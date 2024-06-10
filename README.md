@@ -3,7 +3,7 @@ Follow the instructions below on how to fix Magix (the MagixOfficialR55B.js file
 
 ## To set up this mod, go to Orteil's NeverEnding Legacy and click on the "Use Mods" button. There, paste in the following 2 lines:
 - https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js
-- https://raw.githubusercontent.com/plasma4/magix-fix/main/magix-fix.js
+- https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 ### Upon loading it, you should find that it works. This should properly set up the mod.
 
