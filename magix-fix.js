@@ -6,7 +6,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 Upon loading it, you should find that it works. This should properly set up the mod.
 */
 
-/* PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes, thus disregarding the comment below. Note that the license may be invalid and may in fact not be valid for public domain. This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
+/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes, thus disregarding the comment below. Note that the license may be invalid and may in fact not be valid for public domain. This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
 
 /////////
 	///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiariasm will be punished. Copyright: 2020
@@ -11368,7 +11368,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Tech({
           name:'bookwriting',category:'tier1',
-          desc:'[florist\'s notes],[poet\'s notes], may now be written into some book.  @unlocks [lodge of writers] who will convert their notes into books.',
+          desc:'[florist\'s notes],[poet\'s notes] may now be written into some book.  @unlocks [lodge of writers] who will convert their notes into books.',
           icon:[12,13,'magixmod'], 
           cost:{'insight':300},
           req:{'bookcrafting':true,'ink crafting':true},
