@@ -1,5 +1,5 @@
 # Introducing the Magix fixer
-Magix is a mod developed by pelletstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix.
+Magix is a mod developed by pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix.
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
 Paste in the following script into the console:
 ```js
