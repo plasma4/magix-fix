@@ -576,7 +576,7 @@ function setCookie(cname, cvalue, exdays) {
   G.AddData({
   name:'Default dataset',
   author:'pelletsstarPL',
-  desc:'Fit more people, discover essences which have its secret use. At the moment you can reach new dimensions which will increase your max land soon. More housing so you can fit more people. Mod utilizes vanilla part of the game by adding new modes or new units. Credits to Orteil for default dataset.',
+  desc:'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people. Note that this mod uses part of the vanilla game, so credits to Orteil for the default dataset.',
   engineVersion:1,
   manifest:'ModManifest.js',
   requires:['MagixUtils'],
@@ -611,7 +611,7 @@ function setCookie(cname, cvalue, exdays) {
               G.getDict("pagoda of democracy").steps=2000;
               G.getDict("pagoda of democracy").messageOnStart='You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that Pagoda is taller than Mausoleum. <font color="#aaffaa">But this time ancient powers of nature brought from elvish universe can lead this wonder to be better than ever.</font>';
               G.getDict("pagoda of democracy").finalStepCost={'authority':25,'population':2000,'precious building materials':4500,'gem block':50};
-              G.getDict("pagoda of democracy").finalStepDesc='To complete the wonder and make justice, peace and democration last even longer you need to do the final step.';
+              G.getDict("pagoda of democracy").finalStepDesc='To complete the wonder and make justice, peace and democration last even longer, you need to do the final step.';
               G.getDict("pagoda of democracy").use={'land':15,'worker':20,'metal tools':20};
               if(G.getUnit("pagoda of democracy").desc.indexOf("better than ever")==-1)
                   G.getDict("pagoda of democracy").desc+='//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase <b>Democration</b> achievement starting bonus by 2.</font>';
@@ -1607,11 +1607,11 @@ function setCookie(cname, cvalue, exdays) {
           'A cool breeze is blowing.',	'Another sea wave crashes against a huge rock.',
           'What a cloudy day today.',	'It\'s dry air today.',
           'Wild brambles look so scary even from far.',	'Some dangerous creature sleeps calmly.',
-          'From far a sounds of a falling tree can be heard',	'There is no wind today.',
-          'Just the another day in your tribe',	'From somwhere a meowing sound can be heard',
-          'Uncover the secrets',	'Merge with nature',
-          'Discover undiscovered',	'This is a lush evening.',
-          'Another sea wave crashes against a tall cliff.','What a storm'
+          'From far a sounds of a falling tree can be heard.',	'There is no wind today.',
+          'Just another day in your tribe!',	'From somwhere a meowing sound can be heard...',
+          'Uncover the secrets.',	'Merge with nature.',
+          'Discover the undiscovered.',	'This is a lush evening.',
+          'Another sea wave crashes against a tall cliff.','What a storm!'
       ];
       }
       /*=====================================================================================
@@ -1955,7 +1955,7 @@ function setCookie(cname, cvalue, exdays) {
                       weastory=true
                   }
                   if(G.has('skinning') && !skinnsto && !G.has('city planning')){
-                  G.Message({type:'important',text:'You hope that primitive clothing from hide will make people happier. You think that this resource will make better clothing. You will likely ask some hunter to hunt some animal and get its hide for your tribe.',icon:[9,7]})
+                  G.Message({type:'important',text:'You hope that primitive clothing from hide will make people happier. You think that this resource will make better clothing. You will likely ask some hunter to hunt some animal and get its hide to your tribe!',icon:[9,7]})
                   skinnsto=true
                   }
                   if(G.getRes('gem block').amount>=10 && !gem && !G.has('monument-building')){
@@ -2840,7 +2840,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'burial spot',
-          desc:'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried at the rate of 1 per day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
+          desc:'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried once every day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
           icon:[13,4],
           displayUsed:true,
       });
@@ -2895,7 +2895,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Res({
           name:'wtr',
           displayName:'Water',
-          desc:'Each tile of oceans you own grants you some [wtr] (100 per fully-explored ocean tile normally) upon which you...cannot construct much. You can only use 10% of the water in the entire world. If for some reason you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
+          desc:'Every tile of ocean you own grants you some [wtr] (100 per fully-explored ocean tile normally) upon which you...cannot construct much. You can only use 10% of the water in the entire world. If for some reason you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
           icon:[25,18,'magixmod'],
           displayUsed:true,
           getDisplayAmount:function()
@@ -2948,7 +2948,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'happiness',
-          desc:'[happiness] describes the global level of well-being of your [population].//Happy people work even harder, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach the limit.',
+          desc:'[happiness] describes the global level of well-being of your [population].//Happy people work even harder, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
           startWith:0,
           visible:true,
           icon:[3,4],
@@ -3243,7 +3243,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'herb',
-          desc:'[herb,Herbs] are various plants, roots and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste fairly unpleasant.',
+          desc:'[herb,Herbs] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste fairly unpleasant.',
           icon:[4,6],
           startWith:300,
           turnToByContext:{'eating':{'health':0.005,'happiness':-0.03},'decay':{'herb':0.2,'spoiled food':0.8}},
@@ -3285,7 +3285,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'cured meat',
-          desc:'[cured meat] is interestingly tough and can keep for months without spoiling. It also provides a curious flavor and makes your people a little happier than eating cooked meat.',
+          desc:'[cured meat] is interestingly tough and can keep for months without spoiling. It also provides a curious flavor and tastes a bit better than [cooked meat].',
           icon:[11,6],
           turnToByContext:{'eating':{'health':0.02,'happiness':0.035,'bone':0.1},'decay':{'cured meat':0.95,'spoiled food':0.05}},
           partOf:'food',
@@ -3327,7 +3327,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'bugs',
-          desc:'Worms, insects, spiders - [bugs] are easily caught, but are usually not considered [food].',
+          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered [food].',
           icon:[8,11],
           turnToByContext:{'eating':{'health':0,'happiness':-0.05},'decay':{'spoiled food':0.5}},
           //partOf:'food',
@@ -3425,7 +3425,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'stick',
-          desc:'A short but sturdy branch. Obtained when foraging or when felling a tree.',
+          desc:'A short but sturdy branch. Obtained when foraging or when chopping a tree.',
           icon:[0,6],
           partOf:'archaic building materials',
           category:'build',
@@ -3447,7 +3447,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'basic building materials',
-          desc:'Processed materials such as [cut stone,Stone blocks], [brick]s and [lumber], used to build basic structures.',
+          desc:'Processed materials such as [cut stone,Stone blocks], [brick]s and [lumber], used to build basic structures belong here.',
           icon:[2,8],
           meta:true,
           tick:loseBasicMaterialsTick,
@@ -3488,7 +3488,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'brick',
-          desc:'Made from fired [clay]; can be used to construct solid walls efficiently.',
+          desc:'Made from fired [clay] and can be used to construct solid walls efficiently.',
           icon:[3,8],
           partOf:'basic building materials',
           category:'build',
@@ -3496,14 +3496,14 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'advanced building materials',
-          desc:'Building materials such as [concrete] and [glass], used to build more advanced structures.',
+          desc:'Building materials such as [concrete] and [glass] are often used to build more advanced structures.',
           icon:[3,9],
           meta:true,
           tick:loseAdvancedMaterialsTick,
       });
       new G.Res({
           name:'sand',
-          desc:'Easily harvested from deserts and beaches and may be processed into [glass].',
+          desc:'Easily harvested from deserts and beaches and can be processed into [glass].',
           icon:[4,9],
           partOf:'misc materials',
           category:'build',
@@ -3532,7 +3532,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'marble',
-          desc:'A construction material prized for its decorative properties, that can also be employed in sculptures.',
+          desc:'A construction material prized for its decorative properties. It can also be employed in sculptures.',
           icon:[7,8],
           partOf:'precious building materials',
           category:'build',
@@ -3591,7 +3591,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'coal',
-          desc:'Extracted from mines; makes a good source of energy, and can be used in alloying.',
+          desc:'Extracted from mines, coal provides a good source of energy and can be used in alloying.',
           icon:[12,8],
           partOf:'misc materials',
           category:'build',
@@ -3891,7 +3891,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'influence',
-          desc:'[influence] is generated by power structures.//You also get 1 free influence point at the start of every year.//'+limitDesc('[authority]')+'//Influence is required to enact or remove most policies and traits.',
+          desc:'[influence] is generated by power structures.//You also get 1 free influence point at the start of every year.//'+limitDesc('[authority]')+'//Influence is required to enact most policies or remove traits.',
           icon:[11,4],
           category:'main',
           limit:'authority',
@@ -3927,14 +3927,14 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'wand',
-          desc:'Wands are basic of wizardry, and of course used by wizards. Without it, most spells cannot be casted. @Number to the left means how much is now used, to the right how much is in stock.',
+          desc:'Wands are basic of wizardry, and of course are used by wizards. Without it, most spells cannot be casted. @Number to the left means how much is now used, to the right how much is in stock.',
           icon:[6,4,'magixmod'],
           category:'gear',
           displayUsed:true,
       });
           new G.Res({
           name:'painting',
-          desc:'The paint made by [painter].[population,People] are proud from its beauty.',
+          desc:'The paint made by [painter]. [population,People] are proud to see it.',
           icon:[12,4,'magixmod'],
           category:'misc',
           tick:function(me,tick)
@@ -4201,7 +4201,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'sugar cane',
-          desc:'These canes contain valuable [sugar] within, which you can get [sugar] by giving this task to an artisan.',
+          desc:'These canes contain valuable [sugar] within, which you can obtain by giving this task to an artisan.',
           icon:[15,4,'magixmod'],
           partOf:'misc materials',
           category:'misc',
@@ -4259,7 +4259,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'potion pot',
-          desc:'Pot made specially for [alchemist]s. Hard and a little bit heavy, but safe.',
+          desc:'Pot made specially for [alchemist]s. Hard and a little bit heavy, but pretty safe.',
           icon:[14,8,'magixmod'],
           category:'misc',
           tick:function(me,tick)
@@ -4471,7 +4471,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'armor set',
-          desc:'Solid, durable armor set made for soldiers to protect against not every, but common threats like ambush for instance. @Number to the left means how much is now used, to the right how much is in stock.',
+          desc:'A solid, durable [armor set] made for soldiers can protect against common threats like ambushes. @Number to the left means how much is now used, to the right how much is in stock.',
           icon:[16,11,'magixmod'],
           displayUsed:true,
           category:'gear',
@@ -5778,7 +5778,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'relic',
-          desc:'@can be found underground and analyzed by [archaeologist]s. These are leftovers of civilizations you ruled in previous ascensions or previous generations in current one. Relics have rarity. Any relic with rarity above or equal to <font color="#8888ff">Rare</font> will be counted here. Relics currently do not have too much of a use.',
+          desc:'@can be found underground and analyzed by [archaeologist]s. These are leftovers of civilizations you ruled in previous ascensions or previous generations in current one. Relics have rarity. Any relic with rarity above or equal to <font color="#8888ff">Rare</font> will be counted here. Relics do not have too much of a use, however.',
           icon:[8,29,'magixmod'],
           tick:function(me,tick){
               var toSpoil=me.amount*0.0001;
@@ -8768,19 +8768,19 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'lodge on water',
-          desc:'@NOTE : modes are disabled for now.@can be set to manage automatic recruitment for units such as [gatherer]s, [hunter]s or [woodcutter]s<>A [lodge] is where people of all professions gather to rest and store their tools.//Lodges let you automate your tribe somewhat; should a worker fall sick or die, they will be automatically replaced if a lodge is tasked for it.',
+          desc:'Sadly, lodges do not work properly on water and are simply a waste of space.',
           icon:[36,18,'magixmod'],
           cost:{'archaic building materials':60,'log':12,'lumber':50},
           use:{'wtr':1},
           gizmos:true,
           modes:{
               'off':G.MODE_OFF,
-              'gatherers':{name:'Gatherer\'s lodge',desc:'Hire [gatherer]s until there are 5 for each of this lodge.',req:{'tribalism':true},icon:[0,2]},
-              'hunters':{name:'Hunter\'s lodge',desc:'Hire [hunter]s until there are 5 for each of this lodge.',req:{'hunting':true},icon:[18,2]},
-              'fishers':{name:'Fisher\'s lodge',desc:'Hire [fisher]s until there are 5 for each of this lodge.',req:{'fishing':true},icon:[17,2]},
-              'diggers':{name:'Digger\'s lodge',desc:'Hire [digger]s until there are 5 for each of this lodge.',req:{'digging':true},icon:[8,2]},
-              'woodcutters':{name:'Woodcutter\'s lodge',desc:'Hire [woodcutter]s until there are 5 for each of this lodge.',req:{'woodcutting':true},icon:[7,2]},
-              'artisans':{name:'Artisan\'s lodge',desc:'Hire [artisan]s until there are 5 for each of this lodge.',req:{'stone-knapping':true},icon:[6,2]},
+              'gatherers':{name:'Gatherer\'s lodge',desc:'Hire [gatherer]s.',req:{'tribalism':true},icon:[0,2]},
+              'hunters':{name:'Hunter\'s lodge',desc:'Hire [hunter]s.',req:{'hunting':true},icon:[18,2]},
+              'fishers':{name:'Fisher\'s lodge',desc:'Hire [fisher]s.',req:{'fishing':true},icon:[17,2]},
+              'diggers':{name:'Digger\'s lodge',desc:'Hire [digger]s.',req:{'digging':true},icon:[8,2]},
+              'woodcutters':{name:'Woodcutter\'s lodge',desc:'Hire [woodcutter]s.',req:{'woodcutting':true},icon:[7,2]},
+              'artisans':{name:'Artisan\'s lodge',desc:'Hire [artisan]s.',req:{'stone-knapping':true},icon:[6,2]},
           },
           effects:[
           ],
@@ -8899,7 +8899,7 @@ function setCookie(cname, cvalue, exdays) {
           });
           new G.Unit({
           name:'farm of smokers',
-          desc:'Smoker\'s "skin" and seeds he throws out while releasing another bunch of smoke into the sky. From this farm your people can gather [fire essence]. ',
+          desc:'Smoker\'s "skin" and seeds he throws out while releasing another bunch of smoke into the sky. From this farm your people can gather useful [fire essence].',
           icon:[28,7,'magixmod'],
           cost:{'essenced seeds':300,'fire essence':1000,'herb':100},
           req:{'smokers & Windferns':true},
@@ -8915,7 +8915,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of windferns',
-          desc:'From his white leaves you can find tiny grains that can fly away from your hand quickly. From this farm your people can gather [wind essence]. ',
+          desc:'From his white leaves you can find tiny grains that can fly away from your hand quickly. From this farm your people can gather useful [wind essence].',
           icon:[28,8,'magixmod'],
           cost:{'essenced seeds':300,'wind essence':1000,'herb':100},
           req:{'smokers & Windferns':true},
@@ -8931,7 +8931,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of holy roses',
-          desc:'Holy rose\'s petals are radiating with a lot of light that can blind a farmer. Carefully gathered can be disenchanted allowing you to gather [holy essence]. ',
+          desc:'Holy rose\'s petals are radiating with a lot of light that can blind a farmer. Carefully gathered can be disenchanted allowing you to gather useful [holy essence].',
           icon:[28,4,'magixmod'],
           cost:{'essenced seeds':300,'holy essence':1000,'herb':100},
           req:{'holy roses farm':true},
@@ -8947,7 +8947,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of watorchids',
-          desc:'This farm is muddy and wet due to enviroment that is required to start farming [water essence]. Small pools of essenced droplets can be collected to bucket for instance and then be disenchanted. This is the way the people will gather [water essence]. ',
+          desc:'This farm is muddy and wet due to enviroment that is required to start farming [water essence]. Small pools of essenced droplets can be collected to bucket for instance and then be disenchanted. This is the way the people will gather useful [water essence].',
           icon:[28,10,'magixmod'],
           cost:{'essenced seeds':300,'water essence':1000,'herb':100},
           req:{'withering tulips & Watorchids':true},
@@ -8963,7 +8963,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of withering tulips',
-          desc:'These tulips darkens each torch a human holds. Farmers of these tulips don\'t want to share the way how do they collect [dark essence] out of these flowers. ',
+          desc:'These tulips darkens each torch a human holds. Farmers of these tulips don\'t want to share the way how do they collect useful [dark essence] out of these flowers, but you want to find those secrets.',
           icon:[28,9,'magixmod'],
           cost:{'essenced seeds':300,'dark essence':1000,'herb':100},
           req:{'withering tulips & Watorchids':true},
@@ -8979,7 +8979,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of naturdaisies',
-          desc:'Naturdaisies are growing on big "trees" that can release these essenced beauties. Then people gathers them and disenchant them gaining [nature essence]. ',
+          desc:'Naturdaisies are growing on big "trees" that can release these essenced beauties. Then people gathers them and disenchant them, gaining useful [nature essence].',
           icon:[28,6,'magixmod'],
           cost:{'essenced seeds':300,'nature essence':1000,'herb':100},
           req:{'lightlily & Naturdaisy':true},
@@ -8995,7 +8995,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'farm of lightlilies',
-          desc:'Lightlily is the one which leaves can have lightning shape. People are cautious because sometime especially while storms the flower gets electrified. But cutting stalk with main flower and disenchanting it allows people to gather [lightning essence]. ',
+          desc:'Lightlily is the one those leaves that can have a mysterious lightning shape. People are cautious because sometimes (especially during storms) the flower gets electrified. But cutting the stalk with the unique flower and disenchanting it allows people to gather [lightning essence].',
           icon:[28,5,'magixmod'],
           cost:{'essenced seeds':300,'lightning essence':1000,'herb':100},
           req:{'lightlily & Naturdaisy':true},
@@ -9011,7 +9011,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'treehouse',
-          desc:'@provides 2 [housing]<>Small pied-a-terre built inside one of paradise trees.',
+          desc:'@provides 2 [housing]<>A tiny pied-a-terre built inside one of paradise trees.',
           icon:[6,21,'magixmod'],
           cost:{'lumber':150},
           use:{'land of the Paradise':0.33},
@@ -9024,7 +9024,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'cozy lodge',
-          desc:'@provides 5 [housing]<>Small live that is cozy and everyone feels safe inside it.',
+          desc:'@provides 5 [housing]<>A small yet sweet lodge that is cozy and everyone feels safe inside it.',
           icon:[3,21,'magixmod'],
           cost:{'basic building materials':150},
           use:{'land of the Paradise':1},
@@ -9037,7 +9037,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'cozy paradise hut',
-          desc:'@provides 6 [housing]<>Small dwelling that is cozy and place where your people can lead calm and happy life.',
+          desc:'@provides 6 [housing]<>A small dwelling that is cozy and a place where your people can lead calm and happy life.',
           icon:[2,21,'magixmod'],
           cost:{'basic building materials':200},
           use:{'land of the Paradise':1},
@@ -9050,7 +9050,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'Hardened house',
-          desc:'@provides 16 [housing]<>Huge house that can fit 2 even 3 families at the same time. Due to its capacity it is far more limited type of housing. Inside of this [hardened house] people feel safe and they probably will never even thinking about moving away from this house to huts or lodges.',
+          desc:'@provides 16 [housing]<>This is a huge house that can fit 2 or 3 large families at the same time. Due to its capacity, it is a far more limited type of housing. Inside of this [hardened house] people feel safe and they probably will never even think about moving away from this house to plain huts or lodges.',
           icon:[4,21,'magixmod'],
           cost:{'basic building materials':1200,'glass':5},
           use:{'land of the Paradise':1},
@@ -9063,7 +9063,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'musician',
-          desc:'@generates [culture] every now and then<>[musician]s gather the tribe around at nightfall to sing and play songs that people know and give fun to people.',
+          desc:'@generates [culture] every now and then<>[musician]s gather the tribe around at nightfall to sing and play songs that people know and give fun to people. //<small>(Their favorite note is C#. Maybe it means something?)</small>',
           icon:[28,18,'magixmod'],
           cost:{},
           use:{'worker':1},
@@ -9078,7 +9078,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'fishers & hunters camp',
-          desc:'@An camp where [hunter]s and [fisher]s come.  //There they train and learn to be better at their job. //One [fishers & hunters camp] can associate up to 800 [worker]s divided into 400 [hunter]s and 400 [fisher]s. //[hunter]s that work at this camp has very low chance for being a victim of an accident. //It may be more expensive but it can gather you a lot of [food].',
+          desc:'@An camp where [hunter]s and [fisher]s train at. //There, they learn to be better at their job. //One [fishers & hunters camp] can associate up to 800 [worker]s divided into 400 [hunter]s and 400 [fisher]s! //[hunter]s that work at this camp also have a very low chance to be the victim of an accident. //It may be more expensive, but it can gather you a lot of delectable [food].',
           icon:[5,23,'magixmod'],
           wideIcon:[3,23,'magixmod'],
           cost:{'basic building materials':4850,'food':2500,'paper':3000,'thread':500},
@@ -9107,7 +9107,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
               name:'dark wormhole',
-              desc:'A wormhole built in the depths of the Underworld where darkness is everywhere. The wormhole provides over 20M[burial spot] but requires upkeep. It just looks cheap. Furthermore the [dark wormhole] may get new abilities.',
+              desc:'A wormhole built in the depths of the Underworld where darkness is everywhere. The wormhole provides over 20M[burial spot] but requires some upkeep. It just looks cheap for now though. Oh, and the [dark wormhole] may get new abilities!',
               icon:[13,22,'magixmod'],
               cost:{'gem block':4,'precious building materials':5e3},
               effects:[
@@ -9157,7 +9157,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
               name:'underworld',displayName:'<font color="red">Underworld</font>',
-              desc:'Now you may enter right into the Underworld. A new creepy, unstable, dangerous world will become open for you',
+              desc:'Now you may enter right into the Underworld. A new creepy, unstable, dangerous world will become open for you!//<small>fun</small>',
               wideIcon:[7,5,'magixmod'],
               cost:{'precious building materials':35000,'insight':1500,'faith':250,'fire essence':95000,'water essence':47500,'dark essence':157500,'wind essence':27500,'lightning essence':37750,'nature essence':10750},
               effects:[
@@ -9171,7 +9171,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'temple of deities',
-          desc:'A mystical monument dedicated to angels, archangels, seraphins and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is high, above clouds, despite fact there is cold on top some brave people may come up to prey its god, or listen heavenly symphonies and hums.',
+          desc:'A mystical monument dedicated to angels, archangels, seraphins and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is towers above the world\'s clouds, and despite the fact there is cold on top, some brave people may come up to prey its god, or listen to heavenly symphonies and hums.',
           wonder:'heavenly',
           icon:[1,11,'magixmod'],
           wideIcon:[0,11,'magixmod'],
@@ -9181,7 +9181,7 @@ function setCookie(cname, cvalue, exdays) {
           type:'stepByStep',
           messageOnStart:'You begin the construction of the Temple. Its highest tower is a pass between land of people and sky of angels. No one may go on top unless it is coated. This temple will be last bastion of religion and a storage of relics. Your people with full of hope are building this mass, full of glory wonder.',
           finalStepCost:{'population':1000,'precious building materials':25000,'faith':100,'influence':75,'basic building materials':3000,'deitytemplePoint':-100},
-          finalStepDesc:'To complete the Temple, 1000 of your [population,People] and many more resources needed to finish Temple completely must be sacrificed to accompany you as servants in the afterlife and Angels of the Afterlife. Are you ready?',
+          finalStepDesc:'To complete the giant Temple, 1000 of your [population,People] and many more resources needed to finish Temple completely must be sacrificed to accompany you as servants in the afterlife and Angels of the Afterlife. Are you ready?',
           use:{'land':50},
           //require:{'worker':10,'stone tools':10},
           req:{'monument-building II':true},
@@ -9191,16 +9191,16 @@ function setCookie(cname, cvalue, exdays) {
           new G.Unit({
           name:'the cemetarium',
           displayName:'The Cemetarium',
-          desc:'@leads to the <b>Deadly escape</b><>A big cemetary where full of hostility [revenants] live with second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. Per each step you will perform building it you will grant big amount of [burial spot]. <i>Let these corpses go into their rightenous home</i>',
+          desc:'@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. Per each step you will perform building it you will grant big amount of [burial spot]. <i>Let these corpses go into their rightenous home please</i>',
           wonder:'deadly, revenantic',
           icon:[1,16,'magixmod'],
           wideIcon:[0,16,'magixmod'],
           cost:{'basic building materials':1000,'gem block':30},
           costPerStep:{'basic building materials':2500,'archaic building materials':1500,'burial spot':-6700,'cemetarium construction point':-1},
           steps:270,
-          messageOnStart:'You begin the construction of The Cemetarium. First terrain marked for realm is getting look like this from graves where your people lie. You think that is going right way. You say: <b>I think wild corpses will go right there to leave us away. I want calmness, for all price. It is right choice. I will make my soldiers take these living skulls right there.</b>',
+          messageOnStart:'You begin the construction of The Cemetarium. First terrain marked for realm is getting look like this from graves where your people lie. You think that is going right way. You say: <b>I think wild corpses will go right there to leave us away. I want calmness, at any price. It is the right choice. I will make my soldiers take these living skulls to here.</b>',
           finalStepCost:{'corpse':100,'faith':100,'dark essence':25000,'cobalt ingot':1000,'burial spot':-15000},
-          finalStepDesc:'To complete this wonder in hope of wild corpses leaving you away for some time you will need pay some tools in order',
+          finalStepDesc:'To complete this wonder in the hope of wild corpses leaving you away for some time, you will need to pay a hefty price in order to finish it.',
           use:{'land':100},
           require:{'worker':40,'stone tools':10},
           req:{'monument-building II':true,'revenants':true,'dark wonder':true},
@@ -9209,7 +9209,7 @@ function setCookie(cname, cvalue, exdays) {
   //WonderFULL
             new G.Unit({
           name:'fortress of cultural legacy',
-          desc:'@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gains by 20% if performed a final step! It is [culture] and [inspiration] specified so it needs it while building. <>Inside of the Fortress people store most important and most beautiful arts, statues, sculptures. That wonder makes the culture immune to perditions.',
+          desc:'@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gains by 20% if performed a final step! It is [culture] and [inspiration] specified so it needs it while building. <>Inside of the Fortress people store most important and most beautiful arts, statues, sculptures. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
           wonder:'sacrificed for culture',
           icon:[6,12,'magixmod'],
           wideIcon:[choose([9,12,15]),17,'magixmod',5,12,'magixmod'],
@@ -9225,7 +9225,7 @@ function setCookie(cname, cvalue, exdays) {
       });
             new G.Unit({
           name:'complex of dreamers',
-          desc:'@leads to the <b>Insight-ly victory</b><>The nice complex built at basis of a [Wizard Complex]. In the name of [dreamer]s. It is their home. This wonder may provide housing and...empower [insight] by itself if final step finished! It is [insight] and [wisdom] specified so it needs it while building. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
+          desc:'@leads to the <b>Insight-ly victory</b><>The nice complex built at basis of a [Wizard Complex]. In the name of [dreamer]s. It is their home. This wonder may provide housing and...empower [insight] by itself if the final step is finished! It requires [insight] and [wisdom] during construction. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
           wonder:'insight-ly',
           icon:[choose([1,4,7]),17,'magixmod'],
           wideIcon:[choose([0,3,6]),17,'magixmod'],
@@ -9234,7 +9234,7 @@ function setCookie(cname, cvalue, exdays) {
           steps:200,
           messageOnStart:'You began the construction of complex of Dreamers. The complex looks like not from this world when night visits the world.',
           finalStepCost:{'wisdom':125,'population':2500,'precious building materials':4500,'gem block':50,'insight':1000},
-          finalStepDesc:'To complete the wonder and make your whole civilization much smarter you will need to perform a final step.',
+          finalStepDesc:'To complete the wonder and make your whole civilization much smarter, you will need to perform a final step.',
           use:{'land':25,'worker':10,'metal tools':10},
           upkeep:{'mana':15},
           req:{'monument-building':true,'roots of insight':true},
@@ -9243,32 +9243,32 @@ function setCookie(cname, cvalue, exdays) {
             new G.Unit({
           name:'pagoda of democracy',
           displayName:'pagoda of Democracy',
-          desc:'@leads to the <b>Democration victory</b><>The nice pagoda built over the forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for justice roots. It is [influence] and [authority] specified so it needs it while building.',
+          desc:'@leads to the <b>Democration victory</b><>The nice pagoda built over the forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. It is [influence] and [authority] specified so it needs it while building.',
           wonder:'democration',
           icon:[6,13,'magixmod'],
           wideIcon:[5,13,'magixmod'],
           cost:{'basic building materials':1000,'precious building materials':500},
           costPerStep:{'basic building materials':2500,'precious building materials':500,'influence':45,'authority':0.25,'pagoda construction point':-1},
           steps:200,
-          messageOnStart:'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that Pagoda is taller than Mausoleum.',
+          messageOnStart:'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that the Pagoda is taller than even the Mausoleum!',
           finalStepCost:{'authority':25,'population':2000,'precious building materials':4500,'gem block':50},
-          finalStepDesc:'To complete the wonder and make justice and democration last even longer you need to do the final step.',
+          finalStepDesc:'To complete the wonder and make justice and democration last even longer, you need to do the final step.',
           use:{'land':10,'worker':10,'metal tools':10},
           req:{'monument-building':true,'political roots':true},
           category:'political',
       });
             new G.Unit({
           name:'New world',
-          desc:'Step by step digging will lead people to new world. You need to know that this won\'t be as safe as you thought it is. After finishing this step of activation you need to ascend by it.',
+          desc:'Step-by-step digging will lead people to new world. You need to know that this won\'t be as safe as you thought it is. After finishing this step of activation you need to ascend by it.',
           wonder:'in the underworld',
           icon:[8,5,'magixmod'],
           wideIcon:[6,19,'magixmod',7,5,'magixmod'],
           cost:{'basic building materials':1500},
           costPerStep:{'dark essence':150,'basic building materials':150,'gem block':1,'population':3,'mana':3000,'new world point':-1},
           steps:1111,
-          messageOnStart:'Your people started digging down right into core of the mortal world. The deeper they mine the warmer it is there. What can be inside the new world?',
+          messageOnStart:'Your people started digging down right into core of the mortal world. The deeper they mine the warmer it is there. What could possibly be inside the new world?',
           finalStepCost:{'population':2000,'gem block':500,'gold block':50,'new world point':-389},
-          finalStepDesc:'<font color="fuschia">To complete this step of activating passage to the Underworld you need to ascend.</font>',
+          finalStepDesc:'<font color="fuschia">To complete the final step of activating the passage to the Underworld, you need to ascend first.</font>',
           use:{'land':1,'worker':35,'metal tools':35,'armor set':35},
           category:'dimensions',
           req:{'a feeling from the Underworld':false,'third passage to new world':true}
@@ -9276,7 +9276,7 @@ function setCookie(cname, cvalue, exdays) {
             new G.Unit({
           name:'fortress of magicians',
           displayName:'<font color="yellow">Fortress of magicians</font>',
-          desc:'Leads to <b>Magical victory</b> //A wonder that represents wisdom and power of your [wizard]s and whole [magic essences,Magic]. //Built at tall mountain, filled wih magic in one word it is essenced.',
+          desc:'Leads to <b>Magical victory</b> //A wonder that represents wisdom and power of your [wizard]s and whole [magic essences,Magic]. //Built at a tall mountain and filled with magic, it is absolutely full with magical properties!',
           icon:[10,22,'magixmod'],
           wideIcon:[9,22,'magixmod'],
           cost:{'basic building materials':1500},
@@ -9284,7 +9284,7 @@ function setCookie(cname, cvalue, exdays) {
           steps:200,
           messageOnStart:'Your people who worship magic, wizardry and believe in power of the essences started building a wonder that will be related to the believements. <br>Will magic award your and your people\'s hard work?',
           finalStepCost:{'population':5000,'fire essence':5e4,'lightning essence':5e4,'dark essence':5e4,'wind essence':5e4,'nature essence':5e4,'water essence':5e4,'holy essence':5e4},
-          finalStepDesc:'To complete this step a 50k [Fire essence,F.e.], [Dark essence,D.e.], [Nature essence,N.e], [Lightning essence,L.e.] and other [magic essences,Essences] must be sacrificed and many other resources in order to make magic being cultivated for long time.',
+          finalStepDesc:'To complete this step a 50k [Fire essence,F.e.], [Dark essence,D.e.], [Nature essence,N.e], [Lightning essence,L.e.] and other [magic essences,Essences] must be sacrificed and many other resources in order to make magic cultivated for a long time.',
           use:{'land':15},
           category:'wonder',
           wonder:'magical',
@@ -9294,7 +9294,7 @@ function setCookie(cname, cvalue, exdays) {
       //Seasonal content units
       new G.Unit({
           name:'artisan of new year',
-          desc:'This guy can craft new year fireworks for celebration. Sulfur? For fireworks? It is celebration so he has [Sulfur] already at his stock. He will just consume [paper], [thread] to finish it up.',
+          desc:'This guy can craft New Year fireworks as celebration. Wait...[Sulfur]? For fireworks? It is a celebration so he has [Sulfur] already at his stock. He will just consume [paper], [thread] to finish it up.',
           icon:[19,0,'seasonal'],
           cost:{},
           use:{'worker':1},
@@ -9313,7 +9313,7 @@ function setCookie(cname, cvalue, exdays) {
       });
   new G.Unit({
           name:'firework launcher',
-          desc:'There the guy launches fireworks right up into the sky. Generates happiness by itself and for every firework bunch launched up into the sky.',
+          desc:'There the guy launches fireworks right up into the sky. This generates happiness by itself and for every batch of fireworks launched up into the sky.',
           icon:[18,0,'seasonal'],
           cost:{'food':10},
           use:{'worker':1,'land':1},
@@ -9329,7 +9329,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'heavy warehouse',
-          desc:'@provides 9000 [material storage]<>A large and hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.',
+          desc:'@provides 9000 [material storage]<>A large and hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.//<small>storage9000</small>',
           icon:[30,12,'magixmod'],
           cost:{'basic building materials':1500,'cobalt ingot':1000,'precious building materials':100},
           use:{'land of the Underworld':5},
@@ -9338,14 +9338,14 @@ function setCookie(cname, cvalue, exdays) {
               {type:'provide',what:{'added material storage':9000}},
               {type:'provide',what:{'added material storage':3150},req:{'well stored':true}},
               {type:'provide',what:{'added material storage':4950},req:{'well stored 2':true}},
-              {type:'waste',chance:0.001/100000000}
+              {type:'waste',chance:0.00000001}//increased by @1_e0 because...why that small?
           ],
           req:{'Storage at the bottom of the world':true},
           category:'underworld',
       });
       new G.Unit({
           name:'temple of the Paradise',
-          desc:'@leads to the <b>Victory next to the God</b>. //A big, precious temple which is homeland of Seraphins and the God. A temple that is supported by huge cloud. It is glowing with ambrosium.',
+          desc:'@leads to the <b>Victory next to the God</b>. //A big, precious temple which is the homeland of Seraphins and the God. It is a temple that is supported by a gigantic cloud. It is glowing with ambrosium.',
           wonder:'next to the God',
           icon:[9,25,'magixmod'],
           wideIcon:[8,25,'magixmod'],
@@ -9354,7 +9354,7 @@ function setCookie(cname, cvalue, exdays) {
           steps:400,
           messageOnStart:'The construction of The <b>Temple of The Paradise</b> has been started. Now you are full of hope that it will someday make the God appear next to you and show his true good-natured face.',
           finalStepCost:{'wisdom':125,'population':25000,'precious building materials':24500,'gem block':500,'insight':1000,'ambrosium shard':10000,'holy essence':225000,'faith II':15,'faith':725,'spirituality':25,'godTemplePoint':-100},
-          finalStepDesc:'To complete the wonder and be even closer to the God you must perform this final step 25k [population,people] must be sacrificed...and many other ingredients.',
+          finalStepDesc:'To complete the wonder and be even closer to the God, you must perform this final step. You need 25k [population,people] must be sacrificed...and many other ingredients.',
           use:{'land of the Paradise':30},
           req:{'monument-building III':true},
           category:'wonder',
@@ -9374,7 +9374,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'pagoda of passing time',
-          desc:'@Leads to <b>Patience</b> trial completion. //A monument of time. A wonder for Chra-nos the Seraphin of Time. Tall Pagoda with a huge clock that is a Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...<br>But waiting right there<br>Is deadly<br>Each year weakens me<br>Hope this year is the last one...<br>Patience...is a poison...<br>...deadly poison.',
+          desc:'@Leads to <b>Patience</b> trial completion. //A monument of time. A wonder for Chra-nos the Seraphin of Time. Tall Pagoda with a huge clock that is a Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...<br>But waiting right there<br>Is deadly<br>Each year weakens me<br>Hope this year is the last one...<br>Patience...is a poison...<br>a...deadly poison.',
           wonder:'patience',
           icon:[4,26,'magixmod'],
           wideIcon:[3,26,'magixmod'],
@@ -9383,14 +9383,14 @@ function setCookie(cname, cvalue, exdays) {
           steps:90,
           messageOnStart:'You started to build wonder for <b>Chra-nos</b>. <br>This pagoda will have a huge clock which is the symbol of the seraphin. Stars on night sky as you noticed mostly often make a shape of clock. <br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
           finalStepCost:{'population':200,'gem block':10},
-          finalStepDesc:'To perform the final step 200[population,People] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 200[population,People] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t1':true,'trial':true,'language':true},
           category:'wonder',
       });
           new G.Unit({
           name:'the outstander',
-          desc:'[the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite. They doesn\'t seem like erudites for real. People call Outstanders like this one Guru\'s children.<>Provides 5 [wisdom II](1 extra per each 4 [the outstander,Outstanders] obtained) and 1 [education] each.',
+          desc:'Strangely, [the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite? Likely not. People call Outstanders like this one Guru\'s children.<>Each outstander provides 5 [wisdom II](1 extra per each 4 [the outstander,Outstanders] obtained) and 1 [education] each.',
           icon:[12,28,'magixmod'],
           use:{'worker':1},
           limitPer:{'population':38000},
@@ -9402,30 +9402,30 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'statue of Madness',
-          desc:'@Leads to <b>Unhappy</b> trial completion. //A monument of anger and wrath. A wonder for Bersaria the Seraphin of Madness. Tall statue with a mad face and some bonfires. <><font color="#ffdddd">It is insane...</font>',
+          desc:'@Leads to <b>Unhappy</b> trial completion. //A monument of anger and wrath. A wonder for Bersaria the Seraphin of Madness. Tall statue with a mad face and some bonfires. <><font color="#ffdddd">It is insane...INSANE!!!</font>',
           wonder:'unhappy',
           icon:[7,26,'magixmod'],
           wideIcon:[6,26,'magixmod'],
           cost:{'basic building materials':250,'gold block':10},
           costPerStep:{'gold block':15,'blood':(2*(G.achievByName['unhappy'].won+1.2)),'basic building materials':100,'gem block':1},
           steps:100,
-          messageOnStart:'You started to build wonder for <b>Bersaria</b>. <br>This statue will have a angry face at top. Terrain is covered by some sort of fog. But you do it to stop the Madness and come back to normal plane. Let the statue be built!',
+          messageOnStart:'You started to build wonder for <b>Bersaria</b>. <br>This statue will have a angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to normal plane. Let the statue be built!',
           finalStepCost:{'population':(50+(1*G.achievByName['unhappy'].won+1/10)),'gem block':5,'blood':75},
-          finalStepDesc:'To perform the final step '+250+(1*G.achievByName['unhappy'].won+1/10)+'[population,People],5 [gem block]s and '+100+(1*G.achievByName['unhappy'].won)+'[blood] must be sacrificed in order to escape that plane of Wrath and Madness and award you with <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, '+250+(1*G.achievByName['unhappy'].won+1/10)+'[population,People],5 [gem block]s and '+100+(1*G.achievByName['unhappy'].won)+'[blood] must be sacrificed in order to escape that plane of Wrath and Madness and award you with <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t2':true,'trial':true,'language':true},
           category:'wonder',
       });
       new G.Unit({
           name:'pagoda of culture',
-          desc:'@Leads to <b>Cultural</b> trial completion. //A wonder full of cultural sparks for Tu-ria the Seraphin of Inspiration. Place that is beloved by culturists. <><font color="#0adbbd">Without culture your tribe would not even exist...</font>',
+          desc:'@Leads to <b>Cultural</b> trial completion. //A wonder full of cultural sparks for Tu-ria the Seraphin of Inspiration. Place that is beloved by culturists. <><font color="#0adbbd">Without culture your tribe would not even exist...would it?</font>',
           wonder:'cultural',
           icon:[19,26,'magixmod'],
           wideIcon:[18,26,'magixmod'],
           cost:{'basic building materials':250,'gold block':10},
           costPerStep:{'gold block':5,'mana':25,'basic building materials':100},
           steps:125,
-          messageOnStart:'You started to build wonder for <b>Tu-ria</b>. <br>People start to bring all the artifacts right to the Pagoda. You are full of hope that it will be enough to make Tu-ria support you even more.',
+          messageOnStart:'You started to build the wonder for <b>Tu-ria</b>. <br>People start to bring all the artifacts right to the Pagoda. You are full of hope that it will be enough to make Tu-ria support you even more.',
           finalStepCost:{'population':175,'gem block':25,'culture':25},
           finalStepDesc:'175 [population,people], 25 [mana] and some extra materials will be needed to perform final step and let you ascend for some <b>Victory points</b> from this trial.',
           use:{'land':10,'worker':5,'metal tools':5},
@@ -9434,7 +9434,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'hartar\'s statue',
-          desc:'@Leads to <b>Hunted</b> trial completion. //Statue fully related to patron of this plane: Hartar.<><font color="#ffd000">Fresh meat...might be healthy but only...with sense</font>',
+          desc:'@Leads to <b>Hunted</b> trial completion. //Statue fully related to patron of this plane: Hartar.<><font color="#ffd000">Fresh meat...might be healthy but only with sense, of course.</font>',
           wonder:'hunted',
           icon:[25,26,'magixmod'],
           wideIcon:[24,26,'magixmod'],
@@ -9443,14 +9443,14 @@ function setCookie(cname, cvalue, exdays) {
           steps:100,
           messageOnStart:'You started to build statue for <b>Hartar</b>. <br>This statue will have a Hartar\'s big statuette at its top. You eat some meat and stare with hopeful smile that you will finish this trial by that.',
           finalStepCost:{'population':100,'gem block':5,'blood':25},
-          finalStepDesc:'To perform the final step 25 [blood], 100 [population,people] must be sacrificed in order to escape that plane of meat fanatics and award you with <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 25 [blood], 100 [population,people] must be sacrificed in order to escape that plane of meat fanatics and award you with <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t4':true,'trial':true,'language':true},
           category:'wonder',
       });
       new G.Unit({
           name:'hartar\'s servant',
-          desc:'@hunts wild animals for [meat], [bone]s and [hide]s. @The servant can\'t be wounded and replaces [gatherer]',
+          desc:'@hunts wild animals for [meat], [bone]s and [hide]s. @The servant can\'t be wounded and can replace a [gatherer].',
           icon:[7,29,'magixmod'],
           cost:{},
           limitPer:{'population':3},
@@ -9468,7 +9468,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'platinum fish statue',
-          desc:'@Leads to <b>Unfishy</b> trial completion. //Statue with precious platinum fish at the top.<><font color="#44d0aa">Fish is tasty but it is not only one source of health. Fishyar gets attracted...</font>',
+          desc:'@Leads to <b>Unfishy</b> trial completion. //Statue with precious platinum fish at the top.<><font color="#44d0aa">Fish is tasty, but it is not the only source of health. Fishyar gets attracted...</font>',
           wonder:'unfishy',
           icon:[22,26,'magixmod'],
           wideIcon:[21,26,'magixmod'],
@@ -9477,62 +9477,62 @@ function setCookie(cname, cvalue, exdays) {
           steps:175,
           messageOnStart:'You started to build statue for <b>Fishyar</b>. <br>This statue will have precious fish at the top. Feel thirsty for seafood and stare with hopeful smile that you will finish this trial by that.',
           finalStepCost:{'population':400,'gem block':5,'water':10000,'platinum ore':25},
-          finalStepDesc:'To perform the final step bunch of [water], 100 [population,people] and many more must be sacrificed in order to leave the plane of seafood fanatics and award you with <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 100 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood fanatics and award you with <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'language':true,'tribalism':false},
           category:'wonder',
       });
       new G.Unit({
           name:'tomb of oceans',
-          desc:'@Leads to <b>Ocean</b> trial completion. //A little bit ruined tomb with a Posi\'zul \'s statue next to it surrounded by huge ocean.<><font color="#ddffdd">The oceans have no equal. No law rules them. No human\'s law can affect the Ocean.</font>',
+          desc:'@Leads to <b>Ocean</b> trial completion. //A little bit of a ruined tomb with a Posi\'zul \'s statue next to it surrounded by huge ocean.<><font color="#ddffdd">The oceans have no equal. No law rules them. No human law can affect the Ocean!</font>',
           wonder:'ocean',
           icon:[2,25,'magixmod'],
           wideIcon:[1,25,'magixmod'],
           cost:{'basic building materials':250,'precious metal ingot':5},
           costPerStep:{'precious metal ingot':15,'strong metal ingot':1,'population':5,'basic building materials':75},
           steps:125,
-          messageOnStart:'You and your people started to build the <b>tomb of oceans</b>. <br>Around the ocean, in the middle of Ocean as some people say the wonder for Posi\'zul will stand.',
+          messageOnStart:'You and your people started to build the <b>tomb of oceans</b>. <br>In the middle of Ocean, as some people say, the wonder for Posi\'zul will eternally stand.',
           finalStepCost:{'population':1000,'gem block':5,'water':10000},
-          finalStepDesc:'To perform the final step 1000 [population,people] and many more must be sacrificed in order to leave the world of endless waters and award you <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 1000 [population,people] (and a few other things) must be sacrificed in order to leave the world of endless waters and award you <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'language':true,'tribalism':false},
           category:'wonder',
       });
       new G.Unit({
           name:'the Herboleum',
-          desc:'@Leads to <b>Herbalism</b> trial completion. //A big monument surrounded by herbs and bushes with berries. Herboleum can attract Herbalia and let you finish this trial.<><font color="lime">Herbs taste bad but edible. This wonder is...<br>...for the mostly acknowledged Herbalist<br> in the Universe...<br>Herbalia</font>',
+          desc:'@Leads to <b>Herbalism</b> trial completion. //A big monument surrounded by herbs and bushes with berries. Herboleum can attract Herbalia and let you finish this trial.<><font color="lime">Herbs taste bad but edible. This wonder is...<br>...for the most acknowledged Herbalist<br> in the Universe...<br>Herbalia</font>',
           wonder:'herbalism',
           icon:[13,26,'magixmod'],
           wideIcon:[12,26,'magixmod'],
           cost:{'basic building materials':250,'herb':500,'fruit':500,'vegetable':500},
           costPerStep:{'precious metal ingot':20,'precious building materials':50,'herb essence':10},
           steps:100,
-          messageOnStart:'You and your people started to build <b>The Herboleum</b>. <br>Around the dense forest of herbs, bushes and occasionaly small ponds the mostly natural wonder arises being slightly taller than any other people\'s building around.',
+          messageOnStart:'You and your people started to build <b>The Herboleum</b>. <br>Around the dense forest of herbs, bushes, and occasionaly small ponds, the mostly natural wonder arises being slightly taller than the other human-made buildings around.',
           finalStepCost:{'population':1000,'gem block':5,'herb':10000,'fruit':200,'vegetable':200},
-          finalStepDesc:'To perform the final step 1000 [population,people] and some goods must be sacrificed to finish this "healthy" trial and award <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 1000 [population,people] and some goods must be sacrificed to finish this "healthy" trial and award <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t7':true,'trial':true},
           category:'wonder',
       });
       new G.Unit({
           name:'temple of the Dead',
-          desc:'@Leads to <b>Buried</b> trial completion. //Dark temple built in dead and hostile terrain. A lot of graves around. That may attract Buri\'o dak.<><font color="#FF00FF">Why is everyone feared of death? Just face it.</font>',
+          desc:'@Leads to <b>Buried</b> trial completion. //A very dark temple built in dead and hostile terrain. A lot of graves around. That may attract Buri\'o dak.<><font color="#FF00FF">Why is everyone afraid of death? Just face it.</font>',
           wonder:'buried',
           icon:[1,26,'magixmod'],
           wideIcon:[0,26,'magixmod'],
           cost:{'basic building materials':250,'bone':200,'corpse':20},
           costPerStep:{'basic building materials':10,'corpse':2,'precious building materials':1.2,'bone':3,'dark essence':2},
           steps:2000,
-          messageOnStart:'Your people have started building the <b>temple of the Dead</b>. You do not know why but it goes slightly slower than normal. But its shadow spreads fear all around.',
+          messageOnStart:'Your people have started building the <b>temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow spreads fear all around!',
           finalStepCost:{'population':50,'corpse':40},
-          finalStepDesc:'To perform the final step 50 [population,people] and 40 [corpse]s must be sacrificed to escape this hell once and for all and award 15 <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 50 [population,people] and 40 [corpse]s must be sacrificed to escape this hell once and for all and award 15 <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'t8':true},//due to trial conditions you start run with unlocked wonder
           category:'wonder',
       });
       new G.Unit({
           name:'faithsoleum',
-          desc:'@Leads to <b>Faithful</b> trial completion. //Faithsoleum is full of light and sparks of religion all around. Its eye is symbol of the Enlightened the Seraphin of Faith<><font color="yellow">Worship to victory.</font>',
+          desc:'@Leads to <b>Faithful</b> trial completion. //The Faithsoleum is full of light and sparks of religion as far as the human eye can see. Its eye is the symbol of An Enlightened Seraphin of Faith!<><font color="yellow">Worship to victory.</font>',
           wonder:'faithful',
           icon:[1,27,'magixmod'],
           wideIcon:[0,27,'magixmod'],
@@ -9541,14 +9541,14 @@ function setCookie(cname, cvalue, exdays) {
           steps:50,
           messageOnStart:'Your people have started building the <b>Faithsoleum</b>. People rather build this wonder in bigger steps getting inspired by Gods. You say: <b>Worship leads to victory!<br>Religion is a key.</b>',
           finalStepCost:{'population':250,'spirituality':35,'faith':35},
-          finalStepDesc:'To perform the final step 250 [population,people] and both 25 [faith] & [spirituality] must be sacrificed to escape this pious plane and award <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 250 [population,people] must be sacrificed to escape this pious plane and award <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t11':true,'trial':true,'language':true,'wizard towers':true},
           category:'wonder',
       });
       new G.Unit({
           name:'temple of the Stone',
-          desc:'@Leads to <b>Undergroud</b> trial completion. //Temple built out of rocks that can be found on surface.<><font color="yellow">How you feel without mining? How is it?</font>',
+          desc:'@Leads to <b>Underground</b> trial completion. //A weird temple built out of rocks that can be found on surface.<><font color="yellow">How you feel without mining? How is it?</font>',
           wonder:'Underground',
           icon:[16,26,'magixmod'],
           wideIcon:[15,26,'magixmod'],
@@ -9557,7 +9557,7 @@ function setCookie(cname, cvalue, exdays) {
           steps:100,
           messageOnStart:'Your people have started building the <b>Temple of the Stone</b>. No words for that.',
           finalStepCost:{'population':250},
-          finalStepDesc:'To perform the final step 250 [population,people] must be sacrificed to finish this trial and award <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 250 [population,people] must be sacrificed to finish this trial and award <b>Victory points</b>.',
           use:{'land':10,'worker':5,'metal tools':5},
           req:{'language':true,'tribalism':false},
           category:'wonder',
@@ -9571,16 +9571,16 @@ function setCookie(cname, cvalue, exdays) {
           cost:{'basic building materials':1000,'precious metal ingot':20},
           costPerStep:{'basic building materials':400,'precious metal ingot':5},
           steps:115,
-          messageOnStart:'Your people have started building the <b>Mausoleum of richness</b>. You better buy some preeties to make this wonder as much prestigious as possible.',
+          messageOnStart:'Your people have started building the <b>Mausoleum of richness</b>. You better buy some valuables or something to make this wonder as much prestigious as possible.',
           finalStepCost:{'population':100,'precious metal ingot':5},
-          finalStepDesc:'To perform the final step 100 [population,people] and must be sacrificed to finish this trial and award <b>Victory points</b>.',
+          finalStepDesc:'To perform the final step, 100 [population,people] and a few ingots must be sacrificed to finish this trial and award <b>Victory points</b>!',
           use:{'land':15,'worker':5,'metal tools':5},
           req:{'monument-building':true,'t10':true,'trial':true,'language':true},
           category:'wonder',
       });
       new G.Unit({
           name:'Mausoleum of the Dreamer',
-          desc:'@Leads to <b>Dreamy</b> trial completion. //Monument where the acknowledged dead lie. Tall monument<><font color="#D4a000">Wisdom is key...that can open a lot of doors.</font>',
+          desc:'@Leads to <b>Dreamy</b> trial completion. //A monument where the acknowledged dead lie. Tall monument<><font color="#D4a000">Wisdom is key...that can open a lot of doors.</font>',
           wonder:'Dreamy',
           icon:[28,26,'magixmod'],
           wideIcon:[27,26,'magixmod'],
@@ -9589,23 +9589,23 @@ function setCookie(cname, cvalue, exdays) {
           steps:150,
           messageOnStart:'Your people have started building the <b>Mausoleum of the Dreamer</b>. This monument is the tallest building that exists at the lands of '+(G.getName('island')=="undefined" ? "Plain Island" : G.getName('island'))+'. This is how wisdom leads to success.',
           finalStepCost:{'population':1000,'insight':100,'wisdom':100},
-          finalStepDesc:'To perform the final step 1000 [population,people] and both 100 [wisdom],[insight] must be sacrificed to leave the plane of Wisdom and award <b>Victory points</b>. This',
+          finalStepDesc:'To perform the final step, 1000 [population,people] must be sacrificed to leave the plane of Wisdom and award <b>Victory points</b>.',
           use:{'land of the plain island':15,'worker':5,'metal tools':5},
           req:{'language':true,'tribalism':false},
           category:'wonder',
       });
       new G.Unit({
           name:'university of science',
-          desc:'@This wonder is different than others. You cannot ascend via  [university of science,University] but you can unlock bonuses, upgrades for your great civilization. <>Settled at the lands of '+(G.getName('island')=="undefined" ? "Plain Island" : G.getName('island'))+', university where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-met before things. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.',
+          desc:'@This wonder is different than others. You cannot ascend via [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of '+(G.getName('island')=="undefined" ? "Plain Island" : G.getName('island'))+', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.',
           wonder:'.',
           icon:[13,29,'magixmod'],
           wideIcon:[12,29,'magixmod'],
           cost:{'basic building materials':1000,'precious building materials':400,'magic essences':300,'mana':400,'science':20},
           costPerStep:{'basic building materials':400,'precious metal ingot':50,'insight II':160,'science':5,'gems':100,'mana':1e4,'university point':-1},
           steps:200,
-          messageOnStart:'The construction of Scientific University has been started. It is the complex of education where each knowledge can be deepened. You are proud of that.',
+          messageOnStart:'The construction of a Scientific University has been started. It is the complex of education where each knowledge can be deepened. You are proud of that.',
           finalStepCost:{'population':1000,'insight II':100,'wisdom':250,'science':50,'wisdom II':-25,'education':-25,'university point':-100},
-          finalStepDesc:'To finish this stage of [university of science,University] you need to sacrifice some resources. To unlock next stage remember that you will need to gain more [victory point]s. After each stage finish you will unlock new researches.',
+          finalStepDesc:'To finish this stage of [university of science,University], you need to sacrifice some resources. To unlock next stage remember that you will need to gain more [victory point]s. After each stage finish you will unlock new researches.',
           use:{'land of the plain island':15,'worker':5,'metal tools':5},
           req:{'wonder \'o science':true},
           category:'civil',
@@ -9613,7 +9613,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
               name:'money stockpile',
-              desc:'Can store the money making them decay slower. You always start with 1. Amount of money that [money stockpile] can store is not affected by Pocket completions. Due to trial rules you do not need [stockpiling] to unlock this unit.',
+              desc:'This can store money, slowing the decay of it. You always start with one. The amount of money that he t[money stockpile] can store is not affected by Pocket completions. Due to trial rules you do not need [stockpiling] to unlock this unit!',
               icon:[25,29,'magixmod'],
           cost:{'archaic building materials':50},
               effects:[
@@ -9628,7 +9628,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Unit({
               name:'bank',
-              desc:'Can store the money making them decay slower. The more times you completed Pocket, the less [bank] can store [silver coin,Money] for you.',
+              desc:'This can store money, preventing decay over time. The more times you complete Pocket, the less a [bank] can store [silver coin,Money] for you.',
               icon:[22,29,'magixmod'],
               cost:{'basic building materials':100},
               effects:[
@@ -9640,7 +9640,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Unit({
               name:'hovel with garden',
-              desc:'@provides 8 [housing] and can gather [ambrosium shard]s for you. Rarely can provide you few [fruit]s or/and [vegetable]s.',
+              desc:'@provides 8 [housing] and can gather [ambrosium shard]s for you. Occasionally can provide you with a few tasty [fruit]s and [vegetable]s.',
               icon:[9,6,'magixmod'],
               cost:{'basic building materials':90},
               effects:[
@@ -9658,7 +9658,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
               name:'fort',
-              desc:'@provides 30 housing. Uses 6 guards to protect civillians from cruel possesed dark powers.',
+              desc:'@provides 30 housing. Uses 6 guards to protect civillians from cruel and possesed dark powers.',
               icon:[8,6,'magixmod'],
               cost:{'basic building materials':800,'strong metal ingot':400,'cobalt ingot':100},
               effects:[
@@ -9671,7 +9671,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
               name:'shop',
-              desc:'Thanks to the Shop and worker you hired you can order resources that you only could craft. Remember: they can still decay so keep that in mind and use \'em quickly so they won\'t waste. Amount of times you completed Pocket does not affect decay speed.',
+              desc:'Thanks to the Shop and the worker you hired, you can order resources that you only could craft. Remember: they can still decay so keep that in mind and use \'em quickly so they won\'t waste. The amount of times you completed Pocket does not affect decay speed.',
               icon:[24,29,'magixmod'],
               cost:{'archaic building materials':500},
           modes:{
@@ -9699,7 +9699,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
               name:'cantor',
-              desc:'Exchanges coins of lower tier into 1 coin of higher tier. For example: 100 of <b>x</b> currency will be exchanged into 1 <b>y</b> currency.',
+              desc:'Exchanges coins of a lower tier into 1 coin of higher tier. For example: 100 of <b>x</b> currency will be exchanged into 1 <b>y</b> currency.',
               icon:[23,29,'magixmod'],
               cost:{'archaic building materials':200,'wooden coin':90},
               effects:[
@@ -9727,12 +9727,12 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
               name:'grand mirror',
-              desc:'A door to world that is exact copy of mortal world. //<b><font color="fuschia">Isn\'t it weird that you have MIRRORED world and terrain only duplicated but any housing, crafting shacks did not? Well...maybe it is better for you.</font></b>',
+              desc:'A door to a world that is  anexact copy of the mortal world. //<b><font color="fuschia">Isn\'t it weird that you have MIRRORED world and only terrain duplicated? Well...maybe it is better for you.</font></b>',
               icon:[0,0],
           wideIcon:[0,0],
           wonder:'.',
           steps:50,
-          finalStepDesc:'Perform final step to gain an [tablet \'o mirror]. You will need it.',
+          finalStepDesc:'Perform the final step to gain a [tablet \'o mirror]. You will need it.',
           finalStepCost:{'tablet \'o mirror':-1,'magic essences':1e6,'mana':450000},
               effects:[
               ],
@@ -9765,7 +9765,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'corpse slayer',
-          desc:'Hunts for [wild corpse]s and does a takedown on\'em. Has a chance to become wounded while encounter. //Once slain [wild corpse] cannot revive again.',
+          desc:'Hunts for [wild corpse]s and takes \'em down. Has a chance to become wounded while encounter. //Once slain, a [wild corpse] cannot revive again.',
           icon:[24,30,'magixmod'],
           cost:{},
           use:{'worker':1,'metal weapons':1,'armor set':1},
@@ -9831,7 +9831,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'Toolhut',
-          desc:'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //Produces bigger packets of these items but is slower. @Materials used in process: [thread],[stone],[lumber],[fire pit],[coal].',
+          desc:'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //They produce bigger packets of these items, but at a slower rate. @Materials used in process: [thread],[stone],[lumber],[fire pit],[coal].',
           icon:[18,31,'magixmod'],
           cost:{'basic building materials':775,'basic factory equipment':400},
           upkeep:{'coal':3,'fire pit':0.15,'food':65,'water':85},
@@ -9849,7 +9849,7 @@ function setCookie(cname, cvalue, exdays) {
           new G.Unit({
           name:'f.r.o.s.t.y',
           displayName:'F.R.O.S.T.Y',
-          desc:'@From snowmen created by children extracts [christmas essence]. However there is a chance that the extraction will destroy the snowman. The faster [f.r.o.s.t.y] becomes the bigger chance for that is.//Powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas]',
+          desc:'@From snowmen created by children extracts [christmas essence]. However, there is a chance that the extraction will destroy the snowman. The faster [f.r.o.s.t.y] becomes the bigger chance for that to happen.//Powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas]',
           icon:[15,12,'seasonal'],
           cost:{'strong metal ingot':100,'hard metal ingot':15,'precious metal ingot':2,'basic building materials':10,'magic essences':5000,'platinum ore':10},
           upkeep:{'snow':6,'magic essences':10,'lightning essence':5},
@@ -9895,7 +9895,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Unit({
           name:'christmas essence storage',
-          desc:'@One storage allows you to store 6000 [christmas essence] more<>A simple glass shielded storage with essence faucet.',
+          desc:'@One storage allows you to store 6000 [christmas essence] more.<>A simple glass shielded storage with essence faucet.',
           icon:[4,11,'seasonal'],
           cost:{'basic building materials':200,'glass':400},
           use:{'land':0.8},
@@ -9947,7 +9947,7 @@ function setCookie(cname, cvalue, exdays) {
       }); 
       new G.Unit({
           name:'lodge of Christmas',
-          desc:'@this lodge can turn normal [child,children] to [child of Christmas,children of Christmas].',
+          desc:'@this lodge can turn normal [child,children] into [child of Christmas,children of Christmas]. At least, that is supposed to happen. Currently completely useless due to protesting.//<small>totally not because dev is to lazy to implement</small>',
           icon:[14,11,'seasonal'],
           cost:{'archaic building materials':50,'basic building materials':30},
           use:{'land':1,'worker':3},
@@ -9974,7 +9974,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Unit({
           name:'fortress of love',
           displayName:'<font color="pink">Fortress of love</font>',
-          desc:'Constucted in Paradise, giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @Note: Final level will need full 2 [love] levels.',
+          desc:'Constucted in Paradise: a giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @Note: Final level will need full 2 [love] levels.',
           icon:[0,16,'seasonal'],
           wonder:'.',
           steps:999,
@@ -9990,7 +9990,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'villa of victory',
-          desc:'@The more [victory point]s you got the more of housing it will provide. Starting from 100 it will provide 8 more housing per each [victory point] obtained. Villas cannot waste however those are very limited. At the moment it provides:'+(100+(G.getRes('victory point').amount*8))+'[housing].',
+          desc:'@The more [victory point]s you got, the more of housing it will provide. Starting from 100, it will provide 8 more housing for every [victory point] obtained. Villas cannot waste however those are very limited. At the moment it provides:'+(100+(G.getRes('victory point').amount*8))+'[housing].',
           wideIcon:[1,31,'magixmod'],
           icon:[1,31,'magixmod'],
           cost:{'basic building materials':1000,'precious building materials':300},
@@ -10012,9 +10012,9 @@ function setCookie(cname, cvalue, exdays) {
           modes:{
               'off':G.MODE_OFF,
               'spirits':{name:'Summon spirits',icon:[32,16,'magixmod'],desc:'[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].',use:{'worker':10,'knapped tools':4,'stone tools':1}},
-              'demons':{name:'Summon demons',icon:[8,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but you need [halloween essence] in process.',use:{'worker':16,'worker':2,'knapped tools':4,'stone tools':1},req:{'demon-summoning':true}},
-              'vampire':{name:'Summon vampire spirits',icon:[9,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon bloodthirsty vampires. Way ess safer way to generate a lot of [spookiness], but you will need [halloween essence] in process.//Note: If ritual will fail causing people wounded or even someone will be dead your [happiness] level will be harmed.',use:{'worker':16,'worker':2,'knapped tools':4,'stone tools':1,'metal weapons':3},req:{'vampirism':true}},
-              'halloween':{name:'Summon halloween spirits',icon:[10,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon ancient Halloween spirits and their ghosts. Generates small amount of [spookiness], but you can earn some [halloween essence] from their kindness.',use:{'worker':14,'worker':1,'knapped tools':4,'stone tools':1},req:{'halloween-spirits':true}},
+              'demons':{name:'Summon demons',icon:[8,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.',use:{'worker':16,'worker':2,'knapped tools':4,'stone tools':1},req:{'demon-summoning':true}},
+              'vampire':{name:'Summon vampire spirits',icon:[9,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon bloodthirsty vampires. A way safer way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If ritual fails, it will cause people to be injured or even die, your [happiness] level will be harmed.',use:{'worker':16,'worker':2,'knapped tools':4,'stone tools':1,'metal weapons':3},req:{'vampirism':true}},
+              'halloween':{name:'Summon halloween spirits',icon:[10,9,'seasonal'],desc:'[spirit summoner,Summoner] will summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.',use:{'worker':14,'worker':1,'knapped tools':4,'stone tools':1},req:{'halloween-spirits':true}},
           },
           effects:[
               {type:'gather',what:{'spookiness xp':0.75},mode:'spirits',chance:4/5},
@@ -10030,7 +10030,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'halloween essence storage',
-          desc:'@One storage allows you to store 6000 [halloween essence] more<>A simple glass shielded storage with essence faucet. ',
+          desc:'@One storage allows you to store 6000 [halloween essence] more<>A simple glass shielded storage with essence faucet.',
           icon:[7,8,'seasonal'],
           cost:{'basic building materials':200,'glass':400},
           use:{'land':0.8},
@@ -10045,21 +10045,21 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'boat',
-          desc:'@[boat] with crew on board is able to explore seas and oceans unlike [wanderer]s, [scout]s and [globetrotter]s. However they are required along with [worker]s who will take care of both boat and themselves. You can obtain [wanderer,exploration units] via hiring them into respective modes. Primarily uses 2 [worker]s who maintain the boat.',
+          desc:'@[boat] with crew on board is able to explore seas and oceans unlike [wanderer]s, [scout]s and [globetrotter]s. However, they are required, along with 2 [worker]s who will take care of both the boat and themselves. You can obtain [wanderer,exploration units] via hiring them into respective modes.',
           icon:[3,28,'magixmod'],
           cost:{'lumber':2000,'food':7500,'water':3000,'leather':90},
           use:{'worker':2},
           gizmos:true,
           modes:{
               'off':G.MODE_OFF,
-              'discover':{name:'Voyage deeply into the ocean',icon:[10,33,'magixmod'],desc:'This [boat]\'s crew will swim with boat into unknown to explore endless-like oceans. Keep in mind that everything on sea can happen so this boat may sink down.',use:{'scoutW':12,'worker':11}},
-              'explore':{name:'Explore already discovered waters',icon:[9,33,'magixmod'],desc:'This [boat]\'s crew will deeply explore already discovered parts of ocean. Keep in mind that everything on sea can happen so this boat may sink down.',use:{'wandererW':12,'worker':11}},
+              'discover':{name:'Voyage deeply into the ocean',icon:[10,33,'magixmod'],desc:'This [boat]\'s crew will swim and use the boat to explore endless-like oceans. Keep in mind that much can happen in the ocean, so this boat may sink down.',use:{'scoutW':12,'worker':10}},
+              'explore':{name:'Explore already discovered waters',icon:[9,33,'magixmod'],desc:'This [boat]\'s crew will deeply explore already discovered parts of ocean. Keep in mind that everything on sea can happen so this boat may sink down.',use:{'wandererW':12,'worker':10}},
           },
           effects:[
               {type:'exploreOcean',unexplored:0.07,mode:'discover'},
               {type:'exploreOcean',explored:0.07,mode:'explore'},
-              {type:'function',func:unitGetsConverted({},0.01,0.05,true,'[X] [people].','ship sank. Sadly everyone who was on the ship drowned','ships sank. Sadly everyone who was on the ship drowned'),chance:1/117.5,notMode:'off',req:{'at4':false}},
-              {type:'function',func:unitGetsConverted({},0.01,0.05,true,'[X] [people].','ship sank. Sadly everyone who was on the ship drowned','ships sank. Sadly everyone who was on the ship drowned'),chance:1/150,notMode:'off',req:{'at4':true}},
+              {type:'function',func:unitGetsConverted({},0.01,0.05,true,'[X] [people].','ship sank. Sadly, everyone who was on the ship drowned.','ships sank. Sadly everyone who was on the ship drowned...'),chance:1/117.5,notMode:'off',req:{'at4':false}},
+              {type:'function',func:unitGetsConverted({},0.01,0.05,true,'[X] [people].','ship sank. Sadly, everyone who was on the ship drowned.','ships sank. Sadly, everyone who was on the ship drowned...'),chance:1/150,notMode:'off',req:{'at4':true}},
               {type:'mult',value:1.05,req:{'at2':true}},
           ],
           req:{'boat building':true,'leather-working':true},
@@ -10067,7 +10067,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'archaeologist',
-          desc:'@digs in the ground to find some [relic]s. Good source of essentials as finding treasures won\'t just give you [insight]. Depending on what [archaeologist] found you can also gain [culture], [faith] or [influence]. If very rare relic found it will give way more of essential on find.//When no more [relic]s this unit will look for stuff left by previous generations but it will provide way less [insight,Essentials].',
+          desc:'@digs in the ground to find some [relic]s. Good source of essentials as finding treasures won\'t just give you [insight]. Depending on what [archaeologist] found you can also gain [culture], [faith] or [influence]. If a super rare [relic] is found, it will give more essentials.//When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
           icon:[22,33,'magixmod'],
           use:{'worker':1,'metal tools':2},
           upkeep:{'food':1,'water':1},
@@ -10140,7 +10140,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'vegetable farmland',
-          desc:'@Special for [vegetable]s . This farm settled in ancestors world not only produces [vegetable]s but also provides: 50 [housing] and 1000 [food storage].',
+          desc:'@Special for [vegetable]s. This farm settled in ancestors world not only produces [vegetable]s but also provides: 50 [housing] and 1000 [food storage].',
           icon:[5,9,'magixmod'],
           cost:{'seeds':2000,'basic building materials':800},
           req:{'glorious agriculture':true},
@@ -10156,7 +10156,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'fruit farmland',
-          desc:'@Special for [fruit]s . This farm settled in ancestors world not only produces [fruit]s but also provides: 50 [housing] and 1000 [food storage]. //[next-to house fruitbushes] increase its efficiency.',
+          desc:'@Special for [fruit]s. This farm settled in ancestors world not only produces [fruit]s but also provides: 50 [housing] and 1000 [food storage]. //[next-to house fruitbushes] increase its efficiency.',
           icon:[6,9,'magixmod'],
           cost:{'seeds':2000,'basic building materials':800},
           req:{'glorious agriculture':true,'next-to house fruitbushes':true},
@@ -10930,7 +10930,7 @@ function setCookie(cname, cvalue, exdays) {
       //MAGIX
       new G.Tech({
           name:'wizardry',category:'tier1',
-          desc:'@Some sort of weird, uncommon people will now arrive in tribe. These are called <b><font color="white">Wizards</font></b> .They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad</small>',
+          desc:'@Some sort of weird, uncommon people will now arrive in tribe. These are called <b><font color="white">Wizards</font></b>. They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad</small>',
           icon:[5,3,'magixmod'],
           cost:{'insight':75,'faith':5},
           req:{'well-digging':true,'a gift from the mausoleum':true,'spark\'o religion':true},
@@ -11148,7 +11148,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Tech({
           name:'maths III',category:'tier1',
-          desc:'@increase math skills of your civilization. Required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wiardry. @[population,People] can count area of some figures . Depending on their [will to know more] they can know slightly more than that. @increases current equation knowledge and introduces functions //<small> I would research it now.</small>',
+          desc:'@increase math skills of your civilization. Required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wiardry. @[population,People] can count area of some figures. Depending on their [will to know more] they can know slightly more than that. @increases current equation knowledge and introduces functions //<small> I would research it now.</small>',
           icon:[1,35,'magixmod',18,4,'magixmod'],
           cost:{'insight':360,'wisdom':10},
           req:{'oral tradition':true,'maths II':true,'plain island building':true},
@@ -11445,21 +11445,21 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Tech({
           name:'explosive crafting & mining',category:'tier1',
-          desc:'Unlocks [explosive mine] <b>( not at all, needs [intelligent blasting] )</b> . You think it is joke but you will quickly get into big mistake. @Unlocks [pyro-artisan] (artisan for explosives, which requires mostly [sulfur] for explosion power). Mines will start gathering some [sulfur] at <b>any</> of modes chosen. Both [mine] and [mine of the plain island] can gather it.',
+          desc:'Unlocks the [explosive mine] <b>(well, you also need [intelligent blasting])</b>. You think it is joke but you will quickly get into big mistake. @Unlocks [pyro-artisan] (artisan for explosives, which requires mostly [sulfur] for explosion power). Mines will start gathering some [sulfur] at <b>any</> of modes chosen. Both [mine] and [mine of the plain island] can gather it.',
           icon:[20,15,'magixmod'], 
           cost:{'insight':850,'wisdom':10},
           req:{'ambrosium treeplanting':true,'paradise building':true},
       });
           new G.Tech({
           name:'intelligent blasting',category:'tier1',
-          desc:'Unlocks [explosive mine]. With explosives supplies now miners will be able to...Blast underground. However these mines cannot be [prospecting,prospected] but they still may be turned on/off . These mines have bigger rate of accidents than other ones which do not use explosives to mine undeground.',
+          desc:'Unlocks [explosive mine]. With explosives supplies now miners will be able to...blast off underground. However, these mines cannot be [prospecting,prospected] but they still can be turned on/off. These mines have a larger rate of accidents than other ones which do not use explosives to mine undeground.',
           icon:[14,15,'magixmod'], 
           cost:{'insight':850,'science':1,'wisdom':9},
           req:{'ambrosium treeplanting':true,'paradise building':true},
       });
           new G.Tech({
           name:'bigger potion pallet',category:'tier1',
-          desc:'Unlocks more potion types. These are [combat potions] which has a needle and grip so they are throwable and may be use in defense battle, unlocks a [jar for concoctions,concoctions] used to craft other potions. <b>Unlocks stand which allows to craft pots for these types of potion out of [potion pot].</b>',
+          desc:'Unlocks more potion types. These are [combat potions] which has a needle and grip so they are throwable and may be use in defense battle, unlocks a [jar for concoctions,concoctions] used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
           icon:[21,16,'magixmod'], 
           cost:{'insight':850,'science':1,'wisdom':9},
           req:{'alcohol brewing':true,'medicaments brewing':true,'alchemy':true,'paradise building':true},
@@ -11494,7 +11494,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Tech({
           name:'art of cooking',category:'tier1',
-          desc:'<font color="fuschia">Unlocks [chef]. Talented with art of cooking worker may make tasty and very decent food [meals]. A [meals,Meal] makes people even happier</font>',
+          desc:'<font color="fuschia">Unlocks [chef]. Talented with art of cooking, a worker may make delectable and very decent food [meals]. A [meals,Meal] makes people even happier!</font>',
           icon:[23,13,'magixmod'], 
           cost:{'insight':535,'wisdom':30,'culture':400,'inspiration':200},
           req:{'cooking II':true},
@@ -11508,7 +11508,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Tech({
           name:'flour-crafting I',category:'tier1',
-          desc:'<li>Unlocks mode for [artisan] that allows to process [wheat] into [flour].</li>',
+          desc:'<li>Unlocks a mode for [artisan] that allows to process [wheat] into [flour].</li>',
           icon:[9,7,'magixmod'], 
           cost:{'insight':685},
           req:{'farm of wheat':true},
@@ -11988,7 +11988,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'ritual necrophagy',
-          desc:'@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
+          desc:'@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
           icon:[15,7,'magixmod'],
           cost:{'culture':25},
           chance:500,
@@ -12018,7 +12018,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'insect-eating',
-          desc:'@your people are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b> //<small>Sometimes it is a need to eat a worm in order to survive when you have nothing else to eat.</small>',
+          desc:'@your people are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b> //<small>Sometimes it is a need to eat a worm in order to survive when you have nothing else to eat.</small>',
           icon:[8,11,22,1],
           chance:5,
           req:{'insects as food':'on','decent nourishment':false,'worm culture':false},
@@ -13394,7 +13394,7 @@ function setCookie(cname, cvalue, exdays) {
           effects:[
           {type:'function',func:function(){
               if(G.has('ritual necrophagy'))G.deleteTrait('ritual necrophagy');
-              G.traitByName['art of death'].desc='@[corpse]s and their parts can now only be <u>topic</u> of an art(thanks to [respect for the corpse], creating some [culture] but harming [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>';
+              G.traitByName['art of death'].desc='@[corpse]s and their parts can now only be <u>topic</u> of an art(thanks to [respect for the corpse], creating some [culture] but harming [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>';
           }}
           ],
           chance:35
@@ -16172,7 +16172,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'decent nourishment',
-          desc:'@unhappiness from eating [bugs] and [spoiled food] is doubled. @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b>//<small>But what if this is only food you have?...There is only one advice: do not even think about serving them wormie on plate. Throw it away or eat it yourself.</small>',
+          desc:'@unhappiness from eating [bugs] and [spoiled food] is doubled. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if this is only food you have?...There is only one advice: do not even think about serving them wormie on plate. Throw it away or eat it yourself.</small>',
           icon:[8,11,26,0,'magixmod'],
           chance:5,
           req:{'insects as food':'on','insect-eating':false,'worm culture':false},
@@ -16185,7 +16185,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'worm culture',
-          desc:'@your people are no longer unhappy when eating [bugs]. @in addition one-third of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Consumers are happy about that as they say it improves dish\'s taste</small>',
+          desc:'@your people are no longer unhappy when eating [bugs]. @in addition one-third of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Consumers are happy about that as they say it improves dish\'s taste</small>',
           icon:[8,11,24,1],
           chance:15,
           req:{'insects as food':'on','insect-eating':false,'decent nourishment':false},
@@ -16216,7 +16216,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'death scepticism',
-          desc:'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>',
+          desc:'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
           icon:[9,15,'magixmod',25,34,'magixmod'],
           cost:{'culture':4,'insight':1},
           chance:50,
@@ -16661,7 +16661,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'art of death',
-          desc:'@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+          desc:'@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
           icon:[15,6,'magixmod'],
           cost:{'culture':25},
           chance:500,
@@ -16671,7 +16671,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'royal treatment',
-          desc:'@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
+          desc:'@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
           icon:[19,1,'magixmod'],
           cost:{'culture':25},
           chance:750,
@@ -16680,7 +16680,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'belongings preservance',
-          desc:'@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>',
+          desc:'@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
           icon:[16,6,'magixmod'],
           cost:{'culture':25},
           chance:500,
@@ -17195,7 +17195,7 @@ function setCookie(cname, cvalue, exdays) {
       });
                           new G.Policy({
           name:'se11',
-          displayName:'Enlightened the Seraphin of Faith',
+          displayName:'An Enlightened Seraphin of Faith',
           desc:'<font color="lime">All [faith] gathering is increased by 25%.</font><br><hr color="fuschia"><font color="red">Backfire: All [influence], [insight] units are weakened by 25% (including [guru])!</font>',
           icon:[19,25,'magixmod'],
           cost:{'worship point':1,'faith II':10},
@@ -17625,7 +17625,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Policy({
           name:'eat on gather',
-          desc:'Your people will eat every food just after they gathered it. That means very low amount of food will be shared with others. In consequences it may lead to starvation at the cost of [happiness]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than specific % . Note that if food/water rations policies are set to plentiful then this policy disables automatically.',
+          desc:'Your people will eat every food just after they gathered it. That means that a very low amount of food will be shared with others. It may lead to starvation at the cost of [happiness]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific percentage. Note that if food/water rations policies are set to <b>plentiful</b>, then this policy disables automatically.',
           icon:[5,12,16,33,'magixmod'],
           cost:{'influence':2},
           startMode:'off',
@@ -18212,7 +18212,7 @@ function setCookie(cname, cvalue, exdays) {
       //plants
       new G.Goods({
           name:'grass',
-          desc:'[grass] is a good source of [herb]s; you may also occasionally find some [fruit]s and [stick]s while foraging.',
+          desc:'[grass] will sometimes hide [fruit]s and [stick]s that can be found by foraging.',
           icon:[10,10],
           res:{
               'gather':{'fruit':0.5,'stick':0.5},
@@ -18221,7 +18221,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'oak',
-          desc:'The [oak] is a mighty tree that thrives in temperate climates, rich in [log]s and [stick]s.',
+          desc:'The [oak] tree is a mighty tree that thrives in temperate climates, rich in [log]s and [stick]s.',
           icon:[0,10],
           res:{
               'chop':{'log':3,'stick':6},
@@ -18328,7 +18328,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'succulents',
-          desc:'Hardy cactii that grow in the desert. While tricky to harvest, [succulents] can provide [herb]s and [fruit]s.',
+          desc:'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide [herb]s and [fruit]s.',
           icon:[6,10],
           res:{
               'gather':{'fruit':1},
@@ -19805,7 +19805,10 @@ function setCookie(cname, cvalue, exdays) {
           'Wild scents flow in from elsewhere.',
           'The dust is oppressive.',
           'An eerie glow from above illuminates the night.',
-          'Distant lands lay undisturbed.'
+          'Distant lands lay undisturbed.',
+          'Something mysterious seems to approach.',
+          'Sleep is difficult tonight.',
+          'The moon is strangely bright today.'
       ];
       let story3=false;
       let story5=false;
@@ -19884,7 +19887,7 @@ function setCookie(cname, cvalue, exdays) {
                                   var audio = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/JustPlainLucky.mp3');
                                   audio.play(); 
                               }
-              G.middleText('<font color="#d4af37">- Congratulations: you striked lucky number. -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You striked the lucky number -'+G.achievByName['just plain lucky'].won+' '+(G.achievByName['just plain lucky'].won==1 ? 'time' : 'times')+'<br>Impressive.<br> DM me on discord to hear a word from me ~ pelletsstarPL</small>','slow');
+              G.middleText('<font color="#d4af37">- Congratulations: you struck the lucky number (777770). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number -'+G.achievByName['just plain lucky'].won+' '+(G.achievByName['just plain lucky'].won==1 ? 'time' : 'times')+'<br>Impressive.<br>Anyway, enjoy the game!</small>','slow');
               
           }
           
@@ -20268,7 +20271,7 @@ function setCookie(cname, cvalue, exdays) {
                   }
                   if(me.amount>G.getRes('pressure resistance').amount){
                       var pressure=Math.max(0,(me.amount)-G.getRes('pressure resistance').amount);
-                      if(tick%75==0)G.Message({type:'bad',text:'You have more elves than you can protect against <b>Pressure</b>. That means you won\'t be able to breed more elves over the <b>Pressure resistance</b> level. Increase <b>resistance</b> level by completing trials or some achievements. Having more housing than pressure resistance level won\'t solve the problem.',icon:[2,11,'c2']});
+                      if(tick%75==0)G.Message({type:'bad',text:'You have more elves than you can protect against <b>Pressure</b>. That means you won\'t be able to breed more elves over the <b>Pressure resistance</b> level! Increase the <b>resistance</b> level by completing trials or some achievements. Having more housing than pressure resistance level will NOT solve the problem.',icon:[2,11,'c2']});
                   }
                   //age
                   if (G.checkPolicy('disable aging')=='off')
@@ -20448,7 +20451,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'sick',
-          desc:'[adult,Elves] can fall [sick,sick] when your [health] levels are too low. They do not [worker,work], but may be healed over time.',
+          desc:'[adult,Elves] can fall [sick,sick] when your [health] levels become too low. They do not [worker,work], but may be healed eventually.',
           partOf:'population',
           icon:[6,3,'c2'],
           category:'demog',
@@ -20456,7 +20459,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'wounded',
-          desc:'[adult,Elves] may get [wounded,wounded] due to work injuries, or from war. They do not [worker,work], but may slowly get better over time.',
+          desc:'[adult,Elves] may get [wounded,wounded] due to work injuries, or from war. They do not [worker,work], but may slowly improve.',
           partOf:'population',
           icon:[7,3,'c2'],
           category:'demog',
@@ -20523,13 +20526,13 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'burial spot',
-          desc:'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried at the rate of 1 per day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
+          desc:'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried once every day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
           icon:[13,4,'c2'],
           displayUsed:true,
       });
       new G.Res({
           name:'housing',
-          desc:'Each [housing,Housing spot] accommodates one [population,Person].//Beyond the 15 people a nomad tribe can support, your population will only grow if you have empty housing.//Homelessness (having less housing than population) will lead to unhappiness and disease.//The number on the left is how much housing is occupied, while the number on the right is how much housing room you have in total.',
+          desc:'Each [housing,Housing spot] accommodates one [population,Person].//Beyond the 15 people a basic nomad tribe can support, your population will only grow if you have empty housing.//Homelessness (having less housing than population) will lead to unhappiness and disease.//The number on the left is how much housing is occupied, while the number on the right is how much housing room you have in total.',
           icon:[12,4,'c2'],
           getDisplayAmount:function()
           {
@@ -20538,7 +20541,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'land',
-          desc:'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile, by default) upon which you can construct buildings. If for some reason you find yourself with less land than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much land is occupied, while the number on the right is how much land you have in total.',
+          desc:'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile normally) upon which you can construct buildings. If for some reason you find yourself with less land than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much land is occupied, while the number on the right is how much land you have in total.',
           icon:[14,4,'c2'],
           displayUsed:true,
           tick:function(me)
@@ -20564,7 +20567,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Res({
           name:'wtr',
           displayName:'Water',
-          desc:'Each tile of oceans you own grants you some [wtr] (100 per fully-explored ocean tile, by default) upon which you rather cannot construct anything. You can only use 10% of waters in the entire world. If for some reason you find yourself with less water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
+          desc:'Every tile of ocean you own grants you some [wtr] (100 per fully-explored ocean tile normally) upon which you...cannot construct much. You can only use 10% of the water in the entire world. If for some reason you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
           icon:[15,4,'c2'],
           displayUsed:true,
           getDisplayAmount:function()
@@ -20611,7 +20614,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'happiness',
-          desc:'[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time.',
+          desc:'[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
           startWith:0,
           visible:true,
           icon:[3,4,'c2'],
@@ -20850,7 +20853,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'herb',
-          desc:'[herb,Herbs] are various plants, roots and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste fairly unpleasant.',
+          desc:'[herb,Herbs] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
           icon:[4,6,'c2'],
           startWith:175,
           turnToByContext:{'eating':{'health':0.005,'happiness':-0.03},'decay':{'herb':0.2,'spoiled food':0.8}},
@@ -20868,7 +20871,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'vegetable',
-          desc:'[vegetable,Vegetables], whether gathered from bushes or any gardens, are both healthy and good for you.',
+          desc:'[vegetable,Vegetables], whether gathered from bushes or any gardens, are both healthy and quite good for you.',
           icon:[13,6,'c2'],
           turnToByContext:{'eating':{'health':0.02,'happiness':0.01},'decay':{'spoiled food':1}},
           partOf:'food',
@@ -20892,7 +20895,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'cured meat',
-          desc:'[cured meat] is interestingly tough and can keep for months without spoiling.',
+          desc:'[cured meat] is interestingly tough and can keep for months without spoiling. It also provides a curious flavor and is even better than [cooked meat]!',
           icon:[11,6,'c2'],
           turnToByContext:{'eating':{'health':0.02,'happiness':0.05,'bone':0.1},'decay':{'cured meat':0.95,'spoiled food':0.05}},
           partOf:'food',
@@ -20908,7 +20911,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'cooked seafood',
-          desc:'[cooked seafood] tastes pretty good and has various health benefits.',
+          desc:'[cooked seafood] tastes absolutely stunning and has various health benefits.',
           icon:[6,6,'c2'],
           turnToByContext:{'eating':{'health':0.03,'happiness':0.03,'bone':0.02},'decay':{'cooked seafood':0.2,'spoiled food':0.8}},
           partOf:'food',
@@ -20916,7 +20919,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'cured seafood',
-          desc:'[cured seafood] has a nice smoky flavor and lasts terribly long.',
+          desc:'[cured seafood] has a nice smoky flavor and lasts incredibly long, making your people even happier!',
           icon:[12,6,'c2'],
           turnToByContext:{'eating':{'health':0.02,'happiness':0.04,'bone':0.02},'decay':{'cured seafood':0.95,'spoiled food':0.05}},
           partOf:'food',
@@ -20925,7 +20928,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'bread',
-          desc:'[bread] is filling, nutritious, and usually not unpleasant to eat; for these reasons, it is often adopted as staple food by those who can produce it.',
+          desc:'[bread] is filling, nutritious, and usually not unpleasant to eat; for these reasons, it is often adopted as staple food by those who can produce it in large amounts.',
           icon:[7,7,'c2'],
           turnToByContext:{'eating':{'health':0.02,'happiness':0.02},'decay':{'spoiled food':1}},
           partOf:'food',
@@ -20934,7 +20937,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'bugs',
-          desc:'Worms, insects, spiders - [bugs] are easily caught, but are usually not considered [food].',
+          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered [food].',
           icon:[12,19,'c2'],
           turnToByContext:{'eating':{'health':0,'happiness':-0.05},'decay':{'spoiled food':0.5}},
           //partOf:'food',
@@ -20967,7 +20970,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'archaic building materials',
-          desc:'Materials such as [stick]s and [stone]s, used to build rudimentary structures.',
+          desc:'Materials such as a [stick] and a [stone] are used to build rudimentary structures.',
           icon:[2,7,'c2'],
           meta:true,
           tick:loseMaterialsTick,
@@ -20981,7 +20984,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'stick',
-          desc:'A short but sturdy branch. Obtained when foraging or when felling a tree.',
+          desc:'A short but sturdy branch. Obtained when foraging or when chopping a tree.',
           icon:[0,6,'c2'],
           partOf:'archaic building materials',
           category:'build',
@@ -20995,7 +20998,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'mire',
-          desc:'Dirt saturated with water; found often when foraging or digging.',
+          desc:'Dirt saturated with water that is found often when foraging or digging.',
           icon:[0,7,'c2'],
           partOf:'archaic building materials',
           category:'build',
@@ -21003,7 +21006,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'basic building materials',
-          desc:'Processed materials such as [cut stone,Stone blocks], [brick]s and [lumber], used to build basic structures.',
+          desc:'Processed materials such as [cut stone,Stone blocks], [brick]s and [lumber], used to build basic structures belong here.',
           icon:[2,8,'c2'],
           meta:true,
           tick:loseMaterialsTick,
@@ -21024,7 +21027,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'shroom stem',
-          desc:'Chopped [shroom stem]s can be used as a building material, but cannot be processed into goods like lumber nor can be burned for [coal].',
+          desc:'Chopped [shroom stem]s can be used as a building material, but cannot be processed into goods like lumber, nor can be burned for [coal]. Quite a strange material.',
           icon:[0,10,'c2'],
           partOf:'basic building materials',
           category:'build',
@@ -21045,7 +21048,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'brick',
-          desc:'Made from fired [clay]; can be used to construct solid walls efficiently.',
+          desc:'Made from fired [clay] and can be used to construct solid walls efficiently.',
           icon:[3,8,'c2'],
           partOf:'basic building materials',
           category:'build',
@@ -21053,14 +21056,14 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'advanced building materials',
-          desc:'Building materials such as [concrete] and [glass], used to build advanced structures.',
+          desc:'Building materials such as [concrete] and [glass] are often used to build advanced structures.',
           icon:[3,9,'c2'],
           meta:true,
           tick:loseMaterialsTick,
       });
       new G.Res({
           name:'sand',
-          desc:'Easily harvested from deserts and beaches; may be processed into [glass].',
+          desc:'Easily harvested from deserts and beaches and can be processed into [glass].',
           icon:[4,9,'c2'],
           partOf:'misc materials',
           category:'build',
@@ -21089,7 +21092,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'fazble',
-          desc:'A construction material prized for its decorative properties, that can also be employed in sculptures.',
+          desc:'A construction material prized for its decorative properties. It can also be employed in sculptures.',
           icon:[7,8,'c2'],
           partOf:'precious building materials',
           category:'build',
@@ -21103,7 +21106,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'gem block',
-          desc:'A precious building material used only for the finest monuments.',
+          desc:'A precious building material used only for the finest monuments. Quite nice to look at too.',
           icon:[choose([17,18,19]),8,'c2'],//i can't pick
           partOf:'precious building materials',
           category:'build',
@@ -21111,28 +21114,28 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'olivnum ore',
-          desc:'Ore that can be processed into [soft metal ingot]s. This ore is like copper for people...but it is less durable.',
+          desc:'Ore that can be processed into [soft metal ingot]s. This ore is like a sort of copper...but it is less durable.',
           icon:[9,8,'c2'],
           partOf:'misc materials',
           category:'build',
       });
       new G.Res({
           name:'berrylium ore',
-          desc:'Ore that can be processed into [soft metal ingot]s. However this ore is very fragile so to make solid ingot you need way more of this ore. It is said that this ore smells like some fresh berries but sadly these are not edible at all.',
+          desc:'Ore that can be processed into [soft metal ingot]s. However, this ore is very fragile, so to make a solid ingot you need way more of this ore. It is said that this ore smells like fresh berries, but sadly these are not edible at all and is as dangerous as consuming lead.',
           icon:[13,9,'c2'],
           partOf:'misc materials',
           category:'build',
       });
       new G.Res({
           name:'iron ore',
-          desc:'Ore that can be processed into [hard metal ingot]s which can be used to craft useful stuff.',
+          desc:'Ore that can be processed into [hard metal ingot]s.',
           icon:[10,8,'c2'],
           partOf:'misc materials',
           category:'build',
       });
       new G.Res({
           name:'greenold ore',
-          desc:'Ore that can be processed into [precious metal ingot]s. For people looks like uranium but is green and have gold properties.',
+          desc:'Ore that can be processed into [precious metal ingot]s. For people, it looks like uranium but is green and has some properties of gold.',
           icon:[11,8,'c2'],
           partOf:'misc materials',
           category:'build',
@@ -21155,7 +21158,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'coal',
-          desc:'Extracted from mines; makes a good source of energy, and can be used in alloying.',
+          desc:'Extracted from mines, coal provides a good source of energy and can be used in alloying.',
           icon:[12,8,'c2'],
           partOf:'misc materials',
           category:'build',
@@ -21163,7 +21166,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'soft metal ingot',
-          desc:'Soft, malleable metal that can be used to make basic [metal tools].//Includes tin ,berrylium and olivnum.',
+          desc:'Soft, malleable metal that can be used to make basic [metal tools].//Includes tin, berrylium, and olivnum.',
           icon:[9,9,'c2'],
           partOf:'misc materials',
           category:'build',
@@ -21363,7 +21366,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'discernment',
-          desc:'[discernment] represents your elves\'s ideas and random sparks of intuition.//'+limitDesc('[wisdom]')+'//Many technologies require discernment to be researched.',
+          desc:'[discernment] represents your elves\'s ideas and random sparks of intuition.//'+limitDesc('[wisdom]')+'//Many technologies require this to be researched.',
           icon:[8,4,'c2'],
           category:'main',
           colorGood:'#d4af37',
@@ -21379,7 +21382,7 @@ function setCookie(cname, cvalue, exdays) {
       });
         new G.Res({
           name:'creativity',
-          desc:'[creativity] represents your elves\'s smartiness.//'+limitDesc('[quick-wittinity]')+'//Most technologies require creativity to be researched.',
+          desc:'[creativity] represents your elves\'s smartiness.//'+limitDesc('[quick-wittinity]')+'//Most technologies require [creativity] to be researched.',
           icon:[9,5,'c2'],
           colorGood:'#d4af37',
           category:'main',
@@ -21396,7 +21399,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'science',
-          desc:'[science] is the product of experiments and discoveries.//'+limitDesc('[education]')+'//Many technologies require science to be researched.',
+          desc:'[science] is the product of experiments and discoveries.//'+limitDesc('[education]')+'//Many technologies require [science] to be researched.',
           icon:[6,4,'c2'],
           category:'main',
           colorGood:'#d4af37',
@@ -21413,7 +21416,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'gentility',
-          desc:'[gentility] is produced when your elves create beautiful and thought-provoking things.//'+limitDesc('[inspiration]')+'//Gentility is used to develop cultural traits.',
+          desc:'[gentility] is produced when your elves create beautiful and thought-provoking things.//'+limitDesc('[inspiration]')+'//[gentility] is used to develop cultural traits.',
           icon:[10,4,'c2'],
           colorGood:'#d4af37',
           category:'main',
@@ -21430,7 +21433,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'faith',
-          desc:'[faith] derives from all things divine, from meditation to sacrifices.//'+limitDesc('[spirituality]')+'//Some cultural traits and technologies depend on faith.',
+          desc:'[faith] derives from all things divine, from meditation to sacrifices.//'+limitDesc('[spirituality]')+'//Some cultural traits and technologies depend on [faith].',
           icon:[7,4,'c2'],
           colorGood:'#d4af37',
           category:'main',
@@ -21464,7 +21467,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'battery of discoveries',
-          desc:"[battery of discoveries] is required to discover and research in this Universe. Can be charged by [dreamer]s. Further progress may allow battery to overcap and reduce required amount to roll/reroll new technology choices.",
+          desc:"The [battery of discoveries] is required to discover and research in this Universe. Can be charged by [dreamer]s. Further progress may allow your battery to overcap and reduce the amount needed to roll/reroll new technology choices.",
           icon:[4,0,'c2'],
           colorGood:'#d4af37',
           visible:true,
@@ -21510,7 +21513,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'pressure resistance',
-          desc:'This world is under <b>Pressure</b>. However you can resist pressure. Pressure mechanic works similarily to [housing] but can only be increased by completing trials in both human and elf civilization.//You won\'t be able to have any more [population,Elves] even if you will have more [housing] than [pressure resistance]. //Your current [pressure resistance,Resistance] level is <font color="lime"></font> allowing you for having some [population,Elves] in your tribe. Complete some trials and achievements for Victory points which will increase the limit. Also you can use special technologies. That may help you too.',
+          desc:'This world is under <b>Pressure</b>. However, you can resist pressure. Pressure mechanics work similarily to [housing] but can only be increased by completing trials in both the human and elf civilizations.//You won\'t be able to have any more [population,Elves] even if you will have more [housing] than [pressure resistance]. //Your current [pressure resistance,Resistance] level is <font color="lime"></font> allowing you to have that many [population,Elves] in your tribe. Complete some trials and achievements for Victory points to increase the limit. You can also use special technologies to help.',
           icon:[0,11,'c2'],
           startWith:500,
           tick:function(me,tick){
@@ -21562,7 +21565,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'arrow',
-          desc:'An ammo for ranged weapons like [bow]s and <b>Crossbows</b>. //Required to keep units that use this stuff work.',
+          desc:'A piece of ammo for ranged weapons like [bow]s and [crossbow]s. //Required to keep units that use this stuff working properly.',
           icon:[19,7,'c2'],
           category:'gear',
       });
@@ -21583,7 +21586,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'painting',
-          desc:'The paint made by [painter].[population,Elves] are proud from its beauty.',
+          desc:'The paint made by [painter]. [population,Elves] are proud to see it.',
           icon:[2,10,'c2'],
           category:'misc',
           tick:function(me,tick)
@@ -21595,7 +21598,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Res({
           name:'relic',
-          desc:'@can be found underground  and analyzed by [archaeologist]s. These are leftovers of civilizations you ruled in previous ascensions or previous generations in current one. Relics have rarities. Any relic with rarity above or equal to <font color="#da4f37">Unique</font> will be counted here. //in future updates relics will have more use and will be required to some ingame actions.',
+          desc:'@can be found underground and analyzed by [archaeologist]s. These are leftovers of civilizations you ruled in previous ascensions or previous generations in current one. Relics have rarities. Any relic with rarity above or equal to <font color="#da4f37">Unique</font> will be counted here. Relics do not have too much of a use, however.',
           icon:[3,10,'c2'],
           tick:function(me,tick){
               var toSpoil=me.amount*0.0001;
@@ -21641,14 +21644,14 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Res({
           name:'armor set',
-          desc:'Solid, durable armor set made for soldiers to protect against not every, but common threats like ambush for instance. @Number to the left means how much is now used, to the right how much is in stock.',
+          desc:'A solid, durable [armor set] made for soldiers can protect against common threats like ambushes. @Number to the left means how much is now used, to the right how much is in stock.',
           icon:[16,11,'magixmod'],
           displayUsed:true,
           category:'gear'
       });
       new G.Res({
           name:'wand',
-          desc:'Wands are basic of wizardry. Used by wizards. Without it most of spells are impossible to be casted. @Number to the left means how much is now used, to the right how much is in stock.',
+          desc:'Wands are basic of wizardry, and of course are used by wizards. Without it, most spells cannot be casted. @Number to the left means how much is now used, to the right how much is in stock.',
           icon:[6,4,'magixmod'],
           category:'gear',
           displayUsed:true,
@@ -22359,7 +22362,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'branch shelter',
-          desc:'@provides 3 [housing]<>Basic, very frail dwelling in which a small family can live.',
+          desc:'@provides 3 [housing]<>Basic and a very very frail dwelling in which a small family can live.',
           icon:[10,2,'c2'],
           cost:{'stick':75},
           use:{'land':1},
@@ -22527,7 +22530,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Unit({
           name:'lodge',
-          desc:'@NOTE : modes are disabled for now.@can be set to manage automatic recruitment for units such as [gatherer]s, [hunter]s or [woodcutter]s<>A [lodge] is where elves of all professions gather to rest and store their tools.//Lodges let you automate your tribe somewhat; should a worker fall sick or die, they will be automatically replaced if a lodge is tasked for it.',
+          desc:'Lodges are currently useless in elf civilizations and are just a waste of land.',
           icon:[17,3,'c2'],
           cost:{'archaic building materials':50},
           use:{'land':1},
@@ -22536,12 +22539,12 @@ function setCookie(cname, cvalue, exdays) {
           gizmos:true,
           modes:{
               'off':G.MODE_OFF,
-              'gatherers':{name:'Gatherer\'s lodge',desc:'Hire [gatherer]s until there are 5 for each of this lodge.',req:{'tribalism':true},icon:[0,2,'c2']},
-              'hunters':{name:'Hunter\'s lodge',desc:'Hire [hunter]s until there are 5 for each of this lodge.',req:{'hunting':true},icon:[18,2,'c2']},
-              'fishers':{name:'Fisher\'s lodge',desc:'Hire [fisher]s until there are 5 for each of this lodge.',req:{'fishing':true},icon:[17,2,'c2']},
-              'diggers':{name:'Digger\'s lodge',desc:'Hire [digger]s until there are 5 for each of this lodge.',req:{'digging':true},icon:[8,2,'c2']},
-              'woodcutters':{name:'Woodcutter\'s lodge',desc:'Hire [woodcutter]s until there are 5 for each of this lodge.',req:{'woodcutting':true},icon:[7,2,'c2']},
-              'artisans':{name:'Artisan\'s lodge',desc:'Hire [artisan]s until there are 5 for each of this lodge.',req:{'stone-knapping':true},icon:[6,2,'c2']},
+              'gatherers':{name:'Gatherer\'s lodge',desc:'Hire [gatherer]s.',req:{'tribalism':true},icon:[0,2,'c2']},
+              'hunters':{name:'Hunter\'s lodge',desc:'Hire [hunter]s.',req:{'hunting':true},icon:[18,2,'c2']},
+              'fishers':{name:'Fisher\'s lodge',desc:'Hire [fisher]s.',req:{'fishing':true},icon:[17,2,'c2']},
+              'diggers':{name:'Digger\'s lodge',desc:'Hire [digger]s.',req:{'digging':true},icon:[8,2,'c2']},
+              'woodcutters':{name:'Woodcutter\'s lodge',desc:'Hire [woodcutter]s.',req:{'woodcutting':true},icon:[7,2,'c2']},
+              'artisans':{name:'Artisan\'s lodge',desc:'Hire [artisan]s.',req:{'stone-knapping':true},icon:[6,2,'c2']},
           },
           effects:[
           ],
@@ -22697,7 +22700,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'druidish travellers team',
-          desc:'@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith] and if it will drop to very low level the team will refuse to work. Every team provide 1 [spirituality].',
+          desc:'@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith] and if it drops too low, the team will refuse to work. Every team provide 1 [spirituality].',
           icon:[29,2,'c2'],
           cost:{'food':100},
           use:{'worker':6,'druid':2,'stone tools':4,'knapped tools':2},
@@ -23433,7 +23436,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'carpentry',category:'tier1',
-          desc:'@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])<br>//<small>Pink planks? Oh, I forgot that is no longer human\'s universe. Sorry my bad.</small>',
+          desc:'@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])<br>//<small>Pink planks? Oh, I forgot that is no longer the human\'s universe. Sorry, my bad.</small>',
           icon:[30,6,'c2'],
           cost:{'discernment':35,'gentility':2,'creativity':5},
           req:{'building':true,'woodcutting':true},
@@ -23577,7 +23580,7 @@ function setCookie(cname, cvalue, exdays) {
                   fortress();
               G.getDict('druidish travellers team').req={'missionary':true,'belief in the afterlife':true};
               G.getDict('druidish travellers team').icon=[30,2,'c2'];
-              G.getDict('druidish travellers team').desc='@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and souls that live with second life or in totally different world as another form. //This unit requires 2 druids to spread [faith] and if it will drop to very low level the team will refuse to work. Every team provides 1 [spirituality].';
+              G.getDict('druidish travellers team').desc='@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and souls that live with second life or in totally different world as another form. //This unit requires 2 druids to spread [faith] and if it will drops too low, the team will refuse to work. Every team provides 1 [spirituality].';
               }},
           ],
           category:'religion',
@@ -23592,7 +23595,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'ritual necrophagy',
-          desc:'@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving dead one for animals to devour him...but sometimes you have no choice...no...choice.</small>',
+          desc:'@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving dead one for animals to devour him...but sometimes you have no choice...no...choice.</small>',
           icon:[15,7,'magixmod'],
           cost:{'gentility':25,'discernment':5},
           chance:500,
@@ -23621,7 +23624,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'insect-eating',
-          desc:'@your elves are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b><br />//<small>Probably this world has <b>bugs</b> that can eat elves...literally. Sorry to scare ya.</small>',
+          desc:'@your elves are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b><br />//<small>This world may have <b>bugs</b> that can eat elves...literally. Maybe. Sorry to scare ya.</small>',
           icon:[12,19,'c2',22,1,'c2'],
           chance:5,
           req:{'insects as food':'on'},
@@ -24137,7 +24140,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'decent nourishment',
-          desc:'@unhappiness from eating [bugs] and [spoiled food] is multiplied by 1.33 @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b>//<small>But what if it is the only food in this wilderness? Will you still demand <b>decent nourishment</b>?</small>',
+          desc:'@unhappiness from eating [bugs] and [spoiled food] is multiplied by 1.33 @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if it is the only food in this wilderness? Will you still demand <b>decent nourishment</b>?</small>',
           icon:[8,11,26,0,'magixmod'],
           chance:5,
           req:{'insects as food':'on','insect-eating':false,'worm culture':false},
@@ -24150,7 +24153,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'worm culture',
-          desc:'@your people are no longer unhappy when eating [bugs]. @in addition half of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note:This trait is rather temporary and has very vary lifetime but there is small chance that this trait will become permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Surprisingly there people are happy about that as they say it improves dish\'s taste</small>',
+          desc:'@your people are no longer unhappy when eating [bugs]. @in addition half of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Surprisingly there people are happy about that as they say it improves dish\'s taste</small>',
           icon:[8,11,24,1,'c2'],
           chance:15,
           req:{'insects as food':'on','insect-eating':false,'decent nourishment':false},
@@ -24163,7 +24166,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'death scepticism',
-          desc:'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>',
+          desc:'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
           icon:[9,15,'magixmod',26,16,'c2'],
           cost:{'gentility':12,'creativity':3},
           chance:30,
@@ -24260,7 +24263,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'art of death',
-          desc:'@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+          desc:'@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
           icon:[15,6,'magixmod'],
           cost:{'gentility':25,'discernment':5},
           req:{'tribalism':true,'ritualism':true,'belief in the beforelife':false,'ritual necrophagy':false},
@@ -24268,7 +24271,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'royal treatment',
-          desc:'@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
+          desc:'@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
           icon:[19,1,'magixmod'],
           cost:{'gentility':25,'discernment':5},
           chance:750,
@@ -24277,7 +24280,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'belongings preservance',
-          desc:'@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note:This trait is rather temporary but there is slight chance that this trait will become permanent.</font></b>',
+          desc:'@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
           icon:[16,6,'magixmod'],
           cost:{'gentility':25,'discernment':5},
           chance:500,
@@ -24953,18 +24956,18 @@ function setCookie(cname, cvalue, exdays) {
           category:'faith',
           effects:[
               {type:'function',func:function(){
-                      G.getDict('happiness').desc='[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at <font color="yellow">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="yellow">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time.';
+                      G.getDict('happiness').desc='[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at <font color="yellow">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="yellow">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                   }},
           ],
           effectsOff:[
               {type:'function',func:function(){
-                      G.getDict('happiness').desc='[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time.';
+                      G.getDict('happiness').desc='[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down happiness are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                   }},
           ],
       });
       new G.Policy({
           name:'eat on gather',
-          desc:'Your elves will eat every food just after they gathered it. That means very low amount of food will be shared with others. In consequences it may lead to starvation at the cost of [happiness] but lowers rate of [spoiled food]. In consequences it may lead to starvation at the cost of [happiness]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than specific % . Note that if food/water rations policies are set to plentiful then this policy disables automatically.',
+          desc:'Your elves will eat every piece of food just right after being gathered, meaning that a very small portion of food will be shared with others. It may lead to starvation at the cost of [happiness], but lowers the rate of [spoiled food]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific amount. Note that if food/water rations policies are set to plentiful then this policy disables automatically.',
           icon:[5,12,26,0,'c2'],
           cost:{'influence':2},
           startMode:'off',
@@ -24973,7 +24976,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Policy({
           name:'creative foraging',
-          desc:'@[gatherer]s will explore terrain just like [wanderer] but with 3x bigger chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //To upkeep this policy effects you will need 1[creativity] per year. Once you get enough land [creative foraging] will stop taking [creativity].',
+          desc:'@[gatherer]s will explore terrain just like [wanderer] but with a 3x bigger chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //To upkeep this policy effects you will need 1[creativity] per year. Once you get enough land [creative foraging] will stop taking [creativity].',
           icon:[25,0,'c2'],
           cost:{'influence':3},
           startMode:'off',
@@ -25506,7 +25509,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'oakloo',
-          desc:'The [oakloo] is a mighty tree with dark wood that thrives in temperate climates (non-autumnal forests), rich in [log]s and [stick]s. Can be found in other biomes but rarely.',
+          desc:'The [oakloo] is a mighty tree with dark wood that thrives in temperate climates (non-autumnal forests), rich in [log]s and [stick]s. It can rarely be found in other biomes.',
           icon:[18,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25517,7 +25520,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'autumnal oakloo',
-          desc:'The [autumnal oakloo] is a mighty tree with dark wood that thrives in temperate climates, rich in [log]s and [stick]s. Can be found in other biomes but rarely. This kind of [autumnal oakloo,Oakloo] only appears in autumnal forests where trees grow in autumnal colours every time spring starts.',
+          desc:'The [autumnal oakloo] is a mighty tree with dark wood that thrives in temperate climates, rich in [log]s and [stick]s. It can rarely be found in other biomes. This kind of [autumnal oakloo,Oakloo] only appears in autumnal forests where trees grow unique colours of autumn every time spring starts.',
           icon:[choose([3,4]),14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25528,7 +25531,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'burchinn',
-          desc:'[burchinn,Burchinn trees] have white and slightly green bark and are rather frail, but are a good source of [log]s and [stick]s.',
+          desc:'[burchinn,Burchinn trees] have a white and slightly green bark and are rather frail, but are a good source of [log]s and [stick]s.',
           icon:[21,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25561,7 +25564,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'palm tree',
-          desc:'[palm tree]s prefer warm climates and provide [log]s when chopped; harvesting them may also yield [stick]s and [fruit,Tropical fruits].',
+          desc:'[palm tree]s prefer warm climates and provide [log]s when chopped; harvesting them may also yield [stick]s and delicious [fruit,Tropical fruits].',
           icon:[14,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25572,7 +25575,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'palmacia tree',
-          desc:'[palmacia tree]s prefer warm and dry climates and provide [log]s when chopped; harvesting them may also yield [stick]s and rarely [jungle fruits,Tropical fruits].',
+          desc:'All [palmacia tree]s prefer warm and dry climates and provide [log]s when chopped. Harvesting them can yield [stick]s and rarely [jungle fruits,Tropical fruits].',
           icon:[13,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25605,7 +25608,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'pine tree',
-          desc:'[pine tree]s are tall and easily handles cold climates and keep their needles all year along; they can provide [log]s and [stick]s. //Can be found in some ice deserts and in <b>Firreal woods</b> along with other conifers.',
+          desc:'[pine tree]s are tall and can easily handle cold climates and keep their needles all year along; they can provide [log]s and [stick]s. //Can be found in some ice deserts and in the <b>Firreal woods</b>, along with other conifers.',
           icon:[16,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25616,7 +25619,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'confern tree',
-          desc:'[confern tree]s are tall and easily handles cold climates and keep their needles all year along; they can provide [log]s and [stick]s. //Can be found in some tundras and in <b>Firreal woods</b> along with other conifers.',
+          desc:'[confern tree]s are tall and can easily handle cold climates and keep their needles all year along; they can provide [log]s and [stick]s. //Can be found in some tundras and in the <b>Firreal woods</b>, along with other conifers.',
           icon:[17,14,'c2'],
           res:{
               'chop':{'log':1,'stick':3},
@@ -25627,7 +25630,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'dead tree',
-          desc:'While an ornery sight, [dead tree]s are an adequate source of dry [log]s and [stick]s.',
+          desc:'While an ornery and sad sight, [dead tree]s are an adequate source of dry [log]s and [stick]s.',
           icon:[9,10],
           res:{
               'chop':{'log':1,'stick':2},
@@ -25638,7 +25641,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'berry bush',
-          desc:'[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s and sometimes [herb]s.',
+          desc:'[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s and the occasional [herb].',
           icon:[3,17,'c2'],
           res:{
               'gather':{'fruit':3,'stick':0.5,'herb':0.25},
@@ -25658,7 +25661,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'forest mushrooms',
-          desc:'[forest mushrooms] grow in the penumbra of the underbrush, and often yield all sorts of interesting [herb]s.',
+          desc:'[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [herb]s. They also have multiple unique styles that are quite facinating.',
           icon:[choose([4,5,6]),17,'c2'],
           res:{
               'gather':{'herb':4},
@@ -25668,7 +25671,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'big warped shrooms',
-          desc:'[big warped shrooms] are variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be met in <b>Warplands</b>. Yields rarely some [herb]s, more often [spoiled food]. Can be chopped for its stem that can be later used to fabricate it into a building material.',
+          desc:'[big warped shrooms] are a variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be met in <b>Warplands</b>. Yields rarely some [herb]s, more often [spoiled food]. Can be chopped for its stem that can be later used to make a building material.',
           icon:[8,choose([14,15]),'c2'],
           res:{
               'gather':{'herb':1,'spoiled food':4},
@@ -25691,7 +25694,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'succulents',
-          desc:'Hardy cactii that grow in the desert. While tricky to harvest, [succulents] can provide [herb]s and [fruit]s.',
+          desc:'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide [herb]s and [fruit]s.',
           icon:[12,17,'c2'],
           res:{
               'gather':{'fruit':1,'herb':3},
@@ -25756,7 +25759,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'omieer',
-          desc:'Ominous variety of [mosseer]s //Purple herbivores that live in dense forests; good source of [meat], [bone]s and [hide]s.//Their carcasses can rarely be gathered for [spoiled food] as well as they provide better [hide]s.',
+          desc:'Ominous variety of [mosseer]s. //Purple herbivores that live in dense forests; good source of [meat], [bone]s and [hide]s.//Their carcasses can rarely be gathered for [spoiled food] as well as they provide better [hide]s.',
           icon:[8,19,'c2'],
           res:{
               'gather':{'spoiled food':0.7},
@@ -25767,7 +25770,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'bears',
-          desc:'Large omnivorous mammals that hibernate in cold seasons; fearsome in battle. Yield plenty of [meat], [bone]s and large [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Large omnivorous mammals that hibernate in cold seasons; fearsome in battle. Bears are a great source of [meat], [bone]s and large [hide]s.//Carcasses can also be gathered for [spoiled food].',
           icon:[9,19,'c2'],
           res:{
               'gather':{'spoiled food':1},
@@ -25855,7 +25858,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Goods({
           name:'wild bugs',
           displayName:'Bugs',
-          desc:'[wild bugs,Bugs] are ubiquitious and easy to capture.',
+          desc:'[wild bugs,Bugs] are ubiquitious and plentiful.',
           icon:[12,19,'c2'],
           res:{
               'gather':{'bugs':2},
@@ -25865,7 +25868,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'saltwater fish',
-          desc:'Fish of every size and color.//A source of [seafood].',
+          desc:'[saltwater fish] are of every size and color.//A source of [seafood].',
           icon:[choose([3,4]),18,'c2'],
           res:{
               'gather':{'seafood':0.03},
@@ -25876,7 +25879,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'freshwater fish',
-          desc:'Fish that live in streams and rivers.//A source of [seafood].',
+          desc:'[freshwater fish] live in streams and rivers.//A source of [seafood].',
           icon:[choose([5,6]),18,'c2'],
           res:{
               'gather':{'seafood':0.03},
@@ -25887,7 +25890,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'stortle',
-          desc:'A turtle with hard like stone shell on its top. Lives only in stonelands.',
+          desc:'A turtle with a hard shell on its top,tone almost like a s. They live only in the stonelands.',
           icon:[16,19,'c2'],
           res:{
               'gather':{'meat':0.5},
@@ -25922,7 +25925,7 @@ function setCookie(cname, cvalue, exdays) {
       //NEW SUBSTRATES
       new G.Goods({
           name:'rocky substrate',
-          desc:'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [greenold ore,Ores], and precious [gems].',
+          desc:'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s, and occasionally [olivnum ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [greenold ore,Ores], and precious [gems].',
           icon:[3,16,'c2'],
           res:{
               'gather':{'stone':0.25,'clay':0.005,'limestone':0.005},
@@ -25936,7 +25939,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'warm rocky substrate',
-          desc:'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides less [fazble]',
+          desc:'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides less [fazble].',
           icon:[7,16,'c2'],
           res:{
               'gather':{'stone':0.2,'clay':0.002,'limestone':0.003},
@@ -26020,7 +26023,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'dead rocky substrate',
-          desc:'A [dead rocky substrate] is unique for Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and [clay].//Mining there is not worthy at all because there you will find almost no [tin ore,Ores]. //Same with quarrying except ([fazble] which is more often than anywhere else). //<font color="#aabbbb">There you will find no [greenold ore,greenold] and no other ore.</font>',
+          desc:'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and [clay].//Mining there is not worthy at all because there you will find almost no [tin ore,Ores]. //Same with quarrying except ([fazble] which is more often than anywhere else). //<font color="#aabbbb">There you will find no [greenold ore,greenold] and no other ore.</font>',
           icon:[4,16,'c2'],
           res:{
               'gather':{'stone':0.25,'clay':0.004,'limestone':0.002},
