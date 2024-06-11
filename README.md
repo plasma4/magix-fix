@@ -1,5 +1,5 @@
 # Setting up the Magix fixer
-Magix is a mod developed by pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix.
+Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix.
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
 Paste in the following script into the console:
 ```js
@@ -19,7 +19,8 @@ This mod provides a few important fixes that prevent the game from breaking. Min
 # What does this fixed mod do?
 Here are a few examples:
 - Multiple game-breaking bugs are fixed (in particular, bookwriting no longer crashes your game after a bit)
-- A variety of spelling/spacing issues are no longer there
+- A variety of spelling and spacing issues are no longer there
 - Guilds now work (partially)
-- Prison traits obtained randomly (sharp edges and fragile bars) now work properly
-- May come with new features down the line
+- Prison traits obtained randomly (the "sharp edges" and "fragile bars" traits) now work properly
+- Negative costs are hidden now
+- May come with **new features** down the line!
