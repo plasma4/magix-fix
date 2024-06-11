@@ -5,7 +5,7 @@ Paste in the following script into the console:
 ```js
 javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js")))),location.reload()
 ```
-It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmark bar. Then, go to the tab with NeverEnding Legacy and click on the bookmark. You can then delete it.
+It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 
 ---
 ## IF YOU ARE STARTING AS A NEW PLAYER
