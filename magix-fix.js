@@ -1,12 +1,20 @@
 /*
-To set up this mod, go to Orteil's NeverEnding Legacy and click on the load mod button. There, paste in the following 2 lines:
+    Setup process:
+  - IF YOU ALREADY HAVE MAGIX INSTALLED:
+ Paste the script below into the console.
+javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js")))),location.reload()
+
+>>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
+==========
+  - IF YOU ARE STARTING FROM A NEW GAME:
+ To set up this mod, go to Orteil's NeverEnding Legacy and click on the Load Mod button. There, paste in the following 2 lines:
 https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js
 https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
-Upon loading it, you should find that it works. This should properly set up the mod.
+>>> Upon loading it, you should find that it works. This should properly set up the mod.
 */
 
-/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes, thus disregarding the comment below. Note that the license may be invalid and may in fact not be valid for public domain. This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
+/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. Note that the license may be invalid and may in fact not be in the public domain. This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
 
 /////////
 	///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiariasm will be punished. Copyright: 2020
