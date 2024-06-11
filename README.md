@@ -13,6 +13,6 @@ It's that easy! If you can't open the console for some reason, you can try selec
 - https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js
 - https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 #### Upon loading it, you can now play the game! Congrats.
-***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes, thus disregarding the comment below. Note that the license may be invalid and may in fact not be valid. I am not responsible for any damage caused by that.
+***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes. Note that the license may be invalid due to a lack of clarity. I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
 
 This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source.
