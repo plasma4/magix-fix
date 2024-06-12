@@ -3327,7 +3327,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'bugs',
-          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered [food].',
+          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered proper [food].',
           icon:[8,11],
           turnToByContext:{'eating':{'health':0,'happiness':-0.05},'decay':{'spoiled food':0.5}},
           //partOf:'food',
@@ -3336,7 +3336,6 @@ function setCookie(cname, cvalue, exdays) {
           {
               var toLose=me.amount*0.003;//bugs don't like to stick around
               var spent=G.lose(me.name,randomFloor(toLose),'decay');
-              
           }
       });
       
@@ -9829,7 +9828,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'Toolhut',
-          desc:'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //They produce bigger packets of these items, but at a slower rate. @Materials used in process: [thread],[stone],[lumber],[fire pit],[coal].',
+          desc:'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //They produce bigger packets of these items, but at a slower rate. @Materials used in processing: [thread], [stone], [lumber], [fire pit], and [coal].',
           icon:[18,31,'magixmod'],
           cost:{'basic building materials':775,'basic factory equipment':400},
           upkeep:{'coal':3,'fire pit':0.15,'food':65,'water':85},
@@ -13789,14 +13788,14 @@ function setCookie(cname, cvalue, exdays) {
           cost:{},
           effects:[
               {type:'function',func:function(){
-                  G.getDict('monument-building').desc='@unlocks wonder depending on Trial you are currently in';document.title='Trial active - NeverEnding Legacy'}},
+                  G.getDict('monument-building').desc='@unlocks a wonder depending on Trial you are currently in';document.title='Trial active - NeverEnding Legacy'}},
           ],
           category:'trial'
       });
       new G.Trait({
           name:'t1',
           displayName:'Chra-nos\' Trial',
-          desc:'You are during Patience trial',
+          desc:'You are currently in the Patience trial',
           icon:[7,27,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -13824,7 +13823,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'mo\' shelterz',category:'upgrade',
-          desc:'Decreases the [land] limit per for [paradise shelter]s by 4 points. It means more shelters. <>More shelters = more housing = more people @provides 15 [wisdom II].',
+          desc:'Decreases the [land] limit for [paradise shelter]s by 4 points. It means more shelters, after all. <>More shelters = more housing = more people @provides 15 [wisdom II].',
           icon:[10,27,'magixmod'],
           req:{'paradise shelters':true,'caretaking':true},
           cost:{'insight II':201,'science':14,'influence II':1},
@@ -14015,7 +14014,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'atheism',
-          desc:'@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (for example if research costs 200 [faith] it will cost 208 as long as this trait is active)@maximum reduction is 45. // <small>dissenters...seems like</small>',
+          desc:'@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (for example if research costs 200 [faith] it will cost 208 as long as this trait is active)@maximum reduction is 45. // <small>dissenters...it seems like</small>',
           icon:[23,3,'magixmod',7,4,23,1],
           cost:{'culture':15,'insight':5},
           chance:150,
@@ -14068,7 +14067,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'sabotaged knowledge',
-          desc:'@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, new cost is increased by 2. (for example if research costs 100 [science] it will cost 120 as long as this trait is active) @maximum increase is 18// <small>dissenters...seems like</small>',
+          desc:'@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, new cost is increased by 2. (for example if research costs 100 [science] it will cost 120 as long as this trait is active) @maximum increase is 18.// <small>dissenters...seems like</small>',
           icon:[23,3,'magixmod',6,4,23,1],
           cost:{'culture II':15,'insight II':5},
           chance:1500,
@@ -14153,7 +14152,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'cart1',
           displayName:'Carver\'s trend:Stone statuettes',
-          desc:'[carver]s feel that [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> mode is 5% more efficient.',
+          desc:'[carver]s feel that a [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> mode is 5% more efficient.',
           icon:[25,28,'magixmod',2,22,'magixmod'],
           req:{'construction':true,'cart2':false},
           cost:{'insight':25,'culture':25},
@@ -14165,7 +14164,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'cart2',
           displayName:'Carver\'s trend:Wooden statuettes',
-          desc:'[carver]s feel that [wooden statuette,Statuette] made out of wood is accepted better by this tribe than statuette from stone or other non-wood resource. <><b>Craft wooden statuettes</b> mode is 5% more efficient.',
+          desc:'[carver]s feel that a [wooden statuette,Statuette] made out of wood is accepted better by this tribe than statuette from stone or other non-wood resource. <><b>Craft wooden statuettes</b> mode is 5% more efficient.',
           icon:[26,28,'magixmod',2,22,'magixmod'],
           req:{'construction':true,'cart1':false},
           cost:{'insight':25,'culture':25},
@@ -14177,7 +14176,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'gtt1',
           displayName:'Gatherer\'s trend:Sticks',
-          desc:'[gatherer] gains more [stick]s. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[gatherer]s gain more [stick]s. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[27,28,'magixmod',2,22,'magixmod'],
           req:{'plant lore II':true,'gtt2':false},
           cost:{'culture':45,'insight':30},
@@ -14188,7 +14187,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'gtt2',
           displayName:'Gatherer\'s trend:Water',
-          desc:'[gatherer] gains more [water]. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[gatherer]s gain more [water]. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[28,28,'magixmod',2,22,'magixmod'],
           req:{'plant lore II':true,'gtt1':false},
           cost:{'culture':45,'insight':30},
@@ -14199,7 +14198,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'dtt1',
           displayName:'Digger\'s trend:Ice',
-          desc:'[digger] gains more [ice]. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[digger]s gain more [ice]. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[29,28,'magixmod',2,22,'magixmod'],
           req:{'digging':true,'dtt2':false},
           cost:{'culture':45,'insight':30},
@@ -14209,7 +14208,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'dtt2',
           displayName:'Digger\'s trend:Sand',
-          desc:'[digger] gains more [sand]. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[digger]s gain more [sand]. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[30,28,'magixmod',2,22,'magixmod'],
           req:{'digging':true,'dtt1':false},
           cost:{'culture':45,'insight':30},
@@ -14219,7 +14218,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'htt1',
           displayName:'Hunter\'s trend:Hide',
-          desc:'[hunter] gains more [hide]. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[hunter]s gain more [hide]. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[31,28,'magixmod',2,22,'magixmod'],
           req:{'hunting':true,'htt2':false},
           cost:{'culture':45,'insight':30},
@@ -14229,7 +14228,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'htt2',
           displayName:'Hunter\'s trend:Meat',
-          desc:'[hunter] gains more [meat]. Doesn\'t disable effect of Decisional trend related to this unit.',
+          desc:'[hunter]s gain more [meat]. Doesn\'t disable effect of Decisional trend related to this unit.',
           icon:[32,28,'magixmod',2,22,'magixmod'],
           req:{'hunting':true,'htt1':false},
           cost:{'culture':45,'insight':30},
@@ -14248,7 +14247,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'better seeking',
-          desc:'@[archaeologist]s are 20% more efficient',
+          desc:'@[archaeologist]s are 20% more efficient!',
           icon:[20,33,'magixmod'],
           cost:{'insight':1495,'science':5},
           req:{'archaeology':true,'gt3':true},
@@ -14256,7 +14255,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'ink-fishing',category:'tier2',
-          desc:'Now fishing context contains [ink]. <>Fishers from camp now are able to gather [ink] out of some squids.',
+          desc:'Now fishing can provide some [ink]. <>Fishers from camp now are able to gather [ink] out of some squids.',
           icon:[32,19,'magixmod'],
           req:{'outstanding wisdom':true,'hunters & fishers unification':true},
           cost:{'insight II':267,'science':20},
@@ -14264,7 +14263,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'bonus1',
           displayName:'. . .',
-          desc:'You seem powerful. Probably [guru] can make more science',
+          desc:'You seem powerful. [guru] can probably make more science.',
           icon:[32,5,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14273,7 +14272,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'bonus2',
           displayName:'. . .',
-          desc:'You have a potential and power. Feels like everything goes faster.',
+          desc:'You have a potential and enough power. It feels like everything goes faster.',
           icon:[32,4,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14299,7 +14298,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'aiming',category:'tier1',
-          desc:'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was hunters were shooting arrows from bows without any preparation just on "try your luck". Same with spear throwing.<>Improved accuarcy will increase chances for successful hunting meaning that <b>Bow hunting</b> & <b>Spear hunting/fishing</b> are no longer penaltized.',
+          desc:'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>Improved accuarcy will increase chances for successful hunting meaning that <b>Bow hunting</b> & <b>Spear hunting/fishing</b> are no longer penaltized.',
           icon:[33,28,'magixmod'],
           req:{'spears':true,'bows':true,'building':true},
           cost:{'insight':17,'influence':3},
@@ -14307,7 +14306,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t2',
           displayName:'Bersaria\'s Trial',
-          desc:'You are during Unhappy trial',
+          desc:'You are currently in the Unhappy trial',
           icon:[28,25,'magixmod',5,22,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14320,7 +14319,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t3',
           displayName:'Tu-ria\'s Trial',
-          desc:'You are during Cultural trial',
+          desc:'You are currently in the Cultural trial',
           icon:[27,25,'magixmod',1,22,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14334,7 +14333,7 @@ function setCookie(cname, cvalue, exdays) {
           new G.Trait({
           name:'t4',
           displayName:'Hartar\'s Trial',
-          desc:'You are during Hunted trial',
+          desc:'You are currently in the Hunted trial',
           icon:[26,25,'magixmod',1,22,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14370,7 +14369,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t10',
           displayName:'Mamuun\'s Trial',
-          desc:'You are during Pocket trial',
+          desc:'You are currently in the Pocket trial',
           icon:[20,25,'magixmod',5,22,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -14682,7 +14681,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'handwashM',
           displayName:'Handwashing',category:'tier1',
-          desc:'People will now wash their hands. However they do not know how to make a soap also focused on technological progress more than on their health they\'ll forget to do it sometime.. At least water can clean hands. Raises up a little bit [health] level.',
+          desc:'People will now wash their hands. However they do not know how to make a soap also focused on technological progress more than on their health they\'ll forget to do it sometime.. At least water can clean hands. Raises [health] level slightly.',
           icon:[34,24,'magixmod'],
           req:{'moderation':true,'caretaking':false},
           cost:{'insight':435},
@@ -14692,7 +14691,7 @@ function setCookie(cname, cvalue, exdays) {
       });	
       new G.Tech({
           name:'primary intuition',category:'tier1',
-          desc:'[primary intuition] is like a key to researching. However if [population,people] will expand their intuition they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition] tech. More complicated researches like sewing, crafting can be unlocked only with "secondary" [intuition].',
+          desc:'[primary intuition] is like a key to researching. However, if [population,people] will expand their intuition they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition] tech. More complicated researches like sewing, crafting can be unlocked only with "secondary" [intuition].',
           startWith:true,
           icon:[34,31,'magixmod'],
       });
@@ -15041,7 +15040,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t11',
           displayName:'Enlightened\' Trial',
-          desc:'You are during Faithful trial',
+          desc:'You are currently in the Faithful trial',
           icon:[19,25,'magixmod',1,22,'magixmod'],
           req:{'tribalism':false,'trial':true},
           cost:{},
@@ -15207,7 +15206,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'policies',
           displayName:'<font color="fuschia">Policies</font>',
-          desc:'@Now you can spend your [influence] in <b>Policies</b> tab. @Unlocks policies, one of main part of your civilization. @Learn more about Policies in its own tab.',
+          desc:'@Now you can spend your [influence] in <b>Policies</b> tab. @Unlocks policies, one of main part of your civilization. Go to the Policies tab to unlock new options.',
           icon:[34,13,'magixmod'],
           chance:0.25,
           effects:[
@@ -15218,7 +15217,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'where am i?',
           displayName:'<font color="#7f7fff">Where am I?</font>',
-          desc:'@Unlocks primary informations about your small but still world, one of main part of your civilization. @Click <b>Territory</b> tab to see what goods you can gain from the territory and where your tribe has settled. //<small>Seriously where am I?</small>',
+          desc:'@Unlocks primary information about your small but still world, one of the main parts of your civilization. @Click <b>Territory</b> tab to see what goods you can gain from the territory and where your tribe has settled. //<small>Seriously though, where am I?</small>',
           icon:[35,11,'magixmod'],
           chance:1.11,
           cost:{'insight':1},
@@ -15227,14 +15226,14 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Tech({
           name:'globetrottering',category:'tier1',
-          desc:'@Unlocks [globetrotter]. // [globetrotter] not only wants to explore and discover new landscapes, terrains but also wants to deepen his knowledge a little about lands he just saw.',
+          desc:'@Unlocks [globetrotter]. // [globetrotter] not only wants to explore and discover new landscapes and terrain but also wants to deepen his knowledge a little about lands he just saw.',
           icon:[35,1,'magixmod'],
           cost:{'insight':30,'culture':10},
           req:{'scouting':true,'building':true,'a gift from the mausoleum':true},
       });
       new G.Tech({
           name:'festive artisanistry',category:'seasonal',
-          desc:'unlocks [artisan of christmas] // <small>Ho, ho, ho</small>',
+          desc:'unlocks [artisan of christmas] // <small>Ho, ho, ho!</small>',
           icon:[15,11,'seasonal'],
           cost:{'insight':600,'culture':100,'influence':50},
           req:{'winter holidays':true,'tribalism':false},
@@ -15315,7 +15314,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'lovely monument',
-      desc:'//You can now start constructing [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
+      desc:'//You can now start constructing the [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
           icon:[7,16,'seasonal'],
       cost:{'culture II':25,'research':150,'insight II':15},
           req:{'parental love':true,'compliments':true,'alphabet 3/3':true,'monument-building II':true},
@@ -15323,7 +15322,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'peace',
-      desc:'During of <b>Valentine\'s day</b> event no [thief] no [wild corpse] will spawn. //<small>Why it is only during Valentines?</small>',
+      desc:'During the <b>Valentine\'s day</b> event no [thief] or [wild corpse] will spawn. //<small>Why it is only during Valentines?</small>',
           icon:[6,16,'seasonal'],
       cost:{'culture':500,'research':100,'faith':500},
           req:{'compliments':true},
@@ -15331,7 +15330,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'families full of love',
-      desc:'Every year you gain some amount of [love] from [elder]s.',
+      desc:'Every year, you gain some amount of [love] from [elder]s.',
           icon:[10,16,'seasonal'],
       cost:{'culture':75,'research':130,'faith':120,'influence':10,'insight':600},
           req:{'love grows around us':true,'time measuring 2/2':true,'compliments':true,'alchemy':true},
@@ -15339,7 +15338,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Trait({
           name:'voodoo spirit',
-          desc:'@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse) //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except [dark wormhole] and [cemetary of Plain Island] which gets 2500 more [burial spot]s.)',
+          desc:'@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole] and the [cemetary of Plain Island], which gets 2500 additional [burial spot]s.)',
           icon:[24,5,'magixmod'],
           effects:[
            {type:'function',func:function(){
@@ -15351,7 +15350,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron1',
       displayName:'Aflamtnaja the Phoenix of Fire',
-      desc:'[patron1] represents flames and fires. @This patron also symbolizes fight and decisivness. @Your [wizard]s and people picking this patron want to mark that their decisions are made with confidence. Also [wizard]s believe that Phoenix will lead them to right paths of their lives. //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron1] represents flames and fires. @This patron also symbolizes fight and decisivwness. @Your [wizard]s and people picking this patron wish to mark that their decisions are made with confidence. Also, [wizard]s believe that the Phoenix will lead them to the right paths of their lives. //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[0,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron6':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15366,7 +15365,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron2',
       displayName:'Wuraloik The Son of the Forest',
-      desc:'[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has keys to fix a lot of troubles and no agression is needed to solve every problem. Also [wizard]s believe that The Son created once true Oasis of Peace. //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has keys to fix a lot of troubles and no agression is needed to solve every problem. Also, [wizard]s believe that The Son created once a true Oasis of Peace. //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[1,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron1':false,'patron3':false,'patron4':false,'patron5':false,'patron6':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15380,7 +15379,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron3',
       displayName:'Rvikol The Guide of the Winds',
-      desc:'[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuiosity. @Your [wizard]s picking and sending their hopes to [patron3,Him] want to mark that each hard decision can be taken easily. Also [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven preventing from being absorbed by darkness of Hell/Underworld. //Cult of that patron persists through ages. Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuosity. @Your [wizard]s picking and sending their hopes to [patron3,Him] want to mark that each hard decision can be taken easily. Also, [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven, preventing them from being absorbed by darkness of the Hell or Underworld. //Cult of that patron persists through the ages. Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[2,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron1':false,'patron4':false,'patron5':false,'patron6':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15394,7 +15393,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron4',
       displayName:'Uselatarraya the Dark Dragon',
-      desc:'[patron4] represents mysteries, secrets and insecurity. @This patron also symbolizes withdrawal and concealment. @Your [wizard]s picking this patron want to mark that their lives are full of secrets and mysteries. Also [wizard]s believe that [patron4,The Dragon] will protect their secrets from being leaked and will curse "the leakers". Are there any miserables? //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron4] represents mysteries, secrets and insecurity. @This patron also symbolizes withdrawal and concealment. @Your [wizard]s picking this patron want to mark that their lives are full of secrets and mysteries. Also, [wizard]s believe that [patron4,The Dragon] will protect their secrets from being leaked and will curse "the leakers" involved. Are there any miserables here? //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[3,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron1':false,'patron5':false,'patron6':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15408,7 +15407,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron5',
       displayName:'Takerus The Stormlord',
-      desc:'[patron5] represents precision and impulsivity. @This patron also symbolizes indigation and quick action. @Your [wizard]s picking this patron want to mark that sometimes all of us need to perform a decision very, very quickly. Also [wizard]s believe that [patron5,The Stormlord] will guide through [population,people] lives helping making decisions with His precision. //Cult of that patron persists through ages.  @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron5] represents precision and impulsivity. @This patron also symbolizes indigation and quick action. @Your [wizard]s picking this patron want to mark that sometimes all of us need to perform a decision very, very quickly. Also, [wizard]s believe that [patron5,The Stormlord] will guide through the lives of [population,people], helping to make decisions with His precision. //Cult of that patron persists through the ages.  @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[4,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron1':false,'patron6':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15422,7 +15421,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron6',
       displayName:'Kolier\'ali ,Eye of the Sea',
-      desc:'[patron6] represents restraint and observation. @This patron also symbolizes cautioness and prudence. @Your [wizard]s picking this patron want to mark that you cannot sometimes do something quickly...you just need to do it slowly and thoughtfully. Also [wizard]s believe that [patron6,The Eye] will help [population,people] keep restraint and prevent obsession to appear in their hearts. //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron6] represents restraint and observation. @This patron also symbolizes cautioness and prudence. @Your [wizard]s picking this patron want to mark that you cannot always finish something quickly...you need to do it slowly and thoughtfully. Also, [wizard]s believe that [patron6,The Eye] will help [population,people] keep restraint and prevent obsession to appear in their hearts. //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[5,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron1':false,'patron8':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15436,7 +15435,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'unknown patron',
-      desc:'Unknown patron. You don\'t know who is he/she/them. @Maybe it is a group of spirits/demigods/semigods...@It is impossible to point what it represents. @Each [wizard] would tell you different thing about it. //Cult of that unknown patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'Unknown patron. You don\'t know who is he/she/them. @Maybe it is a group of spirits/demigods/semigods...@It is impossible to point what it represents. @Each [wizard] will tell you a different thing about it. //Cult of that unknown patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[6,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron1':false,'patron7':false,'patron8':false,'patron6':false,'nonpatronage':false},
@@ -15447,7 +15446,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron7',
       displayName:'Chirus the time watcher',
-      desc:'[patron7] represents time and passing. @This patron also symbolizes that things pass all the time. @Your [wizard]s picking this patron want to mark that they realize it. Also [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron7] is all about time and passing. @This patron also symbolizes that things pass way aall the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[8,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron1':false,'patron6':false,'patron8':false,'unknown patron':false,'nonpatronage':false},
@@ -15462,7 +15461,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'patron8',
       displayName:'Hzakilok the homepeace keeper',
-      desc:'[patron8] is a patron of [housing,Houses]. @This patron also symbolizes that everywhere you can feel good but the best place is still your own home. @Your [wizard]s picking this patron want to mark that their homeland can also be a peaceful place. Also [wizard]s believe that [patron8,The Homepeace keeper] will protect [housing,Houses] from dark powers. //Cult of that patron persists through ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is lore thing.</font>',
+      desc:'[patron8] is a patron of [housing,Houses]. @This patron also symbolizes that everywhere you can feel good but the best place is still your own home. @Your [wizard]s picking this patron want to mark that their homeland can also be a peaceful place. Also, [wizard]s believe that [patron8,The Homepeace keeper] will protect [housing,Houses] from evil and dark powers. //Cult of that patron persists through the ages. @<font color="fuschia">Patron does not involve gameplay in any way. It is just some lore.</font>',
           icon:[7,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron1':false,'patron6':false,'patron7':false,'unknown patron':false,'nonpatronage':false},
@@ -15476,7 +15475,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'nonpatronage',
-      desc:'Seems like your tribe want to live without gods sons/daughters. <b>The reasons might be:</b> @First decision that has been spread through tribe @Fear @Insecurity @Their religion say nothing about patronage //Through rest of the run [wizard]s and eventually [population,people] will not pick/create their own Patron. @<font color="fuschia">Patron if chosen by [population,people] does not involve gameplay in any way. It is lore thing.</font> //<small>Not having a patron is also fine pal/gal :)</small>',
+      desc:'Seems like your tribe want to live without gods sons/daughters. <b>The reasons might be:</b> @First decision that has been spread through tribe @Fear @Insecurity @Their religion say nothing about patronage //Through the rest of the run, [wizard]s and eventually [population,people] will not pick or create their own Patron. @<font color="fuschia">Patrons chosen by [population,people] does not involve gameplay in any way. It is just some lore.</font> //<small>Not having a patron is also fine, don\'t worry too much :)</small>',
           icon:[9,32,'magixmod'],
       cost:{'culture':75,'faith':5,'insight':105},
           req:{'wizardry':true,'patron2':false,'patron3':false,'patron4':false,'patron5':false,'patron1':false,'patron7':false,'patron8':false,'patron6':false,'unknown patron':false},
@@ -15488,7 +15487,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t8',
           displayName:'Buri\'o dak\'s Trial',
-          desc:'You are during Buried trial. After you succesfully finish this trial you will no longer be able to rerun it.',
+          desc:'You are currently in the Buried trial. After you succesfully finish this trial you will no longer be able to rerun it.',
           icon:[22,25,'magixmod',1,22,'magixmod'],
           req:{'tribalism':false,'trial':true},
           cost:{},
@@ -15509,7 +15508,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'message memory',
-          desc:'Message history increased from 25 to 50. ',
+          desc:'Message history increased from 25 to 50.',
           icon:[35,13,'magixmod'],
           cost:{'culture':15,'insight':5},
           req:{'oral tradition':true,'caligraphy':true},
@@ -15519,12 +15518,12 @@ function setCookie(cname, cvalue, exdays) {
                       G.maxMessages=50;	
                   }},
           ],
-          tutorialMesg:['tutorial','Perform three ascensions to unlock <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via <b>Magix</b> tab',[32,27,'magixmod']]
+          tutorialMesg:['tutorial','Perform three ascensions to unlock the <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via the <b>Magix</b> tab',[32,27,'magixmod']]
       });
       new G.Tech({
           name:'bII(acceptance)',
           displayName:'Burial II',category:'tier1',
-          desc:'@increases [acceptance of death] and [belongings preservance] positive effects power by 5%. <>@Funreal cerermonies are more common.  @provides 30 [inspiration].',
+          desc:'@increases the positive effects of [acceptance of death] and [belongings preservance] by 5%. <>@Funeral cerermonies are more common.@provides 30 [inspiration].',
           icon:[0,35,'magixmod',13,23,'magixmod',24,1],
           cost:{'insight':510},
           req:{'burial':true,'philosophy':true,'bII(normal)':false},
@@ -15535,7 +15534,8 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Trait({
           name:'constelations',
-          desc:'<font color="#aaffff">A naming system for star constelations has been invented. //<small>Big dog,Little dog,Dove,Centaur,Water bearer,Octant,Balance,Sea serpent,Crane...yeah these are names of constelations</small></font>',
+          displayName:'constellations', // fix by @1_e0
+          desc:'<font color="#aaffff">A naming system for star constellations has been invented. //<small>Big dog,Little dog,Dove,Centaur,Water bearer,Octant,Balance,Sea serpent,Crane...yeah these are names of constellations</small></font>',
           icon:[36,32,'magixmod'],
           cost:{'culture II':35,'insight II':600,'science':100},
           chance:6,
@@ -15552,7 +15552,7 @@ function setCookie(cname, cvalue, exdays) {
       //halloween part two
       new G.Tech({
           name:'halloween ornaments',
-          desc:'Increases [spookiness] gain from all sources by quarter. //Various ornaments to make better Halloween climat and make everything more spooky. //<small>Woah...*trembles*</small>',
+          desc:'Increases your [spookiness] gain from all sources by +25%. //Various ornaments are to make a better Halloween climate and make everything more spooky. //<small>Woah...*trembles*</small>',
           icon:[7,9,'seasonal'],
           cost:{'insight':250,'culture':100,'wisdom':25},
           req:{'trick or treat':true},
@@ -15567,7 +15567,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'costume-crafting',
-          desc:'[clothier] can now sew spooky, scary [colored clothing]. While crafting [clothier] will also gain some [spookiness] XP.//Note:After Halloween ends, Craft costumes modes will be replaced with "Craft colored clothing" modes once again till another Halloween. //<small>Let\'s begin that scary mascarade. For real.</small>',
+          desc:'[clothier] can now sew spooky, scary [colored clothing]. While crafting, [clothier]s will also gain some [spookiness] XP.//Note:After Halloween ends, Craft costumes modes will be replaced with "Craft colored clothing" modes once again till another Halloween. //<small>Let\'s begin that scary mascarade. For real.</small>',
           icon:[5,9,'seasonal'],
           cost:{'insight':300,'culture':30},
           req:{'weaving II':true,'"dark season"':true},
@@ -15585,7 +15585,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'candy-crafting',
-          desc:'[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can help you gather [halloween essence] out of the candies.//Note:You are able to set artisan into that mode only during Halloween. After the event [artisan] won\'t produce anymore [candy,Candies] till next Halloween.//<small>Candies are so sweet.</small>',
+          desc:'[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can help you gather [halloween essence] out of the candies.//Note:You are able to set artisan into that mode only during Halloween. After the event ends, [artisan] won\'t produce any more [candy,Candies] till next Halloween.//<small>Candies are so sweet.</small>',
           icon:[8,8,'seasonal'],
           cost:{'insight':800,'culture':100},
           req:{'farm of the sugar cane':true,'"dark season"':true},
@@ -15594,7 +15594,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'trick or treat',
-          desc:'People living in houses now can use their halloween costumes and gather sweet [candy,Candies] in the tribe. //Thanks to [trick or treat] you have another source of [halloween essence] and [spookiness]. //Note: [paradise housing] does not provide [halloween essence] nor [spookiness].//<small>Candies are so sweet.</small>',
+          desc:'People living in houses can now use their halloween costumes and gather sweet [candy,Candies] in the tribe. //Thanks to [trick or treat], you have another source of [halloween essence] and [spookiness]. //Note: [paradise housing] does not provide [halloween essence] or [spookiness] with this upgrade.//<small>Candies are so sweet.</small>',
           icon:[19,8,'seasonal'],
           cost:{'insight':800,'culture':100,'colored clothing':1000,'halloween essence':2500},
           req:{'candy-crafting':true,'costume-crafting':true},
@@ -15616,7 +15616,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Trait({
           name:'vampirism',
-          desc:'@some [population,People] will start ocassionaly drinking blood from alive [population,people] and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear harming [happiness] but gaining some [spookiness]. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>That is even more eww</small>',
+          desc:'@some [population,People] will start ocassionaly drinking blood from living [population,people] and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear (in turn decreasing [happiness]) in exchange for [spookiness]. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>That is even more eww</small>',
           icon:[2,9,'seasonal'],
           cost:{'faith':50,'culture':50},
           req:{'"dark season"':true,'ritual necrophagy':true},
@@ -15625,7 +15625,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'demon-summoning',
-          desc:'[spirit summoner] now can summon demons of Halloween at a cost of [halloween essence] to minimalize risk of any sort of curses. //While in new mode [spirit summoner,Summoner] gains more [spookiness] but uses more. //Note: [spirit summoner] will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
+          desc:'[spirit summoner]s are now able to summon demons of Halloween at the cost of [halloween essence] to minimalize risk of any sort of curses. //While in new mode [spirit summoner,Summoner] gains more [spookiness] but uses more. //Note: [spirit summoner] will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
           icon:[6,9,'seasonal'],
           cost:{'faith':100,'culture':100},
           req:{"spirit-summoning":true,'trick or treat':true},
@@ -15902,7 +15902,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Trait({
           name:'t7',
           displayName:'Herbalia\'s Trial',
-          desc:'You are during Herbalism trial',
+          desc:'You are currently in the Herbalism trial',
           icon:[23,25,'magixmod',5,22,'magixmod'],
           req:{'tribalism':false},
           cost:{},
@@ -16474,9 +16474,9 @@ function setCookie(cname, cvalue, exdays) {
           req:{'tribalism':true,'culture of moderation':false,'joy of eating':false,'consumption stability':false,'unstable drinking habits':false,'unstable consumption habits':false},
       });
       new G.Tech({
-          displayName:'Crime and punishment',
+          displayName:'Crime and punishment (heavy)',
           name:'CaP(cruel)',
-          desc:'@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation predicts violent punishments for various crimes such as robbery, murder or one can get punished in the name of "an eye for an eye, a tooth for a tooth" rule. ',
+          desc:'@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation creates violent punishments for various crimes such as robbery or murder, in the style of "an eye for an eye, a tooth for a tooth."',
           icon:[30,34,'magixmod',26,0,'magixmod'],
           cost:{'influence':25},
           req:{'code of law':true,'CaP':false,'CaP(light)':false},
@@ -16488,9 +16488,9 @@ function setCookie(cname, cvalue, exdays) {
           ],
       });
       new G.Tech({
-          displayName:'Crime and punishment',
+          displayName:'Crime and punishment (light)',
           name:'CaP(light)',
-          desc:'@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation don\'t predict tortures or death penalties. For serious crimes people may get moved away and be imprisoned for the rest of the life.',
+          desc:'@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation doesn\'t contain tortures or death penalties. For much more serious crimes, people may simply be moved away.',
           icon:[30,34,'magixmod',24,1],
           cost:{'influence':25},
           req:{'code of law':true,'CaP(cruel)':false,'CaP':false},
@@ -16503,7 +16503,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'city planning II',category:'upgrade',
-          desc:'@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12). <> @also they can plan for you some decorations. //<small>This knowledge may make cities constructed by your civilization look less cluttered. Who knows if they have an idea for some decorations...sadly you cannot see that with your own eyes...I am feeling sorry for you too friend...I can\'t see it either.</small>',
+          desc:'@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12 per architect). <> @also they can plan for you some decorations. //<small>This knowledge may make cities constructed by your civilization look much less cluttered. Who knows if they have an idea for some decorations...maybe not.</small>',
           icon:[31,34,'magixmod'], 
           cost:{'insight':668,'wisdom':2},
           req:{'construction II':true,'architects knowledge':true,'will to know more':true},
@@ -16518,7 +16518,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'city planning III(m)',category:'upgrade',
           displayName:'City planning III',
-          desc:'@[architect]s and [terrain conservator]s can have their own mode in [guild quarters]. While having their guild [architect]s can construct 2 more buildings each. @[architect] works 10% more efficient. //<small>That\'s moderation...deal with it. It all goes to smallest, fastest, most efficient...with only slight on decors on the streets.</small>',
+          desc:'Now, [architect]s work 10% faster. //<small>That\'s moderation...deal with it. It all goes to the smallest, fastest, most efficient...with only slight decorations on the streets.</small>',
           icon:[33,34,'magixmod'], 
           cost:{'insight II':75,'science':10},
           req:{'city planning II':true,'moderation':true,'guilds unite':true},
@@ -16688,7 +16688,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'bII(normal)',
           displayName:'Burial II',category:'tier1',
-          desc:'@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funreal cerermonies are more common. @provides 30 [inspiration].',
+          desc:'@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration].',
           icon:[0,35,'magixmod',13,23,'magixmod',22,1],
           cost:{'insight':510},
           req:{'burial':true,'philosophy':true,'bII(acceptance)':false},
@@ -17632,7 +17632,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Policy({
           name:'far foraging',
-          desc:'@[gatherer]s will explore like [wanderer] but with 3x bigger chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //When [gatherer]s will explore to the max this policy will be disabled automatically and won\'t be visible anymore. This autotoggle won\'t cost your [influence].',
+          desc:'@[gatherer]s will explore like [wanderer]s but with a 3x bigger chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //When [gatherer]s have explored to the maximum, this policy will be disabled automatically and won\'t be visible from then on. (That autotoggle won\'t cost you any [influence].)',
           icon:[15,33,'magixmod'],
           cost:{'influence':3},
           startMode:'off',
@@ -17643,7 +17643,7 @@ function setCookie(cname, cvalue, exdays) {
       if(G.modsByName['Market mod']){
            new G.Policy({
               name: 'extended essences catalog',
-              desc: 'The [magic essences] trading will be refined. You will be able to fine tune what specific items from the category you want to trade (instead of the whole category)',
+              desc: 'The trading of [magic essences] trading will be refined. You will be able to fine-tune what specific items from the category you want to trade (instead of the whole category)',
               icon: [0, 2, "market_images", 20, 13,'magixmod'],
               cost: {'influence': 10 },
               startMode: 'off',
@@ -17748,7 +17748,7 @@ function setCookie(cname, cvalue, exdays) {
       }
       new G.Policy({
           name:'prisoner workforce',
-          desc:'[prisoner]s now count as [worker]s; working [prisoner]s can serve their sentences faster.',
+          desc:'[prisoner]s now count as [worker]s; working [prisoner]s will serve their sentences faster.',
           icon:[7,12,17,0,'magixmod'],
           cost:{'influence':2},
           req:{'imprisonment II':true},
@@ -18252,7 +18252,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'acacia',
-          desc:'The [acacia,Acacia tree] tends to grow in warm, dry climates, and can be chopped for [log]s and harvested for [stick]s.',
+          desc:'The [acacia,Acacia tree] tends to grow in warm, dry climates, and can be chopped for [log]s and some [stick]s.',
           icon:[8,10],
           res:{
               'chop':{'log':2,'stick':4},
@@ -18274,7 +18274,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'pine tree',
-          desc:'[pine tree]s are tall and able to endure cold climates and keep their needles year-long; they can provide [log]s and [stick]s.',
+          desc:'[pine tree]s are tall and able to endure cold climates and will keep their needles year-long; they can provide [log]s and [stick]s.',
           icon:[16,10,'magixmod'],
           res:{
               'chop':{'log':2,'stick':6},
@@ -18285,10 +18285,10 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'wild bush',
-          desc:'[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s and sometimes [herb]s.',
+          desc:'[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s and very rarely, [herb]s.',
           icon:[17,10,'magixmod'],
           res:{
-              'gather':{'vegetable':3,'stick':0.5},
+              'gather':{'vegetable':3,'stick':0.5,'herb':0.02},
           },
           affectedBy:['scarce forageables'],
           mult:10,
@@ -18316,17 +18316,17 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'forest mushrooms',
-          desc:'[forest mushrooms] grow in the penumbra of the underbrush, and often yield all sorts of interesting [herb]s.',
+          desc:'[forest mushrooms] grow in the penumbra of the underbrush, and may very rarely yield a [herb] or two.',
           icon:[5,10],
           res:{
-              'gather':{},
+              'gather':{'herb':0.03},
           },
           affectedBy:['scarce forageables'],
           mult:10,
       });
       new G.Goods({
           name:'succulents',
-          desc:'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide [herb]s and [fruit]s.',
+          desc:'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide valuable [fruit].',
           icon:[6,10],
           res:{
               'gather':{'fruit':1},
@@ -18336,7 +18336,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'jungle fruits',
-          desc:'[jungle fruits] come in all shapes, colors and sizes, and will yield [fruit]s and [herb]s to those who forage them.',
+          desc:'[jungle fruits] come in all shapes, colors and sizes, and will yield [fruit]s to those willing to forage around.',
           icon:[7,10],
           res:{
               'gather':{'fruit':2},
@@ -18347,7 +18347,7 @@ function setCookie(cname, cvalue, exdays) {
       //animals
       new G.Goods({
           name:'wild rabbits',
-          desc:'[wild rabbits] are quick and hard to catch, and yield a little [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'[wild rabbits] are quick and hard to catch, and yield [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for a little [spoiled food].',
           icon:[0,11],
           res:{
               'gather':{'spoiled food':0.5},
@@ -18380,7 +18380,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'deer',
-          desc:'Forest herbivores that live in herds; good source of [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Forest herbivores that live in herds and are a good source of [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
           icon:[3,11],
           res:{
               'gather':{'spoiled food':1},
@@ -18391,7 +18391,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'bears',
-          desc:'Large omnivorous mammals that hibernate in cold seasons; fearsome in battle. Yield plenty of [meat], [bone]s and large [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Large omnivorous mammals that hibernate in cold seasons but fearsome in battle. They yield plenty of [meat], [bone]s and large [hide]s.//Carcasses can also be gathered for [spoiled food].',
           icon:[5,11],
           res:{
               'gather':{'spoiled food':1},
@@ -18402,7 +18402,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'polar bears',
-          desc:'Large omnivorous mammals that live in snowy regions; fierce hunters. Yield plenty of [meat], [bone]s and large [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Large omnivorous mammals that live in snowy regions, and are extremely fierce hunters. Yield plenty of [meat], [bone]s and large [hide]s.//Carcasses can also be gathered for [spoiled food].',
           icon:[10,11],
           res:{
               'gather':{'spoiled food':1},
@@ -18413,7 +18413,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'boars',
-          desc:'Omnivorous mammals armed with tusks; provide [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Omnivorous mammals armed with tusks that provide [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
           icon:[4,11],
           res:{
               'gather':{'spoiled food':1},
@@ -18456,7 +18456,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'seals',
-          desc:'Carnivorous semi-aquatic mammal; provides [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Carnivorous semi-aquatic mammal that will give you [meat], [bone]s and [hide]s.//Carcasses can be gathered for [spoiled food].',
           icon:[9,11],
           res:{
               'gather':{'spoiled food':1},
@@ -18490,7 +18490,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Goods({
           //TODO
           name:'clams',
-          desc:'Bivalves and other assorted shells.//A source of [seafood], fairly easy to gather.',
+          desc:'Bivalves and other assorted shells.//A source of [seafood] and fairly easy to gather.',
           icon:[0,0],
           res:{
               'gather':{'seafood':0.5},
@@ -18502,7 +18502,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Goods({
           //TODO
           name:'crabs',
-          desc:'Skittish crustaceans that walk sideways.//A source of [seafood].',
+          desc:'Skittish crustaceans that walk sideways.//An occasional source of [seafood] when gathering: you\'re better off fishing for them instead.',
           icon:[0,0],
           res:{
               'gather':{'seafood':0.1},
@@ -18530,7 +18530,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'snow cover',
-          desc:'A [snow cover] is often available year-long in cold environments, and is a good source of [water]; it may also conceal [ice], which must be dug out.',
+          desc:'A [snow cover] is often available year-long in cold environments, and is a good source of [water]; it may also conceal [ice] that must be dug out.',
           icon:[13,10],
           res:{
               'gather':{'water':4,'muddy water':8},
@@ -18601,7 +18601,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'vfb1',
-          displayName:'Various flowers bush',
+          displayName:'Bush with flowers',
           desc:'A bush filled with some [flowers].',
           icon:[10,23,'magixmod'],
           res:{
@@ -18611,7 +18611,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'vfb2',
-          displayName:'Various flowers bush',
+          displayName:'Bush with flowers',
           desc:'A bush filled with some [flowers].',
           icon:[10,23,'magixmod'],
           res:{
@@ -18621,7 +18621,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'bush of tulips',
-          desc:'A bush filled with some [flowers].',
+          desc:'A bush filled with [flowers].',
           icon:[12,23,'magixmod'],
           res:{
               'flowers':{'flowers':5},
@@ -18631,7 +18631,7 @@ function setCookie(cname, cvalue, exdays) {
       //Swamplands
           new G.Goods({
           name:'crocodiles',
-          desc:'Crocodiles are large semiaquatic reptiles that live throughout the tropics especially swamplands. Source of [meat] and [leather].//Carcasses can sometimes be gathered for [spoiled food].',
+          desc:'Crocodiles are large semiaquatic reptiles that live throughout the tropics especially swamplands. A source of [meat] and [leather].//Carcasses can sometimes be gathered for [spoiled food].',
           icon:[17,24,'magixmod'],
           res:{
               'hunt':{'meat':2},
@@ -18664,7 +18664,7 @@ function setCookie(cname, cvalue, exdays) {
       //Lavender fields
           new G.Goods({
           name:'lavender',
-          desc:'Nice flower that has relaxing smell and can be used in aromatherapy. Except [lavender] you may find many other types of [flowers].',
+          desc:'A nice flower that has relaxing smell and can be used in aromatherapy. However, [lavender] flowers are hard to come by.',
           icon:[35,4,'magixmod'],
           res:{
               'flowers':{'flowers':0.1},
@@ -18686,7 +18686,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'Ice',
-          desc:'Only in iceberg you can find so much [ice]. It is so coooldddd....Brrr...',
+          desc:'Only in an iceberg can you can find so much [ice]. It is freeeezing....Brrr...',
           icon:[21,24,'magixmod'],
           res:{
               'dig':{'ice':2.25},
@@ -18696,7 +18696,7 @@ function setCookie(cname, cvalue, exdays) {
       });
                   new G.Goods({
           name:'Sugar cane',
-          desc:'Wet land where [sugar cane] can live and grow. Can be found at lush biomes and amount of sugar cane is not constant. At some lands you may spot that [sugar cane] is scarce while somewhere else it is plenty.',
+          desc:'A wetland is where [sugar cane] can live and grow. Can be found at lush biomes and amount of sugar cane is not constant. At some lands you may find that [sugar cane] is scarce, while somewhere else it is plenty.',
           icon:[31,22,'magixmod'],
           res:{
               'gather':{'sugar cane':0.000002},
@@ -18705,7 +18705,7 @@ function setCookie(cname, cvalue, exdays) {
       });
               new G.Goods({
           name:'squid',
-          desc:'Squid is a good source of *Ink*. That doesn\'t mean that [artisan] is useless though. You need [Ink-fishing] for this to be a good source of [Ink] for you.',
+          desc:'Squid is a good source of [ink]. You need [Ink-fishing] to collect it, however.',
           icon:[32,6,'magixmod'],
           res:{
               'fish':{},//B4 inkfishing tech
@@ -18716,7 +18716,7 @@ function setCookie(cname, cvalue, exdays) {
       //NEW SUBSTRATES
           new G.Goods({
           name:'warm rocky substrate',
-          desc:'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mud], more [stone]s and occasionally [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [gold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides less [marble]',
+          desc:'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mud], more [stone]s, and occasionally [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [gold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides a little [marble].',
           icon:[33,23,'magixmod'],
           res:{
               'gather':{'stone':0.2,'clay':0.002,'limestone':0.003},
@@ -18732,7 +18732,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'tundra rocky substrate',
-          desc:'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mud], more [stone]s and a little bit less [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore]s and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]//Quarrying underneath there provides more [limestone] and [platinum ore].',
+          desc:'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mud], more [stone]s and a little bit less [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore]s and [coal], but less of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath provides more [limestone] and [platinum ore].',
           icon:[33,22,'magixmod'],
           res:{
               'gather':{'stone':0.2,'clay':0.004,'limestone':0.0035},
@@ -18748,7 +18748,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'ice desert rocky substrate',
-          desc:'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone] and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore]s, more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble] but way less [various stones].//<font color="#ffcccc">This substrate contains no [salt].</font>',
+          desc:'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore]s, more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#ffcccc">This substrate contains no [salt].</font>',
           icon:[33,21,'magixmod'],
           res:{
               'gather':{'stone':0.2,'clay':0.002,'limestone':0.0035},
@@ -18764,7 +18764,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'wet rocky substrate',
-          desc:'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [marble] but less [cut stone].',
+          desc:'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
           icon:[33,20,'magixmod'],
           res:{
               'gather':{'stone':0.25,'clay':0.007,'limestone':0.005},
@@ -18797,7 +18797,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'lush rocky substrate',
-          desc:'A [lush rocky substrate] is found underneath terrain with lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less ores like [copper ore,Copper], [tin ore,Tin], [nickel ore,Nickel], [iron ore,Iron]. Also there you will find less [coal]//Quarrying there gives a little bit more [marble], [platinum ore,Platinum].',
+          desc:'A [lush rocky substrate] is found underneath terrain with lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less ores like [copper ore,Copper], [tin ore,Tin], [nickel ore,Nickel], [iron ore,Iron]. Also, you will find less [coal]//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
           icon:[33,19,'magixmod'],
           res:{
               'gather':{'stone':0.25,'clay':0.005,'limestone':0.005},
@@ -18813,7 +18813,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'dead rocky substrate',
-          desc:'A [dead rocky substrate] is unique for Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining there is not worthy at all because there you will find almost no [tin ore,Ores]. //Same with quarrying except ([marble] and [platinum ore,Platinum] which is more often than anywhere else). //<font color="#aabbbb">There you will find no [gold ore,Gold] and no [nickel ore,Nickel].</font>',
+          desc:'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining there is not worthy at all because there you will find almost no [tin ore,Ores]! //Same with quarrying (excluding [marble] and [platinum ore,Platinum], which is more common than anywhere else). //<font color="#aabbbb">There, you will find no [gold ore,Gold] and no [nickel ore,Nickel].</font>',
           icon:[33,16,'magixmod'],
           res:{
               'gather':{'stone':0.25,'clay':0.004,'limestone':0.002},
@@ -18828,7 +18828,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'dead grass',
-          desc:'[dead grass] is a bad source of [herb]s; Because it is dead grass there is almost no [fruit]s',
+          desc:'[dead grass] is a bad source of [herb]s; Rarely, you may gain a piece of [fruit].',
           icon:[33,15,'magixmod'],
           res:{
               'gather':{'fruit':0.1,'stick':0.5},
@@ -18846,7 +18846,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'animal corpse',
-          desc:'[animal corpse]s can be only found there. Some of them are dug underground by the ages, so both digging and gathering may provide some [bone]s.',
+          desc:'[animal corpse]s can only be found there. Some of them are dug underground by the ages, so both digging and gathering may provide some [bone]s.',
           icon:[33,14,'magixmod'],
           res:{
               'gather':{'bone':0.1},
@@ -18856,16 +18856,16 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'dead fishes',
-          desc:'Disgusting smell...Eww. This can give you [spoiled food] out of fishing.',
+          desc:'Disgusting smell...Ewww. This can give you an insignificant amount of [spoiled food].',
           icon:[33,13,'magixmod'],
           res:{
-              'fish':{'spoiled food':0.01},
+              'fish':{'spoiled food':0.02},
           },
           mult:2,
       });
       new G.Goods({
           name:'spoiled fruits',
-          desc:'Fruits that are dangerous for health when eaten. Source of [spoiled food].',
+          desc:'Fruits that are dangerous for health when eaten. A source of [spoiled food].',
           icon:[33,12,'magixmod'],
           res:{
               'gather':{'spoiled food':0.1},	
@@ -18874,7 +18874,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'badlands substrate',
-          desc:'A [badlands substrate] can be only found in badlands biome.//Instead of [stone]s there are [various stones] that can be gathered by hand.//By digging you can find less [mud] and [clay], more [various stones] and in little less amounts [copper ore,Soft metal ores]. You won\'t find any [salt] by digging.//Mining provides the best results, outputting a variety of [various stones], more often [gold ore,Precious ores], [salt] and [gems], but you will find less [coal] there.',
+          desc:'A [badlands substrate] can only be found in the badlands biome.//Instead of [stone]s, there are [various stones] that can be gathered by hand.//By digging, you can find less [mud] and [clay], more [various stones], and small portions of [copper ore,Soft metal ores]. You won\'t find any [salt] by digging here.//Mining provides the best results, outputting a variety of [various stones], more often [gold ore,Precious ores], [salt] and [gems], but you will find less [coal] there.',
           icon:[3,29,'magixmod'],
           res:{
               'gather':{'various stones':0.25,'clay':0.005,'limestone':0.005},
@@ -18890,7 +18890,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'ostrich',
-          desc:'[meat] source that can be found in: <b>Savanna</b>,<b>Desert</b> and <b>Badlands</b>. Ostriches are birds without wings and run very fast making hunting more challenging.',
+          desc:'[meat] source that can be found in the <b>Savanna</b>, <b>Desert</b> and <b>Badlands</b> biomes. Ostriches are birds without wings and run very fast, making hunting them more challenging.',
           icon:[choose([4,5]),29,'magixmod'],
           res:{
               'hunt':{'meat':2,'bone':0.25},
@@ -18899,7 +18899,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'xeric substrate',
-          desc:'A [xeric substrate] can be only found at xeric shrublands.//There are [stone]s that can be gathered by hand.//By digging you can find no [clay], less [stone]s and some [copper ore,Ores]. Rarely by digging you can find some [salt].//Mining provides the best results, outputting a variety of [stone]s, more often [gold ore,Precious ores](in fact more fool\'s gold than true gold) and precious [gems].//Quarrying there provides no mythril.',
+          desc:'A [xeric substrate] can only be found at xeric shrublands.//There are [stone]s that can be gathered by hand.//By digging, you can find no [clay], less [stone]s, and some [copper ore,Ores]. There are also small amounts of [salt] hidden throughout.//Mining provides the best results, outputting a variety of [stone]s, more often [gold ore,Precious ores](in fact more fool\'s gold than true gold) and precious [gems].//Quarrying there provides no mythril.',
           icon:[6,29,'magixmod'],
           res:{
               'gather':{'various stones':0.25,'clay':0.005,'limestone':0.005},
@@ -18924,12 +18924,12 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'coral reef',
-          desc:'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything',
+          desc:'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything, however.',
           icon:[36,0,'magixmod'],
       });
       new G.Goods({
           name:'kelp',
-          desc:'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything',
+          desc:'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything, however.',
           icon:[36,1,'magixmod'],
       });
       /*=====================================================================================
@@ -20935,7 +20935,7 @@ function setCookie(cname, cvalue, exdays) {
       
       new G.Res({
           name:'bugs',
-          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered [food].',
+          desc:'Worms, insects, spiders, and other creatures belong here. They are easily caught, but are usually not considered proper [food].',
           icon:[12,19,'c2'],
           turnToByContext:{'eating':{'health':0,'happiness':-0.05},'decay':{'spoiled food':0.5}},
           //partOf:'food',
@@ -21801,7 +21801,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Unit({
           name:'artisan',
-          desc:'@starts with the ability to turn [stone]s into [knapped tools]@gains more modes as technology progresses<>An [artisan] dedicates their life to crafting various little objects by hand.//Note : artisans will gain new modes of operation when you discover new technologies, such as crafting stone tools; you can press the button with 3 dots on the side of this unit to switch between those modes.',
+          desc:'@starts with the ability to turn [stone]s into [knapped tools]@gains more modes as technology progresses<>An [artisan] dedicates their life to crafting various little objects by hand.//Note: artisans will gain new modes of operation when you discover new technologies, such as crafting stone tools; you can press the button with 3 dots on the side of this unit to switch between those modes.',
           icon:[6,2,'c2'],
           cost:{},
           use:{'worker':1},
@@ -23077,7 +23077,7 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'guilds',category:'tier1',
-          desc:'@unlocks [guild quarters]<>NOTE : useless for now.',
+          desc:'@unlocks [guild quarters].',
           icon:[23,8,'c2'],
           cost:{'discernment':24,'gentility':12},
           req:{'cities':true,'construction':true,'code of law':true},
@@ -23461,13 +23461,13 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Tech({
           name:'primary intuition',category:'tier1',
-          desc:'[primary intuition] is like a key to researching. However if [population,elves] will expand their intuition they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition 2/2,Oral tradition] tech. More complicated researches like sewing, crafting can be unlocked only with "secondary" [intuition].',
+          desc:'[primary intuition] is like a key to researching. However, if [population,elves] will expand their intuition they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition 2/2,Oral tradition] tech. More complicated researches like sewing, crafting can be unlocked only with "secondary" [intuition].',
           icon:[27,10,'c2'],
           startWith:true,
       });	
       new G.Trait({
           name:'water courage',
-          desc:'<font color="#e6ffee">Elves are less afraid of water. //Obtaining this knowledge trait will allow elves later to use boats as a way to travel or explore the mystic, full of secrets world. </font><br>//<small>So elves are hydrophobic?</small>',
+          desc:'<font color="#e6ffee">Elves are less afraid of water. //Obtaining this knowledge trait will allow elves later to use boats as a way to travel or explore the mystic world filled with secreats. </font><br>//<small>So elves are hydrophobic?</small>',
           icon:[29,9,'c2'],
           cost:{'creativity':1},
           chance:1,
@@ -24692,7 +24692,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'bII(normal)',
           displayName:'Burial II',category:'tier1',
-          desc:'@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funreal cerermonies are more common. @provides 30 [inspiration]',
+          desc:'@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
           icon:[3,13,'c2',24,16,'c2',22,1,'c2'],
           cost:{'discernment':195,'creativity':85,'gentility':50},
           req:{'burial':true,'philosophy':true,'bII(acceptance)':false},
@@ -24704,7 +24704,7 @@ function setCookie(cname, cvalue, exdays) {
       new G.Tech({
           name:'bII(acceptance)',
           displayName:'Burial II',category:'tier1',
-          desc:'@increases [acceptance of death] effects by 5%. <>@Funreal cerermonies are more common. @provides 30 [inspiration]',
+          desc:'@increases [acceptance of death] effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
           icon:[3,13,'c2',24,16,'c2',24,1,'c2'],
           cost:{'discernment':195,'creativity':85,'gentility':50},
           req:{'burial':true,'philosophy':true,'bII(acceptance)':false},
@@ -26119,12 +26119,12 @@ function setCookie(cname, cvalue, exdays) {
       });
       new G.Goods({
           name:'coral reef',
-          desc:'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything',
+          desc:'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything, however.',
           icon:[choose([8,9]),17,'c2'],
       });
       new G.Goods({
           name:'kelp',
-          desc:'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything',
+          desc:'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything, however.',
           icon:[10,17,'c2'],
       });
       new G.Goods({
@@ -26149,7 +26149,7 @@ function setCookie(cname, cvalue, exdays) {
       });
           new G.Goods({
           name:'vfb3',
-          displayName:'Various flowers bush',
+          displayName:'Bush with flowers',
           desc:'A bush filled with some various [flowers].',
           icon:[15,17,'c2'],
           res:{
