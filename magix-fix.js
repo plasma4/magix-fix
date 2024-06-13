@@ -16889,14 +16889,14 @@ return "";
           ],
           chance:2,
       });
-      new G.Trait({// New trait by @1_e0 to counter happiness slightly
+
+      new G.Trait({ // New trait by @1_e0 to counter happiness slightly
         name:'ungrateful tribe',
-        desc:'@people consume 3% less [water] and 3% less [food], but gain 25% less [happiness] from everything. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].// <small>we\'re getting used to it...</small>',
+        desc:'@people consume 3% less [food], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].// <small>we\'re getting used to it...</small>',
         icon:[3,12,19,1],
-        cost:{'insight':50,'corpse':500},
-        chance:2,
+        chance:1.1,
         req:{'rules of food':true},
-    });
+      });
       
       
       
@@ -20223,6 +20223,7 @@ return "";
                       var consumeMult=1;
                       var happinessAdd=0;
                       if (G.has('culture of moderation')) {consumeMult*=0.85;happinessAdd-=0.1;}
+                      if (G.has('ungrateful tribe')) {consumeMult*=0.97}
                       else if (G.has('joy of eating')) {consumeMult*=1.15;happinessAdd+=0.1;}
                       else if (G.has('unstable eating habits')) {consumeMult*=(G.year%31>15 ? 1.07 : 0.93);happinessAdd+=(G.year%31>15 ? 0.06 : -0.04);}
                       else if (G.has('unstable consumption habits')){
