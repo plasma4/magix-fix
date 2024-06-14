@@ -2,7 +2,7 @@
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 
 >>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
@@ -104,7 +104,6 @@ var civ2 = function () {
     }, 'noClose');
 }
 G.NewGame = function (doneLoading, mods) {
-
     if (G.resets == 0) G.loadmenu = 1;
     document.title = 'Setup: NeverEnding Legacy';
     //clean up data, create a map and ask the player to pick a starting location
@@ -2902,7 +2901,7 @@ if (getCookie("civ") == "0") {
                 colorGood: 'lime', colorBad: '#F44',
                 fractional: true,
                 tick: function (me, tick) {
-                    ungrateful = G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.985 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1
+                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.985 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
                     var se = 0;
                     if (G.checkPolicy("se07") == "on") se = 25;
                     if (tick % 99 == 44) {
@@ -9160,7 +9159,7 @@ if (getCookie("civ") == "0") {
                     { type: 'provide', what: { 'added material storage': 9000 } },
                     { type: 'provide', what: { 'added material storage': 3150 }, req: { 'well stored': true } },
                     { type: 'provide', what: { 'added material storage': 4950 }, req: { 'well stored 2': true } },
-                    { type: 'waste', chance: 0.00000001 }//increased by @1_e0 because...why that small?
+                    { type: 'waste', chance: 0.00000001 }
                 ],
                 req: { 'Storage at the bottom of the world': true },
                 category: 'underworld',
@@ -9176,7 +9175,7 @@ if (getCookie("civ") == "0") {
                 steps: 400,
                 messageOnStart: 'The construction of The <b>Temple of The Paradise</b> has been started. Now you are full of hope that it will someday make the God appear next to you and show his true good-natured face.',
                 finalStepCost: { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 15, 'faith': 725, 'spirituality': 25, 'godTemplePoint': -100 },
-                finalStepDesc: 'To complete the wonder and be even closer to the God, you must perform this final step. You need 25k [population,people] must be sacrificed...and many other ingredients.',
+                finalStepDesc: 'To complete the wonder and be even closer to the God, you must perform this final step, needing 25k [population,people] to be sacrificed...and many other ingredients.',
                 use: { 'land of the Paradise': 30 },
                 req: { 'monument-building III': true },
                 category: 'wonder',
@@ -10220,7 +10219,7 @@ if (getCookie("civ") == "0") {
 
                 ],
                 chance: 3,
-                tutorialMesg: ['important', 'Now while talking to your people they understand you better. And they understand themselves each other', [1, 28, 'magixmod']]
+                tutorialMesg: ['important', 'Now, while talking to your people, they understand you better. Even better, they understand themselves and each other somewhat.', [1, 28, 'magixmod']]
             });
 
             new G.Tech({
@@ -10281,7 +10280,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water exploration faster. @[canoes] are inefficient on biomes: <b>Swamplands</b>,<b>Jungle</b>, <b>Tundra</b> and <b>Boreal forest</b><> //Canoes are good and safe way to explore ocean shores but slow. The longest it takes to explore swamps using these so depending on your closest location consider picking maybe [rafts] instead and make this tech be obtainable in slightly later game stage. ',
+                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water exploration faster. @[canoes] are inefficient on biomes: <b>Swamplands</b>,<b>Jungle</b>, <b>Tundra</b> and <b>Boreal forest</b><> //Canoes are a good and safe way to explore ocean shores but slow. The longest it takes to explore swamps using these, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [26, 7],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'rafts': false },
@@ -10394,7 +10393,7 @@ if (getCookie("civ") == "0") {
                 req: { 'digging': true, 'sedentism': true, 'tool-making': true },
                 effects: [
                 ],
-                tutorialMesg: ['tutorial', 'Henceforth you can dig a well why wouldn\'t you teach the others and set up your first <b>Well</b>. A well is a good source of fresh water but only 1 well can be constructed for every 10 pieces of land that you have.', [30, 3, 'magixmod']]
+                tutorialMesg: ['tutorial', 'Henceforth, you can dig a well. A well is a good source of fresh water, but only 1 well can be constructed for every 10 pieces of land that you have.', [30, 3, 'magixmod']]
             });
             new G.Tech({
                 name: 'woodcutting', category: 'tier1',
@@ -10411,14 +10410,14 @@ if (getCookie("civ") == "0") {
                 name: 'plant lore', category: 'upgrade',
                 desc: '@[gatherer]s find more [herb]s, [fruit]s and [vegetable]s<>The knowledge of which plants are good to eat and which mean certain death is a slow and perilous one to learn.',
                 icon: [23, 7],
-                cost: { 'insight': 5 },
+                cost: { 'insight': 10 }, // Cost doubled by @1_e0
                 req: { 'oral tradition': true, 'herbalism': true },
                 effects: [
                 ],
             });
             new G.Tech({
                 name: 'healing', category: 'tier1',
-                desc: '@unlocks [healer]s // <small>hospitals when?</small>',
+                desc: '@unlocks [healer]s。 // <small>hospitals when?</small>',
                 icon: [25, 7],
                 cost: { 'insight': 10 },
                 req: { 'plant lore': true, 'stone-knapping': true, 'herbalism': true, 'intuition': true },
@@ -10442,7 +10441,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'symbolism', category: 'upgrade',
-                desc: '@[dreamer]s produce 40% more [insight]@[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another - to make the cosmos relate to itself - this one focuses on shapes.',
+                desc: '@[dreamer]s produce 40% more [insight]@[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; focusing on shapes.',
                 icon: [13, 1],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbI': false },
@@ -10475,7 +10474,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'fishing', category: 'tier1',
-                desc: '@unlocks [fisher]s<>Fishing is more than simply catching fish; it involves knowing where the fish like to gather and which ones are good to eat.//It would be wise to check whether any of your territory contains fish before investing in this technology.',
+                desc: '@unlocks [fisher]s<>Fishing is more than simply catching fish; it involves knowing where the fish like to gather and which ones are tasty.//It would be wise to check whether any of your territory contains fish before investing in this technology.',
                 icon: [25, 1],
                 cost: { 'insight': 5 },
                 req: { 'tribalism': true },
@@ -10498,14 +10497,14 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'spears', category: 'tier1',
                 displayName: 'Spears and maces',
-                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes has only 80% of its normal efficiency. To remove that penalty obtain [aiming] research.',
+                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes has only 80% of its normal efficiency. To remove that penalty, obtain the [aiming] research.',
                 icon: [26, 1],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true },
             });
             new G.Tech({
                 name: 'bows', category: 'tier1',
-                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<> <b>Bow hunting</b> mode has only 40% of its normal efficiency. To remove that penalty obtain [aiming] research.',//TODO : desc
+                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<> <b>Bow hunting</b> mode has only 40% of its normal efficiency. To remove that penalty, obtain the [aiming] research.',//TODO : desc
                 icon: [27, 1],
                 cost: { 'insight': 20 },
                 req: { 'spears': true },
@@ -10525,7 +10524,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'insight': 15 },
                 req: { 'stone-knapping': true },
                 chance: 3,
-                tutorialMesg: ['tutorial', 'Cold days and nights are gone if your <b>Firekeepers</b> will lit up some <b>Fire pits</b> with wood and knapped tools.', [13, 7]]
+                tutorialMesg: ['tutorial', 'Cold days and nights are gone if your <b>Firekeepers</b> will create up some <b>Fire pits</b> with wood and knapped tools.', [13, 7]]
             });
 
             new G.Tech({
@@ -10717,7 +10716,7 @@ if (getCookie("civ") == "0") {
                 req: { 'fire-making': true, 'digging': true, 'tool-making': true },
                 effects: [
                 ],
-                tutorialMesg: ['tutorial', 'Take advantage of bonuses that your researches provide such as digger finding more clay thanks to this research...<small>so you can craft more <b>pots</b> then.</small>', [32, 15, 'magixmod']]
+                tutorialMesg: ['tutorial', 'Take advantage of bonuses that your researches provide, such as diggers finding more clay thanks to this research...so you can craft more <b>pots</b>.', [32, 15, 'magixmod']]
             });
             new G.Tech({
                 name: 'masonry', category: 'tier1',
@@ -10744,12 +10743,12 @@ if (getCookie("civ") == "0") {
                 icon: [24, 8],
                 cost: { 'insight': 90, 'culture': 40 },
                 req: { 'construction': true, 'burial': true, 'belief in the afterlife': true, 'intuition': true },
-                tutorialMesg: ['tutorial', 'Once you obtained <b>Monument-building</b> you may begin construction of very first wonder of your ' + G.getName('inhabs') + '. Check it out in <u>Production</u> tab.', [32, 18, 'magixmod']]
+                tutorialMesg: ['tutorial', 'After getting <b>Monument-building</b>, you may begin construction of the very first wonder of your ' + G.getName('inhabs') + '. Check it out in the <u>Production</u> tab.', [32, 18, 'magixmod']]
             });
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in tribe. These are called <b><font color="white">Wizards</font></b>. They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in tribe. These are called <b><font color="white">Wizards</font></b>. They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [5, 3, 'magixmod'],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
@@ -10784,7 +10783,7 @@ if (getCookie("civ") == "0") {
                 req: { 'mana brewery': true, 'more useful housing': true },
                 effects: [
                 ],
-                tutorialMesg: ['tutorial', 'You unlocked <b>Wizard towers</b>.<br />These towers provide housing and produce Essences using Mana.  Make sure that you have enough <b>Mana</b> income and some <b>Wizards</b> to upkeep at least one of towers. Make also sure that you have built <b>Essence storages</b>.', [20, 13, 'magixmod']]
+                tutorialMesg: ['tutorial', 'You unlocked <b>Wizard towers</b>.<br />These towers provide housing and produce Essences using Mana. Make sure that you have enough <b>Mana</b> income and some <b>Wizards</b> to upkeep at least one of the towers. Also, make sure that you have <b>Essence storages</b>.', [20, 13, 'magixmod']]
             });
             new G.Tech({
                 name: 'wizard wisdom', category: 'tier1',
@@ -10792,7 +10791,7 @@ if (getCookie("civ") == "0") {
                 icon: [3, 0, 'magixmod'],
                 cost: { 'insight': 85, 'culture': 30, 'mana': 40, 'influence': 10 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true },
-                tutorialMesg: ['tutorial', 'Now you unlocked Wizards. Don\'t hire too much of them because these guys love eating a lot so having too much of them may lead to tribe starvation. Instead try to make your tribe bigger, hire more gatherers, explore then hire some. They are must-have.', [choose([24, 23, 22, 21]), 8, 'magixmod']]
+                tutorialMesg: ['tutorial', 'Now you\'ve unlocked Wizards. Don\'t hire too much of them too early because these guys love eating a lot, so having too much of them may lead to tribe starvation. Instead, try to make your tribe bigger, explore more, and find more ways to get food. Just be aware that wizards are a must-have in large amounts for new magical technologies!', [choose([24, 23, 22, 21]), 8, 'magixmod']]
             });
             new G.Tech({
                 name: 'Wizard complex', category: 'tier1',
@@ -11741,7 +11740,7 @@ if (getCookie("civ") == "0") {
                 name: 'rules of food',
                 desc: '@unlocks policies that manage which food types can be eaten. // <small>Can I eat fried chips?</small>',
                 icon: [19, 1],
-                chance: 0.6,// average chance decreased by 0.1 years by @1_e0
+                chance: 0.4,// average chance decreased by 0.3 years by @1_e0
                 req: { 'tribalism': true, 'policies': true },
                 effects: [
                 ]
@@ -13219,7 +13218,7 @@ if (getCookie("civ") == "0") {
                         }
                     }
                 ],
-                tutorialMesg: ['story2', 'Oh. <b>Mo\' beauty</b> made cities look much, much nicer. Lanterns, flower decors everywhere. Sometimes even <b>tools</b> (not joking now) have some shapes,patterns carved. And it is not any festival. You wander and even some huts get even more beautiful than ever were.']
+                tutorialMesg: ['story2', '<b>Mo\' beauty</b> made cities look much, much nicer. Lanterns, flower decors everywhere. Sometimes even <b>tools</b> (not joking now) have some shapes and patterns carved. And it is not just any festival. You wander and the huts are even more beautiful than they ever were.']
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
@@ -15474,7 +15473,7 @@ if (getCookie("civ") == "0") {
                         }
                     },
                 ],
-                tutorialMesg: ['tutorial', 'Perform three ascensions to unlock the <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via the <b>Magix</b> tab', [32, 27, 'magixmod']]
+                tutorialMesg: ['tutorial', 'Perform three ascensions to unlock the <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via the <b>Magix</b> tab!', [32, 27, 'magixmod']]
             });
             new G.Tech({
                 name: 'bII(acceptance)',
@@ -15737,7 +15736,7 @@ if (getCookie("civ") == "0") {
                                 G.getDict("temple of the Paradise").steps = 400,
                                 G.getDict("temple of the Paradise").messageOnStart = 'The construction of The <b>Temple of Ancestors</b> has been started. Now you are full of hope that it will someday make the Ancestors Leader appear next to you and show his true good-natured face.',
                                 G.getDict("temple of the Paradise").finalStepCost = { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 5, 'faith': 125, 'influence': 400, 'influence II': 10, 'spirituality': 25, 'godTemplePoint': -100 },
-                                G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader known as God you must perform this final step 25k [population,people] must be sacrificed...and many other ingredients.',
+                                G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader, you must perform this final step: 25k [population,people] must be sacrificed...and many other ingredients.',
                                 G.getDict("temple of the Paradise").use = { 'land of the Past': 30 };
 
                             G.getDict('monument-building').req = { 'construction': true, 'burial': true, 'belief in the beforelife': true };
@@ -16771,7 +16770,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'rafts', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores<> @makes terrain with lots of water exploration faster. @[rafts] are inefficient on biomes: <b>Prairie</b>,<b>Tundra</b>,<b>Ice desert</b> and <b>Forest</b>//Rafts are good but very risky and uneasy way to explore bigger parts of an ocean. Their area allowing to store some [food] on board allows for longer explorations. Allows to explore 2 tiles away from beaches yet you need to be aware of big risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in slightly later game stage.',
+                desc: '@allows exploring through ocean shores<> @makes terrain with lots of water exploration faster. @[rafts] are inefficient on biomes: <b>Prairie</b>,<b>Tundra</b>,<b>Ice desert</b> and <b>Forest</b>//Rafts are good but a risky and uneasy way to explore the bigger parts of an ocean. Their area allows you to store some [food] on board allows for longer explorations. Allows to explore 2 tiles away from beaches yet you need to be aware of big risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [29, 6, 'magixmod'],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'canoes': false },
@@ -16834,6 +16833,13 @@ if (getCookie("civ") == "0") {
                 icon: [3, 12, 19, 1],
                 chance: 1.1,
                 req: { 'rules of food': true },
+            });
+            new G.Trait({ // New trait by @1_e0 to counter happiness slightly
+                name: 'ungrateful tribe II',
+                desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.// <small>we\'re getting used to it...</small>',
+                icon: [3, 12, 19, 1],
+                chance: 600,
+                req: { 'rules of food': true, 'sedentism': true },
             });
 
 
@@ -19916,27 +19922,23 @@ if (getCookie("civ") == "0") {
                 }
             }
 
-            G.funcs['tracked stat str'] = function () {
-                return 'Most population ruled';
-            }
-
             G.funcs['civ blurb'] = function () {
                 var str = '';
                 str += 'Deep in the wild<br />';
                 str += '<div class="fancyText shadowed">';
 
                 str += '<div class="barred infoTitle"><font color="lime">The land of ' + G.getName('civ') + '</font></div>' +
-                    '<div class="barred">ruler : ' + G.getName('ruler') + '</div>';
+                    '<div class="barred">ruler: ' + G.getName('ruler') + '</div>';
                 var toParse = '';
                 var pop = G.getRes('population').amount;
                 if (pop > 0) {
-                    toParse += 'Population : <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
+                    toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
                     var text = 'unknown'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat <= 200) text = 'high'; else if (stat >= 200) text = 'euphoric';
                     toParse += 'Happiness : <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
                     var text = 'unknown'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming'; else if (stat >= 200) text = 'examplary';
-                    toParse += 'Health : <b>' + text + '</b>//';
+                    toParse += 'Health: <b>' + text + '</b>//';
                     var stat = G.techN;
                     var text = 'unknown'; if (stat <= 28) text = 'pre-prehistoric'; else if (stat <= 50) text = 'prehistoric'; else if (stat <= 100) text = 'skilled'; else if (stat <= 170) text = 'decent technologically'; else if (stat <= 240) text = 'expanded'; else if (stat <= 325) text = 'advanced'; else if (stat <= 400) text = 'modern'; else if (stat <= 500) text = 'truly advanced'; else if (stat >= 500) text = 'most advanced';
                     toParse += 'Technological stage: <b>' + text + '</b>//';
@@ -19950,7 +19952,7 @@ if (getCookie("civ") == "0") {
             G.funcs['found tile'] = function (tile) {
                 G.Message({
                     type: 'good', mergeId: 'foundTile', textFunc: function (args) {
-                        if (args.count == 1) return 'Our explorers have found a new tile : <b>' + args.tile.land.displayName + '</b>.';
+                        if (args.count == 1) return 'Our explorers have found a new tile: <b>' + args.tile.land.displayName + '</b>.';
                         else return 'Our explorers have found ' + B(args.count) + ' new tiles; the latest is <b>' + args.tile.land.displayName + '</b>.';
                     }, args: { tile: tile, count: 1 }, icon: [14, 4]
                 });
@@ -20145,6 +20147,7 @@ if (getCookie("civ") == "0") {
                             var happinessAdd = 0;
                             if (G.has('culture of moderation')) { consumeMult *= 0.85; happinessAdd -= 0.1; }
                             if (G.has('ungrateful tribe')) { consumeMult *= 0.97 }
+                            if (G.has('ungrateful tribe II')) { consumeMult *= 0.97 }
                             else if (G.has('joy of eating')) { consumeMult *= 1.15; happinessAdd += 0.1; }
                             else if (G.has('unstable eating habits')) { consumeMult *= (G.year % 31 > 15 ? 1.07 : 0.93); happinessAdd += (G.year % 31 > 15 ? 0.06 : -0.04); }
                             else if (G.has('unstable consumption habits')) {
@@ -22851,7 +22854,7 @@ if (getCookie("civ") == "0") {
                     { type: 'provide res', what: { 'inspiration': 30, 'wisdom': 30, 'quick-wittinity': 15 } },
                 ],
                 chance: 3,
-                tutorialMesg: ['tutorial', 'This plane feels more harsh. It is harder to progress than it was with humanity. Also the weird feeling is striking you every single time.', [8, 4, 'c2']],
+                tutorialMesg: ['tutorial', 'This plane feels more harsh. It is harder to progress than it was with humanity. Also, a weird feeling is striking you every single time.', [8, 4, 'c2']],
             });
 
             new G.Tech({
@@ -22873,7 +22876,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'provide res', what: { 'inspiration': 10, 'wisdom': 10, 'quick-wittinity': 5 } },
                 ],
-                tutorialMesg: ['tutorial', 'You need battery of discoveries charged for <b>each</b> research roll and reroll. With some ascension bonuses you can make battery charge faster or be less required.', [8, 0, 'c2']],
+                tutorialMesg: ['tutorial', 'You need the battery of discoveries charged for <b>each</b> research roll and reroll. With some ascension bonuses, you can make the battery charge faster or require less charge as cost.', [8, 0, 'c2']],
             });
 
             new G.Tech({
@@ -22922,7 +22925,7 @@ if (getCookie("civ") == "0") {
                     }
                 ],
                 chance: 2,
-                tutorialMesg: ['story2', 'You wonder where you are but tall trees, dense bushes do not tell you much. You look at the sky which is rather aqua than blue you known from your reality...wait, reality? You tried to touch your ears to check if you are an elf too but you are a human...but you still do not know why elves decided to pick you as their ruler, despite the fact that you aren\'t an elf just like them. Everything feels weird.', [33, 0, 'c2']],
+                tutorialMesg: ['story2', 'You wonder where you are but tall trees and dense bushes do not tell you much. You look at the sky, which darker than blue you know from your reality...wait, reality? You try to touch your ears to check if you are an elf too but you are a human...but you still do not know why elves decided to pick you as their ruler. After all, the fact that you aren\'t an elf just like them seems pretty important. Everything feels weird.', [33, 0, 'c2']],
             });
             new G.Tech({
                 name: 'canoes', category: 'tier1',
@@ -22934,7 +22937,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'allow', what: ['shore exploring'] },
                 ],
-                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead on sides just like increased gravity. It feels like some pressure. You see a bird having a hard time to fly up while wind blows like that...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
+                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead on the sides just like increased gravity. It feels like some pressure. You see a bird having a hard time flying while wind blows like that...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
             });
             new G.Tech({
                 name: 'boat building', category: 'tier1',
@@ -22983,7 +22986,7 @@ if (getCookie("civ") == "0") {
                 icon: [30, 7, 'c2'],
                 cost: { 'discernment': 30, 'creativity': 6 },
                 req: { 'cities': true, 'masonry': true, 'carpentry': true, 'quarrying': true, 'construction-planning': true },
-                tutorialMesg: ['story1', 'You think about setting up a modern factory here. However elves may have other plans. You\'d like to talk about it for your elves but they do not know yet what a factory is.', [33, 4, 'c2']],
+                tutorialMesg: ['story1', 'You think about setting up a modern factory here. However, elves may have other plans. You\'d like to talk about it for your elves but they do not know yet what a factory even is.', [33, 4, 'c2']],
                 chance: 3,
             });
             new G.Tech({
@@ -23368,7 +23371,7 @@ if (getCookie("civ") == "0") {
                 icon: [24, 8, 'c2'],
                 cost: { 'discernment': 97, 'gentility': 43, 'creativity': 46, 'influence': 9, 'faith': 3 },
                 req: { 'construction': true, 'burial': true, 'belief in the afterlife': true },
-                tutorialMesg: ['story2', 'You want to constuct a wonder. However there a lot of excavation is needed though.', [33, 3, 'c2']]
+                tutorialMesg: ['story2', 'You want to constuct a wonder. However, a lot of excavation is needed.', [33, 3, 'c2']]
             });
             new G.Tech({
                 name: 'a power of the fortress', category: 'misc',
@@ -23728,7 +23731,7 @@ if (getCookie("civ") == "0") {
                 icon: [26, 9, 'c2'],
                 req: { 'writing': true },
                 cost: { 'discernment': 30, 'gentility': 9, 'creativity': 15 },
-                tutorialMesg: ['story1', 'You glance at your <i>' + G.getName('inhabs') + '</i> for a while. Everything seems harsh yet your will of conquering this infinite-like wilderness never fades away.']
+                tutorialMesg: ['story1', 'You glance at your <i>' + G.getName('inhabs') + '</i> for a while. Everything seems harsh, yet your will of conquering this infinite-like wilderness never fades away.']
             });
             new G.Tech({
                 name: 'alphabet 1/3', category: 'tier1',
@@ -23800,7 +23803,7 @@ if (getCookie("civ") == "0") {
                 icon: [23, 10, 'c2'],
                 cost: { 'discernment': 36, 'influence': 18, 'gentility': 36, 'creativity': 24 },
                 req: { 'wizardry': true },
-                tutorialMesg: ['story1', 'Looks like magic in this plane exists, but it is way more arcane than it was in human\'s plane.', [choose([24, 23, 22, 21]), 8, 'magixmod']]
+                tutorialMesg: ['story1', 'Looks like magic in this plane also exists, but it is way more arcane than it was in the human\'s plane.', [choose([24, 23, 22, 21]), 8, 'magixmod']]
             });
             new G.Tech({
                 name: 'knitting', category: 'tier1',
@@ -23879,7 +23882,7 @@ if (getCookie("civ") == "0") {
                 icon: [27, 14, 'c2'],
                 cost: { 'faith': 8, 'discernment': 24, 'gentility': 18 },
                 req: { 'ritualism': true, 'symbolism': true, 'language': true },
-                tutorialMesg: ['story1', 'These elves really do live long here. However this wind is pressing down. You decided to call this wind "Pressure" because they say it is more than just a wind.', [2, 11, 'c2']]
+                tutorialMesg: ['story1', 'These elves really do live long here. However, the wind is pressing down harshly. You decided to call this wind "Pressure" because they say it is more than just a wind.', [2, 11, 'c2']]
             });
             new G.Tech({
                 name: 'philosophy', category: 'tier1',//Unlocks thot if Thot(actually Philosopher) Mod installed :)
