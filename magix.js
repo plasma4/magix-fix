@@ -26,6 +26,7 @@ meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 document.getElementsByTagName('head')[0].appendChild(meta);
 
+const isChangedMagix = true
 var clickModePolicy = 0
 var clickModeUnit = 0
 // Allow touchscreen or mobile users to change policies
@@ -143,7 +144,11 @@ G.widget.update = function () {
         me.lAnchor.style.left = x + 'px';
         me.lAnchor.style.top = y + 'px';
         me.lAnchor.style.display = 'block';
-        if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) me.close();
+        if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
+            clickModePolicy = 0
+            clickModeUnit = 0
+            me.close();
+        }
     }
     if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
         me.closeInFrames--;
@@ -772,11 +777,11 @@ G.NewGame = function (doneLoading, mods) {
                 '<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About original content~Orteil</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par"><font color="pink">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</font></div></div>') + '</div>' +
                 '<div class="framed bgMid fancyText" style="position:absolute;right:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About Magix</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">Current mod release: 53 <br> The mod adds a ton of new content, including a very lategame second civilization.</div><div class="par">Features that could be added include the rest of the trials for human race, new mechanics for second race and of course, more magic into the world.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! On discord, you can contact me at @1_e0 (the original creator, @pelletsstarPL is no longer maintaining the project).</div><div class="par"><font color="#aaffaa">Thank you for playing Magix!</div><div class="par" style="text-align:right;">-pelletsstarPL (general fixes and rewrittings separately by 1_e0)</div></div>') + '</div>' +
                 '<div class="divider"></div>' +
-                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time.(of course if you<br>unlock that second one)<br> (it\'d be too hard anyway <b>:p</b>)<br>' +
+                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun!<b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
                 G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment. <br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br> Gameplay difficulty is higher than with human race but doing job here <br>will let you boost both human and elf races themself.<br> Make housing  for elves and place to live<br> and most importantly, survive in that wilderness. <br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race.')) +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment. <br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br> Gameplay difficulty is higher than with human race but doing your job here <br>will let you boost both the human and elf races.<br> Make housing for elves and a place to live, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -3692,7 +3697,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'muddy water',
-                desc: '[muddy water] tastes awful and is unhealthy, but is better than dying of thirst. Your people will default to drinking it in the absence of fresh [water].//Muddy water can be collected while gathering, from stagnant pools or old rainwater; [water] also turns into muddy water over time, if not stored properly. Additionally, muddy water itself will slowly dry out.',
+                desc: '[muddy water] tastes awful and is unhealthy, but is better than dying of thirst. Your people will default to drinking it in the absence of fresh [water].//This kind of dirty water can be collected while gathering, from stagnant pools or old rainwater; [water] also turns into [muddy water] over time, if not stored properly. Additionally, [muddy water] itself will slowly dry out.',
                 icon: [8, 6],
                 visible: true,
                 turnToByContext: { 'drinking': { 'health': -0.03, 'happiness': -0.05 } },
@@ -3727,7 +3732,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'spoiled food',
-                desc: '[spoiled food] is eaten when no other [food] is available, in a last-ditch effort to fend off starvation.//Spoiled food is terribly unhealthy and tastes just as bad. Over time, it will decay even further into inedibility.',
+                desc: '[spoiled food] is eaten when no other [food] is available, in a last-ditch effort to fend off starvation.//[spoiled food] is terribly unhealthy and tastes just as bad. Over time, it will decay even further into inedibility.',
                 icon: [3, 7],
                 visible: true,
                 turnToByContext: { 'eating': { 'health': -0.3, 'happiness': -0.5 } },
@@ -3743,7 +3748,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'herb',
-                desc: '[herb,Herbs] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste fairly unpleasant.',
+                desc: '[herb,Herbs] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
                 icon: [4, 6],
                 startWith: 300,
                 turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herb': 0.2, 'spoiled food': 0.8 } },
@@ -12007,28 +12012,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'improved furnace construction', category: 'upgrade',
-                desc: 'People figured a way to make a [furnace] produce more at the same costs of run and upkeep. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [furnace]s will work 20% more efficient. <>If they have chosen [caretaking] then [furnace]s will work 10% more efficient.',
+                desc: 'People figured a way to make a [furnace] produce more at the same costs of run and upkeep. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [furnace]s will work 20% more efficient. <>If they have chosen [caretaking], then [furnace]s will work 10% more efficient.',
                 icon: [1, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'focused gathering', category: 'upgrade',
-                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking] then [gatherer]s will work 12.5% more.',
+                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking], then [gatherer]s will work 12.5% more.',
                 icon: [2, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'bigger fires', category: 'upgrade',
-                desc: '[firekeeper]s figured out how to make bigger fires. They will need to use more [stick]s but most important thing is that there will be profit <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [firekeeper]s will work 5% more efficient. <>If they have chosen [caretaking] then [firekeeper]s will work 8% more efficient.',
+                desc: '[firekeeper]s figured out how to make bigger fires. They will need to use more [stick]s but most important thing is that there will be profit <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [firekeeper]s will work 5% more efficient. <>If they have chosen [caretaking], then [firekeeper]s will work 8% more efficient.',
                 icon: [3, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'motivation for artisans', category: 'upgrade',
-                desc: '[artisan]\'s succesful work made him work harder and motivated. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [artisan]s will work 8% more efficient. <>If they have chosen [caretaking] then [artisan]s will work 4% more efficient. <>Doesn\'t include [artisan of juice] and [pyro-artisan]!',
+                desc: '[artisan]\'s succesful work made him work harder and motivated. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [artisan]s will work 8% more efficient. <>If they have chosen [caretaking], then [artisan]s will work 4% more efficient. <>Doesn\'t include [artisan of juice] and [pyro-artisan]!',
                 icon: [4, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
@@ -13236,28 +13241,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'more experienced healers', category: 'upgrade',
-                desc: 'All [healer]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [healer]s will work 3% more efficient. <>If they have chosen [caretaking] then [healer]s will work 9% more efficient.',
+                desc: 'All [healer]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [healer]s will work 3% more efficient. <>If they have chosen [caretaking], then [healer]s will work 9% more efficient.',
                 icon: [14, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'better kiln construction', category: 'upgrade',
-                desc: 'All [kiln]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [kiln]s will work 10% more efficient. <>If they have chosen [caretaking] then [kiln]s will work 5% more efficient.',
+                desc: 'All [kiln]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [kiln]s will work 10% more efficient. <>If they have chosen [caretaking], then [kiln]s will work 5% more efficient.',
                 icon: [15, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'inspirated carvers', category: 'upgrade',
-                desc: '[carver]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [carver]s will work 3% more efficient. <>If they have chosen [caretaking] then [carver]s will work 6% more efficient.',
+                desc: '[carver]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [carver]s will work 3% more efficient. <>If they have chosen [caretaking], then [carver]s will work 6% more efficient.',
                 icon: [16, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'mo\' concrete', category: 'upgrade',
-                desc: '[concrete making shack]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation] then [concrete making shack]s will work 20% more efficient. <>If they have chosen [caretaking] then [concrete making shack]s will work 5% more efficient.',
+                desc: '[concrete making shack]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [concrete making shack]s will work 20% more efficient. <>If they have chosen [caretaking], then [concrete making shack]s will work 5% more efficient.',
                 icon: [17, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
@@ -13498,7 +13503,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'hunter\'s coordination', category: 'tier2',
-                desc: '@Decreases value of [hunter]s accidents even more. Requires small amount of food as an upkeep. @Increases [wisdom II] by 10.',
+                desc: '@Decreases value of [hunter]s accidents even more. Requires a small amount of [food] as upkeep. @Increases [wisdom II] by 10.',
                 icon: [6, 23, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
@@ -13507,15 +13512,15 @@ if (getCookie("civ") == "0") {
                 ]
             });
             new G.Tech({
-                name: 'an armor for Hunter', category: 'tier2',
-                desc: '@Let the [hunter] have an armor!. //In fact this tech just leads to more advanced improvements for [hunter].',
+                name: 'an armor for Hunter', displayName: 'Hunter armor', category: 'tier2',
+                desc: '@Let the [hunter] have an armor! //In fact, this tech just leads to more advanced improvements for [hunter].',
                 icon: [14, 24, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
             });
             new G.Tech({
                 name: 'fisher\'s smartness', category: 'tier2',
-                desc: '[fisher]s is twice as efficient but as an upkeep he requires some food. //Fisher knows how to lure different types of fishes.',
+                desc: '[fisher]s are twice as efficient, but as an upkeep he requires some [food]. //[fisher]s can now know how to lure different types of fishes optimally.',
                 icon: [0, 23, 'magixmod'],
                 cost: { 'insight II': 45, 'science': 5 },
                 req: { 'fishing III': true },
@@ -13539,7 +13544,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'camp-cooking', category: 'tier2',
-                desc: '<font color="#aaffff">Increases upkeep (amount of [fire pit]s used) by 1 at [fishers & hunters camp] but since now they will be able to cook some [cooked meat,meat] for you.</font>',
+                desc: '<font color="#aaffff">Increases upkeep (amount of [fire pit]s used) by 1 at the [fishers & hunters camp], but now they will be able to cook some [cooked meat,meat] for you.</font>',
                 icon: [15, 24, 'magixmod'],
                 cost: { 'insight II': 100 },
                 req: { 'hunters & fishers unification': true },
@@ -13555,28 +13560,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'fertile bushes', category: 'upgrade',
-                desc: '[house,Next-to house fruitbushes] are 20% more fertile. In fact they gather 20% more [fruit]s. Yummy :) Also [hovel with garden] gains 10% more.',
+                desc: '[house,Next-to house fruitbushes] are 20% more fertile. In fact, they gather 20% more [fruit]s! Yummy :) Also [hovel with garden] gains 10% more.',
                 icon: [1, 24, 'magixmod'],
                 cost: { 'insight II': 100, 'culture II': 20 },
                 req: { 'hunters & fishers unification': true, 'next-to house fruitbushes': true },
             });
             new G.Tech({
                 name: 'supreme fast filtering', category: 'upgrade',
-                desc: '[water filter]s perform conversion twice as often doubling efficiency.',
+                desc: '[water filter]s performs conversion twice as often, doubling efficiency.',
                 icon: [5, 24, 'magixmod'],
                 cost: { 'insight II': 60 },
                 req: { 'hunters & fishers unification': true },
             });
             new G.Tech({
                 name: 'supreme cloudy fast filtering', category: 'upgrade',
-                desc: '[cloudy water filter]s perform conversion twice as often doubling efficiency.',
+                desc: '[cloudy water filter]s perform conversion twice as often, doubling efficiency.',
                 icon: [6, 24, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'hunters & fishers unification': true, 'supreme fast filtering': true },
             });
             new G.Tech({
                 name: 'Improved alchemy techniques', category: 'upgrade',
-                desc: '[basic brewing stand] becomes thrice as efficient. //<small>why thrice? Thats work beyond limits</small>',
+                desc: '[basic brewing stand] becomes thrice as efficient. //<small>why thrice? That\'s work beyond limits</small>',
                 icon: [16, 23, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 7, 'culture II': 23 },
                 req: { 'camp-cooking': true },
@@ -13590,7 +13595,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'burial wormhole 1/2', category: 'tier2',
-                desc: 'People start thinking about using magic especially [dark essence,dark one] to get rid of corpses without harming reputation. //One of them said that if we have at least 2 portals why won\'t we make some smaller worlds just for burying these [corpse]s ?',
+                desc: 'People start thinking about using magic, especially [dark essence,dark one], to get rid of corpses without harming reputation. //One of them said that if we have at least 2 portals why won\'t we make some smaller worlds just for burying these [corpse]s ?',
                 icon: [27, 3, 'magixmod', 22, 22, 'magixmod'],
                 cost: { 'insight II': 100, 'science': 6, 'faith II': 4, 'influence II': 5 },
                 req: { 'magical presence': true, 'mo \'wine': true },
@@ -21195,7 +21200,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'health',
-                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make elves [sick] and unhappy, while higher health will make elves happier.//Health can be affected by a number of things : eating raw or spoiled [spoiled food,Food], drinking [muddy water], poor living conditions, and ongoing plagues.',
+                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make elves [sick] and unhappy, while higher health will make elves happier.//Health can be affected by a number of things: eating raw or spoiled [spoiled food,Food], drinking [muddy water], poor living conditions, and ongoing plagues.',
                 startWith: 0,
                 visible: true,
                 colorGood: 'lime', colorBad: '#F44',
