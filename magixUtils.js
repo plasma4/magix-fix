@@ -1572,34 +1572,34 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            document.title = 'In the start menu: NeverEnding Legacy';
+            document.title = 'Start: NeverEnding Legacy';
             var str =
-                '<b>Your tribe :</b><div class="thingBox">' +
+                '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
-                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses for this race</b>') : "") +
+                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br> bonuses for this race.</b>') : "A ray of hope") +
                 '</div>' +
-                '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at deepness of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
-                '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br> They call you :</div>';
+                '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
+                '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br>They call you:</div>';
             return str;
         }
         G.funcs['new game blurb'] = function () {
             document.title = 'Setup: NeverEnding Legacy';
             var str =
-                '<b>Your tribe :</b><div class="thingBox">' +
+                '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x300</div>', '300 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x250</div>', '250 Water') +
-                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses' + G.resets > 0 + '</b>') : "") +
+                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses.' + G.resets > 0 + '</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
-                '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader. <br>These people... They call you: </div>';
+                '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader. <br>These people...they call you: </div>';
             return str;
 
         }
@@ -1613,7 +1613,7 @@ G.AddData({
         ==========================*/
         new G.Res({
             name: 'victory point',
-            desc: 'You can gain Victory Points for completing Seraphin\'s Trial. 11 of 12 trials are repeatable. After first completion of the trial it grants 1 VP, after 2nd succesful attempt in total grants 3 VP\'s and so on. They can\'t be spent but their amount may provide extra bonuses. ',
+            desc: 'You can gain Victory Points for completing Seraphin\'s Trial. 11 of 12 trials are repeatable. After first completion of the trial it grants 1 VP, after 2nd succesful attempt in total grants 3 VP\'s and so on. They can\'t be spent, but their amount may provide extra bonuses. ',
             icon: [0, 28, 'magixmod'],
         });
 
@@ -1628,7 +1628,7 @@ G.AddData({
             else {
                 G.widget.popup({
                     func: function (widget) {
-                        var str = '(this was supposed to be a percent slider<br>...in 2017 or 2018<br><small>Sorry Orteil&Opti i couldn\'t stop myself<br>from saying that</small>)';//TODO
+                        var str = '(this was supposed to be a percent slider<br>...in 2017 or 2018.<br><small>sorry Orteil&Opti i couldn\'t stop myself<br>from saying that</small>)';//TODO
                         widget.l.innerHTML = str;
                     },
                     offX: 0,

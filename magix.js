@@ -2602,7 +2602,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.achievByName['mausoleum'].won >= 1 && G.achievByName['democration'].won >= 1 && G.achievByName['sacrificed for culture'].won >= 1 && G.achievByName['insight-ly'].won >= 1 && G.achievByName['first glory'].won >= 1 && G.achievByName['apprentice'].won >= 1 && G.achievByName['experienced'].won == 0) { //Experienced
                         G.achievByName['experienced'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! - </br> </hr> <small>From now you will start each run with an extra 100 fruits.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! - </br> </hr> <small>From now you will start each run with an extra 100 fruit.</small>', 'slow')
                     }
                     if (G.achievByName['heavenly'].won >= 1 && G.achievByName['deadly, revenantic'].won >= 1 && G.achievByName['in the underworld'].won >= 1 && G.achievByName['level up'].won >= 1 && G.achievByName['lucky 9'].won >= 1 && G.achievByName['traitsman'].won >= 1 && G.achievByName['smart'].won == 0 && G.achievByName['familiar'].won == 1 && G.achievByName['in the shadows'].won == 1) { //Smart
                         G.achievByName['smart'].won = 1
@@ -7795,7 +7795,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: ';cloudy water filter',
                 displayName: 'Cloudy water filter',
-                desc: 'A filter that uses [land of the Paradise] and a worker. As his upkeep uses [coal] and [mana], you gain 82% of the converted water. <>Moderation path unit. Has research techs that can improve power and efficiency of the [;cloudy water filter] <>Conversion: [cloudy water] into [water]',
+                desc: 'A filter that uses [land of the Paradise] and a worker. As his upkeep uses [coal] and [mana], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve power and efficiency of the [;cloudy water filter] <>Conversion: [cloudy water] into [water]',
                 icon: [25, 11, 'magixmod'],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1, 'mana': 1.5 },
@@ -7828,7 +7828,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: ';water filter',
                 displayName: 'Water filter',
-                desc: 'A filter that uses land and a worker. As his upkeep uses [coal] you gain 82% of converted water. <>Moderation path unit. Has research techs that can improve power and efficiency of the [;water filter] <>Conversion: [muddy water] into [water]',
+                desc: 'A filter that uses land and a worker. As his upkeep uses [coal] you gain 82% of converted water. <>A [moderation] path unit. Has research techs that can improve power and efficiency of the [;water filter] <>Conversion: [muddy water] into [water]',
                 icon: [24, 16, 'magixmod'],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1 },
@@ -10040,13 +10040,13 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'hovel with garden',
-                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Occasionally can provide you with a few tasty [fruit]s and [vegetable]s.',
+                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Occasionally can provide you with the occasional tasty [fruit] and [vegetable].',
                 icon: [9, 6, 'magixmod'],
                 cost: { 'basic building materials': 90 },
                 effects: [
                     { type: 'provide', what: { 'housing': 8 } },
                     { type: 'gather', what: { 'ambrosium shard': 0.04 } },
-                    { type: 'gather', what: { 'fruit': 0.02 }, chance: 1 / 50 },
+                    { type: 'gather', what: { 'fruit': 0.025 }, chance: 1 / 50 },
                     { type: 'gather', what: { 'vegetable': 0.04 }, chance: 1 / 50 },
                     { type: 'mult', value: 1.1, req: { 'fertile bushes': true } },
                     { type: 'mult', value: 1.1, req: { 'backshift at farms': true } },
@@ -10071,7 +10071,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'shop',
-                desc: 'Thanks to the Shop and the worker you hired, you can order resources that you only could craft. Remember: they can still decay so keep that in mind and use \'em quickly so they won\'t waste. The amount of times you completed Pocket does not affect decay speed.',
+                desc: 'Thanks to the Shop and the worker you hired, you can order resources that you could previously only craft. Remember: they can still decay, so keep that in mind and use \'em quickly so they won\'t waste. The amount of times you completed Pocket does not affect decay speed.',
                 icon: [24, 29, 'magixmod'],
                 cost: { 'archaic building materials': 500 },
                 modes: {
@@ -10099,7 +10099,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'cantor',
-                desc: 'Exchanges coins of a lower tier into 1 coin of higher tier. For example: 100 of <b>x</b> currency will be exchanged into 1 <b>y</b> currency.',
+                desc: 'Exchanges coins of a lower tier into 1 coin of a higher tier. That means that 100 of <b>x</b> currency will be exchanged into 1 <b>y</b> currency.',
                 icon: [23, 29, 'magixmod'],
                 cost: { 'archaic building materials': 200, 'wooden coin': 90 },
                 effects: [
@@ -10131,7 +10131,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'grand mirror',
-                desc: 'A door to a world that is  anexact copy of the mortal world. //<b><font color="fuschia">Isn\'t it weird that you have MIRRORED world and only terrain duplicated? Well...maybe it is better for you.</font></b>',
+                desc: 'A door to a world that is an exact copy of the mortal world. //<b><font color="fuschia">Isn\'t it weird that you have a MIRRORED world and only the terrain duplicated? Well...maybe it is better for you.</font></b>',
                 icon: [0, 0],
                 wideIcon: [0, 0],
                 wonder: '.',
@@ -12309,7 +12309,7 @@ if (getCookie("civ") == "0") {
 
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a tenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather resources with a tenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [20, 1],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'active exploration': false, 'dreaming': false },
@@ -13271,7 +13271,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'oil-digging', category: 'tier2',
-                desc: '[quarry,Quarries] can dig for [oil] that can be used in the future as fuel. //<small>At least we have something to fuel a car</small>',
+                desc: '[quarry,Quarries] can dig for [oil] that can be used in the future as fuel. //<small>At least we have something to fuel a car now!</small>',
                 icon: [29, 2, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true },
@@ -13281,7 +13281,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'bigger factory racks', category: 'upgrade',
-                desc: '[leather factory,Leather factories] dry twice as much [leather] without [happiness] harm.',
+                desc: '[leather factory,Leather factories] dry twice as much [leather] without any [happiness] harm.',
                 icon: [29, 19, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true }
@@ -13294,7 +13294,7 @@ if (getCookie("civ") == "0") {
                 req: { 'caretaking': true, 'eotm': true, 'cozier building': true }
             }); new G.Tech({
                 name: '<font color="lime">Fruit supplies</font>', category: 'misc',
-                desc: 'Obtaining <font color="red">Experienced</font> made you getting extra 100 [fruit]s. Wish your people having good taste :) // <small>Let\'s make prehistoric fruit salad</small>',
+                desc: 'Obtaining <font color="red">Experienced</font> made you recieve extra 100 [fruit]s. Wish your people having good taste :) // <small>Let\'s make prehistoric fruit salad</small>',
                 icon: [4, 12, 'magixmod', 28, 22, 'magixmod'],
                 cost: {},
                 effects: [
@@ -16596,7 +16596,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at4',
                 displayName: 'Ancestors trait #4 Aquatic protection',
-                desc: '@[boat]s have quarter less chance to sink. Also their efficiency is increased by 5%.',
+                desc: '@[boat]s have a quarter less chance to sink. Also, their efficiency is increased by 5%.',
                 icon: [13, 34, 'magixmod', 22, 1],
                 cost: {},
                 chance: 275,
@@ -16606,7 +16606,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at5',
                 displayName: 'Ancestors trait #5 Afterlife punishment',
-                desc: '@[thief,Thieves] are quarter more likely to be killed for their actions but their spawn rate is reduced by 10%. @harms [happiness] with [fear of death] while with [acceptance of death,Acceptance] makes [population,people] less scared of these bad guys. @[fear of death] reduces spawn rate by further 5%. @[acceptance of death] increases probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
+                desc: '@[thief,Thieves] are a quarter more likely to be killed for their actions, so their spawn rate is reduced by 10%. @harms [happiness] with [fear of death] while with [acceptance of death,Acceptance] makes [population,people] less scared of these bad guys. @[fear of death] reduces spawn rate by further 5%. @[acceptance of death] increases probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
                 icon: [12, 34, 'magixmod', 22, 1],
                 cost: {},
                 chance: 275,
@@ -16615,14 +16615,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'essential transmutation II', category: 'tier2',
-                desc: '@[transcendentalist] is twice as efficient but will use only [insight II] from now. @[dreamer] has 4x bigger chance to succeed at transmuting knowledge essentials. //<small>Looks like this civilization will create new type of science soon.</small>',
+                desc: '@[transcendentalist] is twice as efficient but will use only [insight II] from now. @[dreamer] has 4x bigger chance to succeed at transmuting knowledge essentials. //<small>Looks like this civilization will create a new type of science soon.</small>',
                 icon: [17, 34, 'magixmod'],
                 cost: { 'insight II': 15, 'science': 5, 'mana': 435 },
                 req: { 'at3': true, 'symbolism II': true },
             });
             new G.Trait({
                 name: 'fear of revenants',
-                desc: '@[grave]s, and [family graves,Cemetaries] generate [spookiness].//<small>You know that you are safe but still you feel that you are scared while seeing these graves. That\'s such a phenomeon isn\'t it? Others also do and feel the same.</small>',
+                desc: '@[grave]s, and [family graves,Cemetaries] generate [spookiness].//<small>You know that you are safe, but still you feel that you are scared while seeing these graves. That\'s such a phenomeon, isn\'t it? Others also do and feel the same.</small>',
                 icon: [13, 9, 'seasonal'],
                 cost: { 'faith': 50, 'culture': 50 },
                 req: { '"dark season"': true, 'belief in revenants': true },
@@ -16644,7 +16644,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cold heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (sometimes it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
+                desc: '@unhappiness from lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
                 icon: [20, 34, 'magixmod', 24, 1],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'hot heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -16654,7 +16654,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'hot heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by quarter//<small>Your tribe needs warmth. They really love the warmth brought to them by fire or other heating sources.</small>',
+                desc: '@unhappiness from lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by a quarter//<small>Your tribe needs warmth. They really love the warmth brought to them by fire or other heating sources.</small>',
                 icon: [21, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -16694,7 +16694,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'strict dress code',
-                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5.//<small>Strict dress code may affect relationships between people. Sometimes it feels unfair and sound stupid doesn\'t it?</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5.//<small>Strict dress codes may affect relationships between people. Sometimes it feels unfair and sounds stupid, doesn\'t it?</small>',
                 icon: [19, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'nudist culture': false, 'fluid dress code': false, 'clothing unconcern': false },
@@ -16704,7 +16704,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'clothing unconcern',
-                desc: '@un/happiness from lacking of/having [colored clothing,Clothing] or other heating sources isn\'t increased or decreased in any way. //<small>simply it\'s also neutral.</small>',
+                desc: '@un/happiness from lacking of or having [colored clothing,Clothing] isn\'t increased or decreased in any way. //<small>simply it\'s also neutral.</small>',
                 icon: [19, 34, 'magixmod', 22, 1],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
@@ -17025,7 +17025,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable eating habits',
-                desc: '@people\'s [food] consumption is fluid, meaning that it may change over time. Consumption modifier will switch every period of time between: @5% less but deriving less joy from eating @5% more deriving more joy from eating <> @may unlock more food habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
+                desc: '@people\'s [food] consumption is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but deriving less joy from eating @5% more deriving more joy from eating <> @may unlock more food habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
                 icon: [9, 15, 'magixmod', 8, 15, 'magixmod'],
                 cost: { 'culture': 7.5 },
                 chance: 70,
@@ -17199,7 +17199,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable drinking habits',
-                desc: '@people\'s drinkage is fluid meaning that it may change over time. Consumption modifier will switch every period of time between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
+                desc: '@people\'s drinkage is fluid meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
                 icon: [9, 15, 'magixmod', 35, 34, 'magixmod'],
                 cost: { 'culture': 7.5 },
                 chance: 70,
@@ -17209,7 +17209,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable consumption habits',
-                desc: '@people\'s general consumption is fluid meaning that it may change over time. Consumption modifier will switch every period of time between: @5% less but half less joy from consumption @5% more deriving tenth more joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness] <>// <small>variety in its true form</small>',
+                desc: '@people\'s general consumption is fluid meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but half less joy from consumption @5% more deriving tenth more joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness] <>// <small>variety in its true form</small>',
                 icon: [9, 15, 'magixmod', 36, 34, 'magixmod'],
                 cost: { 'culture': 7.5 },
                 chance: 250,
@@ -17313,7 +17313,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 1, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'dreaming': false },
@@ -17321,7 +17321,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [insight] with a tenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [insight] with a tenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 2, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'carcass-looting': false },
@@ -17329,7 +17329,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'active exploration',
-                desc: '@hired [wanderer]s gather [insight] with fifteenth of the efficiency of a [dreamer] and gather resources with fifteenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@hired [wanderer]s gather [insight] with fifteenth of the efficiency of a [dreamer] and gather resources with fifteenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 3, 'magixmod'],
                 chance: 3,
                 req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false },
@@ -19413,7 +19413,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
                 icon: [33, 20, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -19430,7 +19430,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides less [platinum ore,Platinum].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides less [platinum ore,Platinum].',
                 icon: [33, 18, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -20025,16 +20025,16 @@ if (getCookie("civ") == "0") {
             }
 
             G.funcs['new game blurb'] = function () {
-                document.title = 'In the start menu - NeverEnding Legacy';
+                document.title = 'Setup: NeverEnding Legacy';
                 var str =
-                    '<b>Your tribe :</b><div class="thingBox">' +
+                    '<b>Your tribe:</b><div class="thingBox">' +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
-                    (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses for this race</b>') : "") +
+                    (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses for this race.</b>') : "A ray of hope") +
                     '</div>' +
                     '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at deepness of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
                     '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br> They call you :</div>';
@@ -20514,7 +20514,7 @@ if (getCookie("civ") == "0") {
                     toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
                     var text = 'unknown'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat <= 200) text = 'high'; else if (stat >= 200) text = 'euphoric';
-                    toParse += 'Happiness : <b>' + text + '</b>//';
+                    toParse += 'Happiness: <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
                     var text = 'unknown'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming'; else if (stat >= 200) text = 'examplary';
                     toParse += 'Health: <b>' + text + '</b>//';
@@ -22149,7 +22149,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'wand',
-                desc: 'Wands are basic of wizardry, and of course are used by wizards. Without it, most spells cannot be casted. @Number to the left means how much is now used, to the right how much is in stock.',
+                desc: 'Wands are basis of wizardry, and of course are used by wizards. Without it, most spells cannot be casted. @Number to the left means how much is now used, to the right how much is in stock.',
                 icon: [6, 4, 'magixmod'],
                 category: 'gear',
                 displayUsed: true,
@@ -23986,7 +23986,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a twelfth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
+                desc: '@idle [worker]s gather resources with a twelfth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
                 icon: [20, 1, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'dreaming': false, 'branching wisdom': false },
@@ -24707,7 +24707,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable eating habits',
-                desc: '@elves [food] consumption is fluid meaning that it may change over time. Consumption modifier will switch every period of time between: @7% less but deriving less joy from eating @7% more, deriving more joy from eating <> @may unlock more food habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
+                desc: '@elves [food] consumption is fluid meaning that it may change over time. The consumption modifier will switch every so often between: @7% less but deriving less joy from eating @7% more, deriving more joy from eating <> @may unlock more food habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
                 icon: [9, 15, 'magixmod', 25, 15, 'c2'],
                 cost: { 'gentility': 7.5 },
                 chance: 40,
@@ -24757,7 +24757,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable drinking habits',
-                desc: '@elves drinkage is fluid meaning that it may change over time. Consumption modifier will switch every period of time between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
+                desc: '@elves drinkage is fluid meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits // <small>In real human history diets, nutritional habits were also "fluid" let\'s say, weren\'t these?</small>',
                 icon: [9, 15, 'magixmod', 30, 18, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 70,
@@ -24767,7 +24767,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'unstable consumption habits',
-                desc: '@elves general consumption is fluid meaning that it may change over time. Consumption modifier will switch every period of time between: @5% less but half less joy from consumption @5% more deriving tenth more joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>// <small>variety in its true form</small>',
+                desc: '@elves general consumption is fluid meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but half less joy from consumption @5% more deriving tenth more joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>// <small>variety in its true form</small>',
                 icon: [9, 15, 'magixmod', 30, 19, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 250,
@@ -24898,7 +24898,7 @@ if (getCookie("civ") == "0") {
             /*Insight traits will work together with culture one*/
             new G.Trait({
                 name: 'natural discernment', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, new cost is reduced by 3. (for example if research costs 225 [discernment] it will cost 216 as long as this trait is active) @maximum reduction is 70.// <small>smort</small>',
+                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, the new cost is reduced by 3. (For example, if a research costs 225 [discernment], it will cost 216 as long as this trait is active.) @the maximum reduction is 70.// <small>much smort</small>',
                 icon: [24, 3, 'magixmod', 8, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25289,7 +25289,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 18, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'dreaming': false },
@@ -25297,7 +25297,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 17, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'carcass-looting': false },
@@ -25305,7 +25305,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'branching wisdom',
-                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various period of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various period of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 19, 'c2'],
                 chance: 3,
                 cost: { 'discernment': 3, 'creativity': 3 },
@@ -26561,7 +26561,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,olivnum], and precious [gems]. Also mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,olivnum], and precious [gems]. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
                 icon: [9, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -26575,7 +26575,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,olivnum] amounts. Also mining there provides way less [iron ore,Iron].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,olivnum] amounts. Also, mining there provides way less [iron ore,Iron].',
                 icon: [6, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
