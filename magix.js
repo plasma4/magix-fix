@@ -772,10 +772,10 @@ G.NewGame = function (doneLoading, mods) {
                 '<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About original content~Orteil</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par"><font color="pink">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</font></div></div>') + '</div>' +
                 '<div class="framed bgMid fancyText" style="position:absolute;right:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About Magix</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">Current mod release: 53 <br> The mod adds a ton of new content, including a very lategame second civilization.</div><div class="par">Features that could be added include the rest of the trials for human race, new mechanics for second race and of course, more magic into the world.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! On discord, you can contact me at @1_e0 (the original creator, @pelletsstarPL is no longer maintaining the project).</div><div class="par"><font color="#aaffaa">Thank you for playing Magix!</div><div class="par" style="text-align:right;">-pelletsstarPL (general fixes and rewrittings separately by 1_e0)</div></div>') + '</div>' +
                 '<div class="divider"></div>' +
-                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time.(of course if you<br>unlock that second one)<br> (it\'d be too hard anyway <b>: )</b> )<br>' +
+                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time.(of course if you<br>unlock that second one)<br> (it\'d be too hard anyway <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
                 (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment. <br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br> Gameplay difficulty is higher than with human race but doing job here <br>will let you boost both human and elf races themself.<br> Make housing  for elves and place to live<br> and most importantly, survive in that wilderness. <br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race.')) +
                 '</div>';
         }, 'noClose');
@@ -17993,7 +17993,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'sleepy insight',
-                desc: 'A chance to obtain some amount of [insight] at start of new year. This policy has a meter that has a scale from: -3 to 3. <>Modes with number lower than 0 will cause ability to be stronger at the cost of chance while modes with over 0 numbers will cause ability provide less [insight] but with bigger chance.',
+                desc: 'You get a chance to obtain some amount of [insight] at start of new year. This policy has a meter that has a scale from: -3 to 3. <>Modes with number lower than 0 will cause the ability to be stronger at the cost of chance, while modes above 0 will cause ability provide less [insight] but with bigger chance.',
                 icon: [8, 12, 33, 24, 'magixmod'],
                 cost: { 'faith': 10, 'insight': 1 },
                 startMode: '0',
@@ -18012,7 +18012,7 @@ if (getCookie("civ") == "0") {
 
             new G.Policy({
                 name: 'reset health level',
-                desc: 'Only available while in Hunted. Resets health to 0%. Available only once per Hunted attempt.',
+                desc: 'Only available while in Hunted. Resets [health] back to 0%. Available only once per Hunted attempt.',
                 icon: [21, 29, 'magixmod'],
                 cost: { 'influence': 1 },
                 startMode: 'inactive',
@@ -26670,7 +26670,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'mudwater',
-                desc: '[mudwater], whether found in swamps, polluted streams, can be collected for disgusting [muddy water].',
+                desc: '[mudwater], whether found in swamps, polluted streams, or other locations can be collected for disgusting [muddy water].',
                 icon: [16, 16, 'c2'],
                 res: {
                     'gather': { 'muddy water': 8 },
@@ -26681,7 +26681,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'ominous tree',
-                desc: '[ominous tree] is a dark tree that live in lush climates of Ominous Woods and keep their dark needles year-long; they can provide [log]s and [stick]s.',
+                desc: 'The [ominous tree] is a dark tree that lives in the lush climates of Ominous Woods and keep their dark needles year-long; they can provide [log]s and [stick]s.',
                 icon: [3, 15, 'c2'],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
@@ -26701,7 +26701,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything, however.',
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This does not provide anything useful, however.',
                 icon: [choose([8, 9]), 17, 'c2'],
             });
             new G.Goods({
