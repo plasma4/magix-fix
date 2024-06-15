@@ -4473,7 +4473,7 @@ G.AddData({
                         if (G.day > 300) { G.day = 0; G.year++; G.doFunc('new year'); }
                         //Time measuring tech. It will have 2 levels. Here goes the code:
                         if (!G.has('time measuring 1/2') && !G.has('primary time measure')) {
-                            l('date').innerHTML = 'No ' + G.getName('inhabs') + ' knows the time yet';
+                            l('date').innerHTML = 'No ' + G.getName('inhabs') + ' know the time yet';
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">While researching, people may get the <b>Primary time measure</b> knowledge to display the current date<br>(you\'ll see it in Centuries).<br>Despite that, current date events related to time may still occur.</div>'; }, { offY: -8 });
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
                         }
