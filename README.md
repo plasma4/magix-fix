@@ -3,14 +3,14 @@ Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made b
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
 Paste in the following script into the console:
 ```js
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 ```
 It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 
 ---
 ## IF YOU ARE STARTING AS A NEW PLAYER
 ### To set up this mod, go to Orteil's NeverEnding Legacy and click on the "Use Mods" button. There, paste in the following 2 lines:
-- https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js
+- https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js
 - https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 #### Upon loading it, you can now play the game! Congrats.
 ***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes. Note that the license may be invalid due to a lack of clarity. I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
