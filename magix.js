@@ -20,6 +20,585 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 ///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiariasm will be punished. Copyright: 2020
 //===========================
 
+// Disable double click's default behavior for mobile users
+var meta = document.createElement('meta');
+meta.name = "viewport";
+meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+document.getElementsByTagName('head')[0].appendChild(meta);
+
+var clickModePolicy = 0
+var clickModeUnit = 0
+// Allow touchscreen or mobile users to change policies
+G.widget.update = function () {
+    var me = this;
+    var time = 3;//how many frames to open and close
+    if (me.T < time) me.T++;
+    if (me.T == time && me.closing) {
+        me.lAnchor.style.display = 'none';
+        me.l.innerHTML = '';
+        me.func = 0;
+        me.parent = 0;
+        me.anchor = 'top';
+        me.linked = 0;
+    }
+    else if (me.parent)//widget is currently active and focused on an element
+    {
+        //position and scale widget
+        var t = (me.T / time);
+        if (me.closing) t = 1 - t;
+        t = (3 * Math.pow(t, 2) - 2 * Math.pow(t, 3));
+        var x1 = 0, x2 = 0, y1 = 0, y2 = 0, s1 = 0, s2 = 1;
+        var bounds = me.parent.getBoundingClientRect();
+
+        //measure and fit in screen
+        var dimensions = {
+            top: me.l.offsetTop,
+            right: me.l.offsetLeft + me.l.offsetWidth,
+            bottom: me.l.offsetTop + me.l.offsetHeight,
+            left: me.l.offsetLeft,
+            width: me.l.offsetWidth,
+            height: me.l.offsetHeight
+        };
+
+        var anchor = me.anchor;
+        var behavior = 'pop';//me.behavior;
+        var offX = me.offX;
+        var offY = me.offY;
+        var styleTransform = '';
+        var styleTop = '';
+        var styleLeft = '';
+
+        for (var step = 0; step < 3; step++)//this is probably an awkward way of doing this
+        {
+            //this used to be handled with mostly just CSS. let's just say things didn't go as expected
+            if (anchor == 'top') {
+                x1 = (bounds.left + bounds.right) / 2; x2 = x1 + offX;
+                y1 = bounds.top; y2 = y1 + offY;
+                styleTransform = 'translate(0,-100%)';
+                styleTop = 'auto';
+                styleLeft = '-50%';
+            }
+            else if (anchor == 'bottom') {
+                x1 = (bounds.left + bounds.right) / 2; x2 = x1 + offX;
+                y1 = bounds.bottom; y2 = y1 + offY;
+                styleTransform = 'translate(0,0)';
+                styleTop = 'auto';
+                styleLeft = '-50%';
+            }
+            else if (anchor == 'left') {
+                x1 = bounds.left; x2 = x1 + offX;
+                y1 = (bounds.top + bounds.bottom) / 2; y2 = y1 + offY;
+                styleTransform = 'translate(-100%,0)';
+                styleTop = (-dimensions.height / 2) + 'px';
+                styleLeft = 'auto';
+            }
+            else if (anchor == 'right') {
+                x1 = bounds.right; x2 = x1 + offX;
+                y1 = (bounds.top + bounds.bottom) / 2; y2 = y1 + offY;
+                styleTransform = 'translate(0,0)';
+                styleTop = (-dimensions.height / 2) + 'px';
+                styleLeft = 'auto';
+            }
+
+            if (step == 0)//toggle on the same axis
+            {
+                if (anchor == 'left' && x2 - dimensions.width < 0) { anchor = 'right'; offX = -offX; }
+                else if (anchor == 'right' && x2 + dimensions.width >= G.w) { anchor = 'left'; offX = -offX; }
+                else if (anchor == 'top' && y2 - dimensions.height < 0) { anchor = 'bottom'; offY = -offY; }
+                else if (anchor == 'bottom' && y2 + dimensions.height >= G.h) { anchor = 'top'; offY = -offY; }
+            }
+            else if (step == 1)//still no room? switch axis
+            {
+                if (anchor == 'left' && x2 - dimensions.width < 0) { anchor = 'bottom'; var tmp = offX; offX = offY; offY = tmp; }
+                else if (anchor == 'right' && x2 + dimensions.width >= G.w) { anchor = 'bottom'; var tmp = offX; offX = offY; offY = tmp; }
+                else if (anchor == 'top' && y2 - dimensions.height < 0) { anchor = 'right'; var tmp = offX; offX = offY; offY = tmp; }
+                else if (anchor == 'bottom' && y2 + dimensions.height >= G.h) { anchor = 'right'; var tmp = offX; offX = offY; offY = tmp; }
+            }
+            else//stick to the sides of the screen
+            {
+                if (anchor == 'top' || anchor == 'bottom') {
+                    if (x2 - dimensions.width / 2 < 0) x2 = dimensions.width / 2;
+                    else if (x2 + dimensions.width / 2 >= G.w) x2 = G.w - dimensions.width / 2;
+                }
+                else if (anchor == 'left' || anchor == 'right') {
+                    if (y2 - dimensions.height / 2 < 0) y2 = dimensions.height / 2;
+                    else if (y2 + dimensions.height / 2 >= G.h) y2 = G.h - dimensions.height / 2;
+                }
+            }
+        }
+
+        me.l.style.transform = styleTransform;
+        me.l.style.top = styleTop;
+        me.l.style.left = styleLeft;
+
+        var x = Math.round(t * x2 + (1 - t) * x1);
+        var y = Math.round(t * y2 + (1 - t) * y1);
+
+        var s = 1;
+        var o = 1;
+        if (behavior == 'pop') s = (t * s2 + (1 - t) * s1);
+        if (behavior == 'fade') o = t;
+        me.lAnchor.style.transform = 'scale(' + s + ')';
+        me.lAnchor.style.opacity = o;
+        me.lAnchor.style.left = x + 'px';
+        me.lAnchor.style.top = y + 'px';
+        me.lAnchor.style.display = 'block';
+        if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) me.close();
+    }
+    if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
+        me.closeInFrames--;
+        if (me.closeInFrames == 0) me.close();
+    }
+}
+
+G.selectModeForPolicy = function (me, div) {
+    if (div == G.widget.parent) G.widget.close();
+    else {
+        G.widget.popup({
+            func: function (widget) {
+                var str = '';
+                var me = widget.linked;
+                var proto = me;
+                for (var i in proto.modes) {
+                    var mode = proto.modes[i];
+                    if (!mode.req || G.checkReq(mode.req)) { str += '<div class="button' + (mode.num == me.mode.num ? ' on' : '') + '" id="mode-button-' + mode.num + '">' + mode.name + '</div>'; }
+                }
+                widget.l.innerHTML = str;
+                //TODO : how do uses and costs work in this?
+                for (var i in proto.modes) {
+                    var mode = proto.modes[i];
+                    if (!mode.req || G.checkReq(mode.req)) {
+                        l('mode-button-' + mode.num).onmouseup = function (target, mode, div) {
+                            return function () {
+                                if (clickModePolicy > 0) {
+                                    return
+                                }
+                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
+                                if (G.speed > 0) {
+                                    var me = target;
+                                    var proto = me;
+                                    if (G.testCost(me.cost, 1)) {
+                                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), 1)) {
+                                            G.doCost(me.cost, 1);
+                                            //remove "on" class from all mode buttons and add it to the current mode button
+                                            for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
+                                            l('mode-button-' + mode.num).classList.add('on');
+                                            G.setPolicyMode(me, mode);
+                                            if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
+                                        }
+                                    }
+                                } else G.cantWhenPaused();
+                                widget.closeOnMouseUp = false;//override default behavior
+                                widget.close(5);//schedule to close the widget in 5 frames
+                            };
+                        }(me, mode, div);
+
+                        // New section for the onclick event
+                        l('mode-button-' + mode.num).onclick = function (target, mode, div) {
+                            return function () {
+                                if (--clickModePolicy > 0) {
+                                    return
+                                }
+                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
+                                if (G.speed > 0) {
+                                    var me = target;
+                                    var proto = me;
+                                    if (G.testCost(me.cost, 1)) {
+                                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), 1)) {
+                                            G.doCost(me.cost, 1);
+                                            //remove "on" class from all mode buttons and add it to the current mode button
+                                            for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
+                                            l('mode-button-' + mode.num).classList.add('on');
+                                            G.setPolicyMode(me, mode);
+                                            if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
+                                        }
+                                    }
+                                } else G.cantWhenPaused();
+                                widget.closeOnMouseUp = false;//override default behavior
+                                widget.close(5);//schedule to close the widget in 5 frames
+                            };
+                        }(me, mode, div);
+
+                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), me.amount)) addHover(l('mode-button-' + mode.num), 'hover');//fake mouseover because :hover doesn't trigger when mouse is down
+                        G.addTooltip(l('mode-button-' + mode.num), function (me, target) {
+                            return function () {
+                                var proto = target;
+                                //var uses=G.subtractCost(target.mode.use,me.use);
+                                var str = '<div class="info">' + G.parse(me.desc);
+                                //if (!isEmpty(me.use)) str+='<div class="divider"></div><div class="fancyText par">Uses : '+G.getUseString(me.use,true,true)+' per '+proto.name+'</div>';
+                                //if (target.amount>0 && target.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,target.amount)+' to switch</div>';
+                                str += '<div>Changing to this mode costs ' + G.getCostString(proto.cost, true, false, 1) + '.</div></div>';
+                                return str;
+                            };
+                        }(mode, me), { offY: -8 });
+                    }
+                }
+            },
+            offX: 0,
+            offY: -8,
+            anchor: 'top',
+            parent: div,
+            linked: me
+        });
+    }
+}
+
+G.update['policy'] = function () {
+    var str = '';
+    str +=
+        '<div class="regularWrapper">' +
+        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Policies help you regulate various aspects of the life of your citizens.</div><div class="par">Some policies provide multiple modes of operation while others are simple on/off switches.</div><div class="par">Changing policies usually costs influence points and, depending on how drastic or generous the change is, may have an impact on your people\'s morale.</div></div>', 'infoButton') +
+        '<div class="fullCenteredOuter"><div id="policyBox" class="thingBox fullCenteredInner"></div></div></div>';
+    l('policyDiv').innerHTML = str;
+
+    var strByCat = [];
+    var len = G.policyCategories.length;
+    for (var iC = 0; iC < len; iC++) {
+        strByCat[G.policyCategories[iC].id] = '';
+    }
+    var len = G.policy.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.policy[i];
+        if (me.visible && (me.category != 'debug' || G.getSetting('debug'))) {
+            var str = '';
+            var disabled = '';
+            if (me.binary && me.mode.id == 'off') disabled = ' off';
+            str += '<div class="policy thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
+                G.getIconStr(me, 'policy-icon-' + me.id) +
+                '<div class="overlay" id="policy-over-' + me.id + '"></div>' +
+                '</div>';
+            strByCat[me.category] += str;
+        }
+    }
+
+    var str = '';
+    var len = G.policyCategories.length;
+    for (var iC = 0; iC < len; iC++) {
+        if (strByCat[G.policyCategories[iC].id] != '') str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div>';
+    }
+    l('policyBox').innerHTML = str;
+
+    G.addCallbacks();
+
+    var len = G.policy.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.policy[i];
+        if (me.visible) {
+            var div = l('policy-' + me.id); if (div) me.l = div; else me.l = 0;
+            var div = l('policy-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
+            var div = l('policy-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
+            G.addTooltip(me.l, function (what) { return function () { return G.getPolicyTooltip(what) }; }(me), { offY: -8 });
+            if (me.l) { me.l.onclick = function (what) { return function () { G.clickPolicy(what); }; }(me); }
+            if (me.l && !me.binary) {
+                var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div);
+                div.onclick = function (policy, div) { return function () { clickModePolicy = 2; G.selectModeForPolicy(policy, div); }; }(me, div);
+            }
+        }
+    }
+
+    G.draw['policy']();
+}
+
+// Allow touchscreen or mobile users to click on gizmos
+G.selectModeForUnit = function (me, div) {
+    if (div == G.widget.parent) G.widget.close();
+    else {
+        G.widget.popup({
+            func: function (widget) {
+                var str = '';
+                var me = widget.linked;
+                for (var i in me.unit.modes) {
+                    var mode = me.unit.modes[i];
+                    if (!mode.req || G.checkReq(mode.req))
+                    //{str+='<div class="button'+(mode.num==me.mode.num?' on':'')+'" id="mode-button-'+mode.num+'">'+mode.name+'</div>';}
+                    { str += '<div class="button' + (mode.num == me.mode.num ? ' on' : '') + '" id="mode-button-' + mode.num + '">' + (mode.icon ? G.getSmallThing(mode) : '') + '' + mode.name + '</div>'; }
+                }
+                widget.l.innerHTML = str;
+                for (var i in me.unit.modes) {
+                    var mode = me.unit.modes[i];
+                    if (!mode.req || G.checkReq(mode.req)) {
+                        l('mode-button-' + mode.num).onmouseup = function (unit, mode, div) {
+                            return function () {
+                                if (clickModeUnit > 0) {
+                                    return
+                                }
+                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
+                                if (G.speed > 0) {
+                                    if (true)//G.testUse(G.subtractCost(unit.mode.use,mode.use),unit.amount))
+                                    {
+                                        //remove "on" class from all mode buttons and add it to the current mode button
+                                        for (var i in unit.unit.modes) { if (l('mode-button-' + unit.unit.modes[i].num)) { l('mode-button-' + unit.unit.modes[i].num).classList.remove('on'); } }
+                                        l('mode-button-' + mode.num).classList.add('on');
+                                        G.setUnitMode(unit, mode);
+                                        if (unit.l) G.popupSquares.spawn(l('mode-button-' + mode.num), unit.l);
+                                    }
+                                } else G.cantWhenPaused();
+                                widget.closeOnMouseUp = false;//override default behavior
+                                widget.close(5);//schedule to close the widget in 5 frames
+                            };
+                        }(me, mode, div);
+
+                        // New section for the onclick event
+                        l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
+                            return function () {
+                                if (--clickModeUnit > 0) {
+                                    return
+                                }
+                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
+                                if (G.speed > 0) {
+                                    if (true)//G.testUse(G.subtractCost(unit.mode.use,mode.use),unit.amount))
+                                    {
+                                        //remove "on" class from all mode buttons and add it to the current mode button
+                                        for (var i in unit.unit.modes) { if (l('mode-button-' + unit.unit.modes[i].num)) { l('mode-button-' + unit.unit.modes[i].num).classList.remove('on'); } }
+                                        l('mode-button-' + mode.num).classList.add('on');
+                                        G.setUnitMode(unit, mode);
+                                        if (unit.l) G.popupSquares.spawn(l('mode-button-' + mode.num), unit.l);
+                                    }
+                                } else G.cantWhenPaused();
+                                widget.closeOnMouseUp = false;//override default behavior
+                                widget.close(5);//schedule to close the widget in 5 frames
+                            };
+                        }(me, mode, div);
+
+                        if (true)/*G.testUse(G.subtractCost(me.mode.use,mode.use),me.amount))*/ addHover(l('mode-button-' + mode.num), 'hover');//fake mouseover because :hover doesn't trigger when mouse is down
+                        G.addTooltip(l('mode-button-' + mode.num), function (me, unit) {
+                            return function () {
+                                //var uses=G.subtractCost(unit.mode.use,me.use);
+                                var str = '<div class="info"><div class="fancyText barred infoTitle">' + (me.icon ? G.getSmallThing(me) : '') + '' + me.name + '</div>' + G.parse(me.desc);
+                                if (!isEmpty(me.use)) str += '<div class="divider"></div><div class="fancyText par">Uses : ' + G.getUseString(me.use, true, true) + ' per ' + unit.unit.displayName + '</div>';
+                                //if (unit.amount>0 && unit.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,unit.amount)+' to switch</div>';
+                                if (unit.amount > 0 && unit.mode.num != me.num) str += '<div class="divider"></div><div class="fancyText par">Switching will reset all of this stack\'s units to idle</div>';
+                                str += '</div>';
+                                return str;
+                            };
+                        }(mode, me), { offY: -8 });
+                    }
+                }
+            },
+            offX: 0,
+            offY: -8,
+            anchor: 'top',
+            parent: div,
+            linked: me
+        });
+    }
+}
+
+G.update['unit'] = function () {
+    l('unitDiv').innerHTML =
+        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of.<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
+        '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
+        G.button({
+            id: 'removeBulk',
+            text: '<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">-</span>',
+            tooltip: 'Divide by 10',
+            onclick: function () {
+                var n = G.getSetting('buyAmount');
+                if (G.keys[17]) n = -n;
+                else {
+                    if (n == 1) n = -1;
+                    else if (n < 1) n = n * 10;
+                    else if (n > 1) n = n / 10;
+                }
+                n = Math.round(n);
+                n = Math.max(Math.min(n, 1e+35), -1e+35);
+                G.setSetting('buyAmount', n);
+                G.updateBuyAmount();
+            },
+        }) +
+        '<div id="buyAmount" class="bgMid framed" style="width:128px;display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">...</div>' +
+        G.button({
+            id: 'addBulk',
+            text: '<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">+</span>',
+            tooltip: 'Multiply by 10',
+            onclick: function () {
+                var n = G.getSetting('buyAmount');
+                if (G.keys[17]) n = -n;
+                else {
+                    if (n == -1) n = 1;
+                    else if (n > -1) n = n * 10;
+                    else if (n < -1) n = n / 10;
+                }
+                n = Math.round(n);
+                n = Math.max(Math.min(n, 1e+35), -1e+35);
+                G.setSetting('buyAmount', n);
+                G.updateBuyAmount();
+            }
+        }) +
+        '<div class="flourishR"></div></div>' +
+        '<div class="fullCenteredOuter" style="padding-top:16px;"><div id="unitBox" class="thingBox fullCenteredInner"></div></div>';
+
+    /*
+        -create an empty string for every unit category
+        -go through every unit owned and add it to the string of its category
+        -display each string under category headers, then attach events
+    */
+    var strByCat = [];
+    var len = G.unitCategories.length;
+    for (var iC = 0; iC < len; iC++) {
+        strByCat[G.unitCategories[iC].id] = '';
+    }
+    var len = G.unitsOwned.length;
+    for (var i = 0; i < len; i++) {
+        var str = '';
+        var me = G.unitsOwned[i];
+        str += '<div class="thingWrapper">';
+        str += '<div class="unit thing' + G.getIconClasses(me.unit, true) + '" id="unit-' + me.id + '">' +
+            G.getIconStr(me.unit, 'unit-icon-' + me.id, 0, true) +
+            G.getArbitrarySmallIcon([0, 0], false, 'unit-modeIcon-' + me.id) +
+            '<div class="overlay" id="unit-over-' + me.id + '"></div>' +
+            '<div class="amount" id="unit-amount-' + me.id + '"></div>' +
+            '</div>';
+        if (me.unit.gizmos) {
+            str += '<div class="gizmos">' +
+                '<div class="gizmo gizmo1" id="unit-mode-' + me.id + '"></div>' +
+                '<div class="gizmo gizmo2' + (me.splitOf ? ' off' : '') + '" id="unit-split-' + me.id + '"></div>' +
+                '<div class="gizmo gizmo3" id="unit-percent-' + me.id + '"><div class="percentGizmo" id="unit-percentDisplay-' + me.id + '"></div></div>' +
+                '</div>';
+        }
+        str += '</div>';
+        strByCat[me.unit.category] += str;
+    }
+
+    var str = '';
+    var len = G.unitCategories.length;
+    for (var iC = 0; iC < len; iC++) {
+        if (strByCat[G.unitCategories[iC].id] != '') {
+            if (G.unitCategories[iC].id == 'wonder') str += '<br>';
+            str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="unit-catName-' + iC + '">' + G.unitCategories[iC].name + '</div>' + strByCat[G.unitCategories[iC].id] + '</div>';
+        }
+    }
+    l('unitBox').innerHTML = str;
+
+    G.addCallbacks();
+
+
+    G.addTooltip(l('buyAmount'), function () { return '<div style="width:320px;"><div class="barred">Buy amount</div><div class="par">This is how many units you\'ll queue or unqueue at once in a single click.</div><div class="par">Click the + and - buttons to increase or decrease the amount. You can ctrl-click either button to instantly make the amount negative or positive.</div><div class="par">You can also ctrl-click a unit to unqueue an amount instead of queueing it, or shift-click to queue 50 times more.</div></div>'; }, { offY: -8 });
+
+    G.updateBuyAmount();
+    var len = G.unitsOwned.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.unitsOwned[i];
+        var div = l('unit-' + me.id); if (div) me.l = div; else me.l = 0;
+        var div = l('unit-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
+        var div = l('unit-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
+        var div = l('unit-amount-' + me.id); if (div) me.lAmount = div; else me.lAmount = 0;
+        var div = l('unit-modeIcon-' + me.id); if (div) me.lMode = div; else me.lMode = 0;
+        if (me.lMode && me.mode.icon) { G.setIcon(me.lMode, me.mode.icon); me.lMode.style.display = 'block'; }
+        else if (me.lMode) me.lMode.style.display = 'none';
+        if (me.unit.gizmos) {
+            var div = l('unit-mode-' + me.id); div.onmousedown = function (unit, div) { return function () { G.selectModeForUnit(unit, div); }; }(me, div);
+            div.onclick = function (unit, div) { return function () { clickModeUnit = 2; G.selectModeForUnit(unit, div); }; }(me, div);
+            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to change unit mode.<br>Current mode :<div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
+            var div = l('unit-split-' + me.id); div.onclick = function (unit, div) { return function () { if (G.speed > 0) G.splitUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
+            G.addTooltip(div, function (me, instance) { return function () { if (instance.splitOf) return 'Click to remove this stack of units.'; else return 'Click to split into another unit stack.<br>Different unit stacks can use different modes.' }; }(me.unit, me), { offY: -8 - 16 });
+            var div = l('unit-percent-' + me.id); div.onmousedown = function (unit, div) { return function () { if (G.speed > 0) G.selectPercentForUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
+            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to set unit work capacity.<br>This feature is not yet implemented.' }; }(me.unit, me), { offY: 8, anchor: 'bottom' });
+        }
+        G.addTooltip(me.l, function (me, instance) {
+            return function () {
+                var amount = G.getBuyAmount(instance);
+                if (me.wonder) amount = (amount > 0 ? 1 : -1);
+                if (me.wonder) {
+                    var str = '<div class="info">';
+                    str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>';
+                    str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
+                    str += '<div class="fancyText barred" style="color:#c3f;">Wonder</div>';
+                    if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders</div>';
+                    else {
+                        if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
+                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed - Step : ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
+                        else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step : ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
+                        else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform</div>';
+                        else if (instance.mode == 4) str += '<div class="fancyText barred">Completed<br>Click to ascend</div>';
+                        //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
+                    }
+                    if (amount < 0) amount = 0;
+
+                    if (instance.mode != 4) {
+                        str += '<div class="fancyText barred">';
+                        if (instance.mode == 0 && amount > 0) {
+                            if (!isEmpty(me.cost)) str += '<div>Initial cost : ' + G.getCostString(me.cost, true, false, amount) + '</div>';
+                            if (!isEmpty(me.use)) str += '<div>Uses : ' + G.getUseString(me.use, true, false, amount) + '</div>';
+                            if (!isEmpty(me.require)) str += '<div>Prerequisites : ' + G.getUseString(me.require, true, false, amount) + '</div>';
+                        }
+                        else if ((instance.mode == 1 || instance.mode == 2) && !isEmpty(me.costPerStep)) str += '<div>Cost per step : ' + G.getCostString(me.costPerStep, true, false, amount) + '</div>';
+                        else if (instance.mode == 3 && !isEmpty(me.finalStepCost)) str += '<div>Final step cost : ' + G.getCostString(me.finalStepCost, true, false, amount) + '</div>';
+                        str += '</div>';
+                    }
+
+                    if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
+                    str += '</div>';
+                    str += G.debugInfo(me);
+                    return str;
+                }
+                else {
+                    if (amount < 0) amount = Math.max(-instance.targetAmount, amount);
+                    /*if (G.getSetting('buyAny'))
+                    {
+                        var n=0;
+                        n=G.testAnyCost(me.cost);
+                        if (n!=-1) amount=Math.min(n,amount);
+                        n=G.testAnyUse(me.use,amount);
+                        if (n!=-1) amount=Math.min(n,amount);
+                        n=G.testAnyUse(me.require,amount);
+                        if (n!=-1) amount=Math.min(n,amount);
+                        n=G.testAnyUse(instance.mode.use,amount);
+                        if (n!=-1) amount=Math.min(n,amount);
+                        n=G.testAnyLimit(me.limitPer,G.getUnitAmount(me.name)+amount);
+                        if (n!=-1) amount=Math.min(n,amount);
+                    }*/
+                    var str = '<div class="info">';
+                    //infoIconCompensated ?
+                    str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div>' +
+                        '<div class="fancyText infoAmount onLeft">' + B(instance.displayedAmount) + '</div>' +
+                        '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued :<br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active :<br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
+                        '</div>';
+                    str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
+                    str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
+                    if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode :<br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
+                    str += '<div class="fancyText barred">';
+                    if (!isEmpty(me.cost)) str += '<div>Cost : ' + G.getCostString(me.cost, true, false, amount) + '</div>';
+                    if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses : ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
+                    if (!isEmpty(me.require)) str += '<div>Prerequisites : ' + G.getUseString(me.require, true, false, amount) + '</div>';//should amount count?
+                    if (!isEmpty(me.upkeep)) str += '<div>Upkeep : ' + G.getCostString(me.upkeep, true, false, amount) + '</div>';
+                    if (!isEmpty(me.limitPer)) str += '<div>Limit : ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
+                    if (isEmpty(me.cost) && isEmpty(me.use) && isEmpty(me.staff) && isEmpty(me.upkeep) && isEmpty(me.require)) str += '<div>Free</div>';
+                    if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses : ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
+                    str += '</div>';
+                    if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
+                    str += '</div>';
+                    str += G.debugInfo(me);
+                    return str;
+                }
+            };
+        }(me.unit, me), { offY: -8 });
+        if (me.l) me.l.onclick = function (unit) {
+            return function (e) {
+                if (G.speed > 0) {
+                    var amount = G.getBuyAmount(unit);
+                    if (unit.unit.wonder) amount = (amount > 0 ? 1 : -1);
+                    if (amount < 0) G.taskKillUnit(unit, -amount);
+                    else if (amount > 0) G.taskBuyUnit(unit, amount, (G.getSetting('buyAny')));
+                } else G.cantWhenPaused();
+            };
+        }(me);
+        if (me.l) me.l.oncontextmenu = function (unit) {
+            return function (e) {
+                e.preventDefault();
+                if (G.speed > 0) {
+                    var amount = -G.getBuyAmount(unit);
+                    if (unit.unit.wonder) amount = (amount > 0 ? 1 : -1);
+                    if (amount < 0) G.taskKillUnit(unit, -amount);
+                    //else if (amount>0) G.buyUnit(unit,amount);
+                } else G.cantWhenPaused();
+            };
+        }(me);
+    }
+    G.draw['unit']();
+    //G.cacheUnitBounds();
+}
+
 // We can override this function to hide negative costs
 G.getCostString = function (costs, verbose, neutral, mult) {
     //returns a string that displays resource costs with icons and amount; the amounts will be red if our current resources don't match them, unless neutral is set to true; only the amount will be displayed unless verbose is true, in which case the amount and the resource name will be displayed; costs will be multiplied by mult if specified
@@ -10377,7 +10956,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'digging', category: 'tier1',
-                desc: '@unlocks [digger]s@paves the way for simple buildings<>The earth is full of riches - to those who can find them. // <small>Diggy,diggy,hole</small>',
+                desc: '@unlocks [digger]s@paves the way for simple buildings<>The earth is full of riches - to those who can find them. //<small>Diggy, diggy, hole</small>',
                 icon: [11, 1],
                 cost: { 'insight': 10 },
                 req: { 'stone-knapping': true },
@@ -12098,7 +12677,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'moderation',
                 displayName: '<font color="Yellow">Moderation</font>',
-                desc: 'The time has finally come and people seem very curious. That is a sign that they want to know more and more. May unlock unique techs, traits, units for this path.',
+                desc: 'The time has finally come, and people seem very curious. That is a sign that they want to know more and more. This trait will unlock unique techs, traits, and units.',
                 icon: [25, 17, 'magixmod'],
                 cost: {},
                 chance: 750,
@@ -12111,7 +12690,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'caretaking',
                 displayName: '<font color="Yellow">Caretaking</font>',
-                desc: 'People do not seem curious to further discoveries. Instead of it they wish to live long, calmly and in peace. May unlock unique techs, traits, units for this path.',
+                desc: 'People do not seem curious about further discoveries. Instead of that, they wish to live long, calmly and in peace. This trait will unlock unique techs, traits, and units.',
                 icon: [24, 17, 'magixmod'],
                 cost: {},
                 req: { 'plain island building': true, 'moderation': false },
@@ -12130,7 +12709,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dark side',
-                desc: '@people believe that if there are good deities, helpful spirits then there must be something opposite to them, some of terror and pain',
+                desc: '@people believe that if there are good deities and helpful spirits then there must be something opposite to them, some of terror and pain',
                 icon: [11, 19, 'magixmod'],
                 cost: { 'spirituality': 10, 'faith': 200 },
                 chance: 375,
@@ -12141,7 +12720,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt1',
                 displayName: 'Devil\'s trait #1 Lazy blacksmiths',
-                desc: 'Rates of [blacksmith workshop]s production decreased by 5% at each mode. It involves its paradise version too.',
+                desc: 'Rates of [blacksmith workshop]s production decreased by 5% at each mode. It also affects the paradise version.',
                 icon: [26, 1, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12180,7 +12759,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt4',
                 displayName: 'Devil\'s trait #4 Precious material unluck',
-                desc: 'All gathering of [gold ore,gold] and [platinum ore,platinum] decreased by 5%',
+                desc: 'All gathering of [gold ore,gold] and [platinum ore,platinum] decreased by 5%.',
                 icon: [26, 4, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12193,7 +12772,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt5',
                 displayName: 'Devil\'s trait #5 Hard material decay',
-                desc: 'All gathering of resources that are used to craft [hard metal ingot]s decreased by 5%',
+                desc: 'All gathering of resources that are used to craft [hard metal ingot]s decreased by 5%.',
                 icon: [26, 5, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12206,7 +12785,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt6',
                 displayName: 'Devil\'s trait #6 Soft metal decay',
-                desc: 'All gathering of resources that are used to craft [soft metal ingot]s decreased by 5%',
+                desc: 'All gathering of resources that are used to craft [soft metal ingot]s decreased by 5%.',
                 icon: [26, 6, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -14639,7 +15218,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'intuition',
-                desc: '[intuition] opens a way to more complex researching. Researches related to crafting, building, planning etc can be "on plan" since this moment.',
+                desc: '[intuition] opens a way to more complex researching. Researches related to crafting, building, planning, and other related ideas can be "on-plan" since this moment.',
                 icon: [35, 31, 'magixmod'],
                 chance: 1.75,
                 cost: { 'culture': 1, 'insight': 1, 'influence': 1 },
@@ -14647,7 +15226,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'manufacture units II', category: 'tier2',
-                desc: 'Now more units will be merged into one. [artisan]s: craft [stone weapons], [stone tools], [bow]s and [crossbow]s  modes will no longer be available for [artisan]//[artisan] will no longer work while in these modes. ',
+                desc: 'Now, more units will be merged into one. [artisan]s\' crafting of [stone weapons], [stone tools], [bow]s and [crossbow]s modes will no longer be available for [artisan]//[artisan] will no longer work while in these modes.',
                 icon: [16, 31, 'magixmod'],
                 req: { 'moderation': false, 'caretaking': true, 'manufacture units I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 335 },
@@ -14657,7 +15236,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mentors of nature', category: 'tier1',
-                desc: '[druid]s now generate [health]. //Some people call\'em nature\'s descendants. Probably this is the reason.',
+                desc: '[druid]s now generate [health]. //Some people call\'em nature\'s descendants. This may be the reason.',
                 icon: [31, 31, 'magixmod'],
                 req: { 'Wizard complex': true, 'smaller but efficient': true },
                 cost: { 'insight': 750 },
@@ -14667,7 +15246,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'no knapping anymore',
-                desc: 'Depending on chosen path people will produce way less [knapped tools]. Also [healer], [digger] and [woodcutter] will use now [stone tools] instead of [knapped tools] However it won\'t increase their efficiency. //For [moderation] it is 95% //For [caretaking] it is 80%',
+                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Also [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency. //For [moderation] it is 95%, and for [caretaking] it is 80%',
                 icon: [27, 31, 'magixmod'],
                 cost: { 'culture II': 10 },
                 effects: [
@@ -14677,7 +15256,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'factories II', category: 'tier2',
-                desc: 'Now more units will be merged into one. [artisan]s : craft [stone weapons], [stone tools], [bow]s modes will no longer be available for [artisan]//@[artisan] will no longer work while in these modes. //@also unlocks [heat factory] which will replace <b>Start fires</b> modes for [firekeeper]. You will still be able to specify from what resource [heat factory] will produce [fire pit]s by switching modes. ',
+                desc: 'Now, more units will be merged into one. [artisan]s : craft [stone weapons], [stone tools], [bow]s modes will no longer be available for [artisan]//@[artisan] will no longer work while in these modes. //@also unlocks [heat factory] which will replace <b>Start fires</b> modes for [firekeeper]. You will still be able to specify from what resource [heat factory] will produce [fire pit]s by switching modes. ',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 335 },
@@ -14687,7 +15266,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'villas of victory', category: 'tier2',
-                desc: 'provides 15 [inspiration II],5 [spirituality II] and [authority II]. //Unlocks villa of victory. New way to give people housing...//This unit will provide amount of housing equal to result of equation below: //<font color="aqua">(victory points+1)*5</font>',
+                desc: 'Provides 15 [inspiration II],5 [spirituality II] and [authority II]. //Unlocks villa of victory. New way to give people housing...//This unit will provide amount of housing equal to result of equation below: //<font color="aqua">(victory points+1)*5</font>',
                 icon: [0, 31, 'magixmod'],
                 req: { 'bigger university': true },
                 cost: { 'insight II': 325, 'science': 50, 'culture II': 25 },
@@ -14888,7 +15467,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'deep-rooted faith',
-                desc: 'Provides @50 [spirituality II], [spirituality] @90 [inspiration II]. //Religion built for centuries yet milleniums is deep rooted meaning that almost nothing can make this religion die. ',
+                desc: 'Provides @50 [spirituality II], [spirituality] @90 [inspiration II]. //Religion built for centuries or milleniums is deep-rooted, meaning that almost nothing can make this religion die.',
                 icon: [35, 24, 'magixmod'],
                 cost: { 'culture II': 50, 'faith II': 35, 'insight II': 350, 'science': 60 },
                 effects: [
@@ -14913,7 +15492,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tool refinery 2/2', category: 'tier2',
-                desc: '[stone tools,Stone tools] become [stone tools,Refined tools] making them decay slower. Also [artisan] is no longer able to craft them but...obtain [factories II] or [manufacture units II] to unlock unit that will let you craft them again if you do not have it yet.',
+                desc: '[stone tools,Stone tools] become [stone tools,Refined tools], making them decay slower. Also, [artisan]s are no longer able to craft them. Obtain [factories II] or [manufacture units II] to unlock a unit that will let you craft them again if you do not have it yet.',
                 icon: [27, 2, 'magixmod', 25, 31, 'magixmod'],
                 req: { 'outstanding wisdom': true, 'wonder \'o science': true },
                 cost: { 'insight II': 150, 'science': 5 },
@@ -14933,7 +15512,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'at(ct)',
                 displayName: 'automation', category: 'tier1',
-                desc: 'Caretaking has one feature: people do not focus that much on industrialization or technological progress / innovations. That means some part of automation people will want to discover later but they won\'t want to make every single thing being automated.',
+                desc: 'Caretaking has one feature: people do not focus that much on industrialization or technological progress or innovations. That means that for some parts of automation, people will want to discover it later, but they won\'t want to make every single thing being automated.',
                 icon: [15, 31, 'magixmod'],
                 req: { 'paradise crafting': true, 'bigger university': true },
                 cost: { 'insight': 1500, 'wisdom': 15 },
@@ -14973,7 +15552,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'spark\'o religion',
-                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such like cults, courie, spirits. Who knows if you can even reach some sort of...[magic essences,Magic] ?',
+                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such like cults, courie, spirits. Who knows if you can even reach some sort of...[magic essences,Magic]?',
                 icon: [35, 15, 'magixmod'],
                 chance: 1.3,
                 cost: { 'culture': 2 },
@@ -15958,7 +16537,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'glorious agriculture', category: 'tier2',
-                desc: 'Unlocks [wheat farmland,Farmlands] for [land of the Past,ancestors world].[wheat farmland,Farmlands] not only produce [wheat, Food] but also provide small amount of [housing] and [food storage].',
+                desc: 'Unlocks [wheat farmland,Farmlands] for [land of the Past,ancestors world].[wheat farmland,Farmlands] not only produce [wheat, Food], but also provide a small amount of [housing] and [food storage].',
                 icon: [3, 9, 'magixmod'],
                 req: { 'ancestors world housing': true, 'leaves of wisdom': true },
                 cost: { 'insight II': 151, 'culture II': 40, 'influence II': 10, 'science': 10 },
@@ -15974,7 +16553,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ancestors world housing', category: 'tier2',
-                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited at some way. Paradise is not like ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + "(Plain Island)" + ' a spot where you can build as much housing as you wish because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse].',
+                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited in some way. Paradise is not like ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + "(Plain Island)" + ' a spot where you can build as much housing as you wish because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse].',
                 icon: [7, 8, 'magixmod'],
                 cost: { 'insight II': 70 },
                 req: { 'ancestors world building': true, 'ancestors world housing conceptions': true, 'cozy building': true },
@@ -23022,7 +23601,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'digging', category: 'tier1',
-                desc: '@unlocks [digger]s@paves the way for simple buildings<>The earth is full of riches - to those who can find them. <br>//<small>Diggy diggy hole</small>',
+                desc: '@unlocks [digger]s@paves the way for simple buildings<>The earth is full of riches - to those who can find them. //<small>Diggy, diggy, hole</small>',
                 icon: [11, 1, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 3 },
                 req: { 'stone-knapping': true },
@@ -23032,7 +23611,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'well-digging', category: 'tier1',
-                desc: '@unlocks [well]s<>It takes some thinking to figure out that water can be found if you dig deep enough.//It takes a lot of bravery, however, to find out if it is safe to drink.',
+                desc: '@unlocks [well]s<>It takes some thinking to figure out that water can be found if you dig deep enough.//It takes a lot of bravery, however, to find out if it is safe enough to drink.',
                 icon: [22, 7, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 3 },
                 req: { 'digging': true, 'sedentism': true, 'tool-making': true },
@@ -23041,7 +23620,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'woodcutting', category: 'tier1',
-                desc: '@unlocks [woodcutter]s// <small>Chop,chop</small>',
+                desc: '@unlocks [woodcutter]s// <small>chopchopchop</small>',
                 icon: [23, 5, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 3 },
                 req: { 'stone-knapping': true },
@@ -23773,7 +24352,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'spark\'o religion',
-                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such like cults, courie, spirits. Who knows if you can even reach some sort of...Magic? (It\'s the name of the game...)',
+                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such like cults, courie, spirits. Who knows if you can even reach some sort of...[magic essences,Magic]? (It\'s the name of the game...)',
                 icon: [24, 12, 'c2'],
                 chance: 2,
                 cost: { 'gentility': 6 },

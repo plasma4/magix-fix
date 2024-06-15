@@ -23,6 +23,7 @@ function setCookie(cname, cvalue, exdays) {
     let expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -591,7 +592,7 @@ G.AddData({
                         n = Math.max(Math.min(n, 1e+35), -1e+35);
                         G.setSetting('buyAmount', n);
                         G.updateBuyAmount();
-                        G.playSound('http://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
                     },
                 }) +
                 '<div id="buyAmount" class="bgMid framed" style="width:128px;display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">...</div>' +
@@ -611,7 +612,7 @@ G.AddData({
                         n = Math.max(Math.min(n, 1e+35), -1e+35);
                         G.setSetting('buyAmount', n);
                         G.updateBuyAmount();
-                        G.playSound('http://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
                     }
                 }) + '<div class="flourishR"></div>' +
                 (G.modsByName['Default dataset'] ? (G.traitsOwnedNames.indexOf('t11') > 0 ? '<br />' + G.button({
@@ -631,7 +632,7 @@ G.AddData({
                         } else {
                             G.middleText("<small>- Cannot afford -</small>");
                         }
-                        G.playSound('http://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
                     }
                 }) : "") : "")
                 + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br />You need " + B(G.herbReq) + " <font color='lime'>Herb essence</font> to please people in this plane.</div>" : "") +
@@ -715,7 +716,7 @@ G.AddData({
                     else if (me.lMode) me.lMode.style.display = 'none';
                     if (me.unit.gizmos) {
                         var div = l('unit-mode-' + me.id); div.onmousedown = function (unit, div) { return function () { G.selectModeForUnit(unit, div); }; }(me, div);
-                        G.addTooltip(div, function (me, instance) { return function () { return 'Click or drag to change unit mode.<br>Current mode :<div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
+                        G.addTooltip(div, function (me, instance) { return function () { return 'Click or drag to change unit mode.<br>Current mode:<div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
                         var div = l('unit-split-' + me.id); div.onclick = function (unit, div) { return function () { if (G.speed > 0) G.splitUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
                         G.addTooltip(div, function (me, instance) { return function () { if (instance.splitOf) return 'Click to <u>remove</u> this stack of units.'; else return 'Click to <u>split</u> into another unit stack.<br>Different unit stacks can use different modes.' }; }(me.unit, me), { offY: -8 - 16 });
                         var div = l('unit-percent-' + me.id); div.onmousedown = function (unit, div) { return function () { if (G.speed > 0) G.selectPercentForUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
@@ -787,7 +788,7 @@ G.AddData({
                                     '</div>';
                                 str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
                                 str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
-                                if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode :<br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
+                                if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode:<br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
                                 str += '<div class="fancyText barred">';
                                 if (!isEmpty(me.cost)) str += '<div>Cost: ' + G.getCostString(me.cost, true, false, amount) + '</div>';
                                 if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses: ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
@@ -3333,7 +3334,7 @@ G.AddData({
                         G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/spiritReject.wav');
                         me.l.classList.add('off');
                     } else {
-                        G.playSound('http://orteil.dashnet.org/cookieclicker/snd/spirit.mp3');
+                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/spirit.mp3');
                         me.l.classList.remove('off')
                     }
                 }
@@ -4473,12 +4474,12 @@ G.AddData({
                         //Time measuring tech. It will have 2 levels. Here goes the code:
                         if (!G.has('time measuring 1/2') && !G.has('primary time measure')) {
                             l('date').innerHTML = 'No ' + G.getName('inhabs') + ' knows the time yet';
-                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">While researching, people may get the <b>Primary time measure</b> knowledge to display the current date<br>(you\'ll see it inCenturies).<br>Despite that, current date events related to time may still occur.</div>'; }, { offY: -8 });
-                            G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain at least 250 fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">While researching, people may get the <b>Primary time measure</b> knowledge to display the current date<br>(you\'ll see it in Centuries).<br>Despite that, current date events related to time may still occur.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
                         }
                         else if (G.has('primary time measure') && !G.has('time measuring 1/2')) {
                             l('date').innerHTML = 'Century ' + Math.floor(((G.year / 100) + 1)) + ' in ' + G.getName('civ');
-                            G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometime people start a new centrury. To see years obtain <b>Time measuring</b> 1/2 research.</div>'; }, { offY: -8 });
 
                         } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
