@@ -26,9 +26,85 @@ meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 document.getElementsByTagName('head')[0].appendChild(meta);
 
+var EMPTY = function () { }
+var currentClickFunc = EMPTY
+var alreadyClickedMode = false
 var isChangedMagix = true
 var clickModePolicy = 0
 var clickModeUnit = 0
+
+// Touchscreen fix
+G.update['res'] = function () {
+    currentClickFunc()
+    currentClickFunc = EMPTY
+    var str = '';
+
+    str += G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">These are your resources. Some of them are physical goods you own, while others are indicators of various stats about your civilization.</div><div class="par">Resources are used for many things; creating units, crafting more resources, generating technologies and cultural traits...</div><div class="par">Some resources are part of other resources; for instance, the "food" resource represents the sum of all food-type resources you own, such as herbs and fruits.</div><div class="par">Many resources decay over time : food rots, fresh water goes bad, crafting materials get lost or stolen. Some measures such as storage containers can mitigate that.</div><div class="par">You can click on resource category headers to collapse them.</div></div>', 'infoButton');
+
+    l('extraRes').innerHTML = str;
+
+    //create the instances and set their DOM
+    G.resInstances = [];
+    G.resN = 0;
+    str = '';
+
+    var catI = 0;
+    //run through every category and create resource instances as specified
+    for (var i in G.resCategories) {
+        var cat = G.resCategories[i];
+        str += '<div class="categoryName barred fancyText" style="display:none;" id="res-catName-' + catI + '">' + cat.name + '</div>';
+        if (cat.open) {
+            var catRes = [];
+            var catSideRes = [];
+            for (var ii in cat.base || []) { catRes.push(G.getRawRes(cat.base[ii])); }
+            for (var ii in cat.side || []) { catSideRes.push(G.getRawRes(cat.side[ii])); }
+
+            G.resCategories[i].contents = [];//we're caching the resources contained in each category, this comes in handy later
+
+            //if (catI>0) str+='<div class="divider"></div>';
+
+            str += '<div class="category' + (catSideRes.length > 0 ? ' categoryWithSide' : '') + '" style="display:none;" id="res-cat-' + catI + '">';
+
+            if (catSideRes.length > 0) {
+                str += '<div class="sideCategory">';
+                for (var ii in catSideRes) {
+                    var rawMe = catSideRes[ii];
+                    var me = G.resolveRes(catSideRes[ii]);
+                    var instance = { res: rawMe, id: G.resN };
+                    G.resInstances.unshift(instance);
+                    G.resCategories[i].contents.push(rawMe);
+                    G.resN++;
+
+                    str += '<div class="res thing' + G.getIconClasses(rawMe) + '" id="res-' + instance.id + '" style="display:none;">' +
+                        G.getIconStr(rawMe, 'res-icon-' + instance.id) +
+                        '<div class="overlay" id="res-over-' + instance.id + '"></div>' +
+                        '<div class="amount" id="res-amount-' + instance.id + '"></div>' +
+                        '</div>';
+                }
+                str += '</div>';
+            }
+
+            for (var ii in catRes) {
+                var rawMe = catRes[ii];
+                var me = G.resolveRes(catRes[ii]);
+                var instance = { res: rawMe, id: G.resN };
+                G.resInstances.unshift(instance);
+                G.resCategories[i].contents.push(rawMe);
+                G.resN++;
+
+                str += '<div class="res thing' + G.getIconClasses(rawMe) + '" id="res-' + instance.id + '">' +
+                    G.getIconStr(rawMe, 'res-icon-' + instance.id) +
+                    '<div class="overlay" id="res-over-' + instance.id + '"></div>' +
+                    '<div class="amount" id="res-amount-' + instance.id + '"></div>' +
+                    '</div>';
+            }
+
+            str += '</div>';
+        }
+        catI++;
+    }
+}
+
 // Allow touchscreen or mobile users to change policies
 G.widget.update = function () {
     var me = this;
@@ -145,18 +221,20 @@ G.widget.update = function () {
         me.lAnchor.style.top = y + 'px';
         me.lAnchor.style.display = 'block';
         if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
-            clickModePolicy = 0
-            clickModeUnit = 0
             me.close();
         }
     }
     if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
         me.closeInFrames--;
+        clickModePolicy = 0;
+        clickModeUnit = 0;
         if (me.closeInFrames == 0) me.close();
     }
 }
 
 G.selectModeForPolicy = function (me, div) {
+    currentClickFunc()
+    currentClickFunc = EMPTY
     if (div == G.widget.parent) G.widget.close();
     else {
         G.widget.popup({
@@ -199,10 +277,10 @@ G.selectModeForPolicy = function (me, div) {
                         }(me, mode, div);
 
                         // New section for the onclick event
-                        l('mode-button-' + mode.num).onclick = function (target, mode, div) {
+                        currentClickFunc = l('mode-button-' + mode.num).onclick = function (target, mode, div) {
                             return function () {
                                 if (--clickModePolicy > 0) {
-                                    return
+                                    return false
                                 }
                                 //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                 if (G.speed > 0) {
@@ -306,6 +384,8 @@ G.update['policy'] = function () {
 
 // Allow touchscreen or mobile users to click on gizmos
 G.selectModeForUnit = function (me, div) {
+    clickModePolicy = 0;
+    clickModeUnit = 0;
     if (div == G.widget.parent) G.widget.close();
     else {
         G.widget.popup({
@@ -344,7 +424,7 @@ G.selectModeForUnit = function (me, div) {
                         }(me, mode, div);
 
                         // New section for the onclick event
-                        l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
+                        currentClickFunc = l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
                             return function () {
                                 if (--clickModeUnit > 0) {
                                     return
@@ -2542,7 +2622,7 @@ if (getCookie("civ") == "0") {
                             guru = true
                         }
                         if (G.has('rules of food') && !rofpopup && !G.has('sedentism')) {
-                            G.Message({ type: 'tutorial', text: 'You now can control food and water rations. Your people seem a little angry and want to eat and drink more. Check the policies, there you may find a solution to this minor problem that may later become the major one if you will ignore this.<br>Make sure you unlocked policies first!', icon: [4, 28, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You now can control food and water rations. Your people seem a little angry and want to eat and drink more. Check the policies, there you may find a solution to this minor problem that may quickly become a major one if you will ignore this.<br>Make sure you unlocked policies first!', icon: [4, 28, 'magixmod'] })
                             rofpopup = true
                         }
                         if (G.getRes('land').amount == 100 && !explorepop && !G.has('scout').amount >= 1) {
@@ -16742,7 +16822,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your people are no longer unhappy when eating [bugs]. @in addition one-third of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Consumers are happy about that as they say it improves dish\'s taste</small>',
+                desc: '@your people are no longer unhappy when eating [bugs]. @in addition one-third of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>There are some countries that put worms into dishes. Consumers are happy about that, as they say it improves the dish\'s taste!</small>',
                 icon: [8, 11, 24, 1],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
