@@ -26,84 +26,20 @@ meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 document.getElementsByTagName('head')[0].appendChild(meta);
 
-var EMPTY = function () { }
-var currentClickFunc = EMPTY
-var alreadyClickedMode = false
+// Touchscreen fix
+var modeFunction = null
 var isChangedMagix = true
 var clickModePolicy = 0
 var clickModeUnit = 0
-
-// Touchscreen fix
-G.update['res'] = function () {
-    currentClickFunc()
-    currentClickFunc = EMPTY
-    var str = '';
-
-    str += G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">These are your resources. Some of them are physical goods you own, while others are indicators of various stats about your civilization.</div><div class="par">Resources are used for many things; creating units, crafting more resources, generating technologies and cultural traits...</div><div class="par">Some resources are part of other resources; for instance, the "food" resource represents the sum of all food-type resources you own, such as herbs and fruits.</div><div class="par">Many resources decay over time : food rots, fresh water goes bad, crafting materials get lost or stolen. Some measures such as storage containers can mitigate that.</div><div class="par">You can click on resource category headers to collapse them.</div></div>', 'infoButton');
-
-    l('extraRes').innerHTML = str;
-
-    //create the instances and set their DOM
-    G.resInstances = [];
-    G.resN = 0;
-    str = '';
-
-    var catI = 0;
-    //run through every category and create resource instances as specified
-    for (var i in G.resCategories) {
-        var cat = G.resCategories[i];
-        str += '<div class="categoryName barred fancyText" style="display:none;" id="res-catName-' + catI + '">' + cat.name + '</div>';
-        if (cat.open) {
-            var catRes = [];
-            var catSideRes = [];
-            for (var ii in cat.base || []) { catRes.push(G.getRawRes(cat.base[ii])); }
-            for (var ii in cat.side || []) { catSideRes.push(G.getRawRes(cat.side[ii])); }
-
-            G.resCategories[i].contents = [];//we're caching the resources contained in each category, this comes in handy later
-
-            //if (catI>0) str+='<div class="divider"></div>';
-
-            str += '<div class="category' + (catSideRes.length > 0 ? ' categoryWithSide' : '') + '" style="display:none;" id="res-cat-' + catI + '">';
-
-            if (catSideRes.length > 0) {
-                str += '<div class="sideCategory">';
-                for (var ii in catSideRes) {
-                    var rawMe = catSideRes[ii];
-                    var me = G.resolveRes(catSideRes[ii]);
-                    var instance = { res: rawMe, id: G.resN };
-                    G.resInstances.unshift(instance);
-                    G.resCategories[i].contents.push(rawMe);
-                    G.resN++;
-
-                    str += '<div class="res thing' + G.getIconClasses(rawMe) + '" id="res-' + instance.id + '" style="display:none;">' +
-                        G.getIconStr(rawMe, 'res-icon-' + instance.id) +
-                        '<div class="overlay" id="res-over-' + instance.id + '"></div>' +
-                        '<div class="amount" id="res-amount-' + instance.id + '"></div>' +
-                        '</div>';
-                }
-                str += '</div>';
-            }
-
-            for (var ii in catRes) {
-                var rawMe = catRes[ii];
-                var me = G.resolveRes(catRes[ii]);
-                var instance = { res: rawMe, id: G.resN };
-                G.resInstances.unshift(instance);
-                G.resCategories[i].contents.push(rawMe);
-                G.resN++;
-
-                str += '<div class="res thing' + G.getIconClasses(rawMe) + '" id="res-' + instance.id + '">' +
-                    G.getIconStr(rawMe, 'res-icon-' + instance.id) +
-                    '<div class="overlay" id="res-over-' + instance.id + '"></div>' +
-                    '<div class="amount" id="res-amount-' + instance.id + '"></div>' +
-                    '</div>';
-            }
-
-            str += '</div>';
-        }
-        catI++;
+document.addEventListener("click", function (e) {
+    var target = e.target
+    if (modeFunction !== null && (target.id === "resources" || target.id === "generalInfo" || target.className.slice(0, 4) === "tab " || (target.parentElement.className && target.parentElement.className.slice(0, 4) === "tab "))) {
+        clickModePolicy = 0
+        clickModeUnit = 0
+        modeFunction()
+        modeFunction = null
     }
-}
+})
 
 // Allow touchscreen or mobile users to change policies
 G.widget.update = function () {
@@ -225,16 +161,14 @@ G.widget.update = function () {
         }
     }
     if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
+        clickModePolicy = 0
+        clickModeUnit = 0
         me.closeInFrames--;
-        clickModePolicy = 0;
-        clickModeUnit = 0;
         if (me.closeInFrames == 0) me.close();
     }
 }
 
 G.selectModeForPolicy = function (me, div) {
-    currentClickFunc()
-    currentClickFunc = EMPTY
     if (div == G.widget.parent) G.widget.close();
     else {
         G.widget.popup({
@@ -271,17 +205,20 @@ G.selectModeForPolicy = function (me, div) {
                                         }
                                     }
                                 } else G.cantWhenPaused();
-                                widget.closeOnMouseUp = false;//override default behavior
                                 widget.close(5);//schedule to close the widget in 5 frames
                             };
                         }(me, mode, div);
 
                         // New section for the onclick event
-                        currentClickFunc = l('mode-button-' + mode.num).onclick = function (target, mode, div) {
+                        modeFunction = function () {
+                            widget.close(5);//schedule to close the widget in 5 frames
+                        }
+                        l('mode-button-' + mode.num).onclick = function (target, mode, div) {
                             return function () {
                                 if (--clickModePolicy > 0) {
-                                    return false
+                                    return
                                 }
+                                modeFunction = null
                                 //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                 if (G.speed > 0) {
                                     var me = target;
@@ -297,7 +234,6 @@ G.selectModeForPolicy = function (me, div) {
                                         }
                                     }
                                 } else G.cantWhenPaused();
-                                widget.closeOnMouseUp = false;//override default behavior
                                 widget.close(5);//schedule to close the widget in 5 frames
                             };
                         }(me, mode, div);
@@ -384,8 +320,6 @@ G.update['policy'] = function () {
 
 // Allow touchscreen or mobile users to click on gizmos
 G.selectModeForUnit = function (me, div) {
-    clickModePolicy = 0;
-    clickModeUnit = 0;
     if (div == G.widget.parent) G.widget.close();
     else {
         G.widget.popup({
@@ -418,17 +352,20 @@ G.selectModeForUnit = function (me, div) {
                                         if (unit.l) G.popupSquares.spawn(l('mode-button-' + mode.num), unit.l);
                                     }
                                 } else G.cantWhenPaused();
-                                widget.closeOnMouseUp = false;//override default behavior
                                 widget.close(5);//schedule to close the widget in 5 frames
                             };
                         }(me, mode, div);
 
                         // New section for the onclick event
-                        currentClickFunc = l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
+                        modeFunction = function () {
+                            widget.close(5);//schedule to close the widget in 5 frames
+                        }
+                        l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
                             return function () {
                                 if (--clickModeUnit > 0) {
                                     return
                                 }
+                                modeFunction = null
                                 //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                 if (G.speed > 0) {
                                     if (true)//G.testUse(G.subtractCost(unit.mode.use,mode.use),unit.amount))
@@ -440,7 +377,6 @@ G.selectModeForUnit = function (me, div) {
                                         if (unit.l) G.popupSquares.spawn(l('mode-button-' + mode.num), unit.l);
                                     }
                                 } else G.cantWhenPaused();
-                                widget.closeOnMouseUp = false;//override default behavior
                                 widget.close(5);//schedule to close the widget in 5 frames
                             };
                         }(me, mode, div);
@@ -5000,7 +4936,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'urn',
-                desc: 'Cremated [corpse]. People can store 4 [urn]s per 1 [burial spot]. They decay slowly as well.',
+                desc: 'Cremated [corpse]. People can store 4 [urn]s for each 1 [burial spot]. They decay slowly as well.',
                 icon: [31, 6, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -5421,7 +5357,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'heating capability',
-                desc: 'Each [heating capability] unit allows to keep moderate temperature for one unit.//The number on the left is how much heating capability is occupied, while the number on the right is how much you have in total.',
+                desc: 'Each unit of [heating capability] allows you to keep moderate temperature for one [population,Person].//The number on the left is how much heating capability is occupied, while the number on the right is how much you have in total.',
                 icon: [22, 2, 'magixmod'],
                 tick: function (me, tick) {
                     var amount = 0;
@@ -5511,7 +5447,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'ambrosium leaf',
-                desc: 'A thing which can be used to gather [ambrosium shard]s with help of some other ingredients.',
+                desc: 'A thing which can be used to gather [ambrosium shard]s with the help of some other ingredients.',
                 icon: [12, 14, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.003;
@@ -5540,7 +5476,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'sulfur',
-                desc: 'Thing used to craft pyromaniacs\' toys. They make quite a nice show.',
+                desc: 'Something used to craft pyromaniac-related toys. They make quite a nice show.',
                 icon: [17, 15, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0075;
@@ -6247,7 +6183,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'snow',
-                desc: 'Cold snow can be used to craft Snowmen, fun, snowball fights. The thing that children like mostly. Hire a [digger] to gather it. Decreases health at a very very small rate and increases happiness slightly.',
+                desc: 'Cold snow can be used to craft snowmen and make snowball fights. The thing that children like mostly. Hire a [digger] to gather it. Decreases health at a very very small rate and increases happiness slightly.',
                 icon: [9, 12, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -6259,7 +6195,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'christmas essence',
-                desc: 'Main of Christmas. Can be gathered from ways related to that festive. Has its uses. Does not belong to [magic essences] officially until you unlock [sleep-speech] and [villas of victory].',
+                desc: 'A part of Christmas. Can be gathered in ways related to it. Has its uses. Does not belong to [magic essences] officially until you unlock [sleep-speech] and [villas of victory].',
                 icon: [3, 11, 'seasonal'],
                 category: 'magic',
                 hidden: true,
@@ -6439,7 +6375,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'halloween essence',
-                desc: 'Main of Halloween. Can be gathered from ways related to that festive. Has usages. Does not belong to [magic essences] since its seasonal essence.',
+                desc: 'A part of Halloween. Can be gathered in ways related to it. Has usages. Does not belong to [magic essences] since it is seasonal essence.',
                 icon: [5, 8, 'seasonal'],
                 category: 'magic',
                 hidden: true,
@@ -7212,7 +7148,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'soothsayer',
-                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping tribespeople deal with grief.',
+                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief.',
                 icon: [15, 2],
                 cost: {},
                 use: { 'worker': 1 },
@@ -7276,7 +7212,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'chieftain',
-                desc: '@generates [influence] every now and then<>The [chieftain] leads over a small group of people, guiding them in their decisions.',
+                desc: '@generates [influence] every now and then<>The [chieftain] leads a small group of people, guiding them in their decisions.',
                 icon: [18, 3],
                 cost: { 'food': 50 },
                 use: { 'worker': 1 },
@@ -7317,7 +7253,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'grave',
-                desc: '@provides 1 [burial spot], in which the [corpse,dead] are automatically interred one by one@graves with buried corpses decay over time, slowly freeing up land for more graves<>A simple grave dug into the earth, where the dead may find rest.//Burying your dead helps prevent [health,disease] and makes your people slightly [happiness,happier].',
+                desc: '@provides 1 [burial spot], in which the [corpse,dead] are automatically interred one by one@graves with buried corpses decay over time, freeing up land for more graves<>A simple grave dug into the earth, where the dead may find rest.//Burying your dead helps prevent [health,disease] and makes your people slightly [happiness,happier].',
                 icon: [13, 2],
                 cost: {},
                 use: { 'land': 1 },
@@ -7336,7 +7272,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'mud shelter',
-                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live.',
+                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live. The weakest shelter.',
                 icon: [9, 2],
                 cost: { 'mud': 75 },
                 use: { 'land': 1 },
@@ -7344,14 +7280,14 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'provide', what: { 'housing': 3 } },
                     { type: 'provide', what: { 'housing': 1 }, req: { 'gt1': true } },
-                    { type: 'waste', chance: 3 / 1000, req: { 'sedentism': true } },
+                    { type: 'waste', chance: 3.05 / 1000, req: { 'sedentism': true } },
                 ],
                 req: { 'sedentism': true },
                 category: 'housing',
             });
             new G.Unit({
                 name: 'branch shelter',
-                desc: '@provides 3 [housing]<>Basic, very frail dwelling in which a small family can live.',
+                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live.',
                 icon: [10, 2],
                 cost: { 'stick': 75 },
                 use: { 'land': 1 },
@@ -7367,7 +7303,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'hut',
-                desc: '@provides 5 [housing]<>A small dwelling built out of hardened mud and branches.',
+                desc: '@provides 5 [housing]<>A small dwelling built out of various materials.',
                 icon: [11, 2],
                 cost: { 'archaic building materials': 100 },
                 use: { 'land': 1 },
@@ -7581,7 +7517,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'lodge',
-                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. <b>You should remove these before removing workers!</b>',
+                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. Lodges normally provide 5 housing. <b>You should remove these before removing workers!</b>',
                 icon: [17, 3],
                 cost: { 'archaic building materials': 50 },
                 use: { 'land': 1 },
@@ -7597,6 +7533,8 @@ if (getCookie("civ") == "0") {
                     'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 8 for each of this lodge.', req: { 'plant lore': true } },
                 },
                 effects: [
+                    { type: 'provide', what: { 'housing': 5 }, req: { 'guilds unite': false } },
+                    { type: 'provide', what: { 'housing': 8 }, req: { 'guilds unite': true } },
                     {
                         type: 'function', func: function (me) {
                             if (me.amount * (G.has("guilds unite") ? 100 : 8) > G.getUnitAmount('gatherer') + G.unitsOwned[(G.unitsOwned.length - 1) - G.unitByName['gatherer'].id].idle && G.canBuyUnitByName('gatherer', 1)) G.buyUnitByName('gatherer', 1, true);
@@ -8948,7 +8886,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'cemetary of Plain Island',
                 displayName: 'cemetary of ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')),
-                desc: '@Big cemetry but stores a lot of corpses with a method of family burials. Uses workers to keep conservacy & keep Cemetry clean. Provides 7500 [burial spot].',//Soon new policies which will decide how much you may store corpses
+                desc: 'A big cemetary that stores a lot of corpses with a method of family burials. Uses workers to keep conservacy and keep the cemetary clean. Provides 7500 [burial spot]s.',//Soon new policies which will decide how much you may store corpses
                 icon: [2, 6, 'magixmod'],
                 cost: { 'basic building materials': 300 },
                 use: { 'land of the plain island': 100, 'worker': 10 },
@@ -8962,7 +8900,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'family graves',
-                desc: 'On 5 pieces of new land you can store 10 family graves. Does not use [worker]. Provides 100 [burial spot].',
+                desc: 'On 5 pieces of new land, you can store 10 family graves. Does not use [worker]. Provides 100 [burial spot]s.',
                 icon: [0, 6, 'magixmod'],
                 cost: { 'basic building materials': 300 },
                 use: { 'land of the plain island': 5 },
@@ -8976,7 +8914,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'single grave',
-                desc: 'Simple, single grave for 1 person. Does not use [worker]. Provides 1 [burial spot].',
+                desc: 'A simple, single grave for 1 person. Does not use [worker]. Provides 1 [burial spot].',
                 icon: [3, 6, 'magixmod'],
                 cost: { 'basic building materials': 300 },
                 use: { 'land of the plain island': 1 },
@@ -9676,7 +9614,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'the cemetarium',
                 displayName: 'The Cemetarium',
-                desc: '@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. Per each step you will perform building it you will grant big amount of [burial spot]. <i>Let these corpses go into their rightenous home please</i>',
+                desc: '@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. For each step that you perform for the building, you will get a large amount of [burial spot]s. <i>Let these corpses go into their rightenous home please</i>',
                 wonder: 'deadly, revenantic',
                 icon: [1, 16, 'magixmod'],
                 wideIcon: [0, 16, 'magixmod'],
@@ -10232,7 +10170,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'druid',
-                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any people around\'em.',
+                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any people around \'em.',
                 icon: [26, 30, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -10401,7 +10339,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'globetrotter',
-                desc: '@[globetrotter] is able to discover new tiles and explore already discovered (note that [globetrotter] is going to do it slower than actual [scout])@can explore occupied tiles but does it slower than actual [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen knowledge about territories already known.',
+                desc: '@[globetrotter]s are able to discover new tiles and explore already discovered (note that [globetrotter] is going to do it slower than actual [scout])@can explore occupied tiles but does it slower than actual [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen knowledge about territories already known.',
                 icon: [35, 2, 'magixmod'],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -10418,7 +10356,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'artisan of christmas',
-                desc: '@has the ability to turn [archaic building materials,Various things] into festive ornaments, lights and anything related to [the christmas]. Once they decay they turn into [christmas essence]. They can be used to build a very special wonder and bring some happiness especially lights.',
+                desc: '@has the ability to turn [archaic building materials,Various things] into festive ornaments, lights and anything related to [the christmas]. Once they decay, they turn into [christmas essence]. They can be used to build a very special wonder and bring some joy to your people.',
                 icon: [5, 11, 'seasonal'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -10465,7 +10403,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'fortress of love',
                 displayName: '<font color="pink">Fortress of love</font>',
-                desc: 'Constucted in Paradise: a giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @Note: Final level will need full 2 [love] levels.',
+                desc: 'Constucted in Paradise: a giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @Note: The final level will require 2 full [love] levels.',
                 icon: [0, 16, 'seasonal'],
                 wonder: '.',
                 steps: 999,
@@ -10481,7 +10419,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'villa of victory',
-                desc: '@The more [victory point]s you got, the more of housing it will provide. Starting from 100, it will provide 8 more housing for every [victory point] obtained. Villas cannot waste however those are very limited. At the moment it provides:' + (100 + (G.getRes('victory point').amount * 8)) + '[housing].',
+                desc: '@The more [victory point]s you get, the more of housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste, however, these are very limited. At the moment it provides: ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing].',
                 wideIcon: [1, 31, 'magixmod'],
                 icon: [1, 31, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 300 },
@@ -10495,7 +10433,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'spirit summoner',
-                desc: '@during Halloween summons spirits, souls of dead [population,people], gaining [spookiness]. @can summon spirits and souls gaining [spookiness] and [halloween essence]. @later he will be able to summon demons.',
+                desc: '@during Halloween summons spirits, souls of dead [population,people], gaining [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @later he will be able to summon demons.',
                 icon: [4, 9, 'seasonal'],
                 upkeep: { 'food': 0.3 },
                 limitPer: { 'population': 30 },
@@ -10536,20 +10474,20 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'boat',
-                desc: '@[boat] with crew on board is able to explore seas and oceans unlike [wanderer]s, [scout]s and [globetrotter]s. However, they are required, along with 2 [worker]s who will take care of both the boat and themselves. You can obtain [wanderer,exploration units] via hiring them into respective modes.',
+                desc: '@[boat] with crew on board is able to explore seas and oceans unlike [wanderer]s, [scout]s and [globetrotter]s. However, they are required, along with 2 [worker]s who will take care of both the boat and themselves. You can obtain these [wanderer,exploration units] by using their respective modes.',
                 icon: [3, 28, 'magixmod'],
                 cost: { 'lumber': 2000, 'food': 7500, 'water': 3000, 'leather': 90 },
                 use: { 'worker': 2 },
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'discover': { name: 'Voyage deeply into the ocean', icon: [10, 33, 'magixmod'], desc: 'This [boat]\'s crew will swim and use the boat to explore endless-like oceans. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'scoutW': 12, 'worker': 10 } },
-                    'explore': { name: 'Explore already discovered waters', icon: [9, 33, 'magixmod'], desc: 'This [boat]\'s crew will deeply explore already discovered parts of ocean. Keep in mind that everything on sea can happen so this boat may sink down.', use: { 'wandererW': 12, 'worker': 10 } },
+                    'discover': { name: 'Voyage deeply into the ocean', icon: [10, 33, 'magixmod'], desc: 'This [boat]\'s crew will swim and use the boat to explore the supposedly endless oceans. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'scoutW': 12, 'worker': 10 } },
+                    'explore': { name: 'Explore already discovered waters', icon: [9, 33, 'magixmod'], desc: 'This [boat]\'s crew will deeply explore already discovered parts of the ocean. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'wandererW': 12, 'worker': 10 } },
                 },
                 effects: [
                     { type: 'exploreOcean', unexplored: 0.07, mode: 'discover' },
                     { type: 'exploreOcean', explored: 0.07, mode: 'explore' },
-                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned.', 'ships sank. Sadly everyone who was on the ship drowned...'), chance: 1 / 117.5, notMode: 'off', req: { 'at4': false } },
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned.', 'ships sank. Sadly, everyone who was on the ship drowned...'), chance: 1 / 117.5, notMode: 'off', req: { 'at4': false } },
                     { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned.', 'ships sank. Sadly, everyone who was on the ship drowned...'), chance: 1 / 150, notMode: 'off', req: { 'at4': true } },
                     { type: 'mult', value: 1.05, req: { 'at2': true } },
                 ],
@@ -10714,7 +10652,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'heat factory',
-                desc: '@This factory can process many resources turning them into [heating capability,Heating power]. @Note:production has slight chance to fail!',
+                desc: '@This factory can process many resources, turning them into [heating capability,Heating power]. @Note:production has slight chance to fail!',
                 icon: [34, 16, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 1, 'food': 25, 'water': 35 },
@@ -11116,7 +11054,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'burial', category: 'tier1',
-                desc: '@unlocks [grave]s@exposed [corpse]s make people even more unhappy<>It is the belief that there might be more to death than is first apparent that drives us to bury our deceased.',
+                desc: '@unlocks [grave]s, which provide [burial spot]s@exposed [corpse]s make people even more unhappy<>It is the belief that there might be more to death than is first apparent that drives us to bury our deceased.',
                 icon: [14, 1],
                 cost: { 'insight': 5 },
                 req: { 'ritualism': true, 'digging': true },
@@ -13177,7 +13115,7 @@ if (getCookie("civ") == "0") {
             =======================================*/
             new G.Tech({
                 name: 'guilds unite', category: 'tier2',
-                desc: '@moderns up existing modes of the [lodge]. Increases the max hiring amount to 100.',
+                desc: '@moderns up existing modes of the [lodge]. It increases the housing capacity of the lodge, but increases the hiring amount to 100. This cannot be undone.',
                 icon: [29, 8, 'magixmod'],
                 cost: { 'insight II': 25, 'culture II': 10, 'influence II': 5 },
                 req: { 'cities': true, 'construction II': true, 'code of law II': true },
@@ -13433,7 +13371,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'spiritual piety', category: 'religion',
-                desc: '@provides 7 [spirituality II] @Increases [faith] gains of [church] by 30% @Applies visual changes for [grave] and [church]. @One [grave] provides 3 [burial spot]s and uses 0.7 instead of 1 [land].',
+                desc: '@provides 7 [spirituality II] @Increases [faith] gains of [church] by 30% @Applies visual changes for [grave] and [church]. @One [grave] provides 3 [burial spot]s and uses 0.7 [land] instead of 1.',
                 icon: [26, 23, 'magixmod'],
                 cost: { 'faith II': 5, 'insight II': 50, 'culture II': 20 },
                 effects: [
@@ -13748,7 +13686,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'corpse decay',
-                desc: '<b>The wormhole you opened...<br>ejects [corpse]s<br>before people...<br>bury them<br>decreasing usage of...<br>the [burial spot].</b>',
+                desc: '<b>The wormhole you opened...<br>ejects [corpse]s<br>before people...<br>bury them<br>decreasing usage of...<br>the [burial spot]s.</b>',
                 icon: [7, 24, 'magixmod'],
                 cost: { 'insight II': 125, 'dark essence': 2.5e4, 'culture II': 25, 'influence II': 3 },
                 req: { 'burial wormhole 2/2': true, 'doctrine of the dark wormhole 5/5': true },
@@ -17423,7 +17361,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs refund 1 [insight] for every 150 [insight] spent on research. @adopting traits provide 1 [culture]. <>The manifestation of one thing for the meaning of another - to make the cosmos relate to itself - this one focuses on colours.',
+                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs refund 1 [insight] for every 150 [insight] spent on research. @adopting traits provide 1 [culture]. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
                 icon: [36, 11, 'magixmod'],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbolism': false },
@@ -18357,7 +18295,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'eat on gather',
-                desc: 'Your people will eat every food just after they gathered it. That means that a very low amount of food will be shared with others. It may lead to increased [happiness] at the cost of slow starvation. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific percentage. Note that if food/water rations policies are set to <b>plentiful</b>, then this policy disables automatically.',
+                desc: 'Your people will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] and less food spoilage at the cost of slow starvation. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific percentage. Note that if food/water rations policies are set to <b>plentiful</b>, then this policy disables automatically.',
                 icon: [5, 12, 16, 33, 'magixmod'],
                 cost: { 'influence': 2 },
                 startMode: 'off',
@@ -22827,7 +22765,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'soothsayer',
-                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping tribeselves deal with grief.',
+                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief.',
                 icon: [15, 2, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -23278,15 +23216,15 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'discover': { name: 'Voyage deeply into the ocean', icon: [10, 33, 'magixmod'], desc: 'This [boat]\'s crew will swim with boat into unknown to explore endless-like oceans. Keep in mind that everything on sea can happen so this boat may sink down.', use: { 'scoutW': 12, 'worker': 11 } },
-                    'explore': { name: 'Explore already discovered waters', icon: [9, 33, 'magixmod'], desc: 'This [boat]\'s crew will deeply explore already discovered parts of ocean. Keep in mind that everything on sea can happen so this boat may sink down.', use: { 'wandererW': 12, 'worker': 11 } },
+                    'discover': { name: 'Voyage deeply into the ocean', icon: [10, 33, 'magixmod'], desc: 'This [boat]\'s crew will swim and use the boat to explore the supposedly endless oceans. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'scoutW': 12, 'worker': 10 } },
+                    'explore': { name: 'Explore already discovered waters', icon: [9, 33, 'magixmod'], desc: 'This [boat]\'s crew will deeply explore already discovered parts of the ocean. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'wandererW': 12, 'worker': 10 } },
                 },
                 effects: [
                     { type: 'exploreOcean', unexplored: 0.06, mode: 'discover' },
                     { type: 'exploreOcean', explored: 0.06, mode: 'explore' },
                     {
                         type: 'function', func: function () {
-                            unitGetsConverted({}, 0.01, 0.05, '[X] [elves].', 'boat sank. Sadly everyone who was on the ship drowned', 'boats sank. Sadly everyone who was on the ship drowned')
+                            unitGetsConverted({}, 0.01, 0.05, '[X] [elves].', 'boat sank. Sadly, everyone who was on the ship drowned.', 'boats sank. Sadly, everyone who was on the ship drowned...')
                         }, chance: 1 / 120, notMode: 'off'
                     },
                 ],
@@ -23295,7 +23233,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'druidish travellers team',
-                desc: '@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith] and if it drops too low, the team will refuse to work. Every team provide 1 [spirituality].',
+                desc: '@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith], and if it drops too low, the team will refuse to work. Every team provides 1 [spirituality].',
                 icon: [29, 2, 'c2'],
                 cost: { 'food': 100 },
                 use: { 'worker': 6, 'druid': 2, 'stone tools': 4, 'knapped tools': 2 },
@@ -23311,7 +23249,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'druid',
-                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any people around\'em. Their mission is to spread faith in this big jungle called The World. //[druid]s are very limited as not everyone related to religion is eligible for that title.',
+                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any people around  \'em. Their mission is to spread faith in this big jungle called The World. //[druid]s are very limited as not everyone related to religion is eligible for that title.',
                 icon: [28, 2, 'c2'],
                 cost: {},
                 priority: 2,
@@ -23747,7 +23685,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'symbolism', category: 'upgrade',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @[storyteller]s produce 20% more [gentility]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another - to make the cosmos relate to itself - this one focuses on shapes.',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @[storyteller]s produce 20% more [gentility]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on shapes.',
                 icon: [13, 1, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbI': false, 'symbN': false },
@@ -23756,7 +23694,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'burial', category: 'tier1',
-                desc: '@unlocks [grave]s@exposed [corpse]s make elves even more unhappy<>It is the belief that there might be more to death than is first apparent that drives us to bury our deceased.',
+                desc: '@unlocks [grave]s, which provide [burial spot]s@exposed [corpse]s make elves even more unhappy<>It is the belief that there might be more to death than is first apparent that drives us to bury our deceased.',
                 icon: [14, 1, 'c2'],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'ritualism': true, 'digging': true },
@@ -24605,7 +24543,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'druidsymbolism3',
                 displayName: 'Mental balance',
-                desc: 'Unlocks new ritual which will affect [happiness] and it\'s bonus and penalty at specific costs. Look for [mental balance] in <b>Policies</b> in <b>Rituals</b> category. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: 'Unlocks new ritual which will affect [happiness] and its bonus and penalty at specific amounts. Look for [mental balance] in <b>Policies</b> in the <b>Rituals</b> category. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 17, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
@@ -25412,7 +25350,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches require 33% less [discernment,Essentials] (except [battery of discoveries,Battery power] if number of your technologies ends with 0. @gaining traits provide 1 [gentility] each @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another - to make the cosmos relate to itself - this one focuses on colours.',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches require 33% less [discernment,Essentials] (except [battery of discoveries,Battery power] if number of your technologies ends with 0. @gaining traits provide 1 [gentility] each @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
                 icon: [28, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbN': false },
@@ -25423,7 +25361,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbN', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '<b>Bonus relies on the number of total technologies that you end with.</b> @if it ends with 3 you won\'t need [gentility] while rolling/rerolling researches. @if it ends with 7 it will require half less [discernment]. @if it ends with 1 it will require 5% less [battery of discoveries,Battery] power @if it ends with 0 it won\'t require [discernment] at all<>The manifestation of one thing for the meaning of another - to make the cosmos relate to itself - this one focuses on numbers.',
+                desc: '<b>Bonus relies on the number of total technologies that you end with.</b> @if it ends with 3 you won\'t need [gentility] while rolling/rerolling researches. @if it ends with 7 it will require half less [discernment]. @if it ends with 1 it will require 5% less [battery of discoveries,Battery] power @if it ends with 0 it won\'t require [discernment] at all<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on numbers.',
                 icon: [27, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbI': false },
@@ -25609,7 +25547,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'mental balance',
-                desc: 'The penalty for low [happiness] level is moved from -100 to -120% and bonus activates at 90 instead of 100% but this ritual uses and takes way more [faith] than any other. @in addition it reduces efficiency of [soothsayer]s and [druid]s themself by 10% while active. @this ritual is very fragile as it will lose it\'s power whenever [faith] will go below one thirds of your [spirituality] amount.',
+                desc: 'The penalty for low [happiness] level is moved from -100 to -120% and the bonus activates at 90 instead of 100%, but this requires way more [faith] than a usual ritual. @in addition, it reduces efficiency of [soothsayer]s and [druid]s themselves by 10% while active. @this ritual is very fragile as it will lose its power whenever your [faith] goes below one third of your [spirituality] amount.',
                 icon: [8, 12, 'c2', 24, 0, 'c2'],
                 cost: { 'faith': 4 },
                 startMode: 'off',
@@ -25632,7 +25570,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'eat on gather',
-                desc: 'Your elves will eat every piece of food just right after being gathered, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] at the cost of slow starvation, but lowers the rate of [spoiled food]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific amount. Note that if food/water rations policies are set to plentiful, this policy disables automatically.',
+                desc: 'Your elves will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] at the cost of slow starvation, but lowers the rate of [spoiled food]. @this policy cannot bring [happiness] level over 100% and will only provide happiness once it is lower than a specific amount. Note that if food/water rations policies are set to plentiful, this policy disables automatically.',
                 icon: [5, 12, 26, 0, 'c2'],
                 cost: { 'influence': 2 },
                 startMode: 'off',
@@ -26555,7 +26493,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'stortle',
-                desc: 'A turtle with a hard shell on its top,tone almost like a s. They live only in the stonelands.',
+                desc: 'A turtle with a hard shell on its top. They live only in the stonelands.',
                 icon: [16, 19, 'c2'],
                 res: {
                     'gather': { 'meat': 0.5 },
@@ -26860,7 +26798,7 @@ if (getCookie("civ") == "0") {
             });
             new G.TileEffect({
                 name: 'over hunting',
-                desc: 'This is the result of too much hunting in an area.//Having this effect on a tile lowers the quantity of animals it provides.//If hunting is halted, this effect will slowly subside as animal population recovers over time, if there is enough of it left.',
+                desc: 'This is the result of too much hunting in an area.//Having this effect on a tile lowers the amount of resources that animals provide.//If hunting is halted, this effect will slowly subside as animal population recovers over time, if there is enough of it left.',
                 visibleAt: 100,
             });
             new G.TileEffect({
