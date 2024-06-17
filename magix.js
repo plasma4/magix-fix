@@ -2,7 +2,7 @@
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 
 >>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
@@ -7517,24 +7517,24 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'lodge',
-                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. Lodges normally provide 5 housing. <b>You should remove these before removing workers!</b>',
+                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. Lodges increase [happiness] of your tribe by a tiny amount. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. Lodges normally provide 5 housing. <b>You should remove these before removing workers!</b>',
                 icon: [17, 3],
                 cost: { 'archaic building materials': 50 },
                 use: { 'land': 1 },
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'gatherers': { name: 'Gatherer\'s lodge', icon: [0, 2], desc: 'Hire [gatherer]s until there are 8 for each of this lodge.', req: { 'tribalism': true } },
-                    'hunters': { name: 'Hunter\'s lodge', icon: [18, 2], desc: 'Hire [hunter]s until there are 8 for each of this lodge.', req: { 'hunting': true } },
-                    'fishers': { name: 'Fisher\'s lodge', icon: [17, 2], desc: 'Hire [fisher]s until there are 8 for each of this lodge.', req: { 'fishing': true } },
-                    'diggers': { name: 'Digger\'s lodge', icon: [7, 2], desc: 'Hire [digger]s until there are 8 for each of this lodge.', req: { 'digging': true } },
-                    'woodcutters': { name: 'Woodcutter\'s lodge', icon: [8, 2], desc: 'Hire [woodcutter]s until there are 8 for each of this lodge.', req: { 'woodcutting': true } },
-                    'artisans': { name: 'Artisan\'s lodge', icon: [6, 2], desc: 'Hire [artisan]s until there are 8 for each of this lodge.', req: { 'stone-knapping': true } },
-                    'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 8 for each of this lodge.', req: { 'plant lore': true } },
+                    'gatherers': { name: 'Gatherer\'s lodge', icon: [0, 2], desc: 'Hire [gatherer]s until there are 5 for each of this lodge.', req: { 'tribalism': true } },
+                    'hunters': { name: 'Hunter\'s lodge', icon: [18, 2], desc: 'Hire [hunter]s until there are 5 for each of this lodge.', req: { 'hunting': true } },
+                    'fishers': { name: 'Fisher\'s lodge', icon: [17, 2], desc: 'Hire [fisher]s until there are 5 for each of this lodge.', req: { 'fishing': true } },
+                    'diggers': { name: 'Digger\'s lodge', icon: [7, 2], desc: 'Hire [digger]s until there are 5 for each of this lodge.', req: { 'digging': true } },
+                    'woodcutters': { name: 'Woodcutter\'s lodge', icon: [8, 2], desc: 'Hire [woodcutter]s until there are 5 for each of this lodge.', req: { 'woodcutting': true } },
+                    'artisans': { name: 'Artisan\'s lodge', icon: [6, 2], desc: 'Hire [artisan]s until there are 5 for each of this lodge.', req: { 'stone-knapping': true } },
+                    'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 5 for each of this lodge.', req: { 'plant lore': true } },
                 },
                 effects: [
-                    { type: 'provide', what: { 'housing': 5 }, req: { 'guilds unite': false } },
-                    { type: 'provide', what: { 'housing': 8 }, req: { 'guilds unite': true } },
+                    { type: 'gather', what: { 'happiness': 0.005 } },
+                    { type: 'provide', what: { 'housing': 2 }, req: { 'guilds unite': true } },
                     {
                         type: 'function', func: function (me) {
                             if (me.amount * (G.has("guilds unite") ? 100 : 8) > G.getUnitAmount('gatherer') + G.unitsOwned[(G.unitsOwned.length - 1) - G.unitByName['gatherer'].id].idle && G.canBuyUnitByName('gatherer', 1)) G.buyUnitByName('gatherer', 1, true);
@@ -7542,27 +7542,27 @@ if (getCookie("civ") == "0") {
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('hunter')) G.buyUnitByName('hunter', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('hunter')) G.buyUnitByName('hunter', 1, true);
                         }, mode: 'hunters', req: { 'guilds unite': false }
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('fisher')) G.buyUnitByName('fisher', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('fisher')) G.buyUnitByName('fisher', 1, true);
                         }, mode: 'fishers', req: { 'guilds unite': false }
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('digger')) G.buyUnitByName('digger', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('digger')) G.buyUnitByName('digger', 1, true);
                         }, mode: 'diggers', req: { 'guilds unite': false }
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('woodcutter')) G.buyUnitByName('woodcutter', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('woodcutter')) G.buyUnitByName('woodcutter', 1, true);
                         }, mode: 'woodcutters', req: { 'guilds unite': false }
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('artisan')) G.buyUnitByName('artisan', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('artisan')) G.buyUnitByName('artisan', 1, true);
                         }, mode: 'artisans', req: { 'guilds unite': false }
                     },
                     //At guilds unite
@@ -7602,7 +7602,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'guild quarters',
-                desc: 'Groups of people sharing the same profession can meet in these to share their craft and trade secrets. These [guild quarters] do not provide your workers with tools, and if you have workers not assigned here, they will automatically be assigned if possible. <b>You should remove these before removing workers!</b>',
+                desc: 'Groups of people sharing the same profession can meet in these to share their craft and trade secrets, providing a tiny amount of [happiness]. These [guild quarters] do not provide your workers with tools, and if you have workers not assigned here, they will automatically be assigned if possible. <b>You should remove these before removing workers!</b>',
                 icon: [26, 3, 25, 2],
                 cost: { 'basic building materials': 75 },
                 use: { 'land': 1 },
@@ -7612,24 +7612,25 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'potters': { name: 'Potters\' guild', icon: [20, 2], desc: 'Hire [potter]s until there are 8 for each of this guild.', req: { 'pottery': true } },
-                    'carpenters': { name: 'Carpenters\' guild', icon: [27, 2, 25, 2], desc: 'Build [carpenter workshop]s until there are 8 for each of this guild.', req: { 'carpentry': true } },
-                    'blacksmiths': { name: 'Blacksmiths\' guild', icon: [26, 2, 25, 2], desc: 'Build [blacksmith workshop]s until there are 8 for each of this guild.', req: { 'smelting': true } }
+                    'potters': { name: 'Potters\' guild', icon: [20, 2], desc: 'Hire [potter]s until there are 5 for each of this guild.', req: { 'pottery': true } },
+                    'carpenters': { name: 'Carpenters\' guild', icon: [27, 2, 25, 2], desc: 'Build [carpenter workshop]s until there are 5 for each of this guild.', req: { 'carpentry': true } },
+                    'blacksmiths': { name: 'Blacksmiths\' guild', icon: [26, 2, 25, 2], desc: 'Build [blacksmith workshop]s until there are 5 for each of this guild.', req: { 'smelting': true } }
                 },
                 effects: [
+                    { type: 'gather', what: { 'happiness': 0.005 } },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('potter')) G.buyUnitByName('potter', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('potter')) G.buyUnitByName('potter', 1, true);
                         }, mode: 'potters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('carpenter workshop')) G.buyUnitByName('carpenter workshop', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('carpenter workshop')) G.buyUnitByName('carpenter workshop', 1, true);
                         }, mode: 'carpenters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 8 > G.getUnitAmount('blacksmith workshop')) G.buyUnitByName('blacksmith workshop', 1, true);
+                            if (me.amount * 5 > G.getUnitAmount('blacksmith workshop')) G.buyUnitByName('blacksmith workshop', 1, true);
                         }, mode: 'blacksmiths'
                     }
                 ],
@@ -13115,7 +13116,7 @@ if (getCookie("civ") == "0") {
             =======================================*/
             new G.Tech({
                 name: 'guilds unite', category: 'tier2',
-                desc: '@moderns up existing modes of the [lodge]. It increases the housing capacity of the lodge, but increases the hiring amount to 100. This cannot be undone.',
+                desc: '@moderns up existing modes of the [lodge]. It also adds 2 [housing] capacity to each lodge, but increases the hiring amount to 100. This cannot be undone.',
                 icon: [29, 8, 'magixmod'],
                 cost: { 'insight II': 25, 'culture II': 10, 'influence II': 5 },
                 req: { 'cities': true, 'construction II': true, 'code of law II': true },
@@ -23078,7 +23079,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'guild quarters',
-                desc: 'Groups of people sharing the same profession can meet in these to share their craft and trade secrets. These [guild quarters] do not provide your workers with tools, and if you have workers not assigned here, they will automatically be assigned if possible. <b>You should remove these before removing workers!</b>',
+                desc: 'Groups of people sharing the same profession can meet in these to share their craft and trade secrets, providing a tiny amount of [happiness]. These [guild quarters] do not provide your workers with tools, and if you have workers not assigned here, they will automatically be assigned if possible. <b>You should remove these before removing workers!</b>',
                 icon: [26, 3, 'c2', 25, 2, 'c2'],
                 cost: { 'basic building materials': 75 },
                 use: { 'land': 1 },
@@ -23088,11 +23089,12 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'potters': { name: 'Potters\' guild', desc: 'Hire [potter]s until there are 8 for each of this guild.', req: { 'pottery': true }, icon: [20, 2, 'c2'] },
-                    'carpenters': { name: 'Carpenters\' guild', desc: 'Build [carpenter workshop]s until there are 8 for each of this guild.', req: { 'carpentry': true }, icon: [27, 2, 'c2', 25, 2, 'c2'] },
-                    'blacksmiths': { name: 'Blacksmiths\' guild', desc: 'Build [blacksmith workshop]s until there are 8 for each of this guild.', req: { 'smelting': true }, icon: [26, 2, 'c2', 25, 2, 'c2'] },
+                    'potters': { name: 'Potters\' guild', desc: 'Hire [potter]s until there are 5 for each of this guild.', req: { 'pottery': true }, icon: [20, 2, 'c2'] },
+                    'carpenters': { name: 'Carpenters\' guild', desc: 'Build [carpenter workshop]s until there are 5 for each of this guild.', req: { 'carpentry': true }, icon: [27, 2, 'c2', 25, 2, 'c2'] },
+                    'blacksmiths': { name: 'Blacksmiths\' guild', desc: 'Build [blacksmith workshop]s until there are 5 for each of this guild.', req: { 'smelting': true }, icon: [26, 2, 'c2', 25, 2, 'c2'] },
                 },
                 effects: [
+                    { type: 'gather', what: { 'happiness': 0.005 } },
                     {
                         type: 'function', func: function (me) {
                             if (me.amount * 8 > G.getUnitAmount('potter')) G.buyUnitByName('potter', 1, true);
