@@ -14260,7 +14260,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'trial',
-                desc: 'You are being under the trial. As long as you are in the trial new rules will apply depending on the Trial you had chosen.',
+                desc: 'You are currently under a Trial. As long as you are in a Trial, new rules will apply depending on the one that you have chosen.',
                 icon: [8, 27, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -14294,7 +14294,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'improved construction', category: 'upgrade',
-                desc: 'All buildings that can waste wastes additive 2x slower so (7 in total). It won\'t increase building costs. ',
+                desc: 'All buildings that can waste will decay 2x slower, additively (7 in total). It won\'t increase building costs. ',
                 icon: [11, 27, 'magixmod'],
                 req: { 'construction III': true, 'moderation': true },
                 cost: { 'insight II': 200, 'science': 14, 'influence II': 1 },
@@ -14304,7 +14304,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mo\' shelterz', category: 'upgrade',
-                desc: 'Decreases the [land] limit for [paradise shelter]s by 4 points. It means more shelters, after all. <>More shelters = more housing = more people @provides 15 [wisdom II].',
+                desc: 'Decreases the [land] limit for [paradise shelter]s by 4 points. It means more shelters, after all. <>More shelters = more housing = more people!@provides 15 [wisdom II].',
                 icon: [10, 27, 'magixmod'],
                 req: { 'paradise shelters': true, 'caretaking': true },
                 cost: { 'insight II': 201, 'science': 14, 'influence II': 1 },
@@ -14314,7 +14314,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'outstanding wisdom', category: 'tier2',
-                desc: 'Make the Wisdom tree have even more leaves. <>@unlocks [the outstander] who will provide more [wisdom II] and [education]. @provides 15 extra [wisdom II].',
+                desc: 'Make the Wisdom tree have even more leaves. <>@unlocks [the outstander], who will provide more [wisdom II] and [education]. @provides 15 extra [wisdom II].',
                 icon: [11, 28, 'magixmod'],
                 req: { 'leaves of wisdom': true },
                 cost: { 'insight II': 175, 'science': 10, 'influence II': 5, 'culture II': 15 },
@@ -16055,7 +16055,7 @@ if (getCookie("civ") == "0") {
                             G.getDict('mud shelter').desc = '@provides 8 [housing]<>Basic, frail dwelling in which a small family can live.';
                             G.getDict('branch shelter').desc = '@provides 8 [housing]<>Basic, very frail dwelling in which a small family can live.';
                             G.getDict('shelter on water').desc = '@provides 15 [housing]<>Small dwelling with roof out of branches and walls out of [bamboo].';
-                            G.getDict('monument-building').desc = '@useless because you unlock wonder in this plane at the very beginning of the Trial.';
+                            G.getDict('monument-building').desc = '@useless because you unlock the wonder in this plane at the very beginning of the Trial.';
                             //G.getDict('dark essence').limit=null;
                         }
                     },
