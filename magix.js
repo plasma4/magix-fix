@@ -793,7 +793,7 @@ G.NewGame = function (doneLoading, mods) {
                 '<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About original content~Orteil</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par"><font color="pink">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</font></div></div>') + '</div>' +
                 '<div class="framed bgMid fancyText" style="position:absolute;right:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About Magix</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">Current mod release: 53 <br> The mod adds a ton of new content, including a very lategame second civilization.</div><div class="par">Features that could be added include the rest of the trials for human race, new mechanics for second race and of course, more magic into the world.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! On discord, you can contact me at @1_e0 (the original creator, @pelletsstarPL is no longer maintaining the project).</div><div class="par"><font color="#aaffaa">Thank you for playing Magix!</div><div class="par" style="text-align:right;">-pelletsstarPL (general fixes and rewrittings separately by 1_e0)</div></div>') + '</div>' +
                 '<div class="divider"></div>' +
-                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun!<b>:p</b>)<br>' +
+                '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
                 G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
@@ -2508,7 +2508,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.getSetting('story messages') || G.resets <= 3) {
                         if (G.has('canoes') && !canoestory && !G.has('boat building')) {
-                            G.Message({ type: 'important', text: 'From now, exploring through ocean shores is possible. You realize that the world is so beautiful. You wonder if that "endless" ocean hides some secrets.', icon: [2, 28, 'magixmod'] })
+                            G.Message({ type: 'important', text: 'From now, exploring through ocean shores is possible. You realize that the world is truly beautiful. You wonder if that "endless" ocean hides some secrets.', icon: [2, 28, 'magixmod'] })
                             canoestory = true
                         }
                         if (G.has('sedentism') && !sedestory && !G.has('building')) {
@@ -3501,7 +3501,12 @@ if (getCookie("civ") == "0") {
                 colorGood: 'lime', colorBad: '#F44',
                 fractional: true,
                 tick: function (me, tick) {
+                    // Calculate ungratefulness
                     ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.985 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
+                    if (G.has('tribe of eaters')) {
+                        // Decrease the effect by half
+                        ungrateful = 1 - 0.5 * (1 - ungrateful)
+                    }
                     var se = 0;
                     if (G.checkPolicy("se07") == "on") se = 25;
                     if (tick % 99 == 44) {
@@ -5201,7 +5206,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'back to grave',
-                desc: 'Send [wild corpse] to pernament death.',
+                desc: 'Send [wild corpse] to permanent death.',
                 icon: [8, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5693,7 +5698,7 @@ if (getCookie("civ") == "0") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !UnderworldMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere a Tablet appears behind you. It is hot to the touch. Its red glowing will only attract curses.</b></br> <font color="fuschia">So prepare to tame 6 Devil\'s traits in order to continue your adventure. Without it the Underworld won\'t allow you discover its secrets.', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere a Tablet appears behind you. It is hot to the touch. Its red glowing will only attract curses.</b></br> <font color="fuschia">So, prepare to tame 6 Devil\'s traits in order to continue your adventure. Without it the Underworld won\'t allow you discover its secrets.', icon: [12, 19, 'magixmod'] });
                         UnderworldMESG = true
                         G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/GainedEmblem.mp3');
                     }
@@ -5923,12 +5928,15 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'corpsedecaypoint',
+                displayName: 'corpse decay point'
             });
             new G.Res({
                 name: 'deitytemplePoint',
+                displayName: 'deity temple point'
             });
             new G.Res({
                 name: 'godTemplePoint',
+                displayName: 'god temple point'
             });
             new G.Res({
                 name: 'unhappy',
@@ -6536,7 +6544,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'artisan',
-                desc: '@starts with the ability to turn [stone]s into [knapped tools]@gains more modes as technology progresses<>An [artisan] dedicates their life to crafting various little objects by hand.//Note: artisans will gain new modes of operation when you discover new technologies, such as crafting stone tools; you can press the button with 3 dots on the side of this unit to switch between those modes.',
+                desc: '@starts with the ability to turn [stone]s into [knapped tools]@gains more modes as technology progresses<>An [artisan] dedicates their life to crafting various little objects by hand.//Note: [artisan]s will gain new modes of operation when you discover new technologies, such as crafting stone tools; you can press the button with 3 dots on the side of this unit to switch between those modes.',
                 icon: [6, 2],
                 cost: {},
                 use: { 'worker': 1 },
@@ -7640,7 +7648,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'wanderer',
-                desc: '@explores occupied tiles for [land]@cannot discover new tiles@may sometimes get lost<>[wanderer]s walk about in search of new places to settle, reporting what they saw upon coming back.',
+                desc: '@explores occupied tiles for [land]@cannot discover new tiles normally@may sometimes get lost<>[wanderer]s walk about in search of new places to settle, reporting what they saw when they come back.',
                 icon: [2, 2],
                 cost: { 'food': 20 },
                 gizmos: true,
@@ -7668,7 +7676,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'scout',
-                desc: '@discovers new tiles for [land]@cannot explore occupied tiles@may sometimes get lost<>[scout]s explore the world in search of new and exciting territories.',
+                desc: '@discovers new tiles of [land]@cannot explore occupied tiles@may sometimes get lost<>[scout]s explore the world in search of new and exciting territories.',
                 icon: [24, 3],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -9606,7 +9614,7 @@ if (getCookie("civ") == "0") {
                 type: 'stepByStep',
                 messageOnStart: 'You begin the construction of the Temple. Its highest tower is a pass between land of people and sky of angels. No one may go on top unless it is coated. This temple will be last bastion of religion and a storage of relics. Your people with full of hope are building this mass, full of glory wonder.',
                 finalStepCost: { 'population': 1000, 'precious building materials': 25000, 'faith': 100, 'influence': 75, 'basic building materials': 3000, 'deitytemplePoint': -100 },
-                finalStepDesc: 'To complete the giant Temple, 1000 of your [population,People] and many more resources needed to finish Temple completely must be sacrificed to accompany you as servants in the afterlife and Angels of the Afterlife. Are you ready?',
+                finalStepDesc: 'To complete the giant Temple, 1000 of your [population,People] are needed to finish the Temple. They must be sacrificed to accompany you as servants and Angels of the Afterlife, combined with some other resources. Are you ready?',
                 use: { 'land': 50 },
                 //require:{'worker':10,'stone tools':10},
                 req: { 'monument-building II': true },
@@ -10341,7 +10349,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'globetrotter',
-                desc: '@[globetrotter]s are able to discover new tiles and explore already discovered (note that [globetrotter] is going to do it slower than actual [scout])@can explore occupied tiles but does it slower than actual [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen knowledge about territories already known.',
+                desc: '@[globetrotter]s are able to discover new tiles and explore already discovered (note that [globetrotter] is going to do it slower than actual [scout])@can explore occupied tiles but does it slower than actual [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen their knowledge about territories already known.',
                 icon: [35, 2, 'magixmod'],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -10405,7 +10413,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'fortress of love',
                 displayName: '<font color="pink">Fortress of love</font>',
-                desc: 'Constucted in Paradise: a giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @Note: The final level will require 2 full [love] levels.',
+                desc: 'Constucted in Paradise: a giant [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @The final level will require 2 full [love] levels.',
                 icon: [0, 16, 'seasonal'],
                 wonder: '.',
                 steps: 999,
@@ -10444,7 +10452,7 @@ if (getCookie("civ") == "0") {
                     'off': G.MODE_OFF,
                     'spirits': { name: 'Summon spirits', icon: [32, 16, 'magixmod'], desc: '[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
                     'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
-                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon bloodthirsty vampires. A way safer way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If ritual fails, it will cause people to be injured or even die, your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
+                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon bloodthirsty vampires. A way safer way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
                     'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 14, 'worker': 1, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
                 },
                 effects: [
@@ -10654,7 +10662,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'heat factory',
-                desc: '@This factory can process many resources, turning them into [heating capability,Heating power]. @Note:production has slight chance to fail!',
+                desc: '@This factory can process many resources, turning them into [heating capability,Heating power]. @production has a slight chance to fail',
                 icon: [34, 16, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 1, 'food': 25, 'water': 35 },
@@ -10884,7 +10892,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water exploration faster. @[canoes] are inefficient on biomes: <b>Swamplands</b>,<b>Jungle</b>, <b>Tundra</b> and <b>Boreal forest</b><> //Canoes are a good and safe way to explore ocean shores but slow. The longest it takes to explore swamps using these, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water get explored faster. @[canoes] are inefficient on the <b>Swamplands</b>, <b>Jungle</b>, <b>Tundra</b>, and <b>Boreal forest</b> biomes<> //Canoes are a good and safe way to explore ocean shores, but slow. The longest it takes to explore swamps using these, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [26, 7],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'rafts': false },
@@ -12096,7 +12104,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'manufacture units I', category: 'tier1',
-                desc: 'Unlocks [hut of potters] and [hovel of colours]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s, [artisan]s on <b>Craft dyes</b> mode will become USELESS! They won\'t produce.</font> ',
+                desc: 'Unlocks [hut of potters] and [hovel of colours]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become USELESS! They won\'t produce.</font> ',
                 icon: [17, 18, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 5, 'stone': 1365 },//Stones are there to make tech at same level as Factories I
                 req: { 'workstation planning': true, 'manufacturing': true },
@@ -12113,7 +12121,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'factories I', category: 'tier1',
-                desc: 'Unlocks [factory of pots] and [leather factory]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s, [clothier]s on <b>Craft leather</b> and <b>Craft leather (cheap)</b> mode and [drying rack]s will become useless and won\'t produce anything anymore.</font> ',
+                desc: 'Unlocks [factory of pots] and [leather factory]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s, [clothier]s on <b>Craft leather</b> and <b>Craft leather (cheap)</b> mode and [drying rack]s will become useless and won\'t produce anything anymore.</font>',
                 icon: [18, 18, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 5 },
                 effects: [
@@ -12141,14 +12149,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'underworld building 1/2', category: 'tier1',
-                desc: 'Allows to build some stuff in Underworld. Starts attracting 6 random <font color="red"><b>Devil\'s traits</b></font>',
+                desc: 'Allows you to build some stuff in the Underworld. Starts attracting 6 random <font color="red"><b>Devil\'s traits</b></font>',
                 icon: [27, 3, 'magixmod', 14, 19, 'magixmod'],
                 cost: { 'insight': 90, 'new world point': 400 },
                 req: { 'third passage to new world': true, 'a feeling from the Underworld': true }
             });
             new G.Tech({
                 name: 'underworld building 2/2', category: 'tier1',
-                desc: 'Allows to build some stuff in Underworld.',
+                desc: 'Allows you to build some more stuff in the Underworld.',
                 icon: [27, 2, 'magixmod', 14, 19, 'magixmod'],
                 cost: { 'insight': 100, 'new world point': 6, 'underworld tablet': 1 },
                 req: { 'third passage to new world': true, 'a feeling from the Underworld': true, 'underworld building 1/2': true }
@@ -12334,7 +12342,7 @@ if (getCookie("civ") == "0") {
 
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a tenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather resources with a tenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [20, 1],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'active exploration': false, 'dreaming': false },
@@ -12351,7 +12359,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'ground tools',
-                desc: '@[artisan]s and [carver]s use ground tools allowing them to craft their stuff 20% faster. //Note: it also applies to seasonal artisan for example [artisan of christmas] (with [culture of celebration] obtained]) but it is only 10% boost in their case.',
+                desc: '@[artisan]s and [carver]s use ground tools allowing them to craft their stuff 20% faster. //Note: it also applies to seasonal artisans such as the [artisan of christmas] (with [culture of celebration] obtained, however), but it is only a 10% boost in their case.',
                 icon: [15, 10, 'magixmod'],
                 cost: { 'insight': 7 },
                 chance: 10,
@@ -12421,7 +12429,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'ritual necrophagy',
-                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
+                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -13547,7 +13555,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'hunters & fishers unification', category: 'tier2',
-                desc: 'Unlocks unit that merges [hunter]s and [fisher]s into one. @[harvest rituals] now buffs newly [fishers & hunters camp] by 35% instead of [fisher]s and [hunter]s. @Note: primary [hunter]s and [fisher]s will be available but won\'t be as efficient as they were before just in case you would get softlocked.',
+                desc: 'Unlocks unit that merges [hunter]s and [fisher]s into one. @[harvest rituals] now buffs newly [fishers & hunters camp] by 35% instead of [fisher]s and [hunter]s. @primary [hunter]s and [fisher]s will be available, but won\'t be as efficient as they were before.',
                 icon: [2, 23, 'magixmod'],
                 cost: { 'insight II': 55, 'science': 5 },
                 req: { 'fishing III': true, 'hunting III': true, 'fisher\'s smartness': true, 'hunter\'s coordination': true, 'an armor for Hunter': true },
@@ -13864,7 +13872,7 @@ if (getCookie("civ") == "0") {
                     {
                         type: 'function', func: function () {
                             if (G.has('ritual necrophagy')) G.deleteTrait('ritual necrophagy');
-                            G.traitByName['art of death'].desc = '@[corpse]s and their parts can now only be <u>topic</u> of an art(thanks to [respect for the corpse], creating some [culture] but harming [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>';
+                            G.traitByName['art of death'].desc = '@[corpse]s and their parts can now only be <u>topic</u> of an art(thanks to [respect for the corpse], creating some [culture] but harming [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>';
                         }
                     }
                 ],
@@ -15325,7 +15333,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'pumpkins', category: 'seasonal',
-                desc: 'From now you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b> <br><font color="red">Note! It won\'t make you get pumpkins pernamently. Once Halloween ends you won\'t be able to get new Pumpkins till next Halloween. You can only get them during Halloween season.</font>',
+                desc: 'From now you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b> <br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins till next Halloween. You can only get them during Halloween season.</font>',
                 icon: [6, 7, 'seasonal'],
                 req: { '"dark season"': true },
                 cost: { 'insight': 100 },
@@ -16795,7 +16803,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: 'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 25, 34, 'magixmod'],
                 cost: { 'culture': 4, 'insight': 1 },
                 chance: 50,
@@ -17255,7 +17263,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -17265,7 +17273,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect, making [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 750,
@@ -17274,7 +17282,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -17338,7 +17346,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 1, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'dreaming': false },
@@ -17346,7 +17354,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [insight] with a tenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [insight] with a tenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 2, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'carcass-looting': false },
@@ -17354,7 +17362,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'active exploration',
-                desc: '@hired [wanderer]s gather [insight] with fifteenth of the efficiency of a [dreamer] and gather resources with fifteenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@hired [wanderer]s gather [insight] with fifteenth of the efficiency of a [dreamer] and gather resources with fifteenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 3, 'magixmod'],
                 chance: 3,
                 req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false },
@@ -17374,7 +17382,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'rafts', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores<> @makes terrain with lots of water exploration faster. @[rafts] are inefficient on biomes: <b>Prairie</b>,<b>Tundra</b>,<b>Ice desert</b> and <b>Forest</b>//Rafts are good but a risky and uneasy way to explore the bigger parts of an ocean. Their area allows you to store some [food] on board allows for longer explorations. Allows to explore 2 tiles away from beaches yet you need to be aware of big risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@allows exploring through ocean shores @makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the bigger parts of an ocean. Their area allows you to store some [food] on board allows for longer explorations. Allows to explore 2 tiles away from beaches yet you need to be aware of big risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [29, 6, 'magixmod'],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'canoes': false },
@@ -17389,7 +17397,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'symbolic culture colors',
-                desc: '@another [culture] point can be refunded every trait obtained if the trait lifetime is over 150 years. Refundation rate gets reduced from 150 to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b> @<b><font color="red">Note: This trait is rather temporary, has long lifetime and a slight chance to become pernament.</font></b>',
+                desc: '@another [culture] point can be refunded every trait obtained if the trait lifetime is over 150 years. Refundation rate gets reduced from 150 to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b> @<b><font color="red">Note: This trait is rather temporary and has long lifetime and a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 35, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -17401,7 +17409,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'symbolic knowledge colors',
-                desc: '@another [insight] point can be refunded every research. Refundation rate gets reduced from 150 to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b>  @<b><font color="red">Note: This trait is rather temporary, has long lifetime and a slight chance to become pernament.</font></b>',
+                desc: '@another [insight] point can be refunded every research. Refundation rate gets reduced from 150 to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b>  @<b><font color="red">Note: This trait is rather temporary and has long lifetime and a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 36, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -17422,7 +17430,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer] allowing them to discover nearby tiles if primary terrain is decently explored and researched.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>An alternative for [scouting]. <>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
+                desc: '@unlocks a new mode for [wanderer], allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>An alternative for [scouting]. <>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -17432,9 +17440,9 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Tech({
-                name: 'around the world',
+                name: 'around the world', // New tech by @1_e0
                 desc: 'Increases the speed of [wanderer]s when exploring new tiles by 10%.',
-                icon: [2, 2],
+                icon: [2, 2, 24, 1],
                 cost: { 'insight': 20 },
                 req: { 'exploration trips': true },
                 effects: [
@@ -17442,7 +17450,7 @@ if (getCookie("civ") == "0") {
                 chance: 2.5,
             });
             new G.Tech({
-                name: 'trails',
+                name: 'trails', // New tech by @1_e0
                 desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
@@ -17459,9 +17467,9 @@ if (getCookie("civ") == "0") {
                 chance: 2.5,
             });
             new G.Tech({
-                name: 'horses',
+                name: 'horses', // New tech by @1_e0
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%.',
-                icon: [2, 2],
+                icon: [24, 3, 24, 1],
                 cost: { 'insight': 10 },
                 req: { 'scouting': true },
                 effects: [
@@ -17478,17 +17486,24 @@ if (getCookie("civ") == "0") {
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
-                desc: '@people consume 3% less [food], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].// <small>we\'re getting used to it...</small>',
-                icon: [3, 12, 19, 1],
-                chance: 1.1,
+                desc: '@people consume 3% less [food], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].//<small>we\'re getting used to it...</small>',
+                icon: [1, 4, 26, 0, 'magixmod'],
+                chance: 1.5,
                 req: { 'rules of food': true },
             });
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe II',
-                desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.// <small>we\'re getting used to it...</small>',
+                desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.//<small>we\'re getting used to it...</small>',
                 icon: [3, 12, 19, 1],
                 chance: 600,
-                req: { 'rules of food': true, 'sedentism': true },
+                req: { 'ungrateful tribe': true, 'sedentism': true, 'tribe of eaters': false },
+            });
+            new G.Trait({ // New trait by @1_e0 to counter happiness slightly
+                name: 'tribe of eaters',
+                desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will continue to be ungrateful, but at least they don\'t mind so much anymore.</small>',
+                icon: [0, 2, 19, 1],
+                chance: 600,
+                req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
             });
 
 
@@ -20797,6 +20812,7 @@ if (getCookie("civ") == "0") {
                             if (G.has('culture of moderation')) { consumeMult *= 0.85; happinessAdd -= 0.1; }
                             if (G.has('ungrateful tribe')) { consumeMult *= 0.97 }
                             if (G.has('ungrateful tribe II')) { consumeMult *= 0.97 }
+                            if (G.has('tribe of eaters')) { consumeMult *= 0.97 }
                             else if (G.has('joy of eating')) { consumeMult *= 1.15; happinessAdd += 0.1; }
                             else if (G.has('unstable eating habits')) { consumeMult *= (G.year % 31 > 15 ? 1.07 : 0.93); happinessAdd += (G.year % 31 > 15 ? 0.06 : -0.04); }
                             else if (G.has('unstable consumption habits')) {
@@ -23163,7 +23179,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'wanderer',
-                desc: '@explores occupied tiles for [land]@cannot discover new tiles@may sometimes get lost<>[wanderer]s walk about in search of new places to settle, reporting what they saw when they come back.',
+                desc: '@explores occupied tiles for [land]@cannot discover new tiles normally@may sometimes get lost<>[wanderer]s walk about in search of new places to settle, reporting what they saw when they come back.',
                 icon: [2, 2, 'c2'],
                 cost: { 'food': 20 },
                 use: { 'worker': 1 },
@@ -23182,7 +23198,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'scout',
-                desc: '@discovers new tiles for [land]@cannot explore occupied tiles@may sometimes get lost<>[scout]s explore the world in search of new territories.',
+                desc: '@discovers new tiles of [land]@cannot explore occupied tiles@may sometimes get lost<>[scout]s explore the world in search of new and exciting territories.',
                 icon: [24, 3, 'c2'],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -23580,7 +23596,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores <br>//<small>It doesn\'t look like a beach to me. It is still a forest but near the "endless" ocean.</small>',
+                desc: '@allows exploring through ocean shores <><small>It doesn\'t look like a beach to me. It is still a forest, but near the "endless" ocean.</small>',
                 icon: [26, 7, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 2, 'influence': 1 },
                 req: { 'tool-making': true, 'woodcutting': true },
@@ -23592,7 +23608,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'boat building', category: 'tier1',
                 //TODO : in the future, boats will be units or resources. It is already Orteil...for both races.
-                desc: '@allows full ocean exploring.<>Unlocks [boat]s which will allow you to explore oceans. Also unlocks new modes for [wanderer]s and [scout]s. //<small>Let the voyage begin...again. Just take a seat!</small>',
+                desc: '@allows full ocean exploring.<>Unlocks [boat]s, which will allow you to explore oceans. Also unlocks new modes for [wanderer]s and [scout]s. //<small>Let the voyage begin...again. Just take a seat!</small>',
                 icon: [28, 7, 'c2'],
                 cost: { 'discernment': 60, 'creativity': 30 },
                 req: { 'canoes': true, 'carpentry': true, 'intuition': true, 'construction': true },
@@ -24057,7 +24073,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a twelfth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary, has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
+                desc: '@idle [worker]s gather resources with a twelfth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
                 icon: [20, 1, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'dreaming': false, 'branching wisdom': false },
@@ -24172,7 +24188,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'ritual necrophagy',
-                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving dead one for animals to devour him...but sometimes you have no choice...no...choice.</small>',
+                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving dead one for animals to devour him...but sometimes you have no choice...no...choice.</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 500,
@@ -24749,7 +24765,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: 'unhappiness from death is fluid meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 26, 16, 'c2'],
                 cost: { 'gentility': 12, 'creativity': 3 },
                 chance: 30,
@@ -24847,7 +24863,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness](depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false },
@@ -24855,7 +24871,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
+                desc: '@[corpse]s are treated with full respect making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Pure...glory. Treating dead bodies with royal attitude will surely make others less feared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 750,
@@ -24864,7 +24880,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@[corpse,Dead person\'s] belongings are preserved and left for family instead taken for common use unless person didn\'t have one. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 500,
@@ -25359,7 +25375,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 18, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'dreaming': false },
@@ -25367,7 +25383,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 17, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'carcass-looting': false },
@@ -25375,7 +25391,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'branching wisdom',
-                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various period of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become pernament. During lategame, if this trait won\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various period of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 19, 'c2'],
                 chance: 3,
                 cost: { 'discernment': 3, 'creativity': 3 },
@@ -27086,7 +27102,5 @@ if (getCookie("civ") == "0") {
                 return lvl;
             }
         }
-
-    });
-
+    })
 }

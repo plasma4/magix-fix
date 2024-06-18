@@ -325,7 +325,7 @@ G.AddData({
                     id: 'traitManagement',
                     name: 'traitManagement',
                     classes: G.getSetting('traitRemovalMode') ? ["on"] : [],
-                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits. <br /> You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.66) }) + ' Influence). This option shows up after having currently 15 traits. </br>Also temporary traits that became pernament may also be removed but cooldown until next <br /> available removal will be significantlly longer and will cost <b>max</b> available influence. <br /><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',
+                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time.<br>Also, temporary traits that became pernament may also be removed but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> Sometimes, some traits that negatively affect your civilization may be a key to traits that will support you.',
                     text: 'Manage temporary traits',
                     style: 'box-shadow:-1px 0px 2px 2px #f00;',
                     onclick: function () {
@@ -346,7 +346,7 @@ G.AddData({
                 str += '</div>';
             } else {
                 G.setSetting('traitRemovalMode', false); //autodisable it
-                str += '<br />Gain 15 traits to unlock additional option</div>';
+                str += '<br />Gain 15 traits to unlock an additional option</div>';
             }
 
             l('traitDiv').innerHTML =
@@ -3478,7 +3478,7 @@ G.AddData({
                 case 4: G.middleText('<font color="#faffee"><small>You can\'t do that while time is stopped.</small></font>'); break;
                 case 5: G.middleText('<font color="#ffff00"><small>You can\'t do that here...</small></font>'); break;
                 case 6: G.middleText('<font color="#b0b0ff"><small>Sorry, but you can\'t rule a frozen civilization.</small></font>'); break;
-                case 7: G.middleText('<font color="#b0b0ff"><small>Ask or DM pelletsstarPL(mod creator & Grand Magixian), maybe he will help you.</small></font>'); break;
+                case 7: G.middleText('<font color="#b0b0ff"><small>Ask or DM pelletsstarPL (mod creator & Grand Magixian), and maybe he will help you.</small></font>'); break;
                 case 8: G.middleText('<font color="lime"><small>Log #' + Math.round(Math.random() * 132767) + 1 + '<br>Attempted to perform operation while paused<br>ACTION INTERRUPTED</small></font>'); break;
                 case 9: G.middleText('<font color="#ffbbaa"><small>Don\'t push while paused. It won\'t provide you anything.</small></font>'); break;
                 case 10: G.middleText('<font color="cyan"><small>Oh no, no. Don\'t think I will let you do this like that. >:)</small></font>'); break;
@@ -5150,7 +5150,7 @@ G.AddData({
                 G.middleText('<big><font color="pink">Happy ' + truY + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow');
             };
             if (yer.getMonth() == 6 && yer.getDate() >= 14 && yer.getDate() <= 20) { //Magix anniversary week
-                G.middleText('<big><font color="olive">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br> Thanks for playing this neat mod ~ pelletsstarPL. <font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
+                G.middleText('<big><font color="olive">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br>Thanks for playing this neat mod ~ pelletsstarPL<br><font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
             };
             if (day >= easterDay - 7 && day <= easterDay) { //EASTER
                 G.middleText('<big><font color="green">Happy Easter!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away. Easter bunny does a sniff,sniff</small></font>', 'slow');
@@ -5159,7 +5159,7 @@ G.AddData({
                 G.middleText('<big>Today Magix creator has their birthday.</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
             };
             if (yer.getMonth() == 2 && yer.getDate() == 8) { //Females/Ladies day greeting
-                G.middleText('<big>Today is Female\'s day.</big><br><small>Make sure you will greet some lady nicely today and not only today :)<br>- Welcome back -<br>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
+                G.middleText('<big>Today is Female\'s day.</big><br><small>Make sure you will greet some lady nicely today and not just today :)<br>- Welcome back -<br>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
             };
             if (yer.getMonth() == 2 && yer.getDate() == 8) { //Males/Gentlemen day greeting
                 G.middleText('<big>Today is Male\'s day.</big><br><small>Yeah boiii<br>- Welcome back -<br>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
@@ -5175,7 +5175,7 @@ G.AddData({
 
         G.funcs['>9000'] = function () {
             G.Message({ type: 'tutorial', text: '<font size="10">IT\'S OVER 9000!!!!</font>' });
-            if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, it is insane. No way that can be right...</small>', 'slow');
+            if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, it is insane! No way that can be right...</small>', 'slow');
             G.achievByName['it\'s over 9000'].won++;
             var audio = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/EasterEgg.mp3');
             audio.play();
@@ -5185,12 +5185,12 @@ G.AddData({
             var debug = G.keys[17] && G.getSetting('debug');
             var lt = typeof (me.trait.lifetime) === 'function' ? me.trait.lifetime() : me.trait.lifetime;
             var tierSuffix = G.traitsOwnedNames.indexOf('eotm') != -1 ? " II" : "";
-            var cost = lt == Infinity ? Math.floor(G.getRes('authority' + tierSuffix).amount) : Math.floor(G.getRes('authority' + tierSuffix).amount * 0.66);
+            var cost = lt == Infinity ? Math.floor(G.getRes('authority' + tierSuffix).amount) : Math.floor(G.getRes('authority' + tierSuffix).amount * 0.6);
             var index = G.traitsOwned.indexOf(me);
             var canRemoveViaInfluence = G.influenceTraitRemovalCooldown <= 0 && G.getSetting('traitRemovalMode') && Math.floor(G.getRes('influence' + tierSuffix).amount) >= cost;
 
             if (!canRemoveViaInfluence && !debug && lt != undefined) {
-                if (Math.floor(G.getRes('influence' + tierSuffix).amount) < Math.floor(G.getRes('authority').amount * 0.66)) G.middleText('You need more Influence' + tierSuffix + ' to remove a trait.');
+                if (Math.floor(G.getRes('influence' + tierSuffix).amount) < Math.floor(G.getRes('authority').amount * 0.6)) G.middleText('You need more Influence' + tierSuffix + ' to remove this trait.');
                 if (G.influenceTraitRemovalCooldown > 0) G.middleText('The cooldown is still active.');
                 if (G.getSetting('paused')) G.cantWhenPaused(); //of course can't when paused just to clarify
             }
@@ -5205,8 +5205,6 @@ G.AddData({
                 G.applyKnowEffects(me.trait, true, true);
                 G.update['trait']();
             }
-
         }
-
     }
-});
+})
