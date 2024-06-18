@@ -1029,7 +1029,7 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic. <br />It is <b>' + itemName + '</b>. This finding provides you <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u><br />Great!',
+                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic. <br>It is <b>' + itemName + '</b>. This finding provides you <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u><br>Great!',
                 icon: [23, 33, 'magixmod']
             });
         }
@@ -1128,7 +1128,7 @@ function timeAchievs() {
     if (time >= 3600000 * 24) { G.achievByName['the day of rise'].won = 1; if (G.achievByName['the day of rise'].won == 0) G.middleText("- Completed The day of rise achievement -"); }
     if (time >= 3600000 * 24 * 7) { G.achievByName['authority\'s week'].won = 1; if (G.achievByName['authority\'s week'].won == 0) G.middleText("- Completed Authority\'s week achievement -"); }
     if (time >= 3600000 * 24 * 30) { G.achievByName['golden month'].won = 1; if (G.achievByName['golden month'].won == 0) G.middleText("- Completed Golden Month achievement -"); }
-    if (time >= 3600000 * 24 * 365) { G.achievByName['so much to do, so much to see'].won = 1; if (G.achievByName['so much to do, so much to see'].won == 0) G.middleText("- Completed so much to do,<br /> so much to see <u>shadow achievement</u> -"); }
+    if (time >= 3600000 * 24 * 365) { G.achievByName['so much to do, so much to see'].won = 1; if (G.achievByName['so much to do, so much to see'].won == 0) G.middleText("- Completed so much to do,<br> so much to see <u>shadow achievement</u> -"); }
 }
 function newDayLines() {
     if (G.getSetting('atmosphere') && Math.random() < 0.01 && (G.getSetting('new day lines') || G.resets <= 3)) {
@@ -1150,6 +1150,9 @@ function AoD() {
         G.gain('health', -changed * 0.1, 'art of death');
 
     }
+}
+function changeHappiness(amount, description) {
+    G.gain('happiness', amount < 0 ? ungrateful * amount : amount, description)
 }
 if (getCookie("civ") == "0") {
     //////////////////////////////////////////////////////////////
@@ -1688,7 +1691,7 @@ if (getCookie("civ") == "0") {
 
                     if (G.checkPolicy("insects as food") == "on") G.makePartOf('bugs', 'food'); //bugfix 
                     G.ta = 1;
-                    G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '. <br />Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> and mine using <a href="https://discord.com/invite/MUyTFvxqm8" target="_blank">this link</a>', icon: [0, 3] });
+                    G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '. <br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> and mine using <a href="https://discord.com/invite/MUyTFvxqm8" target="_blank">this link</a>', icon: [0, 3] });
                     //Had to paste it there because if you obtain and you will unlock 5th choice after page refresh you can still pick 1 of 4 instead of 1 of 5
                     if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
 
@@ -1738,7 +1741,7 @@ if (getCookie("civ") == "0") {
                         G.gain("herb essence", h * 0.08);
                         if (G.getRes('herb essence').amount >= G.herbReq) {
                             G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making " + G.getName("inhabs") + " happy. Keep up the good work and do not forget that civilization will demand more and more of Herbs essence and you will need it for your final wonder.", icon: [36, 19, 'magixmod'] });
-                            G.gain("happiness", 2.3 * G.getRes("population").amount, "Herbal essence happiness");
+                            changeHappiness(2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.gain("health", 2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.lose("herb essence", G.herbReq, "population please");
                         } else {
@@ -1816,14 +1819,14 @@ if (getCookie("civ") == "0") {
                     if (G.getSetting('annual raports'))
                         if (G.has('time measuring 1/2')) {
                             var str = '';
-                            str += 'It is now the year <b>' + (G.year + 1) + '</b>.<br />';
-                            str += 'Report for last year :<br />';
-                            str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br />';
-                            str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br />';
+                            str += 'It is now the year <b>' + (G.year + 1) + '</b>.<br>';
+                            str += 'Report for last year :<br>';
+                            str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
+                            str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
                             if (expTraits.length > 0) {
                                 l = expTraits.length;
                                 expTraits = expTraits.slice(0, 3);
-                                str += '&bull; <b>Temporary traits that expired this year</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br />';
+                                str += '&bull; <b>Temporary traits that expired this year</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br>';
                             }
                             G.getRes('born this year').amount = 0;
                             G.getRes('died this year').amount = 0;
@@ -1832,14 +1835,14 @@ if (getCookie("civ") == "0") {
                         } else if (G.has('primary time measure') && !G.has('time measuring 1/2')) {
                             if (G.year + 1 % 100 == 0) {
                                 var str = '';
-                                str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br />';
-                                str += 'Report for a long, long time...this century:<br />';
-                                str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br />';
-                                str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br />';
+                                str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br>';
+                                str += 'Report for a long, long time...this century:<br>';
+                                str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
+                                str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
                                 if (expTraits.length > 0) {
                                     var l = expTraits.length;
                                     expTraits = expTraits.slice(0, 3);
-                                    str += '&bull; <b>Temporary traits that expired this century</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br />';
+                                    str += '&bull; <b>Temporary traits that expired this century</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br>';
                                 }
                                 G.getRes('born this year').amount = 0;
                                 G.getRes('died this year').amount = 0;
@@ -1951,12 +1954,12 @@ if (getCookie("civ") == "0") {
                                 G.Message({ type: 'story2', text: 'You think that you should ascend someday no matter what. You feel it in your inner being.', icon: [32, 13, 'magixmod'] });
                                 st4 = true
                             } else if (G.resets >= 1) {
-                                G.Message({ type: 'story2', text: 'You wonder how your tribe will look and how advanced it will become within the next centuries. (And hope nothing goes awry.)', icon: [32, 12, 'magixmod'] });
+                                G.Message({ type: 'story2', text: 'You wonder how your tribe will look and how advanced it will become within the next few centuries. (And hope nothing goes awry.)', icon: [32, 12, 'magixmod'] });
                                 st4 = true
                             }
                         }
                         if (G.techN > 74 && G.techN <= 77 && !st5) {
-                            G.Message({ type: 'story1', text: 'You organize storytelling at the beach. Well. Some wolf was lurking to wound some of your ' + G.getName('inhabs') + ' but some hunter takes it down before the tragedy occurs.', icon: [7, 11] });
+                            G.Message({ type: 'story1', text: 'You organize storytelling at the beach. Some wolf was lurking to wound some of your ' + G.getName('inhabs') + ', but a worker takes it down before a tragedy occurs.', icon: [7, 11] });
                             st5 = true
                         }
                         if (G.techN > 77 && G.techN <= 86 && !st6) {
@@ -1968,7 +1971,7 @@ if (getCookie("civ") == "0") {
                             st7 = true
                         }
                         if (G.techN > 93 && G.techN <= 99 && !st8) {
-                            G.Message({ type: 'bad', text: 'You had a nightmare someday. You saw there brutally wounded ' + G.getName('inhab') + '. It really shocked and made you scared.', icon: [32, 9, 'magixmod'] });
+                            G.Message({ type: 'bad', text: 'You had a nightmare someday, which had a brutally wounded ' + G.getName('inhab') + '. It really shocked and made you scared.', icon: [32, 9, 'magixmod'] });
                             st8 = true
                         }
                         if (G.techN > 99 && G.techN <= 106 && !st9) {
@@ -1976,11 +1979,11 @@ if (getCookie("civ") == "0") {
                             st9 = true
                         }
                         if (G.techN > 108 && G.techN <= 112 && !st10) {
-                            G.Message({ type: 'story1', text: 'This angel appears in your dreams. Now it said clearly that Paradise will be open for you and your tribe. You clearly remembered his words: <br><b><font color="#FFFED6">Dear ' + G.getName('ruler') + '. I am so proud of you<br> and people you rule. They are sign that shows how worthy people are. <br>You taught them a lot.<br>Someday the Paradise will be open for you, ' + G.getName('ruler') + ', and your ' + G.getName('inhabs') + '</font></b>', icon: [32, 8, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'An angel appears in your dreams. Now it says clearly that Paradise will be open for you and your tribe. You clearly remembered his words: <br><b><font color="#FFFED6">Dear ' + G.getName('ruler') + '. I am so proud of you<br> and people you rule. They are sign that shows how worthy people are. <br>You taught them a lot.<br>Someday the Paradise will be open for you, ' + G.getName('ruler') + ', and your ' + G.getName('inhabs') + ', so do not worry.</font></b>', icon: [32, 8, 'magixmod'] });
                             st10 = true
                         }
                         if (G.techN > 112 && G.techN <= 119 && !st11) {
-                            G.Message({ type: 'good', text: 'You see one of your carver works on a gem block. You came closer to see the big gem block and even asked if he can teach you a little of carving. You spend some time with him and carved your first wooden statuette. Then you carved a crown for the statuette. Hooray.', icon: [32, 7, 'magixmod'] });
+                            G.Message({ type: 'good', text: 'You see one of your carvers work on a gem block. You came closer to see the big gem block and even asked if he can teach you a little of carving. You spend some time with him and carved your first wooden statuette. Then you carved a little crown for the statuette and made a new friend.', icon: [32, 7, 'magixmod'] });
                             st11 = true
                         }
                         if (G.techN > 119 && G.techN <= 127 && !st12) {
@@ -1992,7 +1995,7 @@ if (getCookie("civ") == "0") {
                             st13 = true
                         }
                         if (G.techN > 139 && G.techN <= 143 && !st14) {
-                            G.Message({ type: 'story2', text: 'People have written a book, and they call it "The Book of Grand Herbalists". It is all about the herbalism profession. People related to druidism are pretty proud of that.', icon: [30, 30, 'magixmod'] });
+                            G.Message({ type: 'story2', text: 'People have written a book, and they call it "The Book of Grand Herbalists" which is all about the herbalism profession. People related to druidism are pretty proud of that.', icon: [30, 30, 'magixmod'] });
                             st14 = true
                         }
                         if (G.techN > 143 && G.techN <= 151 && !st15) {
@@ -2008,9 +2011,9 @@ if (getCookie("civ") == "0") {
                             //G.getRes('population')/150+(G.year+G.achievByName['unhappy'].won*4/5)
                             /////////////////////
                             if (G.has('time measuring 1/2')) {
-                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob, kill. That\'s how Madness looks like. <br>Here comes this cruel year\'s report: <li>People murdered: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li> <br>Population above <font color="orange">' + popinfo + '</font> presents cruel behaviours.' })
+                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob, kill. That\'s what Madness looks like. <br>Here comes this cruel year\'s report: <li>People murdered: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li> <br>Population above <font color="orange">' + popinfo + '</font> presents cruel behaviours.' })
                             } else if (rese == true) {
-                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob, kill. That\'s how Madness looks like. <br> <li>People that got murdered last time: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li> <br>Population above <font color="orange">' + popinfo + '</font> presents cruel behaviours.' })
+                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob, kill. That\'s what Madness looks like. <br> <li>People that got murdered last time: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li> <br>Population above <font color="orange">' + popinfo + '</font> presents cruel behaviours.' })
                             }
                             G.lose('adult', Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))), 'The Madness')
                             G.gain('corpse', Math.round((G.getRes('corpse').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))), 'The Madness')
@@ -2336,7 +2339,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.achievByName['mausoleum eternal'].won >= 1 && G.achievByName['extremely smart'].won >= 1 && G.achievByName['man of essences'].won >= 1 && G.achievByName['magical'].won >= 1 && G.achievByName['next to the God'].won >= 1 && G.achievByName['the first choice'].won >= 1 && G.achievByName['trait-or'].won >= 1 && G.achievByName['not so pious people'].won >= 1 && G.achievByName['talented?'].won == 0) { //Experienced
                         G.achievByName['talented?'].won = 1;
-                        G.middleText('- All achievements from tier <font color="orange">3</font> have been completed! - </br> </hr> <small>All crafting units and a few non-crafting units that use overworld land since the next run will use 15% less land. In addition you can pick <font color="aqua">1 of 5</font> researches instead of <font color="aqua">1 of 4</font>.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="orange">3</font> have been completed! - <br> </hr> <small>All crafting units and a few non-crafting units that use overworld land since the next run will use 15% less land. In addition you can pick <font color="aqua">1 of 5</font> researches instead of <font color="aqua">1 of 4</font>.</small>', 'slow')
                     }
                     if (G.has('outstanders club')) {
                         G.getDict('the outstander').limitPer = { 'population': 26500 }
@@ -2623,11 +2626,11 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.achievByName['mausoleum'].won >= 1 && G.achievByName['democration'].won >= 1 && G.achievByName['sacrificed for culture'].won >= 1 && G.achievByName['insight-ly'].won >= 1 && G.achievByName['first glory'].won >= 1 && G.achievByName['apprentice'].won >= 1 && G.achievByName['experienced'].won == 0) { //Experienced
                         G.achievByName['experienced'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! - </br> </hr> <small>From now you will start each run with an extra 100 fruit.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! - <br> </hr> <small>From now you will start each run with an extra 100 fruit.</small>', 'slow')
                     }
                     if (G.achievByName['heavenly'].won >= 1 && G.achievByName['deadly, revenantic'].won >= 1 && G.achievByName['in the underworld'].won >= 1 && G.achievByName['level up'].won >= 1 && G.achievByName['lucky 9'].won >= 1 && G.achievByName['traitsman'].won >= 1 && G.achievByName['smart'].won == 0 && G.achievByName['familiar'].won == 1 && G.achievByName['in the shadows'].won == 1) { //Smart
                         G.achievByName['smart'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">2</font> completed! - </br> </hr> <small>For the next run, basic housing uses less land.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="orange">2</font> completed! - <br> </hr> <small>For the next run, basic housing uses less land.</small>', 'slow')
                     }
                     if (G.has('dt17') && G.has('sb4') && G.checkPolicy('se03') == 'on' && G.achievByName['not so pious people'].won == 0) {
                         ;
@@ -2639,10 +2642,7 @@ if (getCookie("civ") == "0") {
                         if (G.getRes('wisdom').amount < 100) {
                             G.gain('wisdom', 1)
                         }
-                    }/*year1&2 nerf
-          if(G.year<=1){
-          G.gain('happiness',ungrateful*0.5)
-          }*/
+                    }/*year1&2 nerf removed*/
 
                     if (G.has('t11')) { G.ca = 2; G.cb = 1; };
                     faicost = 1 * (G.getRes("new world point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
@@ -2920,7 +2920,7 @@ if (getCookie("civ") == "0") {
                         }
                         var eatongathermult = 0.5;
                         var happinessLevel = G.getRes('happiness').amount / me.amount;
-                        if (G.checkPolicy('eat on gather') == 'on' && happinessLevel < 70 && G.getRes('food').amount > 0) G.gain('happiness', ungrateful * me.amount * eatongathermult * (G.has("t7") ? 0.2 : 1), 'instant eating');
+                        if (G.checkPolicy('eat on gather') == 'on' && happinessLevel < 70 && G.getRes('food').amount > 0) changeHappiness(me.amount * eatongathermult * (G.has("t7") ? 0.2 : 1), 'instant eating');
                         var productionMult = G.doFunc('production multiplier', 1);
 
                         var deathUnhappinessMult = 1;
@@ -2955,16 +2955,16 @@ if (getCookie("civ") == "0") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; G.gain('happiness', (-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
-                                case 'meager': toConsume *= 0.5; G.gain('happiness', (-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
-                                    G.gain('happiness', ungrateful * ((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
-                                case 'plentiful': toConsume *= 1.5; G.gain('happiness', ungrateful * (me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.07 + ((me.amount % 2) * 0.01))), 'water rations'); break;
+                                    changeHappiness(((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
+                                case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.07 + ((me.amount % 2) * 0.01))), 'water rations'); break;
                             }
                             toConsume = randomFloor(toConsume * consumeMult);
                             var consumed = G.lose('water', toConsume, 'drinking');
-                            G.gain('happiness', ungrateful * consumed * happinessAdd * (G.has("t7") ? 0.2 : 0.5), 'water culture');
+                            changeHappiness(consumed * happinessAdd * (G.has("t7") ? 0.2 : 0.5), 'water culture');
                             var lacking = toConsume - consumed;
                             if (rations == 'none') lacking = me.amount * 0.5;
                             if (lacking > 0)//are we out of water?
@@ -2973,7 +2973,7 @@ if (getCookie("civ") == "0") {
                                 if (rations != 'none' && G.checkPolicy('drink muddy water') == 'on') lacking = lacking - G.lose('muddy water', lacking, 'drinking');
                                 if (lacking > 0 && G.checkPolicy('disable aging') == 'off')//are we also out of muddy water?
                                 {
-                                    G.gain('happiness', -lacking * 5 * (G.has("t7") ? 0.2 : 1), 'no water');
+                                    changeHappiness(-lacking * 5 * (G.has("t7") ? 0.2 : 1), 'no water');
                                     //die off
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
@@ -2983,7 +2983,7 @@ if (getCookie("civ") == "0") {
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
                                     G.gain('corpse', died, 'dehydration');
-                                    G.gain('happiness', -died * 20 * deathUnhappinessMult, 'dehydration');
+                                    changeHappiness(-died * 20 * deathUnhappinessMult, 'dehydration');
                                     G.getRes('died this year').amount += died;
                                     if (G.getSetting('death messages') || G.resets <= 3) { //toggle
                                         if (died > 0) G.Message({ type: 'bad', mergeId: 'diedDehydration', textFunc: function (args) { return B(args.died) + ' ' + (args.died == 1 ? 'person' : 'people') + ' died from dehydration.'; }, args: { died: died }, icon: [5, 4] });
@@ -3013,18 +3013,18 @@ if (getCookie("civ") == "0") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; G.gain('happiness', (-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
-                                case 'meager': toConsume *= 0.5; G.gain('happiness', (-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 100)
-                                        G.gain('happiness', ungrateful * (happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
-                                case 'plentiful': toConsume *= 1.5; G.gain('happiness', ungrateful * (me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.06 + ((me.amount % 2) * 0.01))), 'food rations'); break;
+                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
+                                case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.06 + ((me.amount % 2) * 0.01))), 'food rations'); break;
                             }
                             toConsume = randomFloor(toConsume * consumeMult);
                             var consumed = G.lose('food', toConsume, 'eating');
-                            G.gain('happiness', ungrateful * G.lose('salt', randomFloor(consumed * 0.1), 'eating') * 5, 'salting food');//use salt
-                            G.gain('happiness', ungrateful * consumed * happinessAdd * (G.has("t7") ? 0.2 : 0.5), 'food culture');
+                            changeHappiness(G.lose('salt', randomFloor(consumed * 0.1), 'eating') * 5, 'salting food');//use salt
+                            changeHappiness(consumed * happinessAdd * (G.has("t7") ? 0.2 : 0.5), 'food culture');
                             var lacking = toConsume - consumed;
                             if (rations == 'none') lacking = me.amount * 1;
 
@@ -3034,7 +3034,7 @@ if (getCookie("civ") == "0") {
                                 if (rations != 'none' && G.checkPolicy('eat spoiled food') == 'on') lacking = lacking - G.lose('spoiled food', lacking, 'eating');
                                 if (lacking > 0 && G.checkPolicy('disable aging') == 'off')//are we also out of spoiled food?
                                 {
-                                    G.gain('happiness', -lacking * 5 * (G.has("t7") ? 0.2 : 1), 'no food');
+                                    changeHappiness(-lacking * 5 * (G.has("t7") ? 0.2 : 1), 'no food');
                                     //die off
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
@@ -3044,7 +3044,7 @@ if (getCookie("civ") == "0") {
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
                                     G.gain('corpse', died, 'starvation');
-                                    G.gain('happiness', -died * 20 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'starvation');
+                                    changeHappiness(-died * 20 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'starvation');
                                     G.getRes('died this year').amount += died;
                                     if (G.getSetting('death messages') || G.resets <= 3) { //toggle
                                         if (died > 0) G.Message({ type: 'bad', mergeId: 'diedStarvation', textFunc: function (args) { return B(args.died) + ' ' + (args.died == 1 ? 'person' : 'people') + ' died from starvation.'; }, args: { died: died }, icon: [5, 4] });
@@ -3064,7 +3064,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('fluid dress code')) happyDressModifier *= (G.year % 31 > 15 ? 1.04 : 0.96);
                         for (var i in objects) {
                             fulfilled = Math.min(me.amount, Math.min(G.getRes(i).amount, leftout));
-                            G.gain('happiness', ungrateful * fulfilled * objects[i][0] * happyDressModifier, 'clothing');
+                            changeHappiness(fulfilled * objects[i][0] * happyDressModifier, 'clothing');
                             G.gain('health', fulfilled * objects[i][1] * healthDressModifier, 'clothing');
                             leftout -= fulfilled;
                         }
@@ -3073,10 +3073,10 @@ if (getCookie("civ") == "0") {
                         if (G.has('strict dress code')) dressLackModifierHap *= 1.5;
                         if (G.has('fluid dress code')) heartModifier *= (G.year % 31 > 15 ? 1.25 : 0.75);
                         if (G.has('dt10')) {
-                            G.gain('happiness', -leftout * 0.3 * (G.has("t7") ? 0.2 : 1) * dressLackModifierHap, 'no clothing'),
+                            changeHappiness(-leftout * 0.3 * (G.has("t7") ? 0.2 : 1) * dressLackModifierHap, 'no clothing'),
                                 G.gain('health', -leftout * 0.3 * (G.has("t7") ? 0.2 : 1), 'no clothing');
                         } else {
-                            G.gain('happiness', -leftout * 0.15 * (G.has("t7") ? 0.2 : 1) * dressLackModifierHap, 'no clothing'),
+                            changeHappiness(-leftout * 0.15 * (G.has("t7") ? 0.2 : 1) * dressLackModifierHap, 'no clothing'),
                                 G.gain('health', -leftout * 0.15 * (G.has("t7") ? 0.2 : 1), 'no clothing');
                         }
 
@@ -3093,7 +3093,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('fluid heart')) happyHeartModifier *= (G.year % 31 > 15 ? 1.05 : 0.95);
                         for (var i in objects) {
                             fulfilled = Math.min(me.amount, Math.min(G.getRes(i).amount * objects[i][0], leftout));
-                            G.gain('happiness', ungrateful * fulfilled * objects[i][1] * happyHeartModifier, 'warmth & light');
+                            changeHappiness(fulfilled * objects[i][1] * happyHeartModifier, 'warmth & light');
                             G.gain('health', fulfilled * objects[i][2] * healthHeartModifier, 'warmth & light');
                             leftout -= fulfilled;
                         }
@@ -3102,10 +3102,10 @@ if (getCookie("civ") == "0") {
                         if (G.has('hot heart')) heartModifier *= 0.5;
                         if (G.has('fluid heart')) heartModifier *= (G.year % 31 > 15 ? 1.25 : 0.75);
                         if (G.has('dt11')) {
-                            G.gain('happiness', -leftout * 0.2 * (G.has("t7") ? 0.2 : 1) / heartModifier, 'cold & darkness'),
+                            changeHappiness(-leftout * 0.2 * (G.has("t7") ? 0.2 : 1) / heartModifier, 'cold & darkness'),
                                 G.gain('health', -leftout * 0.2 * (G.has("t7") ? 0.2 : 1), 'cold & darkness');
                         } else {
-                            G.gain('happiness', -leftout * 0.1 * (G.has("t7") ? 0.2 : 1) / heartModifier, 'cold & darkness'),
+                            changeHappiness(-leftout * 0.1 * (G.has("t7") ? 0.2 : 1) / heartModifier, 'cold & darkness'),
                                 G.gain('health', -leftout * 0.1 * (G.has("t7") ? 0.2 : 1), 'cold & darkness');
                         }
 
@@ -3124,7 +3124,7 @@ if (getCookie("civ") == "0") {
                                 var n = randomFloor(G.getRes('elder').amount * 0.00035);
                                 G.gain('corpse', n, 'old age');
                                 G.lose('elder', n, 'old age');
-                                G.gain('happiness', -n * 5 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
+                                changeHappiness(-n * 5 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
                                 if (G.getSetting('homelessness messages') || G.resets <= 3) { //toggle
                                     if (n > 0) G.Message({ type: 'bad', mergeId: 'diedAge', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' died of old age.'; }, args: { n: n }, icon: [13, 4] });
                                 }
@@ -3151,9 +3151,9 @@ if (getCookie("civ") == "0") {
                                 else if (G.checkPolicy('population control') == 'limited') birthRate *= 0.5;
                                 birthRate *= productionMult;
                                 if (homeless > 0 && me.amount > 15) birthRate *= 0.01;//harder to make babies if you have more than 15 people and some of them are homeless
-                                var n = randomFloor(G.getRes('adult').amount * 0.0003 * birthRate); G.gain('baby', n, 'birth'); G.gain('happiness', ungrateful * n * 10 * (G.has("t7") ? 0.75 : 1), 'birth'); born += n;
+                                var n = randomFloor(G.getRes('adult').amount * 0.0003 * birthRate); G.gain('baby', n, 'birth'); changeHappiness(n * 10 * (G.has("t7") ? 0.75 : 1), 'birth'); born += n;
                                 if (day + leap >= 40 && day + leap <= 46 && G.has('parental love')) G.gain('love xp', n, 'birth');
-                                var n = randomFloor(G.getRes('elder').amount * 0.00003 * birthRate); G.gain('baby', n, 'birth'); G.gain('happiness', ungrateful * n * 10 * (G.has("t7") ? 0.75 : 1), 'birth'); born += n;
+                                var n = randomFloor(G.getRes('elder').amount * 0.00003 * birthRate); G.gain('baby', n, 'birth'); changeHappiness(n * 10 * (G.has("t7") ? 0.75 : 1), 'birth'); born += n;
                                 if (day + leap >= 40 && day + leap <= 46 && G.has('parental love')) G.gain('love xp', n / 2, 'birth');
                                 G.getRes('born this year').amount += born;
                                 if (G.getSetting('birth messages') || G.resets <= 3) {
@@ -3188,7 +3188,7 @@ if (getCookie("civ") == "0") {
                             var sickMortality = 0.005;
                             var changed = 0;
                             var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickMortality), 'disease'); G.gain('corpse', n, 'disease'); changed += n;
-                            G.gain('happiness', -changed * 15 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
+                            changeHappiness(-changed * 15 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
                             G.getRes('died this year').amount += changed;
                             if (G.getSetting('death messages') || G.resets <= 3) { //toggle
                                 if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedSick', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' died from disease.'; }, args: { n: changed }, icon: [5, 4] });
@@ -3197,7 +3197,7 @@ if (getCookie("civ") == "0") {
                             if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.2;
                             var changed = 0;
                             var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
-                            G.gain('happiness', ungrateful * changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
+                            changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'person' : 'people') + ' got better.'; }, args: { n: changed }, icon: [4, 3] });
                             };
@@ -3222,7 +3222,7 @@ if (getCookie("civ") == "0") {
                             var woundMortality = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * woundMortality), 'wounds'); G.gain('corpse', n, 'wounds'); changed += n;
-                            G.gain('happiness', -changed * 15 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
+                            changeHappiness(-changed * 15 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
                             G.getRes('died this year').amount += changed;
                             if (G.getSetting('death messages') || G.resets <= 3) { //toggle
                                 if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' died from their wounds.'; }, args: { n: changed }, icon: [5, 4] });
@@ -3230,7 +3230,7 @@ if (getCookie("civ") == "0") {
                             var sickHealing = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
-                            G.gain('happiness', ungrateful * changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
+                            changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('accident messages') || G.resets <= 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3] });
                             }
@@ -3339,7 +3339,7 @@ if (getCookie("civ") == "0") {
                                 if (G.has('fear of death')) happMult *= 1.05;
                                 if (G.has('acceptance of death')) happMult *= 0.95;
                                 if (G.has('death scepticism')) happMult -= G.year % 40 > 19 ? 0.05 : -0.05;
-                                G.gain('happiness', -changed * 0.1 * happMult, 'art of death');
+                                changeHappiness(-changed * 0.1 * happMult, 'art of death');
                             }
                         }
                         if (me.amount > 0) {
@@ -3349,11 +3349,11 @@ if (getCookie("civ") == "0") {
                                 if (G.checkPolicy('se08') == 'off') {//BURI'O DAK
                                     var amount = Math.min(graves.amount - graves.used, Math.max(1, randomFloor(me.amount * 0.1)));
                                     graves.used += amount; G.lose('corpse', amount, 'burial');
-                                    G.gain('happiness', ungrateful * amount * 2, 'burial');
+                                    changeHappiness(amount * 2, 'burial');
                                 } else {
                                     var amount = Math.min(graves.amount - graves.used, Math.max(1, randomFloor(me.amount * 0.1)));
                                     graves.used += amount; G.lose('corpse', amount * 1.1, 'burial');
-                                    G.gain('happiness', ungrateful * amount * 2, 'burial');
+                                    changeHappiness(amount * 2, 'burial');
                                 }
                             }
                         }
@@ -3373,7 +3373,7 @@ if (getCookie("civ") == "0") {
                     var unhappiness = 0.01;
                     if (G.has('burial')) unhappiness *= 2;
                     if (G.has('belief in revenants')) unhappiness *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
-                    G.gain('happiness', -me.amount * unhappiness, 'corpses');
+                    changeHappiness(-me.amount * unhappiness, 'corpses');
                     G.gain('health', -me.amount * 0.02, 'corpses');
                     //Corpse decay trait: Normal decay still works and each dark wormhole can increase rate of corpses that will get decayed(?)
                     if (G.has('corpse decay')) {
@@ -3571,7 +3571,7 @@ if (getCookie("civ") == "0") {
                     if (G.getRes('population').amount > 0 && tick % 2 == 0) {
                         //note : this is "soft" sickness; it affects the chance of people falling sick
                         //G.getRes('happiness').amount+=(me.amount-G.getRes('happiness').amount)*0.01;
-                        G.gain('happiness', ungrateful * me.amount * 0.001, 'health');
+                        changeHappiness(me.amount * 0.001, 'health');
 
                         var sickness = 0.1;
                         sickness += Math.pow(Math.max(0, G.getRes('population').amount - 50), 0.1) * 0.1;//more people means more contagion
@@ -4665,7 +4665,7 @@ if (getCookie("civ") == "0") {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose('spoiled juices', randomFloor(toSpoil), 'decay');
                     if (G.checkPolicy('drink spoiled juice') == 'on') {
-                        G.gain('happiness', ungrateful * randomFloor(spent * -1.17), 'drinking spoiled juice');
+                        changeHappiness(randomFloor(spent * -1.17), 'drinking spoiled juice');
                         G.gain('health', randomFloor(spent * -1.35), 'drinking spoiled juice');
                     }
                 },
@@ -4952,11 +4952,11 @@ if (getCookie("civ") == "0") {
                             if (G.checkPolicy('se08') == 'off') {
                                 var amount = Math.min(graves.amount - graves.used, Math.max(1, randomFloor(me.amount * 0.1)));
                                 graves.used += amount; G.lose('urn', amount * 4, 'burial');
-                                G.gain('happiness', ungrateful * amount * 2, 'burial');
+                                changeHappiness(amount * 2, 'burial');
                             } else {
                                 var amount = Math.min(graves.amount - graves.used, Math.max(1, randomFloor(me.amount * 0.1)));
                                 graves.used += amount; G.lose('urn', amount * 5, 'burial');
-                                G.gain('happiness', ungrateful * amount * 2, 'burial');
+                                changeHappiness(amount * 2, 'burial');
                             };
                         }
                     }
@@ -5698,7 +5698,7 @@ if (getCookie("civ") == "0") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !UnderworldMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere a Tablet appears behind you. It is hot to the touch. Its red glowing will only attract curses.</b></br> <font color="fuschia">So, prepare to tame 6 Devil\'s traits in order to continue your adventure. Without it the Underworld won\'t allow you discover its secrets.', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere a Tablet appears behind you. It is hot to the touch. Its red glowing will only attract curses.</b><br> <font color="fuschia">So, prepare to tame 6 Devil\'s traits in order to continue your adventure. Without it the Underworld won\'t allow you discover its secrets.', icon: [12, 19, 'magixmod'] });
                         UnderworldMESG = true
                         G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/GainedEmblem.mp3');
                     }
@@ -5721,23 +5721,23 @@ if (getCookie("civ") == "0") {
                 hidden: true,
                 tick: function (me, tick) {
                     if (me.amount == 150 && !G.has('a feeling from the Underworld') && !u1popup) {
-                        G.Message({ type: 'underworldig', text: 'As your people keep digging down they start to feel more warm, but not overheated yet. It mostly warms you. It feels like some soul from an earlier world wants to say something.</br> <b><font color="aqua">You are the one</br>Who wasn\'t done</br>Those people seek new worlds...</br>...and new odds</font></b>', icon: [0, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'As your people keep digging down they start to feel more warm, but not overheated yet. It mostly warms you. It feels like some soul from an earlier world wants to say something.<br> <b><font color="aqua">You are the one<br>Who wasn\'t done<br>Those people seek new worlds...<br>...and new odds</font></b>', icon: [0, 19, 'magixmod'] });
                         u1popup = true
                     }
                     if (me.amount == 350 && !G.has('a feeling from the Underworld') && !u2popup) {
-                        G.Message({ type: 'underworldig', text: 'People continue digging down and another souls want to tell you few things and green soul seemed like Nature essence creation has bitten you. People complain for warmth.</br><b><font color="fuschia">The world you want to meet</br> will not give all it has right before your feet</br>Danger for people abounds</br>and the forbidden will become crowds</font></b>', icon: [1, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'People continue digging down and another souls want to tell you few things and green soul seemed like Nature essence creation has bitten you. People complain for warmth.<br><b><font color="fuschia">The world you want to meet<br> will not give all it has right before your feet<br>Danger for people abounds<br>and the forbidden will become crowds</font></b>', icon: [1, 19, 'magixmod'] });
                         u2popup = true
                     }
                     if (me.amount == 600 && !G.has('a feeling from the Underworld') && !u3popup) {
-                        G.Message({ type: 'underworldig', text: 'You see wizards using magic to cool down the warmth so people can continue digging down for new world. Dark voices yell and make civils feared near you. This doesn\'t seem well.</br><b><font color="teal">You want to see fear...</br>Please don\'t show me even a tear...</br>You hear...</br>"I yell so you FEAR!!!!!!"</font></b>', icon: [2, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'You see wizards using magic to cool down the warmth so people can continue digging down for new world. Dark voices yell and make civils feared near you. This doesn\'t seem well.<br><b><font color="teal">You want to see fear...<br>Please don\'t show me even a tear...<br>You hear...<br>"I yell so you FEAR!!!!!!"</font></b>', icon: [2, 19, 'magixmod'] });
                         u3popup = true
                     }
                     if (me.amount == 750 && !G.has('a feeling from the Underworld') && !u4popup) {
-                        G.Message({ type: 'underworldig', text: 'Out of nowhere, people yell and run away in panic except small group of brave people who still dig down. Souls start to behave weird...or you just don\'t understand them yet.</br><b><font color="red">Don\'t let the Gods</br>Send there his crowds</br>Danger for people abounds</br>and forbidden are becoming crowds</font></b>', icon: [3, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'Out of nowhere, people yell and run away in panic except small group of brave people who still dig down. Souls start to behave weird...or you just don\'t understand them yet.<br><b><font color="red">Don\'t let the Gods<br>Send there his crowds<br>Danger for people abounds<br>and forbidden are becoming crowds</font></b>', icon: [3, 19, 'magixmod'] });
                         u4popup = true
                     }
                     if (me.amount == 950 && !G.has('a feeling from the Underworld') && !u5popup) {
-                        G.Message({ type: 'underworldig', text: 'A huge cavern starts to show while braves continued digging down. They run away to you...empowered weirdly by these souls. Another lightning essence creature paralyses you and water essence creatures started behaving insane. Is this a greeting from a new world?</br><b><font color="silver">Alright ' + G.getName('ruler') + '...</br>Call your soul and make it go...</br>Right to the world</br>The Under...world</font></b>', icon: [4, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'A huge cavern starts to show while braves continued digging down. They run away to you...empowered weirdly by these souls. Another lightning essence creature paralyses you and water essence creatures started behaving insane. Is this a greeting from a new world?<br><b><font color="silver">Alright ' + G.getName('ruler') + '...<br>Call your soul and make it go...<br>Right to the world<br>The Under...world</font></b>', icon: [4, 19, 'magixmod'] });
                         u5popup = true
                     }
                     if (me.amount == 1500 && !G.has('a feeling from the Underworld') && !finalupopup) {
@@ -7482,7 +7482,7 @@ if (getCookie("civ") == "0") {
                             var toMake = me.amount - me.idle;
                             if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('house', toMake)) {
                                 G.buyUnitByName('house', toMake, true);
-                                if (G.has('city planning III')) G.gain('happiness', ungrateful * toMake * 1.5, 'architect trust');
+                                if (G.has('city planning III')) changeHappiness(toMake * 1.5, 'architect trust');
                             }
                         }, mode: 'house building'
                     },
@@ -7502,7 +7502,7 @@ if (getCookie("civ") == "0") {
                             var toMake = me.amount - me.idle;
                             if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('house', toMake)) {
                                 G.buyUnitByName('floored house', toMake, true);
-                                if (G.has('city planning III')) G.gain('happiness', ungrateful * toMake * 1.5, 'architect trust');
+                                if (G.has('city planning III')) changeHappiness(toMake * 1.5, 'architect trust');
                             }
                         }, mode: 'floored houser'
                     },
@@ -7513,7 +7513,7 @@ if (getCookie("civ") == "0") {
                             var toMake = me.amount - me.idle;
                             if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('house', toMake)) {
                                 G.buyUnitByName('brick house with a silo', toMake, true);
-                                if (G.has('city planning III')) G.gain('happiness', ungrateful * toMake * 1.5, 'architect trust');
+                                if (G.has('city planning III')) changeHappiness(toMake * 1.5, 'architect trust');
                             }
                         }, mode: 'brickhouser'
                     },
@@ -10749,7 +10749,7 @@ if (getCookie("civ") == "0") {
                     onTechBuy('people', what);
                     //this.cooldown=10;
                     G.popupSquares.spawn(l('chooseOption-' + index + '-' + this.id), l('techBox').children[0]);
-                    if (G.has('symbI')) G.gain('insight', (G.has('symbolic knowledge colors') ? 2 : 1) + Math.floor(what.cost['insight'] / G.has('symbolic knowledge colors') ? 100 : 150), 'symbolism');
+                    if (G.has('symbI')) G.gain('insight', (G.has('symbolic knowledge colors') ? 2 : 1) + Math.ceil(what.cost['insight'] / (G.has('symbolic knowledge colors') ? 100 : 150)), 'symbolism');
                     if (G.has('t3')) {
                         G.lose('cultural balance', 1)
                     }
@@ -10859,14 +10859,14 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'tool-making', category: 'tier1',
-                desc: '@[artisan]s can now create [stone tools]<>With proper [tool-making], new procedures arise to craft a multitude of specialized tools out of cheap materials - such as hammers, knives, and axes.',
+                desc: '@[artisan]s can now create [stone tools]<>With proper [tool-making], new procedures arise to craft a multitude of specialized tools out of cheap materials. These include hammers, knives, and axes.',
                 icon: [4, 1],
                 cost: { 'insight': 10 },
                 req: { 'stone-knapping': true, 'carving': true },
                 effects: [
                 ],
                 chance: 3,
-                type: ['tutorial', 'Finally people can use and craft something better than knapped tools, rocks etc. Hire <b>Artisan</b> for this job.', [1, 9]]
+                type: ['tutorial', 'Finally, people can use and craft something better than knapped tools. Hire an <b>Artisan</b> and switch modes for this job.', [1, 9]]
             });
 
             new G.Tech({
@@ -10892,7 +10892,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water get explored faster. @[canoes] are inefficient on the <b>Swamplands</b>, <b>Jungle</b>, <b>Tundra</b>, and <b>Boreal forest</b> biomes<> //Canoes are a good and safe way to explore ocean shores, but slow. The longest it takes to explore swamps using these, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water get explored faster. @[canoes] are inefficient on the <b>Swamplands</b>, <b>Jungle</b>, <b>Tundra</b>, and <b>Boreal forest</b> biomes<> //Canoes are a good and safe way to explore ocean shores, but slow. In particular, it takes a long time in swamps, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [26, 7],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'rafts': false },
@@ -10939,7 +10939,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'cities', category: 'tier1',
-                desc: '@unlocks [hovel]s // <small>Villages are good too</small>',
+                desc: '@unlocks [hovel]s, which provide 8 [housing] each.// <small>Villages are good too...</small>',
                 icon: [29, 7],
                 cost: { 'insight': 25 },
                 req: { 'building': true, 'intuition': true },
@@ -10967,7 +10967,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'guilds', category: 'tier1',
-                desc: '@unlocks [guild quarters].',
+                desc: '@unlocks [guild quarters]',
                 icon: [23, 8],
                 cost: { 'insight': 20 },
                 req: { 'cities': true, 'construction': true, 'code of law': true, 'intuition': true },
@@ -11395,7 +11395,7 @@ if (getCookie("civ") == "0") {
                 req: { 'mana brewery': true, 'more useful housing': true },
                 effects: [
                 ],
-                tutorialMesg: ['tutorial', 'You unlocked <b>Wizard towers</b>.<br />These towers provide housing and produce Essences using Mana. Make sure that you have enough <b>Mana</b> income and some <b>Wizards</b> to upkeep at least one of the towers. Also, make sure that you have <b>Essence storages</b>.', [20, 13, 'magixmod']]
+                tutorialMesg: ['tutorial', 'You unlocked <b>Wizard towers</b>.<br>These towers provide housing and produce Essences using Mana. Make sure that you have enough <b>Mana</b> income and some <b>Wizards</b> to upkeep at least one of the towers. Also, make sure that you have <b>Essence storages</b>.', [20, 13, 'magixmod']]
             });
             new G.Tech({
                 name: 'wizard wisdom', category: 'tier1',
@@ -12114,7 +12114,7 @@ if (getCookie("civ") == "0") {
                             G.getDict('potter').icon = [28, 2, 'magixmod', 20, 2];
                             G.getDict('potter').gizmos = false;
                             G.getDict('potter').upkeep = {};
-                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely...or spilling uselessly into the dirt. </br><b><font color="fuschia">If you obtain [manufacture units I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely...or spilling uselessly into the dirt.<br><b><font color="fuschia">If you obtain [manufacture units I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -12131,10 +12131,10 @@ if (getCookie("civ") == "0") {
                             G.getDict('potter').gizmos = false;
                             G.getDict('potter').visible = false;
                             G.getDict('potter').upkeep = {};
-                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt. </br><b><font color="fuschia">Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt. <br><b><font color="fuschia">Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
                             G.getDict('drying rack').icon = [28, 2, 'magixmod', 13, 3, 'magixmod'];
                             G.getDict('drying rack').visible = false;
-                            G.getDict('drying rack').desc = '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower. </br><b><font color="fuschia"> Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('drying rack').desc = '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower. <br><b><font color="fuschia"> Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -13917,7 +13917,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'leaves of wisdom',
-                desc: 'The weird thought strikes scholars head. It\'s all about [wisdom II,Wisdom tree] that has now ruby red leaves. This tree produces leaves faster than it can grow branches for them. <br />Suddenly this thought dissipated from sholars minds, providing you: 2[education], 35[wisdom II] and 250 [wisdom].',
+                desc: 'The weird thought strikes scholars head. It\'s all about [wisdom II,Wisdom tree] that has now ruby red leaves. This tree produces leaves faster than it can grow branches for them. <br>Suddenly this thought dissipated from sholars minds, providing you: 2[education], 35[wisdom II] and 250 [wisdom].',
                 icon: [31, 10, 'magixmod'],
                 req: { 'symbolism II': true, 'branches of wisdom': false },
                 chance: 100,
@@ -17371,7 +17371,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs refund 1 [insight] for every 150 [insight] spent on research. @adopting traits provide 1 [culture]. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
+                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs now refund 1 [insight] for every 150 [insight] spent on research, rounded up.@adopting traits now provide 1 bonus [culture].<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
                 icon: [36, 11, 'magixmod'],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbolism': false },
@@ -17382,7 +17382,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'rafts', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores @makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the bigger parts of an ocean. Their area allows you to store some [food] on board allows for longer explorations. Allows to explore 2 tiles away from beaches yet you need to be aware of big risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@allows exploring through ocean shores @makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the larger parts of the ocean. [rafts] allow you to store some [food] on board allows for longer explorations. It lets you explore 2 tiles away from beaches, but can come at some risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [29, 6, 'magixmod'],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'canoes': false },
@@ -17447,7 +17447,6 @@ if (getCookie("civ") == "0") {
                 req: { 'exploration trips': true },
                 effects: [
                 ],
-                chance: 2.5,
             });
             new G.Tech({
                 name: 'trails', // New tech by @1_e0
@@ -17464,7 +17463,6 @@ if (getCookie("civ") == "0") {
                         }
                     }
                 ],
-                chance: 2.5,
             });
             new G.Tech({
                 name: 'horses', // New tech by @1_e0
@@ -17481,7 +17479,6 @@ if (getCookie("civ") == "0") {
                         }
                     }
                 ],
-                chance: 2.5,
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -18182,7 +18179,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'The only food acceptable here are healthy Herbs. In this plane you start with <b>Wizardry</b> unlocked, and Mana wells and wands will be available much earlier. Gatherers can exclusively gather herbs, but only in a very small area. To finish the wonder of Herbalia\'s plane you will need Herb essence. Herb essence will be consumed by culture, discover, and political units as an upkeep and occasionally to maintain happiness at its neutral level. Lacking Herb essence will make happiness and health significally drop, as a lack of clothing or warmth won\'t drop its level as much as a lack of essence will. Completing this trial for the first time will remove the happiness drop from eating herbs, making these not affect its actual level. <br /><Br /><BR />' +
+                                    'The only food acceptable here are healthy Herbs. In this plane you start with <b>Wizardry</b> unlocked, and Mana wells and wands will be available much earlier. Gatherers can exclusively gather herbs, but only in a very small area. To finish the wonder of Herbalia\'s plane you will need Herb essence. Herb essence will be consumed by culture, discover, and political units as an upkeep and occasionally to maintain happiness at its neutral level. Lacking Herb essence will make happiness and health significally drop, as a lack of clothing or warmth won\'t drop its level as much as a lack of essence will. Completing this trial for the first time will remove the happiness drop from eating herbs, making these not affect its actual level. <br><Br /><BR />' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -20331,13 +20328,13 @@ if (getCookie("civ") == "0") {
                             var str = '';
                             str += 'It is now the year <b>' + (G.year + 1) + '</b>.<br>';
                             str += 'Report for last year: <br>';
-                            str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br />';
-                            str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br />';
-                            if (G.has('mystic')) str += '&bull; <b>Wiped resource</b>: ' + resdname + '<br />';
+                            str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
+                            str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
+                            if (G.has('mystic')) str += '&bull; <b>Wiped resource</b>: ' + resdname + '<br>';
                             if (expTraits.length > 0) {
                                 l = expTraits.length;
                                 expTraits = expTraits.slice(0, 3);
-                                str += '&bull; <b>Temporary traits that expired this year</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br />';
+                                str += '&bull; <b>Temporary traits that expired this year</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br>';
                             }
                             G.getRes('born this year').amount = 0;
                             G.getRes('died this year').amount = 0;
@@ -20347,15 +20344,15 @@ if (getCookie("civ") == "0") {
                             var txt = '' + G.year + '';
                             if (G.year + 1 % 100 == 0) {
                                 var str = '';
-                                str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br />';
-                                str += 'Report for a long, long time...this century:<br />';
-                                str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br />';
-                                str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br />';
-                                if (G.has('mystic')) str += '&bull; <b>Recently wiped resource</b>: ' + resdname + '<br />';
+                                str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br>';
+                                str += 'Report for a long, long time...this century:<br>';
+                                str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
+                                str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
+                                if (G.has('mystic')) str += '&bull; <b>Recently wiped resource</b>: ' + resdname + '<br>';
                                 if (expTraits.length > 0) {
                                     var l = expTraits.length;
                                     expTraits = expTraits.slice(0, 3);
-                                    str += '&bull; <b>Temporary traits that expired this century</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br />';
+                                    str += '&bull; <b>Temporary traits that expired this century</b>: ' + (l > 3 ? expTraits + " and " + (l - 3) + " more" : expTraits) + '<br>';
                                 }
                                 G.getRes('born this year').amount = 0;
                                 G.getRes('died this year').amount = 0;
@@ -20441,7 +20438,7 @@ if (getCookie("civ") == "0") {
                         if (G.year == 9000) {
                             G.doFunc('>9000');
                         }
-                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="aqua">Seems like you and your elves are doing well. It is been 150 years since you started magic adventure in Elf universe. Thank you for playing with this expansion and big congratulations for getting that far. Your playing makes mod better and motivates its developer for future updates. <br> <b> -> </b>Remember mod is still getting bigger and gets more content. This means someday the mod may be unavaiable to play for while. If you will lose progress due to update I am sorry. Anyway keep enjoying this adventure...and do not forget to backup your save...<small><b>just in case ;D </b></small> <br /> </font><b>Farewell</b>', icon: [24, 1, 'magixmod'] });
+                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="aqua">Seems like you and your elves are doing well. It is been 150 years since you started magic adventure in Elf universe. Thank you for playing with this expansion and big congratulations for getting that far. Your playing makes mod better and motivates its developer for future updates. <br> <b> -> </b>Remember mod is still getting bigger and gets more content. This means someday the mod may be unavaiable to play for while. If you will lose progress due to update I am sorry. Anyway keep enjoying this adventure...and do not forget to backup your save...<small><b>just in case ;D </b></small> <br> </font><b>Farewell</b>', icon: [24, 1, 'magixmod'] });
                     }
                     //influence trickle
                     if (G.getRes('influence').amount <= G.getRes('authority').amount - 1) G.gain('influence', 1);
@@ -20588,7 +20585,7 @@ if (getCookie("civ") == "0") {
 
             G.funcs['civ blurb'] = function () {
                 var str = '';
-                str += 'Deep in the wild<br />';
+                str += 'Deep in the wild<br>';
                 str += '<div class="fancyText shadowed">';
 
                 str += '<div class="barred infoTitle"><font color="lime">The land of ' + G.getName('civ') + '</font></div>' +
@@ -20739,7 +20736,7 @@ if (getCookie("civ") == "0") {
                         }
                         var eatongathermult = 0.5;
                         var happinessLevel = G.getRes('happiness').amount / me.amount;
-                        if (G.checkPolicy('eat on gather') == 'on' && G.getRes('happiness').amount / me.amount < 70 && G.getRes('food').amount > 0) G.gain('happiness', ungrateful * me.amount * eatongathermult, 'instant eating');
+                        if (G.checkPolicy('eat on gather') == 'on' && G.getRes('happiness').amount / me.amount < 70 && G.getRes('food').amount > 0) changeHappiness(me.amount * eatongathermult, 'instant eating');
                         var productionMult = G.doFunc('production multiplier', 1);
 
                         var deathUnhappinessMult = 1;
@@ -20769,18 +20766,18 @@ if (getCookie("civ") == "0") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; G.gain('happiness', (-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
-                                case 'meager': toConsume *= 0.5; G.gain('happiness', (-me.amount) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 80)
-                                        G.gain('happiness', (happinessLevel < 0 ? ungrateful * me.amount * 0.2 : -me.amount * 0.2) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
-                                case 'plentiful': toConsume *= 1.5; G.gain('happiness', ungrateful * (me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.07 + ((me.amount % 2) * 0.01))), 'water rations'); break;
+                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
+                                case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.07 + ((me.amount % 2) * 0.01))), 'water rations'); break;
                             }
 
                             toConsume = randomFloor(toConsume * consumeMult);
                             var consumed = G.lose('water', toConsume, 'drinking');
-                            G.gain('happiness', ungrateful * consumed * happinessAdd * 0.5, 'water culture');
+                            changeHappiness(consumed * happinessAdd * 0.5, 'water culture');
                             var lacking = toConsume - G.lose('water', toConsume, 'drinking');
                             if (rations == 'none') lacking = me.amount * 0.5;
                             if (lacking > 0)//are we out of water?
@@ -20789,7 +20786,7 @@ if (getCookie("civ") == "0") {
                                 if (rations != 'none' && G.checkPolicy('drink muddy water') == 'on') lacking = lacking - G.lose('muddy water', lacking, 'drinking');
                                 if (lacking > 0 && G.checkPolicy('disable aging') == 'off')//are we also out of muddy water?
                                 {
-                                    G.gain('happiness', -lacking * 5, 'no water');
+                                    changeHappiness(-lacking * 5, 'no water');
                                     //die off
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
@@ -20799,7 +20796,7 @@ if (getCookie("civ") == "0") {
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
                                     G.gain('corpse', died, 'dehydration');
-                                    G.gain('happiness', -died * 20 * deathUnhappinessMult, 'dehydration');
+                                    changeHappiness(-died * 20 * deathUnhappinessMult, 'dehydration');
                                     G.getRes('died this year').amount += died;
                                     if (died > 0) G.Message({ type: 'bad', mergeId: 'diedDehydration', textFunc: function (args) { return B(args.died) + ' ' + (args.died == 1 ? 'elf' : 'elves') + ' died from dehydration.'; }, args: { died: died }, icon: [5, 4, 'c2'] });
                                 }
@@ -20829,18 +20826,18 @@ if (getCookie("civ") == "0") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; G.gain('happiness', (-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
-                                case 'meager': toConsume *= 0.5; G.gain('happiness', -me.amount * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness(-me.amount * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 80)
-                                        G.gain('happiness', ungrateful * (happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
-                                case 'plentiful': toConsume *= 1.5; G.gain('happiness', ungrateful * (me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.06 + ((me.amount % 2) * 0.01))), 'food rations'); break;
+                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
+                                case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel / 4) * (0.06 + ((me.amount % 2) * 0.01))), 'food rations'); break;
                             }
                             toConsume = randomFloor(toConsume * consumeMult);
                             var consumed = G.lose('food', toConsume, 'eating');
-                            G.gain('happiness', ungrateful * G.lose('salt', randomFloor(consumed * 0.1), 'eating') * 5, 'salting food');//use salt
-                            G.gain('happiness', ungrateful * consumed * happinessAdd * 0.5, 'food culture');
+                            changeHappiness(G.lose('salt', randomFloor(consumed * 0.1), 'eating') * 5, 'salting food');//use salt
+                            changeHappiness(consumed * happinessAdd * 0.5, 'food culture');
                             var lacking = toConsume - consumed;
                             if (rations == 'none') lacking = me.amount * 1;
 
@@ -20850,7 +20847,7 @@ if (getCookie("civ") == "0") {
                                 if (rations != 'none' && G.checkPolicy('eat spoiled food') == 'on') lacking = lacking - G.lose('spoiled food', lacking, 'eating');
                                 if (lacking > 0 && G.checkPolicy('disable aging') == 'off')//are we also out of spoiled food?
                                 {
-                                    G.gain('happiness', -lacking * 5, 'no food');
+                                    changeHappiness(-lacking * 5, 'no food');
                                     //die off
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
@@ -20860,7 +20857,7 @@ if (getCookie("civ") == "0") {
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
                                     G.gain('corpse', died, 'starvation');
-                                    G.gain('happiness', -died * 20 * deathUnhappinessMult, 'starvation');
+                                    changeHappiness(-died * 20 * deathUnhappinessMult, 'starvation');
                                     G.getRes('died this year').amount += died;
                                     if (died > 0) G.Message({ type: 'bad', mergeId: 'diedStarvation', textFunc: function (args) { return B(args.died) + ' ' + (args.died == 1 ? 'elf' : 'elves') + ' died from starvation.'; }, args: { died: died }, icon: [5, 4, 'c2'] });
                                 }
@@ -20878,7 +20875,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('fluid dress code')) happyDressModifier *= (G.year % 31 > 15 ? 1.04 : 0.96);
                         for (var i in objects) {
                             fulfilled = Math.min(me.amount, Math.min(G.getRes(i).amount, leftout));
-                            G.gain('happiness', ungrateful * fulfilled * objects[i][0] * happyDressModifier, 'clothing');
+                            changeHappiness(fulfilled * objects[i][0] * happyDressModifier, 'clothing');
                             G.gain('health', fulfilled * objects[i][1] * healthDressModifier, 'clothing');
                             leftout -= fulfilled;
                         }
@@ -20886,7 +20883,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('nudist culture')) dressLackModifierHap *= 1.5;
                         if (G.has('strict dress code')) dressLackModifierHap *= 1.5;
                         if (G.has('fluid dress code')) heartModifier *= (G.year % 31 > 15 ? 1.25 : 0.75);
-                        G.gain('happiness', -leftout * 0.15, 'no clothing');
+                        changeHappiness(-leftout * 0.15, 'no clothing');
                         G.gain('health', -leftout * 0.15, 'no clothing');
 
                         //fire
@@ -20901,7 +20898,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('fluid heart')) happyHeartModifier *= (G.year % 31 > 15 ? 1.05 : 0.95);
                         for (var i in objects) {
                             fulfilled = Math.min(me.amount, Math.min(G.getRes(i).amount * objects[i][0], leftout));
-                            G.gain('happiness', ungrateful * fulfilled * objects[i][1] * happyHeartModifier, 'warmth & light');
+                            changeHappiness(fulfilled * objects[i][1] * happyHeartModifier, 'warmth & light');
                             G.gain('health', fulfilled * objects[i][2] * healthHeartModifier, 'warmth & light');
                             leftout -= fulfilled;
                         }
@@ -20909,7 +20906,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('cold heart')) heartModifier *= 1.5;
                         if (G.has('hot heart')) heartModifier *= 0.5;
                         if (G.has('fluid heart')) heartModifier *= (G.year % 31 > 15 ? 1.2 : 0.75);
-                        G.gain('happiness', -leftout * 0.1 / heartModifier, 'cold & darkness');
+                        changeHappiness(-leftout * 0.1 / heartModifier, 'cold & darkness');
                         G.gain('health', -leftout * 0.1 / heartModifier, 'cold & darkness');
 
                         //homelessness and pressure
@@ -20928,7 +20925,7 @@ if (getCookie("civ") == "0") {
                                 var n = randomFloor(G.getRes('elder').amount * 0.00015);
                                 G.gain('corpse', n, 'old age');
                                 G.lose('elder', n, 'old age');
-                                G.gain('happiness', -n * 5 * deathUnhappinessMult, 'death');
+                                changeHappiness(-n * 5 * deathUnhappinessMult, 'death');
                                 if (n > 0) G.Message({ type: 'bad', mergeId: 'diedAge', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' died of old age.'; }, args: { n: n }, icon: [13, 4, 'c2'] });
 
                                 G.getRes('died this year').amount += n;
@@ -20954,8 +20951,8 @@ if (getCookie("civ") == "0") {
                                 else if (G.checkPolicy('population control') == 'limited') birthRate *= 0.5;
                                 birthRate *= productionMult;
                                 if ((homeless > 0 || pressure > 0) && me.amount > 13) birthRate *= 0.05;//harder to make babies if you have more than 15 elves and some of them are homeless
-                                var n = randomFloor(G.getRes('adult').amount * 0.0003 * birthRate); G.gain('baby', n, 'birth'); G.gain('happiness', ungrateful * n * 10, 'birth'); born += n;
-                                var n = randomFloor(G.getRes('elder').amount * 0.00003 * birthRate); G.gain('baby', n, 'birth'); G.gain('happiness', ungrateful * n * 10, 'birth'); born += n;
+                                var n = randomFloor(G.getRes('adult').amount * 0.0003 * birthRate); G.gain('baby', n, 'birth'); changeHappiness(n * 10, 'birth'); born += n;
+                                var n = randomFloor(G.getRes('elder').amount * 0.00003 * birthRate); G.gain('baby', n, 'birth'); changeHappiness(n * 10, 'birth'); born += n;
                                 G.getRes('born this year').amount += born;
                                 if (born > 0) G.Message({ type: 'good', mergeId: 'born', textFunc: function (args) { return B(args.born) + ' ' + (args.born == 1 ? 'baby has' : 'babies have') + ' been born.'; }, args: { born: born }, icon: [2, 3, 'c2'] });
                             }
@@ -20985,7 +20982,7 @@ if (getCookie("civ") == "0") {
                             var sickMortality = 0.005;
                             var changed = 0;
                             var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickMortality), 'disease'); G.gain('corpse', n, 'disease'); changed += n;
-                            G.gain('happiness', -changed * 15 * deathUnhappinessMult, 'death');
+                            changeHappiness(-changed * 15 * deathUnhappinessMult, 'death');
                             G.getRes('died this year').amount += changed;
                             if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedSick', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' died from disease.'; }, args: { n: changed }, icon: [5, 4, 'c2'] });
 
@@ -20993,7 +20990,7 @@ if (getCookie("civ") == "0") {
                             if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.2;
                             var changed = 0;
                             var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
-                            G.gain('happiness', ungrateful * changed * 10, 'recovery');
+                            changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'elf' : 'elves') + ' got better.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
 
@@ -21015,7 +21012,7 @@ if (getCookie("civ") == "0") {
                             var woundMortality = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * woundMortality), 'wounds'); G.gain('corpse', n, 'wounds'); changed += n;
-                            G.gain('happiness', -changed * 15 * deathUnhappinessMult, 'death');
+                            changeHappiness(-changed * 15 * deathUnhappinessMult, 'death');
                             G.getRes('died this year').amount += changed;
                             if (G.getSetting('death messages') || G.resets <= 3)
                                 if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' died from their wounds.'; }, args: { n: changed }, icon: [5, 4, 'c2'] });
@@ -21023,7 +21020,7 @@ if (getCookie("civ") == "0") {
                             var sickHealing = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
-                            G.gain('happiness', ungrateful * changed * 10, 'recovery');
+                            changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
                         }
@@ -21136,7 +21133,7 @@ if (getCookie("civ") == "0") {
                             if (graves.amount > graves.used) {
                                 var amount = Math.min(graves.amount - graves.used, Math.max(1, randomFloor(me.amount * 0.1)));
                                 graves.used += amount; G.lose('corpse', amount, 'burial');
-                                G.gain('happiness', ungrateful * amount * 2, 'burial');
+                                changeHappiness(amount * 2, 'burial');
                             }
                         }
                     }
@@ -21156,7 +21153,7 @@ if (getCookie("civ") == "0") {
                     var unhappiness = 0.01;
                     if (G.has('burial')) unhappiness *= 2;
                     if (G.has('belief in revenants')) unhappiness *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
-                    G.gain('happiness', -me.amount * unhappiness, 'corpses');
+                    changeHappiness(-me.amount * unhappiness, 'corpses');
                     G.gain('health', -me.amount * 0.02, 'corpses');
                 },
             });
@@ -21295,7 +21292,7 @@ if (getCookie("civ") == "0") {
                         }
                         //note : this is "soft" sickness; it affects the chance of people falling sick
                         //G.getRes('happiness').amount+=(me.amount-G.getRes('happiness').amount)*0.01;
-                        G.gain('happiness', ungrateful * me.amount * 0.001, 'health');
+                        changeHappiness(me.amount * 0.001, 'health');
 
                         var sickness = 0.1;
                         sickness += Math.pow(Math.max(0, G.getRes('population').amount - 50), 0.1) * 0.1;//more people means more contagion
@@ -22976,7 +22973,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'hovel',
-                desc: '@provides 8 [housing]<>A simple home for a family of villagers.',
+                desc: '@provides 8 [housing], which provide 8 [housing] each.<>A simple home for a family of villagers.',
                 icon: [20, 3, 'c2'],
                 cost: { 'basic building materials': 75 },
                 use: { 'land': 1 },
@@ -24217,7 +24214,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'insect-eating',
-                desc: '@your elves are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b><br />//<small>This world may have <b>bugs</b> that can eat elves...literally. Maybe. Sorry to scare ya.</small>',
+                desc: '@your elves are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b><br>//<small>This world may have <b>bugs</b> that can eat elves...literally. Maybe. Sorry to scare ya.</small>',
                 icon: [12, 19, 'c2', 22, 1, 'c2'],
                 chance: 5,
                 req: { 'insects as food': 'on' },
