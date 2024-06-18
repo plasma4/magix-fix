@@ -1029,7 +1029,7 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found <b>' + rarity + '</b> relic. <br />It is <b>' + itemName + '</b>. This finding provides you <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u><br />Great!',
+                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic. <br />It is <b>' + itemName + '</b>. This finding provides you <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u><br />Great!',
                 icon: [23, 33, 'magixmod']
             });
         }
@@ -7517,7 +7517,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'lodge',
-                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. Lodges increase [happiness] of your tribe by a tiny amount. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. Lodges normally provide 5 housing. <b>You should remove these before removing workers!</b>',
+                desc: 'A [lodge] is where people of all professions gather to rest and store their tools. Lodges increase [happiness] of your tribe by a tiny amount. They do not provide your workers with tools, and if you have workers not assigned to a [lodge], they will automatically be assigned if possible. Lodges, unless upgraded, can help out 5 people. <b>You should remove these before removing workers!</b>',
                 icon: [17, 3],
                 cost: { 'archaic building materials': 50 },
                 use: { 'land': 1 },
@@ -7533,7 +7533,7 @@ if (getCookie("civ") == "0") {
                     'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 5 for each of this lodge.', req: { 'plant lore': true } },
                 },
                 effects: [
-                    { type: 'gather', what: { 'happiness': 0.005 } },
+                    { type: 'gather', what: { 'happiness': 0.01 } },
                     { type: 'provide', what: { 'housing': 2 }, req: { 'guilds unite': true } },
                     {
                         type: 'function', func: function (me) {
@@ -7647,15 +7647,16 @@ if (getCookie("civ") == "0") {
                 use: { 'worker': 1 },
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will explore lands as usual.', req: { 'tribalism': true } },
-                    'trips': { name: 'Send on exploration trip', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will discover new tiles if primary land is decently explored.', req: { 'exploration trips': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
+                    'trips': { name: 'Send on exploration trip', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will discover new tiles if your primary land is decently explored.', req: { 'exploration trips': true } },
+                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'gather', context: 'gather', amount: 0.13, max: 0.27, req: { 'active exploration': true } },
                     { type: 'gather', what: { 'insight': 0.007 }, req: { 'active exploration': true } },
                     { type: 'explore', explored: 0.08, unexplored: 0, mode: 'explore land' },
                     //{type:'exploreAlt',explored:0,unexplored:0.06,mode:'trips'},
-                    { type: 'explore', explored: 0, unexplored: 0.06, mode: 'trips' },
+                    { type: 'explore', explored: 0, unexplored: 0.06, mode: 'trips', req: { 'around the world': false } },
+                    { type: 'explore', explored: 0, unexplored: 0.066, mode: 'trips', req: { 'around the world': true } },
                     { type: 'provide', what: { 'wandererW': 1 }, mode: 'crew loadout' },
                     { type: 'mult', value: 2.5, req: { 't10': true } },
                     { type: 'mult', value: 1.02, req: { 'hallow1': true } },
@@ -7674,7 +7675,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [scout] will discover new land as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
                 },
                 staff: { 'stone tools': 1 },
                 effects: [
@@ -10872,7 +10873,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain you will need more researches.<>An alternative for [exploration trips] @slightly increases exploration cap',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>An alternative for [exploration trips] @slightly increases exploration cap',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11398,14 +11399,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'Wizard complex', category: 'tier1',
-                desc: 'Complex of wizard towers. Expensive but The Complex produces all types of Essences three times better than usual towers. Each complex increases additionaly max [faith],[culture] & [influence].',
+                desc: 'Complex of wizard towers. Expensive, but the complex produces all types of Essences three times faster than usual towers. Each complex increases max [faith], [culture, and [influence] as well.',
                 icon: [2, 2, 'magixmod'],
                 cost: { 'insight': 480, 'culture': 30, 'mana': 100, 'influence': 20 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard towers': true },
             });
             new G.Tech({
                 name: 'first portal to new world', category: 'tier1',
-                desc: 'Your wizards discovered way to make a portal and now they plan to open a new dimension. What would it mean? It means, more place to build, more housing, more everything!',
+                desc: 'Your wizards discovered way to make a portal and now they plan to open a new dimension. What would it mean? It means more places to build, more unlocks, and more everything!',
                 icon: [2, 1, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 30, 'mana': 2500, 'influence': 70 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard wisdom': true, 'Wizard complex': true, 'belief in portals': true, 'valid portal frame': true },
@@ -12247,7 +12248,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'seed-enchanting', category: 'tier2',
-                desc: '@unlocks new mode for [artisan] that allows him to enchant [seeds,seeds] making them become [essenced seeds,essenced]. Planting and taking care of them can make you plant magic plants that will help you gather essences.',
+                desc: '@unlocks a new mode for [artisan] that allows him to enchant [seeds,seeds] making them become [essenced seeds,essenced]. Planting and taking care of them can make you plant magic plants that will help you gather essences.',
                 icon: [27, 17, 'magixmod'],
                 cost: { 'insight II': 14, 'science': 1 },
                 req: { 'eotm': true, 'magical soil': true },
@@ -16397,7 +16398,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'missionary', category: 'tier1',
-                desc: '@provides 1 [spirituality] when [mausoleum]\'s level is over 5 out of 10. //Send religious tribe to spread your religion and its concept around the world. //<small>Hey do not consider it as profanation. It is not like that</small>',
+                desc: '@provides 1 [spirituality] when [mausoleum]\'s level is over 5 out of 10. //Send religious tribe to spread your religion and its concept around the world. //<small>Hey! Do not consider it as profanation. It is not like that...</small>',
                 icon: [17, 33, 'magixmod'],
                 cost: { 'faith': 10, 'culture': 5, 'insight': 10 },
                 req: { 'ritualism': true, 'symbolism': true, 'belief in the afterlife': true },
@@ -17421,13 +17422,58 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks new mode for [wanderer] allowing to discover nearby tiles if primary terrain is decently explored and researched.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with moderate chance for the many travellers to get lost at once. Via exploration policy you can determine at which level [wanderer]s can proceed onto next tile. Each mode provides different risk of [wanderer]s getting lost.<>An alternative for [scouting]. <>Makes exploration <b>rather temporary</b> traits appear earlier in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain you will need more researches. @slightly increases exploration cap',
+                desc: '@unlocks a new mode for [wanderer] allowing them to discover nearby tiles if primary terrain is decently explored and researched.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>An alternative for [scouting]. <>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
                 effects: [
                 ],
                 chance: 2,
+            });
+
+            new G.Tech({
+                name: 'around the world',
+                desc: 'Increases the speed of [wanderer]s when exploring new tiles by 10%.',
+                icon: [2, 2],
+                cost: { 'insight': 20 },
+                req: { 'exploration trips': true },
+                effects: [
+                ],
+                chance: 2.5,
+            });
+            new G.Tech({
+                name: 'trails',
+                desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%.',
+                icon: [24, 7],
+                cost: { 'insight': 10 },
+                req: { 'scouting': true },
+                effects: [
+                    {
+                        type: 'function',
+                        func: function () {
+                            G.unitByName['wanderer'].effects.push({ type: 'mult', value: 1.15 });
+                            G.unitByName['scout'].effects.push({ type: 'mult', value: 0.95 });
+                        }
+                    }
+                ],
+                chance: 2.5,
+            });
+            new G.Tech({
+                name: 'horses',
+                desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%.',
+                icon: [2, 2],
+                cost: { 'insight': 10 },
+                req: { 'scouting': true },
+                effects: [
+                    {
+                        type: 'function',
+                        func: function () {
+                            G.unitByName['wanderer'].effects.push({ type: 'mult', value: 0.95 });
+                            G.unitByName['scout'].effects.push({ type: 'mult', value: 1.15 });
+                        }
+                    }
+                ],
+                chance: 2.5,
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -23124,7 +23170,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will explore lands as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'explore', explored: 0.075, unexplored: 0, mode: 'explore land' },
@@ -23144,7 +23190,7 @@ if (getCookie("civ") == "0") {
                 staff: { 'stone tools': 1 },
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [scout] will discover new land as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'explore', explored: 0, unexplored: 0.075, mode: 'explore land' },
@@ -24715,7 +24761,6 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.getDict('belief in the afterlife').req = { 'death scepticism': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the beforelife': false };
                             G.getDict('belief in the beforelife').req = { 'death scepticism': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false };
-
                         }
                     }
                 ],
