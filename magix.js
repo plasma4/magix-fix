@@ -1151,6 +1151,10 @@ function AoD() {
 
     }
 }
+function islandName() {
+    var rawName = G.getName('island')
+    return rawName == 'undefined' || rawName == 'plain island' ? 'Plain Island' : rawName
+}
 function changeHappiness(amount, description) {
     G.gain('happiness', amount < 0 ? ungrateful * amount : amount, description)
 }
@@ -1273,7 +1277,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.achievByName['mausoleum'].won > 6) G.getDict('archaeology').req = { 'gardening': true, 'will to know more': true };
                     //desc
-                    G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change human\'s legacy. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
+                    G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change the human legacy. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
                         (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your [happiness] gain by 12%.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - extra +2 starting [land] each run<hr>' : '') +
@@ -4445,12 +4449,15 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'land of the plain island',
-                displayName: 'Land of the ' + G.getName('island') + "",
-                desc: 'The land you got from activating a portal to ' + (G.getName('island') == "nameless island" ? "Plain Island" : G.getName('island')) + '. Place for new buildings.',
+                displayName: 'Land of the ' + islandName(),
+                desc: 'The land you got from activating a portal to ' + islandName() + '. A place for new buildings.',
                 icon: [7, 0, 'magixmod'],
                 displayUsed: true,
                 partOf: 'tl',
-                category: 'terr'
+                category: 'terr',
+                tick: function (me, tick) {
+                    me.displayName = 'Land of the ' + islandName()
+                },
             });
             new G.Res({
                 name: 'land of the Paradise',
@@ -6566,7 +6573,7 @@ if (getCookie("civ") == "0") {
                     'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer,Wound curers]. He will craft: [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
                     'book': { name: 'Craft book', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
-                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful to start essence farms', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
+                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'knapped tools': 1 }, every: 5, mode: 'knap' },
@@ -8531,7 +8538,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Worshipper of magic. You will need one to maintain [water wizard tower,Wizard towers] and to cultivate magic in your civilization. Provides 1 [wisdom] for every two [wizard]s.',
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
                 cost: { 'insight': 1, 'stick': 2, 'food': 1, 'water': 1 },
-                use: { 'elder': 1, 'wand': 2 },
+                use: { 'elder': 1, 'wand': 1 },
                 upkeep: { 'food': 1.33 },
                 req: { 'wizard wisdom': true },
                 effects: [
@@ -8836,7 +8843,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'floored house',
-                desc: '@provides 30 [housing]. Constructed at the lands of ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + ' floored house has very low chance to be wasted.',
+                desc: '@provides 30 [housing]. Constructed at the lands of ' + islandName() + ' floored house has very low chance to be wasted.',
                 icon: [9, 1, 'magixmod'],
                 cost: { 'basic building materials': 1000 },
                 use: { 'land of the plain island': 3 },
@@ -8854,7 +8861,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'mine of the plain island',
-                displayName: 'Mine of the ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')),
+                displayName: 'mine of the ' + islandName(),
                 desc: '@can mine new resource such as [cobalt ore]. They will be able to mine few other resources.',
                 icon: [9, 2, 'magixmod'],
                 cost: { 'basic building materials': 100 },
@@ -8890,12 +8897,15 @@ if (getCookie("civ") == "0") {
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 50, req: { 'plain island mining strategy': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 70, req: { 'plain island mining strategy': true } }
                 ],
+                tick: function (me, tick) {
+                    me.displayName = 'mine of the ' + islandName()
+                },
                 category: 'plainisleunit',
                 limitPer: { 'land': 35 },
             });
             new G.Unit({
                 name: 'cemetary of Plain Island',
-                displayName: 'cemetary of ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')),
+                displayName: 'cemetary of ' + islandName(),
                 desc: 'A big cemetary that stores a lot of corpses with a method of family burials. Uses workers to keep conservacy and keep the cemetary clean. Provides 7500 [burial spot]s.',//Soon new policies which will decide how much you may store corpses
                 icon: [2, 6, 'magixmod'],
                 cost: { 'basic building materials': 300 },
@@ -8904,6 +8914,9 @@ if (getCookie("civ") == "0") {
                     { type: 'provide', what: { 'burial spot': 7500 } },
                     { type: 'provide', what: { 'burial spot': 2500 }, req: { 'voodoo spirit': true } },
                 ],
+                tick: function (me, tick) {
+                    me.displayName = 'cemetary of ' + islandName()
+                },
                 req: { 'plain island building': true, 'burial in new world': true },
                 category: 'plainisleunit',
                 limitPer: { 'land': 400 },
@@ -8937,7 +8950,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'well of the Plain Island',
-                displayName: 'well of the' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')),
+                displayName: 'well of the' + islandName(),
                 desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable water.',
                 icon: [25, 3],
                 cost: { 'stone': 70, 'archaic building materials': 30, 'basic building materials': 15 },
@@ -8948,6 +8961,9 @@ if (getCookie("civ") == "0") {
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
                 category: 'plainisleunit',
+                tick: function (me, tick) {
+                    me.displayName = 'well of the ' + islandName()
+                },
                 req: { 'well-digging': true, 'first portal to new world': true, 'plain island building': true },
                 limitPer: { 'land of the plain island': 10 },
             });
@@ -9399,7 +9415,7 @@ if (getCookie("civ") == "0") {
                 icon: [28, 9, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'dark essence': 1000, 'herb': 100 },
                 req: { 'withering tulips & Watorchids': true },
-                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 9 },
+                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'dark essence': 1, 'mana': 7 },
                 category: 'plainisleunit',
                 effects: [
@@ -9415,7 +9431,7 @@ if (getCookie("civ") == "0") {
                 icon: [28, 6, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'nature essence': 1000, 'herb': 100 },
                 req: { 'lightlily & Naturdaisy': true },
-                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 9 },
+                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'nature essence': 1, 'mana': 7 },
                 category: 'plainisleunit',
                 effects: [
@@ -9431,7 +9447,7 @@ if (getCookie("civ") == "0") {
                 icon: [28, 5, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'lightning essence': 1000, 'herb': 100 },
                 req: { 'lightlily & Naturdaisy': true },
-                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 9 },
+                use: { 'worker': 8, 'land of the plain island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'lightning essence': 1, 'mana': 7 },
                 category: 'plainisleunit',
                 effects: [
@@ -9555,8 +9571,8 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Unit({
-                name: 'plain island portal', displayName: '<font color="yellow">' + (G.getName('island') == "" ? "Plain Island" : G.getName('island') + "(Plain Island)") + ' portal</font>',
-                desc: '@opens a portal to a huge <b>Plain Island</b>. A creation made of ideas of wizards and dreams of population.//A Dream comes real. You will grant some [land of the plain island] upon activation of portal. Upon complete you will be able to rename this island.',
+                name: 'plain island portal', displayName: '<font color="yellow">' + islandName() + ' portal</font>',
+                desc: '@opens a portal to a huge <b>Plain Island</b>. A creation made of ideas of wizards and dreams of population.//Your dream comes real. You will recieve some [land of the plain island] upon activation of portal. Upon complete you will be able to rename this island.',
                 wideIcon: [28, 29, 'magixmod'],
                 wideIcon2: [7, 3, 'magixmod'],
                 icon: [29, 29, 'magixmod'],
@@ -9569,6 +9585,9 @@ if (getCookie("civ") == "0") {
                 steps: 100,
                 req: { 'first portal to new world': true, 'belief in portals': true },
                 category: 'dimensions',
+                tick: function (me, tick) {
+                    me.displayName = '<font color="yellow">' + islandName() + ' portal</font>'
+                },
                 type: 'portal',
             });
             new G.Unit({
@@ -10020,7 +10039,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'precious building materials': 400, 'magic essences': 300, 'mana': 400 },
                 costPerStep: { 'basic building materials': 400, 'precious metal ingot': 50, 'insight': 100, 'culture': 5, 'gems': 5 },
                 steps: 150,
-                messageOnStart: 'Your people have started building the <b>Mausoleum of the Dreamer</b>. This monument is the tallest building that exists at the lands of ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. This is how wisdom leads to success.',
+                messageOnStart: 'Your people have started building the <b>Mausoleum of the Dreamer</b>. This monument is the tallest building that exists at the lands of ' + islandName() + '. This is how wisdom leads to success.',
                 finalStepCost: { 'population': 1000, 'insight': 100, 'wisdom': 100 },
                 finalStepDesc: 'To perform the final step, 1000 [population,people] must be sacrificed to leave the plane of Wisdom and award <b>Victory points</b>.',
                 use: { 'land of the plain island': 15, 'worker': 5, 'metal tools': 5 },
@@ -10029,7 +10048,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'university of science',
-                desc: '@This wonder is different than others. You cannot ascend via [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.',
+                desc: '@This wonder is different than others. You cannot ascend via [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.',
                 wonder: '.',
                 icon: [13, 29, 'magixmod'],
                 wideIcon: [12, 29, 'magixmod'],
@@ -11390,16 +11409,16 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'well of mana', category: 'tier1',
-                desc: 'Now you may construct a well from which you can gather mana instead of water. //<small>Oh so thats the power source for magic tricks...</small>',
+                desc: 'You can now construct a well from which you can gather mana rather than water. //<small>Oh, so that\'s the power source for magic tricks...</small>',
                 icon: [4, 3, 'magixmod'],
-                cost: { 'insight': 46, 'faith': 4, 'mana': 20 },
+                cost: { 'insight': 45, 'faith': 5, 'mana': 100 },
                 req: { 'mana brewery': true, 'more useful housing': true },
             });
             new G.Tech({
                 name: 'wizard towers', category: 'tier1',
-                desc: 'Now you can build wizard towers which can produce specified essences. Essences made depends on what type of tower you build. Provides additional housing. Making essences consumes mana. @unlocks [fire wizard tower],[water wizard tower],[nature wizard tower],[dark wizard tower],[lightning wizard tower],[wind wizard tower].',
+                desc: 'Now you can build wizard towers which can produce a variety of [magic essences,Essences]. The type made depends on what type of tower you build. Wizard towers also provide additional housing, but making [magic essences,Essences] consumes [mana]. @unlocks [fire wizard tower], [water wizard tower], [nature wizard tower], [dark wizard tower], [lightning wizard tower], and [wind wizard tower].',
                 icon: [6, 0, 'magixmod'],
-                cost: { 'insight': 125, 'culture': 30, 'mana': 40, 'influence': 10 },
+                cost: { 'insight': 125, 'culture': 30, 'mana': 250, 'influence': 10 },
                 req: { 'mana brewery': true, 'more useful housing': true },
                 effects: [
                 ],
@@ -11409,7 +11428,7 @@ if (getCookie("civ") == "0") {
                 name: 'wizard wisdom', category: 'tier1',
                 desc: 'Now you can hire [wizard]s into your tribe. Every two [wizard]s will gain you 1 [wisdom] point. //<small>wisdom++</small>',
                 icon: [3, 0, 'magixmod'],
-                cost: { 'insight': 85, 'culture': 30, 'mana': 40, 'influence': 10 },
+                cost: { 'insight': 85, 'culture': 30, 'mana': 50, 'influence': 10 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true },
                 tutorialMesg: ['tutorial', 'Now you\'ve unlocked Wizards. Don\'t hire too much of them too early because these guys love eating a lot, so having too much of them may lead to tribe starvation. Instead, try to make your tribe bigger, explore more, and find more ways to get food. Just be aware that wizards are a must-have in large amounts for new magical technologies!', [choose([24, 23, 22, 21]), 8, 'magixmod']]
             });
@@ -11417,7 +11436,7 @@ if (getCookie("civ") == "0") {
                 name: 'Wizard complex', category: 'tier1',
                 desc: 'Complex of wizard towers. Expensive, but the complex produces all types of Essences three times faster than usual towers. Each complex increases max [faith], [culture, and [influence] as well.',
                 icon: [2, 2, 'magixmod'],
-                cost: { 'insight': 480, 'culture': 30, 'mana': 100, 'influence': 20 },
+                cost: { 'insight': 480, 'culture': 30, 'mana': 1000, 'influence': 20 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard towers': true },
             });
             new G.Tech({
@@ -11445,7 +11464,7 @@ if (getCookie("civ") == "0") {
                 name: 'essence storages', category: 'tier1',
                 desc: 'Essence has to be stored somewhere. So do not wait and build! // Unlocks [water essence storage,Essence storages]. //<small>And nobody knows why those storages look like hourglasses...even this mod author.</small>',
                 icon: [5, 0, 'magixmod'],
-                cost: { 'insight': 100, 'mana': 317, 'faith': 8, 'wand': 200 },
+                cost: { 'insight': 100, 'mana': 300, 'faith': 8, 'wand': 1 },
                 effects: [
                     { type: 'provide res', what: { 'fire essence limit': 1 } },
                     { type: 'provide res', what: { 'water essence limit': 1 } },
@@ -11479,7 +11498,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'burial in new world', category: 'tier1',
-                desc: 'Provides even better use of the ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. You may build now few cemetries which consume much more [land of the plain island], but they can store more corpses.',
+                desc: 'Provides even better use of the ' + islandName() + '. You may build now few cemetries which consume much more [land of the plain island], but they can store more corpses.',
                 icon: [1, 6, 'magixmod'],
                 cost: { 'insight': 65 },
                 effects: [
@@ -11559,14 +11578,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'first aid', category: 'tier1',
-                desc: '@[sick],[wounded] will have bigger chance to get recovered. [healer]s with mode to heal wounded are now more efficient. <b>This research generates [health] by [healer] at low rate but it does.</b><>Also adds new mode for [artisan] which lets you craft stuff related to first aid.',
+                desc: '@the [sick] and [wounded] will have a higher chance to recover. [healer]s with the mode to heal wounded are now more efficient. <b>This research generates [health] from [healer]s at a low rate .</b><>Also adds a new mode for [artisan] which lets you craft [first aid things].',
                 icon: [15, 9, 'magixmod'],
                 cost: { 'insight': 680, 'wisdom': 60 },
                 req: { 'better healing': true },
             });
             new G.Tech({
                 name: 'maths', category: 'tier1',
-                desc: '@people will know basic math making them more intelligent and should have less problems with understanding more complex researches. @allows to note small numbers<>',
+                desc: '@people will know basic math, making them more intelligent and allowing them to have less problems with understanding more complex researches. @allows you to notate small numbers<>',
                 icon: [17, 1, 'magixmod', 22, 1],
                 cost: { 'insight': 20 },
                 effects: [
@@ -11576,7 +11595,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,People] will know more about math making them even more intelligent. @Your [population,people] have bigger chances to understand more advanced things. @improves your civilization\'s numeral system @introduces equations<>',
+                desc: '@[population,People] will know more about math making them even more intelligent. @Your [population,people] have a bigger chance to understand more advanced things. @improves your civilization\'s numeral system @introduces equations<>',
                 icon: [0, 35, 'magixmod', 17, 1, 'magixmod', 23, 1],
                 cost: { 'insight': 80 },
                 effects: [
@@ -12181,7 +12200,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'even mo\' floorz', category: 'upgrade',
-                desc: '[floored house]s will have a 5th and <b>6th</b> floor which will allow 20 more people to live in each floored house, increasing it\'s total capacity to 60. Sadly collapse chances, are increased by 5% until more complex construction researches are obtained.',
+                desc: '[floored house]s will have a 5th and <b>6th</b> floor which will allow 20 more people to live in each floored house, increasing its total capacity to 60. Sadly, collapse chances are increased by 5% until more complex construction researches are obtained.',
                 icon: [16, 19, 'magixmod'],
                 cost: { 'insight II': 30, 'science': 5, 'culture II': 5 },
                 req: { 'physics II': true, 'mo\' floorz': true },
@@ -12257,7 +12276,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'magical soil', category: 'tier2',
-                desc: 'People can craft a new type of soil using the one from ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. On this new soil people will be able to plant magic plants that can gather [magic essences] for you. Uses same amount of [land of the plain island,land] as other farms that were in ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + ', but this one (except [water] upkeep) has [mana] and [magic essences,essence that you are going to farm].',
+                desc: 'People can craft a new type of soil using the one from ' + islandName() + '. On this new soil people will be able to plant magic plants that can gather [magic essences] for you. Uses same amount of [land of the plain island,land] as other farms that were in ' + islandName() + ', but this one (except [water] upkeep) has [mana] and [magic essences,essence that you are going to farm].',
                 icon: [27, 18, 'magixmod'],
                 cost: { 'insight II': 14, 'science': 1 },
                 req: { 'wizardry': true, 'eotm': true },
@@ -12305,7 +12324,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'smokers & Windferns', category: 'tier2',
-                desc: 'Unlocks new farms for ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. At these farms you can farm [fire essence] and [wind essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
+                desc: 'Unlocks new farms for ' + islandName() + '. At these farms you can farm [fire essence] and [wind essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
                 icon: [27, 16, 'magixmod'],
                 cost: { 'insight II': 12, 'faith II': 1, 'culture II': 2 },
                 req: { 'magical soil': true },
@@ -12314,7 +12333,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'withering tulips & Watorchids', category: 'tier2',
-                desc: 'Unlocks new farms for ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. At these farms you can farm [dark essence] and [water essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
+                desc: 'Unlocks new farms for ' + islandName() + '. At these farms you can farm [dark essence] and [water essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
                 icon: [27, 15, 'magixmod'],
                 cost: { 'insight II': 8, 'faith II': 1, 'culture II': 1 },
                 req: { 'magical soil': true },
@@ -12323,7 +12342,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'lightlily & Naturdaisy', category: 'tier2',
-                desc: 'Unlocks new farms for ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. On them you can farm [lightning essence] and [nature essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
+                desc: 'Unlocks new farms for ' + islandName() + '. On them you can farm [lightning essence] and [nature essence] out of plants that need \'em. People get their seeds and petals and then disenchant it, gaining desired essence.',
                 icon: [27, 14, 'magixmod'],
                 cost: { 'insight II': 12, 'faith II': 1, 'culture II': 2 },
                 req: { 'magical soil': true },
@@ -12332,7 +12351,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'holy roses farm', category: 'tier2',
-                desc: 'Unlocks [holy essence] farm for ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + '. There people plant seeds of the <b>Holy rose</b> that grow and emit some special light (like a firefly). People get their seeds and petals and then disenchant it gaining desired essence.',
+                desc: 'Unlocks [holy essence] farm for ' + islandName() + '. There people plant seeds of the <b>Holy rose</b> that grow and emit some special light (like a firefly). People get their seeds and petals and then disenchant it gaining desired essence.',
                 icon: [27, 13, 'magixmod'],
                 cost: { 'insight II': 8, 'faith II': 1, 'culture II': 1 },
                 req: { 'magical soil': true },
@@ -12489,7 +12508,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'will to know more',
-                desc: '<font color="#aaffff">@After opening a portal to ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + ' people started to become more curious. @Curiosity has gotten even stronger with this trait. </font>',
+                desc: '<font color="#aaffff">@After opening a portal to ' + islandName() + ' people started to become more curious. @Curiosity has gotten even stronger with this trait. </font>',
                 icon: [8, 12, 8, 5, 22, 1],
                 cost: { 'culture': 5, 'wisdom': 25 },
                 chance: 3,
@@ -12995,7 +13014,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'eotm',
                 displayName: 'Evolution of the minds',
-                desc: 'Replaces [insight], [culture], [faith] and [influence] with: [insight II],[culture II], [faith II] and [influence II]. @To obtain them you will unlock special unit that will convert each for instance 500 [insight] into 1 [insight II] point. In addition [storyteller], [dreamer], [chieftain], and [clan leader] work 90% less efficient. becuase this evolution is like disaster for them all. @Since now choose box in <b>Research tab</b> will require [insight II] & [science] instead of [insight].@So you will still need [wizard]s and units you used to gather lower essentials. @Lower essentials has been hidden but remember...don\'t get rid of wizards. @[flower rituals] and [wisdom rituals] will be no longer available until [ritualism II] is researched. @[sleepy insight] now gives [insight II] instead of [insight]. Same chances. ' + (G.modsByName["Thot Mod"] != undefined ? "[thot] limit per is increased but becomes extra quarter more efficient" : "") + '',
+                desc: 'Replaces [insight], [culture], [faith] and [influence] with: [insight II],[culture II], [faith II] and [influence II]. @To obtain them you will unlock special unit that will convert each for instance 500 [insight] into 1 [insight II] point. In addition [storyteller], [dreamer], [chieftain], and [clan leader] work 90% less efficient. becuase this evolution is like disaster for them all. @Since now choose box in <b>Research tab</b> will require [insight II] & [science] instead of [insight].@So you will still need [wizard]s and units you used to gather lower essentials. @Lower essentials has been hidden but remember...don\'t get rid of wizards. @[flower rituals] and [wisdom rituals] will be no longer available until [ritualism II] is researched. @[sleepy insight] now gives [insight II] instead of [insight]. The chances stay the same. ' + (G.modsByName["Thot Mod"] != undefined ? "[thot] limit per is increased but becomes extra quarter more efficient" : "") + '',
                 icon: [25, 19, 'magixmod'],
                 cost: { 'culture': 1000, 'insight': 1000, 'influence': 300, 'faith': 300 },
                 chance: 190,
@@ -13236,7 +13255,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'paradise housing', category: 'tier2',
-                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited at some way. Paradise is not like ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + "(Plain Island)" + ' a spot where you can build as much housing as you wish because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse], [cozy lodge], [Hardened house], [cozy paradise hut]. Paradise is lush world so your people do not need to construct chimneys for their houses at all.',
+                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited at some way. Paradise is not like ' + islandName() + ' (Plain Island), a spot where you can build as much housing as you wish because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse], [cozy lodge], [Hardened house], [cozy paradise hut]. Paradise is lush world so your people do not need to construct chimneys for their houses at all.',
                 icon: [1, 21, 'magixmod'],
                 cost: { 'insight II': 70 },
                 req: { 'paradise building': true, 'paradise housing conceptions': true, 'cozy building': true },
@@ -13245,7 +13264,7 @@ if (getCookie("civ") == "0") {
                 name: 'science blessing', category: 'tier2',
                 desc: '[guru]s generate 50% more [science] and [insight]. //<small>I\'ve gotten blessed with more knowledge!</small>',
                 icon: [29, 5, 'magixmod'],
-                cost: { 'insight II': 15, 'science': 5, 'mana': 435 },
+                cost: { 'insight II': 15, 'science': 5, 'mana': 500 },
                 req: { 'physics II': true, 'ambrosium treeplanting': true, 'faithful cloudy water filtering': true, 'farm of wheat': true, 'belief in the afterlife': true, 'symbolism II': true },
             });
             new G.Trait({
@@ -13473,7 +13492,7 @@ if (getCookie("civ") == "0") {
                 name: 'nutritious magical soil', category: 'upgrade',
                 desc: 'Increases efficiency of [farm of withering tulips,Essence farms] by 10%. @This 10% bonus compounds with bonus from [gt6].',
                 icon: [21, 23, 'magixmod'],
-                cost: { 'insight II': 45, 'culture II': 15, 'faith II': 3, 'influence II': 2, 'mana': 1365, 'science': 2 },
+                cost: { 'insight II': 45, 'culture II': 15, 'faith II': 3, 'influence II': 2, 'mana': 1500, 'science': 2 },
                 req: { 'policy revaluation': true, 'magical soil': true }
             });
             new G.Trait({
@@ -13716,7 +13735,7 @@ if (getCookie("civ") == "0") {
                 name: 'liberating darkness', category: 'tier2',
                 desc: '[the cemetarium] now can generate [dark essence] for you...<br>but [wild corpse]s will become more deadly!',
                 icon: [8, 24, 'magixmod'],
-                cost: { 'insight II': 140, 'science': 5, 'faith II': 5, 'mana': 511 },
+                cost: { 'insight II': 140, 'science': 5, 'faith II': 5, 'mana': 600 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'master mana-making': true, 'hope of revenant abandoning': true },
             });
             new G.Tech({
@@ -13856,7 +13875,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'wizard\'s grain fertlizer', category: 'upgrade',
-                desc: 'Fertlizer that makes [wheat farm]s produce 110% more [wheat] instead of 50%. Made by group of wizards who love eating bread on breakfast and they do not imagine a life without a piece of bread.',
+                desc: 'You make a fertlizer that make [wheat farm]s produce 110% more [wheat] instead of 50%. Made by group of wizards who love eating bread on breakfast and they do not imagine a life without a piece of bread.',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -16452,7 +16471,7 @@ if (getCookie("civ") == "0") {
                 name: '2nd portal past',
                 displayName: 'Second portal to new world',
                 category: 'tier1',
-                desc: 'After your people heard [the ancestors call] your wizards with help of full of faith people figured out a way to acrivate portal to the Ancestors land inside the basement of the latest wonder among stored [relic]s.',
+                desc: 'After your people heard [the ancestors call], your wizards with help of full of faith people figured out a way to acrivate portal to the Ancestors land inside the basement of the latest wonder among stored [relic]s.',
                 icon: [25, 33, 'magixmod'],
                 cost: { 'insight': 1595, 'culture': 300, 'mana': 2500, 'influence': 70, 'spirituality': 50, 'population': 1000 },
                 req: { 'belief in portals': true, 'first portal to new world': true, 'the ancestors call': true, 'monument-building II': true },
@@ -16593,7 +16612,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ancestors world housing', category: 'tier2',
-                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited in some way. Paradise is not like ' + (G.getName('island') == "undefined" ? "Plain Island" : G.getName('island')) + "(Plain Island)" + ' a spot where you can build as much housing as you wish because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse].',
+                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited in some way. Paradise is not like ' + islandName() + ' (Plain Island), a spot where you can build as much housing as you wish, because Paradise isn\'t and never will be totally yours. <>Unlocks: [treehouse].',
                 icon: [7, 8, 'magixmod'],
                 cost: { 'insight II': 70 },
                 req: { 'ancestors world building': true, 'ancestors world housing conceptions': true, 'cozy building': true },
@@ -16657,7 +16676,7 @@ if (getCookie("civ") == "0") {
                 name: 'essential transmutation II', category: 'tier2',
                 desc: '@[transcendentalist] is twice as efficient but will use only [insight II] from now. @[dreamer] has 4x bigger chance to succeed at transmuting knowledge essentials. //<small>Looks like this civilization will create a new type of science soon.</small>',
                 icon: [17, 34, 'magixmod'],
-                cost: { 'insight II': 15, 'science': 5, 'mana': 435 },
+                cost: { 'insight II': 15, 'science': 5, 'mana': 500 },
                 req: { 'at3': true, 'symbolism II': true },
             });
             new G.Trait({
@@ -17458,7 +17477,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
-                req: { 'scouting': true },
+                req: { 'scouting': true, 'horses': false },
                 effects: [
                     {
                         type: 'function',
@@ -17474,7 +17493,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%.',
                 icon: [24, 3, 24, 1],
                 cost: { 'insight': 10 },
-                req: { 'scouting': true },
+                req: { 'scouting': true, 'trails': false },
                 effects: [
                     {
                         type: 'function',
@@ -23409,7 +23428,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Worshipper of magic. You will need one to maintain [water wizard tower,Wizard towers] and to cultivate magic in your civilization. Provides 1 [wisdom] per each 3 [wizard]s.',
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
                 cost: { 'creativity': 3, 'discernment': 1, 'stick': 2, 'food': 1, 'water': 1 },
-                use: { 'elder': 1, 'wand': 2 },
+                use: { 'elder': 1, 'wand': 1 },
                 upkeep: { 'food': 1.33 },
                 req: { 'wizard wisdom': true },
                 effects: [
