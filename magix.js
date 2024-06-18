@@ -10881,7 +10881,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>An alternative for [exploration trips] @slightly increases exploration cap',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can be unlocked upon reaching [wizardry].@slightly increases exploration cap',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11360,10 +11360,18 @@ if (getCookie("civ") == "0") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in tribe. These are called <b><font color="white">Wizards</font></b>. They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [wizard]s on your side.//In addition, both [scouting] and [exploration trips] can be unlocked at the same time.//<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [5, 3, 'magixmod'],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('scouting').req = { 'tool-making': true, 'language': true, 'intuition': true };
+                            G.getDict('exploration trips').req = { 'tool-making': true, 'language': true, 'intuition': true };
+                        }
+                    }
+                ],
             });
             //New tech to allow wizards progressing
             new G.Tech({
@@ -11421,7 +11429,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'glass-crafting', category: 'tier1',
-                desc: 'Since now your [kiln]s will be able to craft glass out of sand. // <small>A window to the world</small>',
+                desc: 'Since now, your [kiln]s will be able to craft glass out of sand. // <small>A window to the world...</small>',
                 icon: [7, 1, 'magixmod'],
                 cost: { 'insight': 45 },
                 req: { 'masonry': true, 'smelting': true },
@@ -13135,7 +13143,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'focused scouting', category: 'upgrade',
-                desc: '@[scout] and [wanderer] are smarter by discovering new techniques of exploring. May make exploring safer<>This tech will allow to explore further worlds with same units. //This increases the exploration cap.',
+                desc: '@[scout]s and [wanderer]s become smarter by discovering new techniques of exploring. It may make exploring safer...<>This tech will allow you to explore further worlds with same units. //This increases the exploration cap.',
                 icon: [10, 21, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'tool-making': true, 'richer language': true, 'well-digging': true },
@@ -13235,7 +13243,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'science blessing', category: 'tier2',
-                desc: '[guru]s generate 50% more [science] & [insight]. //<small>I\'ve gotten blessed with more knowledge!</small>',
+                desc: '[guru]s generate 50% more [science] and [insight]. //<small>I\'ve gotten blessed with more knowledge!</small>',
                 icon: [29, 5, 'magixmod'],
                 cost: { 'insight II': 15, 'science': 5, 'mana': 435 },
                 req: { 'physics II': true, 'ambrosium treeplanting': true, 'faithful cloudy water filtering': true, 'farm of wheat': true, 'belief in the afterlife': true, 'symbolism II': true },
@@ -13880,7 +13888,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'power of the faith', category: 'religion',
-                desc: 'Now [crafting & farm rituals] bonus applies to: @[blacksmith workshop](mortal and paradise version) @[carpenter workshop](mortal and paradise version)@[holy orchard]@[artisan](types: juice, pyro and normal. Bonus for juice and pyro: quarter while for normal it is 3%)//All of these bonuses are only active when the ritual active is. These bonuses won\'t increase amount of [faith II] required to keep the ritual active. @provides 5 [spirituality II]',
+                desc: 'Now the [crafting & farm rituals] bonus applies to: @[blacksmith workshop] (mortal and paradise version) @[carpenter workshop] (mortal and paradise version)@[holy orchard]@[artisan](This is including the juice, pyro and normal types. The bonus for juice and pyro: quarter while for normal it is 3%.)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
                 icon: [24, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'insight II': 135, 'science': 5, 'faith': 26 },
                 req: { 'symbolism III': true },
@@ -13899,7 +13907,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'backshift at farms', category: 'upgrade',
-                desc: '[sugar cane farm]s produces 2.5x more and [wheat farm] gets twice as efficient. //Now these farms require 50% more [worker]s due to way people increase income of the farms. //Requires [moderation] to unlock this tech. Also [hovel with garden] gains 10% more.',
+                desc: '[sugar cane farm]s produces 2.5x more and [wheat farm] becomes twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, [hovel with garden] provides 10% more.',
                 icon: [31, 14, 'magixmod'],
                 cost: { 'insight II': 180, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'improved windmill motors': true, 'moderation': true },
@@ -16288,7 +16296,6 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.getDict('belief in the afterlife').req = { 'acceptance of death': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the beforelife': false };
                             G.getDict('belief in the beforelife').req = { 'acceptance of death': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false };
-
                         }
                     }
                 ],
@@ -16406,7 +16413,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'missionary', category: 'tier1',
-                desc: '@provides 1 [spirituality] when [mausoleum]\'s level is over 5 out of 10. //Send religious tribe to spread your religion and its concept around the world. //<small>Hey! Do not consider it as profanation. It is not like that...</small>',
+                desc: '@provides 1 [spirituality] when [mausoleum]\'s level is over 5 out of 10. //Send religious tribe to spread your religion and its concept all over the world. //<small>Hey! Do not consider it as profanation. It is not like that...</small>',
                 icon: [17, 33, 'magixmod'],
                 cost: { 'faith': 10, 'culture': 5, 'insight': 10 },
                 req: { 'ritualism': true, 'symbolism': true, 'belief in the afterlife': true },
@@ -16796,7 +16803,6 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.getDict('belief in the afterlife').req = { 'death indifference': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the beforelife': false };
                             G.getDict('belief in the beforelife').req = { 'death indifference': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false };
-
                         }
                     }
                 ],
@@ -16816,7 +16822,6 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.getDict('belief in the afterlife').req = { 'death scepticism': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the beforelife': false };
                             G.getDict('belief in the beforelife').req = { 'death scepticism': true, 'oral tradition': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false };
-
                         }
                     }
                 ],
@@ -17430,7 +17435,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer], allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>An alternative for [scouting]. <>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
+                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>The alternative is [scouting], which can be unlocked upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -17476,6 +17481,21 @@ if (getCookie("civ") == "0") {
                         func: function () {
                             G.unitByName['wanderer'].effects.push({ type: 'mult', value: 0.95 });
                             G.unitByName['scout'].effects.push({ type: 'mult', value: 1.15 });
+                        }
+                    }
+                ],
+            });
+            new G.Tech({
+                name: 'sand collection',
+                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean. // <small>A window to dig...</small>',
+                icon: [30, 28, 'magixmod', 5, 22, 'magixmod'],
+                cost: { 'insight': 45 },
+                req: { 'boat building': true },
+                effects: [
+                    {
+                        type: 'function',
+                        func: function () {
+                            G.gain('sand', G.getAmount('wtr') * G.getUnitAmount('digger') * 0.004, 'sand collection');
                         }
                     }
                 ],
@@ -23576,7 +23596,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. @slightly increases exploration cap //<small>Do not forget to take a compass...wait do we have compasses? WHAT IS A COMPASS?!!</small> ',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. @slightly increases exploration cap //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
                 icon: [24, 7, 'c2'],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true },
@@ -24125,10 +24145,8 @@ if (getCookie("civ") == "0") {
                 effects: [
                     {
                         type: 'function', func: function () {
-
                             G.getDict('belief in the afterlife').req = { 'acceptance of death': true, 'oral tradition 2/2': true, 'spark\'o religion': true, 'belief in the beforelife': false };
                             G.getDict('belief in the beforelife').req = { 'acceptance of death': true, 'oral tradition 2/2': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false };
-
                         }
                     }
                 ],
@@ -24520,7 +24538,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'primitive glass-crafting', category: 'tier1',
-                desc: 'Since now, your [kiln]s will be able to craft glass out of sand. // <small>A window to the world...wait...it\'s near impossible to see any beautiful landscape here.</small>',
+                desc: 'Since now, your [kiln]s will be able to craft glass out of sand. // <small>A window to the world...wait...it\'s near impossible to see any beautiful landscape here. Maybe not.</small>',
                 icon: [28, 12, 'c2'],
                 cost: { 'creativity': 30 },
                 req: { 'masonry': true, 'smelting': true },
@@ -24973,7 +24991,7 @@ if (getCookie("civ") == "0") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon elves will now arrive in tribe. These are called <b><font color="white">Wizards</font></b> .They behave weird. Here wizardry and essences will start to appear. Essences are not naturally generated so they consume mana to be made. Get [wizard wisdom] so you may hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad</small>',
+                desc: '@Some sort of weird, uncommon elves will now arrive in your tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [wizard]s on your side. //<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [24, 14, 'c2'],
                 cost: { 'discernment': 106, 'faith': 10, 'gentility': 16 },
                 req: { 'a power of the fortress': true, 'developed creativity': true },
