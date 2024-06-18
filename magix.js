@@ -20812,7 +20812,7 @@ if (getCookie("civ") == "0") {
                             if (G.has('culture of moderation')) { consumeMult *= 0.85; happinessAdd -= 0.1; }
                             if (G.has('ungrateful tribe')) { consumeMult *= 0.97 }
                             if (G.has('ungrateful tribe II')) { consumeMult *= 0.97 }
-                            if (G.has('tribe of eaters')) { consumeMult *= 0.97 }
+                            if (G.has('tribe of eaters')) { consumeMult *= 1.2 }
                             else if (G.has('joy of eating')) { consumeMult *= 1.15; happinessAdd += 0.1; }
                             else if (G.has('unstable eating habits')) { consumeMult *= (G.year % 31 > 15 ? 1.07 : 0.93); happinessAdd += (G.year % 31 > 15 ? 0.06 : -0.04); }
                             else if (G.has('unstable consumption habits')) {
