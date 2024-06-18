@@ -796,8 +796,8 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br> so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment. <br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br> Gameplay difficulty is higher than with human race but doing your job here <br>will let you boost both the human and elf races.<br> Make housing for elves and a place to live, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br> Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br> Make your tribe be legendary and don\'t die early, so<br> your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment. <br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -1485,7 +1485,7 @@ if (getCookie("civ") == "0") {
                 theme();
                 G.ta = 1;
                 if (G.achievByName['fortress eternal'].won > 0) G.gain("insight", 1);
-                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
                 if (G.achievByName['sacrificed for culture'].won == 1 && G.achievByName['the fortress'].won <= 3)
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
                 document.title = 'NeverEnding Legacy';
@@ -1693,7 +1693,7 @@ if (getCookie("civ") == "0") {
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '. <br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> and mine using <a href="https://discord.com/invite/MUyTFvxqm8" target="_blank">this link</a>', icon: [0, 3] });
                     //Had to paste it there because if you obtain and you will unlock 5th choice after page refresh you can still pick 1 of 4 instead of 1 of 5
-                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
 
                     if (G.achievByName['talented?'].won > 0) G.getDict('research box').choicesN++;
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
@@ -4016,7 +4016,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'sand',
-                desc: 'Easily harvested from deserts and beaches and can be processed into [glass].',
+                desc: 'Can be harvested from deserts and beaches and can be processed into [glass].',
                 icon: [4, 9],
                 partOf: 'misc materials',
                 category: 'build',
@@ -10349,7 +10349,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'globetrotter',
-                desc: '@[globetrotter]s are able to discover new tiles and explore already discovered (note that [globetrotter] is going to do it slower than actual [scout])@can explore occupied tiles but does it slower than actual [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen their knowledge about territories already known.',
+                desc: '@[globetrotter]s are able to discover new [land] and explore places already discovered, but slower than than a [scout]@can explore occupied tiles, but does it slower than a [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen their knowledge about territories already known.',
                 icon: [35, 2, 'magixmod'],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -11383,7 +11383,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'more useful housing', category: 'tier1',
-                desc: 'Can store food. Building made out of hard bricks. And in addition it will give a housing to your population.',
+                desc: 'Unlock the [brick house with a silo], which is made out of hard [brick]s that can store food and provide additional [housing].',
                 icon: [5, 2, 'magixmod'],
                 cost: { 'insight': 45 },
                 req: { 'city planning': true, 'cities': true, 'construction': true, 'a gift from the mausoleum': true },
@@ -12741,7 +12741,7 @@ if (getCookie("civ") == "0") {
             //Another knowledge
             new G.Trait({
                 name: 'measuring system',
-                desc: '<font color="#aaffff">People noticed that they will need a measuring system to make constructing, planning easier...so they created their own system of measuring things.</font>.',
+                desc: '<font color="#aaffff">People noticed that they will need a measuring system to make constructing and planning easier...so they created their own system of measuring things.</font>.',
                 icon: [13, 18, 'magixmod'],
                 cost: { 'wisdom': 75 },
                 chance: 475,
@@ -14173,7 +14173,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'alphabet 2/3', category: 'tier1',
-                desc: 'Expands up set of characters in people\'s alphabet. //May lead to make native languages exist',
+                desc: 'Expands up set of characters in people\'s alphabet. //May lead to the existence of native languages.',
                 icon: [27, 27, 'magixmod', 24, 27, 'magixmod'],
                 req: { 'alphabet 1/3': true, 'wizardry': true },
                 cost: { 'insight': 250, 'culture': 50 },
@@ -14182,7 +14182,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'alphabet 3/3', category: 'tier1',
-                desc: 'Significally expands amount of characters in people\'s language',
+                desc: 'Significally expands amount of characters in your people\'s language.',
                 icon: [26, 27, 'magixmod', 25, 27, 'magixmod'],
                 req: { 'alphabet 2/3': true, 'artistic thinking': true, 'alchemy': true },
                 cost: { 'insight': 1400, 'culture': 500, 'inspiration': 20, 'wisdom': 40, 'faith': 181 },
@@ -14192,7 +14192,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'philosophy', category: 'tier1',//Unlocks thot if Thot(actually Philosopher) Mod installed :)
-                desc: 'Provides 25 [wisdom] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus." : "") + '',
+                desc: 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus." : "") + '',
                 icon: [23, 27, 'magixmod'],
                 req: { 'alphabet 2/3': true },
                 cost: { 'insight': 400 },
@@ -14709,7 +14709,7 @@ if (getCookie("civ") == "0") {
             //Trait trends. A trait + tech trend is allowed
             new G.Trait({
                 name: 'cart1',
-                displayName: 'Carver\'s trend:Stone statuettes',
+                displayName: 'Carver\'s trend: Stone statuettes',
                 desc: '[carver]s feel that a [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> mode is 5% more efficient.',
                 icon: [25, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'construction': true, 'cart2': false },
@@ -14721,7 +14721,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cart2',
-                displayName: 'Carver\'s trend:Wooden statuettes',
+                displayName: 'Carver\'s trend: Wooden statuettes',
                 desc: '[carver]s feel that a [wooden statuette,Statuette] made out of wood is accepted better by this tribe than statuette from stone or other non-wood resource. <><b>Craft wooden statuettes</b> mode is 5% more efficient.',
                 icon: [26, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'construction': true, 'cart1': false },
@@ -14733,8 +14733,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gtt1',
-                displayName: 'Gatherer\'s trend:Sticks',
-                desc: '[gatherer]s gain more [stick]s. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Gatherer\'s trend: Sticks',
+                desc: '[gatherer]s gain more [stick]s. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [27, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt2': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -14744,8 +14744,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gtt2',
-                displayName: 'Gatherer\'s trend:Water',
-                desc: '[gatherer]s gain more [water]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Gatherer\'s trend: Water',
+                desc: '[gatherer]s gain more [water]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [28, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt1': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -14755,8 +14755,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dtt1',
-                displayName: 'Digger\'s trend:Ice',
-                desc: '[digger]s gain more [ice]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Digger\'s trend: Ice',
+                desc: '[digger]s gain more [ice]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [29, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt2': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -14765,8 +14765,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dtt2',
-                displayName: 'Digger\'s trend:Sand',
-                desc: '[digger]s gain more [sand]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Digger\'s trend: Sand',
+                desc: '[digger]s gain more [sand] from deserts. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [30, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt1': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -14775,8 +14775,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'htt1',
-                displayName: 'Hunter\'s trend:Hide',
-                desc: '[hunter]s gain more [hide]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Hunter\'s trend: Hide',
+                desc: '[hunter]s gain more [hide]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [31, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt2': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -14785,8 +14785,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'htt2',
-                displayName: 'Hunter\'s trend:Meat',
-                desc: '[hunter]s gain more [meat]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Hunter\'s trend: Meat',
+                desc: '[hunter]s gain more [meat]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [32, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt1': false },
                 cost: { 'culture': 45, 'insight': 30 },
@@ -17486,19 +17486,26 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sand collection',
-                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean. // <small>A window to dig...</small>',
-                icon: [30, 28, 'magixmod', 5, 22, 'magixmod'],
-                cost: { 'insight': 45 },
+                name: 'sandy shores', category: 'upgrade',
+                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. You can research other technologies to improve this effect. // <small>A window to dig...</small>',
+                icon: [4, 9, 21, 15, 'magixmod'],
+                cost: { 'insight': 50 },
                 req: { 'boat building': true },
                 effects: [
                     {
                         type: 'function',
                         func: function () {
-                            G.gain('sand', G.getAmount('wtr') * G.getUnitAmount('digger') * 0.004, 'sand collection');
+                            G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sandy shores');
                         }
                     }
                 ],
+            });
+            new G.Tech({
+                name: 'sandy shores II', category: 'upgrade',
+                desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
+                icon: [4, 9, 0, 35, 'magixmod', 21, 15, 'magixmod'],
+                cost: { 'insight': 180 },
+                req: { 'sandy shores': true },
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -18365,7 +18372,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'discovery rituals',
-                desc: 'Improves <b>Exploration</b> units by: // @[wanderer]:5% @[scout]:3% @[globetrotter]:4%. <>Consumes 2 [faith] every 20 days. Will stop if you run out.',
+                desc: 'Improves <b>Exploration</b> units by: // @[wanderer]: 5% @[scout]: 3% @[globetrotter]: 4%. <>Consumes 2 [faith] every 20 days. Will stop if you run out.',
                 icon: [35, 0, 'magixmod'],
                 cost: { 'faith': 4 },
                 startMode: 'off',
@@ -20153,7 +20160,7 @@ if (getCookie("civ") == "0") {
                 };
                 G.ta = 1;
                 document.title = 'NeverEnding Legacy';
-                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
 
                 fortress();
                 G.fastTicks = G.fastTicks2;
@@ -20306,7 +20313,7 @@ if (getCookie("civ") == "0") {
                         G.getDict('wolvoes').mult = 4.8 * (1 - (i * 0.02));
                     }
                     if (G.releaseNumber == undefined) G.Load();
-                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
                 }
             }
             G.funcs['new year'] = function () //new year but civ2
@@ -24426,7 +24433,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'alphabet 2/3', category: 'tier1',
-                desc: 'Expands up set of characters in elves\'s alphabet. //provides 5 [quick-wittinity] and 15 [wisdom].//May lead to make native languages exist',
+                desc: 'Expands up set of characters in elves\'s alphabet. //provides 5 [quick-wittinity] and 15 [wisdom].//May lead to the existence of native languages.',
                 icon: [27, 27, 'magixmod', 24, 13, 'c2'],
                 req: { 'alphabet 1/3': true, 'second upscale': true },
                 cost: { 'discernment': 250, 'gentility': 50 },
@@ -24436,7 +24443,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'alphabet 3/3', category: 'tier1',
-                desc: 'Significally expands amount of characters in elves\'s language',
+                desc: 'Significally expands amount of characters in your elves\'s language.',
                 icon: [26, 27, 'magixmod', 25, 13, 'c2'],
                 req: { 'alphabet 2/3': true, 'artistic thinking': true },
                 cost: { 'discernment': 1100, 'gentility': 70, 'wisdom': 40, 'faith': 10 },
@@ -24567,7 +24574,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'philosophy', category: 'tier1',//Unlocks thot if Thot(actually Philosopher) Mod installed :)
-                desc: 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases [symbolism] bonus for [dreamer]s from 40 to 45%. //Many elves start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him reduced by 10% comparing to new [dreamer] bonus." : "") + '',
+                desc: 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Many elves start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him reduced by 10% comparing to new [dreamer] bonus." : "") + '',
                 icon: [29, 14, 'c2'],
                 req: { 'alphabet 2/3': true },
                 cost: { 'discernment': 135, 'creativity': 70, 'gentility': 35 },
@@ -24904,7 +24911,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cart1',
-                displayName: 'Carver\'s trend:Stone statuettes',
+                displayName: 'Carver\'s trend: Stone statuettes',
                 desc: '[carver]s feel that [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> mode is 5% more efficient.',
                 icon: [25, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'construction': true, 'cart2': false },
@@ -24916,7 +24923,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cart2',
-                displayName: 'Carver\'s trend:Wooden statuettes',
+                displayName: 'Carver\'s trend: Wooden statuettes',
                 desc: '[carver]s feel that [clay statuette,Statuette] made out of clay or mud is accepted better by this tribe than statuette from clay and other non-stone resources. <><b>Craft clay statuettes</b> mode is 5% more efficient.',
                 icon: [25, 16, 'c2', 5, 22, 'magixmod'],
                 req: { 'construction': true, 'cart1': false },
@@ -24928,8 +24935,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gtt1',
-                displayName: 'Gatherer\'s trend:Sticks',
-                desc: '[gatherer] gains more [stick]s. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Gatherer\'s trend: Sticks',
+                desc: '[gatherer] gains more [stick]s. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [27, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -24939,8 +24946,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gtt2',
-                displayName: 'Gatherer\'s trend:Water',
-                desc: '[gatherer] gains more [water]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Gatherer\'s trend: Water',
+                desc: '[gatherer] gains more [water]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [28, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -24950,8 +24957,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dtt1',
-                displayName: 'Digger\'s trend:Ice',
-                desc: '[digger] gains more [ice]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Digger\'s trend: Ice',
+                desc: '[digger] gains more [ice]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [29, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -24960,8 +24967,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dtt2',
-                displayName: 'Digger\'s trend:Sand',
-                desc: '[digger] gains more [sand]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Digger\'s trend: Sand',
+                desc: '[digger] gains more [sand]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [30, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -24970,8 +24977,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'htt1',
-                displayName: 'Hunter\'s trend:Hide',
-                desc: '[hunter] gains more [hide]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Hunter\'s trend: Hide',
+                desc: '[hunter] gains more [hide]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [31, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -24980,8 +24987,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'htt2',
-                displayName: 'Hunter\'s trend:Meat',
-                desc: '[hunter] gains more [meat]. Doesn\'t disable effect of Decisional trend related to this unit.',
+                displayName: 'Hunter\'s trend: Meat',
+                desc: '[hunter] gains more [meat]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [32, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
