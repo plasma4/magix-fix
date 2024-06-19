@@ -736,13 +736,13 @@ G.AddData({
                                     case "tiered": str += '<div class="fancyText barred" style="color:lime">Tiered building</div>'; break;
                                     default: str += '<div class="fancyText barred" style="color:#c3f;">Wonder</div>'; break;
                                 }
-                                if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders,step-by-step buildings and portals(Work in progress)</div>';
+                                if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders, step-by-step buildings and portals.</div>';
                                 else {
                                     if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
-                                    else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed - Step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
-                                    else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
+                                    else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed at step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
+                                    else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused at step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
                                     else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform</div>';
-                                    else if (instance.mode == 4 && me.type != 'wonder') { str += '<div class="fancyText barred">Completed<br>Click to ascend</div>' } else { str += '<div class="fancyText barred">Completed</div>' };
+                                    else if (instance.mode == 4 && me.type != 'wonder') { str += '<div class="fancyText barred">Completed<br>Click to ascend...</div>' } else { str += '<div class="fancyText barred">Completed!</div>' };
                                     //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
                                 }
                                 if (amount < 0) amount = 0;
@@ -1404,7 +1404,7 @@ G.AddData({
             if (me.lifetime != undefined && lt != undefined) {
                 str += '<font color="#bbb"><li><small>';
 
-                str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + ' .' : 'This trait is temporary. ';
+                str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary.';
                 if (expiration != Infinity)
                     str += G.has('time measuring 1/2') ? ' This trait will expire at year: ' + expiration : ' This trait will expire: ';
                 else str += "This trait has become pernament";
@@ -1451,7 +1451,7 @@ G.AddData({
                 G.button({
                     id: 'playButton',
                     text: '<div class="image" style="width:9px;background:url(img/playButtons.png) -11px 0px;"></div>',
-                    tooltip: 'Time will pass by normally - 1 day every second.',
+                    tooltip: 'Time will pass by normally, with 1 day passing every second.',
                     onclick: function () {
                         if ((G.getSetting('paused') == true || G.getSetting('fast') == true)) { //prevent playsound if nothing changes
                             G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
@@ -1462,7 +1462,7 @@ G.AddData({
                 G.button({
                     id: 'fastButton',
                     text: '<div class="image" style="width:9px;background:url(img/playButtons.png) -21px 0px;"></div>',
-                    tooltip: 'Time will go by about 30 times faster - 1 month every second.<br>Uses up fast ticks.<br>May lower browser performance while active.',
+                    tooltip: 'Time will go by about 30 times faster: 1 month every second.<br>Uses up fast ticks.<br>May lower browser performance while active.',
                     onclick: function () {
                         if (G.getSetting('fast') == false) { //prevent playsound if nothing changes
                             G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
@@ -1480,17 +1480,17 @@ G.AddData({
                 G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>One day elapses every second, and 300 days make up a year.</div>'; }, { offY: -8 });
             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
             var empowermentsDesc = [
-                '<div class="barred">Current aura:<font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br> <li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
-                '<div class="barred">Current aura:<font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br> <li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>Efficiency of farms and florists decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
-                '<div class="barred">Current aura:<font color="#C3BBCF">Earth</b></div><br><B>Effects of earth in its current phase:</b><br> <li>Units using land waste/collapse ' + (30 * i) + '% faster/more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>Accident rate for mining units increased by ' + (8 * i).toFixed(2) + '%</li><li>When Earth aura has the biggest power and 3 years before and after all accidents in mines and quarries are very violent<br> so it has very big chance to kill instead of just wounding workers.</li><br><li>As ground is unstable it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%</li></font>',
-                '<div class="barred">Current aura:<font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br> <li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by' + (5 + (1 * i)).toFixed(2) + '%</li><li>Every year one random resource gets totally wiped<br>(<b>Warning:</b>if choice will land on any essentials it will<br>wipe all other essentials except those that<br>limit amount of other essentials.)</li></font>',
-                '<div class="barred">Current aura:<font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br> <li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%</li><li>Digger,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster</li><li>' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
+                '<div class="barred">Current aura: <font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br> <li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%.</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water.</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower.</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
+                '<div class="barred">Current aura: <font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br> <li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%.</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>The efficiency of farms and florists is decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br> <li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br> so it has very big chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br> <li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster.</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by ' + (5 + (1 * i)).toFixed(2) + '%.</li><li>Every year, one random resource gets totally wiped!br>(<b>Warning:</b>if the choice will land on any essentials, it will<br>wipe all other essentials except those that<br>limit the amount of other essentials.)</li></font>',
+                '<div class="barred">Current aura: <font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br> <li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%.</li><li>Diggers,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water.</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster.</li><li>There are ' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
             ];
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('Water')) {
-                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and triggers at year:' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras. <br>Each one boosts and weakens some things and persist through<br> rest of the current run.</div><div class="par">Auras are in cycle. At middle point of cycle they have biggest power.</div>' + empowermentsDesc[G.auratext] });
+                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras. <br>Each one boosts and weakens some things and persist through<br>the rest of the current run.</div><div class="par">Auras are in cycle. At the middle point of a cycle, they have the biggest power.</div>' + empowermentsDesc[G.auratext] });
                 } else {
-                    G.addTooltip(l('empower'), function () { return (G.achievByName["druidish heart"].won > 0 ? '<div class="barred">???</div><div class="par">' + (G.has("time measuring 1/2") ? 'Once year ' + (236 - G.techN - G.traitN) : 'Once this moment ') + 'strikes you will see what\'s there.<br>For now wait.</div>' : '<div class="barred">???</div><div class="par">Once it shows up you\'ll see what\'s there.<br>For now wait.</div>') });
+                    G.addTooltip(l('empower'), function () { return (G.achievByName["druidish heart"].won > 0 ? '<div class="barred">???</div><div class="par">' + (G.has("time measuring 1/2") ? 'Once year ' + (236 - G.techN - G.traitN) : 'Once this moment ') + 'strikes, you will see what\'s there.<br>For now, wait.</div>' : '<div class="barred">???</div><div class="par">Once it shows up, you will see what\'s there.<br>For now, wait.</div>') });
                 }
             }
             l('fastTicks').onclick = function (e) {
@@ -2318,7 +2318,7 @@ G.AddData({
             tier: 0,
             name: 'speedresearcher',
             icon: [35, 7, 'magixmod'],
-            desc: 'Get at least 60 techs within first 10 minutes of the current run.',
+            desc: 'Get at least 60 techs within the first 10 minutes of the current run.',
             effects: [
             ],
             visible: false,
@@ -2329,7 +2329,7 @@ G.AddData({
             tier: 0,
             name: 'speedresearcher II',
             icon: [35, 6, 'magixmod'],
-            desc: 'Get at least 100 techs within first 10 minutes of the current run.',
+            desc: 'Get at least 100 techs within the first 10 minutes of the current run.',
             effects: [
             ],
             visible: false,
@@ -2380,7 +2380,7 @@ G.AddData({
             tier: 0,
             name: 'capital of christmas',
             icon: [1, 12, 'seasonal'],
-            desc: 'Finish [wonderful fortress of christmas]. //You\'ll unlock a special buff that last only during christmas and the 7 next runs after [the christmas,<font color="Aqua">Christmas</font>] ends. Merry Christmas!',
+            desc: 'Finish [wonderful fortress of christmas]. //You\'ll unlock a special buff that lasts only during Christmas and the 7 next runs after [the christmas,<font color="Aqua">Christmas</font>] ends. Merry Christmas!',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -2749,7 +2749,7 @@ G.AddData({
             tier: 0,
             name: 'speeddiscoverer',
             icon: [32, 17, 'c2'],
-            desc: 'Get at least 50 techs within first 30 minutes of the current run.',
+            desc: 'Get at least 50 techs within the first 30 minutes of the current run.',
             effects: [
             ],
             visible: false,
@@ -2824,12 +2824,12 @@ G.AddData({
             str += '<div class="par">Longest game: <b>' + G.selfUpdatingText(function () { return G.BT(G.furthestDay); }) + '</b></div>';
             str += '<div class="par">Total legacy time: <b>' + G.selfUpdatingText(function () { return G.BT(G.totalDays); }) + '</b></div>';
             str += '<div class="par">Current amount of adopted traits: <b>' + G.selfUpdatingText(function () { return (G.modsByName['Elves'] ? G.traitN2 : G.traitN) - G.knowN; }) + '</b></div>';
-            str += '<div class="par">Current amount of obtained researches:<b>' + G.selfUpdatingText(function () { return G.techN - G.miscTechN + G.knowN; }) + '</b></div>';
-            str += '<div class="par">Current amount of constructed wonders:<b>' + G.achievByName['wondersDuringRun'].won + '</b></div>';
+            str += '<div class="par">Current amount of obtained researches: <b>' + G.selfUpdatingText(function () { return G.techN - G.miscTechN + G.knowN; }) + '</b></div>';
+            str += '<div class="par">Current amount of constructed wonders: <b>' + G.achievByName['wondersDuringRun'].won + '</b></div>';
             if (G.achievByName['???'].won > 0) {
                 str += '<div class="par">Total ascensions: <b>' + G.selfUpdatingText(function () { return G.achievByName['first glory'].won + G.achievByName['druidish heart'].won }) + '</b></div>';
             }
-            str += '<div class="par">Season:<b>' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Haloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></div>';
+            str += '<div class="par">Season: <b>' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Haloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></div>';
             str += '<div class="fancyText barred" style="text-align:center;"><font style="letter-spacing: 1px;">Human race</font></div>';
             str += '<font color="ffddaa"><div class="par">Ascensions: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['first glory'].won); }) + '</b></div>';
             if (G.achievByName['lands of despair'].won > 0) str += '<div class="par">Dead forests found: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['lands of despair'].won); }) + '</b></div>';
@@ -2837,12 +2837,12 @@ G.AddData({
             if (G.getRes('victory point').amount > 0) str += '<div class="par">Victory points: <b>' + G.selfUpdatingText(function () { return B(G.getRes('victory point').amount); }) + '</b></div>';
             if (G.achievByName['patience'].won + G.achievByName['unhappy'].won + G.achievByName['cultural'].won + G.achievByName['hunted'].won + G.achievByName['unfishy'].won + G.achievByName['ocean'].won + G.achievByName['herbalism'].won + G.achievByName['buried'].won + G.achievByName['underground'].won + G.achievByName['pocket'].won + G.achievByName['faithful'].won + G.achievByName['dreamy'].won > 0) str += '<div class="par">Successful trial accomplishments: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['patience'].won + G.achievByName['unhappy'].won + G.achievByName['cultural'].won + G.achievByName['hunted'].won + G.achievByName['unfishy'].won + G.achievByName['ocean'].won + G.achievByName['herbalism'].won + G.achievByName['buried'].won + G.achievByName['underground'].won + G.achievByName['pocket'].won + G.achievByName['faithful'].won + G.achievByName['dreamy'].won); }) + '</b></div>';
             str += '<div class="par">Most population ruled: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['mostPeople'].won) }) + '</b></div>';
-            str += G.textWithTooltip('<div class="par"><font color="#ffddaa">Most land on people\'s mortal world:<b></font>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostPeopleLand'].won) }) + '</b></div>';
+            str += G.textWithTooltip('<div class="par"><font color="#ffddaa">Most land on people\'s mortal world: <b></font>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostPeopleLand'].won) }) + '</b></div>';
             if (G.achievByName['???'].won > 0) {
                 str += '</font><div class="fancyText barred" style="text-align:center;"><font style="letter-spacing: 1px;">Elf race</font></div>';
-                str += '<div class="par"><font color="#ccffcc">Most population ruled(elf race):<b>' + G.selfUpdatingText(function () { return B(G.achievByName['mostElves'].won) }) + '</b></div>';
+                str += '<div class="par"><font color="#ccffcc">Most population ruled(elf race): <b>' + G.selfUpdatingText(function () { return B(G.achievByName['mostElves'].won) }) + '</b></div>';
                 str += '<div class="par">Ascensions: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['druidish heart'].won); }) + '</b></div>';
-                str += G.textWithTooltip('<div class="par"><font color="#ccffcc">Most land on elves mortal world:</font><b>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostElvesLand'].won) }) + '</b></div>';
+                str += G.textWithTooltip('<div class="par"><font color="#ccffcc">Most land on the mortal world of elves: </font><b>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostElvesLand'].won) }) + '</b></div>';
             }
             str += '</div>';
             str += '<div class="scrollBox underTitle" style="width:380px;right:0px;left:auto;background:rgba(0,0,0,0.25);"></font>';
