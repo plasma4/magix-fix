@@ -510,7 +510,7 @@ G.update['unit'] = function () {
         if (me.unit.gizmos) {
             var div = l('unit-mode-' + me.id); div.onmousedown = function (unit, div) { return function () { G.selectModeForUnit(unit, div); }; }(me, div);
             div.onclick = function (unit, div) { return function () { clickModeUnit = 2; G.selectModeForUnit(unit, div); }; }(me, div);
-            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to change unit mode.<br>Current mode :<div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
+            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to change unit mode.<br>Current mode: <div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
             var div = l('unit-split-' + me.id); div.onclick = function (unit, div) { return function () { if (G.speed > 0) G.splitUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
             G.addTooltip(div, function (me, instance) { return function () { if (instance.splitOf) return 'Click to remove this stack of units.'; else return 'Click to split into another unit stack.<br>Different unit stacks can use different modes.' }; }(me.unit, me), { offY: -8 - 16 });
             var div = l('unit-percent-' + me.id); div.onmousedown = function (unit, div) { return function () { if (G.speed > 0) G.selectPercentForUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
@@ -573,11 +573,11 @@ G.update['unit'] = function () {
                     //infoIconCompensated ?
                     str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                         '<div class="fancyText infoAmount onLeft">' + B(instance.displayedAmount) + '</div>' +
-                        '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued :<br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active :<br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
+                        '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued: <br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active: <br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
                         '</div>';
                     str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
                     str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
-                    if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode :<br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
+                    if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode: <br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
                     str += '<div class="fancyText barred">';
                     if (!isEmpty(me.cost)) str += '<div>Cost : ' + G.getCostString(me.cost, true, false, amount) + '</div>';
                     if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses : ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
@@ -1824,7 +1824,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('time measuring 1/2')) {
                             var str = '';
                             str += 'It is now the year <b>' + (G.year + 1) + '</b>.<br>';
-                            str += 'Report for last year :<br>';
+                            str += 'Report for last year: <br>';
                             str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
                             str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
                             if (expTraits.length > 0) {
@@ -9578,10 +9578,13 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'plain island portal', displayName: '<font color="yellow">Plain Island Portal</font>',
-                desc: '@opens a portal to a huge <b>Plain Island</b>. A creation made of ideas of wizards and dreams of population.//Your dream comes real. You will recieve some [land of the plain island] upon activation of portal. Upon complete you will be able to rename this island.',
+                desc: '@opens a portal to a huge <b>' + islandName() + '</b>. A creation made of ideas from various dreams and wizards.//Your dream comes real! You will recieve some [land of the plain island] upon activation of the portal. Upon completion, you will be able to rename this island.',
                 wideIcon: [28, 29, 'magixmod'],
                 wideIcon2: [7, 3, 'magixmod'],
                 icon: [29, 29, 'magixmod'],
+                tick: function (me, tick) {
+                    me.desc = '@opens a portal to a huge <b>' + islandName() + '</b>. A creation made of ideas from various dreams and wizards.//Your dream comes real! You will recieve some [land of the plain island] upon activation of the portal. Upon completion, you will be able to rename this island.'
+                },
                 wonder: '.',
                 cost: { 'marble': 100, 'gems': 10 },
                 costPerStep: { 'marble': 250, 'basic building materials': 50, 'mana': 3500 },
@@ -10051,7 +10054,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'university of science',
-                desc: '@This wonder is different than others. You cannot ascend via [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.',
+                desc: '@This wonder is different than other wonders. You cannot ascend via the [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.',
                 wonder: '.',
                 icon: [13, 29, 'magixmod'],
                 wideIcon: [12, 29, 'magixmod'],
@@ -10060,10 +10063,10 @@ if (getCookie("civ") == "0") {
                 steps: 200,
                 messageOnStart: 'The construction of a Scientific University has been started. It is the complex of education where each knowledge can be deepened. You are proud of that.',
                 finalStepCost: { 'population': 1000, 'insight II': 100, 'wisdom': 250, 'science': 50, 'wisdom II': -25, 'education': -25, 'university point': -100 },
-                finalStepDesc: 'To finish this stage of [university of science,University], you need to sacrifice some resources. To unlock next stage remember that you will need to gain more [victory point]s. After each stage finish you will unlock new researches.',
+                finalStepDesc: 'To finish this stage of the [university of science,University], you need to sacrifice some resources. To unlock the next stage, remember that you will need to gain more [victory point]s. After each stage that you finish, you will unlock new researches.',
                 use: { 'land of the plain island': 15, 'worker': 5, 'metal tools': 5 },
                 tick: function (me, tick) {
-                    me.desc = '@This wonder is different than others. You cannot ascend via [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build up first computer or...time machine...Nobody knows.'
+                    me.desc = '@This wonder is different than other wonders. You cannot ascend via the [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.'
                 },
                 req: { 'wonder \'o science': true },
                 category: 'civil',
@@ -10071,7 +10074,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'money stockpile',
-                desc: 'This can store money, slowing the decay of it. You always start with one. The amount of money that he t[money stockpile] can store is not affected by Pocket completions. Due to trial rules you do not need [stockpiling] to unlock this unit!',
+                desc: 'This can store money, slowing the decay of it. You always start with one. The amount of money that the [money stockpile] can store is not affected by Pocket completions. Due to the rules of this trial, you do not need [stockpiling] to unlock this unit!',
                 icon: [25, 29, 'magixmod'],
                 cost: { 'archaic building materials': 50 },
                 effects: [
@@ -20150,7 +20153,7 @@ if (getCookie("civ") == "0") {
                     G.getDict('the fortress').wideIcon = [0, 20, 'c2']//wide icon
                     G.getDict('the fortress').finalStepCost = { 'population': population };//final cost
                     G.getDict('the fortress').finalStepDesc = 'To complete The ' + (G.achievByName['the fortress'].won > 9 ? "Great" : "") + ' Fortress, ' + population + ' of your [population,Elves] must be sacrificed to accompany you as servants and hope in your afterlife.';
-                    G.getDict('the fortress').desc = 'leads to the <b>Fortress Victory</b><>A mystical monument where the glory of elves is shown around. Built in the middle of dense and tall forest//A temple housing a tomb deep under its rocky platform, The Fortress stands tall, its eternal shadow forever reminding your elves of your greatness. <font color="yellow">@The Fortress is evolved to level ' + (G.achievByName['the fortress'].won < 10 ? G.achievByName['the fortress'].won : 10) + ' of 10. ' + (G.achievByName['fortress eternal'].won > 0 ? 'You have obtained all bonuses' : 'Continue evolving up to unlock a special achievement and more bonuses. You can evolve up  to next stage by ascending with The Fortress at the stage you currently are') + '. //Each level of [the fortress,The Fortress] provides special bonus. Check the description of [a power of the fortress] tech to learn more.</font>';//description
+                    G.getDict('the fortress').desc = 'leads to the <b>Fortress Victory</b><>A mystical monument where the glory of elves is shown around. Built in the middle of dense and tall forest//A temple housing a tomb deep under its rocky platform, The Fortress stands tall, its eternal shadow forever reminding your elves of your greatness. <font color="yellow">@The Fortress is evolved to level ' + (G.achievByName['the fortress'].won < 10 ? G.achievByName['the fortress'].won : 10) + ' of 10. ' + (G.achievByName['fortress eternal'].won > 0 ? 'You have obtained all bonuses already' : 'Continue evolving up to unlock a special achievement and more bonuses. You can evolve it up to the next stage by ascending with The Fortress at the stage you currently are at') + '. //Each level of [the fortress,The Fortress] provides special bonus. Check the description of [a power of the fortress] tech to learn more.</font>';//description
                     G.getDict('the fortress').cost = { 'basic building materials': 1000 + (G.achievByName['the fortress'].won <= 10 ? 400 * G.achievByName['the fortress'].won : 4000) }
                     if (G.achievByName['the fortress'].won > 9) {
                         G.getDict('the fortress').wonder = 'fortress eternal';
@@ -20166,15 +20169,15 @@ if (getCookie("civ") == "0") {
                         G.getDict("belief in the beforelife").chance /= 2;
                     }
                     G.getDict('a power of the fortress').desc = 'Fortress power will improve many aspects of life if its power will be increased. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - To roll new researches or reroll you need 75% of [battery of discoveries,Battery] instead of 100% along with [a power of the fortress,This deeply rooted power]<hr>' +
-                        (G.achievByName['the fortress'].won > 1 ? '<b>LV2</b> - C2 [wanderer]s are 2% more efficient and [scout]s are 4% more efficient<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks 2nd level for two C1 wonders: <b><font color="fuschia">Pagoda of Democracy</font></b>, <b><font color="aqua">Complex of dreamers</font></b>. Finishing a 2nd stage of rootal wonders will increase starting bonus by 2 (so if insight-ly was providing 1 more insight now it will provide 3 if did for the second time)<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 1 ? '<b>LV2</b> - C2 [wanderer]s are 2% more efficient and [scout]s are 4% more efficient.<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks 2nd level for two C1 wonders: <b><font color="fuschia">Pagoda of Democracy</font></b>, <b><font color="aqua">Complex of dreamers</font></b>. Finishing a 2nd stage of rootal wonders will increase starting bonus by 2. (So, if <b>insight-ly</b> was providing 1 more insight now, it will provide 3 if done for the second time.)<hr>' : '') +
                         (G.achievByName['the fortress'].won > 3 ? '<b>LV4</b> - Unlocks 2nd level for C1 wonder: <b><font color="green">Fortress of Cultural Legacy</font></b><hr>' : '') +
                         (G.achievByName['the fortress'].won > 4 ? '<b>LV5</b> - [battery of discoveries] can overcap. You can now have 125% of battery (you will still need just 75% of it)<hr>' : '') +
                         (G.achievByName['the fortress'].won > 5 ? '<b>LV6</b> - [food rations] and [water rations] policies no longer require [discernment].<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 6 ? '<b>LV7</b> - Start a game with +2 [creativity]<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 6 ? '<b>LV7</b> - Start a game with +2 [creativity].<hr>' : '') +
                         (G.achievByName['the fortress'].won > 7 ? '<b>LV8</b> - Elves have a chance to adopt [archaeology] knowledge over time.' : '') +
-                        (G.achievByName['the fortress'].won > 8 ? '<b>LV9</b> - If year 3 will start you will get extra 1 year and 150 days of fast ticks.<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 9 ? '<b>LV10</b> - Start a game with 1 extra [discernment] and with 20% of [battery of discoveries] charged. Also instead of 1y 150d you will get full 2y 250d of fast ticks. Unlocks <b>Fortress eternal</b> achievement' : '');
+                        (G.achievByName['the fortress'].won > 8 ? '<b>LV9</b> - If year 3 stats, you will get an extra 1 year and 150 days of fast ticks.<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 9 ? '<b>LV10</b> - Start a game with 1 extra [discernment] and with 20% of [battery of discoveries] charged. Also, instead of 1y 150d, you will get 2y 250d of fast ticks. Unlocks <b>Fortress eternal</b> achievement' : '');
                 }
             }
 
@@ -20190,8 +20193,8 @@ if (getCookie("civ") == "0") {
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
                     (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses for this race.</b>') : "A ray of hope") +
                     '</div>' +
-                    '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at deepness of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
-                    '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br> They call you :</div>';
+                    '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at the deepness of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
+                    '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br> They call you:</div>';
                 return str;
             }
 

@@ -784,7 +784,7 @@ G.AddData({
                                 //infoIconCompensated ?
                                 str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                     '<div class="fancyText infoAmount onLeft">' + B(instance.displayedAmount) + '</div>' +
-                                    '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued :<br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active :<br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
+                                    '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued: <br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active: <br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
                                     '</div>';
                                 str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
                                 str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
@@ -1394,12 +1394,12 @@ G.AddData({
             if ((G.getSetting('debug') || G.getSetting('showLeads')) && me.precededBy.length > 0) {
                 var reqStr = [];
                 for (var i in me.precededBy) { reqStr.push(me.precededBy[i].displayName); }
-                str += '<div class="fancyText barred">Requisites :<br>' + reqStr.join(', ') + '</div>';
+                str += '<div class="fancyText barred">Requisites: <br>' + reqStr.join(', ') + '</div>';
             }
             if ((G.getSetting('debug') || G.getSetting('showLeads')) && me.leadsTo.length > 0) {
                 var leadsToStr = [];
                 for (var i in me.leadsTo) { leadsToStr.push(me.leadsTo[i].displayName); }
-                str += '<div class="fancyText barred">Leads to :<br>' + leadsToStr.join(', ') + '</div>';
+                str += '<div class="fancyText barred">Leads to: <br>' + leadsToStr.join(', ') + '</div>';
             }
             if (me.lifetime != undefined && lt != undefined) {
                 str += '<font color="#bbb"><li><small>';
@@ -2904,7 +2904,7 @@ G.AddData({
                                             '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>' +
                                             '<div class="fancyText barred infoTitle">' + me.displayName + '</div>' +
                                             (me.plural == true ?
-                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved :<font color="yellow"> ' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
+                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved: <font color="yellow">' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
                                                 '<div class="fancyText barred">' + (me.won > 0 ? ('Completed<font color="yellow"> :> </font>') : 'Locked <font color="#aaffff">:(</font>') + '</div>') +
                                             //'<div class="fancyText barred">'+(me.won>0?('<font color="yellow">Completed</font>':'Locked <font color="#aaffff">:(</font></div>')+
                                             '<div class="fancyText barred">Effects: ' + G.getAchievEffectsString(me.effects) + '</div>' +
@@ -2967,7 +2967,7 @@ G.AddData({
                                             '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>' +
                                             '<div class="fancyText barred infoTitle">' + me.displayName + '</div>' +
                                             (me.plural == true ?
-                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved :<font color="yellow"> ' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
+                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved: <font color="yellow">' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
                                                 '<div class="fancyText barred">' + (me.won > 0 ? ('Completed<font color="yellow"> :> </font>') : 'Locked <font color="#aaffff">:(</font>') + '</div>') +
                                             //'<div class="fancyText barred">'+(me.won>0?('<font color="yellow">Completed</font>':'Locked <font color="#aaffff">:(</font></div>')+
                                             '<div class="fancyText barred">Effects: ' + G.getAchievEffectsString(me.effects) + '</div>' +
@@ -3047,7 +3047,7 @@ G.AddData({
                                             '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>' +
                                             '<div class="fancyText barred infoTitle">' + me.displayName + '</div>' +
                                             (me.plural == true ?
-                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved :<font color="yellow"> ' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
+                                                '<div class="fancyText barred">' + (me.won > 0 ? ('Achieved: <font color="yellow">' + me.won + '</font> ' + (me.won == 1 ? 'time' : 'times')) : 'Locked <font color="#aaffff">:(</font>') + '</div>' :
                                                 '<div class="fancyText barred">' + (me.won > 0 ? ('Completed<font color="yellow"> :> </font>') : 'Locked <font color="#aaffff">:(</font>') + '</div>') +
                                             //'<div class="fancyText barred">'+(me.won>0?('<font color="yellow">Completed</font>':'Locked <font color="#aaffff">:(</font></div>')+
                                             '<div class="fancyText barred">Effects: ' + G.getAchievEffectsString(me.effects) + '</div>' +
