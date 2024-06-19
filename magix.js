@@ -16944,8 +16944,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'dt30',
-                displayName: 'Devil\'s trait #30 Smart fishes',
-                desc: 'Every good provides 2% less resources from fishing. //<small>these fishes are really smart...do they? Or are these controlled by smart forces and in reality they are stupid?</small>',
+                displayName: 'Devil\'s trait #30 Smart fish',
+                desc: 'Every good provides 2% less resources from fishing. //<small>these fish are really smart...are they? Or are these controlled by smart forces and in reality they are slightly stupid?</small>',
                 icon: [11, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('fish', 0.98) } }],
@@ -16967,7 +16967,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at7',
                 displayName: 'Ancestors trait #7 The Quarry\'s Lord',
-                desc: 'Every good provides 1% more resources from quarrying (regardless of depth) //<small>just look at this big bunch of cut stones behind me!</small>',
+                desc: 'Every good provides 1% more resources from quarrying (regardless of depth).//<small>just look at this big bunch of cut stones behind me!</small>',
                 icon: [2, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('quarry', 1.01) } }],
@@ -16977,8 +16977,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'at8',
-                displayName: 'Ancestors trait #8 Mistress of the forests blessing',
-                desc: 'Every good provides 1% more resources from chopping. //<small>Her blessing is real! I just have enough wood for this winter ~ old woodcutter says</small>',
+                displayName: 'Ancestors trait #8 Mistress of the forest blessing',
+                desc: 'Every good provides 1% more resources from chopping. //<small>Her blessing is real! I just have enough wood for this winter ~ an old woodcutter says...</small>',
                 icon: [4, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('chop', 1.01) } }],
@@ -17044,7 +17044,6 @@ if (getCookie("civ") == "0") {
                 effects: [{ type: 'function', func: function () { ContextBuff('fish', 1.005) } }],
                 req: { 'doctrine of the dark wormhole 5/5': true, 'dt30': false, 'belief in the beforelife': true },
                 chance: 50,
-
                 category: 'ancestors'
             });
             new G.Trait({
@@ -17246,7 +17245,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'drinking stability',
-                desc: '@people\'s drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits // <small>They simply need 2 liters of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
+                desc: '@people\'s drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need several cups of water aday to be happy. Just watch them, they don\'t need more or less.</small>',
                 icon: [10, 15, 'magixmod', 34, 34, 'magixmod'],
                 cost: { 'culture': 7.5 },
                 chance: 60,
@@ -17510,14 +17509,9 @@ if (getCookie("civ") == "0") {
                 icon: [4, 9, 21, 15, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
-                effects: [
-                    {
-                        type: 'function',
-                        func: function () {
-                            G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sandy shores');
-                        }
-                    }
-                ],
+                tick: function () {
+                    G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sandy shores');
+                }
             });
             new G.Tech({
                 name: 'sandy shores II', category: 'upgrade',
