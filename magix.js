@@ -13387,7 +13387,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'life has its theme', displayName: '<font color="orange">Life has its theme</font>', category: 'misc',
-                desc: 'From now you can change game theme :) ',
+                desc: 'From now on you can change the game theme :) ',
                 icon: [4, 12, 'magixmod', 29, 23, 'magixmod'],
                 cost: {},
                 effects: [
@@ -17424,7 +17424,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'rafts', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores @makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the larger parts of the ocean. [rafts] allow you to store some [food] on board allows for longer explorations. It lets you explore 2 tiles away from beaches, but can come at some risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@Allows exploring through ocean shores and makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the larger parts of the ocean. [rafts] allow you to store some [food] on board allows for longer explorations. It lets you explore 2 tiles away from beaches, but can come at some risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [29, 6, 'magixmod'],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'canoes': false },
@@ -17523,7 +17523,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores',
+                name: 'sandy shores', // New tech by @1_e0
                 desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. You can research other technologies to improve this effect. // <small>A window to dig...</small>',
                 icon: [4, 9, 21, 15, 'magixmod'],
                 cost: { 'insight': 50 },
@@ -17532,7 +17532,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores II',
+                name: 'sandy shores II', // New tech by @1_e0
                 desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
                 icon: [4, 9, 0, 35, 'magixmod', 21, 15, 'magixmod'],
                 cost: { 'insight': 180 },
@@ -17559,6 +17559,9 @@ if (getCookie("civ") == "0") {
                 icon: [0, 2, 19, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
+            });
+            new G.Res({
+                name: 'ignoreItem' // Item that is impossible to obtain
             });
 
 
@@ -17972,7 +17975,7 @@ if (getCookie("civ") == "0") {
             var noteStr = 'Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice (from Row 3 completion) and earlier Seraphins unlock based on your VPs amount.'
             new G.Policy({
                 name: 'Patience',
-                desc: 'starts [se01] trial. You will be warned before starting.',
+                desc: 'Starts [se01] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 29, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se01': 'on' },
@@ -18013,7 +18016,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Unhappy',
-                desc: 'starts [se02] trial. You will be warned before starting.',
+                desc: 'Starts [se02] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 28, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se02': 'on' },
@@ -18053,7 +18056,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Cultural',
-                desc: 'starts [se03] trial. You will be warned before starting.',
+                desc: 'Starts [se03] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 27, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se03': 'on' },
@@ -18093,7 +18096,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Hunted',
-                desc: 'starts [se04] trial. You will be warned before starting.',
+                desc: 'Starts [se04] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 26, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se04': 'on' },
@@ -18164,63 +18167,63 @@ if (getCookie("civ") == "0") {
                 req: { 't4': true, 'trial': true },
                 category: 'population',
             });
-            //     new G.Policy({
-            //         name: 'Unfishy (WIP)',
-            //         desc: 'starts [se05] trial. You will be warned before starting.',
-            //         icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
-            //         cost: { 'insight II': 1, 'influence II': 1 },
-            //         startMode: 'off',
-            //         req: { 'se10': 'on' },
-            //         category: 'trial',
-            //         effects: [
-            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
-            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
-            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-            // '<br><br><Br><br>'+
-            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-            //                 '<br>Trial rules<br>'+
-            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-            // '<div class="fancyText title">Tell me your choice...</div>'+
-            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.doFunc('new game');G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-            //                 '</div>'+
-            //             '</div><div class="buttonBox">'+
-            //             '</div></div>'
-            // })}}*/
-            //         ],
-            //     });
-            //     new G.Policy({
-            //         name: 'Ocean (WIP)',
-            //         desc: 'starts [se06] trial. You will be warned before starting.',
-            //         icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
-            //         cost: { 'insight II': 1, 'influence II': 1 },
-            //         startMode: 'off',
-            //         req: { 'se10': 'on' },
-            //         category: 'trial',
-            //         effects: [
-            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
-            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
-            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-            // '<br><br><Br><br>'+
-            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-            //                 '<br>Trial rules<br>'+
-            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-            // '<div class="fancyText title">Tell me your choice...</div>'+
-            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){    G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.doFunc('new game');G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-            //                 '</div>'+
-            //             '</div><div class="buttonBox">'+
-            //             '</div></div>'
-            // })}}*/
-            //         ],
-            //     });
+            new G.Policy({
+                name: 'Unfishy (WIP)',
+                desc: 'Starts [se05] trial. You will be warned before starting.',
+                icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
+                cost: { 'insight II': 1, 'influence II': 1 },
+                startMode: 'off',
+                req: { 'se10': 'on', 'ignoreItem': true },
+                category: 'trial',
+                effects: [
+                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
+                    return '<div style="width:580px;min-height:550px;height:75%;">'+
+                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+        '<br><br><Br><br>'+
+                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+                        '<br>Trial rules<br>'+
+                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+        '<div class="fancyText title">Tell me your choice...</div>'+
+                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.doFunc('new game');G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+                        '</div>'+
+                    '</div><div class="buttonBox">'+
+                    '</div></div>'
+        })}}*/
+                ],
+            });
+            new G.Policy({
+                name: 'Ocean (WIP)',
+                desc: 'Starts [se06] trial. You will be warned before starting.',
+                icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
+                cost: { 'insight II': 1, 'influence II': 1 },
+                startMode: 'off',
+                req: { 'se10': 'on', 'ignoreItem': true },
+                category: 'trial',
+                effects: [
+                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
+                    return '<div style="width:580px;min-height:550px;height:75%;">'+
+                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+        '<br><br><Br><br>'+
+                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+                        '<br>Trial rules<br>'+
+                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+        '<div class="fancyText title">Tell me your choice...</div>'+
+                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){    G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.doFunc('new game');G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+                        '</div>'+
+                    '</div><div class="buttonBox">'+
+                    '</div></div>'
+        })}}*/
+                ],
+            });
             new G.Policy({
                 name: 'Herbalism',
-                desc: 'starts [se07] trial. You will be warned before starting.',
+                desc: 'Starts [se07] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 23, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
@@ -18260,7 +18263,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Buried',
-                desc: 'starts [se08] trial. You will be warned before starting.',
+                desc: 'Starts [se08] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 22, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'voodoo spirit': false },
@@ -18288,36 +18291,36 @@ if (getCookie("civ") == "0") {
                     }
                 ],
             });
-            //     new G.Policy({
-            //         name: 'Underground (WIP)',
-            //         desc: 'starts [se09] trial. You will be warned before starting.',
-            //         icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
-            //         cost: { 'insight II': 1, 'influence II': 1 },
-            //         startMode: 'off',
-            //         req: { 'se10': 'on' },
-            //         category: 'trial',
-            //         effects: [
-            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
-            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
-            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-            // '<br><br><Br><br>'+
-            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-            //                 '<br>Trial rules<br>'+
-            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-            // '<div class="fancyText title">Tell me your choice...</div>'+
-            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.doFunc('new game');G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-            //                 '</div>'+
-            //             '</div><div class="buttonBox">'+
-            //             '</div></div>'
-            // })}}*/
-            //         ],
-            //     });
+            new G.Policy({
+                name: 'Underground (WIP)',
+                desc: 'Starts [se09] trial. You will be warned before starting.',
+                icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
+                cost: { 'insight II': 1, 'influence II': 1 },
+                startMode: 'off',
+                req: { 'se10': 'on', 'ignoreItem': true },
+                category: 'trial',
+                effects: [
+                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
+                    return '<div style="width:580px;min-height:550px;height:75%;">'+
+                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+        '<br><br><Br><br>'+
+                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+                        '<br>Trial rules<br>'+
+                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+        '<div class="fancyText title">Tell me your choice...</div>'+
+                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.doFunc('new game');G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+                        '</div>'+
+                    '</div><div class="buttonBox">'+
+                    '</div></div>'
+        })}}*/
+                ],
+            });
             new G.Policy({
                 name: 'Pocket',
-                desc: 'starts [se10] trial. You will be warned before starting.',
+                desc: 'Starts [se10] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 20, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on' },
@@ -18347,7 +18350,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Faithful',
-                desc: 'starts [se11] trial. You will be warned before starting.',
+                desc: 'Starts [se11] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 19, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se11': 'on' },
@@ -18377,7 +18380,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Dreamy',
-                desc: 'starts [se12] trial. You will be warned before starting.',
+                desc: 'Starts [se12] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 18, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off',
                 req: { 'se10': 'on' },
@@ -23642,7 +23645,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores <><small>It doesn\'t look like a beach to me. It is still a forest, but near the "endless" ocean.</small>',
+                desc: '@allows exploring through ocean shores. <><small>It doesn\'t look like a beach to me. It is still a forest, but near the "endless" ocean.</small>',
                 icon: [26, 7, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 2, 'influence': 1 },
                 req: { 'tool-making': true, 'woodcutting': true },
