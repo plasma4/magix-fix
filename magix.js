@@ -386,7 +386,7 @@ G.selectModeForUnit = function (me, div) {
                             return function () {
                                 //var uses=G.subtractCost(unit.mode.use,me.use);
                                 var str = '<div class="info"><div class="fancyText barred infoTitle">' + (me.icon ? G.getSmallThing(me) : '') + '' + me.name + '</div>' + G.parse(me.desc);
-                                if (!isEmpty(me.use)) str += '<div class="divider"></div><div class="fancyText par">Uses : ' + G.getUseString(me.use, true, true) + ' per ' + unit.unit.displayName + '</div>';
+                                if (!isEmpty(me.use)) str += '<div class="divider"></div><div class="fancyText par">Uses: ' + G.getUseString(me.use, true, true) + ' per ' + unit.unit.displayName + '</div>';
                                 //if (unit.amount>0 && unit.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,unit.amount)+' to switch</div>';
                                 if (unit.amount > 0 && unit.mode.num != me.num) str += '<div class="divider"></div><div class="fancyText par">Switching will reset all of this stack\'s units to idle</div>';
                                 str += '</div>';
@@ -528,8 +528,8 @@ G.update['unit'] = function () {
                     if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders</div>';
                     else {
                         if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
-                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed - Step : ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
-                        else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step : ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
+                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed - Step: ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
+                        else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step: ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
                         else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform</div>';
                         else if (instance.mode == 4) str += '<div class="fancyText barred">Completed<br>Click to ascend</div>';
                         //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
@@ -539,12 +539,12 @@ G.update['unit'] = function () {
                     if (instance.mode != 4) {
                         str += '<div class="fancyText barred">';
                         if (instance.mode == 0 && amount > 0) {
-                            if (!isEmpty(me.cost)) str += '<div>Initial cost : ' + G.getCostString(me.cost, true, false, amount) + '</div>';
-                            if (!isEmpty(me.use)) str += '<div>Uses : ' + G.getUseString(me.use, true, false, amount) + '</div>';
-                            if (!isEmpty(me.require)) str += '<div>Prerequisites : ' + G.getUseString(me.require, true, false, amount) + '</div>';
+                            if (!isEmpty(me.cost)) str += '<div>Initial cost: ' + G.getCostString(me.cost, true, false, amount) + '</div>';
+                            if (!isEmpty(me.use)) str += '<div>Uses: ' + G.getUseString(me.use, true, false, amount) + '</div>';
+                            if (!isEmpty(me.require)) str += '<div>Prerequisites: ' + G.getUseString(me.require, true, false, amount) + '</div>';
                         }
-                        else if ((instance.mode == 1 || instance.mode == 2) && !isEmpty(me.costPerStep)) str += '<div>Cost per step : ' + G.getCostString(me.costPerStep, true, false, amount) + '</div>';
-                        else if (instance.mode == 3 && !isEmpty(me.finalStepCost)) str += '<div>Final step cost : ' + G.getCostString(me.finalStepCost, true, false, amount) + '</div>';
+                        else if ((instance.mode == 1 || instance.mode == 2) && !isEmpty(me.costPerStep)) str += '<div>Cost per step: ' + G.getCostString(me.costPerStep, true, false, amount) + '</div>';
+                        else if (instance.mode == 3 && !isEmpty(me.finalStepCost)) str += '<div>Final step cost: ' + G.getCostString(me.finalStepCost, true, false, amount) + '</div>';
                         str += '</div>';
                     }
 
@@ -579,13 +579,13 @@ G.update['unit'] = function () {
                     str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
                     if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode: <br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
                     str += '<div class="fancyText barred">';
-                    if (!isEmpty(me.cost)) str += '<div>Cost : ' + G.getCostString(me.cost, true, false, amount) + '</div>';
-                    if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses : ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
-                    if (!isEmpty(me.require)) str += '<div>Prerequisites : ' + G.getUseString(me.require, true, false, amount) + '</div>';//should amount count?
-                    if (!isEmpty(me.upkeep)) str += '<div>Upkeep : ' + G.getCostString(me.upkeep, true, false, amount) + '</div>';
-                    if (!isEmpty(me.limitPer)) str += '<div>Limit : ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
+                    if (!isEmpty(me.cost)) str += '<div>Cost: ' + G.getCostString(me.cost, true, false, amount) + '</div>';
+                    if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses: ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
+                    if (!isEmpty(me.require)) str += '<div>Prerequisites: ' + G.getUseString(me.require, true, false, amount) + '</div>';//should amount count?
+                    if (!isEmpty(me.upkeep)) str += '<div>Upkeep: ' + G.getCostString(me.upkeep, true, false, amount) + '</div>';
+                    if (!isEmpty(me.limitPer)) str += '<div>Limit: ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
                     if (isEmpty(me.cost) && isEmpty(me.use) && isEmpty(me.staff) && isEmpty(me.upkeep) && isEmpty(me.require)) str += '<div>Free</div>';
-                    if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses : ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
+                    if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses: ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
                     str += '</div>';
                     if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
                     str += '</div>';
@@ -10804,16 +10804,16 @@ if (getCookie("civ") == "0") {
                 },
                 buttonTooltip: function () {
                     if (G.has('t3')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The costs scales with your <b>Wisdom</b>(for Insight),<b>Inspiration</b>(for Culture) and <b>Authority</b>(for Influence).' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time. This will not involve in stability.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The costs scales with your <b>Wisdom</b>(for Insight),<b>Inspiration</b>(for Culture) and <b>Authority</b>(for Influence).' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time. This will not involve in stability.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     if (!G.has('eotm') && G.has('t2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>The blood cost scales with <b>Wisdom</b> resource as well.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>The blood cost scales with <b>Wisdom</b> resource as well.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     else if (!G.has('eotm')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     else if (G.has('eotm')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom II & Education</b> resources.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom II & Education</b> resources.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                 }
             });
@@ -23529,9 +23529,9 @@ if (getCookie("civ") == "0") {
                 buttonTooltip: function () {
                     var charged = (G.achievByName['the fortress'].won > 0 ? "3/4 charged" : "fully charged");
                     if (G.has('oral tradition 2/2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> and <b>Inspiration</b> resources. <br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> and <b>Inspiration</b> resources. <br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     } else {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource. <br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost : ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource. <br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                 }
             });
