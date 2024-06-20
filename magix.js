@@ -1278,31 +1278,31 @@ if (getCookie("civ") == "0") {
                     if (G.achievByName['mausoleum'].won > 6) G.getDict('archaeology').req = { 'gardening': true, 'will to know more': true };
                     //desc
                     G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change the human legacy. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
-                        (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your [happiness] gain by 12%.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - extra +2 starting [land] each run<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - extra +2 starting [land] each run.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 4 ? '<b>LV5</b> - Allows you to obtain traits that will temporarily affect your researching costs in both a positive and negative way.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched and +1 starting [land] each run<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched and +1 starting [land] each run.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - +1 starting [land] each run and [belief in the beforelife,Belief in the after/beforelife] trait have a doubled chance to be adopted<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - +1 starting [land] each run, and the [belief in the beforelife,Belief in the after/beforelife] traits have a doubled chance to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait only decreases [happiness] gain by 1.5%.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - all traits and knowledges have a slightly higher chance to be adopted, along with +1 extra starting [land] each run. Unlocks <b>Mausoleum eternal</b> achievement' : '');
+                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - all traits and knowledges have a slightly higher chance to be adopted, along with +1 extra starting [land] each run. Unlocks <b>Mausoleum eternal</b> achievement!' : '');
                 }
             }
             G.seasonalContent = function () {
 
-                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, decors bringing Christmas climate to this world. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas you won\'t lose an use, however when christmas ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Christmas. </font>';
-                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving, sewing festive clothing bringing Christmas climate to this world. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas you won\'t lose an use, however when christmas ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas3').desc = 'The sfpirits of the Christmas thank your [potter]s for crafting festive pots, bowls with Christmas symbols bringing Christmas climate to this world. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas you won\'t lose an use, however when christmas ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas4').desc = 'The spirits of the Christmas thank your [carver]s for carving festive statuettes out of various materials and for decoring cut stone with festive shapes/symbols bringing Christmas climate to this world. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas you won\'t lose an use, however when christmas ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('valentine1').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thanks you for finishing the wonder and spreading love all around the globe. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 [water] //<font color="red">Note: While valentines you won\'t lose an use, however when Valentines ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('valentine2').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thanks you for finishing the wonder and spreading love all around the globe. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 pieces of [herb] //<font color="red">Note: While valentines you won\'t lose an use, however when Valentines ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('valentine3').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thanks you for finishing the wonder and spreading love all around the globe. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 70 pieces of [cooked meat] //<font color="red">Note: While valentines you won\'t lose an use, however when Valentines ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('valentine4').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thanks you for finishing the wonder and spreading love all around the globe. For now and for next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] & 1 extra [insight] //<font color="red">Note: While valentines you won\'t lose an use, however when Valentines ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For now and for next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="red">Note: During Halloween you won\'t lose an use, however when halloween ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Halloween. </font>';
-                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For now and for next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="red">Note: During Halloween you won\'t lose an use, however when halloween ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
-                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For now and for next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="red">Note: During Halloween you won\'t lose an use, however when halloween ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
-                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For now and for next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="red">Note: During Halloween you won\'t lose an use, however when halloween ends you will start losing that bonus meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
+                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that give a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('valentine1').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 [water] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
+                G.getDict('valentine2').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 pieces of [herb] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
+                G.getDict('valentine3').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 70 pieces of [cooked meat] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
+                G.getDict('valentine4').desc = 'Amore the Angel of [love] & son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] & 1 extra [insight] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
+                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For now and for the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween. </font>';
+                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For now and for the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
+                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For now and for the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
+                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For now and for the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
                 var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
                 if (day + leap >= 289 && day + leap <= 305) {
                     G.getDict('"dark season"').req = { 'tribalism': true, 'culture of celebration': true, 'sedentism': true, 'intuition': true };
@@ -1323,7 +1323,7 @@ if (getCookie("civ") == "0") {
                     G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 10, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
                     G.getDict("clothier").modes['weave leather colored clothing'] = { name: 'Weave leather costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [leather].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herb].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
-                    G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier] and bring more [happiness] than [basic clothes]. //Variety of vampire, ghost, zombie, skeleton costumes crafted to celebrate this full of [spookiness] time. <br> Happy Halloween!";
+                    G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier] and bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
 
                 } else {
                     G.getDict('spirit summoner').effects.push({ type: 'mult', value: 0 });
@@ -1494,12 +1494,12 @@ if (getCookie("civ") == "0") {
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
                 document.title = 'NeverEnding Legacy';
                 ///new game mesg
-                var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy has begun. May it stand the test of time.';
+                var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy has begun. May it stand the test of time!';
                 G.Message({ type: 'important tall', text: str, icon: [0, 3] });
                 if (G.achievByName['first glory'].won > 1)
                     if (G.achievByName['mausoleum'].won > 0)
                         G.Message({ type: 'good', text: 'Building the Mausoleum in the past has granted you access to magic! :)', icon: [4, 12, 22, 8, 'magixmod'] });
-                    else G.Message({ type: 'bad', text: 'Building the Mausoleum grants access to magic in the future.', icon: [3, 12, 22, 8, 'magixmod'] });
+                    else G.Message({ type: 'important', text: 'Building the Mausoleum grants you access to magic in the future.', icon: [3, 12, 22, 8, 'magixmod'] });
 
                 /////////////////
                 G.achievByName['starting type'].won = G.startingType;
@@ -1761,9 +1761,9 @@ if (getCookie("civ") == "0") {
                     if (G.achievByName['???'].won == 0 && G.has('constelations'))
                         switch (G.getRes('tragedy').amount) {
                             case 8: G.Message({ type: 'story1', text: 'Some rumors tell that something terrible is going to happen...Who knows if thats true...or not. <br>All you say in that case is: We\'ll wait, we\'ll see.', icon: [32, 32, 'magixmod'] }); break;
-                            case 6: G.Message({ type: 'story2', text: 'Wizards believe in the tragedy. Since now happiness will be lower and lower. Soon that won\'t seem like its just a rumor. But is there any confirmation; any proof about incoming tragedy?', icon: [33, 32, 'magixmod'] }); break;
+                            case 6: G.Message({ type: 'story2', text: 'Wizards believe in the tragedy. After now, happiness will goo lower and lower. Soon, that won\'t seem like its just a rumor. But is there any confirmation, any proof about incoming tragedy?', icon: [33, 32, 'magixmod'] }); break;
                             case 4: G.Message({ type: 'story1', text: 'A green moving light on sky is one of the proofs that people have noticed. Unhappiness will now strike quite strongly. It is not a simple rumor anymore. But is there any confirmation, any proof about incoming tragedy?', icon: [34, 32, 'magixmod'] }); break;
-                            case 3: G.Message({ type: 'story2', text: 'The tragedy seems like it will happen no matter what. The end of humanity is nigh...or beginning of something new? That is no longer a rumor. Even at night you can see some <font color="lime">green star</font> on a sky. Looks like it gets bigger and bigger.', icon: [34, 32, 'magixmod'] }); break;
+                            case 3: G.Message({ type: 'story2', text: 'The tragedy seems like it will happen no matter what. The end of humanity is nigh...or is it the beginning of something new? That is no longer a rumor. Even at night, everyone can see a <font color="lime">green star</font>. Looks like it is getting bigger and bigger.', icon: [34, 32, 'magixmod'] }); break;
                             case 2: G.Message({ type: 'story2', text: 'Its...the end...right??? Predicted time when meteor with green glowing stuff will hit Earth is the beginning of next year. <b><big>THE END IS NIGH.</big></b><br>This message and the other one will repeat every 5 days.', icon: [35, 32, 'magixmod'] }); break;
                             case 0:
                                 var survivors = 240 + Math.round(Math.random() * 400);
@@ -1776,14 +1776,15 @@ if (getCookie("civ") == "0") {
                                 G.settingsByName['autosave'].value = 0;
                                 var audio = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/meteor.mp3');
                                 audio.play();
-                                setTimeout(function () { G.middleText('<p id="loading">So...it happened</p>', 'slow'); }, 1000);
-                                setTimeout(function () { G.middleText('<p id="loading">The tragedy. *cough cough* <br>It almost killed the humanity...</p>', 'slow'); }, 5000);
+                                setTimeout(function () { G.middleText('<p id="loading">So...it happened.</p>', 'slow'); }, 1000);
+                                setTimeout(function () { G.middleText('<p id="loading">It really did.</p>', 'slow'); }, 3000);
+                                setTimeout(function () { G.middleText('<p id="loading">The tragedy. *cough cough* <br>It almost killed the humanity...</p>', 'slow'); }, 7000);
                                 setTimeout(function () { G.middleText('<p id="loading">...but there are some survivors. Life won\'t be the same from now.</p>', 'slow'); }, 10000);
                                 setTimeout(function () { G.middleText('<p id="loading"><font color="red" size="7">THEY ARE HERE...</font></p>', 'slow'); }, 15000);
                                 setTimeout(function () { G.middleText('<p id="loading">and thy need your help</p>', 'slow'); }, 20000);
                                 setTimeout(function () { G.middleText('<p id="loading">are you capable enough of giving these aliens a helpful hand?</p>', 'slow'); }, 20000);
                                 setTimeout(function () { G.middleText('<p id="loading">are you capable enough of entering the new universe?</p>', 'slow'); }, 23000);
-                                setTimeout(function () { G.middleText('<p id="loading">are you ready for the new adventure?</p>', 'slow'); }, 26000);
+                                setTimeout(function () { G.middleText('<p id="loading">are you ready for the <i>new</i> adventure?</p>', 'slow'); }, 26000);
                                 setTimeout(function () {
                                     G.dialogue.popup(function (div) {
                                         yy
@@ -3911,7 +3912,7 @@ if (getCookie("civ") == "0") {
             var losePreciousMaterialsTick = function (me, tick) {
                 if (!G.has("t10"))
                     if (G.checkPolicy('se10') == 'on') {
-                        var toSpoil = G.getRes('precious building materials').amount * 0.0009 * 0.97;
+                        var toSpoil = G.getRes('precious building materials').amount * 0.0009 * 0.9;
                         var spent = G.lose('precious building materials', randomFloor(toSpoil), 'decay');
                     } else {
                         var toSpoil = G.getRes('precious building materials').amount * 0.0009;
@@ -5162,11 +5163,10 @@ if (getCookie("civ") == "0") {
                     }
                 },
                 category: 'main',
-
             });
             new G.Res({
                 name: 'combat potion pot',
-                desc: 'Type of potions that are harmful. Can be used to defend people and act as a weapon.',//soldiers are InFartherDev
+                desc: 'A harmful type of potions. Can be used to defend people and act as a weapon.',//soldiers are InFartherDev
                 icon: [17, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5176,7 +5176,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'jar for concoctions',
-                desc: 'Concoctions are used as ingredient for stronger potions or to store potions that cannot be stored in a normal [potion pot].',//soldiers are InFartherDev
+                desc: 'Concoctions are used as an ingredient for stronger potions or to store potions that cannot be stored in a normal [potion pot].',//soldiers are InFartherDev
                 icon: [18, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5219,7 +5219,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'back to grave',
-                desc: 'Send [wild corpse] to permanent death.',
+                desc: 'Send a [wild corpse] to its permanent death.',
                 icon: [8, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5260,7 +5260,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'nature concoction',
-                desc: 'Can be used to grow flowers. But don\'t hold it in your hands for too long, otherwise it may start growing vines on you.',
+                desc: 'Can be used to grow flowers. But don\'t hold it in your hands for too long or it may start growing vines on you!',
                 icon: [13, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5271,20 +5271,20 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'combat potions',
-                desc: 'This is how many you have all <b>combat potions</b> in total currently.',
+                desc: 'This is how many <b>combat potions</b> you have in total currently.',
                 icon: [16, 16, 'magixmod'],
                 meta: true,
             });
             new G.Res({
                 name: 'magic essences',
-                desc: 'This is how many you have all <b>Essences</b> in total currently.',
+                desc: 'This is how many <b>Essences</b> you have in total currently. [magic essences] are important for [wizard]s and greatly respected.',
                 icon: [20, 13, 'magixmod'],
                 meta: true,
             });
             //Currency
             new G.Res({
                 name: 'industry point',
-                desc: 'You can use these points to set up some industries in the Paradise. Depending on your path you may have 800 or 1000.',
+                desc: 'You can use these points to set up some industries in the Paradise. Depending on your path, you may have 800 or 1000.',
                 icon: [0, 14, 'magixmod'],
                 displayUsed: true,
                 category: 'main',
@@ -5292,7 +5292,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'worship point',
-                desc: 'You can use these points to decide which seraphin will be worshipped.',//Seraphins won't be added quickly it may be January /February 2020 when you will be able to see them for the first time
+                desc: 'You can use these points to decide which Seraphin will be worshipped.',//Seraphins won't be added quickly it may be January /February 2020 when you will be able to see them for the first time
                 icon: [1, 14, 'magixmod'],
                 category: 'main',
             });
@@ -5941,22 +5941,25 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'corpsedecaypoint',
-                displayName: 'corpse decay point'
+                displayName: 'corpse decay point',
+                hidden: true,
             });
             new G.Res({
                 name: 'deitytemplePoint',
-                displayName: 'deity temple point'
+                displayName: 'deity temple point',
+                hidden: true,
             });
             new G.Res({
                 name: 'godTemplePoint',
-                displayName: 'god temple point'
+                displayName: 'god temple point',
+                hidden: true,
             });
             new G.Res({
                 name: 'unhappy',
             });
             new G.Res({
                 name: 'blood',
-                desc: 'You gain blood each year from Madness victims (equal to murdered people). You need to glory Bersaria and to research more with [fear of death] active. You start with 200 [blood] in that case. <>But be aware: the blood is used in Hunted trial as well to keep Hartar\'s servants hunting meat for you.',
+                desc: 'You gain [blood] each year from Madness victims (equal to murdered people). You need to glory Bersaria and research more with [fear of death] active. You start with 200 [blood] in that case. <>But be aware: the [blood] is used in Hunted trial as well to keep Hartar\'s servants hunting meat for you.',
                 icon: [33, 6, 'magixmod'],
                 startWith: 200,
                 category: 'main',
@@ -6443,7 +6446,6 @@ if (getCookie("civ") == "0") {
                     }
                 },
                 category: 'main',
-
             });
             new G.Res({
                 name: 'herb essence',
@@ -6494,8 +6496,6 @@ if (getCookie("civ") == "0") {
                     //Far foraging
                     { type: 'explore', explored: 0.008, unexplored: 0, req: { 'far foraging': 'on' }, chance: 1 / 4 },
                     { type: 'function', func: unitGetsConverted({}, 0.001, 0.03, true, '[X] [people] lost in terrain while foraging very far', 'gatherer got', 'gatherers got'), chance: 1 / 34, req: { 'far foraging': 'on' } },
-
-
                 ],
                 req: { 'tribalism': true, 't4': false },
                 category: 'production',
@@ -6750,7 +6750,6 @@ if (getCookie("civ") == "0") {
                     //CROSSBOW
                     { type: 'gather', context: 'hunt', amount: 1.8, max: 2.2, mode: 'crossbow hunting', req: { 'aiming': false } },
                     { type: 'gather', context: 'hunt', amount: 4.5, max: 5.5, mode: 'crossbow hunting', req: { 'aiming': true } },
-
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30, req: { 'hunting III': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 38, req: { 'hunting III': true, 'an armor for Hunter': true, 'hunters & fishers unification': false } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
@@ -7194,7 +7193,6 @@ if (getCookie("civ") == "0") {
                 icon: [23, 3],
                 cost: {},
                 use: { 'worker': 1 },
-
                 //staff:{'knapped tools':1},
                 upkeep: { 'food': 0.2 },
                 modes: {
@@ -7285,7 +7283,6 @@ if (getCookie("civ") == "0") {
                     { type: 'provide', what: { 'burial spot': 2 }, req: { 'spiritual piety': false, 'voodoo spirit': true } },
                     { type: 'provide', what: { 'burial spot': 6 }, req: { 'spiritual piety': true, 'voodoo spirit': true } },
                     //{type:'waste',chance:1/500,desired:true},
-
                 ],
                 req: { 'burial': true },
                 category: 'civil',
@@ -7334,7 +7331,6 @@ if (getCookie("civ") == "0") {
                     { type: 'waste', chance: 3 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.6 / 1000, req: { 'construction III': true, 'improved construction': false } },
                     { type: 'waste', chance: 0.42 / 1000, req: { 'improved construction': true } },
-
                 ],
                 req: { 'building': true },
                 category: 'housing',
@@ -7835,7 +7831,6 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'leather': 40 }, into: { 'dried leather': 40 }, every: 7, req: { 'bigger factory racks': true } },
                     { type: 'convert', from: { 'hide': 250, 'water': 1000, 'salt': 150, 'log': 15 }, into: { 'leather': 235 }, every: 15 },
                     { type: 'convert', from: { 'hide': 250, 'muddy water': 1000, 'herb': 145 }, into: { 'leather': 235 }, every: 20 },
-
                 ],
             });
             new G.Unit({
@@ -7979,7 +7974,6 @@ if (getCookie("civ") == "0") {
                     { type: 'mult', value: 1.2, req: { 'gt2': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertlizer': true, 'wizard\'s grain fertlizer': false } },
                     { type: 'mult', value: 2.1, req: { 'wizard\'s grain fertlizer': true, 'grain fertlizer': true } },
-
                     { type: 'mult', value: 2, req: { 'backshift at farms': true } },
                 ],
             });
@@ -8570,7 +8564,6 @@ if (getCookie("civ") == "0") {
                     { type: 'mult', value: 4, req: { 'master mana-making': true } },
                     { type: 'mult', value: 1.035, req: { 'at9': true } },
                     { type: 'mult', value: 0.95, req: { 'dt28': true } },
-
                 ],
                 category: 'discovery',
                 limitPer: { 'population': 4000 },
@@ -9001,7 +8994,6 @@ if (getCookie("civ") == "0") {
                     { type: 'waste', chance: 0.001 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.0002 / 1000, req: { 'construction III': true, 'improved construction': false } },
                     { type: 'waste', chance: 0.00014 / 1000, req: { 'improved construction': true } },
-
                 ],
                 req: { 'construction II': true },
                 category: 'plainisleunit',
@@ -9212,7 +9204,6 @@ if (getCookie("civ") == "0") {
                 use: { 'worker': 1 },
                 category: 'production',
                 effects: [
-
                     { type: 'gather', context: 'flowers', amount: 0.1, max: 0.4 },
                     { type: 'mult', value: 1.03, req: { 'hallow2': true } },
                     { type: 'mult', value: 1.05, req: { 'harvest rituals for flowers': 'on' } },
@@ -9629,7 +9620,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'temple of deities',
-                desc: 'A mystical monument dedicated to angels, archangels, seraphins and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is towers above the world\'s clouds, and despite the fact there is cold on top, some brave people may come up to prey its god, or listen to heavenly symphonies and hums.',
+                desc: 'A mystical monument dedicated to angels, archangels, Seraphins, and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is towers above the world\'s clouds, and despite the fact there is cold on top, some brave people may come up to prey its god, or listen to heavenly symphonies and hums.',
                 wonder: 'heavenly',
                 icon: [1, 11, 'magixmod'],
                 wideIcon: [0, 11, 'magixmod'],
@@ -9649,7 +9640,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'the cemetarium',
                 displayName: 'The Cemetarium',
-                desc: '@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. For each step that you perform for the building, you will get a large amount of [burial spot]s. <i>Let these corpses go into their rightenous home please</i>',
+                desc: '@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm around it is a burial for them. Home of [wild corpse]. Even if most souls are dark some light souls also live here. For each step that you perform for the building, you will get a large amount of [burial spot]s. <i>Let these corpses go into their rightenous home please.</i>',
                 wonder: 'deadly, revenantic',
                 icon: [1, 16, 'magixmod'],
                 wideIcon: [0, 16, 'magixmod'],
@@ -9839,7 +9830,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 225 },
                 costPerStep: { 'precious building materials': 20, 'gems': 20, 'basic building materials': 200 },
                 steps: 90,
-                messageOnStart: 'You started to build wonder for <b>Chra-nos</b>. <br>This pagoda will have a huge clock which is the symbol of the seraphin. Stars on night sky as you noticed mostly often make a shape of clock. <br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
+                messageOnStart: 'You started to build wonder for <b>Chra-nos</b>. <br>This pagoda will have a huge clock which is the symbol of the Seraphin. Stars on night sky as you noticed mostly often make a shape of clock. <br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
                 finalStepCost: { 'population': 200, 'gem block': 10 },
                 finalStepDesc: 'To perform the final step, 200[population,People] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with <b>Victory points</b>.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9965,7 +9956,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 250, 'herb': 500, 'fruit': 500, 'vegetable': 500 },
                 costPerStep: { 'precious metal ingot': 20, 'precious building materials': 50, 'herb essence': 10 },
                 steps: 100,
-                messageOnStart: 'You and your people started to build <b>The Herboleum</b>. <br>Around the dense forest of herbs, bushes, and occasionaly small ponds, the mostly natural wonder arises being slightly taller than the other human-made buildings around.',
+                messageOnStart: 'You and your people started to build <b>The Herboleum</b>. <br>Around the dense forest of herbs, bushes, and occasionally small ponds, the mostly natural wonder arises being slightly taller than the other human-made buildings around.',
                 finalStepCost: { 'population': 1000, 'gem block': 5, 'herb': 10000, 'fruit': 200, 'vegetable': 200 },
                 finalStepDesc: 'To perform the final step, 1000 [population,people] and some goods must be sacrificed to finish this "healthy" trial and award <b>Victory points</b>.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -10836,7 +10827,6 @@ if (getCookie("civ") == "0") {
                     { type: 'show res', what: ['influence'] },
                     { type: 'show context', what: ['gather'] },
                 ],
-
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
@@ -10856,7 +10846,6 @@ if (getCookie("civ") == "0") {
                 req: { 'speech': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration': 30, 'wisdom': 30 } },
-
                 ],
                 chance: 3,
                 tutorialMesg: ['important', 'Now, while talking to your people, they understand you better. Even better, they understand themselves and each other somewhat.', [1, 28, 'magixmod']]
@@ -11608,7 +11597,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,People] will know more about math making them even more intelligent. @Your [population,people] have a bigger chance to understand more advanced things. @improves your civilization\'s numeral system @introduces equations<>',
+                desc: '@[population,People] will know more about math, making them even more intelligent. @Your [population,people] have a bigger chance to understand more advanced things. @improves your civilization\'s numeral system @introduces equations<>',
                 icon: [0, 35, 'magixmod', 17, 1, 'magixmod', 23, 1],
                 cost: { 'insight': 80 },
                 effects: [
@@ -12046,14 +12035,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'better filtering', category: 'upgrade',
-                desc: 'Water filtrating units that can convert [muddy water] into potable [water] ([water filter] and [;water filter,its moderated version]) work at 175% of their normal efficiency.',
+                desc: 'Water filtrating units such as [water filter] and [;water filter,its moderated version] that can convert [muddy water] into potable [water] work at 175% of their normal efficiency.',
                 icon: [25, 15, 'magixmod'],
                 cost: { 'insight': 520, 'wisdom': 15 },
                 req: { 'water filtering': true, 'burial in new world': true },
             });
             new G.Tech({
                 name: 'non-magical filters improvement', category: 'upgrade',
-                desc: 'Water filtrating units that can convert [muddy water] into potable [water] ([water filter] and [;water filter,its moderated version]) work at 175% of their current efficiency. //<small>Upgrades people,upgrades.</small>',
+                desc: 'Water filtrating units that can convert [muddy water] into potable [water], such as [water filter] and [;water filter,its moderated version] will work at 175% of their current efficiency. //<small>Upgrades, people, upgrades.</small>',
                 icon: [25, 14, 'magixmod'],
                 cost: { 'insight': 405, 'wisdom': 15 },
                 req: { 'better filtering': true, 'mo\' floorz': true },
@@ -12566,7 +12555,6 @@ if (getCookie("civ") == "0") {
                     { type: 'provide res', what: { 'dark decay': 50 } },
                     { type: 'function', func: function () { G.getDict('fruit').turnToByContext['eating']['health'] *= 1.1; } },
                     { type: 'function', func: function () { G.getDict('vegetable').turnToByContext['eating']['health'] *= 1.1; } },
-
                 ],
                 lifetime: function () { return Math.pow(this.yearOfObtainment, 3) % 1000 },
                 switchCategory: false,
@@ -13692,7 +13680,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 1/5', category: 'tier2',
-                desc: 'Provides: @10 [wisdom II] and 2 [inspiration II]. //This part of doctrine is about conception of making a small plane where the [corpse]s will lie in the way that will allow to fit over millions of [corpse]s. //Your [wizard]s seem really impressed reading and forwarding the doctrine.',
+                desc: 'Provides @10 [wisdom II] and 2 [inspiration II]. //This part of doctrine is about conception of making a small plane where the [corpse]s will lie in the way that will allow to fit over millions of [corpse]s. //Your [wizard]s seem really impressed reading and forwarding the doctrine.',
                 icon: [21, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 100, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 10 },
                 req: { 'burial wormhole 1/2': true },
@@ -13704,7 +13692,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 2/5',
-                desc: '<font color="#aaffff">Provides: @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is about spells or rituals that will sucessfully make a wormhole working and stable. //Your [wizard]s seem interested in making the first wormhole. But they wants finished doctrine. They don\'t want to do it by themselves so they will calmly wait for finished doctrine.</font>',
+                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is about spells or rituals that will sucessfully make a wormhole working and stable. //Your [wizard]s seem interested in making the first wormhole. But they wants finished doctrine. They don\'t want to do it by themselves so they will calmly wait for finished doctrine.</font>',
                 icon: [20, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 105, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 15, 'wisdom': 100 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 1/5': true },
@@ -13717,7 +13705,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 3/5', category: 'tier2',
-                desc: 'Provides: @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is filled with valuable info about stability of various objects. Wormholes and portals must be stable. If anybody would enter an unstable world nobody knows what would happen to them. //Your [wizard]s feel goosebumps.',
+                desc: 'Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is filled with valuable info about stability of various objects. Wormholes and portals must be stable. If anybody would enter an unstable world nobody knows what would happen to them. //Your [wizard]s feel goosebumps.',
                 icon: [19, 22, 'magixmod', 15, 22, 'magixmod'],
                 cost: { 'insight II': 105, 'science': 7, 'faith II': 4, 'influence II': 5, 'culture II': 10, 'wisdom': 50 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 2/5': true },
@@ -13728,7 +13716,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 4/5', category: 'tier2',
-                desc: '<font color="#aaffff">Provides: @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine describes ways of keeping the wormhole active. It is important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> ',
+                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine describes ways of keeping the wormhole active. It is important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> ',
                 icon: [18, 22, 'magixmod', 15, 22, 'magixmod'],
                 cost: { 'insight II': 130, 'science': 7, 'faith II': 4, 'influence II': 5, 'culture II': 27 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 3/5': true },
@@ -13857,7 +13845,6 @@ if (getCookie("civ") == "0") {
                     req: { 'treeplanting': true },
                     effects: [
                     ],
-
                 });
             }
             new G.Tech({
@@ -14137,7 +14124,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'pantheon key', category: 'religion',
-                desc: 'Unlocks Pantheon. In pantheon you will meet 12 seraphins. Each one offers to you some boost but each boost has its backfire. <font color="red">Choose the seraphins wisely!</font> //You will get 4 [worship point]s that can be spent to choose up to 4 seraphins. Rejecting already chosen one will not make spent [worship point] come back to you so really be careful and think twice or even thrice before you perform a choice! //You will unlock a new tab. From this new tab you may start a trial. To learn more about trials just check the new tab. //Provides: 25 [spirituality II] and 15 [authority II].',
+                desc: 'Unlocks the Pantheon. In it, you will meet 12 Seraphins. Each one offers some boost, but each boost has its backfire. <font color="red">Choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent to choose up to 4 Seraphins. Rejecting an already chosen one will not make a spent [worship point] come back to you, so really be careful and think twice before you perform a choice! //You will unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
                 icon: [4, 25, 'magixmod', 24, 1],
                 req: { 'life in faith': true, 'monument-building III': true },
                 cost: { 'insight II': 100, 'faith II': 10, 'culture II': 30, 'godTemplePoint': 500, 'faith': 80 },
@@ -14284,7 +14271,6 @@ if (getCookie("civ") == "0") {
                 cost: { 'insight II': 150, 'culture II': 30 },
                 effects: [
                     { type: 'provide res', what: { 'science': 6 } },
-
                     { type: 'function', func: function () { if (G.modsByName['Thot Mod']) { G.getDict('thot').effects.push({ type: 'mult', value: 1.5 }) } } },
                 ],
                 chance: 100
@@ -14936,7 +14922,7 @@ if (getCookie("civ") == "0") {
                 req: { 'tribalism': false },
                 cost: {},
                 effects: [
-                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is main rule of Cultural trial. Defines the rate of cultural stability in this plane. Reaching <b>50-(amount of times you completed Cultural/2)</b> or <b>' + (G.achievByName['cultural'].won / 2) + '</b> causes the trial to be failed. So be careful!'; G.getDict('cultural balance').hidden = false; } },
+                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is the main rule of Cultural trial. You can gain or lose [cultural balance] from various techs (for example, mathematics decreases it, but symbolism increases it). It defines the rate of cultural stability in this plane. Reaching <b>50-(amount of times you completed Cultural/2)</b> or <b>' + (G.achievByName['cultural'].won / 2) + '</b> causes the trial to be failed. So be careful!'; G.getDict('cultural balance').hidden = false; } },
                     { type: 'provide res', what: { 'inspiration': 10 } },
                     { type: 'provide res', what: { 'authority': 5 } },
                 ],
@@ -14956,21 +14942,21 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beyond the edge', category: 'tier1', //despite of costs it doesn\'t do much
-                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you but there is a huge risk.',
+                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
                 req: { 'policy revaluation': true, 'focused scouting': true },
                 cost: { 'insight II': 45, 'influence': 255 },
                 icon: [33, 26, 'magixmod']
             });
             new G.Tech({
                 name: 'sleep-speech', category: 'tier1',
-                desc: '@Unlocks a special ability related to dreaming potential: <b>Sleepy insight</b>. @Sleepy insight can be controlled by policy that will decide about: chance for bonus and power of it.<>Sleepy insight: a chance to obtain some [insight] at start of the new year.(amount and chance can be controlled by its policy)',
+                desc: '@Unlocks a special ability related to dreaming potential: <b>Sleepy insight</b>. @Sleepy insight can be controlled by its policy that will decide the chance for bonus and power of it.<>Sleepy insight gives you a chance to obtain some [insight] at start of the new year. (The amount and chance can be controlled by its policy!)',
                 req: { 'ritualism': true, 'genius feeling': true },
                 cost: { 'insight': 17, 'influence': 3 },
                 icon: [33, 25, 'magixmod']
             });
             new G.Tech({
                 name: 'coordination', category: 'tier1',
-                desc: '[guard] has better coordination so he has twice as bigger chance to succesfully win <b>guard vs thief</b> confrontation. Also it may lead to unlock more types of guard.',
+                desc: '[guard] has better coordination so he has twice as bigger chance to succesfully win a battle of <b>guard vs thief</b>. Also, it may lead you to unlock more types of guards.',
                 icon: [33, 27, 'magixmod'],
                 req: { 'battling thieves': true, 'wizard wisdom': true }, //just to keep it for later
                 cost: { 'insight': 260 },
@@ -15028,7 +15014,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you but there is a larger risk. The further you push beyond the edge, the stronger scourge will fall on you and your civilization.',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, the stronger scourge will fall on you and your civilization.',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 35, 'magixmod', 0, 30, 'magixmod'],
@@ -15205,7 +15191,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'People know how to measure time. Now you\'ll be able to see which year is currently. Also allows to see at which year <b>temporary traits</b> will expire. //To expand it and see days obtain 2nd part of this research.',
+                desc: 'People know how to measure time. Now you\'ll be able to see which year is currently. Also allows to see at which year <b>temporary traits</b> will expire. //To expand it and see days obtain the next part of this research.',
                 icon: [27, 3, 'magixmod', 34, 30, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'maths II': true, 'primary time measure': true },
@@ -15213,7 +15199,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'time measuring 2/2',
-                desc: '<font color="#aaffff">Now you will see which year and day currently is.</font>',
+                desc: '<font color="#aaffff">Now you will see what year and day it currently is.</font>',
                 icon: [27, 2, 'magixmod', 36, 26, 'magixmod'],
                 cost: { 'insight': 400 },
                 effects: [
@@ -16327,7 +16313,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'plant lore II', category: 'knowledge',
-                desc: '<font color="#aaffff">@unlocks [florist]. [florist] is a gatherer specified to collect various flowers instead of food, water ,rocks etc. //Also unlocks <b>Heal sick people</b> mode for [healer]s which allow to heal [sick] people more efficiently.</font>',
+                desc: '<font color="#aaffff">@unlocks [florist]. [florist] is a gatherer specified to collect various flowers instead of food, water ,rocks etc. //Also unlocks the <b>Heal sick people</b> mode for [healer]s which allow you to heal [sick] people faster.</font>',
                 icon: [8, 7, 'magixmod'],
                 cost: { 'insight': 25 },
                 req: { 'herbalism': true, 'a gift from the mausoleum': true, 'plant lore': true },
@@ -16337,7 +16323,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'acceptance of death',
-                desc: '@unhappiness from death is halved@may evolve into more complex spiritual thinking //<small>That had to happen. Death is merciless.</small>',
+                desc: '@unhappiness from death is halved@may evolve into more complex spiritual thinking //<small>That had to happen. Death is merciless...</small>',
                 icon: [21, 1],
                 cost: { 'culture': 8, 'insight': 1 },
                 chance: 10,
@@ -16356,7 +16342,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'belief in the beforelife',
-                desc: '@prevents [ritual necrophagy,Corpse cruelty] traits from being occasionaly adopted @if this trait is adopted after [ritual necrophagy,Necrophagy] or [art of death] then it will be instantly removed as they believe respecting their ancestors is a key to well being.',
+                desc: '@prevents [ritual necrophagy,Corpse cruelty] traits from being occasionally adopted. @if this trait is adopted after [ritual necrophagy,Necrophagy] or [art of death], then it will be instantly removed because they believe respecting their ancestors is a key to well being.',
                 icon: [8, 8, 'magixmod'],
                 cost: { 'culture': 5, 'faith': 2 },
                 chance: 10,
@@ -16519,7 +16505,6 @@ if (getCookie("civ") == "0") {
                 cost: { 'insight': 650, 'influence': 60, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 175,
                 req: { 'culture of the beforelife': true },
-
             });
             new G.Tech({
                 name: 'ancestors world building', category: 'tier1',
@@ -16685,7 +16670,6 @@ if (getCookie("civ") == "0") {
                 chance: 275,
                 req: { 'the ancestors call': true, '7th essence': true },
                 category: 'ancestors',
-
             });
             new G.Trait({
                 name: 'at4',
@@ -17079,7 +17063,6 @@ if (getCookie("civ") == "0") {
                 effects: [{ type: 'function', func: function () { ContextBuff('fish', 1.005) } }],
                 req: { 'doctrine of the dark wormhole 5/5': true, 'dt30': false, 'belief in the beforelife': true },
                 chance: 50,
-
                 category: 'ancestors'
             });
             new G.Trait({
@@ -17540,7 +17523,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores', category: 'upgrade',
+                name: 'sandy shores',
                 desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. You can research other technologies to improve this effect. // <small>A window to dig...</small>',
                 icon: [4, 9, 21, 15, 'magixmod'],
                 cost: { 'insight': 50 },
@@ -17549,7 +17532,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores II', category: 'upgrade',
+                name: 'sandy shores II',
                 desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
                 icon: [4, 9, 0, 35, 'magixmod', 21, 15, 'magixmod'],
                 cost: { 'insight': 180 },
@@ -17796,7 +17779,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'drink spoiled juice',
-                desc: 'Your people will drink [spoiled juices] no matter when clean [water] gets scarce or not, with dire consequences for health and morale.',
+                desc: 'Your people will drink [spoiled juices] even when you have clean [water], with dire consequences for health and morale.',
                 icon: [6, 12, 14, 5, 'magixmod'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
@@ -17805,7 +17788,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'drink cloudy water',
-                desc: 'Your people will drink [cloudy water] which is equal to [water].',
+                desc: 'Your people will drink [cloudy water], which has the same positive effects as [water].',
                 icon: [6, 12, 11, 14, 'magixmod'],
                 cost: { 'influence': 1 },
                 startMode: 'on',
@@ -17814,7 +17797,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'theme changer',
-                desc: 'You can choose colour of GUI. Does not apply to popups (intentional change). The theme updates every ten ticks. //<small>Life has its theme too...</small>',
+                desc: 'You can choose the colour of your game. Does not apply to popups, however. The theme updates every ten ticks. //<small>Life has its theme too...</small>',
                 icon: [28, 21, 'magixmod'],
                 cost: {},
                 req: { 'life has its theme': true },
@@ -17839,7 +17822,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se02',
                 displayName: 'Bersaria the Seraphin of Madness',
-                desc: '<font color="lime">Increases thieve hunters  and other guard efficiency by 40%</font><br><hr color="fuschia"><font color="red">Backfire: Harms happiness and 1% more thieves will spawn. </font>',
+                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="red">Backfire: Harms happiness and 1% more thieves will spawn. </font>',
                 icon: [28, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -17893,7 +17876,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se06',
                 displayName: 'Posi\'zul the Seraphin of Water',
-                desc: '<font color="lime">Increases the gathering of water and decreases the rate of water spoiling</font><br><hr color="fuschia"><font color="red">Backfire: Increases your food spoiling rate</font>',
+                desc: '<font color="lime">Increases the gathering of water and decreases the rate of water spoiling.</font><br><hr color="fuschia"><font color="red">Backfire: Increases your food spoiling rate.</font>',
                 icon: [24, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -17913,7 +17896,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se08',
                 displayName: 'Buri\'o dak the Seraphin of Burial',
-                desc: '<font color="lime">Now 1 [burial spot] can store 1.1 [corpse]s or 5 [urn]s.</font><br><hr color="fuschia"><font color="red">Backfire: Harms [health] and decreases [healer] efficiency by 5%.</font>',
+                desc: '<font color="lime">Now 1 [burial spot] can store 1.1 [corpse]s or 5 [urn]s.</font><br><hr color="fuschia"><font color="red">Backfire: Harms your [health] and decreases [healer] efficiency by 5%.</font>',
                 icon: [22, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -17933,7 +17916,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se10',
                 displayName: 'Mamuun the Seraphin of Richness',
-                desc: '<font color="lime">Gold and [precious building materials] decay 3% slower</font><br><hr color="fuschia"><font color="red">Backfire:[archaic building materials] decay 40% faster, [basic building materials] decay 12% faster, [advanced building materials] decay 3% faster. [food] spoils faster.</font>',
+                desc: '<font color="lime">Gold and [precious building materials] decay 10% slower.</font><br><hr color="fuschia"><font color="red">Backfire: [archaic building materials] decay 40% faster, [basic building materials] decay 12% faster, and [advanced building materials] decay 3% faster. [food] spoils faster.</font>',
                 icon: [20, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18181,60 +18164,60 @@ if (getCookie("civ") == "0") {
                 req: { 't4': true, 'trial': true },
                 category: 'population',
             });
-            new G.Policy({
-                name: 'Unfishy (WIP)',
-                desc: 'starts [se05] trial. You will be warned before starting.',
-                icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
-                req: { 'se10': 'on' },
-                category: 'trial',
-                effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.doFunc('new game');G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
-                ],
-            });
-            new G.Policy({
-                name: 'Ocean (WIP)',
-                desc: 'starts [se06] trial. You will be warned before starting.',
-                icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
-                req: { 'se10': 'on' },
-                category: 'trial',
-                effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){    G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.doFunc('new game');G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
-                ],
-            });
+            //     new G.Policy({
+            //         name: 'Unfishy (WIP)',
+            //         desc: 'starts [se05] trial. You will be warned before starting.',
+            //         icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
+            //         cost: { 'insight II': 1, 'influence II': 1 },
+            //         startMode: 'off',
+            //         req: { 'se10': 'on' },
+            //         category: 'trial',
+            //         effects: [
+            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
+            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
+            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+            // '<br><br><Br><br>'+
+            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+            //                 '<br>Trial rules<br>'+
+            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+            // '<div class="fancyText title">Tell me your choice...</div>'+
+            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.doFunc('new game');G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+            //                 '</div>'+
+            //             '</div><div class="buttonBox">'+
+            //             '</div></div>'
+            // })}}*/
+            //         ],
+            //     });
+            //     new G.Policy({
+            //         name: 'Ocean (WIP)',
+            //         desc: 'starts [se06] trial. You will be warned before starting.',
+            //         icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
+            //         cost: { 'insight II': 1, 'influence II': 1 },
+            //         startMode: 'off',
+            //         req: { 'se10': 'on' },
+            //         category: 'trial',
+            //         effects: [
+            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
+            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
+            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+            // '<br><br><Br><br>'+
+            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+            //                 '<br>Trial rules<br>'+
+            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+            // '<div class="fancyText title">Tell me your choice...</div>'+
+            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){    G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.doFunc('new game');G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+            //                 '</div>'+
+            //             '</div><div class="buttonBox">'+
+            //             '</div></div>'
+            // })}}*/
+            //         ],
+            //     });
             new G.Policy({
                 name: 'Herbalism',
                 desc: 'starts [se07] trial. You will be warned before starting.',
@@ -18305,33 +18288,33 @@ if (getCookie("civ") == "0") {
                     }
                 ],
             });
-            new G.Policy({
-                name: 'Underground (WIP)',
-                desc: 'starts [se09] trial. You will be warned before starting.',
-                icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
-                req: { 'se10': 'on' },
-                category: 'trial',
-                effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.doFunc('new game');G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
-                ],
-            });
+            //     new G.Policy({
+            //         name: 'Underground (WIP)',
+            //         desc: 'starts [se09] trial. You will be warned before starting.',
+            //         icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
+            //         cost: { 'insight II': 1, 'influence II': 1 },
+            //         startMode: 'off',
+            //         req: { 'se10': 'on' },
+            //         category: 'trial',
+            //         effects: [
+            //             /*{type:'function',func:function(){G.dialogue.popup(function(div){
+            //             return '<div style="width:580px;min-height:550px;height:75%;">'+
+            //                 '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
+            //                 '<div class="fancyText">The Mamuun\'s trial</font></div><br>'+
+            //                 '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
+            //                 '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
+            // '<br><br><Br><br>'+
+            //                 '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
+            //                 '<br>Trial rules<br>'+
+            //                 'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
+            // '<div class="fancyText title">Tell me your choice...</div>'+
+            //                 '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.doFunc('new game');G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
+            //                 '</div>'+
+            //             '</div><div class="buttonBox">'+
+            //             '</div></div>'
+            // })}}*/
+            //         ],
+            //     });
             new G.Policy({
                 name: 'Pocket',
                 desc: 'starts [se10] trial. You will be warned before starting.',
@@ -18455,7 +18438,6 @@ if (getCookie("civ") == "0") {
                     startMode: 'off',
                     req: { 'Expanded essence trading catalog': true },
                     category: 'trading_policies',
-
                 });
             }
             if (G.modsByName['Laws Of Food']) {
@@ -19579,7 +19561,6 @@ if (getCookie("civ") == "0") {
                     'quarry': { 'cut stone': 0.81, 'limestone': 0.55, 'marble': 0.011, 'various cut stones': 0.09 },
                     'deep mine': { 'pyrite': 1, 'zinc ore': 0.04, 'dinium ore': 0.01, 'gems': 0.002 },
                     'deep quarry': { 'lead ore': 0.045, 'mythril ore': 0.032, 'unknownium ore': 0.06 },
-
                 },
                 affectedBy: ['mineral depletion'],
                 noAmount: true,
@@ -19626,7 +19607,6 @@ if (getCookie("civ") == "0") {
                     'dig': { 'mud': 0.5, 'clay': 0.05, 'stone': 0.2, 'copper ore': 0.002, 'tin ore': 0.002, 'limestone': 0.025, 'salt': 0.02/*osmium 0.001*/ },
                     'mine': { 'stone': 0.8, 'copper ore': 0.03, 'tin ore': 0.03, 'iron ore': 0.01, 'coal': 0.04, 'salt': 0.1, 'gems': 0.001, 'various stones': 0.2 },
                     'quarry': { 'cut stone': 0.6, 'limestone': 0.1, 'marble': 0.01, 'various cut stones': 0.2 },
-
                 },
                 affectedBy: ['mineral depletion'],
                 noAmount: true,
@@ -22472,7 +22452,6 @@ if (getCookie("civ") == "0") {
                     'arrows': { name: 'Craft arrows', icon: [19, 7, 'c2'], desc: 'Turn [lumber] and [stone]s into [bow]s.', req: { 'bows': true }, use: { 'stone tools': 1 } },
                     'baskets': { name: 'Weave baskets', icon: [14, 7, 'c2'], desc: 'Turn [stick]s into [basket]s.', req: { 'basket-weaving': true }, use: { 'knapped tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'a power of the fortress': true }, icon: [1, 10, 'c2'] },
-
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'knapped tools': 1 }, every: 5, mode: 'knap' },
@@ -22518,7 +22497,6 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'stone': 0.05 }, into: { 'statuette': 0.05 }, every: 5, mode: 'stone statuettes', req: { 'cart1': true } },
                     { type: 'convert', from: { 'log': 0.05 }, into: { 'wooden statuette': 0.05 }, every: 5, mode: 'wood statuettes', req: { 'cart2': true } },
                     { type: 'mult', value: 1.1, req: { 'ground tools': true } },
-
                 ],
                 req: { 'carving': true },
                 category: 'crafting',
@@ -22599,7 +22577,6 @@ if (getCookie("civ") == "0") {
                     { type: 'gather', context: 'hunt', what: { 'hide': 1 }, req: { 'htt1': true } },
                     { type: 'gather', context: 'hunt', what: { 'meat': 1 }, req: { 'htt2': true } },
                     { type: 'mult', value: 1.1, req: { 'harvest rituals': 'on' } },
-
                 ],
                 req: { 'hunting': true },
                 category: 'production',
@@ -22919,7 +22896,6 @@ if (getCookie("civ") == "0") {
                 icon: [23, 3, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
-
                 //staff:{'knapped tools':1},
                 upkeep: { 'food': 0.2 },
                 modes: {
@@ -22945,7 +22921,6 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 14, every: 12, mode: 'normal' },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded' },
                     { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick' },
-
                     //{type:'mult',value:1.03,req:{'more experienced healers':true,'moderation':true}},
                     //    {type:'mult',value:1.06,req:{'more experienced healers':true,'caretaking':true}},
                     //{type:'mult',value:1.25,req:{'se07':'on'}},
@@ -23318,7 +23293,6 @@ if (getCookie("civ") == "0") {
                 use: { 'worker': 1 },
                 category: 'production',
                 effects: [
-
                     { type: 'gather', context: 'flowers', amount: 0.1, max: 0.4 },
                 ],
             });
@@ -24190,7 +24164,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'acceptance of death',
-                desc: '@unhappiness from death is halved@may evolve into more complex spiritual thinking //<small>That had to happen. Nature is merciless.</small>',
+                desc: '@unhappiness from death is halved@may evolve into more complex spiritual thinking //<small>That had to happen. Nature is merciless...</small>',
                 icon: [21, 1, 'c2'],
                 cost: { 'gentility': 12, 'discernment': 1 },
                 chance: 10,
@@ -24208,14 +24182,13 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'belief in the beforelife',
-                desc: '@prevents [ritual necrophagy,Corpse cruelty] traits from being occasionaly adopted. @if this trait is adopted after [ritual necrophagy,Necrophagy] or [art of death] then it will be instantly removed as they believe respecting their ancestors is a key to well being.',
+                desc: '@prevents [ritual necrophagy,Corpse cruelty] traits from being occasionally adopted. @if this trait is adopted after [ritual necrophagy,Necrophagy] or [art of death], then it will be instantly removed because they believe respecting their ancestors is a key to well being.',
                 icon: [8, 8, 'magixmod'],
                 cost: { 'gentility': 10, 'faith': 2, 'influence': 1, 'discernment': 1 },
                 chance: 10,
                 req: { 'fear of death': true, 'oral tradition 2/2': true, 'spark\'o religion': true, 'belief in the afterlife': false, 'ritual necrophagy': false },
                 category: 'religion',
                 effects: [
-
                     {
                         type: 'function', func: function () {
 
@@ -24419,7 +24392,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'Elves know how to measure time. Now you\'ll be able to see which year is currently. Also allows to see at which year <b>temporary traits</b> will expire. //To expand it and see days obtain 2nd part of this research.',
+                desc: 'Elves know how to measure time. Now you\'ll be able to see which year is currently. Also allows to see at which year <b>temporary traits</b> will expire. //To expand it and see days obtain the next part of this research.',
                 icon: [27, 3, 'magixmod', 25, 12, 'c2'],
                 cost: { 'discernment': 60, 'creativity': 12 },
                 effects: [
@@ -24429,7 +24402,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'time measuring 2/2',
-                desc: '<font color="#e6ffee">Now you will see which year and day currently is.</font>',
+                desc: '<font color="#e6ffee">Now you will see what year and day it currently is.</font>',
                 icon: [27, 2, 'magixmod', 25, 12, 'c2'],
                 cost: { 'creativity': 50 },
                 effects: [
@@ -24440,14 +24413,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths', category: 'tier1',
-                desc: '@[population,Elves] will know basic math making them more intelligent and have chance to be good at more advanced technologies. @allows for noting small, basic numbers. //<small>Is x really divisible by y?</small>',
+                desc: '@[population,Elves] will know basic math, making them more intelligent and giving them a chance to be good at more advanced technologies. @allows for noting small, basic numbers. //<small>Is x really divisible by y?</small>',
                 icon: [26, 12, 'c2'],
                 cost: { 'creativity': 6, 'discernment': 12 },
                 req: { 'oral tradition 2/2': true, 'writing': true },
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,Elves] will know more harder and advanced math making them even more intelligent. @Your [population,elves] have bigger chances to understand more advanced things. @improves your civilization\'s numeral system<>',
+                desc: '@[population,Elves] will know more harder and advanced math, making them even more intelligent. @Your [population,elves] have bigger chances to understand more advanced things. @improves your civilization\'s numeral system<>',
                 icon: [3, 13, 'c2', 26, 13, 'c2'],
                 cost: { 'creativity': 42, 'discernment': 12 },
                 req: { 'oral tradition 2/2': true, 'maths': true, 'city planning': true },
@@ -24585,7 +24558,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'plant lore II', category: 'knowledge',
-                desc: '<font color="#e6ffee">@unlocks [florist]. [florist] is a gatherer specified to collect various flowers instead of food, water ,rocks etc.</font>//Also unlocks <b>Heal sick elves</b> mode for [healer]s which allow to heal [sick] elves more efficiently.</font>',
+                desc: '<font color="#e6ffee">@unlocks [florist]. [florist] is a gatherer specified to collect various flowers instead of food, water ,rocks etc.</font>//Also unlocks the <b>Heal sick elves</b> mode for [healer]s, which allow you to heal [sick] elves more effectively.</font>',
                 icon: [27, 13, 'c2'],
                 cost: { 'creativity': 9, 'discernment': 36 },
                 req: { 'herbalism': true, 'a power of the fortress': true, 'plant lore': true },
@@ -24683,7 +24656,6 @@ if (getCookie("civ") == "0") {
                 effects: [
                 ],
                 req: { 'druidism': true, 'druidsymbolism1': false, 'druidsymbolism2': false },
-
                 chance: 100,
                 switchCategory: false,
                 lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 400 }
@@ -26766,7 +26738,6 @@ if (getCookie("civ") == "0") {
                     'dig': { 'mire': 0.5, 'clay': 0.05, 'stone': 0.2, 'olivnum ore': 0.001, 'tin ore': 0.002, 'limestone': 0.025, 'salt': 0.02/*osmium 0.001*/ },
                     'mine': { 'stone': 0.8, 'olivnum ore': 0.01, 'tin ore': 0.03, 'iron ore': 0.01, 'coal': 0.04, 'salt': 0.1, 'gems': 0.001/*,'Various stones':0.2*/ },
                     'quarry': { 'cut stone': 0.6, 'limestone': 0.1, 'fazble': 0.01/*,'Various cut stones':0.2*/ },
-
                 },
                 affectedBy: ['mineral depletion'],
                 noAmount: true,
