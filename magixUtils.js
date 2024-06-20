@@ -14,7 +14,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 >>> Upon loading it, you should find that it works. This should properly set up the mod.
 */
 
-/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewrittings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
+/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 G.loadMenu; G.loadCiv; //its rather to cover pick race menu and display menu related to picked race
 function setCookie(cname, cvalue, exdays) {
