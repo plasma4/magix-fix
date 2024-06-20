@@ -8,7 +8,7 @@ javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decod
 ==========
   - IF YOU ARE STARTING FROM A NEW GAME:
  To set up this mod, go to Orteil's NeverEnding Legacy and click on the Load Mod button. There, paste in the following 2 lines:
-https://file.garden/Xbm-ilapeDSxWf1b/magixUtils.js
+https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js
 https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 >>> Upon loading it, you should find that it works. This should properly set up the mod.
