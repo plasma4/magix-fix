@@ -17,14 +17,16 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 G.loadMenu; G.loadCiv; //its rather to cover pick race menu and display menu related to picked race
-function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+// Cookies aren't really needed for this case
+function setCookie(cname, cvalue) {
+    localStorage.setItem(cname, cvalue)
 }
 
 function getCookie(cname) {
+    var localItem = localStorage.getItem(cname)
+    if (localItem !== null) {
+        return localItem
+    }
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
@@ -39,6 +41,7 @@ function getCookie(cname) {
     }
     return "";
 }
+
 if (getCookie("civ") == "") {
     setCookie("civ", 0, 1000);
 }
@@ -50,7 +53,7 @@ if (getCookie("island") == "undefined") setCookie('island', "Plain Island", 1000
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
-    desc: 'Some mechanics that were in magix code has been moved to this mod. Required to play Magix.',
+    desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
     manifest: 'ModManifest.js',
     sheets: { 'magixmod': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/magixmod.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'c2': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/CiV2IconSheet.png' },//just for achievs
@@ -1724,12 +1727,12 @@ G.AddData({
         G.pressureAdd = 0;
         /*=====Achiev bonuses*/
         G.legacyBonuses.push(
-            { id: 'addFastTicksOnStart', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with <u>human race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks += obj.amount }, context: 'new' },
-            { id: 'addFastTicksOnResearch', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with <u>human race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
+            { id: 'addFastTicksOnStart', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks += obj.amount }, context: 'new' },
+            { id: 'addFastTicksOnResearch', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
             { id: 'wholenewworld', name: 'A whole new adventure', desc: '<font color="#d4af37">...just progress...you will unlock it.</font>', icon: [0, 0] },
             { id: 'pressure', name: '+[X] to base <font color="white">Pressure resistance</font> amount.', desc: 'This will help you having bigger elf civilization.', icon: [0, 0], func: function (obj) { G.pressureAdd += obj.amount } },
-            { id: 'addFastTicksOnStart2', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks2 += obj.amount }, context: 'new' },
-            { id: 'addFastTicksOnResearch2', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
+            { id: 'addFastTicksOnStart2', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks2 += obj.amount }, context: 'new' },
+            { id: 'addFastTicksOnResearch2', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
         );
         //=======================
 
@@ -1941,7 +1944,7 @@ G.AddData({
             tier: 1,
             icon: [29, 21, 'magixmod'],
             name: 'experienced',
-            desc: 'To get this achievement you need to complete rest achievements in this tier along with <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at start of new runs</b>.',
+            desc: 'To get this achievement you need to complete rest achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at start of new runs</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2257,7 +2260,7 @@ G.AddData({
             tier: 0,
             name: 'god complex',
             icon: [35, 5, 'magixmod'],
-            desc: 'Declare yourself as one of the famous ones and get punished for that. @<font color="red">Note: usurpers get -0% [happiness] unless they will change their name</font>',
+            desc: 'Declare yourself as one of the famous ones and get punished for that. @<font color="red">Note: usurpers get -0% [happiness] until they change their name.</font>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 30 },
             ],
@@ -2306,7 +2309,7 @@ G.AddData({
             tier: 0,
             name: 'that was so brutal',
             icon: [35, 8, 'magixmod'],
-            desc: 'Oh my god! Murdering the root full of hope for future AGAIN? And more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of Democracy] @[fortress of cultural legacy] @[complex of Dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[mausoleum of the Dreamer] //Must obtain <b>Cruel goal</b> shadow achievement before that.',
+            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of Democracy] @[fortress of cultural legacy] @[complex of Dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[mausoleum of the Dreamer] //You must obtain the <b>Cruel goal</b> shadow achievement before that.',
             effects: [
             ],
             visible: false,
@@ -4299,7 +4302,7 @@ G.AddData({
                     if (G.speed == 0)//just paused
                     {
                         l('foreground').style.display = 'block';
-                        G.middleText('- Pause -<br><small>Press space to unpause</small>');
+                        G.middleText('- Paused -<br><small>Press space to unpause</small>');
                     }
                     else if (G.oldSpeed == 0)//just unpaused
                     {
