@@ -346,7 +346,7 @@ G.AddData({
                 str += '</div>';
             } else {
                 G.setSetting('traitRemovalMode', false); //autodisable it
-                str += '<br>Gain 15 traits to unlock an additional option</div>';
+                str += '<br>Gain 15 traits to unlock an additional option.</div>';
             }
 
             l('traitDiv').innerHTML =
