@@ -17,11 +17,8 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 G.loadMenu; G.loadCiv; //its rather to cover pick race menu and display menu related to picked race
-// Cookies aren't really needed for this case
-function setCookie(cname, cvalue) {
-    localStorage.setItem(cname, cvalue)
-}
 
+// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on
 function getCookie(cname) {
     var localItem = localStorage.getItem(cname)
     if (localItem !== null) {
@@ -43,9 +40,9 @@ function getCookie(cname) {
 }
 
 if (getCookie("civ") == "") {
-    setCookie("civ", 0, 1000);
+    localStorage.setItem("civ", 0);
 }
-if (getCookie("island") == "undefined") setCookie('island', "Plain Island", 1000);
+if (getCookie("island") == "undefined") localStorage.setItem('island', "Plain Island");
 
 
 
@@ -55,7 +52,6 @@ G.AddData({
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    manifest: 'ModManifest.js',
     sheets: { 'magixmod': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/magixmod.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'c2': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
@@ -1332,7 +1328,7 @@ G.AddData({
                 G.Logic(true);//force a tick (solves some issues with display updates; this howeverr means loading a paused game, saving and reloading will make a single day go by every time, which isn't ideal)
                 G.releaseNumber = 55; //this must be assigned here or else we will have issues
                 tabs();
-                console.log('Game loaded successfully. Release:' + G.releaseNumber);
+                console.log('Game loaded successfully (release ' + G.releaseNumber + ').');
                 return true;
             }
             return false;
@@ -3416,8 +3412,7 @@ G.AddData({
         G.Clear = function () {
             //erase the save and start a new one, handy when the page crashes when testing new save formats
             console.log('Save data cleared. Refresh the page to take effect.');
-            setCookie("civ", 0, -1000);
-            setCookie("civ", 0, 1000);
+            localStorage.setItem("civ", 0);
             G.T = 0;
             window.localStorage.setItem(G.saveTo, '');
             var debug = 0;

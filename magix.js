@@ -13,7 +13,6 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 >>> Upon loading it, you should find that it works. This should properly set up the mod.
 */
-
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
 
 /////////
@@ -640,11 +639,7 @@ G.getCostString = function (costs, verbose, neutral, mult) {
 // Custom new value for ungratefulness
 var ungrateful = 1
 
-// Cookies aren't really needed for this case
-function setCookie(cname, cvalue) {
-    localStorage.setItem(cname, cvalue)
-}
-
+// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on
 function getCookie(cname) {
     var localItem = localStorage.getItem(cname)
     if (localItem !== null) {
@@ -673,8 +668,8 @@ var day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (
 var easterDay = function (Y) { var C = Math.floor(Y / 100); var N = Y - 19 * Math.floor(Y / 19); var K = Math.floor((C - 17) / 25); var I = C - Math.floor(C / 4) - Math.floor((C - K) / 3) + 19 * N + 15; I = I - 30 * Math.floor((I / 30)); I = I - Math.floor(I / 28) * (1 - Math.floor(I / 28) * Math.floor(29 / (I + 1)) * Math.floor((21 - N) / 11)); var J = Y + Math.floor(Y / 4) + I + 2 - C + Math.floor(C / 4); J = J - 7 * Math.floor(J / 7); var L = I - J; var M = 3 + Math.floor((L + 40) / 44); var D = L + 28 - 31 * Math.floor(M / 4); return new Date(Y, M - 1, D); }(yer);
 easterDay = Math.floor((easterDay - new Date(easterDay.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 var spookboost = 1;
-function c1() { G.loadMenu = 1; setCookie("civ", 0, 1000); G.NewGameWithSameMods2() };
-function c2() { G.loadMenu = 2; setCookie("civ", 1, 1000); G.NewGameWithSameMods2() };
+function c1() { G.loadMenu = 1; localStorage.setItem("civ", 0); G.NewGameWithSameMods2() };
+function c2() { G.loadMenu = 2; localStorage.setItem("civ", 1); G.NewGameWithSameMods2() };
 var civ1 = function () {
     G.dialogue.forceClose();
     G.dialogue.popup(function (div) {
@@ -1168,9 +1163,8 @@ if (getCookie("civ") == "0") {
         author: 'pelletsstarPL',
         desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people. Note that this mod uses part of the vanilla game, so credits to Orteil for the default dataset.',
         engineVersion: 1,
-        manifest: 'ModManifest.js',
         requires: ['MagixUtils'],
-        sheets: { 'magix2': 'https://file.garden/ZmatEHzFI2_QBuAF/Spice.png', 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'terrain': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'terrain': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer') == 0 ? 'Default' : G.checkPolicy('theme changer');
@@ -2419,7 +2413,7 @@ if (getCookie("civ") == "0") {
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', slow)
 
                     }
-                    setCookie("civ", 0, 1000);
+                    localStorage.setItem("civ", 0);
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
                     const chances = [
                         {
@@ -6820,7 +6814,7 @@ if (getCookie("civ") == "0") {
                     'stick fires': { name: 'Start fires from sticks', icon: [0, 6, 13, 7], desc: 'Craft [fire pit]s from 20 [stick]s each.', req: { 'factories II': false } },
                     'cook': { name: 'Cook', icon: [6, 7, 13, 7], desc: 'Turn [meat] and [seafood] into [cooked meat] and [cooked seafood] in the embers of [fire pit]s', req: { 'cooking': true } },
                     'cure': { name: 'Cure & smoke', icon: [11, 6, 12, 6], desc: 'Turn 1 [meat] or [seafood] into 2 [cured meat] or [cured seafood] using [salt] in the embers of [fire pit]s', req: { 'curing': true } },
-                    'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 2[fire pit]s with use of: 1[fire essence],13[stick]s', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
+                    'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 2 [fire pit]s with use of: 1 [fire essence] and 13 [stick]s', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
                     'log fires': { name: 'Start fires from logs', icon: [9, 21, 'magixmod'], desc: 'Craft [fire pit]s from 2 [log]s each.', req: { 'fires from logs': true, 'factories II': false } },
                 },
                 effects: [
@@ -7039,9 +7033,9 @@ if (getCookie("civ") == "0") {
                     'gold': { name: 'Gold smelting', icon: [11, 9], desc: 'Cast [precious metal ingot]s out of 5 [gold ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'gold-working': true } },
                     'bronze': { name: 'Bronze alloying', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 8 [copper ore]s and 2 [tin ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'bronze-working': true } },
                     'steel': { name: 'Steel alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 19 [iron ore]s and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
-                    'cobalt': { name: 'Cobalt smelting', icon: [14, 0, 'magixmod'], desc: 'Cast 1 [cobalt ingot] out of 8[cobalt ore].', req: { 'cobalt-working': true }, use: { 'worker': 2, 'metal tools': 2, 'stone tools': 1 } },
-                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6[nickel ore]s each.', req: { 'prospecting II': true, 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
-                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5[platinum ore]s each.', req: { 'prospecting II': true, 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'cobalt': { name: 'Cobalt smelting', icon: [14, 0, 'magixmod'], desc: 'Cast 1 [cobalt ingot] out of 8 [cobalt ore].', req: { 'cobalt-working': true }, use: { 'worker': 2, 'metal tools': 2, 'stone tools': 1 } },
+                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6 [nickel ore]s each.', req: { 'prospecting II': true, 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5 [platinum ore]s each.', req: { 'prospecting II': true, 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
                     //deep quarrymining
                     'osmium': { name: 'Osmium smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 4 [osmium ore]s each.', req: { 'deep mining & quarrying': true, 'osmium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                     'lead': { name: 'Lead smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 6 [lead ore]s each.', req: { 'deep mining & quarrying': true, 'lead-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
@@ -7096,12 +7090,12 @@ if (getCookie("civ") == "0") {
                     'metal tools': { name: 'Forge tools from soft metals', icon: [2, 9], desc: 'Forge [metal tools] out of 2 [soft metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1 }, req: {} },
                     'hard metal tools': { name: 'Forge tools from hard metals', icon: [2, 9], desc: 'Forge 3 [metal tools] out of 1 [hard metal ingot].', use: { 'worker': 1, 'metal tools': 1 }, req: {} },
                     'gold blocks': { name: 'Forge gold blocks', icon: [14, 8], desc: 'Forge [gold block]s out of 10 [precious metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1 }, req: { 'gold-working': true, 'block-smithery': false } },
-                    'forgeweapon': { name: 'Forge weapons out of soft metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 2[soft metal ingot]s each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgeweaponhard': { name: 'Forge weapons out of hard metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 1[hard metal ingot] each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgearmor': { name: 'Forge armor out of soft metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 8[soft metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgearmorhard': { name: 'Forge armor out of hard metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 5[hard metal ingot] each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10[platinum ingot] each.', req: { 'platinum-working': true, 'block-smithery': false }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
-                    'factgear': { name: 'Forge factory equipment', icon: [9, 18, 'magixmod'], desc: 'Forge [basic factory equipment] out of 11[hard metal ingot]s each.', req: { 'advanced casting': true }, use: { 'worker': 3, 'metal tools': 3 } },
+                    'forgeweapon': { name: 'Forge weapons out of soft metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 2 [soft metal ingot]s each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgeweaponhard': { name: 'Forge weapons out of hard metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 1 [hard metal ingot] each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgearmor': { name: 'Forge armor out of soft metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 8 [soft metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgearmorhard': { name: 'Forge armor out of hard metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 5 [hard metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10 [platinum ingot]s each.', req: { 'platinum-working': true, 'block-smithery': false }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
+                    'factgear': { name: 'Forge factory equipment', icon: [9, 18, 'magixmod'], desc: 'Forge [basic factory equipment] out of 11 [hard metal ingot]s each.', req: { 'advanced casting': true }, use: { 'worker': 3, 'metal tools': 3 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'soft metal ingot': 2 }, into: { 'metal tools': 1 }, repeat: 3, mode: 'metal tools' },
@@ -7732,7 +7726,7 @@ if (getCookie("civ") == "0") {
             //debug units
             new G.Unit({
                 name: 'auto nanny',
-                desc: '@generates 25 [fruit], 25[vegetable]s, 50 [cooked meat,Meat], and 100 [water]<>Keeps your people fed so you don\'t have to.//Powered by strange energies.',
+                desc: '@generates 25 [fruit], 25 [vegetable]s, 50 [cooked meat,Meat], and 100 [water]<>Keeps your people fed so you don\'t have to.//Powered by strange energies.',
                 icon: [4, 2],
                 cost: {},
                 effects: [
@@ -7989,9 +7983,9 @@ if (getCookie("civ") == "0") {
                 upkeep: { 'fire pit': 0.2, 'food': 0.2 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad (worth 1 [meals,Meal]) using [fruit]s and [vegetable]s. As an extra spice adds 1 piece of [herb].' },
-                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1[meals,Meal])' },
-                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1[meals,Meal])' },
+                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad (worth 1 [meals,Meal]) using [fruit]s and [vegetable]s. As an extra spice, 1 piece of [herb] is added.' },
+                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1 [meals,Meal])' },
+                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1 [meals,Meal])' },
                     'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat] and 1 [salt] cooks tasty cutlets (worth 1.5 [meals,Meal])' },
                     'sandwich': { name: 'Sandwiches', icon: [23, 14, 'magixmod'], desc: 'Can make 4 big, healthy, tasty sandwiches (worth 1.5 of [meals,Meal]]) using 2 [vegetable]s and 1 [bread, loaf of bread].' },
                 },
@@ -8986,7 +8980,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'hardened barn',
-                desc: '@provides 4500[food storage]. Bigger, harder barn has lower chance to be wasted. To keep stored food safe and fresh it will need 3 guys.',
+                desc: '@provides 4500 [food storage]. Bigger, harder barn has lower chance to be wasted. To keep stored food safe and fresh it will need 3 guys.',
                 icon: [7, 6, 'magixmod', 4, 6, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'glass': 5 },
                 use: { 'land of the plain island': 2, 'worker': 3 },
@@ -9835,7 +9829,7 @@ if (getCookie("civ") == "0") {
                 steps: 90,
                 messageOnStart: 'You started to build wonder for <b>Chra-nos</b>. <br>This pagoda will have a huge clock which is the symbol of the Seraphin. Stars on night sky as you noticed mostly often make a shape of clock. <br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
                 finalStepCost: { 'population': 200, 'gem block': 10 },
-                finalStepDesc: 'To perform the final step, 200[population,People] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with <b>Victory points</b>.',
+                finalStepDesc: 'To perform the final step, 200 [population,People] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with <b>Victory points</b>.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't1': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10130,12 +10124,12 @@ if (getCookie("civ") == "0") {
                 icon: [24, 29, 'magixmod'],
                 cost: { 'archaic building materials': 500 },
                 modes: {
-                    'cut stone pack': { name: 'Cut stone pack', icon: [30, 19, 'magixmod', 2, 12, 'magixmod'], desc: 'Buy bulk of 250 [cut stone] and 250 [various cut stones] for 20 [golden coin]s and 45 [silver coin]s' },
+                    'cut stone pack': { name: 'Cut stone pack', icon: [30, 19, 'magixmod', 2, 12, 'magixmod'], desc: 'Buy bulk of 250 [cut stone] and 250 [various cut stones] for 20 [golden coin]s and 45 [silver coin]s.' },
                     'precious ingot': { name: 'Precious ingot', icon: [30, 19, 'magixmod', 11, 9], desc: 'Buy 15 [precious metal ingot]s for 150 [golden coin]s.' },
                     'woodpack': { name: 'Woodpack', icon: [30, 19, 'magixmod', 1, 6], desc: 'Buy 400 [log]s and 150 [lumber] for 31 [golden coin]s and 45 [silver coin]s.' },
-                    'brickpack': { name: 'Pack of bricks', icon: [30, 19, 'magixmod', 3, 8], desc: 'Buy 350 [brick]s for 32 [golden coin]s, 45 [wooden coin]s, 45 [silver coin]s.' },
+                    'brickpack': { name: 'Pack of bricks', icon: [30, 19, 'magixmod', 3, 8], desc: 'Buy 350 [brick]s for: 32 [golden coin]s, 45 [wooden coin]s, and 45 [silver coin]s.' },
                     'toolpack': { name: 'Pack of tools', icon: [30, 19, 'magixmod', 1, 9], desc: 'Buy pack of: 40x [knapped tools], 15 [stone tools] and 5 sets of [metal tools] for: 10 [golden coin]s and 40 [silver coin]s.' },
-                    'weaponpack': { name: 'Pack of weaponry', icon: [30, 19, 'magixmod', 5, 9], desc: 'Buy pack of: 32x [stone weapons], 8[metal weapons] and 6 [armor set] for: 17 [golden coin]s.' },
+                    'weaponpack': { name: 'Pack of weaponry', icon: [30, 19, 'magixmod', 5, 9], desc: 'Buy pack of: 32x [stone weapons], 8 [metal weapons], and 6 [armor set]s for: 17 [golden coin]s.' },
                     'gempack': { name: 'Pack of gems', icon: [30, 19, 'magixmod', 17, 8, 7, 9], desc: 'Buy 5 [gem block]s and 50 [gems] for: 75 [golden coin]s.' },
                 },
                 effects: [
@@ -10245,12 +10239,12 @@ if (getCookie("civ") == "0") {
                 use: { 'land of the plain island': 1 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'mythril': { name: 'Forge mythril blocks', icon: [34, 25, 'magixmod'], desc: 'Forge [various metal block] out of 30 [mythril ore]s, 3[mystical metal ingot]s, 1 [strong metal ingot]s and 5 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'blackium': { name: 'Forge blackium blocks', icon: [34, 28, 'magixmod'], desc: 'Forge [various metal block] out of 40 [blackium ore]s, 3[mystical metal ingot]s, 1 [strong metal ingot] and 15 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'dinium': { name: 'Forge dinium blocks', icon: [34, 27, 'magixmod'], desc: 'Forge [various metal block] out of 15 [dinium ore]s, 4[mystical metal ingot]s, 5 [coal] and 2 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'unknownium': { name: 'Forge unknownium blocks', icon: [34, 26, 'magixmod'], desc: 'Forge [various metal block] out of 15 [unknownium ore]s, 3[mystical metal ingot]s, 5[coal] and 3 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'mythril': { name: 'Forge mythril blocks', icon: [34, 25, 'magixmod'], desc: 'Forge [various metal block] out of 30 [mythril ore]s, 3 [mystical metal ingot]s, 1 [strong metal ingot]s and 5 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'blackium': { name: 'Forge blackium blocks', icon: [34, 28, 'magixmod'], desc: 'Forge [various metal block] out of 40 [blackium ore]s, 3 [mystical metal ingot]s, 1 [strong metal ingot] and 15 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'dinium': { name: 'Forge dinium blocks', icon: [34, 27, 'magixmod'], desc: 'Forge [various metal block] out of 15 [dinium ore]s, 4 [mystical metal ingot]s, 5 [coal] and 2 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'unknownium': { name: 'Forge unknownium blocks', icon: [34, 26, 'magixmod'], desc: 'Forge [various metal block] out of 15 [unknownium ore]s, 3 [mystical metal ingot]s, 5 [coal] and 3 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
                     'gold blocks': { name: 'Forge gold blocks', icon: [14, 8], desc: 'Forge [gold block]s out of 10 [precious metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: { 'gold-working': true } },
-                    'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10[platinum ingot] each.', req: { 'platinum-working': true }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
+                    'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10 [platinum ingot]s each.', req: { 'platinum-working': true }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'precious metal ingot': 10 }, into: { 'gold block': 1 }, every: 6, mode: 'gold blocks' },
@@ -11674,7 +11668,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'physics', category: 'tier1',
-                desc: 'People acknowledged with physics will understand why towers are falling, why thrown up apple will fall down, why water pushes up light objects while heavy objects sink in it. //provides 2[education].',
+                desc: 'People acknowledged with physics will understand why towers are falling, why thrown up apple will fall down, why water pushes up light objects while heavy objects sink in it. //provides 2 [education].',
                 icon: [13, 10, 'magixmod'],
                 cost: { 'insight': 1000, 'science': 1 },
                 effects: [
@@ -13886,7 +13880,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
-                desc: 'The third level of [symbolism] will make the bonus apply to more units! ([guru] gathers a quarter more [science]. Additionally, [musician], [lawyer], [mediator]. [cathedral]s get a 60% bonus instead of 40% (from [symbolism II]) //In addition, it provides: @10[wisdom II], @10[inspiration II], @3[education], @5[authority II], and @5[spirituality II].',
+                desc: 'The third level of [symbolism] will make the bonus apply to more units! ([guru] gathers a quarter more [science]. Additionally, [musician], [lawyer], [mediator]. [cathedral]s get a 60% bonus instead of 40% (from [symbolism II]) //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'symbI': false },
@@ -13969,7 +13963,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'leaves of wisdom',
-                desc: 'The weird thought strikes scholars head. It\'s all about [wisdom II,Wisdom tree] that has now ruby red leaves. This tree produces leaves faster than it can grow branches for them. <br>Suddenly this thought dissipated from sholars minds, providing you: 2[education], 35[wisdom II] and 250 [wisdom].',
+                desc: 'The weird thought strikes scholars head. It\'s all about [wisdom II,Wisdom tree] that has now ruby red leaves. This tree produces leaves faster than it can grow branches for them. <br>Suddenly this thought dissipated from sholars minds, providing you 2 [education], 35 [wisdom II], and 250 [wisdom].',
                 icon: [31, 10, 'magixmod'],
                 req: { 'symbolism II': true, 'branches of wisdom': false },
                 chance: 100,
@@ -14116,7 +14110,7 @@ if (getCookie("civ") == "0") {
             }); new G.Tech({
                 name: 'life in faith', category: 'misc',
                 displayName: '<font color="gold">Life in faith</font>',
-                desc: 'You remember...you were staying near the Temple...the Gods temple! This memory has unbelieveable powers: @+1[faith] @+1[spirituality] @3 new themes(check [theme changer]).',
+                desc: 'You remember...you were staying near the Temple...the Gods temple! This memory has unbelieveable powers: @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer]).',
                 icon: [4, 12, 'magixmod', 1, 9, 'magixmod'],
                 cost: {},
                 effects: [
@@ -14281,7 +14275,7 @@ if (getCookie("civ") == "0") {
 
             new G.Trait({
                 name: 'mastered caligraphy', category: 'tier2',
-                desc: '<font color="#aaffff">Most of people in your population can write and their writings are pretty easy to read. Amount of almost unreadeable writings is slightly decreased. <br>Provides 5[education].</font>',
+                desc: '<font color="#aaffff">Most of people in your population can write and their writings are pretty easy to read. Amount of almost unreadeable writings is slightly decreased. <br>Provides 5 [education].</font>',
                 icon: [15, 27, 'magixmod'],
                 req: { 'eotm': true },
                 cost: { 'insight II': 15, 'culture II': 15 },
@@ -15565,7 +15559,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'dynamics II', category: 'tier2',
-                desc: '@Way more descriptions of dynamics. @Gravity description @provides 2[education] and 25 [wisdom II] @upon obtain provides exclusively 2 [faith II] and 2 [influence II] @Thanks to more exact descriptions high-level researches may be easier.',
+                desc: '@Way more descriptions of dynamics. @Gravity description @provides 2 [education] and 25 [wisdom II] @upon obtain provides exclusively 2 [faith II] and 2 [influence II] @Thanks to more exact descriptions high-level researches may be easier.',
                 icon: [0, 35, 'magixmod', 33, 31, 'magixmod'],
                 req: { 'physics II': true, 'gt3': true, 'doctrine of the dark wormhole 3/5': true },
                 cost: { 'insight II': 200, 'science': 15 },
@@ -16619,7 +16613,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'glorious agriculture', category: 'tier2',
-                desc: 'Unlocks [wheat farmland,Farmlands] for [land of the Past,ancestors world].[wheat farmland,Farmlands] not only produce [wheat, Food], but also provide a small amount of [housing] and [food storage].',
+                desc: 'Unlocks [wheat farmland,Farmlands] for [land of the Past,ancestors world]. [wheat farmland,Farmlands] not only produce [wheat, Food], but also provide a small amount of [housing] and [food storage].',
                 icon: [3, 9, 'magixmod'],
                 req: { 'ancestors world housing': true, 'leaves of wisdom': true },
                 cost: { 'insight II': 151, 'culture II': 40, 'influence II': 10, 'science': 10 },
@@ -17297,7 +17291,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'branches of wisdom',
-                desc: 'The feeling of extending knowledge is getting stronger and stronger. It feels like tree that grows more and more branches faster than it produces leaves for them. Suddenly this thought dissipates from sholars head, providing you: <b>1 extra technology choice per rolling researches</b>, 35[wisdom II] and 200 [wisdom]].',
+                desc: 'The feeling of extending knowledge is getting stronger and stronger. It feels like a tree that grows more and more branches faster than it produces leaves for them. Suddenly this thought dissipates from your scholars, providing you: <b>1 extra technology choice per rolling researches</b>, 35 [wisdom II], and 200 [wisdom].',
                 icon: [26, 31, 'magixmod'],
                 req: { 'symbolism II': true, 'leaves of wisdom': false },
                 chance: 100,
@@ -17808,18 +17802,17 @@ if (getCookie("civ") == "0") {
                 cost: {},
                 req: { 'life has its theme': true },
                 modes: {
-                    'Default': { name: 'Default', desc: 'Switches theme to default', icon: [4, 22, 'magixmod'] },
+                    'Default': { name: 'Default', desc: 'Switches your theme to the default.', icon: [4, 22, 'magixmod'] },
                     'Green': { name: 'Green', desc: 'Switches to green theme.', icon: [3, 22, 'magixmod'] },
                     'Blue': { name: 'Blue', desc: 'Switches to blue theme.', icon: [2, 22, 'magixmod'] },
                     'Red': { name: 'Red', desc: 'Switches to red theme.', icon: [0, 22, 'magixmod'] },
                     'Cyan': { name: 'Cyan', desc: 'Switches to cyan theme.', icon: [5, 22, 'magixmod'] },
                     'Gray': { name: 'Gray', desc: 'Switches to gray theme.', icon: [1, 22, 'magixmod'] },
-                    'Indigo': { name: 'Indigo', desc: 'Switches to indigo theme. Reward for <b>Magical victory</b> achievement.', req: { 'magical presence': true } },
-                    'Bronze': { name: 'Bronze', desc: 'Switches to bronze theme. Reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Silver': { name: 'Silver', desc: 'Switches to silver theme. Reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Golden': { name: 'Golden', desc: 'Switches to golden theme. Reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Black': { name: 'Black', desc: 'Switches to black theme. Reward for <b>Talented?</b> achievement.', req: { 'smaller shacks': true } },
-                    'Wooden': { name: 'Wooden', desc: 'Switches to wooden theme. Reward for completing Buried trial for the first...and the last time.', req: { 'smaller shacks': true } },
+                    'Indigo': { name: 'Indigo', desc: 'Switches to indigo theme. A reward for <b>Magical victory</b> achievement.', req: { 'magical presence': true } },
+                    'Bronze': { name: 'Bronze', desc: 'Switches to bronze theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
+                    'Silver': { name: 'Silver', desc: 'Switches to silver theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
+                    'Golden': { name: 'Golden', desc: 'Switches to golden theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
+                    'Black': { name: 'Black', desc: 'Switches to black theme. A reward for <b>Talented?</b> achievement.', req: { 'smaller shacks': true } },
                 },
                 category: 'mag',
             });
@@ -17995,7 +17988,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by random ratio from [around 0.01% to 0.5%]. In addition Dreamers in this plane don\'t exist and nobody knows who they are, but I will bring down to you arandom amount of <font color="aqua">Insight</font> each year (in this trial, the amount of <font color="aqua">Insight</font> can be equal to 160% of <font color="aqua">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement.For completing trial for the first time the bonus cap will be increased by 2.5% and you will gain first Victory Point from this challenge. (This trial will be repeatable but will get harder and harder after each time you will perform it again. Difficulty will start increasing after first trial completion<br><Br><BR>' +
+                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by random ratio from [around 0.01% to 0.5%]. In addition Dreamers in this plane don\'t exist and nobody knows who they are, but I will bring down to you arandom amount of <font color="aqua">Insight</font> each year (in this trial, the amount of <font color="aqua">Insight</font> can be equal to 160% of <font color="aqua">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After completing the trial for the first time, the bonus cap will be increased by 2.5% and you will gain first Victory Point from this challenge. (This trial will be repeatable but will get harder and harder after each time you will perform it again. Difficulty will start increasing after first trial completion!<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice now...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18238,7 +18231,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Herbalism - -</font></div>' +
                                     '<div class="fancyText">The Herbalia\'s trial</font></div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/7.png" width="72" height="72"/>' +
+                                    '<img src="https://file.garden/ZmatEHzFI2_QBuAF/Trial7.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -20601,7 +20594,7 @@ if (getCookie("civ") == "0") {
                         }
                     }
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
-                    setCookie("civ", 1, 1000);
+                    localStorage.setItem("civ", 1);
                     newDayLines();
 
 
@@ -22826,10 +22819,10 @@ if (getCookie("civ") == "0") {
                     'metal tools': { name: 'Forge tools from soft metals', icon: [2, 9, 'c2'], desc: 'Forge [metal tools] out of 2 [soft metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1 }, req: {} },
                     'hard metal tools': { name: 'Forge tools from hard metals', icon: [2, 9, 'c2'], desc: 'Forge 3 [metal tools] out of 1 [hard metal ingot].', use: { 'worker': 1, 'metal tools': 1 }, req: {} },
                     'greenold blocks': { name: 'Forge greenold blocks', icon: [14, 8, 'c2'], desc: 'Forge [greenold block]s out of 10 [precious metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1 }, req: { 'greenold-working': true } },
-                    'forgeweapon': { name: 'Forge weapons out of soft metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 2[soft metal ingot]s each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgeweaponhard': { name: 'Forge weapons out of hard metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 1[hard metal ingot] each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgearmor': { name: 'Forge armor out of soft metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 8[soft metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
-                    'forgearmorhard': { name: 'Forge armor out of hard metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 5[hard metal ingot] each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgeweapon': { name: 'Forge weapons out of soft metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 2 [soft metal ingot]s each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgeweaponhard': { name: 'Forge weapons out of hard metals', icon: [15, 11, 'magixmod'], desc: 'Forge [metal weapons] out of 1 [hard metal ingot] each.', req: { 'weapon blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgearmor': { name: 'Forge armor out of soft metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 8 [soft metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
+                    'forgearmorhard': { name: 'Forge armor out of hard metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 5 [hard metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'soft metal ingot': 2 }, into: { 'metal tools': 1 }, repeat: 3, mode: 'metal tools' },
@@ -24359,7 +24352,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'warmth', category: 'anomaly', displayName: '<font color="#f0bb6c">Warmth</font>',
-                desc: '<font color="#f0bb6c">An aura of Warmth has been triggered. High temperatures will speed up [food] and [water] spoilage. Also gathering water will be harder. [fishing] efficiency is decreased.[fire pit,Fire] will extungish slower.//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Summer 24/7/365...right?</small></font>',
+                desc: '<font color="#f0bb6c">An aura of Warmth has been triggered. High temperatures will speed up [food] and [water] spoilage. Also gathering water will be harder. [fishing] efficiency is decreased. [fire pit,Fire] will extinguish slower.//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Summer 24/7/365...right?</small></font>',
                 icon: [22, 15, 'c2'],
                 effects: [{ type: 'function', func: function () { G.auratext = 1 } },],
                 req: { 'tribalism': false },
@@ -25690,7 +25683,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'creative foraging',
-                desc: '@[gatherer]s will explore terrain just like [wanderer] but with a 3x higher chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //To upkeep this policy effects you will need 1[creativity] per year. Once you get enough land, [creative foraging] will stop taking [creativity].',
+                desc: '@[gatherer]s will explore terrain just like [wanderer] but with a 3x higher chance to get lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect food gathering efficiency of [gatherer]s. //To upkeep this policy effects you will need 1 [creativity] per year. Once you get enough land, [creative foraging] will stop taking [creativity].',
                 icon: [25, 0, 'c2'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
