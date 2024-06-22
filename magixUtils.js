@@ -116,7 +116,7 @@ G.AddData({
             if (G.resets >= 3) {
                 str += '<div class="barred fancyText">Settings:</div>';
                 str += G.writeSettingButton({ text: 'Toggle birth messages', tooltip: 'Toggle messages informing that some <b>babies</b> has been born in your civilization.', name: 'birth messages', id: 'birth messages' }) +
-                    G.writeSettingButton({ text: 'Toggle death messages', tooltip: 'Toggle messages informing that someone from your civilization died. <br>Note: It will disable ANY death messages regardless of reason of their death.', name: 'death messages', id: 'death messages' }) +
+                    G.writeSettingButton({ text: 'Toggle death messages', tooltip: 'Toggle messages informing that someone from your civilization died.<br>Note: It will disable ANY death messages regardless of reason of their death.', name: 'death messages', id: 'death messages' }) +
                     G.writeSettingButton({ text: 'Toggle new day lines', tooltip: 'Toggle new day lines. Those are atmospheric messages written with darker text.', name: 'new day lines', id: 'new day lines' });
                 str += "<br/>" + G.writeSettingButton({ text: 'Toggle research messages', tooltip: 'Toggle messages that tell you what you have just researched.', name: 'research messages', id: 'research messages' }) +
                     G.writeSettingButton({ text: 'Toggle trait messages', tooltip: 'Toggle messages that inform you about traits that your civilization have just adopted.', name: 'trait messages', id: 'trait messages' }) +
@@ -319,7 +319,7 @@ G.AddData({
             if (G.traitN >= 15) {
                 str += '<Br /><div class="flourishL"></div>';
                 /*str+=G.writeSettingButton({
-                    text:'Manage temporary traits',tooltip:'Spend influence to manipulate <b>temporary</b> traits. <br> You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level ('+G.selfUpdatingText(function(){return Math.floor(G.getRes('authority').amount*0.66);})+' Influence ). This option shows up after having currently 15 traits. <br>Also temporary traits that became pernament may also be removed but cooldown until next <br> available removal will be significantlly longer and will cost <b>max</b> available influence. <br><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',name:'traitRemovalMode',id:'traitRemovalMode',style:'box-shadow:0px 0px 2px 1px #f00;'});*/
+                    text:'Manage temporary traits',tooltip:'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level ('+G.selfUpdatingText(function(){return Math.floor(G.getRes('authority').amount*0.66);})+' Influence ). This option shows up after having currently 15 traits.<br>Also temporary traits that became pernament may also be removed but cooldown until next<br>available removal will be significantlly longer and will cost <b>max</b> available influence.<br><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',name:'traitRemovalMode',id:'traitRemovalMode',style:'box-shadow:0px 0px 2px 1px #f00;'});*/
                 str += G.button({
                     id: 'traitManagement',
                     name: 'traitManagement',
@@ -783,7 +783,7 @@ G.AddData({
                                 //infoIconCompensated ?
                                 str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                     '<div class="fancyText infoAmount onLeft">' + B(instance.displayedAmount) + '</div>' +
-                                    '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued: <br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active: <br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
+                                    '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued:<br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active:<br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
                                     '</div>';
                                 str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
                                 str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
@@ -1393,12 +1393,12 @@ G.AddData({
             if ((G.getSetting('debug') || G.getSetting('showLeads')) && me.precededBy.length > 0) {
                 var reqStr = [];
                 for (var i in me.precededBy) { reqStr.push(me.precededBy[i].displayName); }
-                str += '<div class="fancyText barred">Requisites: <br>' + reqStr.join(', ') + '</div>';
+                str += '<div class="fancyText barred">Requisites:<br>' + reqStr.join(', ') + '</div>';
             }
             if ((G.getSetting('debug') || G.getSetting('showLeads')) && me.leadsTo.length > 0) {
                 var leadsToStr = [];
                 for (var i in me.leadsTo) { leadsToStr.push(me.leadsTo[i].displayName); }
-                str += '<div class="fancyText barred">Leads to: <br>' + leadsToStr.join(', ') + '</div>';
+                str += '<div class="fancyText barred">Leads to:<br>' + leadsToStr.join(', ') + '</div>';
             }
             if (me.lifetime != undefined && lt != undefined) {
                 str += '<font color="#bbb"><li><small>';
@@ -1479,15 +1479,15 @@ G.AddData({
                 G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>One day elapses every second, and 300 days make up a year.</div>'; }, { offY: -8 });
             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
             var empowermentsDesc = [
-                '<div class="barred">Current aura: <font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br> <li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%.</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water.</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower.</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
-                '<div class="barred">Current aura: <font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br> <li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%.</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>The efficiency of farms and florists is decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
-                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br> <li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br> so it has very big chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
-                '<div class="barred">Current aura: <font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br> <li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster.</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by ' + (5 + (1 * i)).toFixed(2) + '%.</li><li>Every year, one random resource gets totally wiped!br>(<b>Warning:</b>if the choice will land on any essentials, it will<br>wipe all other essentials except those that<br>limit the amount of other essentials.)</li></font>',
-                '<div class="barred">Current aura: <font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br> <li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%.</li><li>Diggers,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water.</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster.</li><li>There are ' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
+                '<div class="barred">Current aura: <font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br><li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%.</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water.</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower.</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
+                '<div class="barred">Current aura: <font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br><li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%.</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>The efficiency of farms and florists is decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br><li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br>so it has very big chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br><li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster.</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by ' + (5 + (1 * i)).toFixed(2) + '%.</li><li>Every year, one random resource gets totally wiped!br>(<b>Warning:</b>if the choice will land on any essentials, it will<br>wipe all other essentials except those that<br>limit the amount of other essentials.)</li></font>',
+                '<div class="barred">Current aura: <font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br><li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%.</li><li>Diggers,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water.</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster.</li><li>There are ' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
             ];
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('Water')) {
-                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras. <br>Each one boosts and weakens some things and persist through<br>the rest of the current run.</div><div class="par">Auras are in cycle. At the middle point of a cycle, they have the biggest power.</div>' + empowermentsDesc[G.auratext] });
+                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras.<br>Each one boosts and weakens some things and persist through<br>the rest of the current run.</div><div class="par">Auras are in cycle. At the middle point of a cycle, they have the biggest power.</div>' + empowermentsDesc[G.auratext] });
                 } else {
                     G.addTooltip(l('empower'), function () { return (G.achievByName["druidish heart"].won > 0 ? '<div class="barred">???</div><div class="par">' + (G.has("time measuring 1/2") ? 'Once year ' + (236 - G.techN - G.traitN) : 'Once this moment ') + 'strikes, you will see what\'s there.<br>For now, wait.</div>' : '<div class="barred">???</div><div class="par">Once it shows up, you will see what\'s there.<br>For now, wait.</div>') });
                 }
@@ -1580,9 +1580,9 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
-                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br> bonuses for this race.</b>') : "A ray of hope") +
+                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "A ray of hope") +
                 '</div>' +
-                '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br> and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
+                '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br>and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br>They call you:</div>';
             return str;
         }
@@ -1595,10 +1595,10 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x300</div>', '300 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x250</div>', '250 Water') +
-                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br> unlock more starting<br> bonuses.' + G.resets > 0 + '</b>') : "") +
+                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.' + G.resets > 0 + '</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
-                '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader. <br>These people...they call you: </div>';
+                '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader.<br>These people...they call you: </div>';
             return str;
 
         }
@@ -1853,7 +1853,7 @@ G.AddData({
             name: 'in the underworld',
             wideIcon: [7, 5, 'magixmod'],
             icon: [9, 5, 'magixmod'],
-            desc: 'You sent your soul to the Underworld, leaving your body that started to decay after it. But... <br><li>If you obtain <font color="green">Sacrificed for culture</font>, <font color="aqua">Insight-ly</font>, and <font color="fuschia">Democration</font> you will start new runs with [adult,The Underworld\'s Ascendant]. <li>To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.',
+            desc: 'You sent your soul to the Underworld, leaving your body that started to decay after it. But...<br><li>If you obtain <font color="green">Sacrificed for culture</font>, <font color="aqua">Insight-ly</font>, and <font color="fuschia">Democration</font> you will start new runs with [adult,The Underworld\'s Ascendant]. <li>To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.',
             fromWonder: '"In the underworld"',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -3457,7 +3457,7 @@ G.AddData({
                 '<br/>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
                 '<br><font color="lime">Debug mode. Magix: Release ' + G.releaseNumber + '</font>' +
-                G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(if add is equal 1 it will add 10, if add 10 then 100 and so on)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units <br> <b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
+                G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(if add is equal 1 it will add 10, if add 10 then 100 and so on)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units<br><b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
                 '</center></div>';
             l('debug').innerHTML = str;
 
@@ -4229,12 +4229,12 @@ G.AddData({
             if (G.modsByName['Default dataset']) {
                 if (Date.now() - G.startDate <= 600000) {
                     if (techs >= 60) {
-                        if (G.achievByName['speedresearcher'].won == 0) G.middleText("- Completed Speedresearcher I <br> shadow achievement - ", 'slow');
+                        if (G.achievByName['speedresearcher'].won == 0) G.middleText("- Completed Speedresearcher I<br>shadow achievement - ", 'slow');
                         G.achievByName['speedresearcher'].won = 1;
                     }
 
                     if (techs >= 100) {
-                        if (G.achievByName['speedresearcher II'].won == 0) G.middleText("- Completed Speedresearcher II <br> shadow achievement -  <br> <hr width='30%' /> <br> <small>So speedy...</small>", 'slow');
+                        if (G.achievByName['speedresearcher II'].won == 0) G.middleText("- Completed Speedresearcher II<br>shadow achievement - <br><hr width='30%' /><br><small>So speedy...</small>", 'slow');
                         G.achievByName['speedresearcher II'].won = 1;
                     }
                 }
@@ -4242,7 +4242,7 @@ G.AddData({
             if (G.modsByName['Elves']) {
                 if (Date.now() - G.startDate <= 1800000) {
                     if (techs >= 50) {
-                        if (G.achievByName['speeddiscoverer'].won == 0) G.middleText("- Completed Speeddiscoverer I <br> shadow achievement -  <br> <hr width='30%' /> <br> <small>The battery is burning...it looks like.</small>", 'slow');
+                        if (G.achievByName['speeddiscoverer'].won == 0) G.middleText("- Completed Speeddiscoverer I<br>shadow achievement - <br><hr width='30%' /><br><small>The battery is burning...it looks like.</small>", 'slow');
                         G.achievByName['speeddiscoverer'].won = 1;
                     }
                 }
@@ -4308,7 +4308,7 @@ G.AddData({
                         G.middleText('- Speed x1 -');
                     }
                     else if (G.speed == 2) {
-                        G.middleText('- Speed x30 - <br><small>That is quite fast :)</small>');
+                        G.middleText('- Speed x30 -<br><small>That is quite fast :)</small>');
                     }
                 }
 
@@ -5001,14 +5001,14 @@ G.AddData({
                                                     G.doCost(me.unit.finalStepCost, amount);
                                                     if (me.unit.name == 'temple of deities') G.achievByName['heavenly'].won++;
                                                     G.achievByName['wondersDuringRun'].won++;
-                                                    if (me.unit.name == 'wonderful fortress of christmas') { G.achievByName['capital of christmas'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Citadel of christmas</font><br>seasonal achievement - <br> <hr width="300"> Ho ho ho! Merry christmas to you! From now you can unlock special Christmas bonus', 'slow') };
+                                                    if (me.unit.name == 'wonderful fortress of christmas') { G.achievByName['capital of christmas'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Citadel of christmas</font><br>seasonal achievement -<br><hr width="300"> Ho ho ho! Merry christmas to you! From now you can unlock special Christmas bonus', 'slow') };
                                                     if (me.unit.name == 'fortress of magicians') { G.achievByName['magical'].won = 1; G.middleText('-  Completed <font color="#ff00ff">Magical</font> achievement -', 'slow'); G.gainTech(G.techByName['magical presence']) };
-                                                    if (me.unit.name == 'fortress of love') { G.achievByName['love for eternity'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Love for eternity</font><br>seasonal achievement - <br> <hr width="300"> Love is in the air! From now you can unlock special Valentine\'s day bonus.', 'slow') };
+                                                    if (me.unit.name == 'fortress of love') { G.achievByName['love for eternity'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Love for eternity</font><br>seasonal achievement -<br><hr width="300"> Love is in the air! From now you can unlock special Valentine\'s day bonus.', 'slow') };
                                                     if (me.unit.name == 'mausoleum' && G.achievByName['mausoleum'].won >= 3 && G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['cruel goal'].won == 0) { G.achievByName['cruel goal'].won = 1; G.middleText('-  Completed <font color="#ff00ff">Cruel goal</font><br>shadow achievement -', 'slow') };
                                                     /*that was so brutal*/
                                                     if (G.achievByName['cruel goal'].won >= 1) {
                                                         if (me.unit.name == 'pagoda of passing time' || me.unit.name == 'Pagoda of culture' || me.unit.name == 'Hartar\'s statue' || me.unit.name == 'Pagoda of democracy' || me.unit.name == 'Fortress of cultural legacy' || me.unit.name == 'Complex of Dreamers' || me.unit.name == 'Fortress of magicians' || me.unit.name == 'Platinum fish statue' || me.unit.name == 'Tomb of oceans' || me.unit.name == 'The Herboleum' || me.unit.name == 'Temple of the Stone' || me.unit.name == 'Mausoleum of the Dreamer') {
-                                                            if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was so brutal. Why? Just why? - <br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
+                                                            if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was so brutal. Why? Just why? -<br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
                                                         }
                                                     }
                                                     G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/WonderComplete.mp3');
