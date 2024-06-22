@@ -1033,10 +1033,16 @@ G.Launch=function()
 	G.Clear=function()
 	{
 		//erase the save and start a new one, handy when the page crashes when testing new save formats
-		for (var i = 0; i < G.mods.length; i++) localStorage.removeItem("nelOffline"+i)
+		var i = 0
+		var localItem = ""
+		localStorage.removeItem("civ")
+		while (localItem !== null) {
+			localStorage.removeItem("nelOffline"+i)
+			localItem=localStorage.getItem("nelOffline"+(++i))
+		}
 		console.log('Save data cleared.');
 		G.T=0;
-		window.localStorage.setItem(G.saveTo,'');
+		localStorage.removeItem(G.saveTo);
 		location.reload();
 	}
 	
