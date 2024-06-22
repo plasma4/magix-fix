@@ -1,7 +1,7 @@
 # Setting up the Magix fixer
 Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix.
 ### Using Magix offline
-If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html to start playing! (It is advised to extract the .zip file so that everything works properly.)
+If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html file to start playing! (It is advised to extract the .zip file first so that everything works properly.)
 
 Additionally, you are also able to locally modify Magix: just go to localDevelopment.js and set `offlineMode` to `true`.
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
