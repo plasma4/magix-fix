@@ -566,7 +566,6 @@ G.Launch=function()
 	}
 	G.Import=function(str)
 	{
-		G.importStr=str;
 		G.Load(false);
 	}
 	
@@ -776,7 +775,7 @@ G.Launch=function()
 			//take care of strings first
 			G.stringsLoadedN=0;
 			G.stringsLoaded=[];
-			str=str.replace(/"(.*?)"/gi,G.parseLoadStrings);
+			str=str.replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace(/"(.*?)"/gi,G.parseLoadStrings);
 			
 			str=str.split('|');
 			
