@@ -102,13 +102,13 @@ G.AddData({
         G.tabPopup['Magix'] = function () {
             var str = '';
             str += '<div class="par">' +
-                '<b>The Magix Mod</b> is a mod for NeverEnding Legacy made by <b>pelletsstarPL</b>.' + 'It is currently in beta, may feature strange and exotic bugs, and may be updated at any time.</div>' + '<div class="par">While in development, the mod may be unstable and subject to changes, but the overall goal is to ' +
+                '<b>The Magix Mod</b> is a mod for NeverEnding Legacy made by <b>pelletsstarPL</b>.</div>' + '<div class="par">While in development, the mod may be unstable and subject to changes, but the overall goal is to ' +
                 'expand and improve the legacy with flexible, balanced, custom-created content and add various improvements to existing mechanics.</div>' +
-                '<b>The Magix Mod</b> was made because I was wondering how legacy would look if the last update was much later.' +
-                'I was checking bunch of mods and noticed...<b>There was no mod about magic...But I was gonna change it</b>.' +
-                'Even today, I am proud of fruits of my creativity and time I sacrificed to make this entertaining mod.' +
-                'I made this mod due to my hobby: IT. I like things like coding, networking. Who knows...maybe I will become an expert of javascript.' +
-                'Various improvements and fixes have been added at @1_e0. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.<div>' +
+                '<b>The Magix Mod</b> was made because I was wondering how legacy would look if the last update was much later. ' +
+                'I was checking bunch of mods and noticed...<b>There was no mod about magic...but I changed it</b>. ' +
+                'Even today, I am proud of the fruits of my creativity and time I sacrificed to make this entertaining mod. ' +
+                'I made this mod due to my hobby: IT. I like things like coding, networking. Who knows...maybe I will become an expert of javascript. ' +
+                '(Various improvements and fixes have been added at @1_e0. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)' +
                 '<font color="#FF0000"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
                 '<div class="barred fancyText"><a href="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/--MAGIX--/Magix.html" target="_blank">Update log</a></div>' +
                 '<div class="barred fancyText">Settings:</div>' +
@@ -182,7 +182,7 @@ G.AddData({
                 var str = '';
                 str +=
                     '<div class="regularWrapper">' +
-                    G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Policies help you regulate various aspects of the life of your citizens.</div><div class="par">Some policies provide multiple modes of operation, while others are simple on/off switches.</div><div class="par">Changing policies usually costs influence points and, depending on how drastic or generous the change is, it may have an impact on your people\'s morale.</div></div>', 'infoButton') +
+                    G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Policies help you regulate various aspects of the life of your citizens.</div><div class="par">Some policies provide multiple modes of operation, while others are simple on/off switches.</div><div class="par">Changing policies usually costs something, such as influence points or faith. Depending on how drastic or generous the change is, it may have an impact on your people\'s morale.</div></div>', 'infoButton') +
                     '<div class="fullCenteredOuter"><div id="policyBox" class="thingBox fullCenteredInner"></div></div></div>';
                 str += '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                     G.button({

@@ -7467,31 +7467,29 @@ G.Launch=function()
 				script.setAttribute('src','data.js');
 				document.head.appendChild(script);	
 				script.onload=function() {
-					G.ModLoaded(mod,'dataScript-data.js');
+					mod.loaded=true;
 				}
 			} else {
 				function tryOffline() {
 					var offlineScript=localStorage.getItem("nelOffline");
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magixUtils.js was loaded locally. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magixUtils.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
-								G.ModLoaded(mod,'dataScript-'+mod.id);
+								mod.loaded=true;
 							}
-						} else if (mod.url !== "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
-							alert("An offline version of a mod could not be loaded in.");
 						}
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
-							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magixUtils.js was loaded locally. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magix.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
-								G.ModLoaded(mod,'dataScript-'+mod.id);
+								mod.loaded=true;
 							}
 						} else if (mod.url !== "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							alert("An offline version of a mod could not be loaded in.");
+							alert("An offline version of a mod could not be loaded in. You can try to download it first with internet and use that file as the mod.");
 						}
 						return;
 					}
@@ -7509,7 +7507,7 @@ G.Launch=function()
 				}
 				let x=new XMLHttpRequest();
 				x.onload=function() {
-					var v=x.responseText + ";\nG.ModLoaded(G.mods[" + i + "],'dataScript-" + mod.id + "')";
+					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+x.responseText);
 					script.innerHTML=(['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url))?v.replace(/https:\/\/[0-9A-Za-z._\-+/%]+(?=\/+[0-9A-Za-z._\-+%]+\.(jpg|png|mp3|wav|css))/g, "Magix").replace(/https:\/\/file\.garden\/Xbm-ilapeDSxWf1b\/' \+ Theme \+ 'Theme/g, "Magix"):v;
 					document.head.appendChild(script);
@@ -7522,16 +7520,6 @@ G.Launch=function()
 		
 		G.dialogue.closeAll(true);
 		G.ModLoadingDialogue();
-	}
-	G.ModLoaded=function(mod,id)
-	{
-		//console.log('Mod loaded : "'+mod.url+'".');
-		mod.loaded=true;
-		/*setTimeout(function(mod){return function()
-		{
-			console.log('Mod loaded : "'+mod.url+'".');
-			mod.loaded=true;
-		}}(mod),1000+mod.id*1000);*/
 	}
 	G.LogicModLoading=function()
 	{
@@ -7871,7 +7859,7 @@ G.Launch=function()
 					G.getKnow(ii).leadsTo.push(me);
 					me.precededBy.push(G.getKnow(ii));
 				}
-				if (!req) console.log('ERROR: '+me.name+' has "'+ii+'" as a requirement, but no such thing was found');
+				if (!req) console.log('ERROR: '+me.name+' has "'+ii+'" as a requirement, but no such thing was found.');
 			}
 		}
 		

@@ -793,8 +793,8 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img class="icon" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="icon" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -2027,7 +2027,7 @@ if (getCookie("civ") == "0") {
                                         '<tt><div class="fancyText">You failed the Unhappy trial by reaching -400% unhappiness cap</tt>' +
                                         '<br>All people murdered themselves leaving no one alive.<br>This is cruel.<br>' +
                                         '<br><br>' +
-                                        'But you can try again, by reaching Pantheon again and choose Bersaria.</div><br>' +
+                                        'But you can try again, by reaching the Pantheon again and choosing Bersaria.</div><br>' +
                                         'Start a new game: you know how.' +
                                         '</div></div>'
                                 })
@@ -2078,10 +2078,10 @@ if (getCookie("civ") == "0") {
                             G.dialogue.popup(function (div) {
                                 return '<div style="width:320x;min-height:200px;height:75%;">' +
                                     '<div class="fancyText title"><font color="red">Trial failed</font></div>' +
-                                    '<tt><div class="fancyText">You failed the Cultural trial</tt>' +
+                                    '<tt><div class="fancyText">You failed the Cultural trial by making your making your people too culturally unbalanced.</tt>' +
                                     '<br>You have been kicked out of this plane.<br>' +
                                     '<br><br>' +
-                                    'But you can try again, by reaching Pantheon again and choose Tu-ria!</div><br>' +
+                                    'But you can try again, by reaching the Pantheon again and choosing Tu-ria!</div><br>' +
                                     'Start a new game: you know how.' +
                                     '</div></div>'
                             })
@@ -2120,7 +2120,7 @@ if (getCookie("civ") == "0") {
                                 '<tt><div class="fancyText">You failed the Faithful trial because you lost all Faith.</tt>' +
                                 '<br>You have been kicked out of this plane.<br>' +
                                 '<br><br>' +
-                                'But you can try again, by reaching Pantheon again and choose Enlightened!</div><br>' +
+                                'But you can try again, by reaching the Pantheon again and choosing Enlightened!</div><br>' +
                                 'Start a new game: you know how.' +
                                 '</div></div>'
                         })
@@ -2129,7 +2129,7 @@ if (getCookie("civ") == "0") {
                         var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1; var lostPeople = Math.ceil(G.getRes('population').amount * 0.02) + 1;
                         G.lose('housing', lostHousing, 'The dark decay'); G.lose('population', lostPeople, 'The dark decay');
                         G.gain('corpse', lostPeople, 'The dark death'); G.gain('dark essence', (Math.round(lostHousing * 0.75)) + lostPeople, 'The dark death');
-                        G.Message({ type: 'story1', text: 'The plane\'s conditions caused you losing: <li>' + lostHousing + ' <b>Housing</b></li><li>' + lostPeople + ' <b> people</b></li><br>However it made you ' + (Math.round(lostHousing * 0.75) + lostPeople) + ' Dark essence richer. Use Dark essence to build Temple of the Dead and finish the trial. There it doesn\'t decay unlike any other plane.', icon: [10, 32, 'magixmod'] })
+                        G.Message({ type: 'story1', text: 'The plane\'s conditions caused you losing: <li>' + lostHousing + ' <b>Housing</b></li><li>' + lostPeople + ' <b> people</b></li><br>However, it made you ' + (Math.round(lostHousing * 0.75) + lostPeople) + ' Dark essence richer. Use Dark essence to build the Temple of the Dead and finish the trial. There it doesn\'t decay unlike any other plane.', icon: [10, 32, 'magixmod'] })
                     };
                     var multiplier = () => { if (G.achievByName['love for eternity'].won >= 1) return 1.2; else return 1 };
                     if (day + leap >= 40 && day + leap <= 46 && G.getRes('love').amount >= 10 && G.achievByName['so adorable'].won == 1) { G.achievByName['so adorable'].won = 1; G.middleText('- Completed <font color="pink">So adorable</font><br>seasonal achievement.', 'slow') };
@@ -6467,7 +6467,7 @@ if (getCookie("civ") == "0") {
             =======================================================================================*/
             new G.Unit({
                 name: 'gatherer',
-                startWith: 5,
+                startWith: 4,
                 desc: '@forages for basic [food], [water] and [archaic building materials,Various interesting things]<>A vital part of an early tribe, [gatherer]s venture in the wilderness to gather food, wood, and other things of note.',
                 icon: [0, 2],
                 cost: {},
@@ -7044,7 +7044,7 @@ if (getCookie("civ") == "0") {
                     'mythril': { name: 'Mythril smelting', icon: [11, 6, 'magixmod'], desc: 'Cast [mystical metal ingot]s out of 6 [mythril ore]s and 1 [gold ore] each.', req: { 'deep mining & quarrying': true, 'mythril-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                     'blackium': { name: 'Blackium alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 6 [blackium ore]s each.', req: { 'deep mining & quarrying': true, 'blackium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                     'zinc': { name: 'Zinc smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 7 [zinc ore]s each.', req: { 'deep mining & quarrying': true, 'zinc-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'unk': { name: 'Dinium & unknownium alloying', icon: [11, 6, 'magixmod'], desc: 'Cast 2 [mystical metal ingot]s out of 4 [dinium ore]s, 3 [copper ore]s, 1 [coal] and 4 [unknownium ore] each. Chance to succed: 95%', req: { 'deep mining & quarrying': true, 'dinium & unknownium working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'unk': { name: 'Dinium & unknownium alloying', icon: [11, 6, 'magixmod'], desc: 'Cast 2 [mystical metal ingot]s out of 4 [dinium ore]s, 3 [copper ore]s, 1 [coal] and 4 [unknownium ore] each. Chance to succeed: 95%', req: { 'deep mining & quarrying': true, 'dinium & unknownium working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'copper ore': 5 }, into: { 'soft metal ingot': 1 }, repeat: 3, mode: 'copper' },
@@ -10667,7 +10667,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'prison',
-                desc: '@can be used to hold [prisoner]s who committed various crimes. @some [prisoner]s can die in prison (for example due to old age or sickness). @there is very low chance for one to flee but may get lowered with future researches. @further researching will unlock new [prison] options @use <b>Policies</b> tab to decide what [prison]s can do with their [prisoner]s. @one [prison] gives storage up to 500 [prisoner]s. @having [prison]s reduce amount of [thief,Thieves] or other criminals in your civilization.',
+                desc: '@can be used to hold [prisoner]s who committed various crimes. @some [prisoner]s can die in prison (such as due to old age or sickness). @there is a very low chance for one to flee but may get lowered with future researches. @further researching will unlock new [prison] options @use <b>Policies</b> tab to decide what [prison]s can do with their [prisoner]s. @one [prison] gives storage up to 500 [prisoner]s. @having [prison]s reduce amount of [thief,Thieves] or other criminals in your civilization.',
                 icon: [19, 12, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'armor set': 10, 'metal weapons': 10 },
                 use: { 'worker': 80, 'land': 9, 'armor set': 60, 'metal weapons': 60 },
@@ -12091,7 +12091,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'motivation for artisans', category: 'upgrade',
-                desc: '[artisan]\'s succesful work made him work harder and motivated. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [artisan]s will work 8% more efficient. <>If they have chosen [caretaking], then [artisan]s will work 4% more efficient. <>Doesn\'t include [artisan of juice] and [pyro-artisan]!',
+                desc: '[artisan]\'s successful work made him work harder and become motivated. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [artisan]s will work 8% more efficient. <>If they have chosen [caretaking], then [artisan]s will work 4% more efficient. <>This doesn\'t include [artisan of juice] and [pyro-artisan]!',
                 icon: [4, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
@@ -12099,28 +12099,28 @@ if (getCookie("civ") == "0") {
             //Back to normal :)
             new G.Tech({
                 name: 'advanced casting', category: 'tier1',
-                desc: '[blacksmith workshop,Blacksmiths] will get taught to be more exact and better due to changing times. Now they may craft basic industry gear and other things which they wouldn\'t craft without this knowledge.',
+                desc: '[blacksmith workshop,Blacksmiths] will get taught to be more exact and work more effectively. Now they may craft basic industry gear and other things which they couldn\'t craft before.',
                 icon: [5, 18, 'magixmod'],
                 cost: { 'insight': 830 },
                 req: { 'smelting': true, 'masonry': true, 'monument-building II': true },
             });
             new G.Tech({
                 name: 'automation', category: 'tier1',
-                desc: '[moderation] is a path where people are going for automation to produce more and do less. So people are figuring out the ways to automate production. This tech will be a light for moderated people.',
+                desc: '[moderation] is a path where people are going for automation to produce more and do less. Therefore, people are figuring out ways to automate production.',
                 icon: [6, 18, 'magixmod'],
                 cost: { 'insight': 1000, 'wisdom': 15, 'inspiration': 5, 'culture': 80, 'influence': 205 },
                 req: { '2nd portal sky': true, 'moderation': true }
             });
             new G.Tech({
                 name: 'manufacturing', category: 'tier1',
-                desc: '[caretaking] is a path where people are going for live long and they do not care about production and automation. They prefer manual working at all. This tech is a beginning of manufacture.',
+                desc: '[caretaking] is a path where people are going for a long life. They do not care about production and automation as much and prefer manual work. However, getting this technology allows you to start unlocking new units.',
                 icon: [7, 18, 'magixmod'],
                 cost: { 'insight': 1000, 'wisdom': 15, 'inspiration': 10, 'culture': 75, 'influence': 205 },
                 req: { '2nd portal sky': true, 'caretaking': true }
             });
             new G.Tech({
                 name: 'moderated workstation planning', category: 'tier1',
-                desc: 'People lead by [moderation] want exact plans of building. It leads to construct more advanced constructions that can work better than single [potter] for instance.',
+                desc: 'People lead by [moderation] want the exact plans of building. It leads to more advanced constructions.',
                 icon: [11, 18, 'magixmod'],
                 cost: { 'insight': 995, 'wisdom': 5 },
                 req: { 'paradise crafting': true, 'moderation': true, 'measuring system': true }
@@ -12134,7 +12134,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'manufacture units I', category: 'tier1',
-                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become USELESS! They won\'t produce.</font> ',
+                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become useless and won\'t produce anything anymore.</font> ',
                 icon: [17, 18, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 5, 'stone': 1365 },//Stones are there to make tech at same level as Factories I
                 req: { 'workstation planning': true, 'manufacturing': true },
@@ -12144,7 +12144,7 @@ if (getCookie("civ") == "0") {
                             G.getDict('potter').icon = [28, 2, 'magixmod', 20, 2];
                             G.getDict('potter').gizmos = false;
                             G.getDict('potter').upkeep = {};
-                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely...or spilling uselessly into the dirt.<br><b><font color="fuschia">If you obtain [manufacture units I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely...or spilling uselessly into the dirt.<br><b><font color="fuschia">Due to getting [manufacture units I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -12161,10 +12161,10 @@ if (getCookie("civ") == "0") {
                             G.getDict('potter').gizmos = false;
                             G.getDict('potter').visible = false;
                             G.getDict('potter').upkeep = {};
-                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt.<br><b><font color="fuschia">Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt.<br><b><font color="fuschia">Due to obtaining [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                             G.getDict('drying rack').icon = [28, 2, 'magixmod', 13, 3, 'magixmod'];
                             G.getDict('drying rack').visible = false;
-                            G.getDict('drying rack').desc = '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower.<br><b><font color="fuschia"> Due to obtaining [factories I] this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('drying rack').desc = '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower.<br><b><font color="fuschia"> Due to obtaining [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -12172,7 +12172,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'third passage to new world', category: 'tier1',
-                desc: 'May unlocking mysterious [New world] begin',
+                desc: 'May unlocking the mysterious [New world] begin!',
                 icon: [12, 19, 'magixmod'],
                 cost: { 'insight': 785, 'wisdom': 5, 'influence': 175, 'authority': 10, 'spirituality': 25 },
                 req: { 'dark side': true }
@@ -12518,7 +12518,7 @@ if (getCookie("civ") == "0") {
             //MAGIX
             new G.Trait({
                 name: 'belief in portals',
-                desc: '@Makes wizards want to create a new dimension //<small>Will it succed?</small>',
+                desc: '@Makes wizards want to create a new dimension. //<small>Will it succeed?</small>',
                 icon: [2, 1, 'magixmod'],
                 cost: { 'culture': 30, 'faith': 3 },
                 chance: 10,
@@ -14160,7 +14160,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'herbalism', category: 'tier1',
-                desc: '[gatherer] can now gather [herb] amount depending on biome.//Previously they were missing most of herbs because they were thinking that is just a simple grass.',
+                desc: '[gatherer] can now gather [herb]s from some types of grass, bushes, and other plants.//Previously they were missing most of the herbs because they thought that it was simple grass.',
                 icon: [31, 27, 'magixmod'],
                 req: { 'language': true },
                 cost: { 'insight': 10 },
@@ -14419,7 +14419,7 @@ if (getCookie("civ") == "0") {
             /*Insight traits will work together with culture one*/
             new G.Trait({
                 name: 'creativity over smartness', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [insight] costs reduced. <>For every 75 [insight] from the original cost, new cost is reduced by 3 (with [roots of insight] it\'s 4). (for example if research costs 225 [insight] it will cost 216 as long as this trait is active) @maximum reduction is 70.// <small>smort</small>',
+                desc: '@all researches, knowledges and traits have their [insight] costs reduced. <>For every 75 [insight] from the original cost, the new cost is reduced by 3 (with [roots of insight] it\'s 4). (For example, if a research costs 225 [insight], it will cost 216 as long as this trait is active.) @maximum reduction is 70.// <small>smort</small>',
                 icon: [24, 3, 'magixmod', 8, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14452,7 +14452,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'slower synapses',
-                desc: '@all researches, knowledges and traits have their [insight] costs increased. <>For every 75 [insight] from the original cost, new cost is increased by 3 (with [roots of insight] it\'s 2). (for example if research costs 225 [insight] it will cost 234 as long as this trait is active) @maximum reduction is 70.// <small>not smort</small>',
+                desc: '@all researches, knowledges and traits have their [insight] costs increased. <>For every 75 [insight] from the original cost, the new cost is increased by 3 (with [roots of insight] it\'s 2). (For example, if a research costs 225 [insight], it will cost 234 as long as this trait is active.) @maximum reduction is 70.// <small>not smort</small>',
                 icon: [23, 3, 'magixmod', 8, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14485,7 +14485,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'artistic thinking II', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [culture] costs reduced. <>For every 50 [culture] from the original cost, new cost is reduced by 2 (with [cultural roots] it\'s 3). (for example if research costs 200 [culture] it will cost 192 as long as this trait is active) @maximum reduction is 45.// <small>that\'s very arty art, isn\'t it?</small>',
+                desc: '@all researches, knowledges and traits have their [culture] costs reduced. <>For every 50 [culture] from the original cost, the new cost is reduced by 2 (with [cultural roots] it\'s 3). (For example, if a research costs 200 [culture], it will cost 192 as long as this trait is active.) @maximum reduction is 45.// <small>that\'s very arty art, isn\'t it?</small>',
                 icon: [24, 3, 'magixmod', 10, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14518,7 +14518,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'art rejection',
-                desc: '@all researches, knowledges and traits have their [culture] costs increased. <>For every 50 [culture] from the original cost, new cost is increased by 3 (with [cultural roots] it\'s 2). (for example if research costs 200 [culture] it will cost 208 as long as this trait is active) @maximum increase is 45. // <small>It\'s not culture after all...</small>',
+                desc: '@all researches, knowledges and traits have their [culture] costs increased. <>For every 50 [culture] from the original cost, the new cost is increased by 3 (with [cultural roots] it\'s 2). (For example, if a research costs 200 [culture], it will cost 208 as long as this trait is active.) @maximum increase is 45.// <small>It\'s not culture after all...</small>',
                 icon: [23, 3, 'magixmod', 10, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14551,7 +14551,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'faithful thinking',
-                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, new cost is reduced by 2 (with [deep-rooted faith] it\'s 3). (for example if research costs 200 [faith] it will cost 192 as long as this trait is active) @maximum reduction is 45.// <small>Ameno</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2 (with [deep-rooted faith] it\'s 3). (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @maximum reduction is 45.// <small>Have fun with this trait: it doesn\'t last very long!</small>',
                 icon: [24, 3, 'magixmod', 7, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14584,7 +14584,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'atheism',
-                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (for example if research costs 200 [faith] it will cost 208 as long as this trait is active)@maximum reduction is 45. // <small>dissenters...it seems like</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.) @maximum reduction is 45.// <small>dissenters...it seems like</small>',
                 icon: [23, 3, 'magixmod', 7, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14617,7 +14617,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //science powerup/powerdown is standalone. Is short and very, very rare
                 name: 'season for inventing',
-                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, new cost is reduced by 1. (for example if research costs 100 [science] it will cost 95 as long as this trait is active) @maximum reduction is 15 // <small>This trait is very rare...</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @maximum reduction is 15.// <small>This trait is very rare...</small>',
                 icon: [24, 3, 'magixmod', 6, 4, 23, 1],
                 cost: { 'culture II': 15, 'insight II': 5 },
                 chance: 1500,
@@ -14649,7 +14649,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'sabotaged knowledge',
-                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, new cost is increased by 2. (for example if research costs 100 [science] it will cost 120 as long as this trait is active) @maximum increase is 18.// <small>dissenters...seems like</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, the new cost is increased by 2. (For example, if a research costs 100 [science], it will cost 120 as long as this trait is active.) @maximum increase is 18.// <small>dissenters...seems like</small>',
                 icon: [23, 3, 'magixmod', 6, 4, 23, 1],
                 cost: { 'culture II': 15, 'insight II': 5 },
                 chance: 1500,
@@ -14682,7 +14682,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'liberality', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, new cost is reduced by 2 (with [political roots] it\'s 3). (for example if research costs 100 [influence] it will cost 92 as long as this trait is active) @maximum reduction is 30 // <small>democration...right?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2 (with [political roots] it\'s 3). (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @maximum reduction is 30.// <small>democration...right?</small>',
                 icon: [24, 3, 'magixmod', 11, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14715,7 +14715,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'disauthority',
-                desc: '@all researches, knowledges and traits have their [influence] costs increased. <>For every 20 [influence] from the original cost, new cost is increased by 2 (with [political roots] it\'s 1). (for example if research costs 100 [influence] it will cost 110 as long as this trait is active) @maximum increase is 38// <small>lawlesness? Isn\'t it lawlessness?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs increased. <>For every 20 [influence] from the original cost, the new cost is increased by 2 (with [political roots] it\'s 1). (For example, if a research costs 100 [influence], it will cost 110 as long as this trait is active.) @maximum increase is 38.// <small>lawlesness? Isn\'t it lawlessness?</small>',
                 icon: [23, 3, 'magixmod', 11, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14913,7 +14913,7 @@ if (getCookie("civ") == "0") {
                 ],
                 category: 'trial'
 
-            }); var most = 50 - (G.achievByName['patience'].won / 2)
+            });
             new G.Trait({
                 name: 't3',
                 displayName: 'Tu-ria\'s Trial',
@@ -14922,7 +14922,7 @@ if (getCookie("civ") == "0") {
                 req: { 'tribalism': false },
                 cost: {},
                 effects: [
-                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is the main rule of Cultural trial. You can gain or lose [cultural balance] from various techs (for example, mathematics decreases it, but symbolism increases it). It defines the rate of cultural stability in this plane. Reaching <b>50-(amount of times you completed Cultural/2)</b> or <b>' + (G.achievByName['cultural'].won / 2) + '</b> causes the trial to be failed. So be careful!'; G.getDict('cultural balance').hidden = false; } },
+                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is the main rule of Cultural trial. You can gain or lose [cultural balance] from various techs (for example, mathematics decreases it, but symbolism increases it). It defines the rate of cultural stability in this plane. Your [cultural balance] must not reach <b>' + (G.achievByName['cultural'].won / 2) + '</b> or <b>' + (50 - (G.achievByName['cultural'].won / 2)) + '</b>, or you will fail the Trial. So be careful!'; G.getDict('cultural balance').hidden = false; } },
                     { type: 'provide res', what: { 'inspiration': 10 } },
                     { type: 'provide res', what: { 'authority': 5 } },
                 ],
@@ -15137,7 +15137,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mining II', category: 'upgrade',
-                desc: 'Strike the earth...even stronger! For new minerals, new mystical wonders. @[mine]s can mine even deeper. To unlock prospecting for them get [prospecting III] research.',
+                desc: 'Strike the earth even stronger for new minerals and mystical wonders! @[mine]s can mine even deeper. To unlock prospecting for them get [prospecting III] research.',
                 icon: [0, 35, 'magixmod', 12, 1, 'magixmod'],
                 cost: { 'insight II': 190, 'science': 12, 'culture II': 8 },
                 req: { 'digging': true, 'construction': true, 'eotm': true, 'deep mining & quarrying': true },
@@ -15155,7 +15155,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'quarrying III', category: 'upgrade',
-                desc: 'Quarries can reach even deeper discovering new resources. However some minerals can be only gathered via quarrying. @If [prospecting III] obtained it will unlock new mode that will mainly focus on gathering these minerals.',
+                desc: 'Quarries can reach even deeper discovering new resources. However, some minerals can be only gathered via quarrying. @If [prospecting III] obtained it will unlock new mode that will mainly focus on gathering these minerals.',
                 icon: [12, 0, 'magixmod'],
                 cost: { 'insight II': 170, 'science': 12, 'faith II': 4, 'culture II': 2, 'influence II': 2 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
@@ -15246,7 +15246,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'dinium & unknownium working', category: 'tier2',
-                desc: '@[furnace]s can now make [mystical metal ingot]s from [dinium ore] and [unknownium ore]. However there is 50% chance that it will succed.<>',
+                desc: '@[furnace]s can now make [mystical metal ingot]s from [dinium ore] and [unknownium ore]. However, there\'s only a 50% chance that it will succeed.<>',
                 icon: [18, 30, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 30 },
                 req: { 'mining II': true, 'furnace modernization': true, 'wonder \'o science': true, 'osmium-working': true, 'blackium-working': true, 'zinc-working': true, 'mythril-working': true, 'lead-working': true },
@@ -15657,7 +15657,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However you still can\'t see more exactly how many of the resource do you have in the territory.</font>',
+                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see more exactly how many of the resource do you have in the territory.</font>',
                 icon: [34, 14, 'magixmod'],
                 cost: { 'insight': 10, 'culture': 15 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -15673,7 +15673,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'enlightenment',
-                desc: '[soothsayer]s and [druid]s from now are more efficient. //@[soothsayer] has more chance to succed [faith] production. [church] generates 2% more [faith]. Also every 5 [church,Churches] you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and can no longer work once any evolution will occur.</font>',
+                desc: '[soothsayer]s and [druid]s from now are more efficient. //@[soothsayer] has more chance to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
                 icon: [35, 28, 'magixmod'],
                 req: { 'tribalism': false },
                 chance: 30,
@@ -15683,7 +15683,7 @@ if (getCookie("civ") == "0") {
             //* * * * * CHRISTMAS TECHS/TRAITS * * * * *
             new G.Tech({
                 name: 'winter holidays', category: 'seasonal',
-                desc: '@You want to bring one of events/festives you know from somewhere else right to your tribe. The hint word: Winter. //It is all about snow, snowmen, etc. However no one showed even to your people how does snowman look like or what a winter ornament is. //[digger]s will start digging for [snow] if available.',
+                desc: '@You want to bring one of events/festivities you know from somewhere else right to your tribe...something about winter. //It is all about snow, snowmen, etc. However, no one has shown to anyone what a snowman looks like or what a winter ornament is. @[digger]s will start digging for [snow] if available.',
                 icon: [1, 11, 'seasonal'],
                 cost: { 'insight': 210, 'culture': 45, 'faith': 5 },
                 req: { 'culture of celebration': true, 'philosophy': true, 'tribalism': false },
@@ -15749,7 +15749,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'festive robot print', category: 'seasonal',
-                desc: 'A [festive robot print] may help you to gather [christmas essence] outta snowmen kids constructed. Works slowly and only one can be placed but later you will unlock magical overclocks. @However with each overclock a chance to lose a snowman upon [christmas essence,Essence] feed increase by some amount that its speed increases.',
+                desc: 'A [festive robot print] may help you to gather [christmas essence] out of snowmen kids. Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon [christmas essence,Essence] feed increases by some amount.',
                 icon: [14, 12, 'seasonal'],
                 cost: { 'insight': 1000, 'wisdom': 100 },
                 req: { 'the christmas': true, 'snowmen': true },
@@ -15841,7 +15841,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'festive artisanistry', category: 'seasonal',
-                desc: 'unlocks the [artisan of christmas] // <small>Ho, ho, ho!</small>',
+                desc: 'Unlocks the [artisan of christmas]. // <small>Ho, ho, ho!</small>',
                 icon: [15, 11, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50 },
                 req: { 'winter holidays': true, 'tribalism': false },
@@ -16565,7 +16565,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict("herb").desc += " However eating them won\'t make [population,people], people mad.";
+                            G.getDict("herb").desc += " However, eating them won\'t make [population,people] people mad.";
                             G.getDict("herb").turnToByContext['eating'] = { 'health': 0.006 };
 
                         }
@@ -19719,7 +19719,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This good does not provide anything, however.',
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This good does not provide anything, however.',
                 icon: [36, 0, 'magixmod'],
             });
             new G.Goods({
@@ -22366,6 +22366,7 @@ if (getCookie("civ") == "0") {
                     { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } },
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
                     { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3 },
+                    { type: 'gather', context: 'gather', what: { 'herb': 0.1 }, amount: 1, max: 1, req: { 'herbalism': true } },
                     { type: 'gather', context: 'gather', what: { 'herb': 0.45, 'fruit': 0.45 }, amount: 1, max: 1, req: { 'plant lore': true } },
                     //Random trends
                     { type: 'gather', context: 'gather', what: { 'stick': 0.035 }, req: { 'gtt1': true } },
@@ -23613,7 +23614,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'tool-making', category: 'tier1',
-                desc: '@[artisan]s can now create [stone tools]<>With proper [tool-making], new procedures arise to craft a multitude of specialized tools out of cheap materials - such as hammers, knives, and axes.',
+                desc: '@[artisan]s can now create [stone tools]<>With proper [tool-making], new procedures arise to craft a multitude of specialized tools out of cheap materials. These include hammers, knives, and axes.',
                 icon: [4, 1, 'c2'],
                 cost: { 'creativity': 6, 'discernment': 6 },
                 req: { 'stone-knapping': true, 'carving': true },
@@ -24289,7 +24290,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'herbalism', category: 'tier1',
-                desc: '[gatherer] can now gather [herb] amount depending on biome.//Previously they were missing almost all of herbs because they were thinking that is just a simple grass.<br>//<small>But still it all looks like a plain grass!</small>',
+                desc: '[gatherer]s can now gather some [herb]s in small amounts.<br>//<small>But still it all looks like plain grass!</small>',
                 icon: [22, 10, 'c2'],
                 req: { 'language': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
@@ -24317,7 +24318,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'upscale', category: 'anomaly',
-                desc: '//Increases costs of rolling/rerolling in tech tab also [battery of discoveries] from now will charge way slower. //<small>It may have something to do with pressure seems like. However it feels balanced doesn\'t it? I\'d better be prepared for next anomalies.</small>',
+                desc: '//Increases costs of rolling/rerolling in tech tab. Also, [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. However, it feels balanced doesn\'t it? I\'d better be prepared for the next anomalies.</small>',
                 icon: [28, 11, 'c2'],
                 req: { 'language': true, 'cities': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
@@ -24376,7 +24377,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'mystic', category: 'anomaly', displayName: '<font color="#fa7df2">Mystic</font>',
-                desc: '<font color="#fa7df2">A mystic aura has been triggered. Everything will decay faster, excluding magical resources. Magical units will be more efficient. Disease and death rates will increase. //Every year, you have a 20% chance for n event that will cause one random resource (except [population] or [land]) to be all lost. If choice lands on [discernment] or other essentials, you will lose them all (except [wisdom], [inspiration], and values controlling caps of essentials)//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Bibiddi bobiddi boo</small></font>',
+                desc: '<font color="#fa7df2">A mystic aura has been triggered. Everything will decay faster, excluding magical resources. Magical units will be more efficient. Disease and death rates will increase. //Every year, you have a 20% chance for an event that will cause one random resource (except [population] or [land]) to be all lost. If choice lands on [discernment] or other essentials, you will lose them all (except [wisdom], [inspiration], and values controlling caps of essentials)//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Bibiddi bobiddi boo</small></font>',
                 icon: [22, 16, 'c2'],
                 effects: [{ type: 'function', func: function () { G.auratext = 3 } },],
                 req: { 'tribalism': false },
@@ -25035,7 +25036,7 @@ if (getCookie("civ") == "0") {
             /*Insight traits will work together with culture one*/
             new G.Trait({
                 name: 'natural discernment', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, the new cost is reduced by 3. (For example, if a research costs 225 [discernment], it will cost 216 as long as this trait is active.) @the maximum reduction is 70.// <small>much smort</small>',
+                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, the new cost is reduced by 3. (For example, if a research costs 225 [discernment], it will cost 216 as long as this trait is active.) @maximum reduction is 70.// <small>much smort</small>',
                 icon: [24, 3, 'magixmod', 8, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25068,7 +25069,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'slower synapses',
-                desc: '@all researches, knowledges and traits have their [discernment] costs increased. <>For every 75 [discernment] from the original cost, new cost is increased by 3. (for example if research costs 225 [discernment] it will cost 234 as long as this trait is active) @maximum reduction is 70.// <small>not smort</small>',
+                desc: '@all researches, knowledges and traits have their [discernment] costs increased. <>For every 75 [discernment] from the original cost, the new cost is increased by 3. (For example, if a research costs 225 [discernment], it will cost 234 as long as this trait is active.) @maximum reduction is 70.// <small>not smort</small>',
                 icon: [23, 3, 'magixmod', 8, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25101,7 +25102,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'artistic thinking II', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [gentility] costs reduced. <>For every 50 [gentility] from the original cost, new cost is reduced by 2. (for example if research costs 200 [gentility] it will cost 192 as long as this trait is active) @maximum reduction is 45.// <small>that\'s very arty art, isn\'t it?</small>',
+                desc: '@all researches, knowledges and traits have their [gentility] costs reduced. <>For every 50 [gentility] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [gentility], it will cost 192 as long as this trait is active.) @maximum reduction is 45.// <small>that\'s very arty art, isn\'t it?</small>',
                 icon: [24, 3, 'magixmod', 10, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25134,7 +25135,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'art rejection',
-                desc: '@all researches, knowledges and traits have their [gentility] costs increased. <>For every 50 [gentility] from the original cost, new cost is increased by 3. (for example if research costs 200 [gentility] it will cost 208 as long as this trait is active) @maximum increase is 45. // <small>It\'s not culture after all...</small>',
+                desc: '@all researches, knowledges and traits have their [gentility] costs increased. <>For every 50 [gentility] from the original cost, the new cost is increased by 3. (For example, if a research costs 200 [gentility], it will cost 208 as long as this trait is active.) @maximum increase is 45.// <small>It\'s not culture after all...</small>',
                 icon: [23, 3, 'magixmod', 10, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25167,7 +25168,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'druidish thinking',
-                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, new cost is reduced by 2 . (for example if research costs 200 [faith] it will cost 192 as long as this trait is active) @maximum reduction is 45.// <small>Ameno</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @maximum reduction is 45.// <small>Have fun with this trait: it doesn\'t last very long!</small>',
                 icon: [24, 3, 'magixmod', 7, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25200,7 +25201,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'druid\'s hatred',
-                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, new cost is increased by 2. (for example if research costs 200 [faith] it will cost 208 as long as this trait is active)@maximum reduction is 45. // <small>dissenters...seems like</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2. (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.)@maximum reduction is 45.// <small>dissenters...seems like</small>',
                 icon: [23, 3, 'magixmod', 7, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25233,7 +25234,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //science powerup/powerdown is standalone. Is short and very, very rare
                 name: 'season for inventing',
-                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (for example if research costs 100 [science] it will cost 95 as long as this trait is active) @maximum reduction is 15 // <small>This trait is very rare...</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @maximum reduction is 15.// <small>This trait is very rare...</small>',
                 icon: [24, 3, 'magixmod', 6, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 1500,
@@ -25265,7 +25266,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'sabotaged knowledge',
-                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, new cost is increased by 2. (for example if research costs 100 [science] it will cost 120 as long as this trait is active) @maximum increase is 18// <small>dissenters...seems like</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, the new cost is increased by 2. (For example, if a research costs 100 [science], it will cost 120 as long as this trait is active.) @maximum increase is 18.// <small>dissenters...seems like</small>',
                 icon: [23, 3, 'magixmod', 6, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 1500,
@@ -25298,7 +25299,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'liberality', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, new cost is reduced by 2. (for example if research costs 100 [influence] it will cost 92 as long as this trait is active) @maximum reduction is 30 // <small>democration...right?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2. (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @maximum reduction is 30.// <small>democration...right?</small>',
                 icon: [24, 3, 'magixmod', 11, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -25331,7 +25332,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'disauthority',
-                desc: '@all researches, knowledges and traits have their [influence] costs increased. <>For every 20 [influence] from the original cost, new cost is increased by 2. (for example if research costs 100 [influence] it will cost 110 as long as this trait is active) @maximum increase is 38// <small>lawlesness? Isn\'t it lawlessness?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs increased. <>For every 20 [influence] from the original cost, the new cost is increased by 2. (For example, if a research costs 100 [influence], it will cost 110 as long as this trait is active.) @maximum increase is 38.// <small>lawlesness? Isn\'t it lawlessness?</small>',
                 icon: [23, 3, 'magixmod', 11, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26837,7 +26838,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However some reefs can be met on depths of lukewarm oceans but in much smaller colonies. //This does not provide anything useful, however.',
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This does not provide anything useful, however.',
                 icon: [choose([8, 9]), 17, 'c2'],
             });
             new G.Goods({
