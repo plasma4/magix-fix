@@ -1,3 +1,15 @@
+.pixelate {
+	/* totally not taken from style.css */
+	/* http://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
+	image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+	image-rendering: -moz-crisp-edges;          /* Firefox                        */
+	image-rendering: -o-crisp-edges;            /* Opera                          */
+	image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+	image-rendering: pixelated; /* Chrome */
+	image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+	-ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */ /* Note : for some reason, no longer works in Edge. This is great */
+}
+
 body {
   height: 100vh;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -5,11 +17,6 @@ body {
   filter: drop-shadow(0 0 10px white);
 }
 
-@function random_range($min, $max) {
-  $rand: random();
-  $random_range: $min + floor($rand * (($max - $min) + 1));
-  @return $random_range;
-}
 .tutorialMessage>.messageContent
 {
 	background:rgba(0,0,255,0.2);
