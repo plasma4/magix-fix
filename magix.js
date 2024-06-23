@@ -793,8 +793,8 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img class="icon" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="icon" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -17993,7 +17993,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Patience - -</font></div>' +
                                     '<div class="fancyText">The Chra-nos trial</font></div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/1.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/1.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -18008,7 +18008,7 @@ if (getCookie("civ") == "0") {
                                             G.NewGameConfirm();
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Patience trial has been started. You are in Chra-nos\'s plane', 'slow');
-                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Patience trial begins</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
+                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
                                             })
                                         }
                                     }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Patience', 'off') } }) + '</center>' +
@@ -18034,7 +18034,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Unhappy - -</font></div>' +
                                     '<div class="fancyText">The Bersaria trial</font></div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/2.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/2.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -18048,7 +18048,7 @@ if (getCookie("civ") == "0") {
                                             G.dialogue.close();
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Unhappy trial has been started. You are in Bersaria\'s plane', 'slow');
-                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Unhappy trial begins</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
+                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
                                             })
                                         }
                                     }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Patience', 'off') } }) + '</center>' +
@@ -18074,7 +18074,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Cultural - -</font></div>' +
                                     '<div class="fancyText">The Turia<br>/div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/3.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/3.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -18088,7 +18088,7 @@ if (getCookie("civ") == "0") {
                                             G.dialogue.close();
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Cultural trial has been started. You are in Tu-ria\'s plane', 'slow');
-                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Cultural trial begins</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
+                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
                                             })
                                         }
                                     }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Patience', 'off') } }) + '</center>' +
@@ -18114,7 +18114,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Hunted - -</font></div>' +
                                     '<div class="fancyText">The Hartar<br>/div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/4.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/4.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -18128,7 +18128,7 @@ if (getCookie("civ") == "0") {
                                             G.dialogue.close();
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Hunted trial has been started. You are in Hartar\'s plane', 'slow');
-                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Hunted trial begins</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
+                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
                                             })
                                         }
                                     }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Patience', 'off') } }) + '</center>' +
@@ -18182,22 +18182,6 @@ if (getCookie("civ") == "0") {
                 req: { 'se10': 'on', 'ignoreItem': true },
                 category: 'trial',
                 effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun<br>/div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.doFunc('new game');G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
                 ],
             });
             new G.Policy({
@@ -18209,22 +18193,6 @@ if (getCookie("civ") == "0") {
                 req: { 'se10': 'on', 'ignoreItem': true },
                 category: 'trial',
                 effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun<br>/div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){    G.getRes('beyond').amount=0;G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.doFunc('new game');G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
                 ],
             });
             new G.Policy({
@@ -18241,7 +18209,7 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Herbalism - -</font></div>' +
                                     '<div class="fancyText">The Herbalia<br>/div><br>' +
-                                    '<img src="https://file.garden/ZmatEHzFI2_QBuAF/Trial7.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://file.garden/ZmatEHzFI2_QBuAF/Trial7.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
@@ -18255,7 +18223,7 @@ if (getCookie("civ") == "0") {
                                             G.dialogue.close();
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Herbalism trial has been started. You are in Herbalia\'s plane', 'slow');
-                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Herbalism trial begins</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
+                                                G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + ''
                                             })
                                         }
                                     }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Patience', 'off') } }) + '</center>' +
@@ -18279,16 +18247,16 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.dialogue.popup(function (div) {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
-                                    '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>' +
+                                    '<div class="fancyText title"><font color="#d4af37" size="5">- - Buried - -</font></div>' +
                                     '<div class="fancyText">The Buri\'o dak<br>/div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/8.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/8.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
                                     'My plane full of one thing...Death. And it\'s full of darkness. Also, everything that provides you <font color="white">Housing</font> gives 2.5x more than it would do normally. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to retry the trial after its completion.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
-                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t8']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.middleText('The Buried trial has been started. You are in Buri\'o dak\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
+                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t8']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.middleText('The Buried trial has been started. You are in Buri\'o dak\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
                                     '</div><div class="buttonBox">' +
                                     '</div></div>'
@@ -18306,22 +18274,6 @@ if (getCookie("civ") == "0") {
                 req: { 'se10': 'on', 'ignoreItem': true },
                 category: 'trial',
                 effects: [
-                    /*{type:'function',func:function(){G.dialogue.popup(function(div){
-                    return '<div style="width:580px;min-height:550px;height:75%;">'+
-                        '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                        '<div class="fancyText">The Mamuun<br>/div><br>'+
-                        '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-        '<br><br><Br><br>'+
-                        '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                        '<br>Trial rules<br>'+
-                        'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-        '<div class="fancyText title">Tell me your choice...</div>'+
-                        '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.doFunc('new game');G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                        '</div>'+
-                    '</div><div class="buttonBox">'+
-                    '</div></div>'
-        })}}*/
                 ],
             });
             new G.Policy({
@@ -18338,14 +18290,14 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>' +
                                     '<div class="fancyText">The Mamuun<br>/div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 2.5x as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Mostly gathering though. Remember, however, that lower tiers of currency decay faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time will raise this up from 35% to 55%)<br><Br><BR>' +
+                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 2.5x as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time will raise this up from 35% to 55%)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
-                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t10']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.middleText('The Pocket trial has been started. You are in Mammun\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
+                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t10']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.middleText('The Pocket trial has been started. You are in Mammun\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
                                     '</div><div class="buttonBox">' +
                                     '</div></div>'
@@ -18368,14 +18320,14 @@ if (getCookie("civ") == "0") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Faithful - -</font></div>' +
                                     '<div class="fancyText">The Enlightened<br>/div><br>' +
-                                    '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/11.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/11.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
                                     'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="aqua">spirituality</font> and 100 <font color="aqua">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If your Faith goes negative or reaches zero, the trial will be failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
-                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.techN = 0; G.traitN = 0; G.doFunc('new game'); G.fastTicks = 0; G.gainTrait(G.traitByName['t11']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.middleText('The Faithful trial has been started. You are in Enlightened\'s plane', 'slow'); G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
+                                    '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.techN = 0; G.traitN = 0; G.doFunc('new game'); G.fastTicks = 0; G.gainTrait(G.traitByName['t11']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.middleText('The Faithful trial has been started. You are in Enlightened\'s plane', 'slow'); G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
                                     '</div><div class="buttonBox">' +
                                     '</div></div>'
@@ -18389,26 +18341,10 @@ if (getCookie("civ") == "0") {
                 desc: 'Starts [se12] trial. You will be warned before starting.',
                 icon: [24, 18, 'magixmod', 18, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off',
-                req: { 'se10': 'on' },
+                req: { 'se10': 'on', 'ignoreItem': true },
                 category: 'trial',
                 effects: [
-              /*{type:'function',func:function(){G.dialogue.popup(function(div){
-              return '<div style="width:580px;min-height:550px;height:75%;">'+
-                  '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>'+
-                  '<div class="fancyText">The Mamuun<br>/div><br>'+
-                  '<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Trial%20icons/10.png" width="72" height="72"/>'+
-                  '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">'+
-  '<br><br><Br><br>'+
-                  '<center><font color="red">Note: Starting this trial will cause similar effects as ascension does, but only these bonuses from achievements will carry to the Trial: +1 tech choice(from Row 3 completion)</font>'+
-                  '<br>Trial rules<br>'+
-                  'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherer can gather money there...in 3 tiers. Also exploring units are 2.5x as efficient. To buying resources that you can\'t gather you will need 3rd tier of currency. None of crafting units exist in fact crafting isn\'t even possible in this plane. Only and just gathering(except some). Remember. Lower tiers of currency decays faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time - raise up from 35 to 55%)<br><Br><BR>'+
-  '<div class="fancyText title">Tell me your choice...</div>'+
-                  '<center>'+G.button({text:'Start the trial',tooltip:'Let the Trial begin. You\'ll pseudoascend.',onclick:function(){G.dialogue.close();G.dialogue.popup(function(div){G.unitsOwned.length=0;G.policy.length=0;G.traitsOwned.length=0;G.techsOwned.length=0;G.NewGameConfirm();G.getRes('burial spot').used=0;G.getRes('worker').used=0;G.getRes('stone weapons').used=0;G.getRes('armor set').used=0;G.getRes('metal weapons').used=0;G.getRes('fishing net').used=0;G.getRes('knapped tools').used=0;G.getRes('stone tools').used=0;G.getRes('land').used=0;G.getRes('metal tools').used=0;G.getRes('worker').used=0;G.getRes('wand').used=0;G.getRes('alchemist').used=0;G.getRes('corpse').amount=0;G.doFunc('new game');G.getRes('beyond').amount=0;G.getRes('health').amount=0;G.getRes('happiness').amount=0;G.techN=0;G.traitN=0;G.fastTicks=0;G.gainTrait(G.traitByName['t10']);var trial=G.traitByName['trial'];G.gainTrait(trial);G.year=0; G.day=0;G.middleText('The Pocket trial has been started. You are in Mammun\'s plane','slow');G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the Pocket trial begins :)</font><br>Technical note: Refresh the page.</div>'+G.dialogue.getCloseButton('Okay')+''})}})+''+G.button({tooltip:'Start preparing',text:'Wait, I\'m not ready yet!',onclick:function(){G.dialogue.forceClose(); G.setPolicyModeByName('Pocket','off')}})+'</center>'+
-                  '</div>'+
-              '</div><div class="buttonBox">'+
-              '</div></div>'
-  })}}
-                  */],
+                ],
             });
             new G.Policy({
                 name: 'discovery rituals',
