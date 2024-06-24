@@ -1151,8 +1151,33 @@ function islandName() {
     return rawName == 'undefined' || rawName == 'plain island' ? 'Plain Island' : rawName
 }
 function changeHappiness(amount, description) {
-    G.gain('happiness', amount < 0 ? ungrateful * amount : amount, description)
+    G.gain('happiness', amount, description)
 }
+G.gain = function (what, amount, context) {
+    //add some amount to a resource; do not use on meta-resources
+    if (amount < 0) { return G.lose(what, -amount, context); }
+    if (what === 'happiness') { amount *= ungrateful }
+    var me = G.getRes(what);
+    if (me.replacement) me = G.getRes(me.replacement);
+    if (amount > 0) {
+        if (me.meta) {
+            return 0;
+        }
+        else {
+            var oldAmount = me.amount;
+            me.amount += amount * me.mult;
+            if (!me.fractional) me.amount = randomFloor(me.amount);
+            if (context != '-') me.gained += me.amount - oldAmount;
+            if (context && context != '-' && !me.gainedBy.includes(context)) me.gainedBy.push(context);
+            if (me.partOf) {
+                var meta = G.getRes(me.partOf);
+                if (context != '-') meta.gained += me.amount - oldAmount;
+                if (context && context != '-' && !meta.gainedBy.includes(context)) meta.gainedBy.push(context);
+            }
+        }
+    }
+}
+
 if (getCookie("civ") == "0") {
     //////////////////////////////////////////////////////////////
     ////////ACTUAL CONTENT - CIV 1
@@ -1538,7 +1563,7 @@ if (getCookie("civ") == "0") {
                 if (G.achievByName['talented?'].won > 0) G.getDict('research box').choicesN++;
                 if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
                     if (G.achievByName['god complex'].won == 0) {
-                        G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats</small>', 'slow')
+                        G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats!</small>', 'slow')
                     };
                     G.getDict('research box').choicesN--; //punishment
                 };
@@ -1696,7 +1721,7 @@ if (getCookie("civ") == "0") {
                     if (G.achievByName['talented?'].won > 0) G.getDict('research box').choicesN++;
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
                         if (G.achievByName['god complex'].won == 0) {
-                            G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats</small>', 'slow')
+                            G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats!</small>', 'slow')
                         };
                         G.getDict('research box').choicesN--; //no matter what. That's punishment element
                     };
@@ -1738,7 +1763,7 @@ if (getCookie("civ") == "0") {
                         G.lose("herb", h);
                         G.gain("herb essence", h * 0.08);
                         if (G.getRes('herb essence').amount >= G.herbReq) {
-                            G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making " + G.getName("inhabs") + " happy. Keep up the good work and do not forget that civilization will demand more and more of Herbs essence and you will need it for your final wonder.", icon: [36, 19, 'magixmod'] });
+                            G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making " + G.getName("inhabs") + " people happy. Keep up the good work and do not forget that your civilization will demand more and more of Herb essence and that the final wonder requires it.", icon: [36, 19, 'magixmod'] });
                             changeHappiness(2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.gain("health", 2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.lose("herb essence", G.herbReq, "population please");
@@ -10763,16 +10788,16 @@ if (getCookie("civ") == "0") {
                 },
                 buttonTooltip: function () {
                     if (G.has('t3')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The costs scales with your <b>Wisdom</b>(for Insight),<b>Inspiration</b>(for Culture) and <b>Authority</b>(for Influence).' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time. This will not involve in stability.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The costs scales with your <b>Wisdom</b> (for Insight),<b>Inspiration</b> (for Culture) and <b>Authority</b> (for Influence).' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time. This will not involve in stability.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     if (!G.has('eotm') && G.has('t2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>The blood cost scales with <b>Wisdom</b> resource as well.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>The blood cost scales with <b>Wisdom</b> resource as well.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     else if (!G.has('eotm')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                     else if (G.has('eotm')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom II & Education</b> resources.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom II & Education</b> resources.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                 }
             });
@@ -20075,7 +20100,7 @@ if (getCookie("civ") == "0") {
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
-                    (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "A ray of hope") +
+                    (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "A ray of hope...") +
                     '</div>' +
                     '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br>and at the deepness of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
                     '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br>They call you:</div>';
@@ -20086,7 +20111,7 @@ if (getCookie("civ") == "0") {
                 theme();
                 if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
                     if (G.achievByName['god complex'].won == 0) {
-                        G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats</small>', 'slow')
+                        G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats!</small>', 'slow')
                     };
                     G.getDict('research box').choicesN--; //no matter what. That's punishment element
                 };
@@ -20169,7 +20194,7 @@ if (getCookie("civ") == "0") {
                     theme();
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
                         if (G.achievByName['god complex'].won == 0) {
-                            G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats</small>', 'slow')
+                            G.achievByName['god complex'].won = 1; G.middleText('- Completed <font color="#bbffbb">God complex</font> shadow achievement -<br><hr width="300"><small>Congrats!</small>', 'slow')
                         };
                         G.getDict('research box').choicesN--; //no matter what. That's punishment element
                     };
@@ -23431,9 +23456,9 @@ if (getCookie("civ") == "0") {
                 buttonTooltip: function () {
                     var charged = (G.achievByName['the fortress'].won > 0 ? "3/4 charged" : "fully charged");
                     if (G.has('oral tradition 2/2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     } else {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll into new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost scales with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>Cost increases with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '.</div></div>';
                     }
                 }
             });
