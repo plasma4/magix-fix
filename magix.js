@@ -6182,7 +6182,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'golden insight',
-                desc: '[golden insight] is a essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself. //Just like [insight] it is limited by [wisdom]!',
+                desc: '[golden insight] is a essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself. //Just like [insight], it is limited by [wisdom]!',
                 icon: [35, 16, 'magixmod'],
                 category: 'main',
                 limit: 'wisdom',
@@ -6236,7 +6236,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'child of Christmas',
-                desc: '[child of Christmas,Children of Christmas] leave after many meetings from the Lodge of Christmas. Some of them say they are elves, Claus\'s helpers and many more.//After a while, they will grow up into [adult,Adults].//Children drink and eat half as much as adults.//These children can work as [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people bringing [happiness]. @They are happy despite assigning them to work as long (as their work is related to christmas, of course).',
+                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them say they are elves, Claus\'s helpers and many more.//After a while, they will grow up into [adult,Adults].//These children drink and eat half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
                 partOf: 'population',
                 icon: [13, 11, 'seasonal'],
                 hidden: true,
@@ -7547,71 +7547,39 @@ if (getCookie("civ") == "0") {
                     'diggers': { name: 'Digger\'s lodge', icon: [7, 2], desc: 'Hire [digger]s until there are 5 for each of this lodge.', req: { 'digging': true } },
                     'woodcutters': { name: 'Woodcutter\'s lodge', icon: [8, 2], desc: 'Hire [woodcutter]s until there are 5 for each of this lodge.', req: { 'woodcutting': true } },
                     'artisans': { name: 'Artisan\'s lodge', icon: [6, 2], desc: 'Hire [artisan]s until there are 5 for each of this lodge.', req: { 'stone-knapping': true } },
-                    'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 5 for each of this lodge.', req: { 'plant lore': true } },
                 },
                 effects: [
-                    { type: 'gather', what: { 'happiness': 0.01 } },
+                    { type: 'gather', what: { 'happiness': 0.015 } },
                     { type: 'provide', what: { 'housing': 2 }, req: { 'guilds unite': true } },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * (G.has("guilds unite") ? 100 : 8) > G.getUnitAmount('gatherer') + G.unitsOwned[(G.unitsOwned.length - 1) - G.unitByName['gatherer'].id].idle && G.canBuyUnitByName('gatherer', 1)) G.buyUnitByName('gatherer', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('gatherer')].targetAmount) G.buyUnitByName('gatherer', 1, true);
                         }, mode: 'gatherers'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('hunter')) G.buyUnitByName('hunter', 1, true);
-                        }, mode: 'hunters', req: { 'guilds unite': false }
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('hunter')].targetAmount) G.buyUnitByName('hunter', 1, true);
+                        }, mode: 'hunters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('fisher')) G.buyUnitByName('fisher', 1, true);
-                        }, mode: 'fishers', req: { 'guilds unite': false }
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('fisher')].targetAmount) G.buyUnitByName('fisher', 1, true);
+                        }, mode: 'fishers'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('digger')) G.buyUnitByName('digger', 1, true);
-                        }, mode: 'diggers', req: { 'guilds unite': false }
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('digger')].targetAmount) G.buyUnitByName('digger', 1, true);
+                        }, mode: 'diggers'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('woodcutter')) G.buyUnitByName('woodcutter', 1, true);
-                        }, mode: 'woodcutters', req: { 'guilds unite': false }
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('woodcutter')].targetAmount) G.buyUnitByName('woodcutter', 1, true);
+                        }, mode: 'woodcutters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('artisan')) G.buyUnitByName('artisan', 1, true);
-                        }, mode: 'artisans', req: { 'guilds unite': false }
-                    },
-                    //At guilds unite
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('gatherer')) G.buyUnitByName('gatherer', 1, true);
-                        }, mode: 'gatherers', req: { 'guilds unite': true }
-                    },
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('hunter')) G.buyUnitByName('hunter', 1, true);
-                        }, mode: 'hunters', req: { 'guilds unite': true }
-                    },
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('fisher')) G.buyUnitByName('fisher', 1, true);
-                        }, mode: 'fishers', req: { 'guilds unite': true }
-                    },
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('digger')) G.buyUnitByName('digger', 1, true);
-                        }, mode: 'diggers', req: { 'guilds unite': true }
-                    },
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('woodcutter')) G.buyUnitByName('woodcutter', 1, true);
-                        }, mode: 'woodcutters', req: { 'guilds unite': true }
-                    },
-                    {
-                        type: 'function', func: function (me) {
-                            if (me.amount * 100 > G.getUnitAmount('artisan')) G.buyUnitByName('artisan', 1, true);
-                        }, mode: 'artisans', req: { 'guilds unite': true }
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('artisan')].targetAmount) G.buyUnitByName('artisan', 1, true);
+                        }, mode: 'artisans'
                     },
                 ],
                 req: { 'sedentism': true },
@@ -7634,20 +7602,20 @@ if (getCookie("civ") == "0") {
                     'blacksmiths': { name: 'Blacksmiths\' guild', icon: [26, 2, 25, 2], desc: 'Build [blacksmith workshop]s until there are 5 for each of this guild.', req: { 'smelting': true } }
                 },
                 effects: [
-                    { type: 'gather', what: { 'happiness': 0.005 } },
+                    { type: 'gather', what: { 'happiness': 0.015 } },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('potter')) G.buyUnitByName('potter', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('potter')].targetAmount) G.buyUnitByName('potter', 1, true);
                         }, mode: 'potters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('carpenter workshop')) G.buyUnitByName('carpenter workshop', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('carpenter workshop')].targetAmount) G.buyUnitByName('carpenter workshop', 1, true);
                         }, mode: 'carpenters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('blacksmith workshop')) G.buyUnitByName('blacksmith workshop', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('blacksmith workshop')].targetAmount) G.buyUnitByName('blacksmith workshop', 1, true);
                         }, mode: 'blacksmiths'
                     }
                 ],
@@ -7946,7 +7914,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'windmill',
-                desc: '@An unit which can convert [wheat] into [flour].',
+                desc: 'These can convert [wheat] into [flour].',
                 icon: [24, 11, 'magixmod'],
                 cost: { 'basic building materials': 600 },
                 req: { 'flour-crafting II': true },
@@ -7961,7 +7929,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'wheat farm',
-                desc: '@Special for [wheat]. Without [wheat] it is impossible to craft [bread].',
+                desc: '@Special for [wheat]. Without [wheat], it is impossible to craft [bread].',
                 icon: [24, 12, 'magixmod'],
                 cost: { 'seeds': 2000 },
                 req: { 'farm of wheat': true },
@@ -10414,18 +10382,11 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'gatherers': { name: 'Gatherer\'s lodge', icon: [0, 2], desc: 'Hire [gatherer]s until there are 6 for each of this lodge.', req: { 'tribalism': true } },
-                    'hunters': { name: 'Hunter\'s lodge', icon: [18, 2], desc: 'Hire [hunter]s until there are 6 for each of this lodge.', req: { 'hunting': true } },
-                    'fishers': { name: 'Fisher\'s lodge', icon: [17, 2], desc: 'Hire [fisher]s until there are 6 for each of this lodge.', req: { 'fishing': true } },
-                    'diggers': { name: 'Digger\'s lodge', icon: [7, 2], desc: 'Hire [digger]s until there are 6 for each of this lodge.', req: { 'digging': true } },
-                    'woodcutters': { name: 'Woodcutter\'s lodge', icon: [8, 2], desc: 'Hire [woodcutter]s until there are 6 for each of this lodge.', req: { 'woodcutting': true } },
-                    'artisans': { name: 'Artisan\'s lodge', icon: [6, 2], desc: 'Hire [artisan]s until there are 6 for each of this lodge.', req: { 'stone-knapping': true } },
-                    'florists': { name: 'Florist\'s lodge', icon: [7, 11, 'magixmod'], desc: 'Hire [florist]s until there are 6 for each of this lodge.', req: { 'plant lore': true } },
                 },
                 effects: [
 
                 ],
-                req: { 'the christmas': true, 'tribalism': false },
+                req: { 'the christmas': true, 'tribalism': false, 'ignoreItem': true },
                 category: 'seasonal',
                 visible: false
             });
@@ -11681,7 +11642,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'monument-building II', category: 'upgrade',
-                desc: '@unlocks the [temple of deities,temple of deities], an mid-legacy wonder. Much bigger than [mausoleum], may lead to victory<>',
+                desc: '@unlocks the [temple of deities,temple of deities], a mid-legacy wonder. Much bigger than [mausoleum], may lead to victory<>',
                 icon: [0, 35, 'magixmod', 14, 10, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 300, 'spirituality': 15, 'faith': 125 },
                 req: { 'construction': true, 'burial': true, 'culture of the afterlife': true, 'physics': true },
@@ -15117,7 +15078,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gardening',
-                desc: '<font color="#aaffff">A key for farms. People learn how to make a irrigation system. Thanks to it they may start thinking about making some small gardens, then expand them to farms or even plantations.</font>',
+                desc: '<font color="#aaffff">A key for farms. People learn how to make an irrigation system. Thanks to it they may start thinking about making some small gardens, then expand them to farms or even plantations.</font>',
                 icon: [10, 0, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'druidism': true, 'city planning': true },
@@ -15327,7 +15288,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'no knapping anymore',
-                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Also [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency. //For [moderation] it is 95%, and for [caretaking] it is 80%',
+                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Also [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency. //For [moderation] it is 95%, while for [caretaking] it is 80%.',
                 icon: [27, 31, 'magixmod'],
                 cost: { 'culture II': 10 },
                 effects: [
@@ -15657,7 +15618,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see more exactly how many of the resource do you have in the territory.</font>',
+                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
                 icon: [34, 14, 'magixmod'],
                 cost: { 'insight': 10, 'culture': 15 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -15691,7 +15652,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'the christmas', category: 'seasonal',
                 displayName: '<font color="cyan">The Christmas</font>',
-                desc: '@People acknowledged that the symbols of this event will not only expand your symbolics, but also make various decorations like like ornaments and lights. //Unlocks the [lodge of Christmas].',
+                desc: '@People acknowledged that the symbols of this event will not only expand your symbolics, but also make various decorations like like ornaments and lights.',
                 icon: [2, 11, 'seasonal'],
                 cost: { 'insight': 400, 'culture': 100, 'faith': 32 },
                 req: { 'culture of celebration': true, 'Wizard complex': true, 'tribalism': false, 'winter holidays': true },
@@ -15742,9 +15703,9 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'snowmen', category: 'seasonal',
-                desc: 'Since [digger] can dig for snow and you can describe and be understood you can explain what is and how does snowman look like. //Gain [the christmas] so you will unlock Lodge of Christmas. @Unlocks a snowmen creator.',
+                desc: 'Since [digger] can dig for snow and you can describe and be understood you can explain what is and how does snowman look like. @Unlocks a new tech.',
                 icon: [10, 11, 'seasonal'],
-                cost: { 'insight': 95, 'culture': 50 },
+                cost: { 'insight': 90, 'culture': 50 },
                 req: { 'winter holidays': true },
             });
             new G.Tech({
@@ -17175,10 +17136,10 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'imprisonment', category: 'tier1',
-                desc: '@[population,people] can now imprison [thief,Bad guys] until [guard]s will move them to [prison]. @required to unlock [prison]s (with [construction II] and [imprisonment II])',
+                desc: '@[population,people] can now imprison [thief,Bad guys] until [guard]s will move them to [prison]. @required to unlock [prison]s (along with [construction II] and [imprisonment II])',
                 icon: [6, 15, 'magixmod'],
                 cost: { 'insight': 70 },
-                req: { 'CaP(light)': true, 'construction': true },
+                req: { 'CaP': true, 'construction': true },
             });
             new G.Tech({
                 name: 'imprisonment II', category: 'tier1',
@@ -18079,7 +18040,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al the right! But show me ya are worthy of me. In my plane no one except me can gather <font color="green">culture</font>, <font color="green">influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial <font color="green">water rations</font> cannot be set to plentiful (food one can be still be set)! In addition you will be forced to keep cultural stability. Doing anything related to researching, discovering causes stability to go low while doing cultural things will bring it up. (Also, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gaining more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
+                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al the right! But show me ya are worthy of me. In my plane no one except me can gather <font color="green">culture</font>, <font color="green">influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial <font color="green">water rations</font> cannot be set to plentiful (food one can be still be set)! In addition you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (Also, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gaining more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18484,7 +18445,7 @@ if (getCookie("civ") == "0") {
                 desc: '[prisoner]s now count as [worker]s; working [prisoner]s will serve their sentences faster.',
                 icon: [7, 12, 17, 0, 'magixmod'],
                 cost: { 'influence': 2 },
-                req: { 'imprisonment II': true },
+                req: { 'imprisonment II': true, 'ignoreItem': true },
                 category: 'work',
             });
 
@@ -23149,20 +23110,20 @@ if (getCookie("civ") == "0") {
                     'blacksmiths': { name: 'Blacksmiths\' guild', desc: 'Build [blacksmith workshop]s until there are 5 for each of this guild.', req: { 'smelting': true }, icon: [26, 2, 'c2', 25, 2, 'c2'] },
                 },
                 effects: [
-                    { type: 'gather', what: { 'happiness': 0.005 } },
+                    { type: 'gather', what: { 'happiness': 0.015 } },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('potter')) G.buyUnitByName('potter', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('potter')].targetAmount) G.buyUnitByName('potter', 1, true);
                         }, mode: 'potters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('carpenter workshop')) G.buyUnitByName('carpenter workshop', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('carpenter workshop')].targetAmount) G.buyUnitByName('carpenter workshop', 1, true);
                         }, mode: 'carpenters'
                     },
                     {
                         type: 'function', func: function (me) {
-                            if (me.amount * 5 > G.getUnitAmount('blacksmith workshop')) G.buyUnitByName('blacksmith workshop', 1, true);
+                            if (me.amount * (G.has("guilds unite") ? 100 : 5) > G.unitsOwned[G.unitsOwnedNames.indexOf('blacksmith workshop')].targetAmount) G.buyUnitByName('blacksmith workshop', 1, true);
                         }, mode: 'blacksmiths'
                     }
                 ],
@@ -24265,7 +24226,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see more exactly how many of the resource do you have in the territory.</font>',
+                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
                 icon: [29, 10, 'c2'],
                 cost: { 'discernment': 20, 'gentility': 18, 'creativity': 10 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -24281,7 +24242,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'second upscale', category: 'anomaly',
-                desc: 'Increases the costs of rolling/rerolling in tech tab. Also, the [battery of discoveries] will charge way slower. //<small>Now it is confirmed. It has to do with <b>Pressure</b>.</small>',
+                desc: 'Increases the costs of rolling/rerolling in tech tab. Also, the [battery of discoveries] will charge way slower. //<small>Now it is confirmed...it has to do with <b>Pressure</b>.</small>',
                 icon: [29, 11, 'c2'],
                 req: { 'monument-building': true },
                 cost: {},
