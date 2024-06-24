@@ -156,14 +156,12 @@ G.widget.update = function () {
         me.lAnchor.style.top = y + 'px';
         me.lAnchor.style.display = 'block';
         if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
-            me.close();
+            me.close()
         }
     }
     if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
         clickModePolicy = 0
-        clickModeUnit = 0
-        me.closeInFrames--;
-        if (me.closeInFrames == 0) me.close();
+        me.close()
     }
 }
 
@@ -406,7 +404,7 @@ G.selectModeForUnit = function (me, div) {
 
 G.update['unit'] = function () {
     l('unitDiv').innerHTML =
-        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of.<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
+        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
         '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
         G.button({
             id: 'removeBulk',
@@ -794,7 +792,7 @@ G.NewGame = function (doneLoading, mods) {
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
                 G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. it will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -1193,12 +1191,12 @@ if (getCookie("civ") == "0") {
                     G.getDict("pagoda of democracy").cost = { 'basic building materials': 800, 'precious building materials': 700 };
                     G.getDict("pagoda of democracy").costPerStep = { 'basic building materials': 25, 'precious building materials': 5, 'influence': 40, 'pagoda construction point': -1 };
                     G.getDict("pagoda of democracy").steps = 2000;
-                    G.getDict("pagoda of democracy").messageOnStart = 'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that Pagoda is taller than Mausoleum. <font color="#aaffaa">But this time ancient powers of nature brought from elvish universe can lead this wonder to be better than ever.</font>';
+                    G.getDict("pagoda of democracy").messageOnStart = 'You began the construction of the Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that Pagoda is even taller than the Mausoleum. <font color="#aaffaa">But this time ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
                     G.getDict("pagoda of democracy").finalStepCost = { 'authority': 25, 'population': 2000, 'precious building materials': 4500, 'gem block': 50 };
                     G.getDict("pagoda of democracy").finalStepDesc = 'To complete the wonder and make justice, peace and democration last even longer, you need to do the final step.';
                     G.getDict("pagoda of democracy").use = { 'land': 15, 'worker': 20, 'metal tools': 20 };
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("pagoda of democracy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase <b>Democration</b> achievement starting bonus by 2.</font>';
+                        G.getDict("pagoda of democracy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Democration</b> achievement\'s starting bonus by 2.</font>';
                 }
                 if (G.achievByName['democration'].won > 0) {
                     G.gain("authority", G.achievByName['democration'].won > 1 ? 3 : 1);
@@ -1213,12 +1211,12 @@ if (getCookie("civ") == "0") {
                     G.getDict("fortress of cultural legacy").cost = { 'basic building materials': 1100, 'precious building materials': 800, 'inspiration': 10 },
                         G.getDict("fortress of cultural legacy").costPerStep = { 'basic building materials': 25, 'precious building materials': 5, 'culture': 125, 'glass': 1, 'fortress construction point': -1, 'dyes': 2 };
                     G.getDict("fortress of cultural legacy").steps = 2000;
-                    G.getDict("fortress of cultural legacy").messageOnStart = 'You began the construction of <b>Fortress of cultural legacy</b>. Made at not flat grounds will make people come inside to watch the arts of the centuries. <b>Unleash the unbreakable cultural roots!</b> <font color="#aaffaa">But this time ancient powers of nature brought from elvish universe can lead this wonder to be better than ever.</font>';
+                    G.getDict("fortress of cultural legacy").messageOnStart = 'You began the construction of <b>Fortress of cultural legacy</b>. <font color="#aaffaa">But this time, ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
                     G.getDict("fortress of cultural legacy").finalStepCost = { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'gem block': 50, 'culture': 650 };
                     G.getDict("fortress of cultural legacy").finalStepDesc = 'To complete the wonder and prevent culture and traditions from being truly perditioned...you need to perform that final step.';
                     G.getDict("fortress of cultural legacy").use = { 'land': 15, 'worker': 20, 'metal tools': 20 };
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("fortress of cultural legacy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase <b>Sacrificed for culture</b> achievement starting bonus by 2.</font>';
+                        G.getDict("fortress of cultural legacy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Sacrificed for culture</b> achievement\'s starting bonus by 2.</font>';
                 }
                 if (G.achievByName['sacrificed for culture'].won > 0) {
                     G.gain("inspiration", G.achievByName['sacrificed for culture'].won > 1 ? 5 : 3);
@@ -1230,13 +1228,13 @@ if (getCookie("civ") == "0") {
                     G.getDict("knowledgeable").cost = { 'complex construction point': 2000 };
                     G.getDict("knowledgeable").desc = G.techByName["knowledgeable"].desc.replace(" 7500", 7500 * 1.25);
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase <b>Insight-ly</b> achievement starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
+                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Insight-ly</b> achievement\'s starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
                     G.getDict("complex of dreamers").icon = [7, 33, 'magixmod'];
                     G.getDict("complex of dreamers").wideIcon = [6, 33, 'magixmod'];
                     G.getDict("complex of dreamers").cost = { 'basic building materials': 700, 'precious building materials': 800, 'wisdom': 20 };
                     G.getDict("complex of dreamers").costPerStep = { 'basic building materials': 250, 'precious building materials': 5, 'insight': 300, 'complex construction point': -1 };
                     G.getDict("complex of dreamers").steps = 2000;
-                    G.getDict("complex of dreamers").messageOnStart = 'You began the construction of complex of Dreamers. The complex looks like not from this world when night visits the world. <font color="#aaffaa">But this time ancient powers of nature brought from elvish universe can lead this wonder to be better than ever.</font>';
+                    G.getDict("complex of dreamers").messageOnStart = 'You began the construction of Complex of Dreamers. The complex looks like not from this world when night visits the world. <font color="#aaffaa">But this time, ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
                     G.getDict("complex of dreamers").finalStepCost = { 'wisdom': 125, 'population': 2500, 'precious building materials': 6000, 'gem block': 50, 'insight': 1000, 'housing': -1875 };
                     G.getDict("complex of dreamers").finalStepDesc = 'To complete the wonder and make your whole civilization much smarter you will need to perform a final step.';
                     G.getDict("complex of dreamers").use = { 'land': 40, 'worker': 32, 'metal tools': 32 };
@@ -1260,9 +1258,9 @@ if (getCookie("civ") == "0") {
                         G.getDict('mausoleum').wonder = 'mausoleum eternal';
                         if (G.achievByName['mausoleum eternal'].won) mausobonus = 15;
                         G.getDict('mausoleum').displayName = 'The Great Mausoleum';
-                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of The Great Mausoleum. Its towering mass already dominates the city, casting fear and awe wherever its shadow reaches. This time the Mausoleum reach its total massivity. It is no huge anymore. People say that The Mausoleum finally got colossal.';
+                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of The Great Mausoleum. Its towering mass will soon dominate the city, casting fear and awe wherever its shadow reaches. This time the Mausoleum reach its total massivity. It is no huge anymore. People say that The Mausoleum finally got colossal.';
                     } else
-                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of the Mausoleum. Its towering mass already dominates the city, casting fear and awe wherever its shadow reaches. This time the Mausoleum will be more massive.';
+                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of the Mausoleum. Its towering mass will dominate the city, casting fear and awe wherever its shadow reaches. This time, the Mausoleum will be even more massive!';
 
                     G.getDict('mausoleum').costPerStep = { 'basic building materials': 200 + (G.achievByName['mausoleum'].won <= 10 ? 10 * G.achievByName['mausoleum'].won : 100), 'precious building materials': 25 + (G.achievByName['mausoleum'].won <= 10 ? 5 * G.achievByName['mausoleum'].won : 50) }
                     G.getDict('mausoleum').use = { 'land': 10 + (G.achievByName['mausoleum'].won <= 10 ? 1 * G.achievByName['mausoleum'].won : 10), 'worker': 5 + (G.achievByName['mausoleum'].won <= 10 ? 1 * G.achievByName['mausoleum'].won : 10), 'metal tools': 5 + (G.achievByName['mausoleum'].won <= 10 ? 1 * G.achievByName['mausoleum'].won : 10) };
@@ -1273,7 +1271,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.achievByName['mausoleum'].won > 6) G.getDict('archaeology').req = { 'gardening': true, 'will to know more': true };
                     //desc
-                    G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change the human legacy. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
+                    G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change the human legacy. Current bonuses://<b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
                         (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your [happiness] gain by 12%.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - extra +2 starting [land] each run.<hr>' : '') +
@@ -1691,7 +1689,7 @@ if (getCookie("civ") == "0") {
 
                     if (G.checkPolicy("insects as food") == "on") G.makePartOf('bugs', 'food'); //bugfix 
                     G.ta = 1;
-                    G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.<br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> and mine using <a href="https://discord.com/invite/MUyTFvxqm8" target="_blank">this link</a>', icon: [0, 3] });
+                    G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.<br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> to join the community!', icon: [0, 3] });
                     //Had to paste it there because if you obtain and you will unlock 5th choice after page refresh you can still pick 1 of 4 instead of 1 of 5
                     if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
 
@@ -1947,7 +1945,7 @@ if (getCookie("civ") == "0") {
                             st2 = true
                         }
                         if (G.techN > 49 && G.techN <= 55 && !st3) {
-                            G.Message({ type: 'story1', text: 'You want some mirrors. But sadly no one can craft any glass mirrors yet. Luckily you didn\'t forget that you can use the water\'s surface as a sort of mirror.', icon: [32, 14, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'You want some mirrors. But sadly, no one can craft any glass mirrors yet.', icon: [32, 14, 'magixmod'] });
                             st3 = true
                         }
                         if (G.techN > 60 && G.techN <= 74 && !st4) {
@@ -2575,7 +2573,7 @@ if (getCookie("civ") == "0") {
                             bapopup = true
                         }
                         if (G.has('belief in the beforelife') && !bapopup && !G.has('monument-building')) {
-                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>From now you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock you very first wonder.<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>From now you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
                             bapopup = true
                         }
                         if (G.getRes('cured meat').amount >= 1 && G.getRes('cured seafood').amount >= 1 && !cure && G.has('curing') && !G.has('hunting II')) {
@@ -6182,7 +6180,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'golden insight',
-                desc: '[golden insight] is a essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself. //Just like [insight], it is limited by [wisdom]!',
+                desc: '[golden insight] is a essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself! //Just like [insight], it is limited by [wisdom].',
                 icon: [35, 16, 'magixmod'],
                 category: 'main',
                 limit: 'wisdom',
@@ -8102,7 +8100,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'holy orchard',
-                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. Gathers falling [ambrosium leaf,Ambrosium leaves]<>',
+                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. Gathers falling [ambrosium leaf,Ambrosium leaves]',
                 icon: [4, 14, 'magixmod'],
                 cost: { 'basic building materials': 900 },
                 use: { 'land of the Paradise': 50, 'industry point': 5 },
@@ -8117,7 +8115,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'ambrosium shard shack',
-                desc: 'A shack where out of many [ambrosium leaf,ambrosium leaves], some [mana] and [holy essence]  you can gain [ambrosium shard]s which may find its use later.<>',
+                desc: 'A shack where out of many [ambrosium leaf,ambrosium leaves], some [mana] and [holy essence]  you can gain [ambrosium shard]s which may find its use later.',
                 icon: [13, 13, 'magixmod', 25, 2],
                 cost: { 'basic building materials': 900 },
                 use: { 'land of the Paradise': 1, 'industry point': 1 },
@@ -9626,14 +9624,14 @@ if (getCookie("civ") == "0") {
             //WonderFULL
             new G.Unit({
                 name: 'fortress of cultural legacy',
-                desc: '@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gains by 20% if performed a final step! It is [culture] and [inspiration] specified so it needs it while building. <>Inside of the Fortress people store most important and most beautiful arts, statues, sculptures. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
+                desc: '@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gain by 20% if finished! It is [culture] and [inspiration] specified so it needs it while building. <>Inside of the Fortress, people store the most important and most beautiful arts, statues, and sculptures. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
                 wonder: 'sacrificed for culture',
                 icon: [6, 12, 'magixmod'],
                 wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'precious building materials': 400, 'inspiration': 10 },
                 costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'culture': 450, 'inspiration': 1, 'glass': 1, 'fortress construction point': -1 },
                 steps: 200,
-                messageOnStart: 'You began the construction of <b>Fortress of cultural legacy</b>. Made at not flat grounds will make people come inside to watch the arts of the centuries. <b>Unleash the unbreakable cultural roots!</b>',
+                messageOnStart: 'You began the construction of <b>Fortress of cultural legacy</b>. This will make people come inside to watch the arts of the centuries. <b>Unleash unbreakable cultural roots!</b>',
                 finalStepCost: { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'gem block': 50, 'culture': 650 },
                 finalStepDesc: 'To complete the wonder and prevent culture and traditions from being perditioned...you need to perform that final step.',
                 use: { 'land': 10, 'worker': 10, 'metal tools': 10 },
@@ -9649,7 +9647,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'precious building materials': 500, 'wisdom': 10 },
                 costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'insight': 450, 'wisdom': 1, 'complex construction point': -1 },
                 steps: 200,
-                messageOnStart: 'You began the construction of complex of Dreamers. The complex looks like not from this world when night visits the world.',
+                messageOnStart: 'You began the construction of Complex of Dreamers. The complex looks like it\'s not from this world when night falls.',
                 finalStepCost: { 'wisdom': 125, 'population': 2500, 'precious building materials': 4500, 'gem block': 50, 'insight': 1000 },
                 finalStepDesc: 'To complete the wonder and make your whole civilization much smarter, you will need to perform a final step.',
                 use: { 'land': 25, 'worker': 10, 'metal tools': 10 },
@@ -9667,7 +9665,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'precious building materials': 500 },
                 costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'influence': 45, 'authority': 0.25, 'pagoda construction point': -1 },
                 steps: 200,
-                messageOnStart: 'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that the Pagoda is taller than even the Mausoleum!',
+                messageOnStart: 'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that the Pagoda is even taller than the Mausoleum!',
                 finalStepCost: { 'authority': 25, 'population': 2000, 'precious building materials': 4500, 'gem block': 50 },
                 finalStepDesc: 'To complete the wonder and make justice and democration last even longer, you need to do the final step.',
                 use: { 'land': 10, 'worker': 10, 'metal tools': 10 },
@@ -9701,7 +9699,7 @@ if (getCookie("civ") == "0") {
                 steps: 200,
                 messageOnStart: 'Your people who worship magic and believe in the power of the essences started building a wonder that will be related to that.<br>Will magic award your and your people\'s hard work?',
                 finalStepCost: { 'population': 5000, 'fire essence': 5e4, 'lightning essence': 5e4, 'dark essence': 5e4, 'wind essence': 5e4, 'nature essence': 5e4, 'water essence': 5e4, 'holy essence': 5e4 },
-                finalStepDesc: 'To complete this step a 50k [Fire essence,F.e.], [Dark essence,D.e.], [Nature essence,N.e], [Lightning essence,L.e.] and other [magic essences,Essences] must be sacrificed along with other resources in order to make magic cultivated for a long time.',
+                finalStepDesc: 'To complete this giant wonder, 50k [Fire essence,F.e.], [Dark essence,D.e.], [Nature essence,N.e], [Lightning essence,L.e.] and other [magic essences,Essences] must be sacrificed along with other resources in order to make magic continue to be cultivated.',
                 use: { 'land': 15 },
                 category: 'wonder',
                 wonder: 'magical',
@@ -9826,7 +9824,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 250, 'gold block': 10 },
                 costPerStep: { 'gold block': 15, 'blood': (2 * (G.achievByName['unhappy'].won + 1.2)), 'basic building materials': 100, 'gem block': 1 },
                 steps: 100,
-                messageOnStart: 'You started to build wonder for <b>Bersaria</b>.<br>This statue will have a angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to normal plane. Let the statue be built!',
+                messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have a angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
                 finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'blood': 75 },
                 finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,People],5 [gem block]s and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape that plane of Wrath and Madness and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9858,7 +9856,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 250, 'gold block': 10 },
                 costPerStep: { 'gold block': 15, 'mana': 25, 'basic building materials': 100, 'cooked meat': 25, 'meat': 25, 'cured meat': 25 },
                 steps: 100,
-                messageOnStart: 'You started to build statue for <b>Hartar</b>.<br>This statue will have a Hartar\'s big statuette at its top. You eat some meat and stare with hopeful smile that you will finish this trial by that.',
+                messageOnStart: 'You started to build a statue for <b>Hartar</b>.<br>This statue will have Hartar\'s big statuette at its top. You eat some meat and stare with a hopeful smile, hoping you can complete it.',
                 finalStepCost: { 'population': 100, 'gem block': 5, 'blood': 25 },
                 finalStepDesc: 'To perform the final step, 25 [blood], 100 [population,people] must be sacrificed in order to escape that plane of meat fanatics and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9892,7 +9890,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 250, 'cut stone': 100 },
                 costPerStep: { 'platinum block': 1, 'gems': 2, 'cut stone': 3, 'water': 4500 },
                 steps: 175,
-                messageOnStart: 'You started to build statue for <b>Fishyar</b>.<br>This statue will have precious fish at the top. Feel thirsty for seafood and stare with hopeful smile that you will finish this trial by that.',
+                messageOnStart: 'You started to build a statue for <b>Fishyar</b>.<br>This statue will have precious fish at the top. You feel a thirst for seafood and stare with a hopeful smile.',
                 finalStepCost: { 'population': 400, 'gem block': 5, 'water': 10000, 'platinum ore': 25 },
                 finalStepDesc: 'To perform the final step, 100 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood fanatics and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9901,14 +9899,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'tomb of oceans',
-                desc: '@Leads to <b>Ocean</b> trial completion. //A little bit of a ruined tomb with a Posi\'zul \'s statue next to it surrounded by huge ocean.<><font color="#ddffdd">The oceans have no equal. No law rules them. No human law can affect the Ocean!</font>',
+                desc: '@Leads to <b>Ocean</b> trial completion. //A ruined tomb with Posi\'zul \'s statue next to it is surrounded by a huge ocean.<><font color="#ddffdd">The oceans have no equal. No law rules them. No human law can affect the Ocean!</font>',
                 wonder: 'ocean',
                 icon: [2, 25, 'magixmod'],
                 wideIcon: [1, 25, 'magixmod'],
                 cost: { 'basic building materials': 250, 'precious metal ingot': 5 },
                 costPerStep: { 'precious metal ingot': 15, 'strong metal ingot': 1, 'population': 5, 'basic building materials': 75 },
                 steps: 125,
-                messageOnStart: 'You and your people started to build the <b>tomb of oceans</b>.<br>In the middle of Ocean, as some people say, the wonder for Posi\'zul will eternally stand.',
+                messageOnStart: 'You and your people started to build the <b>tomb of oceans</b>.<br>In the middle of the Ocean, as some people say, the wonder for Posi\'zul will eternally stand.',
                 finalStepCost: { 'population': 1000, 'gem block': 5, 'water': 10000 },
                 finalStepDesc: 'To perform the final step, 1000 [population,people] (and a few other things) must be sacrificed in order to leave the world of endless waters and award you [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9933,7 +9931,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'temple of the Dead',
-                desc: '@Leads to <b>Buried</b> trial completion. //A very dark temple built in dead and hostile terrain. A lot of graves around. That may attract Buri\'o dak.<><font color="#FF00FF">Why is everyone afraid of death? Just face it.</font>',
+                desc: '@Leads to <b>Buried</b> trial completion. //A very dark temple built in dead and hostile terrain. A lot of graves are around. That may attract Buri\'o dak.<><font color="#FF00FF">Why is everyone afraid of death? Just face it.</font>',
                 wonder: 'buried',
                 icon: [1, 26, 'magixmod'],
                 wideIcon: [0, 26, 'magixmod'],
@@ -9956,7 +9954,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'gold block': 10, 'corpse': 20 },
                 costPerStep: { 'basic building materials': 400, 'precious metal ingot': 5, 'gems': 2, 'precious building materials': 150, 'faith': 5 },
                 steps: 50,
-                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People rather build this wonder in bigger steps getting inspired by Gods. You say: <b>Worship leads to victory!<br>Religion is a key.</b>',
+                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, getting inspired by Gods. You say: <b>Worship leads to victory! Religion is a key.</b>',
                 finalStepCost: { 'population': 250, 'spirituality': 35, 'faith': 35 },
                 finalStepDesc: 'To perform the final step, 250 [population,people] must be sacrificed to escape this pious plane and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9972,7 +9970,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'soft metal ingot': 200 },
                 costPerStep: { 'basic building materials': 400, 'soft metal ingot': 100, 'stone': 1000 },
                 steps: 100,
-                messageOnStart: 'Your people have started building the <b>Temple of the Stone</b>. No words for that.',
+                messageOnStart: 'Your people have started building the <b>Temple of the Stone</b>. (No words for that.)',
                 finalStepCost: { 'population': 250 },
                 finalStepDesc: 'To perform the final step, 250 [population,people] must be sacrificed to finish this trial and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -9988,7 +9986,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 1000, 'precious metal ingot': 20 },
                 costPerStep: { 'basic building materials': 400, 'precious metal ingot': 5 },
                 steps: 115,
-                messageOnStart: 'Your people have started building the <b>Mausoleum of richness</b>. You better buy some valuables or something to make this wonder as much prestigious as possible.',
+                messageOnStart: 'Your people have started building the <b>Mausoleum of Richness</b>. You better buy some valuables or something to make this wonder as prestigious as possible.',
                 finalStepCost: { 'population': 100, 'precious metal ingot': 5 },
                 finalStepDesc: 'To perform the final step, 100 [population,people] and a few ingots must be sacrificed to finish this trial and award [victory point]s!',
                 use: { 'land': 15, 'worker': 5, 'metal tools': 5 },
@@ -10142,8 +10140,8 @@ if (getCookie("civ") == "0") {
                 ],
                 gizmos: true,
                 modes: {
-                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Cantor will convert  [wooden coin]s into 1 [silver coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
-                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Cantor will convert  [silver coin]s into 1 [golden coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
+                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Cantor will convert [wooden coin]s into 1 [silver coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
+                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Cantor will convert [silver coin]s into 1 [golden coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
                 },
                 use: { 'land': 1, 'worker': 1 },
                 req: { 't10': true, 'trial': true },
@@ -10926,7 +10924,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'construction', category: 'tier1',
-                desc: '@unlocks [house]s @unlocks [warehouse]s (with [stockpiling])<>',
+                desc: '@unlocks [house]s @unlocks [warehouse]s (with [stockpiling])',
                 icon: [36, 20, 'magixmod'], //just for borders
                 cost: { 'insight': 30 },
                 req: { 'cities': true, 'masonry': true, 'carpentry': true, 'quarrying': true },
@@ -10936,7 +10934,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'city planning', category: 'tier1',
-                desc: '@unlocks [architect]s<>',
+                desc: '@unlocks [architect]s',
                 icon: [22, 8],
                 cost: { 'insight': 25 },
                 req: { 'construction': true, 'cities': true, 'alphabet 1/3': true, 'basic mapping': true },
@@ -11075,7 +11073,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'bone-working', category: 'tier1',
-                desc: '@[artisan]s can now make [knapped tools] out of [bone]@[bone]s can now be used as [archaic building materials]<>',
+                desc: '@[artisan]s can now make [knapped tools] out of [bone]@[bone]s can now be used as [archaic building materials]',
                 icon: [22, 5],
                 cost: { 'insight': 5 },
                 req: { 'stone-knapping': true },
@@ -11087,21 +11085,21 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'spears', category: 'tier1',
                 displayName: 'Spears and maces',
-                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes has only 80% of its normal efficiency. To remove that penalty, obtain the [aiming] research.',
+                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes have only 80% of its normal efficiency (however, it is still faster than without tools). To remove that penalty, obtain the [aiming] research.',
                 icon: [26, 1],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true },
             });
             new G.Tech({
                 name: 'bows', category: 'tier1',
-                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<> <b>Bow hunting</b> mode has only 40% of its normal efficiency. To remove that penalty, obtain the [aiming] research.',//TODO : desc
+                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<> <b>Bow hunting</b> mode has only 40% of its normal efficiency (slower than without tools). To make it faster than the default mode, obtain the [aiming] research.',//TODO : desc
                 icon: [27, 1],
                 cost: { 'insight': 20 },
                 req: { 'spears': true },
             });
             new G.Tech({
                 name: 'fishing hooks', category: 'tier1',
-                desc: '@unlocks new modes for [fisher]s<>',//TODO : desc
+                desc: '@unlocks new modes for [fisher]s',//TODO : desc
                 icon: [28, 1],
                 cost: { 'insight': 15 },
                 req: { 'fishing': true, 'spears': true },
@@ -11134,7 +11132,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'sewing', category: 'tier1',
-                desc: '@unlocks [clothier]s, who work with fabric and can sew [primitive clothes]<>',//TODO : desc
+                desc: '@unlocks [clothier]s, who work with fabric and can sew [primitive clothes]',//TODO : desc
                 icon: [29, 1],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'intuition': true },
@@ -11152,7 +11150,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'weaving', category: 'tier1',
-                desc: '@[clothier]s can now sew [basic clothes]<>',
+                desc: '@[clothier]s can now sew [basic clothes]',
                 icon: [30, 1],
                 cost: { 'insight': 20 },
                 req: { 'sewing': true, 'intuition': true },
@@ -11161,7 +11159,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'leather-working', category: 'tier1',
-                desc: '@[clothier]s can now cure [hide]s into [leather] and use leather in cloth-making (with [weaving])<>',
+                desc: '@[clothier]s can now cure [hide]s into [leather] and use leather in cloth-making (with [weaving])',
                 icon: [31, 1],
                 cost: { 'insight': 20 },
                 req: { 'sewing': true },
@@ -11170,7 +11168,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 category: 'tier1',
                 name: 'smelting',
-                desc: '@unlocks [furnace]s, which turn ore into metal ingots@unlocks [blacksmith workshop]s, which forge metal ingots into metal goods<>',//TODO : desc
+                desc: '@unlocks [furnace]s, which turn ore into metal ingots@unlocks [blacksmith workshop]s, which forge metal ingots into metal goods',//TODO : desc
                 icon: [26, 5],
                 cost: { 'insight': 30 },
                 req: { 'fire-making': true, 'building': true }, 'intuition': true,
@@ -11207,7 +11205,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'steel-making', category: 'tier1',
-                desc: '@[furnace]s can now make [strong metal ingot]s from [iron ore] and [coal].<>',//TODO : desc
+                desc: '@[furnace]s can now make [strong metal ingot]s from [iron ore] and [coal].',//TODO : desc
                 icon: [30, 5],
                 cost: { 'insight': 40 },
                 req: { 'iron-working': true },
@@ -11268,7 +11266,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'quarrying', category: 'tier1',
-                desc: '@unlocks [quarry,Quarries]<>',
+                desc: '@unlocks [quarry,Quarries]',
                 icon: [25, 6],
                 cost: { 'insight': 20 },
                 req: { 'digging': true, 'building': true, 'intuition': true },
@@ -11279,7 +11277,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'carving', category: 'tier1',
-                desc: '@unlocks [carver]s, which can produce a variety of goods out of stone, wood and bone@may lead to the knowledge of better tools<>',
+                desc: '@unlocks [carver]s, which can produce a variety of goods out of stone, wood and bone@may lead to the knowledge of better tools',
                 icon: [26, 6],
                 cost: { 'insight': 5 },
                 req: { 'stone-knapping': true },
@@ -11300,7 +11298,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'pottery', category: 'tier1',
-                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mud]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay]<>',
+                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mud]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay]',
                 icon: [28, 6],
                 cost: { 'insight': 20 },
                 req: { 'fire-making': true, 'digging': true, 'tool-making': true },
@@ -11319,7 +11317,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'carpentry', category: 'tier1',
-                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])<>',
+                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])',
                 icon: [30, 6],
                 cost: { 'insight': 35 },
                 req: { 'building': true, 'woodcutting': true, 'intuition': true },
@@ -11329,11 +11327,11 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'monument-building', category: 'tier1',
-                desc: '@unlocks the [mausoleum], an early wonder<>',
+                desc: '@unlocks the [mausoleum], an early wonder',
                 icon: [24, 8],
                 cost: { 'insight': 90, 'culture': 40 },
                 req: { 'construction': true, 'burial': true, 'belief in the afterlife': true, 'intuition': true },
-                tutorialMesg: ['tutorial', 'After getting <b>Monument-building</b>, you may begin construction of the very first wonder of your ' + G.getName('inhabs') + '. Check it out in the <u>Production</u> tab.', [32, 18, 'magixmod']]
+                tutorialMesg: ['tutorial', 'After getting <b>Monument-building</b>, you may begin construction of the very first wonder of your people. Check it out in the <u>Production</u> tab!', [32, 18, 'magixmod']]
             });
             //MAGIX
             new G.Tech({
@@ -11478,7 +11476,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'hunting II', category: 'upgrade',
-                desc: 'Upgrades hunting skills of your civilization. @Unlocks way to craft [crossbow] - new weapon. Artisans can now craft [bow]s, [crossbow]s, and [arrow]s in the <b>Craft bows<b> mode.',
+                desc: 'Upgrades hunting skills of your civilization. @Unlocks a way to craft a new weapon, allowing artisans to make [crossbow]s.',
                 icon: [15, 0, 'magixmod'],
                 cost: { 'insight': 385, 'wisdom': 10 },
                 req: { 'wizardry': true, 'hunting': true },
@@ -11492,28 +11490,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'cobalt-working', category: 'tier1',
-                desc: '@[furnace]s can now make [cobalt ingot]s from [cobalt ore]<>',
+                desc: '@[furnace]s can now make [cobalt ingot]s from [cobalt ore]',
                 icon: [16, 0, 'magixmod'],
                 cost: { 'insight': 145 },
                 req: { 'smelting': true, 'construction II': true },
             });
             new G.Tech({
                 name: 'agriculture', category: 'tier1',
-                desc: '@Unlocks [wheat farm,Farms]. Later you can not only grow natural plants that provide food for your civilization but also [magic essences,Essences] out of magical plants. Since you may have trouble fitting all these farms in the mortal world later you will unlock some extra space to set them up.<>',
+                desc: '@Unlocks [wheat farm,Farms]. Later you can not only grow natural plants that provide food for your civilization but also [magic essences,Essences] out of magical plants. Since you may have trouble fitting all these farms in the mortal world later you will unlock some extra space to set them up.',
                 icon: [16, 2, 'magixmod'],
                 cost: { 'insight': 575 },
                 req: { 'Wizard complex': true, 'gardening': true },
             });
             new G.Tech({
                 name: 'juice-crafting', category: 'tier1',
-                desc: '@Makes juices possible to be crafted. Any [fruit] + [sugar] + [water] = [juices]. Be careful. Juices may spoil same like normal water. Spoiled juice grants even more <b>unhappiness and unhealth<b> than normal muddy water.<>',
+                desc: '@Makes juices possible to be crafted. Any [fruit] + [sugar] + [water] = [juices]. Be careful. Juices may spoil same like normal water. Spoiled juice grants even more <b>unhappiness and unhealth<b> than normal muddy water.',
                 icon: [16, 4, 'magixmod'],
                 cost: { 'insight': 495, 'wisdom': 50 },
                 req: { 'agriculture': true, 'gardening': true },
             });
             new G.Tech({
                 name: 'farm of the sugar cane', category: 'tier1',
-                desc: '@Makes [sugar cane] farm possible to be built. This farm will have increased upkeep cost and will need more people to run.<>',
+                desc: '@Makes [sugar cane] farm possible to be built. This farm will have increased upkeep cost and will need more people to run.',
                 icon: [15, 4, 'magixmod', 24, 1],
                 cost: { 'insight': 495, 'wisdom': 50 },
                 req: { 'agriculture': true, 'gardening': true },
@@ -11534,7 +11532,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'terrain conservacy', category: 'tier1',
-                desc: '@Unlocks subclass of [architect] which instead of setting up new houses etc. will set up some part of ground due to requirements of job group, for example [alchemist]s. Their stands and their "toys" will use [alchemy zone]s instead of [land]. <>',
+                desc: '@Unlocks subclass of [architect] which instead of setting up new houses etc. will set up some part of ground due to requirements of job group, for example [alchemist]s. Their stands and their "toys" will use [alchemy zone]s instead of [land]. ',
                 icon: [17, 5, 'magixmod', 24, 1],
                 cost: { 'insight': 940, 'wisdom': 60 },
                 req: { 'map details': true, 'maths II': true, 'maths III': true },
@@ -11548,7 +11546,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths', category: 'tier1',
-                desc: '@people will know basic math, making them more intelligent and allowing them to have less problems with understanding more complex researches. @allows you to notate small numbers<>',
+                desc: '@people will know basic math, making them more intelligent and allowing them to have less problems with understanding more complex researches. @allows you to notate small numbers',
                 icon: [17, 1, 'magixmod', 22, 1],
                 cost: { 'insight': 20 },
                 effects: [
@@ -11558,7 +11556,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,People] will know more about math, making them even more intelligent. @Your [population,people] have a larger chance to understand more complex things. @improves your civilization\'s numeral system @introduces equations<>',
+                desc: '@[population,People] will know more about math, making them even more intelligent. @Your [population,people] have a larger chance to understand more complex things. @improves your civilization\'s numeral system @introduces equations',
                 icon: [0, 35, 'magixmod', 17, 1, 'magixmod', 23, 1],
                 cost: { 'insight': 80 },
                 effects: [
@@ -11568,7 +11566,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths III', category: 'tier1',
-                desc: '@increase math skills of your civilization. Required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wiardry. @[population,People] can count area of some figures. Depending on their [will to know more] they can know slightly more than that. @increases current equation knowledge and introduces functions //<small> I would research it now.</small>',
+                desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wiardry. @[population,People] can count area of some figures. Depending on their [will to know more], they can know slightly more than that. @increases current equation knowledge and introduces functions //<small>I would research it now!</small>',
                 icon: [1, 35, 'magixmod', 18, 4, 'magixmod'],
                 cost: { 'insight': 360, 'wisdom': 10 },
                 req: { 'oral tradition': true, 'maths II': true, 'plain island building': true },
@@ -11642,7 +11640,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'monument-building II', category: 'upgrade',
-                desc: '@unlocks the [temple of deities,temple of deities], a mid-legacy wonder. Much bigger than [mausoleum], may lead to victory<>',
+                desc: '@unlocks the [temple of deities,temple of deities], a mid-legacy wonder. Much bigger than [mausoleum], may lead to victory',
                 icon: [0, 35, 'magixmod', 14, 10, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 300, 'spirituality': 15, 'faith': 125 },
                 req: { 'construction': true, 'burial': true, 'culture of the afterlife': true, 'physics': true },
@@ -11651,7 +11649,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'weapon blacksmithery', category: 'tier1',
-                desc: '[blacksmith workshop,Blacksmiths] can now craft [metal weapons] at the same rules as the [metal tools] were.<>',
+                desc: '[blacksmith workshop,Blacksmiths] can now craft [metal weapons] at the same rules as the [metal tools] were.',
                 icon: [13, 11, 'magixmod', 22, 1],
                 cost: { 'insight': 50 },
                 req: { 'smelting': true },
@@ -11660,7 +11658,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'armor blacksmithery', category: 'tier1',
-                desc: '[blacksmith workshop,Blacksmiths] can now craft [armor set] at the same rules as the [metal tools] were.<>',
+                desc: '[blacksmith workshop,Blacksmiths] can now craft [armor set] at the same rules as the [metal tools] were.',
                 icon: [12, 11, 'magixmod', 22, 1],
                 cost: { 'insight': 50 },
                 req: { 'smelting': true },
@@ -11685,7 +11683,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'better house construction', category: 'upgrade',
-                desc: 'At the same land of usage [house] and [brick house with a silo] will grant bonuses: @ +1 [housing] from [house] every 8 [house]s, @ +1 [housing] from [brick house with a silo] every 5 [brick house with a silo,Brick houses].<>',
+                desc: 'At the same land of usage [house] and [brick house with a silo] will grant bonuses: @ +1 [housing] from [house] every 8 [house]s, @ +1 [housing] from [brick house with a silo] every 5 [brick house with a silo,Brick houses].',
                 icon: [8, 11, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 15 },
                 req: { 'physics': true },
@@ -11713,7 +11711,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'platinum-working', category: 'tier1',
-                desc: '@[furnace]s can now make [platinum ingot]s from [platinum ore]@[blacksmith workshop]s can now forge [platinum block]s out of [platinum ingot]s<>',
+                desc: '@[furnace]s can now make [platinum ingot]s from [platinum ore]@[blacksmith workshop]s can now forge [platinum block]s out of [platinum ingot]s',
                 icon: [5, 11, 'magixmod'],
                 cost: { 'insight': 100 },
                 req: { 'smelting': true, 'prospecting II': true },
@@ -11731,7 +11729,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'papercrafting', category: 'tier1',
-                desc: '@unlocks [Paper-crafting shack]. There you can make 3 types of paper:@<font color="red">papyrus</font> out of [sugar cane] @<font color="red">pergamin</font> out of [hide], [leather] @<font color="red">common paper</font> out of [bamboo] with the help of a secret non-magic recipe<>',
+                desc: '@unlocks [Paper-crafting shack]. There you can make 3 types of paper:@<font color="red">papyrus</font> out of [sugar cane] @<font color="red">pergamin</font> out of [hide], [leather] @<font color="red">common paper</font> out of [bamboo] with the help of a secret non-magic recipe',
                 icon: [18, 12, 'magixmod'],
                 cost: { 'insight': 480, 'wisdom': 5 },
                 req: { 'city planning': true, 'a gift from the mausoleum': true },
@@ -11972,14 +11970,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'trustworthy influence', category: 'upgrade',
-                desc: 'Makes [pagoda of democracy] increase power of [influence,influence gathering units] per tick. Increases gaining of [influence,political] units by 5% for the rest of current run.',
+                desc: 'Makes [pagoda of democracy] increase the power of [influence,influence gathering units] per tick. Increases gaining of [influence,political] units by 5% for the rest of current run.',
                 icon: [21, 17, 'magixmod'],
                 cost: { 'insight': 25, 'pagoda construction point': 200 },
                 req: { 'political roots': true },
             });
             new G.Tech({
                 name: 'knowledgeable', category: 'upgrade',
-                desc: 'Makes [complex of dreamers] increase power of [insight,insight gatherers(dreamers)] per tick. In addition adds 7500 [housing]. Let it have something from the [Wizard Complex]',
+                desc: 'Makes [complex of dreamers] increase the power of [insight,insight gatherers(dreamers)] per tick. In addition adds 7500 [housing]. Let it have something from the [Wizard Complex]',
                 icon: [23, 17, 'magixmod'],
                 cost: { 'complex construction point': 200 },
                 effects: [
@@ -12223,7 +12221,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'sewing II', category: 'upgrade',
-                desc: '@[clothier]s, can sew [hardened clothes] (with [weaving III] ) Requirements for this clothing type are: pieces of [dried leather] and bunch of [thread]<>',
+                desc: '@[clothier]s, can sew [hardened clothes] (with [weaving III] ) Requirements for this clothing type are: pieces of [dried leather] and bunch of [thread]',
                 icon: [0, 35, 'magixmod', 27, 9, 'magixmod'],
                 cost: { 'insight II': 10 },
                 req: { 'weaving': true, 'weaving II': true, 'eotm': true },
@@ -13505,7 +13503,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'magical presence', category: 'misc',
                 displayName: '<font color="silver">Magical presence</font>',
-                desc: 'You feel some weird stuff inside of your body. Sometime it is warm, sometime makes you feel weird but later you don\'t feel any weird things that this presence has made. @Increases the efficiency of all [water wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks you new theme (check [theme changer]).',
+                desc: 'You feel some weird stuff inside of your body. Sometime it is warm, sometimes makes you feel weird, but later you don\'t feel anything bad that this presence has made. @Increases the efficiency of all [water wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks you a new theme (check [theme changer]).',
                 icon: [4, 12, 'magixmod', 2, 24, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false }
@@ -13527,7 +13525,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'fishing III', category: 'upgrade',
-                desc: 'This tech may unlock something that truly will make [fisher] become better. @[fisher]s will get a new icon and catching by hand will no longer be available. ',
+                desc: 'This tech may unlock something that truly will make [fisher] become better. @[fisher]s will get a new icon and catching by hand will no longer be available.',
                 icon: [7, 22, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 3, 'culture II': 2 },
                 req: { 'policy revaluation': true, 'magical presence': true, 'hunting III': true },
@@ -13890,7 +13888,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'power of the faith', category: 'religion',
-                desc: 'Now the [crafting & farm rituals] bonus applies to: @[blacksmith workshop] (mortal and paradise version) @[carpenter workshop] (mortal and paradise version)@[holy orchard]@[artisan](This is including the juice, pyro and normal types. The bonus for juice and pyro: quarter while for normal it is 3%.)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
+                desc: 'Now the [crafting & farm rituals] bonus applies to: @[blacksmith workshop] (mortal and paradise version) @[carpenter workshop] (mortal and paradise version)@[holy orchard]@[artisan](This is including the juice, pyro and normal types. The bonus for juice and pyro: quarter while for normal it is 3%.)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase the amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
                 icon: [24, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'insight II': 135, 'science': 5, 'faith': 26 },
                 req: { 'symbolism III': true },
@@ -14857,7 +14855,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'aiming', category: 'tier1',
-                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>Improved accuarcy will increase chances for successful hunting meaning that <b>Bow hunting</b> & <b>Spear hunting/fishing</b> are no longer penaltized.',
+                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>However, improved accuarcy will increase the chances of good aim, meaning that <b>Bow hunting</b> and <b>Spear hunting/fishing</b> become faster.',
                 icon: [33, 28, 'magixmod'],
                 req: { 'spears': true, 'bows': true, 'building': true },
                 cost: { 'insight': 17, 'influence': 3 },
@@ -14883,7 +14881,7 @@ if (getCookie("civ") == "0") {
                 req: { 'tribalism': false },
                 cost: {},
                 effects: [
-                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is the main rule of Cultural trial. You can gain or lose [cultural balance] from various techs (for example, mathematics decreases it, but symbolism increases it). It defines the rate of cultural stability in this plane. Your [cultural balance] must not reach <b>' + (G.achievByName['cultural'].won / 2) + '</b> or <b>' + (50 - (G.achievByName['cultural'].won / 2)) + '</b>, or you will fail the Trial. So be careful!'; G.getDict('cultural balance').hidden = false; } },
+                    { type: 'function', func: function () { G.getDict('cultural balance').desc = '[cultural balance] is the main rule of the Cultural trial. You can gain or lose [cultural balance] from various techs (for example, mathematics decreases it, but symbolism increases it). It defines the rate of cultural stability in this plane. Your [cultural balance] must not reach <b>' + (G.achievByName['cultural'].won / 2) + '</b> or <b>' + (50 - (G.achievByName['cultural'].won / 2)) + '</b>, or you will fail the Trial. So be careful!'; G.getDict('cultural balance').hidden = false; } },
                     { type: 'provide res', what: { 'inspiration': 10 } },
                     { type: 'provide res', what: { 'authority': 5 } },
                 ],
@@ -14975,7 +14973,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, the stronger scourge will fall on you and your civilization.',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 35, 'magixmod', 0, 30, 'magixmod'],
@@ -15024,7 +15022,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mirror world 1/2', category: 'tier2',
-                desc: 'Unlocks a [grand mirror] which will double your [land] amount. It compounds with bonuses from: [beyond the edge] and [beyond the edge II]. Costs, display depends on chosen by your people path. In fact it is a passage to exact copy of world you met before your civilization have set their first shelter/dwelling. Make sure you fullfill upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
+                desc: 'Unlocks a [grand mirror] which will double your [land] amount. It compounds with bonuses from: [beyond the edge] and [beyond the edge II]. Cost and display depend on your people\'s path. In fact, it is a passage to an exact copy of world you met before your civilization have set their first shelter/dwelling. Make sure you fullfill upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
                 req: { 'parallel theory 3/3': true, 'wonder \'o science': true, 'bigger university': true },
                 cost: { 'insight II': 400, 'science': 62, 'culture II': 38 },
                 icon: [27, 3, 'magixmod', 10, 30, 'magixmod'],
@@ -15171,28 +15169,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'osmium-working', category: 'tier2',
-                desc: '@[furnace]s can now make [soft metal ingot]s from [osmium ore]<>',
+                desc: '@[furnace]s can now make [soft metal ingot]s from [osmium ore]',
                 icon: [16, 30, 'magixmod'],
                 cost: { 'insight II': 183, 'science': 2 },
                 req: { 'mining II': true, 'furnace modernization': true },
             });
             new G.Tech({
                 name: 'lead-working', category: 'tier2',
-                desc: '@[furnace]s can now make [hard metal ingot]s from [lead ore]<>',
+                desc: '@[furnace]s can now make [hard metal ingot]s from [lead ore]',
                 icon: [13, 30, 'magixmod'],
                 cost: { 'insight II': 183, 'science': 2 },
                 req: { 'mining II': true, 'furnace modernization': true },
             });
             new G.Tech({
                 name: 'mythril-working', category: 'tier2',
-                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop] can now forge [various metal block] out of [mystical metal ingot]s.<>',
+                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop] can now forge [various metal block] out of [mystical metal ingot]s.',
                 icon: [14, 30, 'magixmod'],
                 cost: { 'insight II': 200, 'science': 5 },
                 req: { 'mining II': true, 'furnace modernization': true },
             });
             new G.Tech({
                 name: 'zinc-working', category: 'tier2',
-                desc: '@[furnace]s can now make [hard metal ingot]s from [zinc ore]<>',
+                desc: '@[furnace]s can now make [hard metal ingot]s from [zinc ore]',
                 icon: [15, 30, 'magixmod'],
                 cost: { 'insight II': 183, 'science': 2 },
                 req: { 'mining II': true, 'furnace modernization': true },
@@ -15200,14 +15198,14 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'blackium-working', category: 'tier2',
-                desc: '@[furnace]s can now make [mystical metal ingot]s from [blackium ore]<>',
+                desc: '@[furnace]s can now make [mystical metal ingot]s from [blackium ore]',
                 icon: [17, 30, 'magixmod'],
                 cost: { 'insight II': 180 },
                 req: { 'mining II': true, 'furnace modernization': true },
             });
             new G.Tech({
                 name: 'dinium & unknownium working', category: 'tier2',
-                desc: '@[furnace]s can now make [mystical metal ingot]s from [dinium ore] and [unknownium ore]. However, there\'s only a 50% chance that it will succeed.<>',
+                desc: '@[furnace]s can now make [mystical metal ingot]s from [dinium ore] and [unknownium ore]. However, there\'s only a 50% chance that it will succeed.',
                 icon: [18, 30, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 30 },
                 req: { 'mining II': true, 'furnace modernization': true, 'wonder \'o science': true, 'osmium-working': true, 'blackium-working': true, 'zinc-working': true, 'mythril-working': true, 'lead-working': true },
@@ -15225,7 +15223,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'block-smithery', category: 'tier2',
-                desc: '@Unlocks the [block-smith workshop]. It is a subtype of the [blacksmith workshop] that will forge blocks out of precious resources. @After obtaining this, your [blacksmith workshop] will no longer forge blocks. @Uses [land of the plain island].<>',
+                desc: '@Unlocks the [block-smith workshop]. It is a subtype of the [blacksmith workshop] that will forge blocks out of precious resources. @After obtaining this, your [blacksmith workshop] will no longer forge blocks. @Uses [land of the plain island].',
                 icon: [20, 30, 'magixmod'],
                 cost: { 'insight II': 340, 'science': 40 },
                 req: { 'dinium & unknownium working': true, 'mirror world 1/2': true },
@@ -16434,7 +16432,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'doctoral analysis',
-                desc: '@[archaeologist]s gain [wisdom II,Essentials II] instead of [wisdom,Essentials I] from rare relics. Also every relic on or above <font color="#d4af37">Legendary</font> rarity provides [science]. //Doctoral analysis can give way more informations than simple archaeologist would have.',
+                desc: '@[archaeologist]s gain [wisdom II,Essentials II] instead of [wisdom,Essentials I] from rare relics. Also every relic on or above <font color="#d4af37">Legendary</font> rarity provides [science]. //Doctoral analysis can give way more information than a simple [archaeologist] has.',
                 icon: [21, 33, 'magixmod'],
                 cost: { 'science': 70, 'insight II': 300 },
                 req: { 'better seeking': true, 'bigger university': true },
@@ -16442,7 +16440,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'out of relics',
-                desc: 'Most of relics have been found. From now [archaeologist]s will dig out stuff left by previous generations. Luckily there is still a chance to find a rare finding based on current rarity levels. @[archaeologist]s are 80% less efficient.',
+                desc: 'Most of the relics have been found. From now on, [archaeologist]s will dig out stuff left by previous generations. Luckily, there is still a chance to find a rare relic based on current rarity levels. @this trait makes [archaeologist]s 80% less efficient',
                 icon: [3, 12, 24, 33, 'magixmod'],
                 cost: {},
                 req: { 'archaeology': true, 'tribalism': false },
@@ -17283,7 +17281,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 750,
@@ -18040,7 +18038,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al the right! But show me ya are worthy of me. In my plane no one except me can gather <font color="green">culture</font>, <font color="green">influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial <font color="green">water rations</font> cannot be set to plentiful (food one can be still be set)! In addition you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (Also, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gaining more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
+                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al the right! But show me ya are worthy of me. In my plane no one except me can gather <font color="green">culture</font>, <font color="green">influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial <font color="green">water rations</font> cannot be set to plentiful (food one can be still be set)! In addition you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (In addition, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gaining more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18256,7 +18254,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 2.5x as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time will raise this up from 35% to 55%)<br><Br><BR>' +
+                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 2.5x as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above you will start losing money because of thievery. Lead your people to build a wonder of Mamuun worship and ascend your soul for Mamuun. Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for the second time will raise this up from 35% to 55%)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t10']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.middleText('The Pocket trial has been started. You are in Mammun\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
@@ -18286,7 +18284,7 @@ if (getCookie("civ") == "0") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="aqua">spirituality</font> and 100 <font color="aqua">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If your Faith goes negative or reaches zero, the trial will be failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
+                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="aqua">spirituality</font> and 100 <font color="aqua">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If your Faith goes negative or reaches zero, the trial will be failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer only works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.techN = 0; G.traitN = 0; G.doFunc('new game'); G.fastTicks = 0; G.gainTrait(G.traitByName['t11']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.middleText('The Faithful trial has been started. You are in Enlightened\'s plane', 'slow'); G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>Then the trial will begin :)</font><br>Technical note: Refresh the page.</div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
@@ -20054,9 +20052,9 @@ if (getCookie("civ") == "0") {
                         G.getDict("belief in the afterlife").chance /= 2;
                         G.getDict("belief in the beforelife").chance /= 2;
                     }
-                    G.getDict('a power of the fortress').desc = 'Fortress power will improve many aspects of life if its power will be increased. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - To roll new researches or reroll you need 75% of [battery of discoveries,Battery] instead of 100% along with [a power of the fortress,This deeply rooted power]<hr>' +
+                    G.getDict('a power of the fortress').desc = 'Fortress power will improve many aspects of life if its power will be increased. Current bonuses://<b>LV0</b> - nothing<hr><b>LV1</b> - To roll new researches or reroll, you need only 75% of the [battery of discoveries,Battery] instead of 100%, along with [a power of the fortress,This deeply rooted power].<hr>' +
                         (G.achievByName['the fortress'].won > 1 ? '<b>LV2</b> - C2 [wanderer]s are 2% more efficient and [scout]s are 4% more efficient.<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks 2nd level for two C1 wonders: <b><font color="fuschia">Pagoda of Democracy</font></b>, <b><font color="aqua">Complex of dreamers</font></b>. Finishing a 2nd stage of rootal wonders will increase starting bonus by 2. (So, if <b>insight-ly</b> was providing 1 more insight now, it will provide 3 if done for the second time.)<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks 2nd level for two C1 wonders: <b><font color="fuschia">Pagoda of Democracy</font></b>, <b><font color="aqua">Complex of dreamers</font></b>. Finishing a 2nd stage of rootal wonders will increase the starting bonus by 2. (So, if <b>insight-ly</b> was providing 1 more insight now, it will provide 3 if done for the second time.)<hr>' : '') +
                         (G.achievByName['the fortress'].won > 3 ? '<b>LV4</b> - Unlocks 2nd level for C1 wonder: <b><font color="green">Fortress of Cultural Legacy</font></b><hr>' : '') +
                         (G.achievByName['the fortress'].won > 4 ? '<b>LV5</b> - [battery of discoveries] can overcap. You can now have 125% of battery (you will still need just 75% of it)<hr>' : '') +
                         (G.achievByName['the fortress'].won > 5 ? '<b>LV6</b> - [food rations] and [water rations] policies no longer require [discernment].<hr>' : '') +
@@ -23610,7 +23608,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'city planning', category: 'tier1',
-                desc: '@unlocks [architect]s<>',
+                desc: '@unlocks [architect]s',
                 icon: [22, 8, 'c2'],
                 cost: { 'discernment': 25, 'gentility': 5 },
                 req: { 'construction': true, 'cities': true, 'intuition': true, 'caligraphy': true },
@@ -23763,14 +23761,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'bows', category: 'tier1',
-                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<>',//TODO : desc
+                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s',//TODO : desc
                 icon: [27, 1, 'c2'],
                 cost: { 'discernment': 24 },
                 req: { 'spears': true },
             });
             new G.Tech({
                 name: 'fishing hooks', category: 'tier1',
-                desc: '@unlocks new modes for [fisher]s<>',//TODO : desc
+                desc: '@unlocks new modes for [fisher]s',//TODO : desc
                 icon: [28, 1, 'c2'],
                 cost: { 'discernment': 22, 'creativity': 2 },
                 req: { 'fishing': true, 'spears': true },
@@ -23804,7 +23802,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'sewing', category: 'tier1',
-                desc: '@unlocks [clothier]s, who work with fabric and can sew [primitive clothes]<>',//TODO : desc
+                desc: '@unlocks [clothier]s, who work with fabric and can sew [primitive clothes]',//TODO : desc
                 icon: [29, 1, 'c2'],
                 cost: { 'discernment': 27, 'creativity': 3 },
                 req: { 'tool-making': true },
@@ -23813,14 +23811,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'weaving', category: 'tier1',
-                desc: '@[clothier]s can now sew [basic clothes]<>',
+                desc: '@[clothier]s can now sew [basic clothes]',
                 icon: [30, 1, 'c2'],
                 cost: { 'discernment': 21, 'creativity': 3 },
                 req: { 'sewing': true },
             });
             new G.Tech({
                 name: 'leather-working', category: 'tier1',
-                desc: '@[clothier]s can now cure [hide]s into [leather] and use leather in cloth-making (with [weaving])<>',
+                desc: '@[clothier]s can now cure [hide]s into [leather] and use leather in cloth-making (with [weaving])',
                 icon: [31, 1, 'c2'],
                 cost: { 'discernment': 18, 'creativity': 5, 'gentility': 1 },
                 req: { 'sewing': true },
@@ -23828,7 +23826,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'smelting', category: 'tier1',
-                desc: '@unlocks [furnace]s, which turn ore into metal ingots@unlocks [blacksmith workshop]s, which forge metal ingots into metal goods<>',//TODO : desc
+                desc: '@unlocks [furnace]s, which turn ore into metal ingots@unlocks [blacksmith workshop]s, which forge metal ingots into metal goods',//TODO : desc
                 icon: [26, 5, 'c2'],
                 cost: { 'discernment': 41, 'creativity': 7 },
                 req: { 'fire-making': true, 'building': true },
@@ -23838,7 +23836,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'softmetal-working', category: 'tier1',
-                desc: '@[furnace]s can now make [hard metal ingot]s from [olivnum ore] and [tin ore]<>',//TODO : desc
+                desc: '@[furnace]s can now make [hard metal ingot]s from [olivnum ore] and [tin ore]',//TODO : desc
                 icon: [28, 5, 'c2'],
                 cost: { 'discernment': 72, 'creativity': 12 },
                 req: { 'smelting': true },
@@ -23847,7 +23845,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'iron-working', category: 'tier1',
-                desc: '@[furnace]s can now make [hard metal ingot]s from [iron ore]<>',//TODO : desc
+                desc: '@[furnace]s can now make [hard metal ingot]s from [iron ore]',//TODO : desc
                 icon: [27, 5, 'c2'],
                 cost: { 'discernment': 30, 'creativity': 6 },
                 req: { 'smelting': true },
@@ -23856,7 +23854,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'greenold-working', category: 'tier1',
-                desc: '@[furnace]s can now make [precious metal ingot]s from [greenold ore]@[blacksmith workshop]s can now forge [greenold block]s out of [precious metal ingot]s<>',//TODO : desc
+                desc: '@[furnace]s can now make [precious metal ingot]s from [greenold ore]@[blacksmith workshop]s can now forge [greenold block]s out of [precious metal ingot]s',//TODO : desc
                 icon: [29, 5, 'c2'],
                 cost: { 'discernment': 40, 'faith': 2 },
                 req: { 'smelting': true },
@@ -23865,7 +23863,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'steel-making', category: 'tier1',
-                desc: '@[furnace]s can now make [strong metal ingot]s from [iron ore] and [coal]<>',//TODO : desc
+                desc: '@[furnace]s can now make [strong metal ingot]s from [iron ore] and [coal]',//TODO : desc
                 icon: [30, 5, 'c2'],
                 cost: { 'discernment': 46, 'influence': 2 },
                 req: { 'iron-working': true },
@@ -23885,7 +23883,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'clans', category: 'tier1',
-                desc: '@unlocks [clan leader]s, which generate [influence]@provides 5 [authority]<>',//TODO : desc
+                desc: '@unlocks [clan leader]s, which generate [influence]@provides 5 [authority]',//TODO : desc
                 icon: [23, 6, 'c2'],
                 cost: { 'discernment': 25, 'creativity': 2, 'influence': 2, 'gentility': 1 },
                 req: { 'bellwethers': true, 'code of law': true },
@@ -23926,7 +23924,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'quarrying', category: 'tier1',
-                desc: '@unlocks [quarry,Quarries]<>',
+                desc: '@unlocks [quarry,Quarries]',
                 icon: [25, 6, 'c2'],
                 cost: { 'discernment': 30, 'creativity': 6 },
                 req: { 'digging': true, 'building': true },
@@ -23937,7 +23935,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'carving', category: 'tier1',
-                desc: '@unlocks [carver]s, which can produce a variety of goods out of stone, wood and bone@may lead to the knowledge of better tools<>',
+                desc: '@unlocks [carver]s, which can produce a variety of goods out of stone, wood and bone@may lead to the knowledge of better tools',
                 icon: [26, 6, 'c2'],
                 cost: { 'discernment': 9, 'creativity': 3 },
                 req: { 'stone-knapping': true },
@@ -24180,7 +24178,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'aiming', category: 'tier1',
-                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was hunters were shooting arrows from bows without any preparation just on "try your luck". Same with spear throwing.<>Improved accuarcy will increase chances for successful hunting meaning that <b>Bow hunting</b> & <b>Spear hunting/fishing</b> are no longer penaltized.',
+                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>However, improved accuarcy will increase the chances of good aim, meaning that <b>Bow hunting</b> and <b>Spear hunting/fishing</b> become faster.',
                 icon: [25, 8, 'c2'],
                 req: { 'spears': true, 'bows': true, 'building': true },
                 cost: { 'discernment': 24, 'creativity': 12 },
@@ -24195,7 +24193,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'where am i?',
                 displayName: '<font color="#ddff45">Where am I?</font>',
-                desc: '@Unlocks primary informations about your small but still world, one of main part of your civilization. @Click <b>Territory</b> tab to see what goods you can gain from the territory and where your tribe has settled. //<small>Seriously where am I?...i will ask...again.</small>',
+                desc: '@Unlocks primary information about your small but still world. @Click <b>Territory</b> tab to see what goods you can gain from your territory and where your tribe has settled. //<small>Seriously where am I?...i may need to ask...again.</small>',
                 icon: [22, 11, 'c2'],
                 chance: 1.11,
                 cost: { 'creativity': 1, 'battery of discoveries': 12, 'discernment': 1 }, //let's ramp up difficulty
@@ -24327,7 +24325,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,Elves] will know more harder and advanced math, making them even more intelligent. @Your [population,elves] have a larger chance to understand more advanced things. @improves your civilization\'s numeral system<>',
+                desc: '@[population,Elves] will know more harder and advanced math, making them even more intelligent. @Your [population,elves] have a larger chance to understand more advanced things. @improves your civilization\'s numeral system',
                 icon: [3, 13, 'c2', 26, 13, 'c2'],
                 cost: { 'creativity': 42, 'discernment': 12 },
                 req: { 'oral tradition 2/2': true, 'maths': true, 'city planning': true },
@@ -24580,7 +24578,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'water construction', category: 'tier1',
-                desc: '@unlocks [shelter on water,Shelters on water]<>',
+                desc: '@unlocks [shelter on water,Shelters on water]',
                 icon: [24, 15, 'c2'],
                 cost: { 'discernment': 70, 'creativity': 40 },
                 req: { 'construction': true, 'developed creativity': true },
@@ -24820,7 +24818,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making [population] less happy from death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 750,
@@ -25262,7 +25260,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'weapon blacksmithery', category: 'tier1',
-                desc: '[blacksmith workshop,Blacksmiths] can now craft [metal weapons] at the same rules as the [metal tools] were.<>',
+                desc: '[blacksmith workshop,Blacksmiths] can now craft [metal weapons] at the same rules as the [metal tools] were.',
                 icon: [13, 11, 'magixmod', 22, 1, 'c2'],
                 cost: { 'discernment': 54, 'creativity': 36 },
                 req: { 'smelting': true },
@@ -25271,7 +25269,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'armor blacksmithery', category: 'tier1',
-                desc: '[blacksmith workshop,Blacksmiths] can now craft [armor set] at the same rules as the [metal tools] were.<>',
+                desc: '[blacksmith workshop,Blacksmiths] can now craft [armor set] at the same rules as the [metal tools] were.',
                 icon: [12, 11, 'magixmod', 22, 1, 'c2'],
                 cost: { 'discernment': 54, 'creativity': 36 },
                 req: { 'smelting': true },

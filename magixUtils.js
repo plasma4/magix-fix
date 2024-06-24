@@ -273,7 +273,7 @@ G.AddData({
 
                 var str = '';
                 var len = G.policyCategories.length;
-                str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="4">Get the <font color="fuschia">Policies</font> trait to unlock content of this tab<br><li>Policies are one of the main aspects of ruling a tribe</li><br>Wait until you get this trait to learn even more about them :)</font></center></div>';
+                str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="fuschia">Policies</font> trait to unlock this tab!<br>Policies are one of the main aspects of ruling a tribe.<br>Wait until you get this trait to learn more about them :)</font></center></div>';
                 for (var iC = 0; iC < len; iC++) {
                     if (G.policyCategories[iC].id != 'mag') continue;
                     else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
@@ -1580,7 +1580,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
-                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "A ray of hope") +
+                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "A ray of hope...") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br>and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br>They call you:</div>';
@@ -1595,7 +1595,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x300</div>', '300 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x250</div>', '250 Water') +
-                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.' + G.resets > 0 + '</b>') : "") +
+                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.' + G.resets > 0 + '</b>') : "A ray of hope...") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader.<br>These people...they call you: </div>';
@@ -1782,7 +1782,7 @@ G.AddData({
             name: 'heavenly',
             wideIcon: [0, 11, 'magixmod'],
             icon: [1, 11, 'magixmod'],
-            desc: 'Finish <b>Temple of Deities</b> and mid-game wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story languages weren\'t swapped by any God or Gods.</small>',
+            desc: 'Finish <b>Temple of Deities</b> and mid-game wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story, languages weren\'t swapped by any God or Gods.</small>',
             //desc:'Your soul has been sent to Paradise as archangel with power of top Temple tower in an beautiful stone monument the purpose of which takes root in a pure religious thought.',
             fromWonder: 'heavenly',
             effects: [
@@ -1811,7 +1811,7 @@ G.AddData({
             name: 'sacrificed for culture',
             wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
             icon: [6, 12, 'magixmod'],
-            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you. <b>But now, you will obtain <font color="green">+3 culture & inspiration</font> at start of new runs!</b>',
+            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you. <b>But now, you will obtain <font color="green">+3 culture & inspiration</font> at the start of new runs!</b>',
             fromWonder: 'sacrificed for culture',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1825,7 +1825,7 @@ G.AddData({
             name: 'democration',
             wideIcon: [5, 13, 'magixmod'],
             icon: [6, 13, 'magixmod'],
-            desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glory rest made your previous civilization living in laws of justice forever. They will miss you. <b>But this provides...<font color="fuschia">+1 influence & authority</font> at start of new runs! Also, you will get the [policies] trait immediately.</b>',
+            desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glory rest made your previous civilization living in laws of justice forever. They will miss you. <b>But this provides...<font color="fuschia">+1 influence & authority</font> at the start of new runs! Also, you will get the [policies] trait immediately.</b>',
             fromWonder: 'Democration',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1839,7 +1839,7 @@ G.AddData({
             name: 'insight-ly',
             wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
             icon: [choose([1, 4, 7]), 17, 'magixmod'],
-            desc: 'You sacrificed your soul for the Dreamers Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. <b>But this made a profit...<font color="white">+6 insight</font> at start of new runs!</b>',
+            desc: 'You sacrificed your soul for the Dreamers Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. <b>But this made a profit...<font color="white">+6 insight</font> at the start of new runs!</b>',
             fromWonder: 'Insight-ly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1940,7 +1940,7 @@ G.AddData({
             tier: 1,
             icon: [29, 21, 'magixmod'],
             name: 'experienced',
-            desc: 'To get this achievement you need to complete rest achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at start of new runs</b>.',
+            desc: 'To get this achievement you need to complete rest achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2486,7 +2486,7 @@ G.AddData({
             tier: 2,
             name: 'fortress eternal',
             displayName: '<font color="#Da4f37">fortress eternal</font>',
-            desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Reach 10/10 for the Fortress to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for C2. @+1 <b>Insight</b> for C1 at start of run with people.',
+            desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Reach 10/10 for the Fortress to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for C2. @+1 <b>Insight</b> for C1 at the start of run with people.',
             //fromWonder:'the fortress',
             icon: [1, 24, 'c2'],
             wideIcon: [0, 24, 'c2'],
@@ -3299,9 +3299,9 @@ G.AddData({
                 G.hideMap();
                 var str = '';
                 if (G.modsByName['Default dataset']) {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="4">Get the <font color="#7f7fff">Where am I?</font> trait to unlock content of this tab<br><li>There you\'ll see information about land your tribe settled</li><br><li>Not only that. You\'ll also see which goods you can find at these lands</li><br><u>"The world is a book and those who don\'t travel read only one page"</u> ~ Saint Augustine</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="#7f7fff">Where am I?</font> trait to unlock content of this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>"The world is a book and those who don\'t travel read only one page"</u> ~ Saint Augustine</font></center></div></div></div></div></div>';
                 } else {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="4">Get the <font color="#ddff45">Where am I?</font> trait to unlock content of this tab<br><li>There you\'ll see information about land your tribe settled</li><br><li>Not only that. You\'ll also see which goods you can find at these lands</li><br><u>“It feels good to be lost in the right direction” – Unknown</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="#7f7fff">Where am I?</font> trait to unlock content of this tab.<br><li>There you\'ll see information about land your tribe settled!</li><br><li>You\'ll also see which types of goods you can find here!</li><br><u>“It feels good to be lost in the right direction” – Unknown</font></center></div></div></div></div></div>';
                 };
                 l('landDiv').innerHTML = str;
 
@@ -3456,7 +3456,7 @@ G.AddData({
                 //G.writeSettingButton({id:'tieredDisplay',name:'tieredDisplay',text:'<font color="yellow">Show tiers</font>',tooltip:'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>When in that mode, click a tech to highlight its ancestors and descendants.'})+
                 '<br/>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
-                '<br><font color="lime">Debug mode. Magix: Release ' + G.releaseNumber + '</font>' +
+                '<br><font color="lime">Debug mode is enabled. Magix: Release ' + G.releaseNumber + '</font>' +
                 G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(if add is equal 1 it will add 10, if add 10 then 100 and so on)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units<br><b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
                 '</center></div>';
             l('debug').innerHTML = str;
@@ -4987,9 +4987,9 @@ G.AddData({
                             if (instance.mode == 3) {
                                 str += '<div class="fancyText par"><font color="' + (getCookie('civ') == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';
                                 if (me.finalStepDesc) str += '<div class="fancyText par">' + G.parse(me.finalStepDesc) + '</div>';
-                                str += '</div><div class="buttonBox">' +
+                                str += '<div class="divider"></div>' +
                                     G.button({
-                                        text: '<font color="lime">Complete</font>', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;">You need ' + G.getCostString(me.finalStepCost, true, false, 1) + '.</div>'; } }(me), onclick: function (me) {
+                                        text: '<font color="#2b0">Complete</font>', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;">You need ' + G.getCostString(me.finalStepCost, true, false, 1) + '.</div>'; } }(me), onclick: function (me) {
                                             return function () {
                                                 var amount = 1;
                                                 var success = true;
@@ -5001,14 +5001,14 @@ G.AddData({
                                                     G.doCost(me.unit.finalStepCost, amount);
                                                     if (me.unit.name == 'temple of deities') G.achievByName['heavenly'].won++;
                                                     G.achievByName['wondersDuringRun'].won++;
-                                                    if (me.unit.name == 'wonderful fortress of christmas') { G.achievByName['capital of christmas'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Citadel of christmas</font><br>seasonal achievement -<br><hr width="300"> Ho ho ho! Merry christmas to you! From now you can unlock special Christmas bonus', 'slow') };
+                                                    if (me.unit.name == 'wonderful fortress of christmas') { G.achievByName['capital of christmas'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Citadel of christmas</font><br>seasonal achievement -<br><hr width="300"> Ho ho ho! Merry christmas to you! From now on, you can unlock a special Christmas bonus.', 'slow') };
                                                     if (me.unit.name == 'fortress of magicians') { G.achievByName['magical'].won = 1; G.middleText('-  Completed <font color="#ff00ff">Magical</font> achievement -', 'slow'); G.gainTech(G.techByName['magical presence']) };
-                                                    if (me.unit.name == 'fortress of love') { G.achievByName['love for eternity'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Love for eternity</font><br>seasonal achievement -<br><hr width="300"> Love is in the air! From now you can unlock special Valentine\'s day bonus.', 'slow') };
+                                                    if (me.unit.name == 'fortress of love') { G.achievByName['love for eternity'].won = 1; G.middleText('-  Completed <font color="#bbbbff">Love for eternity</font><br>seasonal achievement -<br><hr width="300"> Love is in the air! From now on, you can unlock a special Valentine\'s day bonus.', 'slow') };
                                                     if (me.unit.name == 'mausoleum' && G.achievByName['mausoleum'].won >= 3 && G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['cruel goal'].won == 0) { G.achievByName['cruel goal'].won = 1; G.middleText('-  Completed <font color="#ff00ff">Cruel goal</font><br>shadow achievement -', 'slow') };
                                                     /*that was so brutal*/
                                                     if (G.achievByName['cruel goal'].won >= 1) {
                                                         if (me.unit.name == 'pagoda of passing time' || me.unit.name == 'Pagoda of culture' || me.unit.name == 'Hartar\'s statue' || me.unit.name == 'Pagoda of democracy' || me.unit.name == 'Fortress of cultural legacy' || me.unit.name == 'Complex of Dreamers' || me.unit.name == 'Fortress of magicians' || me.unit.name == 'Platinum fish statue' || me.unit.name == 'Tomb of oceans' || me.unit.name == 'The Herboleum' || me.unit.name == 'Temple of the Stone' || me.unit.name == 'Mausoleum of the Dreamer') {
-                                                            if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was so brutal. Why? Just why? -<br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
+                                                            if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was brutal. Why? Just why would you do that? -<br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
                                                         }
                                                     }
                                                     G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/WonderComplete.mp3');
@@ -5024,9 +5024,7 @@ G.AddData({
                                                 }
                                             }
                                         }(instance)
-                                    }) + '<br>' +
-                                    G.dialogue.getCloseButton('- Back -') +
-                                    '</div>';
+                                    }) + '<br>' + G.dialogue.getCloseButton('- Back -') + '</div>';
                             }
                             else if (me.type == 'stepByStep' || me.type == 'tiered') {
                                 str += '<div class="fancyText par">Building completed</div>';
@@ -5050,10 +5048,10 @@ G.AddData({
                                 str += '<div class="fancyText par">Wonder completed</div>';
                                 if (displayAscend) {
                                     str += '<div class="fancyText par">You can now ascend to a higher state of existence, or remain on this mortal plane for as long as you wish.</div>';
-                                    str += '</div><div class="buttonBox">' +
+                                    str += '<div class="divider"></div>' +
 
                                         G.button({
-                                            text: '<font color="#D4AF37">Ascend</font>', style: 'box-shadow:0px 0px 10px 1px #39f;', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;"><div class="par">Ascending will end this game and let you create a new one.</div><div class="par">You will unlock permanent legacy bonuses for completion of this wonder.</div><div class="par">You can decide to do this later; click this wonder again to ascend at any time.</div><div class="par">Only do this when you\'re certain you\'re done with this world! (seriously I mean that)</div></div>'; } }(me), onclick: function (me) {
+                                            text: '<font color="#D4AF37">Ascend</font>', style: 'box-shadow:0px 0px 10px 1px #39f;', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;"><div class="par">Ascending will end this game and let you create a new one.</div><div class="par">You will unlock permanent legacy bonuses for completion of this wonder.</div><div class="par">You can decide to do this later; you can click on this wonder again to ascend at any time.</div><div class="par">Make sure you\'re certain you\'re done with this world (seriously)!</div></div>'; } }(me), onclick: function (me) {
                                                 return function () {
                                                     //ascend
                                                     G.dialogue.close();
@@ -5077,12 +5075,11 @@ G.AddData({
                                                     G.middleText(middleText, true);
                                                 }
                                             }(instance)
-                                        }) + '<br>';
+                                        }) + '</div><br>';
                                 } else {
                                     str += '<div class="fancyText par">This wonder no longer needs ascending.</div>';
                                 }
-                                G.dialogue.getCloseButton('Back') +
-                                    '</div>';
+                                G.dialogue.getCloseButton('Back');
                             }
                             str += '</div>';
                             return str;
@@ -5163,7 +5160,7 @@ G.AddData({
                 G.middleText('<big>Today is Male\'s day.</big><br><small>Yeah boiii<br>- Welcome back -<br>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
             };
             if (yer.getMonth() == 3 && yer.getDate() == 1) { //fools, maybe, maybe not, rather not
-                G.middleText('-kcab emoclew,dooG -<br><small>Yo accmlatd ' + B(timeOffline) + ' fast ticks whil yo wr away.<br><font color="lime">My two kys on my kyboard got brokn, so that is th ffct.</font></small>', 'slow');
+                G.middleText('-kcab emoclew,dooG -<br><small>Yo accmlatd ' + B(timeOffline) + ' fast ticks whil yo wr away.<br><font color="#2b0">My two kys on my kyboard got brokn, so this happnd.</font></small>', 'slow');
             };
 
         }
