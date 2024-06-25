@@ -2238,7 +2238,7 @@ if (getCookie("civ") == "0") {
                         var amount;
 
                         if (pumpkinroulette >= 1 && pumpkinroulette <= 15) {
-                            if (loot == 0) { amount = G.getRes('cooked meat').amount * 0.33; G.gain('cooked meat', amount, '<font color="orange">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount * 0.33; G.gain('fruit', amount, '<font color="orange">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount * 0.33; G.gain('cooked seafood', '<font color="orange">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="orange">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herb').amount * 0.33; G.gain('herb', amount, '<font color="orange">Treat</font>'); };
+                            if (loot == 0) { amount = G.getRes('cooked meat').amount / 3; G.gain('cooked meat', amount, '<font color="orange">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount / 3; G.gain('fruit', amount, '<font color="orange">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="orange">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="orange">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herb').amount / 3; G.gain('herb', amount, '<font color="orange">Treat</font>'); };
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a strong smash your people managed to collect ' + B(amount) + ' <font color="pink">' + loottabfcase[loot] + '</font> outta it. <b>Noice!</b>', icon: [ic, 7, 'seasonal'] }); //7,8
 
                         } else if (pumpkinroulette > 15 && pumpkinroulette <= 28) {
@@ -4609,7 +4609,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'colored clothing',
-                desc: 'Sewn together from [leather] or textile fiber and in addition colored with help of [dyes].//Each [population,Person] wearing clothing is slightly happier and healthier.',
+                desc: 'Sewn together from [leather] or textile fiber and colored with the help of [dyes].//Each [population,Person] wearing clothing is slightly happier and healthier.',
                 icon: [13, 0, 'magixmod'],
                 category: 'gear',
                 tick: function (me, tick) {
@@ -6175,7 +6175,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'prison space',
-                desc: 'Determines how many [thief,Thieves] and other criminals you can keep imprisoned. It is important stat as a lack of prison space may lead to increased criminal rate, which causes [happiness,Unhappiness].',
+                desc: 'Determines how many [thief,Thieves] and other criminals you can keep imprisoned. It is an important stat, as a lack of prison space may lead to increased criminal rate, which causes [happiness,Unhappiness].',
                 icon: [17, 2, 'magixmod'],
                 displayUsed: true,
                 hidden: true,
@@ -7221,7 +7221,7 @@ if (getCookie("civ") == "0") {
                 modes: {
                     'off': G.MODE_OFF,
                     'normal': { name: 'Normal', icon: [16, 1, 'magixmod'], desc: 'This [healer] will heal [population,people] both [sick] and [wounded] but very slowly.', use: { 'knapped tools': 1 }, req: {} },
-                    'wounded': { name: 'Heal wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with 2x efficiency(2.33 with [first aid] research obtained.', use: { 'knapped tools': 1, 'herb': 0.3, 'flowers': 1 }, req: {} },
+                    'wounded': { name: 'Heal wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with 2x efficiency (more with [first aid]).', use: { 'knapped tools': 1, 'herb': 0.3, 'flowers': 1 }, req: {} },
                     'sick': { name: 'Heal sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people but with 2x efficiency. <>Requires [flowers] along with [herb]s. This mode has an upkeep of 1 [flowers,Flower] and 0.3 [herb] daily.', use: { 'knapped tools': 1 }, req: { 'plant lore II': true } },
                     'brews': { name: 'Heal sick with brews', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people but with 2.5x efficiency using [medicament brew]s. <>Requires [medicament brews] along with [herb]s.', use: { 'stone tools': 1 }, req: { 'plant lore II': true, 'medicament brews': true } },
                 },
@@ -7998,7 +7998,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'concoctions crafting stand',
-                desc: 'There you can craft [jar for concoctions,Concoctions] which are not so safe. At stand there are recipes already but you will decide who you will hire. No accident chance there.</span>',
+                desc: 'There you can craft [jar for concoctions,Concoctions] which are not so safe. At the stand there are recipes already, but you will decide who you will hire.</span>',
                 icon: [15, 16, 'magixmod'],
                 cost: {},
                 use: { 'alchemy zone': 0.3 },
@@ -8267,7 +8267,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'Kiln',
-                desc: '@processes goods with fire<>This specific [Kiln] is an impressive edifice for those not yet accustomed to its roaring fire. @This one can do more than its primary brother but needs to be <b>fueled</b>',
+                desc: '@processes goods with fire<>This specific [Kiln] is an impressive edifice for those not yet accustomed to its roaring fire. @This one can do more than its primary brother but needs to be <b>fueled</b>.',
                 icon: [17, 14, 'magixmod'],
                 cost: { 'archaic building materials': 40, 'basic building materials': 70 },
                 use: { 'land of the Paradise': 1, 'industry point': 1 },
@@ -8506,7 +8506,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'painter',
-                desc: '@generates [culture] by using [dyes] to make a paintings at a faster rate than [storyteller]. Requires the [artistic thinking] trait.',
+                desc: '@generates [culture] by using [dyes] to make a paintings at a faster rate than [storyteller]s. Requires the [artistic thinking] trait.',
                 icon: [12, 2, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -11932,7 +11932,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'better papercrafting recipe', category: 'upgrade',
-                desc: 'Increases the amount of [paper] crafted in shacks by +40%. If you go into moderating culture you obtain additional 8%, while in caretaking path just 4%.',
+                desc: 'Increases the amount of [paper] crafted in shacks by +40%. If you go into moderating culture you obtain an additional 8%, while in caretaking path just 4%.',
                 icon: [8, 12, 14, 12, 'magixmod', 21, 15, 'magixmod'],
                 cost: { 'insight': 846, 'wisdom': 9 },
                 req: { 'papercrafting': true, 'poetry': true },
@@ -12003,7 +12003,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'knowledgeable', category: 'upgrade',
-                desc: 'Makes [complex of dreamers] increase the power of [insight,insight gatherers(dreamers)] per tick. In addition adds 7500 [housing]. Let it have something from the [Wizard Complex]',
+                desc: 'Makes [complex of dreamers] increase the power of [insight,insight gatherers (dreamers)]. In addition adds 7500 [housing]. Let it have something from the [Wizard Complex]',
                 icon: [23, 17, 'magixmod'],
                 cost: { 'complex construction point': 200 },
                 effects: [
@@ -12494,7 +12494,7 @@ if (getCookie("civ") == "0") {
                 chance: 5,
                 req: { 'insects as food': 'on', 'decent nourishment': false, 'worm culture': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] = 0.03; } },
+                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] = 0; } },
                 ],
                 lifetime: function () { return 10 + (this.yearOfObtainment + (this.yearOfObtainment % 20)) % 191 > 175 ? Infinity : 10 + (this.yearOfObtainment + 20) % 191 },
                 switchCategory: false,
@@ -12902,7 +12902,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt10',
                 displayName: 'Devil\'s trait #10 Clothing!!!',
-                desc: 'Unhappiness from lack of clothing is doubled. // <small>Nothing special about it I guess</small>',
+                desc: 'Unhappiness from a lack of clothing is doubled. // <small>Nothing special about it I guess</small>',
                 icon: [26, 10, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -13701,7 +13701,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 4/5', category: 'tier2',
-                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine describes ways of keeping the wormhole active. It is important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> ',
+                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine describes ways of keeping the wormhole active. It is an important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> ',
                 icon: [18, 22, 'magixmod', 15, 22, 'magixmod'],
                 cost: { 'insight II': 130, 'science': 7, 'faith II': 4, 'influence II': 5, 'culture II': 27 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 3/5': true },
@@ -16277,21 +16277,21 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced so they still can get lost but on further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases exploration cap.',
                 icon: [9, 9, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced so they still can get lost but on further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases exploration cap.',
                 icon: [10, 9, 'magixmod'],
                 cost: { 'insight': 1200 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true, 'plain island building': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier2',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced so they still can get lost but on further lands. // <b>Removes</b> exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> exploration cap.',
                 icon: [11, 9, 'magixmod'],
                 cost: { 'insight II': 85 },
                 req: { 'map details': true, 'focused scouting': true },
@@ -16669,7 +16669,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at5',
                 displayName: 'Ancestors trait #5 Afterlife punishment',
-                desc: '@[thief,Thieves] are a quarter more likely to be killed for their actions, so their spawn rate is reduced by 10%. @harms [happiness] with [fear of death] while with [acceptance of death,Acceptance] makes [population,people] less scared of these bad guys. @[fear of death] reduces spawn rate by further 5%. @[acceptance of death] increases probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
+                desc: '@[thief,Thieves] are a quarter more likely to be killed for their actions, so their spawn rate is reduced by 10%. @harms [happiness] with [fear of death], while with [acceptance of death,Acceptance] it makes everyone less scared of [thief,Thieves]. @[fear of death] reduces their spawn rate by an additional 5% @[acceptance of death] increases the probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
                 icon: [12, 34, 'magixmod', 22, 1],
                 cost: {},
                 chance: 275,
@@ -16678,7 +16678,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'essential transmutation II', category: 'tier2',
-                desc: '@[transcendentalist]s are twice as efficient but will use only [insight II] from now. @[dreamer]s will have a 4x larger chance to succeed at transmuting knowledge essentials. //<small>Looks like this civilization will create a new type of science soon.</small>',
+                desc: '@[transcendentalist]s are twice as efficient, but will use only [insight II] from now. @[dreamer]s will have a 4x larger chance to succeed at transmuting knowledge essentials. //<small>Looks like this civilization will create a new type of science soon!</small>',
                 icon: [17, 34, 'magixmod'],
                 cost: { 'insight II': 15, 'science': 5, 'mana': 500 },
                 req: { 'at3': true, 'symbolism II': true },
@@ -16707,7 +16707,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cold heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
                 icon: [20, 34, 'magixmod', 24, 1],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'hot heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -16717,7 +16717,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'hot heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by a quarter//<small>Your tribe needs warmth. They really love the warmth brought to them by fire or other heating sources.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by a quarter//<small>Your tribe needs warmth. They really love the warmth brought to them by fire or other heating sources.</small>',
                 icon: [21, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -16737,7 +16737,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'fluid heart',
-                desc: '@unhappiness from lacking of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometimes.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometimes.</small>',
                 icon: [9, 15, 'magixmod', 23, 34, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'neutral heart': false, 'oral tradition': true },
@@ -16747,7 +16747,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'nudist culture',
-                desc: '@unhappiness from lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5%(sometime it will be 10%) less [happiness] and harming [health] by 2.5%(sometime 4%).',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5% (sometimes it will be 10%) less [happiness] and harming [health] by 2.5% (sometimes 4%).',
                 icon: [19, 34, 'magixmod', 24, 1],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'strict dress code': false, 'clothing unconcern': false, 'fluid dress code': false },
@@ -16767,7 +16767,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'clothing unconcern',
-                desc: '@un/happiness from lacking of or having [colored clothing,Clothing] isn\'t increased or decreased in any way. //<small>simply it\'s also neutral.</small>',
+                desc: '@un/happiness from lacking of or having [colored clothing,Clothing] isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
                 icon: [19, 34, 'magixmod', 22, 1],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
@@ -16777,7 +16777,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from lacking of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
                 icon: [9, 15, 'magixmod', 24, 34, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'clothing unconcern': false, 'nudist culture': false, 'strict dress code': false },
@@ -16800,12 +16800,12 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your people are no longer unhappy when eating [bugs]. @in addition one-third of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>There are some countries that put worms into dishes. Consumers are happy about that, as they say it improves the dish\'s taste!</small>',
+                desc: '@your people are no longer unhappy when eating [bugs]. @in addition, one-third of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>There are some countries that put worms into dishes. Consumers are happy about that, as they say it improves the dish\'s taste!</small>',
                 icon: [8, 11, 24, 1],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] *= -0.33; } }, //negate and divide by 3
+                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] /= -3; } }, //negate and divide by 3
                 ],
                 lifetime: function () { return 10 + (this.yearOfObtainment + (this.yearOfObtainment % 20)) % 191 > 175 ? Infinity : 10 + (this.yearOfObtainment + 20) % 191 },
                 switchCategory: false,
@@ -17541,19 +17541,19 @@ if (getCookie("civ") == "0") {
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe II',
                 desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.//<small>we\'re getting used to it...</small>',
-                icon: [3, 12, 19, 1],
+                icon: [3, 12, 3, 6, 19, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'tribe of eaters': false },
             });
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'tribe of eaters',
                 desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will continue to be ungrateful, but at least they don\'t mind so much anymore.</small>',
-                icon: [0, 2, 19, 1],
+                icon: [0, 3, 4, 12, 24, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
             });
             new G.Res({
-                name: 'ignoreItem' // Item that is impossible to obtain
+                name: 'ignoreItem' // Item that is impossible to obtain to hide some things
             });
 
 
@@ -17598,7 +17598,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s become [wounded] more.</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s are more likely to become [wounded].</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds,
                 //and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
                 //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
@@ -23275,7 +23275,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'druidish travellers team',
-                desc: '@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith], and if it drops too low, the team will refuse to work. Every team provides 1 [spirituality].',
+                desc: '@Within [druid]s, they not only spread [faith] on this wild world but also exploring it. Their mission is to praise nature and ancestors who probably lived on unknown lands ages ago. //This unit requires 2 druids to spread [faith], and if it drops too low, the team will refuse to work. Every team provides 1 [spirituality].',
                 icon: [29, 2, 'c2'],
                 cost: { 'food': 100 },
                 use: { 'worker': 6, 'druid': 2, 'stone tools': 4, 'knapped tools': 2 },
@@ -24147,7 +24147,7 @@ if (getCookie("civ") == "0") {
                             fortress();
                             G.getDict('druidish travellers team').req = { 'missionary': true, 'belief in the afterlife': true };
                             G.getDict('druidish travellers team').icon = [30, 2, 'c2'];
-                            G.getDict('druidish travellers team').desc = '@Within [druid]s, they not only spread [faith] on this wild world but also exploring it in addition. Their mission is to praise nature and souls that live with second life or in totally different world as another form. //This unit requires 2 druids to spread [faith] and if it will drops too low, the team will refuse to work. Every team provides 1 [spirituality].';
+                            G.getDict('druidish travellers team').desc = '@They not only spread [faith] on this wild world, but also explore it. Their mission is to praise nature and souls that live with second life or in a totally different world as another form. //This unit requires 2 druids to spread [faith] and if it will drops too low, the team will refuse to work. Every team provides 1 [spirituality].';
                         }
                     },
                 ],
@@ -24197,7 +24197,7 @@ if (getCookie("civ") == "0") {
                 chance: 5,
                 req: { 'insects as food': 'on' },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] = 0.03; } },
+                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] = 0; } },
                 ],
                 switchCategory: false,
                 lifetime: function () { return 10 + (this.yearOfObtainment + (this.yearOfObtainment % 20)) % 191 > 175 ? Infinity : 10 + (this.yearOfObtainment + 20) % 191 },
@@ -24457,21 +24457,21 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced so they still can get lost but on further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases exploration cap.',
                 icon: [28, 13, 'c2'],
                 cost: { 'discernment': 48, 'creativity': 6 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced so they still can get lost but on further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases exploration cap.',
                 icon: [29, 13, 'c2'],
                 cost: { 'discernment': 104, 'creativity': 16 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced so they still can get lost but on further lands. // <b>Removes</b> exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> exploration cap.',
                 icon: [30, 13, 'c2'],
                 cost: { 'discernment': 660, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
@@ -24633,7 +24633,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'cold heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5%(sometimes it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 15% //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and make your civilization become unforgettable.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (sometimes it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 15% //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and make your civilization become unforgettable.</small>',
                 icon: [27, 15, 'c2', 24, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'hot heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition 1/2': true },
@@ -24643,7 +24643,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'hot heart',
-                desc: '@unhappiness from lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by 15%//<small>Your tribe needs warmth. They really love warmth brought to them by fire or other heating sources.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is increased by 50%. @happiness from having [fire pit]s or other heating sources is increased by a quarter//<small>Your tribe needs warmth. They really love warmth brought to them by fire or other heating sources.</small>',
                 icon: [28, 15, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition 1/2': true },
@@ -24663,7 +24663,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'fluid heart',
-                desc: '@unhappiness from lacking of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a fifth of normal @being reduced by a quarter <>happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometime.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a fifth of normal @being reduced by a quarter <>Happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometime.</small>',
                 icon: [9, 15, 'magixmod', 30, 15, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'neutral heart': false, 'oral tradition 1/2': true },
@@ -24673,7 +24673,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'nudist culture',
-                desc: '@unhappiness from lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5%(sometime it will be 10%) less [happiness] and harming [health] by 2.5%(sometime 4%). //<small>It is not safe to walk like that in the wilderness...however these elves think differently looks like</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5% (sometimes it will be 10%) less [happiness] and harming [health] by 2.5% (sometimes 4%). //<small>It is not safe to walk like that in the wilderness...however these elves think differently looks like</small>',
                 icon: [29, 16, 'c2', 24, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'strict dress code': false, 'clothing indifference': false, 'fluid dress code': false },
@@ -24683,7 +24683,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'strict dress code',
-                desc: '@unhappiness from lack of [basic clothes,Clothing] is multiplied by 1.5 .//<small>Strict dress code may affect relationships between elves. Sometimes it feels unfair and sound stupid doesn\'t it?</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5 .//<small>Strict dress code may affect relationships between elves. Sometimes it feels unfair and sound stupid doesn\'t it?</small>',
                 icon: [29, 16, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'nudist culture': false, 'fluid dress code': false, 'clothing indifference': false },
@@ -24693,7 +24693,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'clothing indifference',
-                desc: '@un/happiness from lacking of/having [primitive clothes,Clothing] or other heating sources isn\'t increased or decreased in any way. //<small>simply it\'s also neutral.</small>',
+                desc: '@un/happiness from lacking of/having [primitive clothes,Clothing] or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
                 icon: [29, 16, 'c2', 22, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
@@ -24703,7 +24703,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from lacking of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
                 icon: [9, 15, 'magixmod', 30, 16, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
@@ -24718,7 +24718,7 @@ if (getCookie("civ") == "0") {
                 chance: 5,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'worm culture': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] *= 1.33; G.getDict('spoiled food').turnToByContext['eating']['happiness'] *= 1.33; } },
+                    { type: 'function', func: function () { G.getDict('bugs').turnToByContext['eating']['happiness'] *= 4 / 3; G.getDict('spoiled food').turnToByContext['eating']['happiness'] *= 4 / 3; } },
                 ],
                 lifetime: function () { return 10 + (this.yearOfObtainment + (this.yearOfObtainment % 20)) % 191 > 175 ? Infinity : 10 + (this.yearOfObtainment + 20) % 191 },
                 category: 'main',
@@ -24726,7 +24726,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition half of its [happiness] harm will turn into <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Surprisingly, elves are happy about that.</small>',
+                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition, half of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Surprisingly, elves are happy about that.</small>',
                 icon: [8, 11, 24, 1, 'c2'],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
@@ -25447,7 +25447,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s become [wounded] more.</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s are more likely to become [wounded].</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
                 //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 'c2', 5, 3, 'c2'],

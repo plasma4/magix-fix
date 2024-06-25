@@ -605,7 +605,7 @@ G.Launch=function()
 		for (var i in G.mods)
 		{
 			var me=G.mods[i];
-			str+='"'+me.url.replaceAll('"','&quot;')+'":';
+			str+='"'+me.url.replaceAll('"','&quot;').replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")+'":';
 			if (me.achievs)
 			{
 				//we save achievements separately for each mod
