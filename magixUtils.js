@@ -319,12 +319,12 @@ G.AddData({
             if (G.traitN >= 15) {
                 str += '<Br /><div class="flourishL"></div>';
                 /*str+=G.writeSettingButton({
-                    text:'Manage temporary traits',tooltip:'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level ('+G.selfUpdatingText(function(){return Math.floor(G.getRes('authority').amount*0.66);})+' Influence ). This option shows up after having currently 15 traits.<br>Also temporary traits that became pernament may also be removed but cooldown until next<br>available removal will be significantlly longer and will cost <b>max</b> available influence.<br><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',name:'traitRemovalMode',id:'traitRemovalMode',style:'box-shadow:0px 0px 2px 1px #f00;'});*/
+                    text:'Manage temporary traits',tooltip:'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level ('+G.selfUpdatingText(function(){return Math.floor(G.getRes('authority').amount*0.66);})+' Influence ). This option shows up after having currently 15 traits.<br>Also temporary traits that became permanent may also be removed but cooldown until next<br>available removal will be significantlly longer and will cost <b>max</b> available influence.<br><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',name:'traitRemovalMode',id:'traitRemovalMode',style:'box-shadow:0px 0px 2px 1px #f00;'});*/
                 str += G.button({
                     id: 'traitManagement',
                     name: 'traitManagement',
                     classes: G.getSetting('traitRemovalMode') ? ["on"] : [],
-                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time.<br>Also, temporary traits that became pernament may also be removed but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> Sometimes, some traits that negatively affect your civilization may be a key to traits that will support you.',
+                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait at the cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time, and has a cooldown.<br>Also, temporary traits that became permanent may also be removed, but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> Sometimes, some traits that negatively affect your civilization may be a key to traits that will support you.',
                     text: 'Manage temporary traits',
                     style: 'box-shadow:-1px 0px 2px 2px #f00;',
                     onclick: function () {
@@ -1406,7 +1406,7 @@ G.AddData({
                 str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary.';
                 if (expiration != Infinity)
                     str += G.has('time measuring 1/2') ? ' This trait will expire at year: ' + expiration : ' This trait will expire: ';
-                else str += "This trait has become pernament";
+                else str += "This trait has become permanent";
                 if (!G.has('time measuring 1/2'))
                     str += (me.lifetime > 100 && me.lifetime != Infinity ? 'in a long time' : 'soon');
                 str += '</small></li></font>';
@@ -1612,7 +1612,7 @@ G.AddData({
         ==========================*/
         new G.Res({
             name: 'victory point',
-            desc: 'You can gain Victory Points for completing Seraphin\'s Trial. 11 of 12 trials are repeatable. After first completion of the trial it grants 1 VP, after 2nd succesful attempt in total grants 3 VP\'s and so on. They can\'t be spent, but their amount may provide extra bonuses. ',
+            desc: 'You can gain [victory point]s for completing Seraphin\'s Trial. All of the trials are repeatable, excluding a single one. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain 2 additional points. They can\'t be spent, but their amount can provide extra bonuses. ',
             icon: [0, 28, 'magixmod'],
         });
 
@@ -2241,7 +2241,7 @@ G.AddData({
             tier: 5,
             icon: [34, 17, 'magixmod', 24, 1],
             name: 'when while becomes eternity',
-            desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become pernament. <b>Note: not every temporary trait has a chance to become pernament!</b>',
+            desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become permanent. <b>Note: not every temporary trait has a chance to become permanent!</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
             ],
@@ -2339,7 +2339,7 @@ G.AddData({
             tier: 5,
             icon: [34, 17, 'magixmod', 24, 1, 'c2'],
             name: 'eternal moments',
-            desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become pernament while playing the elf race. <b>Note: not every temporary trait has a chance to become pernament!</b>',
+            desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become permanent while playing the elf race. <b>Note: not every temporary trait has a chance to become permanent!</b>',
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 200 },
             ],

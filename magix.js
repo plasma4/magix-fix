@@ -1024,7 +1024,7 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic.<br>It is <b>' + itemName + '</b>. This finding provides you <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u><br>Great!',
+                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic.<br>It is <b>' + itemName + '</b>. This finding provides you with <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u>.<br>Great!',
                 icon: [23, 33, 'magixmod']
             });
         }
@@ -1580,7 +1580,7 @@ if (getCookie("civ") == "0") {
                 vpcalc();
                 G.achievByName['pickedCiv'].won = 1; //bc you are playing with human race.
                 G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 8)) } });
-                G.getDict('villa of victory').desc = '@The more [victory point]s you got the more of housing it will provide. Starting from 100 it will provide 8 more housing per each [victory point] obtained. Villas cannot waste however those are very limited. At the moment it provides:' + (100 + (G.getRes('victory point').amount * 8)) + '[housing].';
+                G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
                 /*---------------------
                 . . . assignments
                 ----------------------------*/
@@ -1741,7 +1741,7 @@ if (getCookie("civ") == "0") {
                     vpcalc();
                     G.greeting();
                     G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 7)) } });
-                    G.getDict('villa of victory').desc = '@The more [victory point]s you got the more of housing it will provide. Starting from 60 it will provide 7 more housing per each [victory point] obtained. Villas cannot waste however those are very limited. At the moment it provides:' + (100 + (G.getRes('victory point').amount * 8)) + '[housing].';
+                    G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
                     ////
 
                     if (G.achievByName['???'].won > 0) {
@@ -4465,13 +4465,13 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'painting',
-                desc: 'The paint made by [painter]s. [population,People] are proud to see it.',
+                desc: 'The paint made by [painter]s. [population,People] are proud to see it. Provides [culture] upon decay.',
                 icon: [12, 4, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-                    G.pseudoGather(G.getRes('culture'), randomFloor(spent));
+                    G.pseudoGather(G.getRes('culture'), randomFloor(spent * 2));
                 },
             });
             new G.Res({
@@ -8066,8 +8066,8 @@ if (getCookie("civ") == "0") {
                 },
                 effects: [
                     { type: 'gather', context: 'mine', amount: 28, max: 64, mode: 'on' },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 2 }, 0.001, 0.01, true, '[X] [people].', 'explosive mine collapsed, wounding its miners', 'explosive mines collapsed, wounding their miners.'), chance: 7 / 50, req: { 'safer explosive usage': false } },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 2 }, 0.001, 0.01, true, '[X] [people].', 'explosive mine collapsed, wounding its miners', 'explosive mines collapsed, wounding their miners.'), chance: 6 / 51.5, req: { 'safer explosive usage': true } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 2 }, 0.001, 0.01, true, '[X] [people].', 'explosive mine collapsed, wounding its miners', 'explosive mines collapsed, wounding their miners'), chance: 7 / 50, req: { 'safer explosive usage': false } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 2 }, 0.001, 0.01, true, '[X] [people].', 'explosive mine collapsed, wounding its miners', 'explosive mines collapsed, wounding their miners'), chance: 6 / 51.5, req: { 'safer explosive usage': true } },
                     { type: 'mult', value: 1.05, req: { 'safer explosive usage': true } }
                 ],
                 gizmos: true,
@@ -8225,13 +8225,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'mediator',
-                desc: 'Solves people\' argues with help of law to prevent prisoning people. Generates [happiness] every now and then. @every 75 [mediator]s reduce the cooldown until next trait removal by 1 tick if the cooldown is longer than a decade.',
+                desc: 'Solves people\' argues with help of law to prevent prisoning people. Generates [happiness] and [influence] every now and then. @every 75 [mediator]s reduce the cooldown until next trait removal by 1 tick if the cooldown is longer than a decade.',
                 icon: [9, 13, 'magixmod'],
                 cost: {},
                 upkeep: { 'food': 0.2 },
                 effects: [
                     { type: 'gather', what: { 'happiness': 0.1 } },
-                    { type: 'gather', what: { 'influence': 0.01 } },
+                    { type: 'gather', what: { 'influence': 0.01 }, req: { 'glory': false } },
+                    { type: 'gather', what: { 'influence': 0.02 }, req: { 'glory': true } },
                     { type: 'mult', value: 1.7, req: { 'symbolism III': true } }
                 ],
                 use: { 'worker': 1 },
@@ -9581,7 +9582,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'paradise portal', displayName: '<font color="#E0CE00">Portal to the Paradise</font>',
-                desc: '@opens a portal to a huge <b>God\'s Paradise</b>. A very hard project, guided by God\'s worship.//A Dream to see Paradise, angels and much, much more comes real. You will grant +21500 [land of the Paradise] at your own.',
+                desc: 'Opens a portal to a huge <b>God\'s Paradise</b>: a troublesome project, guided by God\'s worship!//A dream of Paradise, angels, and much more comes real! You will get +21500 [land of the Paradise] that you can use!',
                 wideIcon: [31, 29, 'magixmod'],
                 wideIcon2: [7, 4, 'magixmod'],
                 icon: [32, 29, 'magixmod'],
@@ -10433,7 +10434,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'villa of victory',
-                desc: '@The more [victory point]s you get, the more of housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste, however, these are very limited. At the moment it provides: ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing].',
+                desc: '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.',
                 wideIcon: [1, 31, 'magixmod'],
                 icon: [1, 31, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 300 },
@@ -10547,7 +10548,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'ancestors portal', displayName: '<font color="#FFbbbb">ancestors world portal</font>',
-                desc: '@opens a portal to a huge <b>ancestors world</b>. A very hard project, followed by belief in ancestors.//A Dream to discover more about Ancestors, learn some knowledge. You will grant +21500 [land of the Past] at your own.',
+                desc: 'Opens a portal to a huge <b>ancestors world</b>. It was an arduous project shaped by the belief in ancestors.//A dream of Ancestors, discovery, and much more comes real! You will get +21500 [land of the Past] that you can use.',
                 wideIcon: [26, 33, 'magixmod'],
                 wideIcon2: [29, 33, 'magixmod'],
                 icon: [30, 33, 'magixmod'],
@@ -13189,7 +13190,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'symbolism II', category: 'upgrade',
-                desc: '@increases [symbolism] bonus from 20 to 40%. The boost is similar to [symbolism I], but also works with [druid]s.',
+                desc: '@increases [symbolism] bonus from 20 to 40%. The boost also works with [druid]s.',
                 icon: [0, 35, 'magixmod', 30, 14, 'magixmod'],
                 cost: { 'culture II': 15, 'insight II': 10 },
                 req: { 'oral tradition': true, 'ritualism II': true, 'Improved rhetoric': true, 'richer language': true, 'symbolism': true },
@@ -13399,7 +13400,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'glory', category: 'upgrade',
-                desc: '@provides 7 [authority II] @Increases the efficiency of [chieftain] and [clan leader] by 10% @Applies visual changes for [chieftain] and [clan leader]. @You gain every 5 years 1 [influence II]. @[mediator] can gather [influence] but becomes more limited.',
+                desc: '@provides 7 [authority II] @Increases the efficiency of [chieftain]s and [clan leader]s by 10% @Applies visual changes for [chieftain] and [clan leader]. @You gain 1 [influence II] every 5 years. @[mediator]s gather twice as much [influence].',
                 icon: [23, 23, 'magixmod'],
                 cost: { 'influence II': 5, 'insight II': 50, 'culture II': 20, 'influence': 160 },
                 effects: [
@@ -16412,7 +16413,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'culture of the beforelife',
-                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to ancestor or ancestors they worship. Who knows if they will build another wonder</b>. @unhappiness from death is vary. On odd numbered decades it increases by 10% while on even numbered it decreases by 10% ',
+                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to ancestor or ancestors they worship. Who knows if they will build another wonder</b>. @unhappiness from death varies: on odd numbered decades it increases by 10%, while on even numbered decades it decreases by 10%.',
                 icon: [12, 33, 'magixmod'],
                 cost: { 'insight': 50, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 300,
@@ -22157,13 +22158,13 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'painting',
-                desc: 'The paint made by [painter]s. [population,Elves] are proud to see it.',
+                desc: 'The paint made by [painter]s. [population,Elves] are proud to see it. Provides [gentility] upon decay.',
                 icon: [2, 10, 'c2'],
                 category: 'misc',
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-                    G.pseudoGather(G.getRes('gentility'), randomFloor(spent));
+                    G.pseudoGather(G.getRes('gentility'), randomFloor(spent * 2));
                 },
             });
             new G.Res({
