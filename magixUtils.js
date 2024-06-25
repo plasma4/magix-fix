@@ -3299,9 +3299,9 @@ G.AddData({
                 G.hideMap();
                 var str = '';
                 if (G.modsByName['Default dataset']) {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="#7f7fff">Where am I?</font> trait to unlock content of this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>"The world is a book and those who don\'t travel read only one page"</u> ~ Saint Augustine</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>“The world is a book and those who don\'t travel read only one page”</u> ~ Saint Augustine</font></center></div></div></div></div></div>';
                 } else {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="#7f7fff">Where am I?</font> trait to unlock content of this tab.<br><li>There you\'ll see information about land your tribe settled!</li><br><li>You\'ll also see which types of goods you can find here!</li><br><u>“It feels good to be lost in the right direction” – Unknown</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>“It feels good to be lost in the right direction” – Unknown</font></center></div></div></div></div></div>';
                 };
                 l('landDiv').innerHTML = str;
 

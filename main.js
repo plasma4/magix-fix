@@ -545,7 +545,7 @@ G.Launch=function()
 	G.FileSave=function()
 	{
 		var filename='legacySave';
-		var text=G.Export();
+		var text=G.Export().replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js");
 		var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
 		saveAs(blob,filename+'.txt');
 	}
@@ -566,7 +566,14 @@ G.Launch=function()
 	}
 	G.Import=function(str)
 	{
-		G.Load(false);
+		// Some mods override the G.Load function for various reasons, so we add an extra step here
+		try {
+			G.importStr=btoa(encodeURIComponent(decodeURIComponent(atob(str)).replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js")));
+			G.Load(false);
+		} catch (e) {
+			alert("The save that you have provided was invalid.");
+			console.warn(e);
+		}
 	}
 	
 	G.Save=function(toStr)
@@ -605,7 +612,7 @@ G.Launch=function()
 		for (var i in G.mods)
 		{
 			var me=G.mods[i];
-			str+='"'+me.url.replaceAll('"','&quot;').replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")+'":';
+			str+='"'+me.url.replaceAll('"','&quot;')+'":';
 			if (me.achievs)
 			{
 				//we save achievements separately for each mod
@@ -775,7 +782,7 @@ G.Launch=function()
 			//take care of strings first
 			G.stringsLoadedN=0;
 			G.stringsLoaded=[];
-			str=str.replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace(/"(.*?)"/gi,G.parseLoadStrings);
+			str=str.replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace(/"(.*?)"/gi,G.parseLoadStrings);
 			
 			str=str.split('|');
 			
@@ -2105,7 +2112,7 @@ G.Launch=function()
 	G.dict=[];
 	G.setDict=function(name,what)
 	{
-		if (G.dict[name]) {console.log('WARNING : there is already something with the id "'+name+'".');return false;}
+		if (G.dict[name]) {console.log('WARNING: there is already something with the id "'+name+'".');return false;}
 		else {G.dict[name]=what;return true;}
 	}
 	G.getDict=function(name)
@@ -3003,7 +3010,7 @@ G.Launch=function()
 	{
 		var str='';
 		
-		str+=G.textWithTooltip('?','<div style="width:240px;text-align:left;"><div class="par">These are your resources. Some of them are physical goods you own, while others are indicators of various stats about your civilization.</div><div class="par">Resources are used for many things; creating units, crafting more resources, generating technologies and cultural traits...</div><div class="par">Some resources are part of other resources; for instance, the "food" resource represents the sum of all food-type resources you own, such as herbs and fruits.</div><div class="par">Many resources decay over time : food rots, fresh water goes bad, crafting materials get lost or stolen. Some measures such as storage containers can mitigate that.</div><div class="par">You can click on resource category headers to collapse them.</div></div>','infoButton');
+		str+=G.textWithTooltip('?','<div style="width:240px;text-align:left;"><div class="par">These are your resources. Some of them are physical goods you own, while others are indicators of various stats about your civilization.</div><div class="par">Resources are used for many things; creating units, crafting more resources, generating technologies and cultural traits...</div><div class="par">Some resources are part of other resources; for instance, the "food" resource represents the sum of all food-type resources you own, such as herbs and fruits.</div><div class="par">Many resources decay over time: food rots, fresh water goes bad, crafting materials get lost or stolen. Some measures such as storage containers can mitigate that.</div><div class="par">You can click on resource category headers to collapse them.</div></div>','infoButton');
 		
 		l('extraRes').innerHTML=str;
 		
@@ -4782,8 +4789,8 @@ G.Launch=function()
 		'<div class="framed" style="display:none;cursor:pointer;width:32px;height:32px;position:absolute;left:0px;bottom:0px;" id="tileEditButton"></div>'+
 		//'<div class="image" style="width:9px;height:9px;background:url(img/miscButtonIcons.png) 0px -1px;"></div>'
 		G.writeSettingButton({id:'editMode1',name:'mapEditMode',text:'<div class="image" style="width:10px;height:9px;background:url(img/miscButtonIcons.png) -18px -1px;"></div>',tooltip:'<div class="barred">View mode</div>Clicking a map tile will simply display its info.',value:0,siblings:['editMode1','editMode2','editMode3']})+
-		G.writeSettingButton({id:'editMode2',name:'mapEditMode',text:'<div class="image" style="width:10px;height:9px;background:url(img/miscButtonIcons.png) -39px -1px;"></div>',tooltip:'<div class="barred">Explore mode</div>Clicking a map tile will toggle its exploration level.<br>Note : hold ctrl to edit without scrolling.',value:1,siblings:['editMode1','editMode2','editMode3']})+
-		G.writeSettingButton({id:'editMode3',name:'mapEditMode',text:'<div class="image" style="width:10px;height:9px;background:url(img/miscButtonIcons.png) -28px -1px;"></div>',tooltip:'<div class="barred">Edit mode</div>Clicking a map tile will edit its terrain.<br>Tile changes will not be saved.<br>This is mostly for testing and fun for the time being.<br>Note : hold ctrl to edit without scrolling.',value:2,siblings:['editMode1','editMode2','editMode3']})+
+		G.writeSettingButton({id:'editMode2',name:'mapEditMode',text:'<div class="image" style="width:10px;height:9px;background:url(img/miscButtonIcons.png) -39px -1px;"></div>',tooltip:'<div class="barred">Explore mode</div>Clicking a map tile will toggle its exploration level.<br>Note: hold ctrl to edit without scrolling.',value:1,siblings:['editMode1','editMode2','editMode3']})+
+		G.writeSettingButton({id:'editMode3',name:'mapEditMode',text:'<div class="image" style="width:10px;height:9px;background:url(img/miscButtonIcons.png) -28px -1px;"></div>',tooltip:'<div class="barred">Edit mode</div>Clicking a map tile will edit its terrain.<br>Tile changes will not be saved.<br>This is mostly for testing and fun for the time being.<br>Note: hold ctrl to edit without scrolling.',value:2,siblings:['editMode1','editMode2','editMode3']})+
 		'</div>'+
 		'</div>';
 		str+='<div class="framed map noAlias" id="cornerMap"><div id="mapOverlay"></div><div id="tileFocus" class="framed simple"></div><div id="mapContainer"></div></div>';
@@ -7463,7 +7470,7 @@ G.Launch=function()
 			let script=document.createElement('script');
 			script.id='dataScript-'+mod.id;
 			G.modsByScript['dataScript-'+mod.id]=mod;
-			if (mod.url === 'data.js') {
+			if (mod.url.slice(0, 4) !== 'http') {
 				script.setAttribute('src','data.js');
 				document.head.appendChild(script);	
 				script.onload=function() {
@@ -7694,7 +7701,7 @@ G.Launch=function()
 			{
 				str+='<div style="margin-top:16px;">Looks like you\'ll need an older version of the game to load the selected mods.<br>Luckily, that version is still accessible here: <br><br>'+G.button({text:'Load version '+G.oldestEngineVersionNeeded/*,tooltip:'Reload and redirect to an older version to properly load the mods.'*/,onclick:function(version){return function(){window.location.href=version.url;};}(G.versionsById[G.oldestEngineVersionNeeded])})+'</div>';
 			}
-			else if (G.sequence=='failed loading' || (G.sequence=='checking' && errors>0)) str+='<div style="margin-top:16px;">Drat! Looks like something went wrong when loading data.<br>This may fix itself if you reload the page.<br>If this persists, you can always attempt to start a new game and pick different mods.<br><br>'+G.button({text:'New game',tooltip:'Start a new game',onclick:function(){G.dialogue.popup(function(div){G.dialogue.close();G.NewGame();});}})+'</div>';
+			else if (G.sequence=='failed loading' || (G.sequence=='checking' && errors>0)) str+='<div style="margin-top:16px;">Drat! It looks like something went wrong when loading data.<br>This may fix itself if you reload the page.<br>If this persists, you can always attempt to start a new game and pick different mods.<br><br>'+G.button({text:'New game',tooltip:'Start a new game',onclick:function(){G.dialogue.popup(function(div){G.dialogue.close();G.NewGame();});}})+'</div>';
 			else
 			{str+='<div style="background:url(img/loadingBar.png);height:8px;position:absolute;bottom:0px;left:0px;right:0px;animation:driftRight 20s linear infinite;"></div>';}
 			str+='</div>';

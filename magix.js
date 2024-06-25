@@ -1645,23 +1645,23 @@ if (getCookie("civ") == "0") {
                     document.title = 'Tribe died - NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
-                const quotes = ['"To the well-organized mind, death is but the next great adventure."', '"The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time."', '"It is said that your life flashes before your eyes just before you die."', '"Don\'t feel bad, I\'m usually about to die."', '"Death is so terribly final, while life is full of possibilities."', "It is as natural to die as to be born."];
+                const quotes = ['“To the well-organized mind, death is but the next great adventure.”', '“The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.”', '“It is said that your life flashes before your eyes just before you die.”', '“Don\'t feel bad, I\'m usually about to die.”', '“Death is so terribly final, while life is full of possibilities.”', "It is as natural to die as it is to be born."];
                 if (G.techN < 15) {
-                    G.Message({ type: 'bad', text: 'Your small tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died terribly. No one will mention them.', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: 'Your small tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died terribly. It is a sad fate indeed.', icon: [5, 4] });
                 } else if (G.techN >= 15 && G.techN < 30) {
                     G.Message({ type: 'bad', text: 'Your small tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died sadly. Not even a sidenote in history book will be left about <font color="white"><b>' + G.getName('civ') + '</b></font>. ', icon: [5, 4] });
                 } else if (G.techN >= 30 && G.techN < 50) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no more, and your legacy is but a long-lost memory, merely a sidenote in a history book.<br>Everyone is dead.', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no more, and your legacy is just a long-lost memory and merely a sidenote in a history book.<br>Everyone is dead.', icon: [5, 4] });
                 } else if (G.techN >= 50 && G.techN < 82) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is but a long-lost memory, surely a sidenote in a history book.<br><font color="lime">Everyone is dead but some relics of your tribe left.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is but a long-lost memory, probably a sidenote in a history book.<br><font color="lime">Everyone is dead.</font>', icon: [5, 4] });
                 } else if (G.techN >= 82 && G.techN < 116) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics of your tribe left.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely a interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
                 } else if (G.techN >= 116 && G.techN < 148) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting, not short sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe left waiting to be discovered by other civilization.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 148 && G.techN < 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died and your legacy is <b>not lost memory</b>, and surely a interesting, not short sidenote in a history book.<br><font color="lime">Everyone is dead but  despite of that there is much relics and constructions, manuscripts of your tribe left waiting to be discovered and analyzed by other civilization.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died and your legacy isn\'t <b>lost memory</b>, and surely a interesting, long note in history book.<br><font color="lime">Everyone is dead but  despite of that there is a lot of artifacts and constructions, manuscripts of your tribe left waiting to be discovered and analyzed by other civilization.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died, but your legacy isn\'t a <b>lost memory</b>. It is surely an interesting, long note in some history book.<br><font color="lime">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
                 G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/0population.mp3');
                 G.dialogue.popup(function (div) {
@@ -1673,18 +1673,18 @@ if (getCookie("civ") == "0") {
                         '<li>Most people in your civilization<br>during the run: ' + G.achievByName['mostPeopleDuringRun'].won + '</li><Br>' +
                         '<li>Days survived: ' + B(G.day + (300 * G.year)) + '</li><Br>' +
                         (G.has('time measuring 1/2') ? '<li>Years survived: ' + B(G.year + 1) + '</li><Br>' : '') +
-                        '<li>Pieces of overworld land discovered:' + Math.round(G.getRes('land').amount) + '</li><Br>' +
-                        '<li>Land overall:' + Math.round(G.getRes('tl').amount) + '</li></ br>' +
+                        '<li>Pieces of overworld land discovered: ' + Math.round(G.getRes('land').amount) + '</li><Br>' +
+                        '<li>Land overall: ' + Math.round(G.getRes('tl').amount) + '</li></ br>' +
                         (G.has('eotm') ? 'Evolution of the minds occured<Br>' : '') +
                         '<li>Wonders completed during legacy: ' + G.achievByName['wondersDuringRun'].won + '</li><Br>' +
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
-                        '<li><font color="yellow">Trial: &nbsp;' + (G.has('trial') ? 'active' : 'none') + '</font></li><Br>' +
+                        '<li><font color="yellow">Trial: ' + (G.has('trial') ? 'active' : 'none') + '</font></li><Br>' +
                         '<li>Early game completed: ' + (G.has('monument-building') ? 'YES' : 'NO') + '</li><Br>' +
-                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Haloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
+                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
-                        'Technical note: Start a new game.' +
+                        'Technical note: Start a new game by opening the settings.' +
                         '</div></div>'
                 })
 
@@ -1779,7 +1779,7 @@ if (getCookie("civ") == "0") {
                     G.lose('tragedy', 1);//thats a need
                     if (G.achievByName['???'].won == 0 && G.has('constelations'))
                         switch (G.getRes('tragedy').amount) {
-                            case 8: G.Message({ type: 'story1', text: 'Some rumors tell that something terrible is going to happen...Who knows if thats true...or not.<br>All you say in that case is: We\'ll wait, we\'ll see.', icon: [32, 32, 'magixmod'] }); break;
+                            case 8: G.Message({ type: 'story1', text: 'Some rumors tell that something terrible is going to happen...Who knows if that\'s true...or not.<br>All you say in that case is: We\'ll wait, we\'ll see.', icon: [32, 32, 'magixmod'] }); break;
                             case 6: G.Message({ type: 'story2', text: 'Wizards believe in the tragedy. After now, happiness will go lower and lower. Soon, that won\'t seem like its just a rumor. But is there any confirmation, any proof about incoming tragedy?', icon: [33, 32, 'magixmod'] }); break;
                             case 4: G.Message({ type: 'story1', text: 'A green moving light on sky is one of the proofs that people have noticed. Unhappiness will now strike quite strongly. It is not a simple rumor anymore. But is there any confirmation, any proof about incoming tragedy?', icon: [34, 32, 'magixmod'] }); break;
                             case 3: G.Message({ type: 'story2', text: 'The tragedy seems like it will happen no matter what. The end of humanity is nigh...or is it the beginning of something new? That is no longer a rumor. Even at night, everyone can see a <font color="lime">green star</font>. Looks like it is getting bigger and bigger.', icon: [34, 32, 'magixmod'] }); break;
@@ -2268,9 +2268,9 @@ if (getCookie("civ") == "0") {
                                 if (lootg == 3) amount = 3 + (G.getRes('authority II').amount / 7); G.gain('influence II', amount, '<font color="orange">Treat</font>');
                             }
                             if (!G.has('eotm')) {
-                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had a essential. You gained<b> ' + B(amount) + ' ' + loottabgcase[lootg] + '</b>.', icon: [11, 7, 'seasonal'] });
+                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b> ' + B(amount) + ' ' + loottabgcase[lootg] + '</b>.', icon: [11, 7, 'seasonal'] });
                             } else {
-                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had a essential. You gained<b> ' + B(amount) + ' ' + loottabgcase2[lootg] + '</b>.', icon: [12, 7, 'seasonal'] });
+                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b> ' + B(amount) + ' ' + loottabgcase2[lootg] + '</b>.', icon: [12, 7, 'seasonal'] });
                             }
                         } else if (pumpkinroulette > 41 && pumpkinroulette <= 43 && G.has('pumpkins II')) {
                             var amount = G.getRes('fire pit').amount * 0.4;
@@ -6206,7 +6206,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'golden insight',
-                desc: '[golden insight] is a essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself! //Just like [insight], it is limited by [wisdom].',
+                desc: '[golden insight] is an essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on a button that will make you able to buy this resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself! //Just like [insight], it is limited by [wisdom].',
                 icon: [35, 16, 'magixmod'],
                 category: 'main',
                 limit: 'wisdom',
@@ -9850,7 +9850,7 @@ if (getCookie("civ") == "0") {
                 cost: { 'basic building materials': 250, 'gold block': 10 },
                 costPerStep: { 'gold block': 15, 'blood': (2 * (G.achievByName['unhappy'].won + 1.2)), 'basic building materials': 100, 'gem block': 1 },
                 steps: 100,
-                messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have a angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
+                messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have an angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
                 finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'blood': 75 },
                 finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,People],5 [gem block]s and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape that plane of Wrath and Madness and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -11841,7 +11841,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'bookcrafting', category: 'tier1',
-                desc: '[artisan] can craft books. //<small>By the way: There\'s really no hard limit to how long these in length of the quotes/technology descriptions/names can be. Let\'s go: Konrad Wallenrod is an 1828 narrative poem, in Polish, by Adam Mickiewicz, set in the 14th-century Grand Duchy of Lithuania. Mickiewicz wrote it, while living in St. Petersburg, Russia, in protest against the late-18th-century partitioning of the Polish–Lithuanian Commonwealth by the Russian Empire, the Kingdom of Prussia, and the Habsburg Monarchy. Mickiewicz had been exiled to St. Petersburg for his participation in the Philomaths organization at Vilnius University. The poem helped inspire the Polish November 1830 Uprising against Russian rule. Though its subversive theme was apparent to most readers, the poem escaped censorship due to conflicts among the censors and, in the second edition, a prefatory homage to Tsar Nicholas I. Though Mickiewicz later disparaged the work, its cultural influence in Poland persists.<br>Anyway how\'s your day been?</small>',
+                desc: '[artisan] can craft books. //<small>By the way: There\'s really no hard limit to how long these in length of the quotes/technology descriptions/names can be. Let\'s go: Konrad Wallenrod is an 1828 narrative poem, in Polish, by Adam Mickiewicz, set in the 14th-century Grand Duchy of Lithuania. Mickiewicz wrote it, while living in St. Petersburg, Russia, in protest against the late-18th-century partitioning of the Polish-Lithuanian Commonwealth by the Russian Empire, the Kingdom of Prussia, and the Habsburg Monarchy. Mickiewicz had been exiled to St. Petersburg for his participation in the Philomaths organization at Vilnius University. The poem helped inspire the Polish November 1830 Uprising against Russian rule. Though its subversive theme was apparent to most readers, the poem escaped censorship due to conflicts among the censors and, in the second edition, a prefatory homage to Tsar Nicholas I. Though Mickiewicz later disparaged the work, its cultural influence in Poland persists.<br>Anyway, how\'s your day been?</small>',
                 icon: [12, 12, 'magixmod'],
                 cost: { 'insight': 325 },
                 req: { 'papercrafting': true },
@@ -13112,7 +13112,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'genius feeling', displayName: '<font color="aqua">Genius feeling</font>', category: 'misc',
-                desc: 'You feel like you are genius or semi-genius. Your people noticed it. That may help and decide for their fate. @+6 [insight]. // <small>Thats gorgeous</small>',
+                desc: 'You feel like you are genius (or at least, quite smart). Your people noticed it. That may help and decide for their fate. @You gain +6 [insight]. // <small>That\'s gorgeous...</small>',
                 icon: [4, 12, 'magixmod', choose([1, 4, 7]), 17, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false }
@@ -17107,7 +17107,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 displayName: 'Crime and punishment (heavy)',
                 name: 'CaP(cruel)',
-                desc: '@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation creates violent punishments for various crimes such as robbery or murder, in the style of "an eye for an eye, a tooth for a tooth."',
+                desc: '@provides more detailed laws related to criminals in your civilization. @you may unlock other variations of this research depending on your civilization\'s relation to death. @this variation creates violent punishments for various crimes such as robbery or murder, following "an eye for an eye, a tooth for a tooth" more strictly.',
                 icon: [30, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'influence': 25 },
                 req: { 'code of law': true, 'CaP': false, 'CaP(light)': false },
@@ -20145,23 +20145,23 @@ if (getCookie("civ") == "0") {
                     document.title = 'Tribe died - NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
-                const quotes = ['"To the well-organized mind, death is but the next great adventure."', '"The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time."', '"It is said that your life flashes before your eyes just before you die."', '"Don\'t feel bad, I\'m usually about to die."', '"Death is so terribly final, while life is full of possibilities."', "It is as natural to die as it is to be born."];
+                const quotes = ['“To the well-organized mind, death is but the next great adventure.”', '“The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.”', '“It is said that your life flashes before your eyes just before you die.”', '“Don\'t feel bad, I\'m usually about to die.”', '“Death is so terribly final, while life is full of possibilities.”', "It is as natural to die as it is to be born."];
                 if (G.techN < 15) {
                     G.Message({ type: 'bad', text: 'Your small elvish tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died terribly. No one will mention them, not even humans.', icon: [5, 4] });
                 } else if (G.techN >= 15 && G.techN < 30) {
                     G.Message({ type: 'bad', text: 'Your small tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died sadly in this wilderness. So long...<font color="white"><b>' + G.getName('civ') + '</b></font>. ', icon: [5, 4] });
                 } else if (G.techN >= 30 && G.techN < 50) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no more, and your legacy is just a long-lost memory, merely a sidenote in a history book.<br>Everyone is dead.', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no more, and your legacy is just a long-lost memory and merely a sidenote in a history book.<br>Everyone is dead.', icon: [5, 4] });
                 } else if (G.techN >= 50 && G.techN < 82) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is but a long-lost memory, probably a sidenote in a history book.<br><font color="lime">Everyone is dead.</font>', icon: [5, 4] });
                 } else if (G.techN >= 82 && G.techN < 116) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely a interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
                 } else if (G.techN >= 116 && G.techN < 148) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting, not short sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 148 && G.techN < 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died and your legacy is <b>not lost memory</b>, and surely a interesting, not short sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died, but your legacy isn\'t a <b>lost memory</b>. It is surely an interesting, long note in history book.<br><font color="lime">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died, but your legacy isn\'t a <b>lost memory</b>. It is surely an interesting, long note in some history book.<br><font color="lime">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
                 G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/0population.mp3');
                 G.dialogue.popup(function (div) {
@@ -20180,11 +20180,11 @@ if (getCookie("civ") == "0") {
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
                         //'<li><font color="yellow">Trial: &nbsp;'+(G.has('trial') ? 'active' : 'none')+'</font></li><Br>'+
                         '<li>Early game completed: ' + (G.has('monument-building') ? 'YES' : 'NO') + '</li><Br>' +
-                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Haloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
+                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
-                        'Technical note: Start a new game by opening Settings.' +
+                        'Technical note: Start a new game by opening the settings.' +
                         '</div></div>'
                 })
 
@@ -24594,7 +24594,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gardening',
-                desc: '<font color="#e6ffee">A key for farms. Elves can learn how to make a irrigation system. Thanks to it they may start thinking about making some small gardens overcoming big plant density or putting a good use of it if these are fruit bushes.</font>',
+                desc: '<font color="#e6ffee">A key for farms. Elves can learn how to make an irrigation system. Thanks to it they may start thinking about making some small gardens overcoming big plant density or putting a good use of it if these are fruit bushes.</font>',
                 icon: [26, 10, 'c2'],
                 cost: { 'creativity': 40 },
                 effects: [

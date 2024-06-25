@@ -19,8 +19,9 @@ Upon loading it, you should be able to play the game!
 Here are a few examples:
 - Multiple game-breaking bugs are fixed (in particular, bookwriting no longer crashes your game after a bit)
 - A variety of spelling and spacing issues are no longer there
-- Some alternative techs can be obtained at the same time
-- Some traits now work properly, and new traits and techs have been added (including a new way to get sand)
+- Some alternative techs can now be obtained simultaneously
+- Various traits have been fixed
+- New techs and mechanics have been added (including a new way to get sand)
 - Negative costs are hidden now
 - May come with **new features** down the line!
 ---
