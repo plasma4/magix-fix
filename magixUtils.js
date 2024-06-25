@@ -88,7 +88,7 @@ G.AddData({
         ==========================*/
         function tabs() {
             var tabIds = [];
-            var newText = ['<font color="lime">Production</font>', '<font color="#7f7fff">Territory</font>', '<font color="fuschia">Policies</font>', '<font color="pink">Traits</font>', '<font color="#bbbbff">Research</font>', '<font color="yellow">Settings</font>', '<font color="yellow">Update log - Vanilla</font>', '<font color="yellow">Legacy</font>', '<font color="orange">Magix</font>'];
+            var newText = ['<font color="lime">Production</font>', '<font color="#7f7fff">Territory</font>', '<font color="fuschia">Policies</font>', '<font color="pink">Traits</font>', '<font color="#bbbbff">Research</font>', '<font color="yellow">Settings</font>', '<font color="yellow">Update log (Vanilla)</font>', '<font color="yellow">Legacy</font>', '<font color="orange">Magix</font>'];
             for (i in G.tabs) {
                 tabIds[i] = G.tabs[i].id;
                 G.tabs[i].name = newText[i];
@@ -273,7 +273,7 @@ G.AddData({
 
                 var str = '';
                 var len = G.policyCategories.length;
-                str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.25">Get the <font color="fuschia">Policies</font> trait to unlock this tab!<br>Policies are one of the main aspects of ruling a tribe.<br>Wait until you get this trait to learn more about them :)</font></center></div>';
+                str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center style="line-height: 1.25"><font size="2.5">Get the <font color="fuschia">Policies</font> trait to unlock this tab.<br>Policies are one of the main aspects of ruling a tribe.<br>Wait until you get this trait to learn more about them :)</font></center></div>';
                 for (var iC = 0; iC < len; iC++) {
                     if (G.policyCategories[iC].id != 'mag') continue;
                     else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
@@ -3299,9 +3299,9 @@ G.AddData({
                 G.hideMap();
                 var str = '';
                 if (G.modsByName['Default dataset']) {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>“The world is a book and those who don\'t travel read only one page”</u> ~ Saint Augustine</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center style="line-height: 1.25"><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>\u201cThe world is a book and those who don\'t travel read only one page\u201d</u> \u2014Saint Augustine</font></center></div></div></div></div></div>';
                 } else {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>“It feels good to be lost in the right direction” – Unknown</font></center></div></div></div></div></div>';
+                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center style="line-height: 1.25"><font size="2.5">Get the <font color="#7f7fff">Where am I?</font> trait to unlock this tab.<br>There you\'ll see information about land your tribe settled and find which types of goods you can find here.<br><u>\u201cIt feels good to be lost in the right direction\u201d \u2014Unknown</font></center></div></div></div></div></div>';
                 };
                 l('landDiv').innerHTML = str;
 
@@ -3471,7 +3471,7 @@ G.AddData({
             switch (randText) {
                 case 0: G.middleText('<font color="#ffffee"><small>Sorry. Can\'t do that when paused!</small></font>'); break;
                 case 1: G.middleText('<font color="#ffddbb"><small>[ u n p a u s e ]</small></font>'); break;
-                case 2: G.middleText('<font color="#ffd022"><small>I can\'t let you change things while time is stopped. ~Chra\'nos</small></font>'); break;
+                case 2: G.middleText('<font color="#ffd022"><small>I can\'t let you change things while time is stopped. From: Chra\'nos</small></font>'); break;
                 case 3: G.middleText('<font color="#0fffee"><small>Unpause the game in order to perform this action.</small></font>'); break;
                 case 4: G.middleText('<font color="#faffee"><small>You can\'t do that while time is stopped.</small></font>'); break;
                 case 5: G.middleText('<font color="#ffff00"><small>You can\'t do that here...</small></font>'); break;
@@ -5145,7 +5145,7 @@ G.AddData({
                 G.middleText('<big><font color="pink">Happy ' + truY + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow');
             };
             if (yer.getMonth() == 6 && yer.getDate() >= 14 && yer.getDate() <= 20) { //Magix anniversary week
-                G.middleText('<big><font color="olive">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br>Thanks for playing this neat mod ~ pelletsstarPL<br><font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
+                G.middleText('<big><font color="olive">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br>Thanks for playing this neat mod \u2014pelletsstarPL<br><font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
             };
             if (day >= easterDay - 7 && day <= easterDay) { //EASTER
                 G.middleText('<big><font color="green">Happy Easter!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away. Easter bunny does a sniff,sniff</small></font>', 'slow');

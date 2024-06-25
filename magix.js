@@ -785,7 +785,7 @@ G.NewGame = function (doneLoading, mods) {
                 G.button({ style: 'position:absolute;right:-6px;top:-6px;', tooltip: 'Select mods for this playthrough.', text: 'Use mods', onclick: function (e) { G.SelectMods(); } }) +
                 G.button({ style: 'position:absolute;left:-6px;top:-6px;', tooltip: 'View the game\'s version history.', text: 'Update log', onclick: function (e) { G.dialogue.popup(G.tabPopup['updates'], 'bigDialogue'); } }) +
                 G.button({ style: 'position:absolute;left:-6px;top:20px;', tooltip: 'Change the game\'s settings.', text: 'Settings', onclick: function (e) { G.dialogue.popup(G.tabPopup['settings'], 'bigDialogue'); } }) +
-                '<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About original content~Orteil</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par"><font color="pink">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</font></div></div>') + '</div>' +
+                '<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About original content \u2014Orteil</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par"><font color="pink">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</font></div></div>') + '</div>' +
                 '<div class="framed bgMid fancyText" style="position:absolute;right:-2px;bottom:-26px;">' + G.textWithTooltip('<small>About Magix</small>', '<div style="width:240px;text-align:left;padding:4px;"><div class="par">The mod adds a ton of new content, including a second civilization after playing for a while.</div><div class="par">Features that could be added include the rest of the trials for human race and new mechanics for both races.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! On discord, you can contact me at @1_e0 (the original creator, @pelletsstarPL is no longer maintaining the project).</div><div class="par"><font color="#aaffaa">Thank you for playing Magix!</div><div class="par" style="text-align:right;">-pelletsstarPL (general fixes and rewritings separately by 1_e0)</div></div>') + '</div>' +
                 '<div class="divider"></div>' +
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
@@ -1645,7 +1645,7 @@ if (getCookie("civ") == "0") {
                     document.title = 'Tribe died - NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
-                const quotes = ['“To the well-organized mind, death is but the next great adventure.”', '“The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.”', '“It is said that your life flashes before your eyes just before you die.”', '“Don\'t feel bad, I\'m usually about to die.”', '“Death is so terribly final, while life is full of possibilities.”', "It is as natural to die as it is to be born."];
+                const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
                 if (G.techN < 15) {
                     G.Message({ type: 'bad', text: 'Your small tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died terribly. It is a sad fate indeed.', icon: [5, 4] });
                 } else if (G.techN >= 15 && G.techN < 30) {
@@ -2172,7 +2172,7 @@ if (getCookie("civ") == "0") {
                     'An idiot tried to fall up.',
                     'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
                     'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
-                    'Harder but more interesting ~ pelletsstarPL',
+                    'Harder but more interesting \u2014pelletsstarPL',
                     'Creepers inbound!', 'It is raining.', 'Your rolling pins are rolling and pinning.',
                     '.gnivigrofnu is thgin ehT', '.noziroh eth no mrost a si erehT',
                     'Another stream on Twitch is happening.', 'plasma4 prepares the next update.',
@@ -2189,7 +2189,7 @@ if (getCookie("civ") == "0") {
                     'A warm breeze is blowing', 'sheesh',
                     'jeez', '...gosh', 'You spin me round...',
                     'QUACK!', 'beep beep boop',
-                    'Blab', 'blep', 'Moist cookies ~ grandma',
+                    'Blab', 'blep', 'Moist cookies \u2014grandma',
                     'Is this about cookies?', 'mispeled',
                     'What is this mod called again?'
                 ];
@@ -11815,7 +11815,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: '7th essence', category: 'tier1',
-                desc: 'Discovers another essence which can be feeled in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower]. <small>Shouldn\'t holy essence vapor dark one? ~ commoner</small>',
+                desc: 'Discovers another essence which can be feeled in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower]. <small>Shouldn\'t holy essence vaporize the dark kind?</small>',
                 icon: [20, 6, 'magixmod', 8, 12, 23, 1],
                 cost: { 'insight': 1300 },
                 effects: [
@@ -16987,7 +16987,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at8',
                 displayName: 'Ancestors trait #8 Mistress of the forests blessing',
-                desc: 'Every good provides 1% more resources from chopping. //<small>Her blessing is real! I just have enough wood for this winter ~ old woodcutter says</small>',
+                desc: 'Every good provides 1% more resources from chopping. //<small>"Her blessing is real! I just have enough wood for this winter," an old woodcutter says.</small>',
                 icon: [4, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('chop', 1.01) } }],
@@ -16998,7 +16998,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'at9',
                 displayName: 'Ancestors trait #9 Ancestor wizards blessing',
-                desc: 'Units related to magic and wizardry produce 3.5% more of magical resources. // <small>Bibiddi bobiddi boo! ~ did it sound familiar to you?</small>',
+                desc: 'Units related to magic and wizardry produce 3.5% more of magical resources. // <small>Bibiddi bobiddi boo! Did it sound familiar to you?</small>',
                 icon: [6, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'dt28': false, 'belief in the beforelife': true },
@@ -17146,7 +17146,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'city planning III', category: 'upgrade',
-                desc: '@[architect]s can construct 3 more building each (so instead 12 houses per 1 architect, now it will be 15). <> Also, with each house or other construction setup, you will gain [happiness].//<small>"Now that street I walk every day looks amazing!" ~ says an elder who lived there since their birth.</small>',
+                desc: '@[architect]s can construct 3 more building each (so instead 12 houses per 1 architect, now it will be 15). <> Also, with each house or other construction setup, you will gain [happiness].//<small>"Now that street I walk every day looks amazing," says an elder who lived there since their birth.</small>',
                 icon: [32, 34, 'magixmod'],
                 cost: { 'insight II': 75, 'science': 10 },
                 req: { 'city planning II': true, 'caretaking': true, 'eotm': true },
@@ -20146,7 +20146,7 @@ if (getCookie("civ") == "0") {
                     document.title = 'Tribe died - NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
-                const quotes = ['“To the well-organized mind, death is but the next great adventure.”', '“The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.”', '“It is said that your life flashes before your eyes just before you die.”', '“Don\'t feel bad, I\'m usually about to die.”', '“Death is so terribly final, while life is full of possibilities.”', "It is as natural to die as it is to be born."];
+                const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
                 if (G.techN < 15) {
                     G.Message({ type: 'bad', text: 'Your small elvish tribe <font color="white"><b>' + G.getName('civ') + '</b></font> has died terribly. No one will mention them, not even humans.', icon: [5, 4] });
                 } else if (G.techN >= 15 && G.techN < 30) {
