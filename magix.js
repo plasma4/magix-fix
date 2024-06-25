@@ -3003,7 +3003,7 @@ if (getCookie("civ") == "0") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.3, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.4 };//the elderly are the first to starve off
+                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.4 };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
@@ -3064,7 +3064,7 @@ if (getCookie("civ") == "0") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.3, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.4 };//the elderly are the first to starve off
+                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.4 };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
@@ -3199,7 +3199,8 @@ if (getCookie("civ") == "0") {
                                 if (me.amount <= 15) toChange *= 0.5;
                                 if (G.checkPolicy('flower rituals') == 'on') toChange *= 0.8;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child of Christmas': 1.5, 'child': 1.5, 'adult': 1, 'elder': 2 };
+                                var handwashEffect = G.has('handwashC') ? 0.999 : (G.has('handwashM') ? 0.9996 : 1)
+                                var weights = { 'baby': 2, 'child of Christmas': 1.5 * handwashEffect, 'child': 1.5 * handwashEffect, 'adult': 1 * handwashEffect, 'elder': 2 * handwashEffect };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 2;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 2;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't fall sick the first 5 years
@@ -3219,9 +3220,9 @@ if (getCookie("civ") == "0") {
                                 if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedSick', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' died from disease.'; }, args: { n: changed }, icon: [5, 4] });
                             };
                             var sickHealing = 0.01;
-                            if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.2;
+                            if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.25;
                             var changed = 0;
-                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
+                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'person' : 'people') + ' got better.'; }, args: { n: changed }, icon: [4, 3] });
@@ -3233,7 +3234,7 @@ if (getCookie("civ") == "0") {
                                 if (G.year < 5) toChange *= 0.5;//less wounds the first 5 years
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child of Christmas': 1.5, 'child': 1.5, 'adult': 1, 'elder': 2, 'alchemist': 0.5 };
+                                var weights = { 'baby': 2, 'child of Christmas': 1.5, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2, 'alchemist': 0.5 };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
@@ -3254,7 +3255,7 @@ if (getCookie("civ") == "0") {
                             }
                             var sickHealing = 0.005;
                             var changed = 0;
-                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
+                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('accident messages') || G.resets <= 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3] });
@@ -3852,7 +3853,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'cooked seafood',
-                desc: '[cooked seafood] tastes delicious and has various health benefits.',
+                desc: '[cooked seafood] tastes delicious and has various [health] benefits.',
                 icon: [6, 6],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.02, 'bone': 0.02 }, 'decay': { 'cooked seafood': 0.2, 'spoiled food': 0.8 } },
                 partOf: 'food',
@@ -9093,7 +9094,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'alcohol brewing stand',
-                desc: 'There [alchemist]s can brew alcohol. Harmful for health but may be needed to make more potions.',
+                desc: 'There [alchemist]s can brew alcohol. Harmful for [health] but may be needed to make more potions.',
                 icon: [19, 9, 'magixmod'],
                 cost: { 'basic building materials': 4 },
                 req: { 'alchemy': true, 'alcohol brewing': true },
@@ -9120,7 +9121,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'alcohol drinks brewing stand',
-                desc: 'There [alchemist]s can brew drinks with help of [alcohol pot,alcohol]. Tasty but harmful for health drinks are crafted there. Can craft [wine] or [pot of vodka].',
+                desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,alcohol]. These are tasty but harm [health]. Can craft [wine] or [pot of vodka].',
                 icon: [19, 8, 'magixmod'],
                 cost: { 'basic building materials': 4.3 },
                 req: { 'alchemy': true, 'alcohol brewing': true },
@@ -9128,7 +9129,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'wine': { name: 'Craft wine at this stand', icon: [8, 10, 'magixmod'], desc: 'At this stand you may craft [wine], an [alcohol brews,Alcohol brew].', use: { 'alchemist': 1 } },
-                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, 'magixmod'], desc: 'At this stand you may craft [pot of vodka,Vodka], an [alcohol brews,Alcohol brew]. This drink is very harmful for health so take care about health of your people.', use: { 'alchemist': 1 } },
+                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, 'magixmod'], desc: 'At this stand you may craft [pot of vodka,Vodka], an [alcohol brews,Alcohol brew]. This drink is very harmful for [health], so take care of the [health] of your people.', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'fruit': 0.6, 'sweet water pot': 0.25 }, into: { 'wine': 1 }, every: 4, mode: 'wine' },
@@ -14926,7 +14927,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beyond the edge', category: 'tier1', //despite of costs it doesn\'t do much
-                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
+                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
                 req: { 'policy revaluation': true, 'focused scouting': true },
                 cost: { 'insight II': 45, 'influence': 255 },
                 icon: [33, 26, 'magixmod']
@@ -14998,7 +14999,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essentials] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 35, 'magixmod', 0, 30, 'magixmod'],
@@ -15256,7 +15257,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'handwashC',
                 displayName: 'Handwashing', category: 'tier1',
-                desc: 'People will now wash their hands. However, they do not know how to make soap properly. (At least it can clean hands though!) This raises your people\'s [health] level slightly.',
+                desc: 'People will now wash their hands. However, they do not know how to make soap properly. (At least it can clean hands though!) This raises your people\'s [health] level slightly and decreases the rate of sickness by a tiny amount.',
                 icon: [8, 18, 'magixmod'],
                 req: { 'caretaking': true, 'moderation': false },
                 cost: { 'insight': 435 },
@@ -15267,7 +15268,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'handwashM',
                 displayName: 'Handwashing', category: 'tier1',
-                desc: 'People will now wash their hands. However, they do not know how to make soap, and they\'ll forget to do it sometimes. (At least it can clean hands though!) Raises your people\'s [health] level slightly.',
+                desc: 'People will now wash their hands. However, they do not know how to make soap, and they\'ll forget to do it often. (At least it can clean hands though!) Raises your people\'s [health] level slightly and decreases the rate of sickness by a tiny amount.',
                 icon: [34, 24, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false },
                 cost: { 'insight': 435 },
@@ -17597,9 +17598,10 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death.',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s become [wounded] more.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds,
                 //and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
+                //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 5, 3],
                 cost: { 'influence': 2 },
                 req: { 'tribalism': true },
@@ -19580,7 +19582,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'spoiled fruits',
-                desc: 'Fruits that are dangerous for health when eaten. A source of [spoiled food].',
+                desc: 'Fruits that are dangerous for [health] when eaten. A source of some [spoiled food].',
                 icon: [33, 12, 'magixmod'],
                 res: {
                     'gather': { 'spoiled food': 0.1 },
@@ -20775,7 +20777,7 @@ if (getCookie("civ") == "0") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.3, 'wounded': 0.3 };//the elderly are the first to starve off
+                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3 };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
@@ -20836,7 +20838,7 @@ if (getCookie("civ") == "0") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.3, 'wounded': 0.3 };//the elderly are the first to starve off
+                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3 };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
@@ -20942,7 +20944,7 @@ if (getCookie("civ") == "0") {
                             }
 
                             //health (diseases and wounds)
-                            //note : when a sick or wounded person recovers, they turn into adults; this means you could get a community of old elf fall sick, then miraculously age back. life is a mystery
+                            //note : when a sick or wounded person recovers, they turn into adults; this means you could get a community of old elves fall sick, then miraculously age back. life is a mystery
 
                             //sickness
                             var toChange = 0.00003;
@@ -20971,9 +20973,9 @@ if (getCookie("civ") == "0") {
                             if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedSick', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' died from disease.'; }, args: { n: changed }, icon: [5, 4, 'c2'] });
 
                             var sickHealing = 0.01;
-                            if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.2;
+                            if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.25;
                             var changed = 0;
-                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
+                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'elf' : 'elves') + ' got better.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
@@ -20984,7 +20986,7 @@ if (getCookie("civ") == "0") {
                                 if (G.year < 5) toChange *= 0.5;//less wounds the first 5 years
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child': 1.5, 'adult': 1, 'elder': 2 };
+                                var weights = { 'baby': 2, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2 };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
@@ -21003,7 +21005,7 @@ if (getCookie("civ") == "0") {
 
                             var sickHealing = 0.005;
                             var changed = 0;
-                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain('adult', n, '-'); changed += n;
+                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets <= 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
@@ -21497,7 +21499,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'cooked seafood',
-                desc: '[cooked seafood] tastes absolutely stunning and has various health benefits.',
+                desc: '[cooked seafood] tastes absolutely stunning and has various [health] benefits.',
                 icon: [6, 6, 'c2'],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.03, 'bone': 0.02 }, 'decay': { 'cooked seafood': 0.2, 'spoiled food': 0.8 } },
                 partOf: 'food',
@@ -25445,8 +25447,9 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death.',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s become [wounded] more.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
+                //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 'c2', 5, 3, 'c2'],
                 cost: { 'influence': 2 },
                 req: { 'tribalism': true },
