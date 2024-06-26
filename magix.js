@@ -1304,7 +1304,7 @@ if (getCookie("civ") == "0") {
                         (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched and +1 starting [land] each run.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - +1 starting [land] each run, and the [belief in the beforelife,Belief in the after/beforelife] traits have a doubled chance to be adopted.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait only decreases [happiness] gain by 1.5%.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait only decreases [happiness] gain by 2%.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - all traits and knowledges have a slightly higher chance to be adopted, along with +1 extra starting [land] each run. Unlocks <b>Mausoleum eternal</b> achievement!' : '');
                 }
             }
@@ -1735,7 +1735,7 @@ if (getCookie("civ") == "0") {
                             G.getDict('culture of the afterlife').chance /= 3;
                             G.getDict('culture of the beforelife').chance /= 3;
                             G.getDict('the god\'s call').chance /= 3;
-                            G.getDict('dark side').chance *= 0.66;
+                            G.getDict('dark side').chance *= 2 / 3;
                         }
                     }
                     vpcalc();
@@ -2951,7 +2951,7 @@ if (getCookie("civ") == "0") {
                         var deathUnhappinessMult = 1;
                         if (G.has('fear of death')) deathUnhappinessMult *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
                         if (G.has('acceptance of death')) deathUnhappinessMult /= 2 * (G.has('bII(acceptance)') ? 1.05 : 1);
-                        if (G.has('death scepticism')) (G.year % 40 > 20 ? deathUnhappinessMult *= 1.66 : deathUnhappinessMult *= 1 / 3);
+                        if (G.has('death scepticism')) (G.year % 40 > 20 ? deathUnhappinessMult *= (5 / 3) : deathUnhappinessMult *= 1 / 3);
                         if (G.has('belief in the afterlife')) deathUnhappinessMult /= 2;
                         if (G.has('culture of the afterlife')) deathUnhappinessMult /= 1.75;
                         if (G.has('culture of the beforelife')) { if (parseInt((G.year + 1) / 10) % 2 == 0) deathUnhappinessMult *= 0.9; else deathUnhappinessMult *= 1.1 };
@@ -3235,7 +3235,7 @@ if (getCookie("civ") == "0") {
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
                                 var weights = { 'baby': 2, 'child of Christmas': 1.5, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2, 'alchemist': 0.5 };
-                                if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 3;
+                                if (G.checkPolicy('child workforce') == 'on') weights['child'] *= G.checkPolicy('elder workforce') == 'on' ? 4 : 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
                                 for (var i in weights) { var n = G.lose(i, randomFloor(Math.random() * G.getRes(i).amount * toChange * weights[i]), '-'); changed += n; }
@@ -3292,7 +3292,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are born when you have 2 or more [adult,Adults] left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children].//Babies drink and eat half as much as children.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children].//They drink and eat half as much as children.',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',
@@ -3300,7 +3300,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'child',
-                desc: '[child,Children] grow from [baby,Babies] over time.//After a while, they will grow up into [adult,Adults].//Children drink and eat half as much as adults.//Children do not count as [worker,Workers], unless special measures are in place.',
+                desc: '[child,Children] grow from [baby,Babies] over time.//After a while, they will grow up into [adult]s.//Children drink and eat half as much as adults.//Children do not count as [worker]s, unless special measures are in place.',
                 startWith: 2,
                 visible: true,
                 partOf: 'population',
@@ -3308,7 +3308,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'adult',
-                desc: '[adult,Adults] grow from [child,Children] over time.//They eventually age into [elder,Elders].//Generally, adults make up most of your [worker,workforce].',
+                desc: '[adult]s grow from [child,Children] over time.//They eventually age into [elder,Elders].//Generally, adults make up most of your [worker,workforce].',
                 startWith: 5,
                 visible: true,
                 partOf: 'population',
@@ -3316,7 +3316,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'elder',
-                desc: '[adult,Adults] that grow old are [elder,Elders].//Elders may end up [corpse,dying] of old age.//Elders do not count as [worker,Workers], unless special measures are in place.',
+                desc: '[adult]s that grow old are [elder,Elders].//Elders may end up [corpse,dying] of old age.//Elders do not count as [worker]s, unless special measures are in place.',
                 startWith: 1,
                 visible: true,
                 partOf: 'population',
@@ -3528,7 +3528,7 @@ if (getCookie("civ") == "0") {
                 fractional: true,
                 tick: function (me, tick) {
                     // Calculate ungratefulness
-                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.985 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
+                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.98 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
                     if (G.has('tribe of eaters')) {
                         // Decrease the effect by half
                         ungrateful = 1 - 0.5 * (1 - ungrateful)
@@ -5962,17 +5962,17 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'corpsedecaypoint',
-                displayName: 'corpse decay point (from wonder construction)',
+                displayName: 'Corpse decay point (from wonder construction)',
                 hidden: true,
             });
             new G.Res({
                 name: 'deitytemplePoint',
-                displayName: 'deity temple point (from wonder construction)',
+                displayName: 'Deity temple point (from wonder construction)',
                 hidden: true,
             });
             new G.Res({
                 name: 'godTemplePoint',
-                displayName: 'god temple point (from wonder construction)',
+                displayName: 'God temple point (from wonder construction)',
                 hidden: true,
             });
             new G.Res({
@@ -6260,7 +6260,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'child of Christmas',
-                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them say they are elves, Claus\'s helpers and many more.//After a while, they will grow up into [adult,Adults].//These children drink and eat half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
+                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them say they are elves, Claus\'s helpers and many more.//After a while, they will grow up into [adult]s.//These children drink and eat half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
                 partOf: 'population',
                 icon: [13, 11, 'seasonal'],
                 hidden: true,
@@ -7313,7 +7313,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'mud shelter',
-                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live. The weakest shelter.',
+                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live.',
                 icon: [9, 2],
                 cost: { 'mud': 75 },
                 use: { 'land': 1 },
@@ -7321,23 +7321,23 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'provide', what: { 'housing': 3 } },
                     { type: 'provide', what: { 'housing': 1 }, req: { 'gt1': true } },
-                    { type: 'waste', chance: 3.05 / 1000, req: { 'sedentism': true } },
+                    { type: 'waste', chance: 3 / 1000, req: { 'construction III': false } },
+                    { type: 'waste', chance: 0.6 / 1000, req: { 'construction III': true, 'improved construction': false } },
+                    { type: 'waste', chance: 0.42 / 1000, req: { 'improved construction': true } },
                 ],
                 req: { 'sedentism': true },
                 category: 'housing',
             });
             new G.Unit({
                 name: 'branch shelter',
-                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live.',
+                desc: '@provides 3 [housing]<>Basic, frail dwelling in which a small family can live. The weakest shelter.',
                 icon: [10, 2],
                 cost: { 'stick': 75 },
                 use: { 'land': 1 },
                 effects: [
                     { type: 'provide', what: { 'housing': 3 } },
                     { type: 'provide', what: { 'housing': 1 }, req: { 'gt1': true } },
-                    { type: 'waste', chance: 3 / 1000, req: { 'construction III': false } },
-                    { type: 'waste', chance: 0.6 / 1000, req: { 'construction III': true, 'improved construction': false } },
-                    { type: 'waste', chance: 0.42 / 1000, req: { 'improved construction': true } },
+                    { type: 'waste', chance: 3 / 1000 },
                 ],
                 req: { 'sedentism': true },
                 category: 'housing',
@@ -8945,7 +8945,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'well of the Plain Island',
-                displayName: 'island well',
+                displayName: 'Island well',
                 desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable water.',
                 icon: [25, 3],
                 cost: { 'stone': 70, 'archaic building materials': 30, 'basic building materials': 15 },
@@ -9684,7 +9684,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'pagoda of democracy',
-                displayName: 'pagoda of Democracy',
+                displayName: 'Pagoda of Democracy',
                 desc: '@leads to the <b>Democration victory</b><>The nice pagoda built over the forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. It is [influence] and [authority] specified so it needs it while building.',
                 wonder: 'democration',
                 icon: [6, 13, 'magixmod'],
@@ -11614,8 +11614,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'moar juices', category: 'tier1',
-                displayName: 'more juices',
-                desc: 'Allows you to craft juice out of some [vegetable]s.//<small>Moar juice!!!</small>',
+                desc: 'Allows you to craft juice out of [vegetable]s now.//<small>Moar juice!!!</small>',
                 icon: [17, 4, 'magixmod'],
                 cost: { 'insight': 805 },
                 req: { 'plain island building': true, 'juice-crafting': true },
@@ -11774,7 +11773,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: '2nd portal sky',
-                displayName: 'second portal to new world',
+                displayName: 'The second portal',
                 category: 'tier1',
                 desc: 'After your people heard [the god\'s call] your wizards with help of full of faith people figured out a way to acrivate portal to the Paradise at the top of their latest wonder.',
                 icon: [20, 3, 'magixmod'],
@@ -14008,14 +14007,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'more humid water', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 250% more [sugar cane]',
+                desc: '[sugar cane farm]s produce 250% more [sugar cane].',
                 icon: [31, 23, 'magixmod'],
                 cost: { 'insight': 590 },
                 req: { 'moar juices': true },
             });
             new G.Tech({
                 name: 'soil for moisture-loving plants', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with [more humid water] bonus',
+                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with the [more humid water] bonus!',
                 icon: [31, 24, 'magixmod'],
                 cost: { 'insight': 1350, 'culture': 300 },
                 req: { 'ambrosium treeplanting': true },
@@ -14043,7 +14042,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'gods and idols',
-                desc: 'May open a door to the Seraphins - the Deity superiors.',
+                desc: 'May open a door to the Seraphins: the Deity superiors.',
                 icon: [17, 25, 'magixmod'],
                 req: { 'liberating darkness': true, 'power of the faith': true },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14330,7 +14329,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'construction III', category: 'tier2',
-                desc: 'All buildings waste 5x slower. It won\'t increase building costs. @Provides 15 [wisdom II].',
+                desc: 'All buildings waste 5x slower, excluding [branch shelter]s. It won\'t increase building costs. @Provides 15 [wisdom II].',
                 icon: [12, 27, 'magixmod'],
                 req: { 'leaves of wisdom': true, 'paradise shelters': true, 'do we need that much science?': true },
                 cost: { 'insight II': 180, 'science': 17, 'influence II': 3 },
@@ -15578,7 +15577,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'at(ct)',
-                displayName: 'automation', category: 'tier1',
+                displayName: 'Automation', category: 'tier1',
                 desc: 'Caretaking has one feature: people do not focus that much on industrialization or technological progress or innovations. That means that for some parts of automation, people will want to discover it later, but they won\'t want to make every single thing being automated.',
                 icon: [15, 31, 'magixmod'],
                 req: { 'paradise crafting': true, 'bigger university': true },
@@ -16135,7 +16134,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'constelations',
-                displayName: 'constellations',
+                displayName: 'Constellations',
                 desc: '<font color="#aaffff">A naming system for star constellations has been invented. //<small>Big dog,Little dog,Dove,Centaur,Water bearer,Octant,Balance,Sea serpent,Crane...yeah, these are names of constellations.</small></font>',
                 icon: [36, 32, 'magixmod'],
                 cost: { 'culture II': 35, 'insight II': 600, 'science': 100 },
@@ -17501,6 +17500,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'horses', // New tech by @1_e0
+                displayName: 'Exploration',
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%.',
                 icon: [24, 3, 24, 1],
                 cost: { 'insight': 10 },
@@ -17599,7 +17599,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s are more likely to become [wounded].</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds,
                 //and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
                 //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
@@ -19321,7 +19321,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'vfb1',
-                displayName: 'Bush with flowers',
+                displayName: 'Flower bush',
                 desc: 'A bush filled with some [flowers].',
                 icon: [10, 23, 'magixmod'],
                 res: {
@@ -19331,7 +19331,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'vfb2',
-                displayName: 'Bush with flowers',
+                displayName: 'Flower bush',
                 desc: 'A bush filled with some [flowers].',
                 icon: [10, 23, 'magixmod'],
                 res: {
@@ -20730,7 +20730,7 @@ if (getCookie("civ") == "0") {
                         if (G.has('fear of death')) deathUnhappinessMult *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
                         if (G.has('belief in the afterlife')) deathUnhappinessMult /= 2;
                         if (G.has('acceptance of death')) deathUnhappinessMult /= 2 * (G.has('bII(acceptance)') ? 1.05 : 1);
-                        if (G.has('death scepticism')) (G.year % 40 > 20 ? deathUnhappinessMult *= 1.66 : deathUnhappinessMult *= 1 / 3);
+                        if (G.has('death scepticism')) (G.year % 40 > 20 ? deathUnhappinessMult *= (5 / 3) : deathUnhappinessMult *= 1 / 3);
                         if (tick % 3 == 0 && G.checkPolicy('disable eating') == 'off') {
                             //drink water
                             var toConsume = 0;
@@ -20988,7 +20988,7 @@ if (getCookie("civ") == "0") {
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
                                 var weights = { 'baby': 2, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2 };
-                                if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 3;
+                                if (G.checkPolicy('child workforce') == 'on') weights['child'] *= G.checkPolicy('elder workforce') == 'on' ? 4 : 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
                                 for (var i in weights) { var n = G.lose(i, randomFloor(Math.random() * G.getRes(i).amount * toChange * weights[i]), '-'); changed += n; }
@@ -21041,7 +21041,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are what happens when you have 2 or more [adult,Adults] left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children].//Babies drink and eat half as much as children.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children].//They drink and eat half as much as children.',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',
@@ -21050,7 +21050,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'child',
-                desc: '[child,Children] grow from [baby,Babies] over time.//After a while, they will grow up into [adult,Adults].//Children drink and eat half as much as adults.//Children do not count as [worker,Workers], unless special measures are in place.',
+                desc: '[child,Children] grow from [baby,Babies] over time.//After a while, they will grow up into [adult]s.//Children drink and eat half as much as adults.//Children do not count as [worker]s, unless special measures are in place.',
                 startWith: 2,
                 visible: true,
                 partOf: 'population',
@@ -21059,7 +21059,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'adult',
-                desc: '[adult,Adults] grow from [child,Children] over time.//They eventually age into [elder,Elders].//Generally, adults make up most of your [worker,workforce].',
+                desc: '[adult]s grow from [child,Children] over time.//They eventually age into [elder,Elders].//Generally, adults make up most of your [worker,workforce].',
                 startWith: 5,
                 visible: true,
                 partOf: 'population',
@@ -21068,7 +21068,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'elder',
-                desc: '[adult,Adults] that grow old are [elder,Elders].//Elders may end up [corpse,dying] of old age.//Elders do not count as [worker,Workers], unless special measures are in place.',
+                desc: '[adult]s that grow old are [elder,Elders].//Elders may end up [corpse,dying] of old age.//Elders do not count as [worker]s, unless special measures are in place.',
                 startWith: 1,
                 visible: true,
                 partOf: 'population',
@@ -22928,7 +22928,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'branch shelter',
-                desc: '@provides 3 [housing]<>Basic and a very very frail dwelling in which a small family can live.',
+                desc: '@provides 3 [housing]<>Basic and a very very frail dwelling in which a small family can live. The weakest shelter.',
                 icon: [10, 2, 'c2'],
                 cost: { 'stick': 75 },
                 use: { 'land': 1 },
@@ -25448,7 +25448,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster and [adult]s are more likely to become [wounded].</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and early death. <b>In addition, [sick] and [wounded] people age faster, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
                 //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 'c2', 5, 3, 'c2'],
@@ -26792,7 +26792,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'vfb3',
-                displayName: 'Bush with flowers',
+                displayName: 'Flower bush',
                 desc: 'A bush filled with some various [flowers].',
                 icon: [15, 17, 'c2'],
                 res: {
@@ -26802,8 +26802,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'vfb4',
-                displayName: 'Big flowers bush',
-                desc: 'A bush filled with few [flowers,Big flowers].',
+                displayName: 'Large flowery bush',
+                desc: 'A bush filled with a few [flowers,Large flowers].',
                 icon: [19, 17, 'c2'],
                 res: {
                     'flowers': { 'flowers': 4 },
@@ -26812,7 +26812,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'vfb5',
-                displayName: 'bush of tulips',
+                displayName: 'Bush of tulips',
                 desc: 'A bush filled with some [flowers,Tulips].',
                 icon: [20, 17, 'c2'],
                 res: {
