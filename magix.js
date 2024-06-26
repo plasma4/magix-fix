@@ -930,7 +930,7 @@ var unitGetsConverted = function (into, min, max, mesg, message, single, plural)
 }
 var archaeologyRare = function () //mesg can toggle message
 {
-    //for rare findings
+    //for rare findings and up
     return function (me) {
         var rarities = ['Rare', 'Unique', 'Legendary', 'Magnificient', 'Fabled', 'Ethereal', 'Omnipotent', 'Transcendent', 'Godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var mesgType = ['tutorial', 'unique', 'emblemobtain', 'magnificient', 'fabled', 'ethereal', 'omnipotent', 'transcendent', 'godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
@@ -938,10 +938,10 @@ var archaeologyRare = function () //mesg can toggle message
         //clothing names - will provide culture or influence 
         var namesClothesState = ['Worn', 'Wet', 'Leaky', 'Furry', 'Faded', 'Leather'];
         var namesClothesLegend = ['Royal', 'Majesty\'s', 'High society\'s', 'Emperor\'s', 'Ancestor\'s'];
-        var namesColors = ['red', 'orange', 'blue', 'green', 'purple', 'black', 'white', 'cyan'];
+        var namesColors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'white', 'cyan'];//pelletsstarpl why do i have to add yellow back
         var namesClothing = ['cape', 'coat', 'jacket', 'shirt', 'yukata', 'shoes', 'boots', 'hat', 'mask', 'crown', 'robe'];
         //tool names - will provide insight or influence
-        var namesToolsState = ['Well-preserved', 'Refined', 'Burnt', 'Blunt', 'Wasted'];
+        var namesToolsState = ['Well-preserved', 'Refined', 'Burnt', 'Blunt', 'Wasted', 'Shiny', 'Oxidized', 'Old'];
         var namesToolsLegend = ['Gilded', 'Precious', 'Very well-preserved', 'Emperor\'s', 'Judge\'s', 'Ancestor\'s'];
         var namesTools = ['pickaxe', 'axe', 'weapon', 'sword', 'katana', 'hammer', 'sledgehammer', 'scepter'];
 
@@ -1024,7 +1024,7 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ' have found a <b>' + rarity + '</b> relic.<br>It is <b>' + itemName + '</b>. This finding provides you with <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + '</u>.<br>Great!',
+                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ('aeiou'.includes(rarity[0]) ? ' have found an <b>' : ' have found a <b>') + rarity + '</b> relic.<br>It is <b>' + itemName + '</b>. This finding provides you with <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + ['</u>.<br>Great!', '</u>.<br>Nice!'][Math.random() < 0.5],
                 icon: [23, 33, 'magixmod']
             });
         }
@@ -9252,8 +9252,10 @@ if (getCookie("civ") == "0") {
                 },
                 effects: [
                     { type: 'convert', from: { 'sugar cane': 1.5 }, into: { 'sugar': 1 }, every: 5, mode: 'sugar' },
-                    { type: 'convert', from: { 'sugar': 1, 'fruit': 0.4, 'water': 2 }, into: { 'juices': 2 }, every: 5, mode: 'juicesF' },
-                    { type: 'convert', from: { 'sugar': 1, 'vegetable': 0.4, 'water': 2 }, into: { 'juices': 2 }, every: 7, mode: 'juicesW' },
+                    { type: 'convert', from: { 'sugar': 1, 'fruit': 0.4, 'water': 1.25 }, into: { 'juices': 2 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': false } },
+                    { type: 'convert', from: { 'sugar': 1, 'vegetable': 0.4, 'water': 1.25 }, into: { 'juices': 2 }, every: 6, mode: 'juicesW', req: { 'concentrated juices': false } },
+                    { type: 'convert', from: { 'sugar': 2, 'fruit': 0.8, 'water': 3.75 }, into: { 'juices': 4 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': true } },
+                    { type: 'convert', from: { 'sugar': 2, 'vegetable': 0.8, 'water': 3.75 }, into: { 'juices': 4 }, every: 6, mode: 'juicesW', req: { 'concentrated juices': true } },
                     { type: 'mult', value: 1.25, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'mult', value: 0.915, req: { 'se09': 'on' } },
                 ],
@@ -9582,7 +9584,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'paradise portal', displayName: '<font color="#E0CE00">Portal to the Paradise</font>',
-                desc: 'Opens a portal to a huge <b>God\'s Paradise</b>: a troublesome project, guided by God\'s worship!//A dream of Paradise, angels, and much more comes real! You will get +21500 [land of the Paradise] that you can use!',
+                desc: 'Opens a portal to a huge <b>God\'s Paradise</b>: a troublesome project, guided by God\'s worship!//A dream of Paradise, angels, and much more comes real! You will also get 21.5k [land of the Paradise] that you can use!',
                 wideIcon: [31, 29, 'magixmod'],
                 wideIcon2: [7, 4, 'magixmod'],
                 icon: [32, 29, 'magixmod'],
@@ -10085,7 +10087,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'hovel with garden',
-                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Occasionally can provide you with the occasional tasty [fruit] and [vegetable].',
+                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Can provide you an occasional tasty [fruit] or [vegetable].',
                 icon: [9, 6, 'magixmod'],
                 cost: { 'basic building materials': 90 },
                 effects: [
@@ -10548,7 +10550,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'ancestors portal', displayName: '<font color="#FFbbbb">ancestors world portal</font>',
-                desc: 'Opens a portal to a huge <b>ancestors world</b>. It was an arduous project shaped by the belief in ancestors.//A dream of Ancestors, discovery, and much more comes real! You will get +21500 [land of the Past] that you can use.',
+                desc: 'Opens a portal to a huge <b>ancestors world</b>. It was an arduous project shaped by the belief in ancestors.//A dream of Ancestors, discovery, and much more comes real! You will also get +21.5k [land of the Past] that you can use!',
                 wideIcon: [26, 33, 'magixmod'],
                 wideIcon2: [29, 33, 'magixmod'],
                 icon: [30, 33, 'magixmod'],
@@ -12382,7 +12384,7 @@ if (getCookie("civ") == "0") {
                 name: 'rules of food',
                 desc: '@unlocks policies that manage which food types can be eaten. // <small>Can I eat fried chips?</small>',
                 icon: [19, 1],
-                chance: 0.4,// average chance decreased by 0.3 years by @1_e0
+                chance: 0.4,// average chance decreased by @1_e0
                 req: { 'tribalism': true, 'policies': true },
                 effects: [
                 ]
@@ -14014,7 +14016,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'soil for moisture-loving plants', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with the [more humid water] bonus!',
+                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with [more humid water]!',
                 icon: [31, 24, 'magixmod'],
                 cost: { 'insight': 1350, 'culture': 300 },
                 req: { 'ambrosium treeplanting': true },
@@ -17517,7 +17519,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'sandy shores', // New tech by @1_e0
-                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. You can research other technologies to improve this effect. // <small>A window to dig...</small>',
+                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
                 icon: [4, 9, 21, 15, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
@@ -17527,9 +17529,16 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'sandy shores II', // New tech by @1_e0
                 desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
-                icon: [4, 9, 0, 35, 'magixmod', 21, 15, 'magixmod'],
+                icon: [0, 35, 'magixmod', 4, 9, 21, 15, 'magixmod'],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
+            });
+            new G.Tech({
+                name: 'concentrated juices', category: 'tier1',
+                desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juice]. However, making [juice] now requires 3 times as much [water].//<small>Even MOAR JUICE!!!</small>',
+                icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
+                cost: { 'insight': 1600 },
+                req: { 'more humid water': true },
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -17610,7 +17619,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'food rations',
-                desc: 'Define how much [food] your people are given each day.//Bigger rations will make your people happier, while smaller ones may lead to sickness and starvation.',
+                desc: 'Specifies how much [food] your people are given each day.//Bigger rations will make your people happier, while smaller ones may lead to sickness and starvation.',
                 icon: [5, 12, 3, 6],
                 cost: { 'influence': 2 },
                 startMode: 'sufficient',
@@ -17625,7 +17634,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'water rations',
-                desc: 'Define how much [water] your people are given each day.//Bigger rations will make your people happier, while smaller ones may lead to sickness and dehydration.',
+                desc: 'Specifies how much [water] your people are given each day.//Bigger rations will make your people happier, while smaller ones may lead to sickness and dehydration.',
                 icon: [5, 12, 7, 6],
                 cost: { 'influence': 2 },
                 startMode: 'sufficient',
@@ -25458,7 +25467,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'food rations',
-                desc: 'Define how much [food] your elves are given each day.//Bigger rations will make your elves happier, while smaller ones may lead to sickness and starvation.',
+                desc: 'Specifies how much [food] your elves are given each day.//Bigger rations will make your elves happier, while smaller ones may lead to sickness and starvation.',
                 icon: [5, 12, 'c2', 3, 6, 'c2'],
                 cost: { 'influence': 2, 'discernment': 2 },
                 startMode: 'sufficient',
@@ -25473,7 +25482,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'water rations',
-                desc: 'Define how much [water] your elves are given each day.//Bigger rations will make your elves happier, while smaller ones may lead to sickness and dehydration.',
+                desc: 'Specifies how much [water] your elves are given each day.//Bigger rations will make your elves happier, while smaller ones may lead to sickness and dehydration.',
                 icon: [5, 12, 'c2', 7, 6, 'c2'],
                 cost: { 'influence': 2, 'discernment': 2 },
                 startMode: 'sufficient',
@@ -26303,7 +26312,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'forest mushrooms',
-                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [herb]s. They also have multiple unique styles that are quite facinating.',
+                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [herb]s. They also have multiple unique styles that are quite fascinating.',
                 icon: [choose([4, 5, 6]), 17, 'c2'],
                 res: {
                     'gather': { 'herb': 4 },
