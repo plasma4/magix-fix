@@ -51,13 +51,13 @@ body {
 
 .thing>.overlay
 {
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/frames.png);
+	background:url(frames.png);
 	margin:-2px;
 }
 
 .thing.utilframed>.overlay
 {
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/frames.png);
+	background:url(frames.png);
 	background-position:-338px 0px;
 }
 
@@ -79,7 +79,7 @@ body {
 }
 .thing.shadowachiev>.overlay
 {
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/roundFrameShadowAchiev.png);
+	background:url(roundFrameShadowAchiev.png);
 	margin:-2px;
 }
 .thing.shadowachiev
@@ -98,7 +98,7 @@ body {
 }
 .thing.seasonalachiev>.overlay
 {
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/roundFrameSeasonalAchiev.png);
+	background:url(roundFrameSeasonalAchiev.png);
 	margin:-2px;
 }
 .thing.seasonalachiev
@@ -113,7 +113,7 @@ body {
 }
 .thing.c2achiev>.overlay
 {
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/roundFramec2.png);
+	background:url(roundFramec2.png);
 	margin:-2px;
 }
 .thing.c2achiev
@@ -148,7 +148,7 @@ body {
 	top:0px;
 	padding:0px;
 	text-align:center;
-	background:url(https://file.garden/Xbm-ilapeDSxWf1b/c2/gizmosc2.png);
+	background:url(gizmosc2.png);
 	cursor:pointer;
 }
 .gizmo2 {top:16px;height:20px;background-position:0px -16px;}
