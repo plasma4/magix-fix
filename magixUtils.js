@@ -3539,7 +3539,6 @@ G.AddData({
             if (mark <= 0.5) { bonus = bonus - 1 } else { bonus = bonus + 1 };
             if (G.modsByName['Default dataset']) {
                 var mausobonus = Math.floor(G.achievByName['mausoleum'].won / 2);
-                console.log(Math.floor(G.achievByName['mausoleum'].won / 2));
                 if (G.achievByName['mausoleum'].won > 10) mausobonus = 5;
                 exp = 10 + bonus + mausobonus + mark;
             } else {
