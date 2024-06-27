@@ -2,7 +2,7 @@
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 
 >>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
@@ -13,6 +13,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 >>> Upon loading it, you should find that it works. This should properly set up the mod.
 */
+
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
 
 /////////
@@ -404,7 +405,7 @@ G.selectModeForUnit = function (me, div) {
 
 G.update['unit'] = function () {
     l('unitDiv').innerHTML =
-        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
+        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be assigned over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
         '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
         G.button({
             id: 'removeBulk',
@@ -522,13 +523,13 @@ G.update['unit'] = function () {
                     str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>';
                     str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
                     str += '<div class="fancyText barred" style="color:#c3f;">Wonder</div>';
-                    if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders</div>';
+                    if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders, step-by-step buildings, and portals.</div>';
                     else {
                         if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
-                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed - Step: ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
+                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed (at step ' + B(instance.percent) + '/' + B(me.steps) + ')<br>Click to pause construction</div>';
                         else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step: ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
-                        else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform</div>';
-                        else if (instance.mode == 4) str += '<div class="fancyText barred">Completed<br>Click to ascend</div>';
+                        else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform!</div>';
+                        else if (instance.mode == 4) str += '<div class="fancyText barred">Completed<br>Click to ascend...</div>';
                         //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
                     }
                     if (amount < 0) amount = 0;
@@ -679,7 +680,7 @@ var civ1 = function () {
             'You choose to start somewhere...<br><br>' +
             G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a harsh terrain with scarce natural resources.', text: '<font color="fuschia">Awful</font>', onclick: function (e) { G.startingType = 1; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
             G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a welcoming terrain full of natural resources.', text: '<font color="#aaffaa">Pleasant</font>', onclick: function (e) { G.startingType = 0; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
-            G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!', text: '? Random ?', onclick: function (e) { G.startingType = 2; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
+            G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #888;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!', text: '? Random ?', onclick: function (e) { G.startingType = 2; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
             '</div>';
     }, 'noClose');
 };
@@ -694,7 +695,7 @@ var civ2 = function () {
             'You choose to start somewhere...<br><br>' +
             G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a harsh terrain with scarce natural resources.', text: '<font color="fuschia">Awful & hostile </font>', onclick: function (e) { G.startingType = 1; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
             G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a welcoming terrain full of natural resources.', text: '<font color="#aaffaa">Pleasant & safe</font>', onclick: function (e) { G.startingType = 0; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
-            G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!', text: '? Unknown fate ?', onclick: function (e) { G.startingType = 2; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
+            G.button({ style: 'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #888;',/*style:'display:block;width:100%;',*/tooltip: 'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!', text: '? Unknown fate ?', onclick: function (e) { G.startingType = 2; var names = G.names; G.dialogue.forceClose(); G.NewGameConfirm(); G.names = names; } }) +
             '</div>';
     }, 'noClose');
 }
@@ -791,7 +792,7 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png"  width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
                 (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in mystic environment.<br>Mostly it is one big forest but it still has oceans, tropics, deserts and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races.<br>Make housing for elves and create housing, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. it will take a while though...')) +
                 '</div>';
         }, 'noClose');
@@ -1277,7 +1278,7 @@ if (getCookie("civ") == "0") {
                     G.getDict('mausoleum').wideIcon = [0 + (G.achievByName['mausoleum'].won - 1) * 3, 20, 'magixmod']//wide icon
                     G.getDict('mausoleum').finalStepCost = { 'population': population };//final cost
                     G.getDict('mausoleum').finalStepDesc = 'To complete the ' + (G.achievByName['mausoleum'].won > 9 ? "Great" : "") + ' Mausoleum, ' + population + ' of your [population,People] must be sacrificed to accompany you as servants in the afterlife.'
-                    G.getDict('mausoleum').desc = '@leads to the <b>Mausoleum Victory</b><>A mystical monument where the dead lie.//A temple housing a tomb deep under its rocky platform, the Mausoleum stands tall, its eternal shadow forever reminding your people of your greatness. <font color="yellow">@The Mausoleum is evolved to level ' + (G.achievByName['mausoleum'].won <= 10 ? G.achievByName['mausoleum'].won : 10) + ' of 10. ' + (G.achievByName['mausoleum eternal'].won > 0 ? 'You have obtained all bonuses already.' : 'Continue evolving up to unlock a special achievement and more bonuses. You can evolve up the Mausoleum to next stage by ascending with Mausoleum at the stage you currently are') + '. //To see level bonuses hover [a gift from the mausoleum]\'s tech icon.</font>';//description
+                    G.getDict('mausoleum').desc = '@leads to the <b>Mausoleum Victory</b><>A mystical monument where the dead lie.//A temple housing a tomb deep under its rocky platform, the Mausoleum stands tall, its eternal shadow forever reminding your people of your greatness. <font color="yellow">@The Mausoleum is evolved to level ' + (G.achievByName['mausoleum'].won <= 10 ? G.achievByName['mausoleum'].won : 10) + ' of 10. ' + (G.achievByName['mausoleum eternal'].won > 0 ? 'You have obtained all bonuses already.' : 'Continue evolving up to unlock a special achievement and more bonuses. You can evolve up the Mausoleum to next stage by ascending with Mausoleum at the stage you currently are') + '. //To see level bonuses, hover over [a gift from the mausoleum]\'s tech icon.</font>';//description
                     G.getDict('mausoleum').cost = { 'basic building materials': 1000 + (G.achievByName['mausoleum'].won <= 10 ? 200 * G.achievByName['mausoleum'].won : 2000) }
                     if (G.achievByName['mausoleum'].won > 9) {
                         G.getDict('mausoleum').wonder = 'mausoleum eternal';
@@ -1457,6 +1458,7 @@ if (getCookie("civ") == "0") {
             let backupmesg = false
             let milleniummesg = false
             let Secondmilleniummesg = false
+            let Fifthmilleniummesg = false
             let st2 = false
             let st3 = false
             let st4 = false
@@ -1952,16 +1954,16 @@ if (getCookie("civ") == "0") {
                         backupmesg = true
                     }
                     if (G.year >= 999 && G.year <= 1005 && !milleniummesg) {
-                        G.Message({ type: 'good', text: 'Woah! It\'s been <b>1 thousand</b> years since your tribe started their existence. Your playing supports mod author and motivates for further updates.<br><b>Thank you, and wow ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [27, 23, 'magixmod'] });
+                        G.Message({ type: 'good', text: 'Woah! It\'s been <b>1 thousand</b> years since your tribe started their existence!<br><b>Thank you, and wow ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [27, 23, 'magixmod'] });
                         milleniummesg = true
                     }
                     if (G.year >= 1999 && G.year <= 2005 && !Secondmilleniummesg) {
-                        G.Message({ type: 'good', text: 'OMG! It\'s been <b>2 thousand</b> years since your tribe started their wonderful existence. Also I am sure that your adventure with Magix is not over yet. Your playing supports mod author and motivates for further updates.<br><b>Thank you ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [32, 30, 'magixmod'] });
+                        G.Message({ type: 'good', text: 'Amazing! It\'s been <b>2 thousand</b> years since your tribe started their wonderful existence! Also, I am sure that your adventure with Magix is not over yet.<br><b>Thank you ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [32, 30, 'magixmod'] });
                         Secondmilleniummesg = true
                     }
-                    if (G.year >= 4999 && G.year <= 5005 && !Secondmilleniummesg) {
+                    if (G.year >= 4999 && G.year <= 5005 && !Fifthmilleniummesg) {
                         G.Message({ type: 'good', text: 'Stunning! It\'s been <b>5 thousand</b> years after your tribe began its existence. Congratulations for playing THIS long!<br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [32, 30, 'magixmod'] });
-                        Secondmilleniummesg = true
+                        Fifthmilleniummesg = true
                     }
                     ////STORYLINE////
                     if (G.getSetting('story messages') || G.resets <= 3) {
@@ -1970,7 +1972,7 @@ if (getCookie("civ") == "0") {
                             st2 = true
                         }
                         if (G.techN > 49 && G.techN <= 55 && !st3) {
-                            G.Message({ type: 'story1', text: 'You want some mirrors. But sadly, no one can craft any glass mirrors yet.', icon: [32, 14, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'You want some mirrors. But sadly, no one can craft any mirrors yet.', icon: [32, 14, 'magixmod'] });
                             st3 = true
                         }
                         if (G.techN > 60 && G.techN <= 74 && !st4) {
@@ -2216,8 +2218,8 @@ if (getCookie("civ") == "0") {
                     'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
                     'What a cloudy day today.', 'The air is strangely dry today.',
                     'Wild brambles look so scary even from far.', 'Some dangerous creature sleeps calmly.',
-                    'From far a sounds of a falling tree can be heard.', 'There is no wind today.',
-                    'Just another day in your tribe!', 'From somwhere a meowing sound can be heard...',
+                    'From far away a falling tree can be heard.', 'There is no wind today.',
+                    'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
                     'Uncover the secrets.', 'Merge with nature.',
                     'Discover the undiscovered.', 'This is a lush evening.',
                     'Another sea wave crashes against a tall cliff.', 'What a storm!'
@@ -2535,8 +2537,8 @@ if (getCookie("civ") == "0") {
                         G.Message({ type: 'important', text: 'Your rules and the fact that you are leading this tribe have become accepted. People are bound to you.', icon: [11, 4] }); pol15 = true;
                     }
                     if (G.getSetting('story messages') || G.resets <= 3) {
-                        if (G.has('canoes') && !canoestory && !G.has('boat building')) {
-                            G.Message({ type: 'important', text: 'From now, exploring through ocean shores is possible. You realize that the world is truly beautiful. You wonder if that "endless" ocean hides some secrets.', icon: [2, 28, 'magixmod'] })
+                        if ((G.has('canoes') || G.has('rafts')) && !canoestory && !G.has('boat building')) {
+                            G.Message({ type: 'important', text: 'From now, exploring through ocean shores is possible. You realize that the world is truly beautiful. You wonder what that "endless" ocean hides within it.', icon: [2, 28, 'magixmod'] })
                             canoestory = true
                         }
                         if (G.has('sedentism') && !sedestory && !G.has('building')) {
@@ -2544,7 +2546,7 @@ if (getCookie("civ") == "0") {
                             sedestory = true
                         }
                         if (G.has('boat building') && !boatstory && !G.has('stronger faith')) {
-                            G.Message({ type: 'important', text: 'Remember the first time you could explore the beaches? Since they can build and set up the boat, they can discover the secrets which lay at the deep ocean depths.', icon: [3, 28, 'magixmod'] })
+                            G.Message({ type: 'important', text: 'Remember the first time you could explore beaches? Since they can build and set up a boat, they can discover the secrets which lay at the deep ocean depths.', icon: [3, 28, 'magixmod'] })
                             boatstory = true
                         }
                         if (G.has('ritualism') && !ritstory && !G.has('burial')) {
@@ -2586,7 +2588,7 @@ if (getCookie("civ") == "0") {
                             guru = true
                         }
                         if (G.has('rules of food') && !rofpopup && !G.has('sedentism')) {
-                            G.Message({ type: 'tutorial', text: 'You now can control food and water rations. Your people seem a little angry and want to eat and drink more. Check the policies, there you may find a solution to this minor problem that may quickly become a major one if you will ignore this.<br>Make sure you unlocked policies first!', icon: [4, 28, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You now can control food and water rations. Your people seem a little angry and want to eat and drink more. Check the policies: there you may find a solution to this minor problem that may quickly become a major one if you will ignore this.<br>Make sure you unlocked policies first!', icon: [4, 28, 'magixmod'] })
                             rofpopup = true
                         }
                         if (G.getRes('land').amount == 100 && !explorepop && !G.has('scout').amount >= 1) {
@@ -2594,11 +2596,11 @@ if (getCookie("civ") == "0") {
                             explorepop = true
                         }
                         if (G.has('belief in the afterlife') && !bapopup && !G.has('monument-building')) {
-                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the afterlife</b> trait.<br>From now you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the afterlife</b>, unlocking more religion-related stuff.', icon: [32, 16, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the afterlife</b> trait.<br>From now on you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the afterlife</b>, unlocking more religion-related stuff.', icon: [32, 16, 'magixmod'] })
                             bapopup = true
                         }
                         if (G.has('belief in the beforelife') && !bapopup && !G.has('monument-building')) {
-                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>From now you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>From now on you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
                             bapopup = true
                         }
                         if (G.getRes('cured meat').amount >= 1 && G.getRes('cured seafood').amount >= 1 && !cure && G.has('curing') && !G.has('hunting II')) {
@@ -2705,7 +2707,7 @@ if (getCookie("civ") == "0") {
                     var text = 'unknown'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming'; else if (stat >= 200) text = 'examplary';
                     toParse += 'Health: <b>' + text + '</b>//';
                     var stat = G.techN;
-                    var text = 'unknown'; if (stat <= 28) text = 'pre-prehistoric'; else if (stat <= 50) text = 'prehistoric'; else if (stat <= 100) text = 'skilled'; else if (stat <= 170) text = 'decent technologically'; else if (stat <= 240) text = 'expanded'; else if (stat <= 325) text = 'advanced'; else if (stat <= 400) text = 'modern'; else if (stat <= 500) text = 'truly advanced'; else if (stat >= 500) text = 'most advanced';
+                    var text = 'unknown'; if (stat <= 28) text = 'pre-prehistoric'; else if (stat <= 50) text = 'prehistoric'; else if (stat <= 100) text = 'skilled'; else if (stat <= 170) text = 'decent technologically'; else if (stat <= 240) text = 'expanded'; else if (stat <= 325) text = 'advanced'; else if (stat <= 400) text = 'modern'; else if (stat <= 500) text = 'truly advanced'; else if (stat > 500) text = 'the most advanced';
                     toParse += 'Technological stage: <b>' + text + '</b>//';
                     if (G.has('wizardry')) {
                         var text = 'None'; if (G.has('patron1')) text = '<font color="orange">Fire: ' + G.getTrait('patron1').displayName + '</font>'; else if (G.has('patron2')) text = '<font color="lime">Nature: ' + G.getTrait('patron2').displayName + '</font>'; else if (G.has('patron3')) text = '<font color="#bbbbff">Wind: ' + G.getTrait('patron3').displayName + '</font>'; else if (G.has('patron4')) text = '<font color="purple">Dark: ' + G.getTrait('patron4').displayName + '</font>'; else if (G.has('patron5')) text = '<font color="yellow">Lightning: ' + G.getTrait('patron5').displayName + '</font>'; else if (G.has('patron6')) text = '<font color="#6699FF">Water: ' + G.getTrait('patron6').displayName + '</font>'; else if (G.has('patron7')) text = '<font color="white">Time: ' + G.getTrait('patron7').displayName + '</font>'; else if (G.has('patron8')) text = '<font color="#FF9960">Homepeace: ' + G.getTrait('patron8').displayName + '</font>'; else if (G.has('unknown patron')) text = '<font color="#bbb">Unknown</font>';
@@ -3520,7 +3522,7 @@ if (getCookie("civ") == "0") {
             ungrateful = 1
             new G.Res({
                 name: 'happiness',
-                desc: '[happiness] describes the global level of well-being of your [population].//Happy people work even harder, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
+                desc: '[happiness] describes the global level of well-being of your [population].//Happy people work even harder, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
                 startWith: 0,
                 visible: true,
                 icon: [3, 4],
@@ -3583,7 +3585,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'health',
-                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make people [sick] and unhappy, while higher health will make people happier.//Health can be affected by a number of things, including eating raw or spoiled [spoiled food,Food], drinking [muddy water], poor living conditions, and ongoing plagues.',
+                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make people [sick] and unhappy, while higher health will make people happier.//Health can be affected by a number of things, including eating raw or spoiled [spoiled food], drinking [muddy water], poor living conditions, and ongoing plagues.',
                 startWith: 0,
                 visible: true,
                 icon: [3, 5],
@@ -7504,8 +7506,8 @@ if (getCookie("civ") == "0") {
                     'off': G.MODE_OFF,
                     'house building': { name: 'House building', icon: [21, 3], desc: 'Build [house]s as long as there is homelessness and the right materials are available.' },
                     'undertaker': { name: 'Undertaker', icon: [13, 2], desc: 'Dig [grave]s as long as there are unburied corpses.' },
-                    'floored houser': { name: 'floored house building', icon: [9, 1, 'magixmod'], desc: 'This architect will build more advanced [housing,housing] like a [floored house].', req: { 'architects knowledge': true, 'city planning': true } },
-                    'brickhouser': { name: 'Brickhouse building', icon: [5, 1, 'magixmod'], desc: 'This architect will build more useful housing like [brick house with a silo]', req: { 'architects knowledge': true, 'city planning': true } }
+                    'floored houser': { name: 'floored house building', icon: [9, 1, 'magixmod'], desc: 'This architect will build more advanced [housing,housing], such as a [floored house].', req: { 'architects knowledge': true, 'city planning': true } },
+                    'brickhouser': { name: 'Brickhouse building', icon: [5, 1, 'magixmod'], desc: 'This architect will build more useful housing, such as a [brick house with a silo].', req: { 'architects knowledge': true, 'city planning': true } }
                 },
                 effects: [
                     {
@@ -10897,7 +10899,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores and lakes. @makes terrain with lots of water get explored faster. @[canoes] are inefficient on the <b>Swamplands</b>, <b>Jungle</b>, <b>Tundra</b>, and <b>Boreal forest</b> biomes<> //Canoes are a good and safe way to explore ocean shores, but slow. In particular, it takes a long time in swamps, so depending on your closest location, consider picking maybe [rafts] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@Allows exploring through ocean shores @[canoes] are inefficient on the <b>Tundra</b>, <b>Swamplands</b>, <b>Jungle</b>, and <b>Boreal forest</b> biomes<> //[canoes] are a good and safe way to explore ocean shores, but slow. Depending on your closest location, consider picking [rafts] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [26, 7],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'rafts': false },
@@ -11448,7 +11450,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'essence storages', category: 'tier1',
-                desc: 'Essence has to be stored somewhere. So do not wait and build! // Unlocks [water essence storage,Essence storages]. //<small>And nobody knows why those storages look like hourglasses...even this mod author.</small>',
+                desc: 'Essence has to be stored somewhere. So do not wait and build! // Unlocks [water essence storage,Essence storages]. //<small>And nobody knows why these look like hourglasses...even the creator of them.</small>',
                 icon: [5, 0, 'magixmod'],
                 cost: { 'insight': 100, 'mana': 300, 'faith': 8, 'wand': 1 },
                 effects: [
@@ -12917,7 +12919,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt11',
                 displayName: 'Devil\'s trait #11 Will of warmth',
-                desc: 'Unhappiness from cold & darkness is doubled.',
+                desc: 'Unhappiness from cold and darkness is doubled.',
                 icon: [26, 11, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12930,7 +12932,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt12',
                 displayName: 'Devil\'s trait #12 Bury!!!',
-                desc: 'Unhappiness from unburied corpses increased by 50%. // <small>Nothing special about it I guess</small>',
+                desc: 'Unhappiness from unburied corpses increased by 50%. // <small>Nothing special about it I guess!</small>',
                 icon: [26, 12, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -15368,7 +15370,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'pumpkins', category: 'seasonal',
-                desc: 'From now you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins till next Halloween. You can only get them during Halloween season.</font>',
+                desc: 'From now on you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins till next Halloween. You can only get them during Halloween season.</font>',
                 icon: [6, 7, 'seasonal'],
                 req: { '"dark season"': true },
                 cost: { 'insight': 100 },
@@ -15644,7 +15646,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
+                desc: '@From now on you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
                 icon: [34, 14, 'magixmod'],
                 cost: { 'insight': 10, 'culture': 15 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -17418,7 +17420,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'rafts', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@Allows exploring through ocean shores and makes terrain with lots of water exploration faster. @[rafts] are inefficient on the <b>Prairie</b>, <b>Tundra</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the larger parts of the ocean. [rafts] allow you to store some [food] on board allows for longer explorations. It lets you explore 2 tiles away from beaches, but can come at some risks. Sometimes it may be better to choose [canoes] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@Allows exploring through ocean shores @[rafts] are inefficient on the <b>Tundra</b>, <b>Prairie</b>, <b>Ice desert</b>, and <b>Forest</b> biomes<>//Rafts are good but a risky and uneasy way to explore the larger parts of the ocean. Depending on your closest location, consider picking [canoes] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [29, 6, 'magixmod'],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'canoes': false },
@@ -17427,6 +17429,7 @@ if (getCookie("civ") == "0") {
                     {
                         type: 'function', func: function () {
                             G.getDict('canoes').req = { 'tile inspection II': true, 'basic mapping': true, 'woodcutting': true };
+                            G.getDict('boat building').req = { 'carpentry': true, 'intuition': true, 'construction': true };
                         }
                     }
                 ],
@@ -21237,7 +21240,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'happiness',
-                desc: '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
+                desc: '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
                 startWith: 0,
                 visible: true,
                 icon: [3, 4, 'c2'],
@@ -21274,7 +21277,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'health',
-                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make elves [sick] and unhappy, while higher health will make elves happier.//Health can be affected by a number of things: eating raw or spoiled [spoiled food,Food], drinking [muddy water], poor living conditions, and ongoing plagues.',
+                desc: '[health] represents the average physical condition of your [population].//Lower health tends to make elves [sick] and unhappy, while higher health will make elves happier.//Health can be affected by a number of things: eating raw or spoiled [spoiled food], drinking [muddy water], poor living conditions, and ongoing plagues.',
                 startWith: 0,
                 visible: true,
                 colorGood: 'lime', colorBad: '#F44',
@@ -23076,7 +23079,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'house building': { name: 'House building', icon: [21, 3, 'c2'], desc: 'Build [house]s as long as there is homelessness and the right materials are available.' },
+                    'house building': { name: 'House building', icon: [21, 3, 'c2'], desc: 'Build [house]s as long as your people don\'t have enough housing and the right materials are available.' },
                     'undertaker': { name: 'Undertaker', icon: [13, 2, 'c2'], desc: 'Dig [grave]s as long as there are unburied corpses.' },
                 },
                 effects: [
@@ -23584,14 +23587,14 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@allows exploring through ocean shores. <><small>It doesn\'t look like a beach to me. It is still a forest, but near the "endless" ocean.</small>',
+                desc: '@allows exploring through ocean shores. <><small>It doesn\'t look like a beach to me though...</small>',
                 icon: [26, 7, 'c2'],
                 cost: { 'discernment': 15, 'creativity': 2, 'influence': 1 },
                 req: { 'tool-making': true, 'woodcutting': true },
                 effects: [
                     { type: 'allow', what: ['shore exploring'] },
                 ],
-                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead on the sides just like increased gravity. It feels like some pressure. You see a bird having a hard time flying while wind blows like that...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
+                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead at the sides sides, just like increased gravity. It feels like some pressure. You see a bird having a hard time flying while the wind blows vertically...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
             });
             new G.Tech({
                 name: 'boat building', category: 'tier1',
@@ -24165,7 +24168,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'belief in revenants',
-                desc: '@unhappiness from unburied [corpse]s is doubled',
+                desc: '@unhappiness from unburied [corpse]s is doubled. //<small>Scary!</small>',
                 icon: [18, 1, 'c2'],
                 cost: { 'gentility': 8, 'faith': 2 },
                 chance: 100,
@@ -24261,7 +24264,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
+                desc: '@From now on you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
                 icon: [29, 10, 'c2'],
                 cost: { 'discernment': 20, 'gentility': 18, 'creativity': 10 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -25604,14 +25607,14 @@ if (getCookie("civ") == "0") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at <font color="yellow">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="yellow">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
+                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at <font color="yellow">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="yellow">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                         }
                     },
                 ],
                 effectsOff: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food,food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
+                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                         }
                     },
                 ],

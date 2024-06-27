@@ -2,7 +2,7 @@
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 
 >>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
@@ -103,14 +103,13 @@ G.AddData({
             var str = '';
             str += '<div class="par">' +
                 '<b>The Magix Mod</b> is a mod for NeverEnding Legacy made by <b>pelletsstarPL</b>.</div>' + '<div class="par">While in development, the mod may be unstable and subject to changes, but the overall goal is to ' +
-                'expand and improve the legacy with flexible, balanced, custom-created content and add various improvements to existing mechanics.</div>' +
+                'expand and improve the legacy with flexible, balanced, custom-created content and adds various improvements to existing mechanics.</div>' +
                 '<b>From @pelletsstarPL:</b> this mod was made because I was wondering how legacy would look if the last update was much later. ' +
-                'I was checking bunch of mods and noticed...<b>There was no mod about magic...but I changed it</b>. ' +
+                'I was checking bunch of mods and noticed...<b>there was no mod about magic...but I changed it</b>! ' +
                 'Even today, I am proud of the fruits of my creativity and time I sacrificed to make this entertaining mod. ' +
                 'I made this mod due to my hobby: IT. I like things like coding and networking. Who knows...maybe I will become an expert of javascript! ' +
                 '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)' +
                 '<br><font color="#FF0000"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
-                '<div class="barred fancyText"><a href="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/--MAGIX--/Magix.html" target="_blank">Update log</a></div>' +
                 '<div class="barred fancyText">Settings:</div>' +
                 G.writeSettingButton({ text: 'Toggle sounds', tooltip: 'Toggle all game sounds.', name: 'sound', id: 'sound' }) + "<br>";
             if (G.resets >= 3) {
@@ -735,12 +734,12 @@ G.AddData({
                                     case "tiered": str += '<div class="fancyText barred" style="color:lime">Tiered building</div>'; break;
                                     default: str += '<div class="fancyText barred" style="color:#c3f;">Wonder</div>'; break;
                                 }
-                                if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders, step-by-step buildings and portals.</div>';
+                                if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders, step-by-step buildings, and portals.</div>';
                                 else {
                                     if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
-                                    else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed at step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to pause construction</div>';
+                                    else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed (at step ' + B(instance.percent) + '/' + B(me.steps) + ')<br>Click to pause construction</div>';
                                     else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused at step ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
-                                    else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform</div>';
+                                    else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform!</div>';
                                     else if (instance.mode == 4 && me.type != 'wonder') { str += '<div class="fancyText barred">Completed<br>Click to ascend...</div>' } else { str += '<div class="fancyText barred">Completed!</div>' };
                                     //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
                                 }
@@ -2208,7 +2207,7 @@ G.AddData({
             tier: 3,
             name: 'talented?',
             icon: [32, 25, 'magixmod'],
-            desc: 'To get this achievement you need to complete other achievements in this tier. @<b>Achievement bonus: All crafting units that use land of the primary world will use less land. In addition, this bonus applies to [well]s, <b>Farms</b>,<b>Filters</b> and <b>Crematoriums</b> @Additionally, you gain <b>1 extra technology choice when rolling researches</b>.',
+            desc: 'To get this achievement you need to complete other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land. In addition, this bonus applies to [well]s, <b>Farms</b>,<b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice when rolling researches</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -3148,8 +3147,17 @@ G.AddData({
             }
         }
 
-
-
+        // Added by @1_e0 to make canoes and rafts work properly
+        G.canoeRaftEffect = function (amount, tileName) {
+            var multiplier = 0
+            if (G.has('canoes')) {
+                multiplier += ['swamplands', 'jungle', 'tundra', 'boreal forest'].includes(tileName) ? 0.4 : 1
+            }
+            if (G.has('rafts')) {
+                multiplier += ['prairie', 'tundra', 'ice desert', 'forest'].includes(tileName) ? 0.4 : 1
+            }
+            return amount * multiplier
+        }
 
 
         /*==============================
@@ -4365,8 +4373,7 @@ G.AddData({
                                         if (tile.land.ocean && fromLand) isShore = true;
                                         if (!tile.land.ocean || isShore) {
                                             tile.owner = 1;
-                                            tile.explored += 0.1;
-                                            G.tileToRender(tile);
+                                            tile.explored += G.canoeRaftEffect(0.1, tile.land.name);
                                             updateMap = true;
                                             if (tile.land.name == 'dead forest') G.achievByName['lands of despair'].won++;
                                             if (G.achievByName['lands of despair'].won < 1 && tile.explored.displayName == 'Dead forest') { G.middleText('- Completed <font color="gray">Lands of despair</font> achievement -', 'slow') };
@@ -4397,7 +4404,7 @@ G.AddData({
                                             if (tile.land.ocean && fromLand) isShore = true;
                                             if (!tile.land.ocean || isShore) {
                                                 tile.owner = 1;
-                                                tile.explored += 0.2;
+                                                tile.explored += G.canoeRaftEffect(0.2, tile.land.name);
                                                 G.tileToRender(tile);
                                                 updateMap = true;
                                                 if (tile.land.name == 'dead forest') G.achievByName['lands of despair'].won++;

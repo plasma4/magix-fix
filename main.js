@@ -568,12 +568,13 @@ G.Launch=function()
 	{
 		// Some mods override the G.Load function for various reasons, so we add an extra step here
 		try {
-			G.importStr=btoa(encodeURIComponent(decodeURIComponent(atob(str)).replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js")));
-			G.Load(false);
+			G.importStr=b64EncodeUnicode(escape(unescape(b64DecodeUnicode(str)).replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js")));
 		} catch (e) {
 			alert("The save that you have provided was invalid.");
 			console.warn(e);
+			return;
 		}
+		G.Load(false);
 	}
 	
 	G.Save=function(toStr)
@@ -7481,7 +7482,7 @@ G.Launch=function()
 					var offlineScript=localStorage.getItem("nelOffline");
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, sprites are loaded using internet!" : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magixUtils.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
@@ -7489,7 +7490,7 @@ G.Launch=function()
 							}
 						}
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
-							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix." : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, sprites are loaded using internet!" : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magix.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
@@ -7515,8 +7516,11 @@ G.Launch=function()
 				let x=new XMLHttpRequest();
 				x.onload=function() {
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
-					localStorage.setItem("nelOffline"+i,mod.url+"\n"+x.responseText);
-					script.innerHTML=(['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url))?v.replace(/https:\/\/[0-9A-Za-z._\-+/%]+(?=\/+[0-9A-Za-z._\-+%]+\.(jpg|png|mp3|wav|css))/g, "Magix").replace(/https:\/\/file\.garden\/Xbm-ilapeDSxWf1b\/' \+ Theme \+ 'Theme/g, "Magix"):v;
+					if (['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url)) {
+						v=v.replace(/https:\/\/[0-9A-Za-z._\-+/%]+(?=\/+[0-9A-Za-z._\-+%]+\.(jpg|png|mp3|wav|css))/g, "Magix").replace(/https:\/\/file\.garden\/Xbm-ilapeDSxWf1b\/' \+ Theme \+ 'Theme/g, "Magix");
+					}
+					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
+					script.innerHTML=v;
 					document.head.appendChild(script);
 				};
 				x.addEventListener("error", tryOffline);
