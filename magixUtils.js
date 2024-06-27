@@ -95,7 +95,7 @@ G.AddData({
             }
             var tabL = G.tabs.length;
             if (tabIds.indexOf('Magix') == -1)
-                G.tabs[tabL] = { name: '<font color="orange">Magix</font>', showMap: false, id: 'Magix', popup: true, addClass: 'right', desc: 'Options and infos about the Magix mod.' };
+                G.tabs[tabL] = { name: '<font color="orange">Magix</font>', showMap: false, id: 'Magix', popup: true, addClass: 'right', desc: 'Options and info about the Magix mod.' };
             G.buildTabs();
         }
         //Magix tab
@@ -1796,7 +1796,7 @@ G.AddData({
             name: 'deadly, revenantic',
             wideIcon: [0, 16, 'magixmod'],
             icon: [1, 16, 'magixmod'],
-            desc: 'You escaped and your soul got escorted right into the world of the Underworld...you may discover it sometime.',
+            desc: 'You escaped and your soul got escorted right into the dangerous Underworld...you may discover it at some point.',
             fromWonder: 'Deadly, revenantic',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
@@ -1810,7 +1810,7 @@ G.AddData({
             name: 'sacrificed for culture',
             wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
             icon: [6, 12, 'magixmod'],
-            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you. <b>But now, you will obtain <font color="green">+3 culture & inspiration</font> at the start of new runs!</b>',
+            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you. <b>But now, you will obtain <font color="green">+3 culture and inspiration</font> at the start of new runs!</b>',
             fromWonder: 'sacrificed for culture',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1838,7 +1838,7 @@ G.AddData({
             name: 'insight-ly',
             wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
             icon: [choose([1, 4, 7]), 17, 'magixmod'],
-            desc: 'You sacrificed your soul for the Dreamers Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. <b>But this made a profit...<font color="white">+6 insight</font> at the start of new runs!</b>',
+            desc: 'You sacrificed your soul for the Dreamers Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. <b>But this made a profit...<font color="white">+6 insight and +6% dreamer speed</font> at the start of new runs!</b>',
             fromWonder: 'Insight-ly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -4484,12 +4484,12 @@ G.AddData({
                         else if (G.has('primary time measure') && !G.has('time measuring 1/2')) {
                             l('date').innerHTML = 'Century ' + Math.floor(((G.year / 100) + 1)) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
-                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometime people start a new centrury. To see years obtain <b>Time measuring</b> 1/2 research.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new century starts. To see years obtain <b>Time measuring</b> 1/2 research.</div>'; }, { offY: -8 });
 
                         } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + Math.floor(G.fastTicks / 300) + ' years</b>.</div>'; }, { offY: -8 });
-                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometime a new year starts. To see days obtain <b>Time measuring</b> 2/2 research.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new year starts. To see days, obtain <b>Time measuring</b> 2/2 research.</div>'; }, { offY: -8 });
 
                         } else if (G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ', day ' + (G.day + 1) + ' in ' + G.getName('civ');

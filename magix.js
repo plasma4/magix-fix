@@ -209,7 +209,7 @@ G.selectModeForPolicy = function (me, div) {
 
                         // New section for the onclick event
                         modeFunction = function () {
-                            widget.close(5);//schedule to close the widget in 5 frames
+                            widget.close(5);
                         }
                         l('mode-button-' + mode.num).onclick = function (target, mode, div) {
                             return function () {
@@ -356,7 +356,7 @@ G.selectModeForUnit = function (me, div) {
 
                         // New section for the onclick event
                         modeFunction = function () {
-                            widget.close(5);//schedule to close the widget in 5 frames
+                            widget.close();
                         }
                         l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
                             return function () {
@@ -1188,7 +1188,7 @@ if (getCookie("civ") == "0") {
         desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people. Note that this mod uses part of the vanilla game, so credits to Orteil for the default dataset.',
         engineVersion: 1,
         requires: ['MagixUtils'],
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'terrain': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random(), 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'terrain': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer') == 0 ? 'Default' : G.checkPolicy('theme changer');
@@ -1222,7 +1222,7 @@ if (getCookie("civ") == "0") {
                     G.getDict("pagoda of democracy").finalStepDesc = 'To complete the wonder and make justice, peace and democration last even longer, you need to do the final step.';
                     G.getDict("pagoda of democracy").use = { 'land': 15, 'worker': 20, 'metal tools': 20 };
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("pagoda of democracy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Democration</b> achievement\'s starting bonus by 2.</font>';
+                        G.getDict("pagoda of democracy").desc += '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder. Complete it and ascend to increase the <b>Democration</b> achievement\'s starting bonus by 2.</font>';
                 }
                 if (G.achievByName['democration'].won > 0) {
                     G.gain("authority", G.achievByName['democration'].won > 1 ? 3 : 1);
@@ -1242,7 +1242,7 @@ if (getCookie("civ") == "0") {
                     G.getDict("fortress of cultural legacy").finalStepDesc = 'To complete the wonder and prevent culture and traditions from being truly perditioned...you need to perform that final step.';
                     G.getDict("fortress of cultural legacy").use = { 'land': 15, 'worker': 20, 'metal tools': 20 };
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("fortress of cultural legacy").desc += '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Sacrificed for culture</b> achievement\'s starting bonus by 2.</font>';
+                        G.getDict("fortress of cultural legacy").desc += '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder. Complete it and ascend to increase the <b>Sacrificed for culture</b> achievement\'s starting bonus by 2.</font>';
                 }
                 if (G.achievByName['sacrificed for culture'].won > 0) {
                     G.gain("inspiration", G.achievByName['sacrificed for culture'].won > 1 ? 5 : 3);
@@ -1254,7 +1254,7 @@ if (getCookie("civ") == "0") {
                     G.getDict("knowledgeable").cost = { 'complex construction point': 2000 };
                     G.getDict("knowledgeable").desc = G.techByName["knowledgeable"].desc.replace(" 7500", 7500 * 1.25);
                     if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving elvish fortress unlocked you second level of this wonder. Complete it and ascend to increase the <b>Insight-ly</b> achievement\'s starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
+                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder. Complete it and ascend to increase the <b>Insight-ly</b> achievement\'s starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
                     G.getDict("complex of dreamers").icon = [7, 33, 'magixmod'];
                     G.getDict("complex of dreamers").wideIcon = [6, 33, 'magixmod'];
                     G.getDict("complex of dreamers").cost = { 'basic building materials': 700, 'precious building materials': 800, 'wisdom': 20 };
@@ -1267,6 +1267,7 @@ if (getCookie("civ") == "0") {
                 }
                 if (G.achievByName['insight-ly'].won > 0) {
                     G.gain("insight", G.achievByName['insight-ly'].won > 1 ? 8 : 6);
+                    G.unitByName['dreamer'].effects.push({ type: 'mult', value: 1.06 });
                 }
             }
             function mausoleumEvolve() {
@@ -1302,7 +1303,7 @@ if (getCookie("civ") == "0") {
                         (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your positive [happiness] gain by 15%.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - The [ungrateful tribe] trait takes longer to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 4 ? '<b>LV5</b> - The [ungrateful tribe] trait only decreases your positive [happiness] gain by 10%.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched, and [care for nature] has a much higher cance to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - The [belief in the beforelife,Belief in the after/beforelife] traits have a doubled chance to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait decreases positive [happiness] gain by just 2% now!<hr>' : '') +
@@ -1731,6 +1732,9 @@ if (getCookie("civ") == "0") {
                     if (G.achievByName['mausoleum'].won > 3) {
                         G.getDict('ungrateful tribe').chance /= 2;
                     }
+                    if (G.achievByName['mausoleum'].won > 5) {
+                        G.getDict('care for nature').chance /= 8;
+                    }
                     if (G.achievByName['mausoleum eternal'].won) {
                         if (G.achievByName['mausoleum'].won > 7) {
                             G.getDict('belief in the afterlife').chance /= 2;
@@ -1996,7 +2000,7 @@ if (getCookie("civ") == "0") {
                             st6 = true
                         }
                         if (G.techN > 86 && G.techN <= 92 && !st7) {
-                            G.Message({ type: 'story2', text: 'One of dreamers asks you how are you today. You answer that you are all right. While you talking with this dreamer some firekeeper comes to you with a water pot and some tasty cured seafood. Tasty ;)', icon: [32, 10, 'magixmod'] });
+                            G.Message({ type: 'story2', text: 'One of your dreamers asked you how you were feeling. You answered that you were all right! While you talking with this dreamer, some firekeeper comes to you with a water pot and some tasty cured seafood. Tasty ;)', icon: [32, 10, 'magixmod'] });
                             st7 = true
                         }
                         if (G.techN > 93 && G.techN <= 99 && !st8) {
@@ -6834,7 +6838,7 @@ if (getCookie("civ") == "0") {
                 priority: 5,
             });
             new G.Unit({
-                name: 'firekeeper',
+                name: 'firekeeper', // Added beekeeping
                 desc: '@creates [fire pit]s from fuel@gains more fuel types as technology progresses@handles other fire-related tasks<>Each [firekeeper] is tasked with starting and maintaining fires to keep the tribe warm.',
                 icon: [16, 2],
                 cost: {},
@@ -6846,7 +6850,8 @@ if (getCookie("civ") == "0") {
                     'stick fires': { name: 'Start fires from sticks', icon: [0, 6, 13, 7], desc: 'Craft [fire pit]s from 20 [stick]s each.', req: { 'factories II': false } },
                     'cook': { name: 'Cook', icon: [6, 7, 13, 7], desc: 'Turn [meat] and [seafood] into [cooked meat] and [cooked seafood] in the embers of [fire pit]s', req: { 'cooking': true } },
                     'cure': { name: 'Cure & smoke', icon: [11, 6, 12, 6], desc: 'Turn 1 [meat] or [seafood] into 2 [cured meat] or [cured seafood] using [salt] in the embers of [fire pit]s', req: { 'curing': true } },
-                    'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 2 [fire pit]s with use of: 1 [fire essence] and 13 [stick]s', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
+                    'honey': { name: 'Collect honey', icon: [3, 0, 'magix2'], desc: 'Attempt to collect [honey] from bee nests. Is likely to fail, however.', req: { 'beekeeping': true } },
+                    'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 2 [fire pit]s by using 1 [fire essence] and 13 [stick]s,', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
                     'log fires': { name: 'Start fires from logs', icon: [9, 21, 'magixmod'], desc: 'Craft [fire pit]s from 2 [log]s each.', req: { 'fires from logs': true, 'factories II': false } },
                 },
                 effects: [
@@ -6854,8 +6859,11 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'log': 2 }, into: { 'fire pit': 1 }, every: 5, mode: 'log fires', req: { 'factories II': false } },
                     { type: 'convert', from: { 'meat': 1, 'fire pit': 0.01 }, into: { 'cooked meat': 1 }, every: 1, repeat: 5, mode: 'cook' },
                     { type: 'convert', from: { 'seafood': 1, 'fire pit': 0.01 }, into: { 'cooked seafood': 1 }, every: 1, repeat: 5, mode: 'cook' },
-                    { type: 'convert', from: { 'meat': 1, 'salt': 1, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
-                    { type: 'convert', from: { 'seafood': 1, 'salt': 1, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
+                    { type: 'convert', from: { 'meat': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
+                    { type: 'convert', from: { 'seafood': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
+                    { type: 'gather', context: 'honey', what: { 'honey': 40 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 40 }, max: 100, mode: 'honey', chance: 1 / 5, req: { 'beekeeping II': true, 'beekeeping III': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 40 }, max: 100, mode: 'honey', chance: 1 / 2.5, req: { 'beekeeping III': true } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 5 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -8716,7 +8724,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'church',
-                desc: 'Commonly generates [faith] at the lower rate than [soothsayer]. Further religion improvements may change it.',
+                desc: 'Generates [faith], but slower than [soothsayer]. Further religion improvements may change it.',
                 icon: [6, 3, 'magixmod'],
                 cost: { 'basic building materials': 2000, 'precious building materials': 20 },
                 upkeep: { 'faith': 0.001 },
@@ -8736,7 +8744,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'cathedral',
-                desc: 'A precious place for worship. Commonly generates [faith] at the bigger rate than [soothsayer].',
+                desc: 'A precious place for worship. Generates [faith] faster than [soothsayer]s.',
                 icon: [19, 4, 'magixmod'],
                 cost: { 'basic building materials': 1700, 'precious building materials': 400 },
                 upkeep: { 'faith': 0.003 },
@@ -11652,7 +11660,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'stronger faith', category: 'upgrade',
-                desc: 'Unlocks the [cathedral]. Soothsayers will gain less [faith], but [church,churches] will gain more than [soothsayer] now.',
+                desc: 'Unlocks the [cathedral]. Soothsayers will gain less [faith], but [church,Churches] will gain more than [soothsayer]s now!',
                 icon: [19, 3, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'Wizard complex': true, 'ritualism': true },
@@ -11676,7 +11684,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'monument-building II', category: 'upgrade',
-                desc: '@Unlocks the [temple of deities,temple of deities], a mid-legacy wonder. It is much bigger than [mausoleum] and may lead to victory!',
+                desc: '@Unlocks the [temple of deities], a mid-legacy wonder. It is much bigger than than the [mausoleum] and may lead to victory!',
                 icon: [0, 35, 'magixmod', 14, 10, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 300, 'spirituality': 15, 'faith': 125 },
                 req: { 'construction': true, 'burial': true, 'culture of the afterlife': true, 'physics': true },
@@ -11907,14 +11915,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'intelligent blasting', category: 'tier1',
-                desc: 'Unlocks the [explosive mine]. With explosives supplies now miners will be able to...blast off underground. However, these mines cannot be [prospecting,prospected] but they still can be turned on/off. These mines have a larger rate of accidents than other ones which do not use explosives to mine undeground.',
+                desc: 'Unlocks the [explosive mine]. With explosives supplies now miners will be able to...blast off underground. However, these mines cannot be [prospecting,prospected], but they still can be turned on/off. These mines have a larger rate of accidents than other ones which do not use explosives to mine undeground.',
                 icon: [14, 15, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
             });
             new G.Tech({
                 name: 'bigger potion pallet', category: 'tier1',
-                desc: 'Unlocks more potion types. These are [combat potions] which has a needle and grip so they are throwable and may be use in defense battle, unlocks a [jar for concoctions,concoctions] used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
+                desc: 'Unlocks more potion types. These are [combat potions] which are throwable and may be use in battle. This unlocks [jar for concoctions,concoctions] that are used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
                 icon: [21, 16, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -11991,8 +11999,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'battling thieves', category: 'tier1',
-                desc: 'Bad news...someone committed a crime...it is time to fight against the average [thief,thieves]. @Allows you to hire a [guard].',
-                icon: [22, 16, "magixmod"],
+                desc: 'Bad news...someone committed a crime...it is time to fight against the average [thief]. @Allows you to hire a [guard].',
+                icon: [22, 16, 'magixmod'],
                 cost: { 'insight': 90 },
                 req: { 'hunting': true, 'tribalism': false },
                 effects: []//manual unlocking blocker
@@ -12006,7 +12014,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'trustworthy influence', category: 'upgrade',
-                desc: 'Makes [pagoda of democracy] increase the power of [influence,influence gathering units] per tick. Increases gaining of [influence,political] units by 5% for the rest of current run.',
+                desc: 'Makes [pagoda of democracy] increase the power of [influence,influence gathering units] per tick. Increases the gain of [chieftain]s and [clan leader]s by 5% for the rest of current run.',
                 icon: [21, 17, 'magixmod'],
                 cost: { 'insight': 25, 'pagoda construction point': 200 },
                 req: { 'political roots': true },
@@ -15652,14 +15660,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now on you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
+                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. //@You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory!</font>',
                 icon: [34, 14, 'magixmod'],
                 cost: { 'insight': 10, 'culture': 15 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
             });
             new G.Trait({
                 name: 'tile inspection II',
-                desc: '<font color="#aaffff">@Now you can see how many of resources you have totally in your territory.</font>',
+                desc: '<font color="#aaffff">Now you can see how much of a certain resource you have within your territory.</font>',
                 icon: [0, 35, 'magixmod', 35, 14, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
@@ -17543,17 +17551,39 @@ if (getCookie("civ") == "0") {
                 req: { 'sandy shores': true },
             });
             new G.Tech({
-                name: 'concentrated juices', category: 'tier1',
+                name: 'concentrated juices', // New tech by @1_e0
                 desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juice]. However, making [juice] now requires 3 times as much [water].//<small>Even MOAR JUICE!!!</small>',
                 icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
                 cost: { 'insight': 1600 },
                 req: { 'more humid water': true },
             });
+            new G.Tech({
+                name: 'beekeeping', // New tech by @1_e0
+                desc: '@unlocks a new mode for [firekeeper]s, although it has a large chance to fail.',
+                icon: [4, 0, 'magix2'],
+                cost: { 'insight': 80 },
+                req: { 'care for nature': true },
+                tutorialMesg: ['important', 'You take a bite out of some honey. It\'s sweet and delicious! You also realize a useful trait of honey: honey will <b>never</b> decay! (However, your workers still really want to eat it.)', [5, 0, 'magix2']]
+            });
+            new G.Tech({
+                name: 'beekeeping II', // New tech by @1_e0
+                desc: 'Teach your people how to not destroy the honeycomb within a bee nest, increasing the chance of a successful [honey] harvest! //Additionally, you also gain a policy that sets the honey-eating habits of your people.',
+                icon: [0, 35, 'magixmod', 4, 0, 'magix2'],
+                cost: { 'insight': 450 },
+                req: { 'beekeeping': true },
+            });
+            new G.Tech({
+                name: 'beekeeping III', // New tech by @1_e0
+                desc: 'Use a non-magical method to get the bees out of the hive, making [honey] collection much more likely to succeed.',
+                icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
+                cost: { 'insight': 1200, 'wisdom': 25 },
+                req: { 'beekeeping II': true, 'wizard wisdom': true },
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
                 desc: '@people consume 3% less [food], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].//<small>we\'re getting used to it...</small>',
-                icon: [2, 4, 26, 0, 'magixmod'],
+                icon: [2, 4, 1, 0, 'magix2'],
                 chance: 1.2,
                 req: { 'rules of food': true },
             });
@@ -17564,15 +17594,31 @@ if (getCookie("civ") == "0") {
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'tribe of eaters': false },
             });
-            new G.Trait({ // New trait by @1_e0 to counter happiness slightly
+            new G.Trait({ // New trait by @1_e0
                 name: 'tribe of eaters',
                 desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will continue to be ungrateful, but at least they don\'t mind so much anymore.</small>',
                 icon: [0, 3, 4, 12, 24, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
             });
+            new G.Trait({ // New trait by @1_e0
+                name: 'care for nature',
+                desc: '@people now respect nature much more, and appreciate its resources @unlocks a tech related to [honey]',
+                icon: [2, 0, 'magix2'],
+                chance: 120,
+                req: { 'cooking': true },
+            });
+
             new G.Res({
                 name: 'ignoreItem' // Item that is impossible to obtain to hide some things
+            });
+            new G.Res({
+                name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
+                desc: 'Eating [honey] is both extremely satisfying and healthy for the body, but is also great when combined with other foods. Although it is quite difficult to find, it never spoils!',
+                icon: [5, 0, 'magix2'],
+                turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.035, 'bone': 0.1 }, 'decay': { 'honey': 1 } },
+                // partOf: 'food',
+                category: 'food',
             });
 
 
@@ -18492,6 +18538,21 @@ if (getCookie("civ") == "0") {
                 req: { 'imprisonment II': true, 'ignoreItem': true },
                 category: 'work',
             });
+            new G.Policy({
+                name: 'eat honey', // New policy by @1_e0
+                desc: 'Your people will eat [honey], which makes them both happy and healthy.',
+                icon: [5, 0, 'magix2'],
+                cost: { 'influence': 1 },
+                startMode: 'on',
+                req: { 'beekeeping': true },
+                effects: [
+                    { type: 'make part of', what: ['honey'], parent: 'food' },
+                ],
+                effectsOff: [
+                    { type: 'make part of', what: ['honey'], parent: '' },
+                ],
+                category: 'food',
+            });
 
             /*=====================================================================================
             LANDS
@@ -18569,6 +18630,7 @@ if (getCookie("civ") == "0") {
                     { type: 'wild bugs' },
                     { type: 'freshwater fish', chance: 0.8, min: 0.1, max: 0.5 },
                     { type: 'freshwater', amount: 1 },
+                    { type: 'bee nest', min: 0.1, max: 0.25 },
                     { type: ['lush rocky substrate', 'rocky substrate'] },
                 ],
                 modifiers: { 'river': 0.4, 'volcano': 0.2, },
@@ -18592,6 +18654,7 @@ if (getCookie("civ") == "0") {
                     { type: 'wild bugs' },
                     { type: 'freshwater fish', chance: 0.3, min: 0.1, max: 0.3 },
                     { type: 'freshwater', amount: 0.8 },
+                    { type: 'bee nest', min: 0.15, max: 0.3 },
                     { type: 'rocky substrate' },
                 ],
                 modifiers: { 'river': 0.4, 'volcano': 0.2, },
@@ -18711,6 +18774,7 @@ if (getCookie("civ") == "0") {
                     { type: 'freshwater', amount: 0.8 },
                     { type: 'sandy soil', chance: 0.3 },
                     { type: 'ostrich', chance: 0.2, min: 0.15, max: 0.5 },
+                    { type: 'bee nest', min: 0.1, max: 0.2 },
                     { type: 'warm rocky substrate' },
                 ],
                 image: 12,
@@ -18849,7 +18913,8 @@ if (getCookie("civ") == "0") {
                     { type: 'freshwater', min: 0.07, max: 0.33 },
                     { type: 'succulents', min: 0.5, max: 2.25, chance: 0.99 },
                     { type: ['warm rocky substrate', 'xeric substrate', 'lush rocky substrate'] },
-                    { type: 'sandy soil', min: 0.3, max: 1.8 }
+                    { type: 'sandy soil', min: 0.3, max: 1.8 },
+                    { type: 'bee nest', min: 0.2, max: 0.3 },
                 ],
                 modifiers: { 'river': 0.1 },
                 image: 19,
@@ -19667,6 +19732,16 @@ if (getCookie("civ") == "0") {
                 name: 'kelp',
                 desc: 'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything, however.',
                 icon: [36, 1, 'magixmod'],
+            });
+
+
+            new G.Goods({ // New good by @1_e0
+                name: 'bee nest',
+                desc: 'Each nest is full of hexagonal cells, and while it is relatively hard to collect [honey] out of it, it can be a tasty source of food. Bees also help pollinate nearby flowers, ensuring that they grow properly.',
+                res: {
+                    'honey': { 'honey': 0.1 }
+                },
+                icon: [5, 0, 'magix2'],
             });
             /*=====================================================================================
             TILE EFFECTS
@@ -22370,7 +22445,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'painter',
-                desc: '@generates [gentility] by using [dyes] to make a paintings at bigger rate than [storyteller]. Requires the [artistic thinking] trait.',
+                desc: '@generates [gentility] by using [dyes] to make paintings! Requires the [artistic thinking] trait.',
                 icon: [31, 2, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -22589,8 +22664,8 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'stick': 20 }, into: { 'fire pit': 1 }, every: 5, mode: 'stick fires' },
                     { type: 'convert', from: { 'meat': 1, 'fire pit': 0.01 }, into: { 'cooked meat': 1 }, every: 1, repeat: 5, mode: 'cook' },
                     { type: 'convert', from: { 'seafood': 1, 'fire pit': 0.01 }, into: { 'cooked seafood': 1 }, every: 1, repeat: 5, mode: 'cook' },
-                    { type: 'convert', from: { 'meat': 1, 'salt': 1, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
-                    { type: 'convert', from: { 'seafood': 1, 'salt': 1, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
+                    { type: 'convert', from: { 'meat': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
+                    { type: 'convert', from: { 'seafood': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
                 ],
                 req: { 'fire-making': true },
                 category: 'crafting',
@@ -23237,7 +23312,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'florist',
                 startWith: 0,
-                desc: '@subclass of gatherer which instead of [food] and [water], will collect [flowers] which will have its specific use. The further you will research the more types of [flowers] he will be able to collect.',
+                desc: '@subclass of gatherer which collects [flowers] rather than [food] and [water] @has its use in both healing and painting',
                 icon: [27, 4, 'c2'],
                 cost: {},
                 req: { 'a power of the fortress': true, 'plant lore II': true },
@@ -24270,14 +24345,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now on you can inspect discovered tiles in <b>Territory</b> tab just by clicking on them. //@You can see goods and their density on the tile. @Also, you can inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory.</font>',
+                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. //@You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @<font color="red">However, you still can\'t see exactly how many of a resource you have within your territory!</font>',
                 icon: [29, 10, 'c2'],
                 cost: { 'discernment': 20, 'gentility': 18, 'creativity': 10 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
             });
             new G.Trait({
                 name: 'tile inspection II',
-                desc: '<font color="#e6ffee">@Now you can see how many of a certain resource you have in total within your territory.</font>',
+                desc: '<font color="#e6ffee">Now you can see how much of a certain resource you have within your territory.</font>',
                 icon: [3, 13, 'c2', 30, 10, 'c2'],
                 cost: { 'discernment': 72, 'creativity': 24 },
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
@@ -24538,7 +24613,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'druidism', category: 'tier1',
-                desc: '@unlocks [druid] @Gathers more [faith] and [happiness] than [soothsayer] but at a limited rate. //<small>Nature sometimes can be swift and terrible. Keep that in mind, my friend.</small>',
+                desc: '@unlocks [druid] @Gathers more [faith] and [happiness] than [soothsayer]s, but at a limited rate. //<small>Nature sometimes can be swift and terrible. Keep that in mind, my friend.</small>',
                 icon: [27, 14, 'c2'],
                 cost: { 'faith': 8, 'discernment': 24, 'gentility': 18 },
                 req: { 'ritualism': true, 'symbolism': true, 'language': true },
