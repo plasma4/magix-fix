@@ -9206,7 +9206,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'florist',
                 startWith: 0,
-                desc: '@subclass of gatherer which instead of [food] and [water], will collect [flowers] which will have its specific use. The further you will research the more types of [flowers] he will be able to collect.',
+                desc: '@subclass of gatherer which collects [flowers] rather than [food] and [water] @has its use in both healing and painting',
                 icon: [7, 11, 'magixmod'],
                 cost: {},
                 req: { 'a gift from the mausoleum': true, 'plant lore II': true },
