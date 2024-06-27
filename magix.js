@@ -17,7 +17,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source. */
 
 /////////
-///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiariasm will be punished. Copyright: 2020
+///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiarism will be punished. Copyright: 2020
 //===========================
 
 // Disable double click's default behavior for mobile users
@@ -1284,7 +1284,7 @@ if (getCookie("civ") == "0") {
                         G.getDict('mausoleum').wonder = 'mausoleum eternal';
                         if (G.achievByName['mausoleum eternal'].won) mausobonus = 15;
                         G.getDict('mausoleum').displayName = 'The Great Mausoleum';
-                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of The Great Mausoleum. Its towering mass will soon dominate the city, casting fear and awe wherever its shadow reaches. This time the Mausoleum reach its total massivity. It is no huge anymore. People say that The Mausoleum finally got colossal.';
+                        G.getDict('mausoleum').messageOnStart = 'You begin the construction of The Great Mausoleum. Its towering mass will soon dominate the city, casting fear and awe wherever its shadow reaches. This time the Mausoleum reach its total massivity. It is not just huge anymore; people say that The Mausoleum finally got colossal!';
                     } else
                         G.getDict('mausoleum').messageOnStart = 'You begin the construction of the Mausoleum. Its towering mass will dominate the city, casting fear and awe wherever its shadow reaches. This time, the Mausoleum will be even more massive!';
 
@@ -1298,15 +1298,15 @@ if (getCookie("civ") == "0") {
                     if (G.achievByName['mausoleum'].won > 6) G.getDict('archaeology').req = { 'gardening': true, 'will to know more': true };
                     //desc
                     G.getDict('a gift from the mausoleum').desc = 'This is something that may entirely change the human legacy. Current bonuses://<b>LV1</b> - [a gift from the mausoleum,This mystical gift...]<hr>' +
-                        (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your [happiness] gain by 12%.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - extra +2 starting [land] each run.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 4 ? '<b>LV5</b> - Allows you to obtain traits that will temporarily affect your researching costs in both a positive and negative way.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched and +1 starting [land] each run.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 1 ? '<b>LV2</b> - +1 starting [land] each run for every 2 [mausoleum] levels.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 2 ? '<b>LV3</b> - The [ungrateful tribe] trait only decreases your positive [happiness] gain by 15%.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 3 ? '<b>LV4</b> - The [ungrateful tribe] trait takes longer to be adopted.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 4 ? '<b>LV5</b> - The [ungrateful tribe] trait only decreases your positive [happiness] gain by 10%.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 5 ? '<b>LV6</b> - [missionary] provides 1 [spirituality] when researched.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - +1 starting [land] each run, and the [belief in the beforelife,Belief in the after/beforelife] traits have a doubled chance to be adopted.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait only decreases [happiness] gain by 2%.<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - all traits and knowledges have a slightly higher chance to be adopted, along with +1 extra starting [land] each run. Unlocks <b>Mausoleum eternal</b> achievement!' : '');
+                        (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - The [belief in the beforelife,Belief in the after/beforelife] traits have a doubled chance to be adopted.<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait decreases positive [happiness] gain by just 2% now!<hr>' : '') +
+                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - Unlocks <b>Mausoleum eternal</b> achievement, providing massive fast tick boosts!' : '');
                 }
             }
             G.seasonalContent = function () {
@@ -1728,6 +1728,9 @@ if (getCookie("civ") == "0") {
                         G.getDict('research box').choicesN--; //no matter what. That's punishment element
                     };
 
+                    if (G.achievByName['mausoleum'].won > 3) {
+                        G.getDict('ungrateful tribe').chance /= 2;
+                    }
                     if (G.achievByName['mausoleum eternal'].won) {
                         if (G.achievByName['mausoleum'].won > 7) {
                             G.getDict('belief in the afterlife').chance /= 2;
@@ -1765,12 +1768,12 @@ if (getCookie("civ") == "0") {
                         G.lose("herb", h);
                         G.gain("herb essence", h * 0.08);
                         if (G.getRes('herb essence').amount >= G.herbReq) {
-                            G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making " + G.getName("inhabs") + " people happy. Keep up the good work and do not forget that your civilization will demand more and more of Herb essence and that the final wonder requires it.", icon: [36, 19, 'magixmod'] });
+                            G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making " + G.getName("inhabs") + " people happy. Keep up the good work and do not forget that your civilization will demand more and more of Herbal essence and that the final wonder requires it.", icon: [36, 19, 'magixmod'] });
                             changeHappiness(2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.gain("health", 2.3 * G.getRes("population").amount, "Herbal essence happiness");
                             G.lose("herb essence", G.herbReq, "population please");
                         } else {
-                            G.Message({ type: 'bad', text: "Your Herb essence amounts are not enough to please your civilization currently making " + G.getName("inhabs") + " unhappy. Try harder and do not forget that civilization will demand more and more of Herbs essence and you will need it for your final wonder.", icon: [36, 19, 'magixmod'] });
+                            G.Message({ type: 'bad', text: "Your Herb essence amounts are not enough to please your civilization, which makes your " + G.getName("inhabs") + " unhappy. Try harder and do not forget that your civilization will demand more and more of Herbal essence and you will need it for your final wonder.", icon: [36, 19, 'magixmod'] });
                             G.lose("happiness", 2.3 * G.getRes("population").amount, "Herbal essence unhappiness");
                             G.lose("health", 2.3 * G.getRes("population").amount, "Herbal essence unhappiness");
                             G.lose("herb essence", G.herbReq, "population please");
@@ -1950,7 +1953,7 @@ if (getCookie("civ") == "0") {
                         G.doFunc('>9000');
                     }
                     if (G.year >= 9 && !backupmesg) {
-                        G.Message({ type: 'important', text: '<b>Don\'t forget to backup your save!</b><br>If you don\'t want to lose your save you can always back it up. Click <b>Settings</b> tab then <b>Save to file</b> button. It will download a file with your save that you can load if your curent save ever got lost.', icon: [choose([25, 26, 27]), 22, 'magixmod'] });
+                        G.Message({ type: 'important', text: '<b>Don\'t forget to backup your save!</b><br>If you don\'t want to lose your save you can always back it up. Click <b>Settings</b> tab then <b>Save to file</b> button. It will download a file with your save that you can load back in if your current save ever gets lost.', icon: [choose([25, 26, 27]), 22, 'magixmod'] });
                         backupmesg = true
                     }
                     if (G.year >= 999 && G.year <= 1005 && !milleniummesg) {
@@ -2315,7 +2318,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
                     else G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': false };//it would be stupid losing all relics while no archaeologists
-                    if (G.day % 15 == 0 && G.checkPolicy('far foraging') == 'on' && G.getRes('land').amount < 80) G.lose('happiness', 0.03 * G.getUnitAmount('gatherer'), 'far foraging');
+                    if (G.day % 15 == 0 && G.checkPolicy('far foraging') == 'on' && G.getRes('land').amount < 80) changeHappiness(-0.03 * G.getUnitAmount('gatherer'), 'far foraging');
                     if (G.day % 30 == 0 && G.tab.id == "land") G.updateMapDisplay();
 
                     if (G.has('magic adept') && G.achievByName['man of essences'].won == 0) { //Man of essences achievement
@@ -2476,20 +2479,20 @@ if (getCookie("civ") == "0") {
                     if (G.checkPolicy('se07') == 'on') {
                         if (G.getRes('happiness').amount > 0) {
                             var toSpoil = G.getRes('happiness').amount * 0.00155;
-                            var spent = G.lose('happiness', randomFloor(toSpoil), 'Herbalia');
+                            var spent = changeHappiness(-randomFloor(toSpoil), 'Herbalia');
                         } else {
                             var toSpoil = -G.getRes('happiness').amount * 0.00155;
-                            var spent = G.lose('happiness', randomFloor(toSpoil), 'Herbalia');
+                            var spent = changeHappiness(-randomFloor(toSpoil), 'Herbalia');
                         }
                     }
                     ///////////BERSARIA BACKFIRE
                     if (G.checkPolicy('se02') == 'on') {
                         if (G.getRes('happiness').amount > 0) {
                             var toSpoil = G.getRes('happiness').amount * 0.00295;
-                            var spent = G.lose('happiness', randomFloor(toSpoil), 'Bersaria');
+                            var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
                         } else {
                             var toSpoil = -G.getRes('happiness').amount * 0.00295;
-                            var spent = G.lose('happiness', randomFloor(toSpoil), 'Bersaria');
+                            var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
                         }
 
                     }
@@ -2550,7 +2553,7 @@ if (getCookie("civ") == "0") {
                             boatstory = true
                         }
                         if (G.has('ritualism') && !ritstory && !G.has('burial')) {
-                            G.Message({ type: 'tutorial', text: 'You now have faced rituals. It is the first spark of belief that may become a religion.', icon: [7, 4] })
+                            G.Message({ type: 'tutorial', text: 'You now have faced rituals. It is the first spark of belief that may eventually become a religion!', icon: [7, 4] })
                             ritstory = true
                         }
                         if (G.has('burial') && !burystory && !G.has('monument-building')) {
@@ -3530,7 +3533,7 @@ if (getCookie("civ") == "0") {
                 fractional: true,
                 tick: function (me, tick) {
                     // Calculate ungratefulness
-                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.98 : (G.achievByName['mausoleum'].won > 2 ? 0.88 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
+                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.98 : (G.achievByName['mausoleum'].won > 4 ? 0.9 : (G.achievByName['mausoleum'].won > 2 ? 0.85 : 0.75)) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
                     if (G.has('tribe of eaters')) {
                         // Decrease the effect by half
                         ungrateful = 1 - 0.5 * (1 - ungrateful)
@@ -3547,7 +3550,7 @@ if (getCookie("civ") == "0") {
                     var amount = (this.displayedAmount / G.getRes('population').displayedAmount);
                     if (G.has('t4')) {
                         if (amount >= 98) {
-                            G.lose('happiness', G.getRes('happiness').amount * 0.8)
+                            changeHappiness(G.getRes('happiness').amount * -0.8)
                         }
                     }
 
@@ -4683,20 +4686,21 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'juices',
-                desc: 'This stat shows you how many juices of any type you have currently in total. Juices provide more [happiness] and [health] than normal, common [water], but it spoils a little faster. Can be used in a few crafts such as normal water.',
+                desc: 'This stat shows you how many juices of any type you have in total. [juices] provide more [happiness] and [health] than [water], but it spoils a little faster. Can be used in a few crafts such as normal water.',
                 icon: [14, 3, 'magixmod'],
                 partOf: 'water',
                 tick: function (me, tick) {
                     if (G.checkPolicy('disable spoiling') == 'off') {
                         var toSpoil = me.amount * 0.01;
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'drinking juice');
+                        changeHappiness(spent * 0.3, 'drinking juice');
                         G.gain('spoiled juices', randomFloor(spent * 0.4), 'decay');
                     }
                 },
             });
             new G.Res({
                 name: 'spoiled juices',
-                desc: 'This stat shows you how much spoiled juice of any type you have currently in total. Spoiled juice decreases [happiness] and [health] even faster than plain old [muddy water]. It also can be used in few crafts, such as muddy water.',
+                desc: 'This stat shows you how much spoiled juice of any type you have in total. Spoiled juice decreases [happiness] and [health] even faster than plain old [muddy water]. It also can be used in few crafts, such as muddy water.',
                 icon: [14, 5, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -7055,22 +7059,22 @@ if (getCookie("civ") == "0") {
                 upkeep: { 'log': 1 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'copper': { name: 'Copper smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 5 [copper ore]s each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
-                    'tin': { name: 'Tin smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 10 [tin ore]s each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
-                    'iron': { name: 'Iron smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 5 [iron ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'iron-working': true } },
-                    'gold': { name: 'Gold smelting', icon: [11, 9], desc: 'Cast [precious metal ingot]s out of 5 [gold ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'gold-working': true } },
-                    'bronze': { name: 'Bronze alloying', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 8 [copper ore]s and 2 [tin ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'bronze-working': true } },
-                    'steel': { name: 'Steel alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 19 [iron ore]s and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
+                    'copper': { name: 'Copper smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 5 [copper ore] each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
+                    'tin': { name: 'Tin smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 10 [tin ore] each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
+                    'iron': { name: 'Iron smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 5 [iron ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'iron-working': true } },
+                    'gold': { name: 'Gold smelting', icon: [11, 9], desc: 'Cast [precious metal ingot]s out of 5 [gold ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'gold-working': true } },
+                    'bronze': { name: 'Bronze alloying', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 8 [copper ore] and 2 [tin ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'bronze-working': true } },
+                    'steel': { name: 'Steel alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 19 [iron ore] and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
                     'cobalt': { name: 'Cobalt smelting', icon: [14, 0, 'magixmod'], desc: 'Cast 1 [cobalt ingot] out of 8 [cobalt ore].', req: { 'cobalt-working': true }, use: { 'worker': 2, 'metal tools': 2, 'stone tools': 1 } },
-                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6 [nickel ore]s each.', req: { 'prospecting II': true, 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
-                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5 [platinum ore]s each.', req: { 'prospecting II': true, 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6 [nickel ore] each.', req: { 'prospecting II': true, 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5 [platinum ore] each.', req: { 'prospecting II': true, 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
                     //deep quarrymining
-                    'osmium': { name: 'Osmium smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 4 [osmium ore]s each.', req: { 'deep mining & quarrying': true, 'osmium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'lead': { name: 'Lead smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 6 [lead ore]s each.', req: { 'deep mining & quarrying': true, 'lead-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'mythril': { name: 'Mythril smelting', icon: [11, 6, 'magixmod'], desc: 'Cast [mystical metal ingot]s out of 6 [mythril ore]s and 1 [gold ore] each.', req: { 'deep mining & quarrying': true, 'mythril-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'blackium': { name: 'Blackium alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 6 [blackium ore]s each.', req: { 'deep mining & quarrying': true, 'blackium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'zinc': { name: 'Zinc smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 7 [zinc ore]s each.', req: { 'deep mining & quarrying': true, 'zinc-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
-                    'unk': { name: 'Dinium & unknownium alloying', icon: [11, 6, 'magixmod'], desc: 'Cast 2 [mystical metal ingot]s out of 4 [dinium ore]s, 3 [copper ore]s, 1 [coal] and 4 [unknownium ore] each. Chance to succeed: 95%', req: { 'deep mining & quarrying': true, 'dinium & unknownium working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'osmium': { name: 'Osmium smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 4 [osmium ore] each.', req: { 'deep mining & quarrying': true, 'osmium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'lead': { name: 'Lead smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 6 [lead ore] each.', req: { 'deep mining & quarrying': true, 'lead-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'mythril': { name: 'Mythril smelting', icon: [11, 6, 'magixmod'], desc: 'Cast [mystical metal ingot]s out of 6 [mythril ore] and 1 [gold ore] each.', req: { 'deep mining & quarrying': true, 'mythril-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'blackium': { name: 'Blackium alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 6 [blackium ore] each.', req: { 'deep mining & quarrying': true, 'blackium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'zinc': { name: 'Zinc smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 7 [zinc ore] each.', req: { 'deep mining & quarrying': true, 'zinc-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
+                    'unk': { name: 'Dinium & unknownium alloying', icon: [11, 6, 'magixmod'], desc: 'Cast 2 [mystical metal ingot]s out of 4 [dinium ore], 3 [copper ore], 1 [coal] and 4 [unknownium ore] each. Chance to succeed: 95%', req: { 'deep mining & quarrying': true, 'dinium & unknownium working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'copper ore': 5 }, into: { 'soft metal ingot': 1 }, repeat: 3, mode: 'copper' },
@@ -7672,7 +7676,8 @@ if (getCookie("civ") == "0") {
                     { type: 'mult', value: 2.5, req: { 't10': true } },
                     { type: 'mult', value: 1.02, req: { 'hallow1': true } },
                     { type: 'mult', value: 1.05, req: { 'discovery rituals': 'on' } },
-                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'wanderer got lost', 'wanderers got lost'), chance: 1 / 100, mode: 'explore land' }
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'wanderer got lost', 'wanderers got lost'), chance: 1 / 100, mode: 'explore land', req: { 'trails': false } },
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'wanderer got lost', 'wanderers got lost'), chance: 1 / 150, mode: 'explore land', req: { 'trails': true } }
                 ],
                 req: { 'speech': true },
                 category: 'exploration',
@@ -7694,7 +7699,8 @@ if (getCookie("civ") == "0") {
                     { type: 'provide', what: { 'scoutW': 1 }, mode: 'crew loadout' },
                     { type: 'mult', value: 2.5, req: { 't10': true } },
                     { type: 'mult', value: 1.03, req: { 'discovery rituals': 'on' } },
-                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'scout got lost', 'scouts got lost'), chance: 1 / 300, mode: 'explore land' }
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'scout got lost', 'scouts got lost'), chance: 1 / 200, mode: 'explore land', req: { 'horses': false } },
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'scout got lost', 'scouts got lost'), chance: 1 / 300, mode: 'explore land', req: { 'horses': true } }
                 ],
                 req: { 'scouting': true },
                 category: 'exploration',
@@ -10239,10 +10245,10 @@ if (getCookie("civ") == "0") {
                 use: { 'land of the Plain Island': 1 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'mythril': { name: 'Forge mythril blocks', icon: [34, 25, 'magixmod'], desc: 'Forge [various metal block] out of 30 [mythril ore]s, 3 [mystical metal ingot]s, 1 [strong metal ingot]s and 5 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'blackium': { name: 'Forge blackium blocks', icon: [34, 28, 'magixmod'], desc: 'Forge [various metal block] out of 40 [blackium ore]s, 3 [mystical metal ingot]s, 1 [strong metal ingot] and 15 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'dinium': { name: 'Forge dinium blocks', icon: [34, 27, 'magixmod'], desc: 'Forge [various metal block] out of 15 [dinium ore]s, 4 [mystical metal ingot]s, 5 [coal] and 2 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
-                    'unknownium': { name: 'Forge unknownium blocks', icon: [34, 26, 'magixmod'], desc: 'Forge [various metal block] out of 15 [unknownium ore]s, 3 [mystical metal ingot]s, 5 [coal] and 3 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'mythril': { name: 'Forge mythril blocks', icon: [34, 25, 'magixmod'], desc: 'Forge [various metal block] out of 30 [mythril ore], 3 [mystical metal ingot]s, 1 [strong metal ingot]s and 5 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'blackium': { name: 'Forge blackium blocks', icon: [34, 28, 'magixmod'], desc: 'Forge [various metal block] out of 40 [blackium ore], 3 [mystical metal ingot]s, 1 [strong metal ingot] and 15 [coal] each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'dinium': { name: 'Forge dinium blocks', icon: [34, 27, 'magixmod'], desc: 'Forge [various metal block] out of 15 [dinium ore], 4 [mystical metal ingot]s, 5 [coal] and 2 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
+                    'unknownium': { name: 'Forge unknownium blocks', icon: [34, 26, 'magixmod'], desc: 'Forge [various metal block] out of 15 [unknownium ore], 3 [mystical metal ingot]s, 5 [coal] and 3 [strong metal ingot]s', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: {} },
                     'gold blocks': { name: 'Forge gold blocks', icon: [14, 8], desc: 'Forge [gold block]s out of 10 [precious metal ingot]s each.', use: { 'worker': 1, 'stone tools': 1, 'metal tools': 1 }, req: { 'gold-working': true } },
                     'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10 [platinum ingot]s each.', req: { 'platinum-working': true }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
                 },
@@ -10888,7 +10894,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can be unlocked upon reaching [wizardry].@slightly increases exploration cap',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can also be obtained at the same time upon reaching [wizardry].@slightly increases exploration cap',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11246,7 +11252,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'chieftains', category: 'tier1',
-                desc: '@unlocks [chieftain]s, which generate [influence]@provides 5 [authority]<> [chieftain]s lead to good choice when one\'s struggling with deciding between two or more choices.',
+                desc: '@unlocks [chieftain]s, which generate [influence]@provides 5 [authority]<> [chieftain]s lead to better outcomes when there is a struggle within your tribe.',
                 icon: [22, 6],
                 cost: { 'insight': 10 },
                 req: { 'oral tradition': true },
@@ -11339,7 +11345,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'masonry', category: 'tier1',
-                desc: '@unlocks [kiln]s, which produce a variety of goods such as [brick]s@[carver]s can now turn [stone]s into [cut stone] slowly //<small>Let\'s build a wall, tall brickwall</small>',
+                desc: '@unlocks [kiln]s, which can produce a variety of goods, such as [brick]s@[carver]s can now turn [stone]s into [cut stone] slowly //<small>Let\'s build a tall brick wall!</small>',
                 icon: [29, 6],
                 cost: { 'insight': 35 },
                 req: { 'building': true, 'pottery': true },
@@ -11535,7 +11541,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'juice-crafting', category: 'tier1',
-                desc: '@Makes juices possible to be crafted. Any [fruit] + [sugar] + [water] = [juices]. Be careful. Juices may spoil same like normal water. Spoiled juice grants even more <b>unhappiness and unhealth<b> than normal muddy water.',
+                desc: '@Makes juices possible to be crafted. Any [fruit] + [sugar] + [water] = [juices]. Be careful, however, as [juices] may spoil. Spoiled juice makes your people even more unhappy and unhealthy than normal muddy water.',
                 icon: [16, 4, 'magixmod'],
                 cost: { 'insight': 495, 'wisdom': 50 },
                 req: { 'agriculture': true, 'gardening': true },
@@ -11670,7 +11676,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'monument-building II', category: 'upgrade',
-                desc: '@unlocks the [temple of deities,temple of deities], a mid-legacy wonder. Much bigger than [mausoleum], may lead to victory',
+                desc: '@Unlocks the [temple of deities,temple of deities], a mid-legacy wonder. It is much bigger than [mausoleum] and may lead to victory!',
                 icon: [0, 35, 'magixmod', 14, 10, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 300, 'spirituality': 15, 'faith': 125 },
                 req: { 'construction': true, 'burial': true, 'culture of the afterlife': true, 'physics': true },
@@ -11852,14 +11858,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'noting', category: 'tier1',
-                desc: '[population,people] now note some stuff not to forget it in the future. @this tech increases your population\'s smartness',
+                desc: '[population,People] now can write notes to not forget it in the future!',
                 icon: [21, 6, 'magixmod'],
                 cost: { 'insight': 300 },
                 req: { 'bookcrafting': true, 'ink crafting': true },
             });
             new G.Tech({
                 name: 'bookwriting', category: 'tier1',
-                desc: '[florist\'s notes] and [poet\'s notes] may now be written into a book. @unlocks the [lodge of writers] who will convert their notes into books.',
+                desc: '[florist\'s notes] and [poet\'s notes] may now be written into a book. @unlocks the [lodge of writers], who will convert their notes into books',
                 icon: [12, 13, 'magixmod'],
                 cost: { 'insight': 300 },
                 req: { 'bookcrafting': true, 'ink crafting': true },
@@ -12017,7 +12023,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'water filtering', category: 'tier1',
-                desc: 'Obtaining this tech will make you fulfill one of two requirements to start cleaning [muddy water] and making [water] from it. <>Another one is obtaining [caretaking] or [moderation].',
+                desc: 'Obtaining this tech will make you fulfill one of two requirements to start cleaning [muddy water] and making [water] from it. <>The other one is obtaining [caretaking] or [moderation].',
                 icon: [25, 16, 'magixmod'],
                 cost: { 'insight': 30 },
                 req: { 'bows': true, 'a gift from the mausoleum': true },//IK it seems strange but i wanted to make it equal to other tech at tech tier tree
@@ -12310,7 +12316,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'grain fertlizer', category: 'upgrade',
-                desc: 'Multiplies efficiency of all [wheat,wheat-based] units like [bakery], [wheat farm] and [windmill] by 1.5.',
+                desc: 'Multiplies the efficiency of all [wheat,wheat-based] units like [bakery,Bakeries], [wheat farm]s, and [windmill]s by 1.5.',
                 icon: [27, 4, 'magixmod'],
                 cost: { 'insight II': 30 },
                 req: { 'magical soil': true },
@@ -12393,7 +12399,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'ground tools',
-                desc: '@[artisan]s and [carver]s use ground tools allowing them to craft their stuff 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas] (with the [culture of celebration] obtained), but it is only a 10% boost in their case.',
+                desc: '@[artisan]s and [carver]s use ground tools allowing them to craft their stuff 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas] (with [culture of celebration] obtained), but it is only a 10% boost in their case.',
                 icon: [15, 10, 'magixmod'],
                 cost: { 'insight': 7 },
                 chance: 10,
@@ -12527,7 +12533,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'juicy expertise',
-                desc: '<font color="#aaffff">After some time since you started crafting [juices], you noticed your people make the most <b>tasty juice<b> you\'ve ever tried. Since gaining this trait, you\'ll get these bonuses: @Happiness caused by drinking juices boosted by a quarter. @[health] given by drinking juices is also boosted by a quarter. @Due to these bonuses, [juices] will now need more ingredients to craft. @[artisan of juice] also has a small chance to craft 1 additional [juices,juice].</font>',
+                desc: '<font color="#aaffff">After some time since you started crafting [juices], you noticed your people make the most <b>tasty juice<b> you\'ve ever tried. Getting this trait boosts the amount of [health] and [happiness] from drinking juice by 20%.</font>',
                 icon: [16, 5, 'magixmod'],
                 cost: { 'juices': 6.5e3, 'wisdom': 25, 'insight': 30 },
                 chance: 6,
@@ -13886,7 +13892,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'wizard\'s grain fertlizer', category: 'upgrade',
-                desc: 'You make a fertlizer that make [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. They cannot imagine a life without a piece of bread!',
+                desc: 'You make can now make a fertlizer that make [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -14093,7 +14099,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'sb4',
                 displayName: 'Soothsayer blessing',
-                desc: 'Nobody knows why and how but [soothsayer]s are gaining 5% less [faith] even after getting closer to the God and the whole religion.',
+                desc: 'Nobody knows how or why, but [soothsayer]s are gaining 5% less [faith] even after getting closer to the God and the entire religion.',
                 icon: [16, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb1': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14102,7 +14108,7 @@ if (getCookie("civ") == "0") {
             }); new G.Tech({
                 name: 'life in faith', category: 'misc',
                 displayName: '<font color="gold">Life in faith</font>',
-                desc: 'You remember...you were staying near the Temple...the Gods temple! This memory has unbelieveable powers: @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer]).',
+                desc: 'You remember that you were staying near the Temple...and this memory alone has unbelieveable powers! @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer])',
                 icon: [4, 12, 'magixmod', 1, 9, 'magixmod'],
                 cost: {},
                 effects: [
@@ -17074,7 +17080,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'ground pots',
-                desc: '@units on modes related to [pottery] craft 20% faster. It also applies to [basket-weaving], which will from now on be boosted by 10%.',
+                desc: '@units on modes related to [pottery] craft 20% faster. @[basket-weaving] is boosted by 10%.',
                 icon: [28, 34, 'magixmod'],
                 cost: { 'insight': 7 },
                 chance: 15,
@@ -17469,7 +17475,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>The alternative is [scouting], which can be unlocked upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
+                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -17489,7 +17495,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'trails', // New tech by @1_e0
-                desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%.',
+                desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%. Decreases the chance of [wanderer]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'scouting': true, 'horses': false },
@@ -17505,8 +17511,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'horses', // New tech by @1_e0
-                displayName: 'Exploration',
-                desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%.',
+                displayName: 'Adventurous people',
+                desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%. Decreases the chance of [scout]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [24, 3, 24, 1],
                 cost: { 'insight': 10 },
                 req: { 'scouting': true, 'trails': false },
@@ -17548,7 +17554,7 @@ if (getCookie("civ") == "0") {
                 name: 'ungrateful tribe',
                 desc: '@people consume 3% less [food], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].//<small>we\'re getting used to it...</small>',
                 icon: [2, 4, 26, 0, 'magixmod'],
-                chance: 1.5,
+                chance: 1.2,
                 req: { 'rules of food': true },
             });
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -17788,7 +17794,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'drink spoiled juice',
-                desc: 'Your people will drink [spoiled juices] even when you have clean [water], with dire consequences for health and morale.',
+                desc: 'Your people will drink [spoiled juices] even when you have clean [water], with very dire consequences for health and morale.',
                 icon: [6, 12, 14, 5, 'magixmod'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
@@ -19448,7 +19454,7 @@ if (getCookie("civ") == "0") {
             //NEW SUBSTRATES
             new G.Goods({
                 name: 'warm rocky substrate',
-                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mud], more [stone]s, and occasionally [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [gold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides a little [marble].',
+                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mud], more [stone]s, and occasionally [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [gold ore] and [salt], but less precious [gems].//Quarrying underneath there provides a little [marble].',
                 icon: [33, 23, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.003 },
@@ -19464,7 +19470,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'tundra rocky substrate',
-                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mud], more [stone]s and a little bit less [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore]s and [coal], but less of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath provides more [limestone] and [platinum ore].',
+                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mud], more [stone]s and a little bit less [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath provides more [limestone] and [platinum ore].',
                 icon: [33, 22, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.004, 'limestone': 0.0035 },
@@ -19480,7 +19486,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore]s, more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [33, 21, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
@@ -20424,7 +20430,7 @@ if (getCookie("civ") == "0") {
                     }
                     G.createTopInterface(); G.updateMapDisplay();
                     if (G.year >= 9 && !backupmesg) {
-                        G.Message({ type: 'important', text: '<b>Don\'t forget to backup your save!</b><br>If you don\'t want to lose your save you can always backup it. Click <b>Settings</b> tab then <b>Save to file</b> button. It will download a file with your save that you can load if your curent save ever got lost.', icon: [choose([25, 26, 27]), 22, 'magixmod'] });
+                        G.Message({ type: 'important', text: '<b>Don\'t forget to back up your save!</b><br>If you don\'t want to lose your save you can always bac kup it. Click <b>Settings</b> tab then <b>Save to file</b> button. It will download a file with your save that you can load if your current save ever gets lost.', icon: [choose([25, 26, 27]), 22, 'magixmod'] });
                         backupmesg = true
                     }
                     if (G.year == 2 && G.achievByName['the fortress'].won == 9) { G.fastTicks += 450 };
@@ -20437,7 +20443,7 @@ if (getCookie("civ") == "0") {
                         if (G.year == 9000) {
                             G.doFunc('>9000');
                         }
-                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="aqua">Seems like you and your elves are doing well. It is been 150 years since you started magic adventure in Elf universe. Thank you for playing with this expansion and big congratulations for getting that far. Your playing makes mod better and motivates its developer for future updates.<br><b> -> </b>Remember mod is still getting bigger and gets more content. This means someday the mod may be unavaiable to play for while. If you will lose progress due to update I am sorry. Anyway keep enjoying this adventure...and do not forget to backup your save...<small><b>just in case ;D </b></small><br></font><b>Farewell</b>', icon: [24, 1, 'magixmod'] });
+                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="aqua">Seems like you and your elves are doing well. It is been 150 years since you started magic adventure in Elf universe. Thank you for playing with this expansion and big congratulations for getting that far. Your playing makes mod better and motivates its developer for future updates.<br><b> -> </b>Remember mod is still getting bigger and gets more content. This means someday the mod may be unavaiable to play for while. If you will lose progress due to update I am sorry. Anyway keep enjoying this adventure...and do not forget to back up your save...<small><b>just in case ;D </b></small><br></font><b>Farewell</b>', icon: [24, 1, 'magixmod'] });
                     }
                     //influence trickle
                     if (G.getRes('influence').amount <= G.getRes('authority').amount - 1) G.gain('influence', 1);
@@ -20511,7 +20517,7 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
                     else G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': false };//it would be stupid losing all relics while no archaeologists
-                    if (G.day % 15 == 0 && G.checkPolicy('creative foraging') == 'on' && G.getRes('land').amount < 60) G.lose('happiness', 0.03 * G.getUnitAmount('gatherer'), 'creative foraging');
+                    if (G.day % 15 == 0 && G.checkPolicy('creative foraging') == 'on' && G.getRes('land').amount < 60) changeHappiness(-0.03 * G.getUnitAmount('gatherer'), 'creative foraging');
                     if (G.achievByName['naturality'].won == 0) {
                         var j = 0;
                         var len = G.traitsOwned.length;
@@ -22732,13 +22738,13 @@ if (getCookie("civ") == "0") {
                 //require:{'worker':2,'stone tools':2},
                 modes: {
                     'off': G.MODE_OFF,
-                    'olivnum': { name: 'Olivnum smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 5 [olivnum ore]s each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
-                    'berrylium': { name: 'Berrylium smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 60 [berrylium ore]s each. //<small>This ore isn\'t very durable but you can make use out of it here if you do not have any other use to put berrylium into</small>', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
-                    'tin': { name: 'Tin smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 10 [tin ore]s each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
-                    'iron': { name: 'Iron smelting', icon: [10, 9, 'c2'], desc: 'Cast [hard metal ingot]s out of 5 [iron ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'iron-working': true } },
-                    'greenold': { name: 'Greenold smelting', icon: [11, 9, 'c2'], desc: 'Cast [precious metal ingot]s out of 5 [greenold ore]s each. //<small>You\'ll love green gold, trust me.</small>', use: { 'worker': 2, 'metal tools': 2 }, req: { 'greenold-working': true } },
-                    'bronze': { name: 'Bronze alloying', icon: [10, 9, 'c2'], desc: 'Cast [hard metal ingot]s out of 8 [olivnum ore]s and 2 [tin ore]s each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'softmetal-working': true } },
-                    'steel': { name: 'Steel alloying', icon: [12, 9, 'c2'], desc: 'Cast [strong metal ingot]s out of 19 [iron ore]s and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
+                    'olivnum': { name: 'Olivnum smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 5 [olivnum ore] each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
+                    'berrylium': { name: 'Berrylium smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 60 [berrylium ore] each. //<small>This ore isn\'t very durable but you can make use out of it here if you do not have any other use to put berrylium into</small>', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
+                    'tin': { name: 'Tin smelting', icon: [9, 9, 'c2'], desc: 'Cast [soft metal ingot]s out of 10 [tin ore] each.', use: { 'worker': 2, 'stone tools': 2 }, req: {} },
+                    'iron': { name: 'Iron smelting', icon: [10, 9, 'c2'], desc: 'Cast [hard metal ingot]s out of 5 [iron ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'iron-working': true } },
+                    'greenold': { name: 'Greenold smelting', icon: [11, 9, 'c2'], desc: 'Cast [precious metal ingot]s out of 5 [greenold ore] each. //<small>You\'ll love green gold, trust me.</small>', use: { 'worker': 2, 'metal tools': 2 }, req: { 'greenold-working': true } },
+                    'bronze': { name: 'Bronze alloying', icon: [10, 9, 'c2'], desc: 'Cast [hard metal ingot]s out of 8 [olivnum ore] and 2 [tin ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'softmetal-working': true } },
+                    'steel': { name: 'Steel alloying', icon: [12, 9, 'c2'], desc: 'Cast [strong metal ingot]s out of 19 [iron ore] and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'olivnum ore': 7 }, into: { 'soft metal ingot': 1 }, repeat: 3, mode: 'olivnum' },
@@ -23297,7 +23303,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'explore', explored: 0.12, unexplored: 0.1 },
                     { type: 'provide', what: { 'spirituality': 1 } },
-                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, '[X] [elves].', 'druidish team got lost in the wilderness...So long', 'druidish teams got lost in the wilderness...So long'), chance: 1 / 230 }
+                    { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, '[X] [elves].', 'druidish team got lost in the wilderness...we will miss them', 'druidish teams got lost in the wilderness...we will miss them'), chance: 1 / 230 }
                 ],
                 req: { 'missionary': true, 'belief in the beforelife': true },
                 category: 'exploration',
@@ -23913,7 +23919,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'bellwethers', category: 'tier1',
-                desc: '@unlocks [bellwether]s, which generate [influence]@provides 5 [authority]<> [bellwether]s lead to good choice when one\'s struggling with deciding between two or more choices. //<small>ding ding ding</small>',
+                desc: '@unlocks [bellwether]s, which generate [influence]@provides 5 [authority]<> [bellwether]s lead to better outcomes when there is a struggle within your tribe. //<small>ding ding ding</small>',
                 icon: [22, 6, 'c2'],
                 cost: { 'discernment': 18, 'gentility': 4, 'creativity': 1, 'influence': 1 },
                 req: { 'oral tradition 2/2': true },
@@ -26593,7 +26599,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'warm rocky substrate',
-                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore]s and [salt], but less precious [gems].//Quarrying underneath there provides less [fazble].',
+                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore] and [salt], but less precious [gems].//Quarrying underneath there provides less [fazble].',
                 icon: [7, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.003 },
@@ -26607,7 +26613,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'tundra rocky substrate',
-                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore]s and [coal], but less amounts of ores like [olivnum ore,olivnum] or [tin ore,Tin]. Can\'t forget about [gems]//Quarrying underneath there provides more [limestone].',
+                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less amounts of ores like [olivnum ore,olivnum] or [tin ore,Tin]. Can\'t forget about [gems]//Quarrying underneath there provides more [limestone].',
                 icon: [10, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.004, 'limestone': 0.0035 },
@@ -26621,7 +26627,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore]s, more common [nickel ore] and [coal], but less amounts of ores like [olivnum ore,olivnum]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [olivnum ore,olivnum]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [8, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
