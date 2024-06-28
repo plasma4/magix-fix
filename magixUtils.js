@@ -160,7 +160,7 @@ G.AddData({
         function linearDisplay(tab) {
             G.setSetting('linearD' + tab[0], !G.getSetting('linearD' + tab[0]));
         }
-        /////////////MODYFYING POLCIIES TAB ... and policies
+        /////////////MODIFYING POLCIIES TAB ... and policies
 
         G.policyCategories.push(
             { id: 'debug', name: 'Debug' },
@@ -176,7 +176,6 @@ G.AddData({
             { id: 'pantheon', name: '<font color="#d4af37">----- Pantheon -----</font>' }
         );
         G.update['policy'] = function () {
-
             if (G.has('policies')) {
                 var str = '';
                 str +=
@@ -196,7 +195,6 @@ G.AddData({
                 var len = G.policyCategories.length;
                 for (var iC = 0; iC < len; iC++) {
                     strByCat[G.policyCategories[iC].id] = '';
-
                 }
                 var len = G.policy.length;
                 for (var i = 0; i < len; i++) {
@@ -244,7 +242,6 @@ G.AddData({
                         G.addTooltip(me.l, function (what) { return function () { return G.getPolicyTooltip(what) }; }(me), { offY: -8 });
                         if (me.l) { me.l.onclick = function (what) { return function () { G.clickPolicy(what); }; }(me); }
                         if (me.l && !me.binary) { var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div); }
-
                     }
                 }
             } else {
@@ -253,7 +250,6 @@ G.AddData({
                 var len = G.policyCategories.length;
                 for (var iC = 0; iC < len; iC++) {
                     strByCat[G.policyCategories[iC].id] = '';
-
                 }
                 var len = G.policy.length;
                 for (var i = 0; i < len; i++) {
@@ -276,7 +272,6 @@ G.AddData({
                 for (var iC = 0; iC < len; iC++) {
                     if (G.policyCategories[iC].id != 'mag') continue;
                     else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
-
                 }
                 l('policyDiv').innerHTML = str;
                 var len = G.policyCategories.length;
@@ -292,7 +287,6 @@ G.AddData({
                         if (me.l && !me.binary) { var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div); }
                     }
                 }
-
             }
             G.draw['policy']();
         }
@@ -532,7 +526,6 @@ G.AddData({
                     G.getIconStr(me.trait, 'trait-icon-' + me.id) +
                     '<div class="overlay" id="trait-over-' + me.id + '"></div>' +
                     '</div>';
-
             }
             for (var i in miscTechs) {
                 if (i == 0) {
@@ -545,7 +538,6 @@ G.AddData({
                     G.getIconStr(me.tech, 'tech-icon-' + me.id) +
                     '<div class="overlay" id="tech-over-' + me.id + '"></div>' +
                     '</div>';
-
             }
             l('techBox').innerHTML = str;
             var len = G.techsOwned.length;
@@ -653,12 +645,10 @@ G.AddData({
             var strByCat = [];
             var len = G.unitCategories.length;
             for (var iC = 0; iC < len; iC++) {
-
                 strByCat[G.unitCategories[iC].id] = '';
             }
             var len = G.unitsOwned.length;
             for (var i = 0; i < len; i++) {
-
                 var str = '';
                 var me = G.unitsOwned[i];
                 if (me.unit.visible == true) {
@@ -818,7 +808,6 @@ G.AddData({
                         return function (e) {
                             e.preventDefault();
                             if (G.speed > 0) {
-
                                 var amount = -G.getBuyAmount(unit);
                                 if (unit.unit.wonder) amount = (amount > 0 ? 1 : -1);
 
@@ -1291,11 +1280,9 @@ G.AddData({
                 var len = spl.length;
                 for (var i = len - 1; i >= 0; i--) {
                     if (spl[i] != '') {
-
                         G.chooseBox[i].choices = [];
                         var spl2 = spl[i].split(',');
                         for (var ii in spl2) {
-
                             if (ii == 0) G.chooseBox[i].roll = parseFloat(spl2[ii]);
                             else G.chooseBox[i].choices[ii - 1] = G.know[parseInt(spl2[ii])];
                         }
@@ -1566,7 +1553,6 @@ G.AddData({
                 G.introDur = G.fps * 3;
                 tabs();
                 G.doFunc('new game');
-
             }
         }
         G.funcs['new game blurb 2'] = function () {
@@ -1599,7 +1585,6 @@ G.AddData({
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader.<br>These people...they call you: </div>';
             return str;
-
         }
 
 
@@ -2853,14 +2838,12 @@ G.AddData({
                 }
                 str += '</center><div class="fancyText barred bitBiggerText" style="text-align:center;"><font size="3" style="letter-spacing: 2px;" color="#ffddaa">Achievements</font></div>';
                 for (var i in G.achievByTier) {
-
                     str += '<div class="tier thingBox">';
                     if (i == 'population') str += '<div class="fancyText barred bitBiggerText" style="text-align:center;"><font size="3" color="#ffddaa">Population-based achievements</font></div>';
                     if (i == 'tech') str += '<div class="fancyText barred bitBiggerText" style="text-align:center;"><font size="3" color="#ffddaa">Technology and trait achievements</font></div>';
                     for (var ii in G.achievByTier[i]) {
                         var me = G.achievByTier[i][ii];
                         if (me.visible == true && me.civ == 0) {
-
                             str += '<div class="thingWrapper">' +
                                 (me.special == 'shadow' || me.special == 'seasonal' || me.special == 'c2' ? '<div class="' + me.special + 'achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">' : '<div class="achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">') +
                                 G.getIconStr(me, 'achiev-icon-' + me.id) +
@@ -2868,7 +2851,6 @@ G.AddData({
                                 '</div>' +
                                 '</div>'/* : ".")*/;
                         }
-
                     }
                     str += '<div class="divider"></div>';
                     str += '</div>';
@@ -2925,7 +2907,6 @@ G.AddData({
                     for (var ii in G.achievByTier[i]) {
                         var me = G.achievByTier[i][ii];
                         if (me.visible == true && me.civ == 1) {
-
                             str += '<div class="thingWrapper">' +
                                 (me.special == 'shadow' || me.special == 'seasonal' || me.special == 'c2' ? '<div class="' + me.special + 'achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">' : '<div class="achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">') +
                                 G.getIconStr(me, 'achiev-icon-' + me.id) +
@@ -2933,7 +2914,6 @@ G.AddData({
                                 '</div>' +
                                 '</div>'/* : ".")*/;
                         }
-
                     }
                     str += '<div class="divider"></div>';
                     str += '</div>';
@@ -2990,7 +2970,6 @@ G.AddData({
                     for (var ii in G.achievByTier[i]) {
                         var me = G.achievByTier[i][ii];
                         if (me.visible == true && me.civ == "overall") {
-
                             str += '<div class="thingWrapper">' +
                                 (me.special == 'shadow' || me.special == 'seasonal' || me.special == 'c2' ? '<div class="' + me.special + 'achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">' : '<div class="achiev thing' + G.getIconClasses(me) + '' + (me.won ? '' : ' off') + '" id="achiev-' + me.id + '">') +
                                 G.getIconStr(me, 'achiev-icon-' + me.id) +
@@ -2998,7 +2977,6 @@ G.AddData({
                                 '</div>' +
                                 '</div>'/* : ".")*/;
                         }
-
                     }
                     str += '<div class="divider"></div>';
                     str += '</div>';
@@ -3009,7 +2987,6 @@ G.AddData({
                     var control = 0;
                     for (var i in G.achievByTier) {
                         for (var ii in G.achievByTier[i]) {
-
                             var me = G.achievByTier[i][ii];
                             if (me.civ != "overall") continue;
                             if (me.visible == true) {
@@ -3017,9 +2994,7 @@ G.AddData({
                                 /*me.visible==true ? */
                                 div.onclick = function (me, div) {
                                     return function () {
-
                                         if (me.name == 'here you go...again' && me.won == 0 && control > 1) {
-
                                             me.won = 1;
                                             G.dialogue.forceClose();
                                             G.middleText('And the secret strikes again...<br><small>it wasn\'t that big secret again was it?</small>', 'slow');
@@ -3345,7 +3320,6 @@ G.AddData({
                         me.l.classList.remove('off')
                     }
                 }
-
             }
         }
         //=================================================================
@@ -4147,7 +4121,6 @@ G.AddData({
 
         ///////////////////
         G.Message = function (obj) {
-
             //syntax :
             //G.Message({type:'important',text:'This is a message.'});
             //.type is optional
@@ -4226,8 +4199,6 @@ G.AddData({
         }
 
         G.Logic = function (forceTick) {
-
-
             for (var i in G.unit) {
                 if (G.unit[i].visible == undefined) G.unit[i].visible = true;
             }
@@ -4486,20 +4457,16 @@ G.AddData({
                             l('date').innerHTML = 'Century ' + Math.floor(((G.year / 100) + 1)) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new century starts. To see years obtain <b>Time measuring</b> 1/2 research.</div>'; }, { offY: -8 });
-
                         } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + Math.floor(G.fastTicks / 300) + ' years</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new year starts. To see days, obtain <b>Time measuring</b> 2/2 research.</div>'; }, { offY: -8 });
-
                         } else if (G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ', day ' + (G.day + 1) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>One day elapses every second.</div>'; }, { offY: -8 });
 
-
                         }//l('empower').innerHTML='<div class="image" style="width:32px;height:32px;background:url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Empowerments.png); '+(32*(G.year%40))+'px; 0px;"></div>';
-
                     }
                     if (!forceTick) G.nextTick--;
                 }
@@ -4697,11 +4664,9 @@ G.AddData({
                                                 if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * effect.unexplored * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.01;
                                                 G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 0.01;
-
                                             } else {
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
                                                 G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 1e-300;
-
                                             }
                                         } else {
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 14000 : 0));
@@ -4720,7 +4685,6 @@ G.AddData({
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("focused scouting") ? 20000 : 0) + (G.has("scouting") ? 1000 : 0));
                                             if (G.getRes("wtr").amount + G.getRes("land").amount < limit && !G.isMap) {
-
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
                                                 if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
@@ -4854,11 +4818,9 @@ G.AddData({
 
 
         G.NewGameWithSameMods = function () {
-
             G.loadMenu = undefined;
             G.loadCiv = 0;
             G.setTab = function (tab) {
-
                 if (tab.popup) {
                     if (G.getSetting('animations')) triggerAnim(tab.l, 'plop');
                     G.dialogue.popup(G.tabPopup[tab.id], 'bigDialogue', tab.l);
@@ -4951,7 +4913,6 @@ G.AddData({
                     else if (!G.testUse(me.unit.use, amount)) success = false;
                     else if (!G.testUse(me.unit.require, amount)) success = false;
                     if (success) {
-
                         if (G.getSetting('wonder messages') || G.resets <= 3) if (me.unit.messageOnStart) G.Message({ type: 'important', text: me.unit.messageOnStart });
                         G.doCost(me.unit.cost, amount);
                         G.doUse(me.unit.use, amount);
@@ -4976,7 +4937,6 @@ G.AddData({
                 else if (me.mode == 2) {
                     //building in progress; resuming construction
                     if (success) {
-
                         me.mode = 1;
                         if (G.getSetting('animations')) triggerAnim(me.l, 'plop');
                     }
@@ -5169,7 +5129,6 @@ G.AddData({
             if (yer.getMonth() == 3 && yer.getDate() == 1) { //fools, maybe, maybe not, rather not
                 G.middleText('-kcab emoclew,dooG -<br><small>Yo accmlatd ' + B(timeOffline) + ' fast ticks whil yo wr away.<br><font color="#2b0">My two kys on my kyboard got brokn, so this happnd.</font></small>', 'slow');
             };
-
         }
 
 

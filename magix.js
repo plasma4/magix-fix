@@ -1063,7 +1063,6 @@ G.traitTick = function (race, permachiev) {
         if (!G.has(me.name)) {
             if (Math.random() < 1 / (me.chance * (300 - mausoBonus))) {
                 if (G.checkReq(me.req) && G.testCost(me.cost, 1)) {
-
                     G.doCost(me.cost, 1);
                     G.gainTrait(me);
                     if (G.getSetting('trait messages') || G.resets <= 3) {
@@ -1141,10 +1140,8 @@ function AoD() {
     var changed = 0;
     var n = G.lose('corpse', randomFloor(G.getRes('corpse').amount * 0.01), '<font color="red">art of death</font>'); G.gain('bone', n * 3, 'unused corpse parts (art of death)'); changed += n;
     if (n > 0) {
-
         G.pseudoGather(G.getRes('culture'), changed);
         G.gain('health', -changed * 0.1, 'art of death');
-
     }
 }
 function islandName() {
@@ -1311,7 +1308,6 @@ if (getCookie("civ") == "0") {
                 }
             }
             G.seasonalContent = function () {
-
                 G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
                 G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
                 G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
@@ -1345,7 +1341,6 @@ if (getCookie("civ") == "0") {
                     G.getDict("clothier").modes['weave leather colored clothing'] = { name: 'Weave leather costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [leather].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herb].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier] and bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
-
                 } else {
                     G.getDict('spirit summoner').effects.push({ type: 'mult', value: 0 });
                 };
@@ -1400,10 +1395,9 @@ if (getCookie("civ") == "0") {
                     G.getDict('sewing').icon = [19, 16, 'seasonal'];
                     G.getDict('sewing II').icon = [9, 17, 'seasonal'];
                 }
-
             }
             G.maxMessages = 25;
-            G.la = 1; G.lb = 2; G.ta = 0; //land id tab unlockable. without this trait you can;t see policies, lc is for that quote depending on starting type
+            G.la = 1; G.lb = 2; G.ta = 0; //land id tab unlockable. without this trait you can't see policies, lc is for that quote depending on starting type
             /*=====================================================================================
             TECH & TRAIT CATEGORIES
             =======================================================================================*/
@@ -1577,7 +1571,6 @@ if (getCookie("civ") == "0") {
                     G.getDict('culture of the beforelife').chance /= 3;
                     G.getDict('the god\'s call').chance = 59;
                     G.getDict('dark side').chance = 337;
-
                 }
                 /////VP CALC FOR STARTING A NEW RUN
                 vpcalc();
@@ -1641,7 +1634,6 @@ if (getCookie("civ") == "0") {
                 G.Save();
             }
             G.funcs['game over'] = function () {
-
                 if (yer.getMonth() == 3 && yer.getDate() == 1) {
                     document.title = 'Tribe OOFed - NeverEnding Legacy';
                 } else {
@@ -1690,7 +1682,6 @@ if (getCookie("civ") == "0") {
                         'Technical note: Start a new game by opening the settings.' +
                         '</div></div>'
                 })
-
             }
             G.funcs['game loaded'] = function () {
                 if (G.on) {
@@ -1886,7 +1877,6 @@ if (getCookie("civ") == "0") {
                     var rese = txt.endsWith("5");
 
                     if (t1start == true) {
-
                         if (G.has('time measuring 1/2')) {
                             var insight = Math.floor(Math.random() * (33 / (G.achievByName['patience'].won + 1)));
                             G.Message({ type: 'important', text: 'During this year Chra\'nos has brought down to you:<br><b><font color="#aaffff">' + B(insight) + ' Insight</font></b><br>The hidden weakness in this plane affects you stronger and stronger each year. Think about finishing the trial as soon as possible.', icon: [10, 11, 'magixmod'] });
@@ -2249,7 +2239,6 @@ if (getCookie("civ") == "0") {
                         if (pumpkinroulette >= 1 && pumpkinroulette <= 15) {
                             if (loot == 0) { amount = G.getRes('cooked meat').amount / 3; G.gain('cooked meat', amount, '<font color="orange">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount / 3; G.gain('fruit', amount, '<font color="orange">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="orange">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="orange">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herb').amount / 3; G.gain('herb', amount, '<font color="orange">Treat</font>'); };
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a strong smash your people managed to collect ' + B(amount) + ' <font color="pink">' + loottabfcase[loot] + '</font> outta it. <b>Noice!</b>', icon: [ic, 7, 'seasonal'] }); //7,8
-
                         } else if (pumpkinroulette > 15 && pumpkinroulette <= 28) {
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a loud, strong smash you see...the inside of this pumpkin...there was...nothing...<br><b>Trick!</b>', icon: [9, 7, 'seasonal'] });
                         } else if (pumpkinroulette > 28 && pumpkinroulette <= 36) {
@@ -2429,7 +2418,6 @@ if (getCookie("civ") == "0") {
                     }
                     if (G.has('plain island building')) {
                         G.getDict('plain island portal').wideIcon = [7, 3, 'magixmod'];
-
                     }
                     if (G.has('no knapping anymore')) {
                         G.getDict('healer').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 } //had to addk knapped tools -1 because declaring just
@@ -2443,7 +2431,6 @@ if (getCookie("civ") == "0") {
                         console.log('Url to paste: https://cdn.jsdelivr.net/gh/MagixModLegacy/Magix@master/MagixUtilsForMarketA0.js');
                         console.log('Refresh the page.');
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', slow)
-
                     }
                     localStorage.setItem("civ", 0);
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
@@ -2498,7 +2485,6 @@ if (getCookie("civ") == "0") {
                             var toSpoil = -G.getRes('happiness').amount * 0.00295;
                             var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
                         }
-
                     }
                     //BURIODAK HEALTH HARM
                     if (G.checkPolicy('se08') == 'on') {
@@ -2638,7 +2624,6 @@ if (getCookie("civ") == "0") {
                     if (G.techN >= 100 && G.achievByName['apprentice'].won == 0) { //Apprentice achievement
                         G.achievByName['apprentice'].won = 1
                         G.middleText('- Completed <font color="silver">Apprentice</font> achievement -', 'slow')
-
                     }
                     if (G.techN >= 200 && G.achievByName['familiar'].won == 0) { //Apprentice achievement
                         G.achievByName['familiar'].won = 1
@@ -2688,7 +2673,6 @@ if (getCookie("civ") == "0") {
                         G.achievByName['just plain lucky'].won++;
                         G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/JustPlainLucky.mp3');
                         G.middleText('<font color="#d4af37">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number -' + G.achievByName['just plain lucky'].won + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'time' : 'times') + '<br>Impressive!<br>Anyway, enjoy the game!</small>', 'slow');
-
                     }
                     if (G.achievByName['speedresearcher'].won >= 1 || G.achievByName['speedresearcher II'].won >= 1 || G.achievByName['cruel goal'].won >= 1 || G.achievByName['that was so brutal'].won >= 1) G.achievByName['in the shadows'].won = 1;
                     if (G.traitTick("people", "when while becomes eternity")) {
@@ -2766,7 +2750,6 @@ if (getCookie("civ") == "0") {
                         else mult = 1 / (Math.pow(2, -happiness + 1) / 2);
                     }
                     return mult;
-
                 } else {
                     var mult = 1;
                     if (G.getRes('population').amount > 0) {
@@ -2777,7 +2760,6 @@ if (getCookie("civ") == "0") {
                     }
                 }
                 return mult;
-
             }
             /*=====================================================================================
             RESOURCES - HUMAN RACE
@@ -2858,7 +2840,6 @@ if (getCookie("civ") == "0") {
                 visible: true,
                 icon: [0, 3],
                 tick: function (me, tick) {
-
                     if (me.amount > G.achievByName['mostPeopleDuringRun'].won) G.achievByName['mostPeopleDuringRun'].won = me.amount;
                     if (me.amount > G.achievByName['mostPeople'].won) G.achievByName['mostPeople'].won = me.amount;
                     //this.displayName=G.getName('inhabs');
@@ -3557,7 +3538,6 @@ if (getCookie("civ") == "0") {
                             changeHappiness(G.getRes('happiness').amount * -0.8)
                         }
                     }
-
                 },
                 getDisplayAmount: function () {
                     if (G.getRes('population').amount <= 0) return '-';
@@ -3624,7 +3604,6 @@ if (getCookie("civ") == "0") {
                     if (amount > 200) amount = 200;
                     if (amount < -200) amount = -200;
                     return B(amount) + '%';
-
                 },
                 getIcon: function (me) {
                     if (day >= 40 && day <= 46) {
@@ -4032,7 +4011,6 @@ if (getCookie("civ") == "0") {
                     var toLose = me.amount * 0.0025;
                     var spent = G.lose(me.name, randomFloor(toLose), 'decay');
                 }
-
             });
             new G.Res({
                 name: 'brick',
@@ -4224,7 +4202,6 @@ if (getCookie("civ") == "0") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.005;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-
                 },
             });
             new G.Res({
@@ -5296,7 +5273,6 @@ if (getCookie("civ") == "0") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-
                 },
                 category: 'alchemypotions',
             });
@@ -5693,9 +5669,7 @@ if (getCookie("civ") == "0") {
                 category: 'demog',
                 partOf: 'population',
                 tick: function (me, tick) {
-                    if (day + leap >= 40 && day + leap <= 46 && G.has('peace')) {
-
-                    } else {
+                    if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
                         if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { //Spawning rate
                             var n = G.getRes('adult').amount * 0.00001 * (G.has('at5') ? 0.75 : 1);
                             if (G.checkPolicy('se02') == 'on') {
@@ -6043,7 +6017,6 @@ if (getCookie("civ") == "0") {
                         G.getRes('influence').amount = 0; G.getRes('influence II').amount = 0;
                         G.getRes('science').amount = 0;
                     }
-
                 }
             });
             new G.Res({
@@ -6287,7 +6260,6 @@ if (getCookie("civ") == "0") {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     if (G.getRes('christmas essence').amount < (G.getRes('christmas essence limit').amount - spent)) {
-
                         G.gain('christmas essence', randomFloor(toSpoil) / 6, 'festive ornament decay');
                     };
                 },
@@ -10784,7 +10756,6 @@ if (getCookie("civ") == "0") {
                     if (G.has('t3')) {
                         G.lose('cultural balance', 1)
                     }
-
                 },
                 onReroll: function () {
                     G.update['tech']();
@@ -13065,7 +13036,6 @@ if (getCookie("civ") == "0") {
                                 var ess = ['insight', 'culture', 'faith', 'influence'];
                                 var newEss = ['insight II', 'culture II', 'faith II', 'influence II'];
                                 for (var j in ess) {
-
                                     var prev = G.know[i].cost[ess[j]];
                                     if (prev == undefined) continue;
                                     delete (G.know[i].cost[ess[j]])
@@ -14708,7 +14678,6 @@ if (getCookie("civ") == "0") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * (G.has('political roots') ? 1 : 2);
                                     G.know[i].cost[res] -= reduction > 38 ? 38 : reduction;
-
                                 }
                         }, invert: false
                     },
@@ -14741,7 +14710,6 @@ if (getCookie("civ") == "0") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * (G.has('political roots') ? 1 : 2);
                                     G.know[i].cost[res] += reduction > 38 ? 38 : reduction;
-
                                 }
                         }, invert: false
                     },
@@ -14923,7 +14891,6 @@ if (getCookie("civ") == "0") {
                     { type: 'function', func: function () { G.getDict('blood').hidden = false } },
                 ],
                 category: 'trial'
-
             });
             new G.Trait({
                 name: 't3',
@@ -15392,7 +15359,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'pumpkins', category: 'seasonal',
-                desc: 'From now on you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins till next Halloween. You can only get them during Halloween season.</font>',
+                desc: 'From now on you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins until Halloween starts again. You can only get them during Halloween.</font>',
                 icon: [6, 7, 'seasonal'],
                 req: { '"dark season"': true },
                 cost: { 'insight': 100 },
@@ -15982,7 +15949,6 @@ if (getCookie("civ") == "0") {
                 category: 'religion', chance: 60,
                 switchCategory: false,
                 lifetime: function () { return Infinity }
-
             });
             new G.Trait({
                 name: 'patron2',
@@ -16053,7 +16019,6 @@ if (getCookie("civ") == "0") {
                 category: 'religion', chance: 60,
                 switchCategory: false,
                 lifetime: function () { return Infinity }
-
             });
             new G.Trait({
                 name: 'unknown patron',
@@ -16078,7 +16043,6 @@ if (getCookie("civ") == "0") {
                 category: 'religion', chance: 60,
                 switchCategory: false,
                 lifetime: function () { return Infinity }
-
             });
             new G.Trait({
                 name: 'patron8',
@@ -16093,7 +16057,6 @@ if (getCookie("civ") == "0") {
                 category: 'religion', chance: 60,
                 switchCategory: false,
                 lifetime: function () { return Infinity }
-
             });
             new G.Trait({
                 name: 'nonpatronage',
@@ -16104,7 +16067,6 @@ if (getCookie("civ") == "0") {
                 category: 'religion', chance: 80,
                 switchCategory: false,
                 lifetime: function () { return Infinity }
-
             });
             new G.Trait({
                 name: 't8',
@@ -16215,7 +16177,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'candy-crafting',
-                desc: '[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can help you gather [halloween essence] out of the candies.//Note:You are able to set artisan into that mode only during Halloween. After the event ends, [artisan] won\'t produce any more [candy,Candies] till next Halloween.//<small>Candies are so sweet.</small>',
+                desc: '[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can help you gather [halloween essence] out of the candies.//Note:You are able to set artisan into that mode only during Halloween. After the event ends, [artisan] won\'t produce any more [candy,Candies] until Halloween starts again!//<small>Candies are so tasty!</small>',
                 icon: [8, 8, 'seasonal'],
                 cost: { 'insight': 800, 'culture': 100 },
                 req: { 'farm of the sugar cane': true, '"dark season"': true },
@@ -16561,7 +16523,6 @@ if (getCookie("civ") == "0") {
                                     G.res[i].partOf = 'misc materials';
                                 }
                             }
-
                         }
                     }
                 ],
@@ -16578,7 +16539,6 @@ if (getCookie("civ") == "0") {
                         type: 'function', func: function () {
                             G.getDict("herb").desc += " However, eating them won\'t make [population,people] people mad.";
                             G.getDict("herb").turnToByContext['eating'] = { 'health': 0.006 };
-
                         }
                     }
                 ],
@@ -17560,7 +17520,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'concentrated juices', // New tech by @1_e0
-                desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juice]. However, making [juice] now requires 3 times as much [water].//<small>Even MOAR JUICE!!!</small>',
+                desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juices]. However, making [juices] now requires 3 times as much [water].//<small>Even MOAR JUICE!!!</small>',
                 icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
                 cost: { 'insight': 1600 },
                 req: { 'more humid water': true },
@@ -19841,7 +19801,6 @@ if (getCookie("civ") == "0") {
                         if (me.unit.wonder) {
                             //apply steps
                             if (me.mode == 1 || me.mode == 2) {
-
                                 if (me.percent >= me.unit.steps) {
                                     me.mode = 3;
                                     if (G.getSetting('animations') && me.l) triggerAnim(me.l, 'plop');
@@ -20298,7 +20257,6 @@ if (getCookie("civ") == "0") {
                         'Technical note: Start a new game by opening the settings.' +
                         '</div></div>'
                 })
-
             }
             G.funcs['game loaded'] = function () {
                 if (G.on) {
@@ -20652,7 +20610,6 @@ if (getCookie("civ") == "0") {
                             audio.play();
                         }
                         G.middleText('<font color="#d4af37">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number -' + G.achievByName['just plain lucky'].won + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'time' : 'times') + '<br>Impressive.<br>Anyway, enjoy the game!</small>', 'slow');
-
                     }
 
                     if (G.year > 19)//Gear decaying at year 20 and later
@@ -20714,7 +20671,6 @@ if (getCookie("civ") == "0") {
                         else return 'Our explorers have found ' + B(args.count) + ' new tiles; the latest is <b>' + args.tile.land.displayName + '</b>.';
                     }, args: { tile: tile, count: 1 }, icon: [14, 4]
                 });
-
             }
 
             G.funcs['production multiplier'] = function () {
@@ -21305,7 +21261,6 @@ if (getCookie("civ") == "0") {
                         };
 
                         G.getRes('wtr').amount = G.ocean * 10;
-
                     }
                     return B(this.displayedUsedAmount) + '<wbr>/' + B(this.displayedAmount) + '<wbr>/' + B(this.displayedAmount * 10);
                 },
@@ -24236,7 +24191,6 @@ if (getCookie("civ") == "0") {
                 effects: [
                     {
                         type: 'function', func: function () {
-
                             G.getDict('monument-building').req = { 'construction': true, 'burial': true, 'belief in the beforelife': true };
                             G.getDict('missionary').req = { 'ritualism': true, 'symbolism': true, 'belief in the beforelife': true };
                             fortress();
@@ -25349,7 +25303,6 @@ if (getCookie("civ") == "0") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * 2;
                                     G.know[i].cost[res] -= reduction > 38 ? 38 : reduction;
-
                                 }
                         }, invert: false
                     },
@@ -25382,7 +25335,6 @@ if (getCookie("civ") == "0") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * 2;
                                     G.know[i].cost[res] += reduction > 38 ? 38 : reduction;
-
                                 }
                         }, invert: false
                     },
