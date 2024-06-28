@@ -18544,7 +18544,7 @@ if (getCookie("civ") == "0") {
                 icon: [5, 0, 'magix2'],
                 cost: { 'influence': 1 },
                 startMode: 'on',
-                req: { 'beekeeping': true },
+                req: { 'beekeeping II': true },
                 effects: [
                     { type: 'make part of', what: ['honey'], parent: 'food' },
                 ],
