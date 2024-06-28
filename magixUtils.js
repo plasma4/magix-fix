@@ -525,7 +525,7 @@ G.AddData({
                 if (i == 0) {
                     str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
                         'Knowledges' +
-                        '</div></div>In other words, technologies that act like <u>traits</u><div id="traitBox" class="thingBox"></div></div></div></div>';
+                        '</div></div>(in other words, technologies that act like <u>traits</u>)<div id="traitBox" class="thingBox"></div></div></div></div>';
                 }
                 var me = knows[i];
                 str += '<div class="trait thing' + G.getIconClasses(me.trait) + '" id="trait-' + me.id + '">' +
@@ -1404,10 +1404,10 @@ G.AddData({
 
                 str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary.';
                 if (expiration != Infinity)
-                    str += G.has('time measuring 1/2') ? ' This trait will expire at year: ' + expiration : ' This trait will expire: ';
-                else str += "This trait has become permanent";
-                if (!G.has('time measuring 1/2'))
-                    str += (me.lifetime > 100 && me.lifetime != Infinity ? 'in a long time' : 'soon');
+                    str += G.has('time measuring 1/2') ? ' This trait will expire at year ' + expiration + '.' : ' This trait will expire ';
+                else str += "This trait has become permanent.";
+                if (!G.has('time measuring 1/2') && expiration != Infinity)
+                    str += (me.lifetime > 10 ? me.lifetime > 100 ? 'in a very long time.' : 'after a while.' : 'soon.');
                 str += '</small></li></font>';
             }
             str += '</div>';
@@ -1810,7 +1810,7 @@ G.AddData({
             name: 'sacrificed for culture',
             wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
             icon: [6, 12, 'magixmod'],
-            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you. <b>But now, you will obtain <font color="green">+3 culture and inspiration</font> at the start of new runs!</b>',
+            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you, but you will obtain <b><font color="green">+3 culture and inspiration</font></b> at the start of new runs!',
             fromWonder: 'sacrificed for culture',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1838,7 +1838,7 @@ G.AddData({
             name: 'insight-ly',
             wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
             icon: [choose([1, 4, 7]), 17, 'magixmod'],
-            desc: 'You sacrificed your soul for the Dreamers Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. <b>But this made a profit...<font color="white">+6 insight and +6% dreamer speed</font> at the start of new runs!</b>',
+            desc: 'You sacrificed your soul for the Dreamer\'s Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. But this made a profit...providing <b><font color="white">+6 insight and +6% dreamer speed</font></b> at the start of new runs!',
             fromWonder: 'Insight-ly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1995,7 +1995,7 @@ G.AddData({
             icon: [23, 24, 'magixmod'],
             tier: 1,
             name: '3rd party',
-            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you use one of the NEL mods found/available on the Dashnet Discord server!</b> <font color="fuschia">This achievement will NOT be required while you will try to gain a bonus from completing this achievement row!</font>',
+            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you use one of the mods below:</b> @Market mod @Coal mod @Laws Of Food @Laws Of Food Free Version @Thot mod // <font color="fuschia">This achievement will NOT be required to complete this achievement row.</font>',
             civ: "overall",
             plural: false
         });
@@ -2030,7 +2030,7 @@ G.AddData({
             name: 'cultural',
             wideIcon: [18, 26, 'magixmod'],
             icon: [19, 26, 'magixmod'],
-            desc: 'Complete Tu-ria\'s trial for the first time. Your artistic thinking led you to the victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Tu-ria\'s trial for the first time. Your artistic thinking led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2043,7 +2043,7 @@ G.AddData({
             name: 'hunted',
             wideIcon: [24, 26, 'magixmod'],
             icon: [25, 26, 'magixmod'],
-            desc: 'Complete Hartar\'s trial for the first time. Making people being masters at hunting and showing \'em what brave really is led you to the victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Hartar\'s trial for the first time. Becoming hunting masters and showing \'em what bravery truly is led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2056,7 +2056,7 @@ G.AddData({
             name: 'unfishy',
             wideIcon: [21, 26, 'magixmod'],
             icon: [22, 26, 'magixmod'],
-            desc: 'Complete Fishyar\'s trial for the first time. Making people believe that life without fish is not boring led you to the victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Fishyar\'s trial for the first time. Making people believe that life without fish is not boring led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
