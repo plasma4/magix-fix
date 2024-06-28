@@ -1051,7 +1051,7 @@ G.Launch=function()
 		console.log('Save data cleared.');
 		G.T=0;
 		localStorage.removeItem(G.saveTo);
-		location.reload();
+		onbeforeunload = null; location.reload();
 	}
 	
 	G.Reset=function(hard)
@@ -1323,9 +1323,9 @@ G.Launch=function()
 			(G.resets>0?('You have '+B(G.resets)+' ascension'+(G.resets==1?'':'s')+' behind you.<br>'):'')+
 			'You choose to start somewhere...<br><br>'+
 			/*G.button({style:'display:block;width:100%;',tooltip:'Start your civilization!',text:'Well okay then',onclick:function(e){var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;}})+*/
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a harsh terrain with scarce natural resources.',text:'Awful',onclick:function(e){G.startingType=1;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;location.reload()}})+
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a welcoming terrain full of natural resources.',text:'Pleasant',onclick:function(e){G.startingType=0;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;location.reload()}})+
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!',text:'Random',onclick:function(e){G.startingType=2;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;location.reload()}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a harsh terrain with scarce natural resources.',text:'Awful',onclick:function(e){G.startingType=1;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a welcoming terrain full of natural resources.',text:'Pleasant',onclick:function(e){G.startingType=0;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!',text:'Random',onclick:function(e){G.startingType=2;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
 			'</div>';
 		},'noClose');
 	}
@@ -1837,6 +1837,7 @@ G.Launch=function()
 		{name:'animations',type:'toggle',def:1,onChange:function(){if (G.getSetting('animations')) G.wrapl.classList.add('animationsOn'); else G.wrapl.classList.remove('animationsOn');}},//show animations ("plops" and blue squares)
 		{name:'filters',type:'toggle',def:1,onChange:function(){if (G.getSetting('filters')) G.wrapl.classList.add('filtersOn'); else G.wrapl.classList.remove('filtersOn');}},//use CSS filters
 		{name:'fpsgraph',type:'toggle',def:1,onChange:function(){if (G.getSetting('fpsgraph')) {G.fpsGraph.style.display='block';l('fpsCounter').style.display='block';} else {G.fpsGraph.style.display='none';l('fpsCounter').style.display='none';}}},//show fps graph
+		{name:'unload',type:'toggle',def:0,onChange:function(){if (G.getSetting('unload')) onbeforeunload=function(){return true}; else onbeforeunload=null}},
 		{name:'debug',type:'toggle',def:0,onChange:function(){if (G.getSetting('debug')) G.wrapl.classList.add('debugOn'); else G.wrapl.classList.remove('debugOn');}},//cheaty debug mode
 		{name:'showAllRes',type:'toggle',def:0,onChange:function(){}},//see all resources
 		{name:'autosave',type:'toggle',def:1,onChange:function(){}},//game will save every minute
@@ -1933,7 +1934,7 @@ G.Launch=function()
 					return str;
 				});}})+
 				'<br>'+
-				G.button({text:'Wipe save',tooltip:'Clear your save completely, removing your current game<br>and any achievements and game data.<br>Cannot be undone!',style:'box-shadow:0px 0px 2px 1px #f00;',onclick:function(){G.dialogue.popup(function(div){
+				G.button({text:'Wipe save',tooltip:'Clear your save completely, removing your current game<br>as well as any achievements and game data.<br>Cannot be undone!',style:'box-shadow:0px 0px 2px 1px #f00;',onclick:function(){G.dialogue.popup(function(div){
 					return '<div style="padding:16px;">Are you really sure you want to delete your save file?<br><br>'+G.button({text:'Yes!',onclick:function(){G.Clear();G.middleText('- Save wiped -');G.dialogue.close();}})+G.button({text:'No!',onclick:function(){G.dialogue.close();}})+'</div>';
 				});}})+
 			'</div>'+
@@ -1958,9 +1959,9 @@ G.Launch=function()
 		G.writeSettingButton({id:'particles',name:'particles',text:'Particles',tooltip:'Turn resource particles on/off.'})+
 		G.writeSettingButton({id:'animations',name:'animations',text:'Animations',tooltip:'Turn interface animations on/off.'})+
 		G.writeSettingButton({id:'filters',name:'filters',text:'CSS filters',tooltip:'Turn fancy CSS filters on/off.<br>Includes effects such as icon shadows, blurring and brightness adjustments.'})+
-		
-		'<div class="barred fancyText">Misc.</div>'+
-		G.writeSettingButton({id:'fpsgraph',name:'fpsgraph',text:'Show fps',tooltip:'Display the frames per second graph.'})+
+		G.writeSettingButton({id:'fpsgraph',name:'fpsgraph',text:'Show frame rate',tooltip:'Display the frame rate graph.'})+
+		'<div class="barred fancyText">Page exit</div>'+
+		G.writeSettingButton({id:'unload',name:'unload',text:'Confirm page reload or exit',tooltip:'The game will ask you if you want to leave if this is enabled.'})+
 		'</div>';
 		str+='<div class="buttonBox">'+
 		G.dialogue.getCloseButton()+
@@ -7482,7 +7483,7 @@ G.Launch=function()
 					var offlineScript=localStorage.getItem("nelOffline");
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, sprites are loaded using internet!" : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magixUtils.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
@@ -7490,7 +7491,7 @@ G.Launch=function()
 							}
 						}
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
-							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, sprites are loaded using internet!" : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
+							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magix.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
