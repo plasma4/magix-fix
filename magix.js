@@ -7410,7 +7410,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'storage pit',
-                desc: '@provides 400 [food storage] and 400 [material storage]<>A simple hole in the ground, lined with stones.//Prevents some amount of food from perishing and some goods from being stolen, but may itself crumble away over time.',
+                desc: '@provides 400 [food storage] and 400 [material storage]<>A simple hole in the ground, lined with stones.//Prevents some food from perishing and some goods from being stolen, but may itself crumble away over time.',
                 icon: [12, 2],
                 cost: { 'archaic building materials': 50 },
                 use: { 'land': 2 },
@@ -15406,7 +15406,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt19',
                 displayName: 'Devil\'s trait #19 Extinguishion',
-                desc: 'Everything related to [fire essence] produces 12% less of [fire essence,The Essence].(except [Wizard Complex]) //<small>DON\'T PLAY WITH FIRE!!!</small>',
+                desc: 'Everything related to [fire essence] produces 12% less of it, excluding the [Wizard Complex]. //<small>DON\'T PLAY WITH FIRE!!!</small>',
                 icon: [34, 23, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt7': false, 'belief in the afterlife': true },
@@ -15416,7 +15416,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt20',
                 displayName: 'Devil\'s trait #20 Secret thirst',
-                desc: 'Everything related to [water essence] produces 12% less of [water essence,The Essence].(except [Wizard Complex]) //<small>i need to hydrate but there is no water</small>',
+                desc: 'Everything related to [water essence] produces 12% less of it, excluding the [Wizard Complex]. //<small>i need to hydrate but there is no water</small>',
                 icon: [34, 22, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt8': false, 'belief in the afterlife': true },
@@ -15426,7 +15426,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt21',
                 displayName: 'Devil\'s trait #21 Atmospheric silence',
-                desc: 'Everything related to [wind essence] produces 12% less of [wind essence,The Essence].(except [Wizard Complex]) //<small>Not even a breeze</small>',
+                desc: 'Everything related to [wind essence] produces 12% less of it, excluding the [Wizard Complex]. //<small>Not even a breeze</small>',
                 icon: [34, 21, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt9': false, 'belief in the afterlife': true },
@@ -15436,7 +15436,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt22',
                 displayName: 'Devil\'s trait #22 Drought',
-                desc: 'Everything related to [nature essence] produces 12% less of [nature essence,The Essence].(except [Wizard Complex])',
+                desc: 'Everything related to [nature essence] produces 12% less of it, excluding the [Wizard Complex].',
                 icon: [34, 20, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt10': false, 'belief in the afterlife': true },
@@ -15446,7 +15446,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt23',
                 displayName: 'Devil\'s trait #23 Discharge',
-                desc: 'Everything related to [lightning essence] produces 12% less of [lightning essence,The Essence].(except [Wizard Complex]) //<small>the lightbulb is flickering</small>',
+                desc: 'Everything related to [lightning essence] produces 12% less of it, excluding the [Wizard Complex]. //<small>the lightbulb is flickering</small>',
                 icon: [34, 19, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt11': false, 'belief in the afterlife': true },
@@ -15456,7 +15456,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dt24',
                 displayName: 'Devil\'s trait #24 Deterrence',
-                desc: 'Everything related to [dark essence] produces 12% less of [dark essence,The essence].(except [Wizard Complex]) //<small>it is suspiciously bright tonight</small>',
+                desc: 'Everything related to [dark essence] produces 12% less of it, excluding the [Wizard Complex]. //<small>it is suspiciously bright tonight</small>',
                 icon: [34, 18, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15468,7 +15468,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt7',
                 displayName: 'God\'s trait #7 Triumphal flame',
-                desc: 'A [fire essence] becomes the Trend of Gods. Everything related to [fire essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>LET\'S SET HELL-fire!!!</small>',
+                desc: '[fire essence] becomes the Trend of Gods. Everything related to [fire essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>LET\'S SET HELL-fire!!!</small>',
                 icon: [35, 23, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15480,7 +15480,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt8',
                 displayName: 'God\'s trait #8 Holy rain',
-                desc: 'A [water essence] becomes the Trend of Gods. Everything related to [water essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>A strange rain indeed.</small>',
+                desc: '[water essence] becomes the Trend of Gods. Everything related to [water essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>A strange rain indeed.</small>',
                 icon: [35, 22, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15491,7 +15491,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt9',
                 displayName: 'God\'s trait #9 Windy wisdom',
-                desc: 'A [wind essence] becomes the Trend of Gods. Everything related to [wind essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Dude it\'s so windy today I\'d better stay in my tower.</small>',
+                desc: '[wind essence] becomes the Trend of Gods. Everything related to [wind essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Dude it\'s so windy today I\'d better stay in my tower.</small>',
                 icon: [35, 21, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15502,7 +15502,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt10',
                 displayName: 'God\'s trait #10 Natural merge',
-                desc: 'A [nature essence] becomes the Trend of Gods. Everything related to [nature essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Looks like some plant has grown in my stomach. But it is good for my health, someone said.</small>',
+                desc: '[nature essence] becomes the Trend of Gods. Everything related to [nature essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Looks like some plant has grown in my stomach. But it is good for my health, someone said.</small>',
                 icon: [35, 20, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15513,7 +15513,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt11',
                 displayName: 'God\'s trait #11 Electricity',
-                desc: 'A [lightning essence] becomes the Trend of Gods. Everything related to [lightning essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Dude...you burnt my outlet in the kitchen...</small>',
+                desc: '[lightning essence] becomes the Trend of Gods. Everything related to [lightning essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Dude...you burnt my outlet in the kitchen...</small>',
                 icon: [35, 19, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15524,7 +15524,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gt12',
                 displayName: 'God\'s trait #12 Dark bait',
-                desc: 'A [dark essence] becomes the Trend of Gods. Everything related to [dark essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Attention! This night will be the darkest one universe had ever seen...wait, universe?</small>',
+                desc: '[dark essence] becomes the Trend of Gods. Everything related to [dark essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Attention! This night will be the darkest one universe had ever seen...wait, universe?</small>',
                 icon: [35, 18, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -15676,7 +15676,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'enlightenment',
-                desc: '[soothsayer]s and [druid]s from now are more efficient. //@[soothsayer] has more chance to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
+                desc: '[soothsayer]s and [druid]s from now are more efficient. //@[soothsayer] is more likely to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
                 icon: [35, 28, 'magixmod'],
                 req: { 'tribalism': false },
                 chance: 30,
@@ -15752,28 +15752,28 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'festive robot print', category: 'seasonal',
-                desc: 'A [festive robot print] may help you to gather [christmas essence] out of snowmen kids. Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon [christmas essence,Essence] feed increases by some amount.',
+                desc: 'A [festive robot print] may help you to gather [christmas essence] out of snowmen kids. Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon [christmas essence,Essence] feed increases.',
                 icon: [14, 12, 'seasonal'],
                 cost: { 'insight': 1000, 'wisdom': 100 },
                 req: { 'the christmas': true, 'snowmen': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock I', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="green">[f.r.o.s.t.y] is 25% faster</font> @<font color="red">[f.r.o.s.t.y] has 5% more chance to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="green">[f.r.o.s.t.y] is 25% faster</font> @<font color="red">[f.r.o.s.t.y] 5% more likely to destroy a snowman</font>',
                 icon: [5, 12, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50, 'christmas essence': 114 },
                 req: { 'festive robot print': true, 'land acknowledge': true, 'tribalism': false },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock II', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. Also they know from previous experiences that the faster he is the bigger "snowman destruction" it causes...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="green">[f.r.o.s.t.y] is extra quarter as fast (compounding)</font> @<font color="red">[f.r.o.s.t.y] has 7% more chance to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. Also they know from previous experiences that the faster he is the bigger "snowman destruction" it causes...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="green">[f.r.o.s.t.y] is extra quarter as fast (compounding)</font> @<font color="red">[f.r.o.s.t.y] is 7% more likely to destroy a snowman</font>',
                 icon: [4, 12, 'seasonal'],
                 cost: { 'insight II': 110, 'culture II': 20, 'influence II': 5, 'science': 5, 'christmas essence': 546 },
                 req: { 'festive robot print': true, 'policy revaluation': true, 'f.r.o.s.t.y overclock I': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock III', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="green">[f.r.o.s.t.y] is 45% faster (compounding)</font> @<font color="red">[f.r.o.s.t.y] has 10% more chance to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="green">[f.r.o.s.t.y] is 45% faster (compounding)</font> @<font color="red">[f.r.o.s.t.y] is 10% more likely to destroy a snowman</font>',
                 icon: [3, 12, 'seasonal'],
                 cost: { 'insight II': 400, 'science': 45 },
                 req: { 'festive robot print': true, 'bigger university': true, 'f.r.o.s.t.y overclock II': true, 'dynamics II': true },
@@ -23078,7 +23078,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'storage pit',
-                desc: '@provides 400 [food storage] and 400 [material storage]<>A simple hole in the ground, lined with stones.//Prevents some amount of food from perishing and some goods from being stolen, but may crumble away over time.',
+                desc: '@provides 400 [food storage] and 400 [material storage]<>A simple hole in the ground, lined with stones.//Prevents some food from perishing and some goods from being stolen, but may crumble away over time.',
                 icon: [12, 2, 'c2'],
                 cost: { 'archaic building materials': 50 },
                 use: { 'land': 2 },
