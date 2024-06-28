@@ -1312,10 +1312,10 @@ if (getCookie("civ") == "0") {
             }
             G.seasonalContent = function () {
 
-                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that give a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing a Christmas climate to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
+                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
                 G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 [water] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
                 G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 80 pieces of [herb] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
                 G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For now and for the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with extra 70 pieces of [cooked meat] //<font color="red">Note: While valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
@@ -1945,7 +1945,7 @@ if (getCookie("civ") == "0") {
                             }
                         }
                     }
-                    if (G.year == 29) G.Message({ type: 'important', text: '<font color="gray"><b>Your people noticed that tools they made have started decaying.</font> <li>This doesn\'t seem good.</li></b>', icon: [24, 6, 'magixmod'] });
+                    if (G.year == 29) G.Message({ type: 'important', text: '<font color="gray"><b>Your people noticed that their tools have started decaying.</font> <li>This doesn\'t seem good.</li></b>', icon: [24, 6, 'magixmod'] });
                     if (G.year == 89)
                         if (G.achievByName['mausoleum'].won == 0) {
                             G.Message({ type: 'tutorial', text: 'Try to ascend. When you start a new run you will unlock way more technlogies.', icon: [32, 27, 'magixmod'] });
@@ -15709,7 +15709,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'xmas1',
-                displayName: 'Christmas climate: Artisans',
+                displayName: 'Christmas upgrade: Artisans',
                 icon: [10, 12, 'seasonal'],
                 effects: [
                 ],
@@ -15718,7 +15718,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'xmas2',
-                displayName: 'Christmas climate: Clothiers',
+                displayName: 'Christmas upgrade: Clothiers',
                 icon: [11, 12, 'seasonal'],
                 effects: [
                 ],
@@ -15727,7 +15727,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'xmas3',
-                displayName: 'Christmas climate: Potters',
+                displayName: 'Christmas upgrade: Potters',
                 icon: [12, 12, 'seasonal'],
                 effects: [
                 ],
@@ -15736,7 +15736,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'xmas4',
-                displayName: 'Christmas climate: Carving',
+                displayName: 'Christmas upgrade: Carving',
                 icon: [13, 12, 'seasonal'],
                 effects: [
                 ],
@@ -17495,7 +17495,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'around the world', // New tech by @1_e0
                 desc: 'Increases the speed of [wanderer]s when exploring new tiles by 10%.',
-                icon: [2, 2, 24, 1],
+                icon: [2, 2, 0, 0, 'magix2'],
                 cost: { 'insight': 20 },
                 req: { 'exploration trips': true },
                 effects: [
@@ -17504,7 +17504,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'trails', // New tech by @1_e0
                 desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%. Decreases the chance of [wanderer]s getting lost.//<small>Explore the world...without getting lost.</small>',
-                icon: [24, 7],
+                icon: [2, 2, 0, 0, 'magix2'],
                 cost: { 'insight': 10 },
                 req: { 'scouting': true, 'horses': false },
                 effects: [
@@ -17521,7 +17521,7 @@ if (getCookie("civ") == "0") {
                 name: 'horses', // New tech by @1_e0
                 displayName: 'Adventurous people',
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%. Decreases the chance of [scout]s getting lost.//<small>Explore the world...without getting lost.</small>',
-                icon: [24, 3, 24, 1],
+                icon: [24, 3, 0, 0, 'magix2'],
                 cost: { 'insight': 10 },
                 req: { 'scouting': true, 'trails': false },
                 effects: [
@@ -17536,8 +17536,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'sandy shores', // New tech by @1_e0
-                desc: 'Your [digger]s are now able to collect small amounts of sand from the ocean, based on your [wtr]. However, the effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
-                icon: [4, 9, 21, 15, 'magixmod'],
+                desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1000. // <small>A window...to dig...</small>',
+                icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
                 effects: [
@@ -17567,17 +17567,17 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beekeeping II', // New tech by @1_e0
-                desc: 'Teach your people how to not destroy the honeycomb within a bee nest, increasing the chance of a successful [honey] harvest! //Additionally, you also gain a policy that sets the honey-eating habits of your people.',
+                desc: 'Teach your people how to preserve the honeycombs within a bee nest, increasing the chance of a successful [honey] harvest! //Additionally, you also gain a policy that sets the honey-eating habits of your people.',
                 icon: [0, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 450 },
-                req: { 'beekeeping': true },
+                req: { 'beekeeping': true, 'wizard wisdom': true },
             });
             new G.Tech({
                 name: 'beekeeping III', // New tech by @1_e0
-                desc: 'Use a non-magical method to get the bees out of the hive, making [honey] collection much more likely to succeed.',
+                desc: 'Use a non-magical method to get bees out of hives, making [honey] collection much more likely to succeed.',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
-                req: { 'beekeeping II': true, 'wizard wisdom': true },
+                req: { 'beekeeping II': true },
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -17590,7 +17590,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe II',
                 desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.//<small>we\'re getting used to it...</small>',
-                icon: [3, 12, 3, 6, 19, 1],
+                icon: [3, 6, 1, 0, 'magix2'],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'tribe of eaters': false },
             });
@@ -20512,7 +20512,7 @@ if (getCookie("civ") == "0") {
                     if (G.year == 2 && G.achievByName['the fortress'].won >= 10) { G.fastTicks += 850 };            //ingame its y3
                     if (G.getSetting('story messages')) {
                         if (G.year == 19) {
-                            G.Message({ type: 'important', text: '<font color="gray"><b>Your elves noticed that tools they made have started decaying.</font> <li>This doesn\'t seem good especially when you all are in the middle of that wilderness.</li></b>', icon: [24, 6, 'magixmod'] });
+                            G.Message({ type: 'important', text: '<font color="gray"><b>Your elves noticed that their tools have started decaying.</font> <li>This doesn\'t seem good especially when you all are in the middle of that wilderness.</li></b>', icon: [24, 6, 'magixmod'] });
                             madeWarnToolDecayMesg = true
                         }
                         if (G.year == 9000) {

@@ -525,7 +525,7 @@ G.AddData({
                 if (i == 0) {
                     str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
                         'Knowledges' +
-                        '</div></div>In other words technologies that work like <u>traits</u><div id="traitBox" class="thingBox"></div></div></div></div>';
+                        '</div></div>In other words, technologies that act like <u>traits</u><div id="traitBox" class="thingBox"></div></div></div></div>';
                 }
                 var me = knows[i];
                 str += '<div class="trait thing' + G.getIconClasses(me.trait) + '" id="trait-' + me.id + '">' +
@@ -538,7 +538,7 @@ G.AddData({
                 if (i == 0) {
                     str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
                         'Starter upgrades/Miscellaneous' +
-                        '</div></div>(do not count to total researches stat)<div id="techBox" class="thingBox"></div></div></div></div>';
+                        '</div></div>(do not count towards your total researches)<div id="techBox" class="thingBox"></div></div></div></div>';
                 }
                 var me = miscTechs[i];
                 str += '<div class="tech thing' + G.getIconClasses(me.tech) + '" id="tech-' + me.id + '">' +
