@@ -10,6 +10,7 @@ It's that easy! If you can't open the console for some reason, you can try selec
 ### To set up this mod, go to Orteil's NeverEnding Legacy and click on the "Use Mods" button. There, paste in the following 2 lines:
 - https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js
 - https://file.garden/ZmatEHzFI2_QBuAF/magix.js
+
 Upon loading it, you should be able to play the game!
 ##
 ***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes. This mod has an unclear license, however. I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
@@ -29,7 +30,7 @@ Here are a few examples:
 If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html file to begin playing! (It is advised to extract the .zip file so that everything works properly.)
 
 This offline version of Magix...
-- Allows you to import Magix saves and allows you to use Magix with just one click
+- Allows you to import Magix saves and use Magix with just one click
 - Automatically updates to the newest version of fixed Magix when online and uses that when offline
 - Has the ability to locally mess around with Magix
 - Has ALL sprites and files needed for both the base game and Magix pre-downloaded
