@@ -10906,7 +10906,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can also be obtained at the same time upon reaching [wizardry].@slightly increases exploration cap',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can also be obtained at the same time upon reaching [wizardry]. Getting this increases the exploration cap by a little bit.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11385,7 +11385,7 @@ if (getCookie("civ") == "0") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [wizard]s on your side.//In addition, both [scouting] and [exploration trips] can be unlocked at the same time.//<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [wizard]s on your side.//With your newfound knowledge, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [5, 3, 'magixmod'],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
@@ -17487,7 +17487,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered with a moderate chance for many [wanderer]s to get lost at once. Via the exploration policy, you can determine at which level [wanderer]s can proceed onto the next tile. Each mode provides a different risk of [wanderer]s getting lost.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. @slightly increases exploration cap',
+                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. Getting this increases the exploration cap by a little bit.',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -19056,7 +19056,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'palm tree',
-                desc: '[palm tree]s prefer warm climates and provide [log]s when chopped; harvesting them may also yield [stick]s and [fruit]s such as bananas and coconuts.',
+                desc: '[palm tree]s prefer warm climates and provide [log]s and [stick]s when chopped. [fruit]s such as bananas and coconuts can also be found here.',
                 icon: [2, 10],
                 res: {
                     'chop': { 'log': 2, 'stick': 4 },
@@ -19100,7 +19100,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'wild bush',
-                desc: '[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s, and very rarely [herb]s.',
+                desc: '[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s, and the occasional [herb]s.',
                 icon: [17, 10, 'magixmod'],
                 res: {
                     'gather': { 'vegetable': 3, 'stick': 0.5, 'herb': 0.02 },
@@ -19121,7 +19121,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'berry bush',
-                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s and sometimes [herb]s.',
+                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s, and sometimes [herb]s.',
                 icon: [4, 10],
                 res: {
                     'gather': { 'fruit': 3, 'stick': 0.5 },
@@ -23665,7 +23665,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. @slightly increases exploration cap //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. Getting this increases the exploration cap by a little bit. //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
                 icon: [24, 7, 'c2'],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true },
@@ -26390,7 +26390,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'berry bush',
-                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s and the occasional [herb].',
+                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s, and the occasional [herb].',
                 icon: [3, 17, 'c2'],
                 res: {
                     'gather': { 'fruit': 3, 'stick': 0.5, 'herb': 0.25 },
@@ -26400,7 +26400,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'wild bush',
-                desc: '[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s and sometimes [herb]s.',
+                desc: '[wild bush,Wild bushes] can be foraged for [vegetable]s, [stick]s, and sometimes [herb]s.',
                 icon: [18, 17, 'c2'],
                 res: {
                     'gather': { 'vegetable': 3, 'stick': 0.5 },
