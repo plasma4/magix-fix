@@ -5456,7 +5456,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'cloud',
-                desc: 'Useful with big bunches of it. Useless if you don\'t have so much. It can filter [cloudy water] and gather [water] from it.',
+                desc: 'Useful with big bunches of it, and can be obtained when filtering [cloudy water].',
                 icon: [25, 9, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -11928,7 +11928,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'knowledgeable', category: 'upgrade',
-                desc: 'Makes [complex of dreamers] increase the power of [insight,insight gatherers (dreamers)]. In addition adds 7500 [housing]. Let it have something from the [Wizard Complex]',
+                desc: 'Makes [complex of dreamers] increase the power of [dreamer]s a little more. In addition, it adds 7500 [housing]. Let it have something from the [Wizard Complex]',
                 icon: [23, 17, 'magixmod'],
                 cost: { 'complex construction point': 200 },
                 effects: [
@@ -11959,7 +11959,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'cloudy water filtering', category: 'upgrade',
-                desc: 'Obtaining this tech will open a way for you to make [cloudy water] become a [water].<>While converting [cloudy water] into [water], you may obtain small pieces of a [cloud].',
+                desc: 'Obtaining this tech will open a way for you to make [cloudy water] turn into [water].<>While converting [cloudy water] into [water], you may obtain small pieces of a [cloud].',
                 icon: [25, 13, 'magixmod'],
                 cost: { 'insight': 120, 'wisdom': 30, 'water': -210 },
                 req: { 'water filtering': true, 'paradise crafting': true }
@@ -12089,7 +12089,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'underworld building 1/2', category: 'tier1',
-                desc: 'Allows you to build some stuff in the Underworld. Starts attracting 6 random <font color="red"><b>Devil\'s traits</b></font>',
+                desc: 'Allows you to build some stuff in the Underworld. Starts attracting 6 random <font color="#f66"><b>Devil\'s traits</b>...</font>',
                 icon: [27, 3, 'magixmod', 14, 19, 'magixmod'],
                 cost: { 'insight': 90, 'new world point': 400 },
                 req: { 'third passage to new world': true, 'a feeling from the Underworld': true }
@@ -12103,9 +12103,9 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'physics II', category: 'tier1',
-                desc: 'Provides 5 [education] @People\'s understanding of physics and anomalies in reality increases. Advances the [laws of physics(basic),laws of physics] research.',
+                desc: 'Provides 5 [education] @People understand physics and weird anomalies in the world more.',
                 icon: [0, 35, 'magixmod', 21, 19, 'magixmod'],
-                cost: { 'insight': 1009, 'science': 4, 'culture': 100 },
+                cost: { 'insight': 1100, 'science': 4, 'culture': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 5 } },
                 ],
