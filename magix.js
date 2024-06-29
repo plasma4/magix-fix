@@ -4103,7 +4103,10 @@ if (getCookie("civ") == "0") {
                 category: 'build',
                 tick: function () {
                     if (G.has('sandy shores')) {
-                        G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sandy shores');
+                        G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sand digging');
+                    }
+                    if (G.has('salty sand')) {
+                        G.gain('salt', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('salty sand II') ? 0.0015 : 0.0075), 'salty sand');
                     }
                 }
             });
@@ -4590,7 +4593,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'dark essence',
-                desc: '[dark essence] may be used used to make black holes for graves or to even bigger spellworks like a mirror world.',
+                desc: '[dark essence] may be used used to make black holes for graves or to even bigger spells like a mirror world.',
                 icon: [1, 3, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4741,8 +4744,9 @@ if (getCookie("civ") == "0") {
                 tick: function (me, tick) {
                     if (G.checkPolicy('disable spoiling') == 'off') {
                         var toSpoil = me.amount * 0.01;
-                        var spent = G.lose(me.name, randomFloor(toSpoil), 'drinking juice');
-                        changeHappiness(spent * 0.3, 'drinking juice');
+                        var spent = G.lose(me.name, randomFloor(toSpoil), 'drinking juices');
+                        G.gain('health', spent * 0.2, 'drinking juices');
+                        changeHappiness(spent * 0.3, 'drinking juices');
                         G.gain('spoiled juices', randomFloor(spent * 0.4), 'decay');
                     }
                 },
@@ -7715,7 +7719,7 @@ if (getCookie("civ") == "0") {
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will explore lands as usual.', req: { 'tribalism': true } },
                     'trips': { name: 'Send on exploration trip', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will discover new tiles if your primary land is decently explored.', req: { 'exploration trips': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with a boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'gather', context: 'gather', amount: 0.13, max: 0.27, req: { 'active exploration': true } },
@@ -7743,7 +7747,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [scout] will discover new land as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with a boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
                 },
                 staff: { 'stone tools': 1 },
                 effects: [
@@ -9417,7 +9421,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'farm of windferns',
-                desc: 'From his white leaves you can find tiny grains that can fly away from your hand quickly. From this farm your people can gather useful [wind essence].',
+                desc: 'From his white leaves you can find tiny grains that can fly away from your hand quickly. From this farm, your people can gather useful [wind essence].',
                 icon: [28, 8, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'wind essence': 1000, 'herb': 100 },
                 req: { 'smokers & Windferns': true },
@@ -10564,10 +10568,12 @@ if (getCookie("civ") == "0") {
                     'off': G.MODE_OFF,
                     'discover': { name: 'Voyage deeply into the ocean', icon: [10, 33, 'magixmod'], desc: 'This [boat]\'s crew will swim and use the boat to explore the supposedly endless oceans. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'scoutW': 12, 'worker': 10 } },
                     'explore': { name: 'Explore already discovered waters', icon: [9, 33, 'magixmod'], desc: 'This [boat]\'s crew will deeply explore already discovered parts of the ocean. Keep in mind that much can happen in the ocean, so this boat may sink down.', use: { 'wandererW': 12, 'worker': 10 } },
+                    'wind': { name: 'Voyage deeply and explore discovered waters', icon: [9, 33, 'magixmod', 10, 33, 'magixmod'], desc: 'This [boat]\'s crew will explore the deep ocean and already discovered waters at the same time, and is twice as fast at both tasks. This mode requires [wind essence], however.', use: { 'wandererW': 6, 'scoutW': 6, 'worker': 10 }, req: { 'superior winds': true } },
                 },
                 effects: [
                     { type: 'exploreOcean', unexplored: 0.07, mode: 'discover' },
                     { type: 'exploreOcean', explored: 0.07, mode: 'explore' },
+                    { type: 'exploreOcean', unexplored: 0.14, explored: 0.14, upkeep: ['wind essence', 2], mode: 'wind' },
                     { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned.', 'ships sank. Sadly, everyone who was on the ship drowned...'), chance: 1 / 117.5, notMode: 'off', req: { 'at4': false } },
                     { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned.', 'ships sank. Sadly, everyone who was on the ship drowned...'), chance: 1 / 150, notMode: 'off', req: { 'at4': true } },
                     { type: 'mult', value: 1.05, req: { 'at2': true } },
@@ -12156,14 +12162,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'automation', category: 'tier1',
-                desc: '[moderation] is a path where people are going for automation to produce more and do less. Therefore, people are figuring out ways to automate production.',
+                desc: '[moderation] is a path where people are going for automation to produce more and do less. Therefore, people will try to figure out ways to automate production.',
                 icon: [6, 18, 'magixmod'],
                 cost: { 'insight': 1000, 'wisdom': 15, 'inspiration': 5, 'culture': 80, 'influence': 205 },
                 req: { '2nd portal sky': true, 'moderation': true }
             });
             new G.Tech({
                 name: 'manufacturing', category: 'tier1',
-                desc: '[caretaking] is a path where people are going for a long life. They do not care about production and automation as much and prefer manual work. However, getting this technology allows you to start unlocking new units.',
+                desc: '[caretaking] is a path where people are going for a long life. They do not care about production and automation as much and prefer manual work. However, getting this technology allows you to begin the process of finding new units!',
                 icon: [7, 18, 'magixmod'],
                 cost: { 'insight': 1000, 'wisdom': 15, 'inspiration': 10, 'culture': 75, 'influence': 205 },
                 req: { '2nd portal sky': true, 'caretaking': true }
@@ -14275,7 +14281,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Significally expands the amount of characters in your people\'s language.',
                 icon: [26, 27, 'magixmod', 25, 27, 'magixmod'],
                 req: { 'alphabet 2/3': true, 'artistic thinking': true, 'alchemy': true },
-                cost: { 'insight': 1400, 'culture': 500, 'inspiration': 20, 'wisdom': 40, 'faith': 181 },
+                cost: { 'insight': 1400, 'culture': 500, 'inspiration': 20, 'wisdom': 40, 'faith': 180 },
                 effects: [
                 ]
             });
@@ -15100,7 +15106,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'parallel theory 3/3', category: 'tier2',
-                desc: 'What if you can make mirror work like portal? //This part is related to misc things about mirror world concept.',
+                desc: 'What if you can make mirror work like portal? //This part is related to the mirror world!',
                 req: { 'parallel theory 2/3': true, 'wonder \'o science': true },
                 cost: { 'insight II': 400, 'science': 60, 'culture II': 30, 'faith II': 30, 'influence II': 25 },
                 icon: [26, 27, 'magixmod', 9, 30, 'magixmod'],
@@ -15109,7 +15115,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mirror world 1/2', category: 'tier2',
-                desc: 'Unlocks a [grand mirror] which will double your [land] amount. It compounds with bonuses from: [beyond the edge] and [beyond the edge II]. Cost and display depend on your people\'s path. In fact, it is a passage to an exact copy of world you met before your civilization have set their first shelter/dwelling. Make sure you fullfill upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
+                desc: 'Unlocks a [grand mirror] which will double your [land] amount. It compounds with bonuses from [beyond the edge] and [beyond the edge II]. The cost and display depends on your people\'s path. In fact, it is a passage to an exact copy of a world you met before your civilization set up their first shelter/dwelling. Make sure you fullfill the upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
                 req: { 'parallel theory 3/3': true, 'wonder \'o science': true, 'bigger university': true },
                 cost: { 'insight II': 400, 'science': 62, 'culture II': 38 },
                 icon: [27, 3, 'magixmod', 10, 30, 'magixmod'],
@@ -15118,7 +15124,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mirror world 2/2', category: 'tier2',
-                desc: 'From that point amount of main [land] is doubled. Enjoy...It is seriously time to stop. <b><br>The more worlds you open the more unstable world will become...</b>',
+                desc: 'The amount of main [land] you have is doubled. Enjoy...but it is seriously time to stop. // <b>The more worlds you open the more unstable the world will become...</b>',
                 req: { 'mirror world 1/2': true },
                 cost: { 'insight II': 420, 'science': 62, 'culture II': 38, 'faith II': 30, 'tablet \'o mirror': 1 },
                 icon: [27, 2, 'magixmod', 10, 30, 'magixmod'],
@@ -15146,7 +15152,7 @@ if (getCookie("civ") == "0") {
                 icon: [27, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism2': false },
-                lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 700 },
+                lifetime: function () { return (Math.pow((this.yearOfObtainment + 50) / 2, 2)) % 700 },
                 switchCategory: false,
                 chance: 100
             });
@@ -15159,7 +15165,7 @@ if (getCookie("civ") == "0") {
                 req: { 'druidism': true, 'druidsymbolism1': false },
                 chance: 100,
                 switchCategory: false,
-                lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 700 }
+                lifetime: function () { return (Math.pow((this.yearOfObtainment + 50) / 2, 2)) % 700 }
             });
             new G.Trait({
                 name: 'gardening',
@@ -15968,7 +15974,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'lovely monument',
-                desc: '//You can now start constructing the [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
+                desc: 'You can now start constructing the [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
                 icon: [7, 16, 'seasonal'],
                 cost: { 'culture II': 25, 'research': 150, 'insight II': 15 },
                 req: { 'parental love': true, 'compliments': true, 'alphabet 3/3': true, 'monument-building II': true },
@@ -16287,7 +16293,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'demon-summoning',
-                desc: '[spirit summoner]s are now able to summon demons of Halloween at the cost of [halloween essence] to minimalize risk of any sort of curses. //While in new mode [spirit summoner,Summoner] gains more [spookiness] but uses more. //Note: [spirit summoner] will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
+                desc: '[spirit summoner]s are now able to summon demons of Halloween at the cost of [halloween essence] to minimalize risk of any sort of curses. //While in the new mode, [spirit summoner,Summoners] gain more [spookiness] but use more. //Note: [spirit summoner] will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
                 icon: [6, 9, 'seasonal'],
                 cost: { 'faith': 100, 'culture': 100 },
                 req: { "spirit-summoning": true, 'trick or treat': true },
@@ -17529,7 +17535,7 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Tech({
-                name: 'around the world', // New tech by @1_e0
+                name: 'around the world', category: 'tier1', // New tech by @1_e0
                 displayName: 'Exploration trips II',
                 desc: 'Increases the speed of [wanderer]s when exploring new tiles by 20%.// <small>We\'re gonna go around the world!</small>',
                 icon: [0, 35, 'magixmod', 36, 13, 'magixmod'],
@@ -17539,7 +17545,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'trails', // New tech by @1_e0
+                name: 'trails', category: 'tier1', // New tech by @1_e0
                 desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%. Decreases the chance of [wanderer]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [2, 2, 0, 0, 'magix2'],
                 cost: { 'insight': 10 },
@@ -17555,7 +17561,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'horses', // New tech by @1_e0
+                name: 'horses', category: 'tier1', // New tech by @1_e0
                 displayName: 'Adventurous people',
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%. Decreases the chance of [scout]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [24, 3, 0, 0, 'magix2'],
@@ -17572,7 +17578,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores', // New tech by @1_e0
+                name: 'sandy shores', category: 'tier1', // New tech by @1_e0
                 desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1000. // <small>A window...to dig...</small>',
                 icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
@@ -17581,41 +17587,78 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores II', // New tech by @1_e0
+                name: 'sandy shores II', category: 'tier1', // New tech by @1_e0
                 desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
-                icon: [0, 35, 'magixmod', 4, 9, 21, 15, 'magixmod'],
+                icon: [0, 35, 'magixmod', 4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
+                effects: [
+                ],
             });
             new G.Tech({
                 name: 'concentrated juices', // New tech by @1_e0
-                displayName: 'moar juices II',
+                displayName: 'moar juices II', category: 'tier1',
                 desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juices]. However, making [juices] now requires 3 times as much [water].//<small>Even MOAR JUICE!!! (But concentrated this time.)</small>',
                 icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
                 cost: { 'insight': 1600 },
                 req: { 'more humid water': true },
+                effects: [
+                ],
             });
             new G.Tech({
-                name: 'beekeeping', // New tech by @1_e0
+                name: 'beekeeping', category: 'tier1', // New tech by @1_e0
                 desc: '@unlocks a new [honey]-related mode for [firekeeper]s, although it has a very large chance to fail',
                 icon: [4, 0, 'magix2'],
                 cost: { 'insight': 80 },
                 req: { 'care for nature': true },
-                tutorialMesg: ['important', 'You take a bite out of some honey. It\'s sweet and delicious! You also realize a useful trait of honey: honey will <b>never</b> decay! You start thinking of other ways to use honey...', [5, 0, 'magix2']]
+                tutorialMesg: ['important', 'You take a bite out of some honey. It\'s sweet and delicious! You also realize a useful trait of honey: honey will <b>never</b> decay! You start thinking of other ways to use honey...', [5, 0, 'magix2']],
+                effects: [
+                ],
             });
             new G.Tech({
-                name: 'beekeeping II', // New tech by @1_e0
+                name: 'beekeeping II', category: 'tier1', // New tech by @1_e0
                 desc: 'Teach your people how to preserve the honeycombs within a bee nest, increasing the chance of a successful [honey] harvest somewhat! @you can also get [honeycomb]s from bee nests slowly, which are great for your people\'s [health] @you can now set a policy that sets the honey-eating habits of your people (however, your units that require food as upkeep can choose to be picky and eat [honey] and [honeycomb]s anyway)',
                 icon: [0, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 450 },
                 req: { 'beekeeping': true, 'wizard wisdom': true },
+                effects: [
+                ],
             });
             new G.Tech({
-                name: 'beekeeping III', // New tech by @1_e0
+                name: 'beekeeping III', category: 'tier1', // New tech by @1_e0
                 desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is much more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence], and also makes the non-essenced method slightly better',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
                 req: { 'beekeeping II': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'superior winds', category: 'tier1',
+                desc: 'Unlocks a new mode for [boat]s that will allow you to use [wind essence] to increase their effectiveness. //<small>Let the magic start!</small>',
+                icon: [1, 1, 'magixmod', 28, 7],
+                cost: { 'insight': 250 },
+                req: { 'essence storages': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'salty sand', category: 'tier1', // New tech by @1_e0
+                desc: 'You will be able to get [salt] from your world\'s shores by hiring [digger]s, who will process the [salt] out of [sand].',
+                icon: [11, 7, 0, 0, 'magix2'],
+                cost: { 'insight': 160 },
+                req: { 'sandy shores': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'salty sand II', category: 'tier1', // New tech by @1_e0
+                desc: '[digger]s are now able get much more [salt] from your oceans by drying out the salty water within.',
+                icon: [11, 7, 0, 0, 'magix2'],
+                cost: { 'insight': 400, 'wisdom': 50 },
+                req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
+                effects: [
+                ],
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -23299,7 +23342,7 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [wanderer] will explore lands as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with a boat', icon: [9, 33, 'magixmod'], desc: 'This [wanderer] will wait until a voyage so they will explore oceans the same way as normally they would explore land.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'explore', explored: 0.075, unexplored: 0, mode: 'explore land' },
@@ -23319,7 +23362,7 @@ if (getCookie("civ") == "0") {
                 staff: { 'stone tools': 1 },
                 modes: {
                     'explore land': { name: 'Explore land', icon: [5, 28, 'magixmod'], desc: 'This [scout] will discover new land as usual.', req: { 'tribalism': true } },
-                    'crew loadout': { name: 'Explore oceans with boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
+                    'crew loadout': { name: 'Explore oceans with a boat', icon: [9, 33, 'magixmod'], desc: 'This [scout] will wait until a voyage so they will discover more ocean tiles the same way as normally they would discover more land tiles.', req: { 'boat building': true } },
                 },
                 effects: [
                     { type: 'explore', explored: 0, unexplored: 0.075, mode: 'explore land' },
@@ -24374,7 +24417,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'upscale', category: 'anomaly',
-                desc: '//Increases costs of rolling/rerolling in tech tab. Also, [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. However, it feels balanced doesn\'t it? I\'d better be prepared for the next anomalies.</small>',
+                desc: 'Increases the costs of rolling/rerolling in the tech tab. Also, [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. You may need to prepare for the next anomalies.</small>',
                 icon: [28, 11, 'c2'],
                 req: { 'language': true, 'cities': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
@@ -24412,7 +24455,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'Ice', category: 'anomaly', displayName: '<font color="#ccf">Ice</font>',
-                desc: '<font color="#ccf">An aura of Ice has been triggered. A cold aura will slow down your gathering efficiency but also will slow down spoiling of [food] and [water]. Also efficiency of anything that uses [fire pit,fire] or makes [fire pit,fire] will be decreased. [digger] will dig more [ice].//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Freeze,breeze</small></font>',
+                desc: '<font color="#ccf">An aura of Ice has been triggered. A cold aura will slow down your gathering efficiency but also will slow down spoiling of [food] and [water]. Also efficiency of anything that uses [fire pit,fire] or makes [fire pit,fire] will be decreased. [digger] will dig more [ice].//You can see the power of the Aura by hovering over it on the top interface. Its power changes over time.//<small>Freeze, breeze</small></font>',
                 icon: [22, 13, 'c2'],
                 effects: [{ type: 'function', func: function () { G.auratext = 0 } },],
                 req: { 'tribalism': false },
@@ -24530,7 +24573,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'alphabet 3/3', category: 'tier1',
-                desc: 'Significally expands amount of characters in your elves\'s language.',
+                desc: 'Significally expands the amount of characters in your elves\'s language.',
                 icon: [26, 27, 'magixmod', 25, 13, 'c2'],
                 req: { 'alphabet 2/3': true, 'artistic thinking': true },
                 cost: { 'discernment': 1100, 'gentility': 70, 'wisdom': 40, 'faith': 10 },
@@ -24698,7 +24741,7 @@ if (getCookie("civ") == "0") {
                 req: { 'druidism': true, 'druidsymbolism2': false, 'druidsymbolism3': false },
                 chance: 100,
                 switchCategory: false,
-                lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 500 }
+                lifetime: function () { return (Math.pow((this.yearOfObtainment + 50) / 2, 2)) % 500 }
             });
             new G.Trait({
                 name: 'druidsymbolism2',
@@ -24711,7 +24754,7 @@ if (getCookie("civ") == "0") {
                 req: { 'druidism': true, 'druidsymbolism1': false, 'druidsymbolism3': false },
                 chance: 100,
                 switchCategory: false,
-                lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 500 }
+                lifetime: function () { return (Math.pow((this.yearOfObtainment + 50) / 2, 2)) % 500 }
             });
             new G.Trait({
                 name: 'druidsymbolism3',
@@ -24724,7 +24767,7 @@ if (getCookie("civ") == "0") {
                 req: { 'druidism': true, 'druidsymbolism1': false, 'druidsymbolism2': false },
                 chance: 100,
                 switchCategory: false,
-                lifetime: function () { return (Math.pow((G.yearOfObtainment + 50) / 2, 2)) % 400 }
+                lifetime: function () { return (Math.pow((this.yearOfObtainment + 50) / 2, 2)) % 400 }
             });
             new G.Trait({
                 name: 'gardening',
@@ -25022,7 +25065,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gtt1',
                 displayName: 'Gatherer\'s trend: Sticks',
-                desc: '[gatherer] gains more [stick]s. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[gatherer]s gain more [stick]s. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [27, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -25033,7 +25076,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'gtt2',
                 displayName: 'Gatherer\'s trend: Water',
-                desc: '[gatherer] gains more [water]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[gatherer]s gain more [water]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [28, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'plant lore II': true, 'gtt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -25044,7 +25087,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dtt1',
                 displayName: 'Digger\'s trend: Ice',
-                desc: '[digger] gains more [ice]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[digger]s gain more [ice]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [29, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -25054,7 +25097,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'dtt2',
                 displayName: 'Digger\'s trend: Sand',
-                desc: '[digger] gains more [sand]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[digger]s gain more [sand]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [30, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'digging': true, 'dtt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -25064,7 +25107,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'htt1',
                 displayName: 'Hunter\'s trend: Hide',
-                desc: '[hunter] gains more [hide]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[hunter]s gain more [hide]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [31, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt2': false },
                 cost: { 'gentility': 45, 'discernment': 50 },
@@ -25074,7 +25117,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'htt2',
                 displayName: 'Hunter\'s trend: Meat',
-                desc: '[hunter] gains more [meat]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
+                desc: '[hunter]s gain more [meat]. Doesn\'t disable the effect of the Decisional trend related to this unit.',
                 icon: [32, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'hunting': true, 'htt1': false },
                 cost: { 'gentility': 45, 'discernment': 50 },

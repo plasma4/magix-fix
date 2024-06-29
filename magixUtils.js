@@ -4696,8 +4696,17 @@ G.AddData({
                                             if (G.getRes("wtr").amount + G.getRes("land").amount < limit && !G.isMap) {
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
-                                                if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * effect.unexplored * myAmount;
+                                                var upkeepMet = true
+                                                if (effect.upkeep) {
+                                                    if (G.lose(effect.upkeep[0], effect.upkeep[1], 'unit upkeep') < effect.upkeep[1]) upkeepMet = false // Bad upkeep programming is fun
+                                                }
+                                                if (upkeepMet) {
+                                                    if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
+                                                    if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * effect.unexplored * myAmount;
+                                                } else {
+                                                    G.getDict('boat').effects[2].chance = 1e-300;
+                                                    G.getDict('boat').effects[3].chance = 1e-300;
+                                                }
                                             } else {
 
                                                 G.getDict('boat').effects[2].chance = 1e-300;

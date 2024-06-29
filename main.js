@@ -134,6 +134,8 @@ function formatEveryThirdPower(notations)
 	};
 }
 
+var magixNote = false
+
 function rawFormatter(value) {return Math.round(value * 1000) / 1000;}
 
 var numberFormatters =
@@ -7483,7 +7485,10 @@ G.Launch=function()
 					var offlineScript=localStorage.getItem("nelOffline");
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							console.warn(offlineMode ? "The file magixUtils.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "The file magixUtils.js was loaded locally because you don't have internet. It may not be the newest version.");
+							if (!magixNote) {
+								console.warn(offlineMode ? "Magix was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "Magix was loaded locally because you don't have internet. It may not be the newest version.");
+							}
+							magixNote=true;
 							script.setAttribute('src','magixUtils.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
@@ -7491,7 +7496,6 @@ G.Launch=function()
 							}
 						}
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
-							console.warn(offlineMode ? "The file magix.js was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "The file magix.js was loaded locally because you don't have internet. It may not be the newest version.");
 							script.setAttribute('src','magix.js');
 							document.head.appendChild(script);	
 							script.onload=function() {
