@@ -152,7 +152,10 @@ var numberFormatters =
 		' septillion',
 		' octillion',
 		' nonillion',
-		' decillion'
+		' decillion',
+		' undecillion',
+		' duodecillion',
+		' tredecillion'
 	]),
 	formatEveryThirdPower([
 		'k',
@@ -165,7 +168,10 @@ var numberFormatters =
 		'Sp',
 		'Oc',
 		'No',
-		'Dc'
+		'Dc',
+		'Ud',
+		'Dd',
+		'Td'
 	])
 ];
 function Beautify(value,floats)
@@ -2114,9 +2120,9 @@ G.Launch=function()
 	//handy for getting something without knowing its type
 	//sends a warning when trying to declare something with a duplicate name
 	G.dict=[];
-	G.setDict=function(name,what)
+	G.setDict=function(name,what,verbose)
 	{
-		if (G.dict[name]) {console.log('WARNING: there is already something with the id "'+name+'".');return false;}
+		if (G.dict[name]) {if (verbose)console.warn('There is already something with the id "'+name+'".');return false;}
 		else {G.dict[name]=what;return true;}
 	}
 	G.getDict=function(name)

@@ -39,6 +39,44 @@ function getCookie(cname) {
     return "";
 }
 
+// Add more numbers
+var numberFormatters =
+[
+	rawFormatter,
+	formatEveryThirdPower([
+		' thousand',
+		' million',
+		' billion',
+		' trillion',
+		' quadrillion',
+		' quintillion',
+		' sextillion',
+		' septillion',
+		' octillion',
+		' nonillion',
+		' decillion',
+		' undecillion',
+		' duodecillion',
+		' tredecillion'
+	]),
+	formatEveryThirdPower([
+		'k',
+		'M',
+		'B',
+		'T',
+		'Qa',
+		'Qi',
+		'Sx',
+		'Sp',
+		'Oc',
+		'No',
+		'Dc',
+		'Ud',
+		'Dd',
+		'Td'
+	])
+];
+
 if (getCookie("civ") == "") {
     localStorage.setItem("civ", 0);
 }
