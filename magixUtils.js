@@ -205,7 +205,7 @@ G.AddData({
                         var str = '';
                         var disabled = '';
                         if (me.binary && me.mode.id == 'off') disabled = ' off';
-                        str += '<div class="' + (G.policy[i].category == 'pantheon' ? 'achiev' : G.policy[i].category == 'mag' ? 'utilframed' : 'policy') + ' thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
+                        str += '<div class="' + (G.policy[i].category == 'pantheon' ? 'achiev' : 'policy') + ' thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
                             G.getIconStr(me, 'policy-icon-' + me.id) +
                             '<div class="overlay" id="policy-over-' + me.id + '"></div>' +
                             '</div>';
@@ -259,7 +259,7 @@ G.AddData({
                         var str = '';
                         var disabled = '';
                         if (me.binary && me.mode.id == 'off') disabled = ' off';
-                        str += '<div class="' + (G.policy[i].category == 'pantheon' ? 'achiev' : G.policy[i].category == 'mag' ? 'utilframed' : 'policy') + ' thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
+                        str += '<div class="' + (G.policy[i].category == 'pantheon' ? 'achiev' : 'policy') + ' thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
                             G.getIconStr(me, 'policy-icon-' + me.id) +
                             '<div class="overlay" id="policy-over-' + me.id + '"></div>' +
                             '</div>';
@@ -270,10 +270,10 @@ G.AddData({
                 var str = '';
                 var len = G.policyCategories.length;
                 str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center style="line-height: 1.25"><font size="2.5">Get the <font color="fuschia">Policies</font> trait to unlock this tab.<br>Policies are one of the main aspects of ruling a tribe.<br>Wait until you get this trait to learn more about them :)</font></center></div>';
-                for (var iC = 0; iC < len; iC++) {
-                    if (G.policyCategories[iC].id != 'mag') continue;
-                    else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
-                }
+                // for (var iC = 0; iC < len; iC++) {
+                //     if (G.policyCategories[iC].id != 'mag') continue;
+                //     else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
+                // }
                 l('policyDiv').innerHTML = str;
                 var len = G.policyCategories.length;
                 var len = G.policy.length;
@@ -1391,9 +1391,9 @@ G.AddData({
             if (me.lifetime != undefined && lt != undefined) {
                 str += '<font color="#bbb"><li><small>';
 
-                str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary.';
+                str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary. ';
                 if (expiration != Infinity)
-                    str += G.has('time measuring 1/2') ? ' This trait will expire at year ' + expiration + '.' : ' This trait will expire ';
+                    str += G.has('time measuring 1/2') ? 'This trait will expire at year ' + expiration + '.' : 'This trait will expire ';
                 else str += "This trait has become permanent.";
                 if (!G.has('time measuring 1/2') && expiration != Infinity)
                     str += (me.lifetime > 10 ? me.lifetime > 100 ? 'in a very long time.' : 'after a while.' : 'soon.');
@@ -1423,7 +1423,7 @@ G.AddData({
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
-                '<div id="fastTicks" class="framed" style="display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">0</div>' +
+                '<div id="fastTicks" class="framed" style="display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">0 fast ticks</div>' +
                 G.button({
                     id: 'pauseButton',
                     text: '<div class="image" style="width:9px;background:url(img/playButtons.png) 0px 0px;"></div>',
@@ -1921,10 +1921,10 @@ G.AddData({
             tier: 3,
             icon: [27, 21, 'magixmod'],
             name: 'extremely smart',
-            desc: 'Get <b>Insight II</b> amount equal to <b>Wisdom II</b> amount. It is not easy as you think it is. @In addition completing <font color="#d4af37">Mausoleum eternal</font> unlocks you the [theme changer].',
+            desc: 'Get your <b>Insight II</b> amount equal to your <b>Wisdom II</b>. It is not as easy as you think it may be!',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 100 },
-                { type: 'addFastTicksOnResearch', amount: 10 }
+                { type: 'addFastTicksOnStart', amount: 1000 },
+                { type: 'addFastTicksOnResearch', amount: 100 }
             ],
             civ: 0,
             plural: false
@@ -1933,7 +1933,7 @@ G.AddData({
             tier: 1,
             icon: [29, 21, 'magixmod'],
             name: 'experienced',
-            desc: 'To get this achievement you need to complete rest achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
+            desc: 'To get this achievement you need to complete the other achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -1945,7 +1945,7 @@ G.AddData({
             tier: 2,
             icon: [29, 22, 'magixmod'],
             name: 'smart',
-            desc: 'To get this achievement you need to complete rest achievements in this tier. @<b>Achievement bonus: [brick house with a silo], [house], [hovel], [hut], [branch shelter], and [mud shelter] will use less [land] in new runs</b>.',
+            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: [brick house with a silo], [house], [hovel], [hut], [branch shelter], and [mud shelter] will use less [land] in new runs</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2201,7 +2201,7 @@ G.AddData({
             tier: 3,
             name: 'talented?',
             icon: [32, 25, 'magixmod'],
-            desc: 'To get this achievement you need to complete other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land. In addition, this bonus applies to [well]s, <b>Farms</b>,<b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice when rolling researches</b>.',
+            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land. In addition, this bonus applies to [well]s, <b>Farms</b>,<b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice when rolling researches</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -3357,7 +3357,7 @@ G.AddData({
                                         if (G.speed > 0) {
                                             var me = target;
                                             var proto = me;
-                                            if (G.testCost(me.cost, 1)) {
+                                            if (mode.id != me.mode.id && G.testCost(me.cost, 1)) {
                                                 if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), 1)) {
                                                     G.doCost(me.cost, 1);
                                                     //remove "on" class from all mode buttons and add it to the current mode button
@@ -3382,7 +3382,8 @@ G.AddData({
                                         var str = '<div class="info">' + G.parse(me.desc);
                                         //if (!isEmpty(me.use)) str+='<div class="divider"></div><div class="fancyText par">Uses : '+G.getUseString(me.use,true,true)+' per '+proto.name+'</div>';
                                         //if (target.amount>0 && target.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,target.amount)+' to switch</div>';
-                                        str += (target.category != 'mag' ? '<div><b>Changing to this mode will cost you </b>' + G.getCostString(proto.cost, true, false, 1) + '.</div></div>' : '');
+                                        var costStr = G.getCostString(proto.cost, true, false, 1)
+                                        str += (costStr.length !== 0 ? '<div><b>Changing to this mode will cost you </b>' + G.getCostString(proto.cost, true, false, 1) + '.</div>' : '<div><b>This change will not cost anything!</b></div>');
                                         return str;
                                     };
                                 }(mode, me), { offY: -8 });
@@ -4173,10 +4174,10 @@ G.AddData({
                     '<div class="messageContent' + (me.icon ? ' hasIcon' : '') + '">' + (me.icon ? (G.getArbitraryIcon(me.icon)) : '') + '<span class="messageText">' + text + '</span></div>';
             }
             else if (G.has('time measuring 2/2')) {
-                var str = '<div class="messageTimestamp" title="' + 'year ' + (G.year + 1) + ', day ' + (G.day + 1) + '">' + 'Y:' + (G.year + 1) + '</div>' +
+                var str = '<div class="messageTimestamp" title="' + 'Year ' + (G.year + 1) + ', day ' + (G.day + 1) + '">' + 'Y:' + (G.year + 1) + '</div>' +
                     '<div class="messageContent' + (me.icon ? ' hasIcon' : '') + '">' + (me.icon ? (G.getArbitraryIcon(me.icon)) : '') + '<span class="messageText">' + text + '</span></div>';
             } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
-                var str = '<div class="messageTimestamp" title="' + 'year ' + (G.year + 1) + '">' + 'Y:' + (G.year + 1) + '</div>' +
+                var str = '<div class="messageTimestamp" title="' + 'Year ' + (G.year + 1) + '">' + 'Y:' + (G.year + 1) + '</div>' +
                     '<div class="messageContent' + (me.icon ? ' hasIcon' : '') + '">' + (me.icon ? (G.getArbitraryIcon(me.icon)) : '') + '<span class="messageText">' + text + '</span></div>';
             } else {
                 var str = '<div class="messageTimestamp"></div>' +
@@ -4465,11 +4466,11 @@ G.AddData({
                         else if (G.has('primary time measure') && !G.has('time measuring 1/2')) {
                             l('date').innerHTML = 'Century ' + Math.floor(((G.year / 100) + 1)) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every single time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed</b>.</div>'; }, { offY: -8 });
-                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new century starts. To see years obtain <b>Time measuring</b> 1/2 research.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new century starts. To see years, obtain the <b>Time measuring 1/2</b> research.</div>'; }, { offY: -8 });
                         } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + Math.floor(G.fastTicks / 300) + ' years</b>.</div>'; }, { offY: -8 });
-                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new year starts. To see days, obtain <b>Time measuring</b> 2/2 research.</div>'; }, { offY: -8 });
+                            G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>Sometimes a new year starts. To see days, obtain the <b>Time measuring 2/2</b> research.</div>'; }, { offY: -8 });
                         } else if (G.has('time measuring 2/2')) {
                             l('date').innerHTML = 'Year ' + (G.year + 1) + ', day ' + (G.day + 1) + ' in ' + G.getName('civ');
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
@@ -4708,7 +4709,6 @@ G.AddData({
                                                     G.getDict('boat').effects[3].chance = 1e-300;
                                                 }
                                             } else {
-
                                                 G.getDict('boat').effects[2].chance = 1e-300;
                                                 G.getDict('boat').effects[3].chance = 1e-300;
                                             }

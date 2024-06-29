@@ -166,156 +166,6 @@ G.widget.update = function () {
     }
 }
 
-G.selectModeForPolicy = function (me, div) {
-    if (div == G.widget.parent) G.widget.close();
-    else {
-        G.widget.popup({
-            func: function (widget) {
-                var str = '';
-                var me = widget.linked;
-                var proto = me;
-                for (var i in proto.modes) {
-                    var mode = proto.modes[i];
-                    if (!mode.req || G.checkReq(mode.req)) { str += '<div class="button' + (mode.num == me.mode.num ? ' on' : '') + '" id="mode-button-' + mode.num + '">' + mode.name + '</div>'; }
-                }
-                widget.l.innerHTML = str;
-                //TODO : how do uses and costs work in this?
-                for (var i in proto.modes) {
-                    var mode = proto.modes[i];
-                    if (!mode.req || G.checkReq(mode.req)) {
-                        l('mode-button-' + mode.num).onmouseup = function (target, mode, div) {
-                            return function () {
-                                if (clickModePolicy > 0) {
-                                    return
-                                }
-                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
-                                if (G.speed > 0) {
-                                    var me = target;
-                                    var proto = me;
-                                    if (G.testCost(me.cost, 1)) {
-                                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), 1)) {
-                                            G.doCost(me.cost, 1);
-                                            //remove "on" class from all mode buttons and add it to the current mode button
-                                            for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
-                                            l('mode-button-' + mode.num).classList.add('on');
-                                            G.setPolicyMode(me, mode);
-                                            if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
-                                        }
-                                    }
-                                } else G.cantWhenPaused();
-                                widget.close();
-                            };
-                        }(me, mode, div);
-
-                        // New section for the onclick event
-                        modeFunction = function () {
-                            widget.close(5);
-                        }
-                        l('mode-button-' + mode.num).onclick = function (target, mode, div) {
-                            return function () {
-                                if (--clickModePolicy > 0) {
-                                    return
-                                }
-                                modeFunction = null
-                                //released the mouse on this mode button; test if we can switch to this mode, then close the widget
-                                if (G.speed > 0) {
-                                    var me = target;
-                                    var proto = me;
-                                    if (G.testCost(me.cost, 1)) {
-                                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), 1)) {
-                                            G.doCost(me.cost, 1);
-                                            //remove "on" class from all mode buttons and add it to the current mode button
-                                            for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
-                                            l('mode-button-' + mode.num).classList.add('on');
-                                            G.setPolicyMode(me, mode);
-                                            if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
-                                        }
-                                    }
-                                } else G.cantWhenPaused();
-                                widget.close();
-                            };
-                        }(me, mode, div);
-
-                        if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), me.amount)) addHover(l('mode-button-' + mode.num), 'hover');//fake mouseover because :hover doesn't trigger when mouse is down
-                        G.addTooltip(l('mode-button-' + mode.num), function (me, target) {
-                            return function () {
-                                var proto = target;
-                                //var uses=G.subtractCost(target.mode.use,me.use);
-                                var str = '<div class="info">' + G.parse(me.desc);
-                                //if (!isEmpty(me.use)) str+='<div class="divider"></div><div class="fancyText par">Uses : '+G.getUseString(me.use,true,true)+' per '+proto.name+'</div>';
-                                //if (target.amount>0 && target.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,target.amount)+' to switch</div>';
-                                str += '<div>Changing to this mode costs ' + G.getCostString(proto.cost, true, false, 1) + '.</div></div>';
-                                return str;
-                            };
-                        }(mode, me), { offY: -8 });
-                    }
-                }
-            },
-            offX: 0,
-            offY: -8,
-            anchor: 'top',
-            parent: div,
-            linked: me
-        });
-    }
-}
-
-G.update['policy'] = function () {
-    var str = '';
-    str +=
-        '<div class="regularWrapper">' +
-        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Policies help you regulate various aspects of the life of your citizens.</div><div class="par">Some policies provide multiple modes of operation while others are simple on/off switches.</div><div class="par">Changing policies usually costs influence points and, depending on how drastic or generous the change is, may have an impact on your people\'s morale.</div></div>', 'infoButton') +
-        '<div class="fullCenteredOuter"><div id="policyBox" class="thingBox fullCenteredInner"></div></div></div>';
-    l('policyDiv').innerHTML = str;
-
-    var strByCat = [];
-    var len = G.policyCategories.length;
-    for (var iC = 0; iC < len; iC++) {
-        strByCat[G.policyCategories[iC].id] = '';
-    }
-    var len = G.policy.length;
-    for (var i = 0; i < len; i++) {
-        var me = G.policy[i];
-        if (me.visible && (me.category != 'debug' || G.getSetting('debug'))) {
-            var str = '';
-            var disabled = '';
-            if (me.binary && me.mode.id == 'off') disabled = ' off';
-            str += '<div class="policy thing' + (me.binary ? '' : ' expands') + ' wide1' + disabled + '" id="policy-' + me.id + '">' +
-                G.getIconStr(me, 'policy-icon-' + me.id) +
-                '<div class="overlay" id="policy-over-' + me.id + '"></div>' +
-                '</div>';
-            strByCat[me.category] += str;
-        }
-    }
-
-    var str = '';
-    var len = G.policyCategories.length;
-    for (var iC = 0; iC < len; iC++) {
-        if (strByCat[G.policyCategories[iC].id] != '') str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div>';
-    }
-    l('policyBox').innerHTML = str;
-
-    G.addCallbacks();
-
-    var len = G.policy.length;
-    for (var i = 0; i < len; i++) {
-        var me = G.policy[i];
-        if (me.visible) {
-            var div = l('policy-' + me.id); if (div) me.l = div; else me.l = 0;
-            var div = l('policy-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
-            var div = l('policy-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
-            G.addTooltip(me.l, function (what) { return function () { return G.getPolicyTooltip(what) }; }(me), { offY: -8 });
-            if (me.l) { me.l.onclick = function (what) { return function () { G.clickPolicy(what); }; }(me); }
-            if (me.l && !me.binary) {
-                var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div);
-                div.onclick = function (policy, div) { return function () { clickModePolicy = 2; G.selectModeForPolicy(policy, div); }; }(me, div);
-            }
-        }
-    }
-
-    G.draw['policy']();
-}
-
 // Allow touchscreen or mobile users to click on gizmos
 G.selectModeForUnit = function (me, div) {
     if (div == G.widget.parent) G.widget.close();
@@ -356,7 +206,7 @@ G.selectModeForUnit = function (me, div) {
 
                         // New section for the onclick event
                         modeFunction = function () {
-                            widget.close(5);
+                            widget.close();
                         }
                         l('mode-button-' + mode.num).onclick = function (unit, mode, div) {
                             return function () {
@@ -1252,7 +1102,10 @@ if (getCookie("civ") == "0") {
         sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random(), 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'terrain': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
-                var Theme = G.checkPolicy('theme changer') == 0 ? 'Default' : G.checkPolicy('theme changer');
+                var Theme = G.checkPolicy('theme changer');
+                if (Theme == 0 || Theme == null) {
+                    Theme = 'Default';
+                }
                 //tech
                 if (G.tab.id == 'tech') {
                     document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
@@ -1599,9 +1452,10 @@ if (getCookie("civ") == "0") {
                     G.gainTech(G.techByName['underworld\'s ascendant']);
                 };
                 if (G.achievByName['experienced'].won > 0 && !G.has('<font color="lime">Fruit supplies</font>')) { G.gainTech(G.techByName['<font color="lime">Fruit supplies</font>']); }
-                if (G.achievByName['extremely smart'].won > 0 && G.achievByName['mausoleum eternal'].won >= 1 && !G.has('life has its theme')) {
+                if (G.achievByName['mausoleum eternal'].won >= 1 && !G.has('life has its theme')) {
                     G.gainTech(G.techByName['life has its theme']);
-                }; if (G.achievByName['smart'].won > 0 && !G.has('smaller but efficient')) {
+                };
+                if (G.achievByName['smart'].won > 0 && !G.has('smaller but efficient')) {
                     G.gainTech(G.techByName['smaller but efficient']);
                 };
                 if (G.achievByName['magical'].won > 0 && !G.has('magical presence')) {
@@ -1629,7 +1483,7 @@ if (getCookie("civ") == "0") {
                     G.getDict('research box').choicesN--; //punishment
                 };
 
-
+                G.policyByName['theme changer'].visible = true;
                 if (G.achievByName['next to the God'].won > 0) {
                     G.getDict('culture of the afterlife').chance /= 3;
                     G.getDict('culture of the beforelife').chance /= 3;
@@ -1640,7 +1494,7 @@ if (getCookie("civ") == "0") {
                 vpcalc();
                 G.achievByName['pickedCiv'].won = 1; //bc you are playing with human race.
                 G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 8)) } });
-                G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
+                G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
                 /*---------------------
                 . . . assignments
                 ----------------------------*/
@@ -1690,7 +1544,7 @@ if (getCookie("civ") == "0") {
                 if (G.achievByName['???'].won > 0) {
                     G.tragedyHappened = true;
                     G.achievByName['???'].displayName = 'The tragedy and a whole new beginning';
-                    G.achievByName['???'].desc = 'A green meteor has hit the Earth killing most people around you, wiping most housing you had leaving few survivors including you alive. ';
+                    G.achievByName['???'].desc = 'A green meteor has hit the Earth, killing most people around you and wiping most housing you had, leaving few survivors alive.';
                     G.achievByName['???'].icon = [31, 32, 'magixmod'];
                 }
                 //G.achievByName['first glory'].won=G.resets;
@@ -1805,13 +1659,13 @@ if (getCookie("civ") == "0") {
                     vpcalc();
                     G.greeting();
                     G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 7)) } });
-                    G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
+                    G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
                     ////
 
                     if (G.achievByName['???'].won > 0) {
                         G.tragedyHappened = true;
                         G.achievByName['???'].displayName = 'The tragedy and a whole new beginning';
-                        G.achievByName['???'].desc = 'A green meteor has hit the Earth, killing most people around you, wiping most housing you had out leaving few survivors. Luckily, you stayed alive. ';
+                        G.achievByName['???'].desc = 'A green meteor has hit the Earth, killing most people around you and wiping most housing you had, leaving few survivors alive.';
                         G.achievByName['???'].icon = [31, 32, 'magixmod'];
                     }
                     if (G.releaseNumber == undefined) G.Load();
@@ -10236,8 +10090,8 @@ if (getCookie("civ") == "0") {
                 ],
                 gizmos: true,
                 modes: {
-                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Cantor will convert [wooden coin]s into 1 [silver coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
-                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Cantor will convert [silver coin]s into 1 [golden coin].<br>Amount of required coins of lower tier is defined by this formula:<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
+                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Cantor will convert [wooden coin]s into 1 [silver coin].<br>The amount of [wooden coin]s needed is equal to<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
+                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Cantor will convert [silver coin]s into 1 [golden coin].<br>The amount of coins of the [silver coin]s needed is equal to<br><b><font color="aqua">50*(Pocket trial completions*3+1)</font></b>' },
                 },
                 use: { 'land': 1, 'worker': 1 },
                 req: { 't10': true, 'trial': true },
@@ -10504,7 +10358,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'villa of victory',
-                desc: '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.',
+                desc: '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.',
                 wideIcon: [1, 31, 'magixmod'],
                 icon: [1, 31, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 300 },
@@ -12679,7 +12533,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'land acknowledge',
-                desc: 'Your people will easier acknowledge with any new lands thanks to Paradise exploration. This trait does not add any bonuses.',
+                desc: 'Your people will easier acknowledge new lands thanks to Paradise exploration. This trait does not add any bonuses!',
                 icon: [21, 10, 'magixmod'],
                 cost: {},
                 chance: 100,
@@ -13432,7 +13286,7 @@ if (getCookie("civ") == "0") {
                 req: { 'caretaking': true, 'eotm': true, 'cozier building': true }
             }); new G.Tech({
                 name: '<font color="lime">Fruit supplies</font>', category: 'misc',
-                desc: 'Obtaining <font color="red">Experienced</font> made you recieve extra 100 [fruit]s. Wish your people having good taste :) // <small>Let\'s make prehistoric fruit salad</small>',
+                desc: 'Obtaining <font color="red">Experienced</font> made you recieve extra 100 [fruit]s. Hope your people enjoy it :) // <small>Let\'s make prehistoric fruit salad</small>',
                 icon: [4, 12, 'magixmod', 28, 22, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13442,7 +13296,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'life has its theme', displayName: '<font color="orange">Life has its theme</font>', category: 'misc',
-                desc: 'From now on you can change the game theme :) ',
+                desc: 'From now on, you can change the game theme :) // A reward for finishing the [mausoleum]!',
                 icon: [4, 12, 'magixmod', 29, 23, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13599,7 +13453,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'magical presence', category: 'misc',
                 displayName: '<font color="silver">Magical presence</font>',
-                desc: 'You feel some weird stuff inside of your body. Sometime it is warm, sometimes makes you feel weird, but later you don\'t feel anything bad that this presence has made. @Increases the efficiency of all [water wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks you a new theme (check [theme changer]).',
+                desc: 'You feel some weird stuff inside of your body. Sometimes it is warm, and at other times it makes you feel weird, but there doesn\'t seem to be anything bad that this presence has made. @Increases the efficiency of all [water wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks you a new theme (check [theme changer]).',
                 icon: [4, 12, 'magixmod', 2, 24, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false }
@@ -14021,14 +13875,15 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'leaves of wisdom',
-                desc: 'A weird thought strikes the head of scholars. It\'s all about the [wisdom II,Wisdom tree] that now grows ruby red leaves. This tree produces leaves faster than it can grow branches for them!<br>Learning about these leaves gives you 2 [education], 35 [wisdom II], and 250 [wisdom].',
+                desc: 'A weird thought strikes the head of scholars. It\'s all about the [wisdom II,Wisdom tree] that grows ruby red leaves now. This tree produces leaves faster than it can grow branches for them!<br>Learning about these leaves gives you 2 [education], 35 [wisdom II], and 250 [wisdom].',
                 icon: [31, 10, 'magixmod'],
                 req: { 'symbolism II': true, 'branches of wisdom': false },
-                chance: 100,
+                chance: 50,
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 35, 'wisdom': 250 } },
                     { type: 'provide res', what: { 'education': 2 } },
-                ]
+                ],
+                category: 'knowledge'
             });
             new G.Tech({
                 name: 'embalmment', category: 'tier2',
@@ -14168,7 +14023,7 @@ if (getCookie("civ") == "0") {
             }); new G.Tech({
                 name: 'life in faith', category: 'misc',
                 displayName: '<font color="gold">Life in faith</font>',
-                desc: 'You remember that you were staying near the Temple...and this memory alone has unbelieveable powers! @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer])',
+                desc: 'You remember that you were staying near the Temple...and this memory alone has unbelieveable powers! @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer], which requires <b>Mausoleum eternal</b>)',
                 icon: [4, 12, 'magixmod', 1, 9, 'magixmod'],
                 cost: {},
                 effects: [
@@ -16533,7 +16388,7 @@ if (getCookie("civ") == "0") {
                 cost: {},
                 req: { 'archaeology': true, 'tribalism': false },
                 chance: 2000,
-                lifetime: 1000,
+                lifetime: 400,
             });
             new G.Tech({
                 name: '2nd portal past',
@@ -16546,8 +16401,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'the ancestors call',
-                displayName: 'The Ancestors call',
-                desc: '<b>The ancestors...they called your people...to their old world...full of hopes...full of new adventures...to...their...Realm...</b>',
+                displayName: 'The call of the Ancestors',
+                desc: '<b>The ancestors...they called your people...to their old world...full of hopes...full of new adventures...in...their...Realm...</b>',
                 icon: [4, 0, 'magixmod'],
                 cost: { 'insight': 650, 'influence': 60, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 175,
@@ -16555,7 +16410,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ancestors world building', category: 'tier1',
-                desc: 'Unlocks sheet of buildings which can be only built in newly opened <b>ancestors world</b>. //<small>I\'d construct...a [floored house] in their world. But if I do...it\'ll insult them.</small>',
+                desc: 'Unlocks sheet of buildings which can be only built in newly opened <b>ancestors world</b>. //<small>It would be nice to construct [floored house] in their world. But if I do...it\'ll insult them.</small>',
                 icon: [32, 33, 'magixmod'],
                 cost: { 'insight': 4, 'ancestors tablet': 1 },
                 effects: [
@@ -17349,7 +17204,7 @@ if (getCookie("civ") == "0") {
                 desc: 'The feeling of extending knowledge is getting stronger and stronger. It feels like a tree that grows more and more branches faster than it produces leaves for them. Suddenly this thought dissipates from your scholars, providing you: <b>1 extra technology choice per rolling researches</b>, 35 [wisdom II], and 200 [wisdom].',
                 icon: [26, 31, 'magixmod'],
                 req: { 'symbolism II': true, 'leaves of wisdom': false },
-                chance: 100,
+                chance: 50,
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 35, 'wisdom': 200 } },
                     { type: 'function', func: function () { G.getDict('research box').choicesN++; } }
@@ -17626,7 +17481,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'beekeeping III', category: 'tier1', // New tech by @1_e0
-                desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is much more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence], and also makes the non-essenced method slightly better',
+                desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is much more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] @with a better knowledge of bees, it also makes the non-essenced method a bit better',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
                 req: { 'beekeeping II': true },
@@ -17654,7 +17509,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'salty sand II', category: 'tier1', // New tech by @1_e0
                 desc: '[digger]s are now able get much more [salt] from your oceans by drying out the salty water within.',
-                icon: [11, 7, 0, 0, 'magix2'],
+                icon: [0, 35, 'magixmod', 11, 7, 0, 0, 'magix2'],
                 cost: { 'insight': 400, 'wisdom': 50 },
                 req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
                 effects: [
@@ -17744,7 +17599,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'child workforce',
-                desc: '[child,Children] now count as [worker]s; working children are more prone to accidents and receive lower education. //<q>Can\'t you just make them work willingly. Do you really have to use force?</q>',
+                desc: '[child,Children] now count as [worker]s; working children are more prone to accidents and receive lower education. //<q>Can\'t you just make them work willingly? Do you really have to force them to?</q>',
                 icon: [7, 12, 3, 3],
                 cost: { 'influence': 2 },
                 req: { 'tribalism': true },
@@ -17947,24 +17802,24 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'theme changer',
-                desc: 'You can choose the colour of your game. Does not apply to popups, however. The theme updates every ten ticks. //<small>Life has its theme too...</small>',
+                desc: 'Let your population enjoy the power of colour! Does not apply to popups, however. The theme updates every ten ticks. //<small>Life has its theme too...</small>',
                 icon: [28, 21, 'magixmod'],
                 cost: {},
                 req: { 'life has its theme': true },
                 modes: {
-                    'Default': { name: 'Default', desc: 'Switches your theme to the default.', icon: [4, 22, 'magixmod'] },
-                    'Green': { name: 'Green', desc: 'Switches to green theme.', icon: [3, 22, 'magixmod'] },
-                    'Blue': { name: 'Blue', desc: 'Switches to blue theme.', icon: [2, 22, 'magixmod'] },
-                    'Red': { name: 'Red', desc: 'Switches to red theme.', icon: [0, 22, 'magixmod'] },
-                    'Cyan': { name: 'Cyan', desc: 'Switches to cyan theme.', icon: [5, 22, 'magixmod'] },
-                    'Gray': { name: 'Gray', desc: 'Switches to gray theme.', icon: [1, 22, 'magixmod'] },
-                    'Indigo': { name: 'Indigo', desc: 'Switches to indigo theme. A reward for <b>Magical victory</b> achievement.', req: { 'magical presence': true } },
-                    'Bronze': { name: 'Bronze', desc: 'Switches to bronze theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Silver': { name: 'Silver', desc: 'Switches to silver theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Golden': { name: 'Golden', desc: 'Switches to golden theme. A reward for <b>Next to the Deities</b> achievement.', req: { 'life in faith': true } },
-                    'Black': { name: 'Black', desc: 'Switches to black theme. A reward for <b>Talented?</b> achievement.', req: { 'smaller shacks': true } },
+                    'Default': { name: 'Default', desc: 'Switches to the default theme.', icon: [4, 22, 'magixmod'] },
+                    'Green': { name: 'Green', desc: 'Switches to the green theme.', icon: [3, 22, 'magixmod'] },
+                    'Blue': { name: 'Blue', desc: 'Switches to the blue theme.', icon: [2, 22, 'magixmod'] },
+                    'Red': { name: 'Red', desc: 'Switches to the red theme.', icon: [0, 22, 'magixmod'] },
+                    'Cyan': { name: 'Cyan', desc: 'Switches to the cyan theme.', icon: [5, 22, 'magixmod'] },
+                    'Gray': { name: 'Gray', desc: 'Switches to the gray theme.', icon: [1, 22, 'magixmod'] },
+                    'Indigo': { name: 'Indigo', desc: 'Switches to the indigo theme. A reward for getting <b>Magical victory</b>.', req: { 'magical presence': true } },
+                    'Bronze': { name: 'Bronze', desc: 'Switches to the bronze theme. A reward for getting <b>Next to the Deities</b>.', req: { 'life in faith': true } },
+                    'Silver': { name: 'Silver', desc: 'Switches to the silver theme. A reward for getting <b>Next to the Deities</b>.', req: { 'life in faith': true } },
+                    'Golden': { name: 'Golden', desc: 'Switches to the golden theme. A reward for getting <b>Next to the Deities</b>.', req: { 'life in faith': true } },
+                    'Black': { name: 'Black', desc: 'Switches to the black theme. A reward for getting <b>Talented?</b>.', req: { 'smaller shacks': true } },
                 },
-                category: 'mag',
+                category: 'work',
             });
 
 
@@ -18282,7 +18137,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'sleepy insight',
-                desc: 'You get a chance to obtain some amount of [insight] at start of new year. This policy has a meter that has a scale from: -3 to 3. <>Modes with number lower than 0 will cause the ability to be stronger at the cost of chance, while modes above 0 will cause ability provide less [insight] but with a larger chance.',
+                desc: 'You get a chance to obtain some amount of [insight] at start of new year. This policy has a meter that has a scale from: -3 to 3. <>Modes lower than 0 will cause the ability to be stronger at the cost of chance, while modes above 0 will be less powerful, but with a larger chance.',
                 icon: [8, 12, 33, 24, 'magixmod'],
                 cost: { 'faith': 10, 'insight': 1 },
                 startMode: '0',
