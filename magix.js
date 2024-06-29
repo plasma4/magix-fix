@@ -6503,12 +6503,12 @@ if (getCookie("civ") == "0") {
                     'baskets': { name: 'Weave baskets', icon: [14, 7], desc: 'Turn [stick]s into [basket]s.', req: { 'basket-weaving': true }, use: { 'knapped tools': 1 } },
                     'candies': { name: 'Craft candies', icon: [4, 8, 'seasonal'], desc: 'Your artisan will craft [candy,Candies] using [paper] and [sugar].', req: { 'candy-crafting': true, 'tribalism': false } },
                     'wheat': { name: 'Craft flour', icon: [23, 10, 'magixmod'], desc: 'Turn [wheat] into [flour].', req: { 'flour-crafting I': true }, use: { 'knapped tools': 1 } },
-                    'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft tool used by wizards. It is not any junk tool. Uses 4 [stick]s and 2 [stone]s per 1 [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
+                    'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 2 [stone]s per 1 [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
                     'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [Ink]. Will use water and dark dyes.', req: { 'ink crafting': true } },
-                    'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net] using 35 wool [thread]s. Will also use [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
-                    'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer,Wound curers]. He will craft: [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
+                    'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 35 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
+                    'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
-                    'book': { name: 'Craft book', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
+                    'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
                     'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
                 },
                 effects: [
@@ -7727,7 +7727,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'leather factory',
-                desc: 'Does same thing as [clothier] on craft leather mode and [drying rack] were.',
+                desc: 'Does the same thing as [clothier]s that were crafting [leather] and [drying rack] did.',
                 icon: [15, 18, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
@@ -9091,7 +9091,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'drying rack',
-                desc: '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower.',
+                desc: '@This small rack may dry [leather], making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!',
                 icon: [13, 3, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 use: { 'land': 0.75 },
@@ -10186,7 +10186,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'factory of tools',
-                desc: 'This factory can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //Produces smaller packets of these items but faster',
+                desc: 'This factory can craft the following automatically: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s //It outputs packets of these items every so often.',
                 icon: [24, 31, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 5, 'food': 25, 'water': 35 },
@@ -10602,16 +10602,16 @@ if (getCookie("civ") == "0") {
                 gizmos: true,
                 category: 'crafting',
                 modes: {
-                    'log': { name: 'Process logs', icon: [1, 6], desc: 'Process 30 [log]s turning them into 15 [fire pit]s each.' },
-                    'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s turning them into 15 [fire pit]s each.' },
-                    'essence': { name: 'Process essence', icon: [0, 2, 'magixmod'], desc: 'Process 30 [fire essence] into 10 [fire pit]s each.' },
-                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] turning them into 12 [fire pit]s each.' },
+                    'log': { name: 'Process logs', icon: [1, 6], desc: 'Process 30 [log]s, turning them into 15 [fire pit]s each.' },
+                    'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s, turning them into 15 [fire pit]s each.' },
+                    'essence': { name: 'Process essences', icon: [0, 2, 'magixmod'], desc: 'Process 30 [fire essence], turning them into 20 [fire pit]s each.' },
+                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal], turning them into 8 [fire pit]s each.' },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 30 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log' },
                     { type: 'convert', from: { 'stick': 400 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'stick' },
                     { type: 'convert', from: { 'fire essence': 30 }, into: { 'fire pit': 20 }, every: 8, chance: 0.7, mode: 'essence' },
-                    { type: 'convert', from: { 'coal': 20 }, into: { 'fire pit': 12 }, every: 8, chance: 0.7, mode: 'coal' },
+                    { type: 'convert', from: { 'coal': 20 }, into: { 'fire pit': 8 }, every: 8, chance: 0.7, mode: 'coal' },
                 ],
             });
 
@@ -12058,7 +12058,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'factories I', category: 'tier1',
-                desc: 'Unlocks the [factory of pots] and [leather factory]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s, [clothier]s on <b>Craft leather</b> and <b>Craft leather (cheap)</b> mode and [drying rack]s will become useless and won\'t produce anything anymore.</font>',
+                desc: 'Unlocks the [factory of pots] and [leather factory].<><font color="#ff8080">Note: If you will obtain this tech, [potter]s and [clothier]s that are crafting [leather] and [drying rack]s will become useless and won\'t produce anything anymore.</font>',
                 icon: [18, 18, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 5 },
                 effects: [
@@ -12068,10 +12068,10 @@ if (getCookie("civ") == "0") {
                             G.getDict('potter').gizmos = false;
                             G.getDict('potter').visible = false;
                             G.getDict('potter').upkeep = {};
-                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt.<br><b><font color="fuschia">Due to obtaining [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt.<br><b><font color="fuschia"> Because of [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                             G.getDict('drying rack').icon = [28, 2, 'magixmod', 13, 3, 'magixmod'];
                             G.getDict('drying rack').visible = false;
-                            G.getDict('drying rack').desc = '@This small rack may dry [leather] making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower.<br><b><font color="fuschia"> Due to obtaining [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('drying rack').desc = '@This small rack may dry [leather], making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!<br><b><font color="fuschia"> Because of [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -15215,7 +15215,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'no knapping anymore',
-                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Also [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency. //For [moderation] it is 95%, while for [caretaking] it is 80%.',
+                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Additionally, [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency! //For [moderation] it is 95% slower, while for [caretaking] it is 85% slower.',
                 icon: [27, 31, 'magixmod'],
                 cost: { 'culture II': 10 },
                 effects: [
@@ -15225,7 +15225,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'factories II', category: 'tier2',
-                desc: 'Now, more units will be merged into one. [artisan]s : craft [stone weapons], [stone tools], [bow]s modes will no longer be available for [artisan]//@[artisan] will no longer work while in these modes. //@unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes. ',
+                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will no longer work properly//@[artisan] will no longer work while in these modes. //@unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes. ',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 335 },
