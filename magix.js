@@ -1254,7 +1254,7 @@ if (getCookie("civ") == "0") {
                     G.getDict("colored clothing").displayName = "Halloween costume";
                     G.getDict("colored clothing").icon = [0, 9, 'seasonal'];
                     G.getDict("artisan").modes['candies'].req = { 'tribalism': true, 'candy-crafting': true };
-                    G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 10, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
+                    G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
                     G.getDict("clothier").modes['weave leather colored clothing'] = { name: 'Weave leather costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [leather].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herb].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier] and bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
@@ -6501,15 +6501,15 @@ if (getCookie("civ") == "0") {
                     'bows': { name: 'Craft bows', icon: [6, 9], desc: 'Turn [stone]s and [stick]s into [bow]s.', req: { 'bows': true, 'manufacture units II': false, 'factories II': false }, use: { 'stone tools': 1 } },
                     'arrows': { name: 'Craft arrows', icon: [13, 7, 'magixmod'], desc: 'Turn [lumber] and [stone]s into [arrow]s.', req: { 'bows': true, 'manufacture units II': false, 'factories II': false }, use: { 'stone tools': 1 } },
                     'baskets': { name: 'Weave baskets', icon: [14, 7], desc: 'Turn [stick]s into [basket]s.', req: { 'basket-weaving': true }, use: { 'knapped tools': 1 } },
-                    'candies': { name: 'Craft candies', icon: [4, 8, 'seasonal'], desc: 'Your artisan will craft [candy,Candies] using [paper] and [sugar].', req: { 'candy-crafting': true, 'tribalism': false } },
+                    'candies': { name: 'Craft candies', icon: [4, 8, 'seasonal'], desc: 'Your artisan will craft [candy,Candies] using [sugar] and a little bit of [paper].', req: { 'candy-crafting': true, 'tribalism': false } },
                     'wheat': { name: 'Craft flour', icon: [23, 10, 'magixmod'], desc: 'Turn [wheat] into [flour].', req: { 'flour-crafting I': true }, use: { 'knapped tools': 1 } },
-                    'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 2 [stone]s per 1 [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
+                    'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 1 [stone] for each [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
                     'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [Ink]. Will use water and dark dyes.', req: { 'ink crafting': true } },
                     'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 35 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
                     'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
                     'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
-                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
+                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms!', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'knapped tools': 1 }, every: 5, mode: 'knap' },
@@ -6524,7 +6524,7 @@ if (getCookie("civ") == "0") {
                     { type: 'convert', from: { 'stick': 1, 'stone': 1 }, into: { 'stone weapons': 1 }, every: 10, mode: 'stone weapons', req: { 'tool refinery 2/2': false, 'manufacture units II': false, 'factories II': false } },
                     { type: 'convert', from: { 'stick': 1, 'stone': 1 }, into: { 'bow': 1 }, every: 12, mode: 'bows', req: { 'tool refinery 2/2': false, 'manufacture units II': false, 'factories II': false } },
                     { type: 'convert', from: { 'stick': 15 }, into: { 'basket': 1 }, every: 12, mode: 'baskets' },
-                    { type: 'convert', from: { 'stick': 4, 'stone': 2 }, into: { 'wand': 1 }, every: 7, mode: 'wands' },
+                    { type: 'convert', from: { 'stick': 4, 'stone': 1 }, into: { 'wand': 1 }, every: 8, mode: 'wands' },
                     { type: 'convert', from: { 'dyes': 1, 'mud': 0.0015, 'water': 0.015 }, into: { 'ink': 0.75 }, every: 6, mode: 'ink' },
                     { type: 'convert', from: { 'thread': 35, 'dried leather': 1 }, into: { 'fishing net': 1 }, every: 7, mode: 'net' },
                     { type: 'convert', from: { 'thread': 1.5, 'herb': 0.75 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
@@ -6549,7 +6549,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'carver',
-                desc: '@starts with the ability to turn [stone]s or [bone]s into [statuette]s@gains more modes as technology progresses<>A [carver] uses fine hand-crafting to produce goods out of wood, stone and bone.',
+                desc: '@starts with the ability to turn [stone]s or [bone]s into [statuette]s@gains more modes as technology progresses<>[carver]s use fine hand-crafting to produce goods out of wood, stone and bone.',
                 icon: [21, 2],
                 cost: {},
                 use: { 'worker': 1 },
@@ -8406,7 +8406,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'fire wizard tower',
-                desc: '@provides 20 [housing]<>A tower which can be housing for 20 citizens. It gathers [fire essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower which can be housing for 20 citizens. It gathers [fire essence] by consuming [mana].',
                 icon: [2, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8426,7 +8426,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'painter',
-                desc: '@generates [culture] by using [dyes] to make a paintings at a faster rate than [storyteller]s. Requires the [artistic thinking] trait.',
+                desc: '@generates [culture] by using [dyes], and makes [painting]s slowly. Requires the [artistic thinking] trait.',
                 icon: [12, 2, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -8435,7 +8435,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'gather', what: { 'culture': 0.08 } },
                     { type: 'gather', what: { 'painting': 0.002 } },
-                    { type: 'gather', what: { 'culture': 0.03 }, req: { 'symbolism': true } },
+                    { type: 'gather', what: { 'culture': 0.032 }, req: { 'symbolism': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on' } },
                     { type: 'mult', value: 1.05, req: { 'culture rise': true } },
@@ -8482,7 +8482,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'water wizard tower',
-                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [water essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [water essence] by consuming [mana].',
                 icon: [0, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8503,7 +8503,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'dark wizard tower',
-                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [dark essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [dark essence] by consuming [mana].',
                 icon: [1, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8524,7 +8524,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'nature wizard tower',
-                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [nature essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [nature essence] by consuming [mana].',
                 icon: [3, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8545,7 +8545,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'lightning wizard tower',
-                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [lightning essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [lightning essence] by consuming [mana].',
                 icon: [5, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8585,7 +8585,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'wind wizard tower',
-                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [wind essence] by consuming mana.',
+                desc: '@provides 20 [housing]<>A tower for 20 citizens. It gathers [wind essence] by consuming [mana].',
                 icon: [4, 4, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'precious building materials': 100 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8607,7 +8607,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'holy wizard tower',
-                desc: '@provides 18 [housing]<>A tower for 18 citizens. Gathers [holy essence] by consuming mana.',
+                desc: '@provides 18 [housing]<>A tower for 18 citizens. Gathers [holy essence] by consuming [mana]. It is 20% faster than normal wizard towers!',
                 icon: [20, 7, 'magixmod'],
                 cost: { 'basic building materials': 950, 'precious building materials': 350 },
                 use: { 'land': 1, 'wizard': 4 },
@@ -8616,7 +8616,7 @@ if (getCookie("civ") == "0") {
                 //require:{'wizard':3},
                 effects: [
                     { type: 'provide', what: { 'housing': 18 } },
-                    { type: 'gather', what: { 'holy essence': 2.15 } },
+                    { type: 'gather', what: { 'holy essence': 2.4 } },
                     { type: 'mult', value: 1.05, req: { 'magical presence': true } },
                     { type: 'mult', value: 1.035, req: { 'at9': true } },
                     { type: 'mult', value: 0.95, req: { 'dt28': true } },
@@ -8647,14 +8647,15 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'cathedral',
-                desc: 'A precious place for worship. Generates [faith] faster than [soothsayer]s.',
+                desc: 'A precious place for worship. Generates [faith] faster than [soothsayer]s. Requires [holy essence] to operate properly!',
                 icon: [19, 4, 'magixmod'],
                 cost: { 'basic building materials': 1750, 'precious building materials': 400 },
-                upkeep: { 'food': 2 },
+                upkeep: { 'food': 2, 'holy essence': 1 },
                 use: { 'land': 1, 'worker': 4 },
                 req: { 'churches': true, 'stronger faith': true },
                 effects: [
-                    { type: 'gather', what: { 'faith': 0.9 } },
+                    { type: 'gather', what: { 'faith': 1.8 }, req: { 'stronger faith II': false } },
+                    { type: 'gather', what: { 'faith': 7.2 }, req: { 'stronger faith II': true } },
                     { type: 'gather', what: { 'influence': 0.1 }, req: { 'at1': true }, chance: 0.01 },
                     { type: 'gather', what: { 'faith': 0.3 }, req: { 'symbolism': true } },
                     { type: 'mult', value: 1.7, req: { 'symbolism III': true } },
@@ -8669,14 +8670,13 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'poet',
-                desc: '@generates [culture] every now and then<>[poet] spends his free time in his private life to write novels, stories, poems about any topic. Gathers a little bit more [culture] than storyteller but needs [ink] as upkeep (he needs something with sense to write).',
+                desc: '@generates [culture] every now and then<>[poet] spends his free time in his private life to write novels, stories, poems about any topic. Gathers a little bit more [culture] than storyteller but needs [ink] as upkeep (and something to write, of course).',
                 icon: [18, 5, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
                 upkeep: { 'ink': 0.35 },
                 effects: [
                     { type: 'gather', what: { 'culture': 0.13 } },
-                    { type: 'gather', what: { 'culture': 0.05 }, req: { 'symbolism': true } },
                     { type: 'mult', value: 1.31, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.21, req: { 'wisdom rituals': 'on' } },
                     { type: 'convert', from: { 'paper': 21 }, into: { 'poet\'s notes': 1 }, every: 11, req: { 'bookwriting': true } },
@@ -9024,7 +9024,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'mana crafting stand',
-                desc: 'Here, [alchemist]s can craft [mana] with the same recipe thay your [mana maker] learned.',
+                desc: 'Here, [alchemist]s can craft [mana] with the same recipe that your [mana maker] learned.',
                 icon: [19, 10, 'magixmod'],
                 cost: { 'basic building materials': 4 },
                 req: { 'alchemy': true, 'mana brewery II': true },
@@ -10122,11 +10122,11 @@ if (getCookie("civ") == "0") {
                 upkeep: { 'food': 0.3 },
                 limitPer: { 'population': 10 },
                 effects: [
-                    { type: 'gather', what: { 'faith': 0.1, 'happiness': 0.2 } },
+                    { type: 'gather', what: { 'faith': 0.05, 'happiness': 0.2 } },
                     { type: 'gather', what: { 'health': 0.23 }, req: { 'mentors of nature': true } },
-                    { type: 'gather', what: { 'faith': 0.018 }, req: { 'druidsymbolism2': true } },
-                    { type: 'gather', what: { 'happiness': 0.066 }, req: { 'druidsymbolism1': true } },
-                    { type: 'gather', what: { 'faith': 0.04 }, req: { 'symbolism II': true } },
+                    { type: 'gather', what: { 'faith': 0.005 }, req: { 'druidsymbolism2': true } },
+                    { type: 'gather', what: { 'happiness': 0.05 }, req: { 'druidsymbolism1': true } },
+                    { type: 'gather', what: { 'faith': 0.02 }, req: { 'symbolism II': true } },
                     { type: 'mult', value: 2 / 3, req: { 'dt16': true } },
                     { type: 'mult', value: 1.25, req: { 'se11': 'on' } },
                     { type: 'mult', value: 1.01, req: { 'enlightenment': true } },
@@ -10437,7 +10437,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'archaeologist',
-                desc: '@digs in the ground to find some [relic]s. Good source of essentials as finding treasures won\'t just give you [insight]. Depending on what [archaeologist] found you can also gain [culture], [faith], or [influence]. If a super rare [relic] is found, it will give more essentials.//When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
+                desc: '@digs in the ground to find some [relic]s. Good source of essentials, as finding treasures won\'t just give you [insight]. Depending on what [archaeologist] found you can also gain [culture], [faith], or [influence]. If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
                 icon: [22, 33, 'magixmod'],
                 use: { 'worker': 1, 'metal tools': 2 },
                 upkeep: { 'food': 1, 'water': 1 },
@@ -10981,7 +10981,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'symbolism', category: 'upgrade',
-                desc: '@[dreamer]s produce 40% more [insight]@[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; focusing on shapes.',
+                desc: '@[dreamer]s and [painter]s produce 40% more [gentility] @[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; focusing on shapes. There are two types of [symbolism] that you can unlock!',
                 icon: [13, 1],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbI': false },
@@ -11364,7 +11364,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'churches', category: 'tier1',
-                desc: 'Unlocks [church]. Another source of [faith].',
+                desc: 'Unlocks [church,Churches]. Another source of [faith].',
                 icon: [7, 2, 'magixmod'],
                 cost: { 'insight': 135 },
                 req: { 'wizardry': true, 'wizard wisdom': true },
@@ -11564,10 +11564,10 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'stronger faith', category: 'upgrade',
-                desc: 'Unlocks the [cathedral]. Soothsayers will gain less [faith], but [church,Churches] will gain more than [soothsayer]s now!',
+                desc: 'Unlocks the [cathedral], which requires [holy essence] as upkeep. Soothsayers will gain less [faith], but [church,Churches] will gain more than [soothsayer]s now!',
                 icon: [19, 3, 'magixmod'],
                 cost: { 'insight': 1000 },
-                req: { 'Wizard complex': true, 'ritualism': true },
+                req: { 'Wizard complex': true, '7th essence': true, 'ritualism': true },
             });
             new G.Tech({
                 name: 'healing with brews', category: 'tier1',
@@ -11746,7 +11746,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: '7th complex tower', category: 'tier1',
-                desc: 'Due to the 7th essence discovered, [Wizard Complex] has a need to build up new tower specially for it.@The [Wizard Complex] will use more [mana] to craft the new essence, but you will get more [housing] from it.',
+                desc: 'Due to the 7th essence being discovered, [Wizard Complex,Wizard Complexes] can build up new tower specially for it.@Getting this will make each [Wizard Complex] use more [mana], but you will get more [housing] from it!',
                 icon: [20, 8, 'magixmod'],
                 cost: { 'insight': 695 },
                 effects: [
@@ -12148,7 +12148,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'Improved rhetoric', category: 'tier2',
-                desc: 'People will use more words while talking. They will do their best to make the language and vocabulary survive through next generations. @Provides 10 [wisdom II] @Provides 5 [inspiration II]',
+                desc: 'People will use more words while talking. They will do their best to make the language and vocabulary survive through next generations. @provides 10 [wisdom II] @provides 5 [inspiration II]',
                 icon: [27, 8, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'eotm': true, 'richer language': true, 'speech': true },
@@ -13171,7 +13171,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'science blessing', category: 'tier2',
-                desc: '@[guru]s generate 50% more [science] and [insight]. @Provides 2 bonus [science] //<small>I\'ve gotten blessed with more knowledge!</small>',
+                desc: '@[guru]s generate 50% more [science] and [insight]. @provides 2 bonus [science] //<small>I\'ve gotten blessed with more knowledge!</small>',
                 icon: [0, 35, 'magixmod', 29, 5, 'magixmod'],
                 cost: { 'insight II': 5, 'mana': 500 },
                 req: { 'science master': true },
@@ -13838,7 +13838,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'backshift at farms', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 150% more and [wheat farm] becomes twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, [hovel with garden] provides 10% more.',
+                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, [hovel with garden] provides 10% more.',
                 icon: [31, 14, 'magixmod'],
                 cost: { 'insight II': 180, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'improved windmill motors': true, 'moderation': true },
@@ -13913,30 +13913,30 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'more humid water', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 150% more [sugar cane].',
+                desc: 'By improving the water that you use, [sugar cane farm]s produce 150% more [sugar cane].',
                 icon: [31, 23, 'magixmod'],
                 cost: { 'insight': 590 },
                 req: { 'moar juices': true },
             });
             new G.Tech({
                 name: 'soil for moisture-loving plants', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 200% more [sugar cane]. //Compounds with [more humid water]!',
+                desc: 'Improve the soil of [sugar cane farm]s, making them produce 200% more [sugar cane]. //Compounds with [more humid water]!',
                 icon: [31, 24, 'magixmod'],
                 cost: { 'insight': 1350, 'culture': 300 },
                 req: { 'ambrosium treeplanting': true },
             });
             new G.Tech({
                 name: 'empowered canes', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with previous bonuses. //Makes planted [sugar cane] live longer and able to grow even taller than normal.',
+                desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with previous bonuses. //Makes planted [sugar cane] live longer and improves their growth height.',
                 icon: [31, 25, 'magixmod'],
-                cost: { 'insight II': 50, 'culture II': 15 },
+                cost: { 'insight II': 50, 'culture II': 15, 'nature essence': 1000 },
                 req: { 'eotm': true },
             });
             new G.Tech({
                 name: 'essenced soil for moisture-loving plants', category: 'upgrade',
                 desc: '[sugar cane farm]s produce 300% more [sugar cane]. //Compounds with previous bonuses.',
                 icon: [30, 25, 'magixmod'],
-                cost: { 'insight II': 90, 'culture II': 20, 'influence II': 3, 'science': 2 },
+                cost: { 'insight II': 90, 'culture II': 20, 'influence II': 3, 'science': 2, 'magic essences': 200000 },
                 req: { 'nutritious magical soil': true },
             });
             new G.Tech({
@@ -14235,7 +14235,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'construction III', category: 'tier2',
-                desc: 'All buildings waste five times slower, excluding [branch shelter]s. It won\'t increase building costs. @Provides 15 [wisdom II].',
+                desc: 'All buildings waste five times slower, excluding [branch shelter]s. It won\'t increase building costs. @provides 15 [wisdom II]',
                 icon: [12, 27, 'magixmod'],
                 req: { 'paradise shelters': true, 'do we need that much science?': true },
                 cost: { 'insight II': 180, 'science': 17, 'influence II': 3 },
@@ -14984,7 +14984,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Druidish merriment',
-                desc: '[druid] gathers one-third more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid] gathers 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [27, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism2': false },
@@ -14995,7 +14995,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'druidsymbolism2',
                 displayName: 'Faithful worship',
-                desc: '[druid] gathers 18% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid] gathers 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [28, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism1': false },
@@ -15228,7 +15228,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will no longer work properly//@[artisan] will no longer work while in these modes. //@unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes. ',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
-                cost: { 'insight II': 335 },
+                cost: { 'insight II': 330, 'lightning essence': 8000 },
                 effects: [
                 ],
                 chance: 3
@@ -15561,7 +15561,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'enlightenment',
-                desc: '[soothsayer]s and [druid]s from now are more efficient. //@[soothsayer] is more likely to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
+                desc: '[soothsayer]s and [druid]s from now on are more efficient. //@[soothsayer] is more likely to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="red">Note:[enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
                 icon: [35, 28, 'magixmod'],
                 req: { 'tribalism': false },
                 chance: 30,
@@ -16061,7 +16061,7 @@ if (getCookie("civ") == "0") {
                     {
                         type: 'function', func: function () {
                             spookboost = 1.25;
-                            G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 10, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
+                            G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
                         }
                     },
                 ],
@@ -17233,7 +17233,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'physics III', category: 'tier1',
-                desc: '@Provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now also people can understand 3dimensional world more. //<small> It is x axis, y axis and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now also people can understand 3dimensional world more. //<small> It is x axis, y axis and z axis</small>',
                 icon: [1, 35, 'magixmod', 16, 28, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 100 },
                 effects: [
@@ -17244,7 +17244,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'mathV(sums)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@Provides 10 [education] and 25 [wisdom II]. @By picking this mathematical tech your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc. @this tech decreases [insight II] cost of a few specified future researches by 20%.',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc. @this tech decreases [insight II] cost of a few specified future researches by 20%.',
                 icon: [3, 35, 'magixmod', 17, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17255,7 +17255,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'mathV(3dgeo)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@Provides 10 [education] and 25 [wisdom II]. @By picking this mathematical tech your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry. @this tech decreases [insight II] cost of a few specified future researches by 20%.//<small>It is x axis, y axis, and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry. @this tech decreases [insight II] cost of a few specified future researches by 20%.//<small>It is x axis, y axis, and z axis</small>',
                 icon: [3, 35, 'magixmod', 18, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17266,7 +17266,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'mathV(algebra)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@Provides 10 [education] and 25 [wisdom II]. @By picking this mathematical tech your scholars and mathematicians working in your university will master algebra. @this tech decreases the [insight II] cost of a few specified future researches by 20%.',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will master algebra. @this tech decreases the [insight II] cost of a few specified future researches by 20%.',
                 icon: [3, 35, 'magixmod', 19, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17301,7 +17301,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs now refund 1 [insight] for every 150 [insight] spent on research, rounded up.@adopting traits now provide 1 bonus [culture].<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
+                desc: '@[dreamer]s produce 40% more [insight]@obtaining techs now refund 1 [insight] for every 150 [insight] spent on research, rounded up.@adopting traits now provide 1 bonus [culture].<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are two types of [symbI] that you can unlock!',
                 icon: [36, 11, 'magixmod'],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbolism': false },
@@ -17498,7 +17498,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'smartness of essentials', category: 'tech1', // New tech by @1_e0
-                desc: '@Your people become smarter, making [essential conversion tank]s 50% faster at creating [insight II] and 20% faster at creating other essentials @[essential conversion tank]s will now require twice as much [mana] for upkeep and now require 550 of the lower tier essential',
+                desc: '@Your people become smarter, making [essential conversion tank]s 50% faster at creating [insight II] and 20% faster at converting other essentials. @However, [essential conversion tank]s will now require twice as much [mana] for upkeep and now require 550 of the lower tier essential.',
                 icon: [6, 22, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'essential conversion tank overclock I': true },
@@ -17512,13 +17512,27 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'science master', category: 'tier1', // New tech by @1_e0
-                desc: 'Getting this lets you hire [guru]s that produce [insight] and a small amount of [science]. @Provides 1 bonus [science]',
+                desc: 'Getting this lets you hire [guru]s that produce [insight] and a small amount of [science]. @provides 1 bonus [science]',
                 icon: [27, 0, 'magixmod', 29, 5, 'magixmod'],
                 cost: { 'insight II': 5 },
                 req: { 'eotm': true },
                 effects: [
                     { type: 'provide res', what: { 'science': 1 } },
                 ],
+            });
+            new G.Tech({
+                name: 'stronger faith II', category: 'tier1',
+                desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep.',
+                icon: [0, 35, 'magixmod', 19, 3, 'magixmod'],
+                cost: { 'insight': 2400, 'faith': 120 },
+                req: { 'stronger faith': true, '7th complex tower': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('cathedral').upkeep = { 'food': 2, 'holy essence': 2 };
+                        }
+                    }
+                ]
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -17839,7 +17853,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se02',
                 displayName: 'Bersaria the Seraphin of Madness',
-                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="red">Backfire: Harms [happiness] and 1% more thieves will spawn. </font>',
+                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="red">Backfire: Harms [happiness] and creates thieves 1% more. </font>',
                 icon: [28, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -22394,7 +22408,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'painter',
-                desc: '@generates [gentility] by using [dyes] to make paintings! Requires the [artistic thinking] trait.',
+                desc: '@generates [gentility] by using [dyes], and makes [painting]s slowly. Requires the [artistic thinking] trait.',
                 icon: [31, 2, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -22448,7 +22462,7 @@ if (getCookie("civ") == "0") {
 
             new G.Unit({
                 name: 'carver',
-                desc: '@starts with the ability to turn [stone]s or [bone]s into [statuette]s@gains more modes as technology progresses<>A [carver] uses fine hand-crafting to produce goods out of wood, stone and bone.',
+                desc: '@starts with the ability to turn [stone]s or [bone]s into [statuette]s@gains more modes as technology progresses<>[carver]s use fine hand-crafting to produce goods out of wood, stone and bone.',
                 icon: [21, 2, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -23336,7 +23350,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'druid',
-                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any elves around \'em. Their mission is to spread faith in this big jungle (called The World).//[druid]s are limited, as not everyone related to religion is eligible for that title/',
+                desc: '@generates [faith] and [happiness] every now and then<>[druid]s merge with nature and its spirits to bring down faith and hope to any elves around \'em. Their mission is to spread faith in this strange world!//[druid]s are limited, as not everyone related to religion is eligible for that title.',
                 icon: [28, 2, 'c2'],
                 cost: {},
                 priority: 2,
@@ -23346,7 +23360,7 @@ if (getCookie("civ") == "0") {
                 effects: [
                     { type: 'gather', what: { 'faith': 0.1, 'happiness': 0.2 } },
                     { type: 'provide', what: { 'druid': 1 } }, //as for teams
-                    { type: 'gather', what: { 'health': 0.2 }, req: { 'druidsymbolism2': true } },
+                    { type: 'gather', what: { 'health': 0.8 }, req: { 'druidsymbolism2': true }, chance: 0.2 },
                     { type: 'gather', what: { 'happiness': 0.066 }, req: { 'druidsymbolism1': true } },
                     //{type:'gather',what:{'faith':0.05},req:{'symbolism II':true}},
                     //{type:'mult',value:2/3,req:{'dt16':true}},
@@ -23386,7 +23400,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'archaeologist',
-                desc: '@digs in the ground to find some [relic]s. Good source of essentials as finding treasures won\'t just give you [discernment]. Depending on what [archaeologist] found you can also gain [gentility], [faith] or [influence]. If very rare relic found it will give way more of essential on find.//When no more [relic]s this unit will look for stuff left by previous generations but it will provide way less [wisdom,Essentials].',
+                desc: '@digs in the ground to find some [relic]s. Good source of essentials, as finding treasures won\'t just give you [discernment]. Depending on what [archaeologist] found you can also gain [gentility], [faith] or [influence]. If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
                 icon: [30, 3, 'c2'],
                 use: { 'worker': 1, 'metal tools': 2 },
                 upkeep: { 'food': 1, 'water': 1 },
@@ -23772,7 +23786,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'symbolism', category: 'upgrade',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @[storyteller]s produce 20% more [gentility]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on shapes.',
+                desc: '@[painter]s produce 40% more [culture] @[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @[storyteller]s produce 20% more [gentility]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on shapes. There are three types of [symbolism] that you can unlock!',
                 icon: [13, 1, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbI': false, 'symbN': false },
@@ -24581,7 +24595,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'developed creativity', category: 'knowledge',
-                desc: '<font color="#e6ffee">@unlocks [conceptionist], who spends his free time developing creativity rather than inventing. @this variation of dreamer will generate [creativity] and will charge [battery of discoveries] at the same time. @from now dreamers produce one-third more [discernment], stops gaining [creativity] and becomes limited one per 3 [population,elves]. @provides 20 [quick-wittinity] and 10 [wisdom]</font>',
+                desc: '<font color="#e6ffee">@unlocks [conceptionist], who spends his free time developing creativity rather than inventing. @this variation of dreamer will generate [creativity] and will charge [battery of discoveries] at the same time. @from now on, [dreamer]s produce one-third more [discernment], stop gaining [creativity] and become limited to one per 3 [population,elves]. @provides 20 [quick-wittinity] and 10 [wisdom], and will unlock a few more techs</font>',
                 icon: [30, 14, 'c2'],
                 cost: { 'creativity': 60, 'discernment': 120 },
                 req: { 'philosophy': true, 'a power of the fortress': true },
@@ -24600,7 +24614,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Natural hopefulness',
-                desc: '[druid] gathers 20% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid] gathers 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 15, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
@@ -24613,7 +24627,7 @@ if (getCookie("civ") == "0") {
             new G.Trait({
                 name: 'druidsymbolism2',
                 displayName: 'Holy light',
-                desc: '[druid] using his natural bonds to sporadically gather some [health]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s use their natural bonds to sporadically gather some [health]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 16, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
@@ -25429,7 +25443,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches require 33% less [discernment,Essentials] (except [battery of discoveries,Battery power] if number of your technologies ends with 0. @gaining traits provide 1 [gentility] each @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours.',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches require 33% less [discernment,Essentials] (except [battery of discoveries,Battery power] if number of your technologies ends with 0. @gaining traits provide 1 [gentility] each @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
                 icon: [28, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbN': false },
@@ -25440,7 +25454,7 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'symbN', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '<b>Bonus relies on the number of total technologies that you end with.</b> @if it ends with 3 you won\'t need [gentility] while rolling/rerolling researches. @if it ends with 7 it will require half less [discernment]. @if it ends with 1 it will require 5% less [battery of discoveries,Battery] power @if it ends with 0 it won\'t require [discernment] at all<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on numbers.',
+                desc: '<b>This bonus relies on the number of total technologies that you end with.</b> @if it ends with 3 you won\'t need [gentility] while rolling/rerolling researches. @if it ends with 7 it will require half as much [discernment]. @if it ends with 1 it will require 5% less [battery of discoveries,Battery] power @if it ends with 0 it won\'t require [discernment] at all<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on numbers. There are three types of [symbN] that you can unlock!',
                 icon: [27, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbI': false },
