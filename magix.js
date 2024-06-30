@@ -2624,7 +2624,7 @@ if (getCookie("civ") == "0") {
                 else {
                     toParse += 'All ' + G.getName('inhabs') + ' have died out.<br>';
                     if (G.has('wizardry') && (G.has('patron1') || G.has('patron2') || G.has('patron3') || G.has('patron4') || G.has('patron5') || G.has('patron6') || G.has('patron7') || G.has('patron8') || G.has('unknown patron') || G.has('nonpatronage'))) {
-                        if (G.has('nonpatronage') && G.getRes('population').amount == 0) toParse += 'They had no patron'; else if (G.getRes('population').amount == 0) toParse += 'They had a patron:';
+                        if (G.has('nonpatronage') && G.getRes('population').amount == 0) toParse += 'They did not have a patron!'; else if (G.getRes('population').amount == 0) toParse += 'Their patron involved ';
                         if (!G.has('nonpatronage')) { if (G.has('patron1')) toParse += '<font color="orange">Fire:' + G.getTrait('patron1').displayName + '</font>'; else if (G.has('patron2')) toParse += '<font color="lime">Nature:' + G.getTrait('patron2').displayName + '</font>'; else if (G.has('patron3')) toParse += '<font color="#bbbbff">Wind:' + G.getTrait('patron3').displayName + '</font>'; else if (G.has('patron4')) toParse += '<font color="purple">Dark:' + G.getTrait('patron4').displayName + '</font>'; else if (G.has('patron5')) toParse += '<font color="yellow">Lightning:' + G.getTrait('patron5').displayName + '</font>'; else if (G.has('patron6')) toParse += '<font color="#6699FF">Water:' + G.getTrait('patron6').displayName + '</font>'; else if (G.has('patron7')) toParse += '<font color="white">Time:' + G.getTrait('patron7').displayName + '</font>'; else if (G.has('patron8')) toParse += '<font color="#FF9960">Homepeace:' + G.getTrait('patron8').displayName + '</font>'; else if (G.has('unknown patron')) toParse += 'the unknown one</font>' };
                     }
                 }
@@ -4731,8 +4731,8 @@ if (getCookie("civ") == "0") {
             });
             new G.Res({
                 name: 'first aid things',
-                desc: 'More advanced tools used by [healer,healers].',
-                icon: [choose([22, 23]), 6, 'magixmod'],
+                desc: 'More advanced tools to help the [wounded] that are used by [healer,Healers].',
+                icon: [8, 0, 'magix2'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -6504,7 +6504,7 @@ if (getCookie("civ") == "0") {
                     'candies': { name: 'Craft candies', icon: [4, 8, 'seasonal'], desc: 'Your artisan will craft [candy,Candies] using [sugar] and a little bit of [paper].', req: { 'candy-crafting': true, 'tribalism': false } },
                     'wheat': { name: 'Craft flour', icon: [23, 10, 'magixmod'], desc: 'Turn [wheat] into [flour].', req: { 'flour-crafting I': true }, use: { 'knapped tools': 1 } },
                     'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 1 [stone] for each [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
-                    'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [Ink]. Will use water and dark dyes.', req: { 'ink crafting': true } },
+                    'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [ink] using [water] and [dyes,Dark dyes].', req: { 'ink crafting': true } },
                     'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 35 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
                     'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
@@ -9726,7 +9726,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'paradise shelter',
-                desc: '@provides 4 [housing] @+1 [housing] for every 4 [paradise shelter,Shelters]. Shelter is camouphlaged, so people feel safer inside of this construction. Seems like God doesn\'t mind about it.',
+                desc: '@provides 4 [housing] @+1 [housing] for every 4 [paradise shelter,Shelters]. , so people feel safer inside of this construction. Seems like God doesn\'t mind too much.',
                 icon: [13, 27, 'magixmod'],
                 cost: { 'archaic building materials': 100, 'cut stone': 150, 'lumber': 25 /*lumber because scaffolding*/, 'clay': 100/*mortar*/, 'herb': 2500/*Cover*/ },
                 use: { 'land of the Paradise': 1 },
@@ -9739,7 +9739,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'pagoda of passing time',
-                desc: '@Leads to <b>Patience</b> trial completion. //A monument of time. A wonder for Chra-nos the Seraphin of Time. Tall Pagoda with a huge clock that is a Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...<br>But waiting right there<br>Is deadly<br>Each year weakens me<br>Hope this year is the last one...<br>Patience...is a poison...<br>a...deadly poison.',
+                desc: '@Leads to <b>Patience</b> trial completion. //A monument of time. A wonder for Chra-nos the Seraphin of Time; the Pagoda has a huge clock that is the Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...<br>But waiting right there<br>Is deadly<br>Each year weakens me<br>Hope this year is the last one...<br>Patience...is a poison...<br>a...deadly poison.',
                 wonder: 'patience',
                 icon: [4, 26, 'magixmod'],
                 wideIcon: [3, 26, 'magixmod'],
@@ -10026,7 +10026,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'fort',
-                desc: '@provides 30 housing. Uses 6 guards to protect civillians from cruel and possesed dark powers.',
+                desc: '@provides 30 housing. Uses 6 guards to protect citizens from cruel and possesed dark powers.',
                 icon: [8, 6, 'magixmod'],
                 cost: { 'basic building materials': 800, 'strong metal ingot': 400, 'cobalt ingot': 100 },
                 effects: [
@@ -10039,7 +10039,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'shop',
-                desc: 'Thanks to the Shop and the worker you hired, you can order resources that you could previously only craft. Remember: they can still decay, so keep that in mind and use \'em quickly so they won\'t waste. The amount of times you completed Pocket does not affect decay speed.',
+                desc: 'You can use the [shop] to order resources that you could previously only craft. Remember: they can still decay, so keep that in mind and use \'em quickly so they won\'t waste. The amount of times you completed Pocket does not affect decay speed.',
                 icon: [24, 29, 'magixmod'],
                 cost: { 'archaic building materials': 500 },
                 modes: {
@@ -11522,14 +11522,14 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ink crafting', category: 'tier1',
-                desc: 'Now [artisan] will be able to craft [ink]. Ink will be used by [poet] later. You can craft ink choosing new working mode for [artisan].',
+                desc: 'Now [artisan] will be able to craft [ink], which can be used by [poet]s. You can craft ink using a new [artisan] mode.',
                 icon: [18, 7, 'magixmod'],
                 cost: { 'insight': 335 },
                 req: { 'plain island building': true },
             });
             new G.Tech({
                 name: 'poetry', category: 'tier1',
-                desc: 'Beautiful art of culture. Poems, stories, essays, novels and many more.',
+                desc: 'A beautiful art of culture. Poems, stories, essays, novels and many more can be written down and be cherished for generations.',
                 icon: [18, 8, 'magixmod'],
                 cost: { 'insight': 650, 'culture': 300, 'inspiration': 25 },
                 req: { 'plain island building': true, 'ink crafting': true },
@@ -17802,7 +17802,7 @@ if (getCookie("civ") == "0") {
             new G.Policy({
                 name: 'se01',//It is raw ID. Kept it to prevent crashes but added display name
                 displayName: 'Chra-nos The Seraphin of Time',
-                desc: 'Boost depends on time.<br><font color="lime">Each year [food] decays slower by 0.1% (range: 1 to 10%). Bonus applies to [water] as well, but is only half as powerful.</font><br><hr color="fuschia"><font color="red"> Backfire: All Miscellaneous materials decay faster.</font>',
+                desc: 'The effect depends on time.<br><font color="lime">Each year [food] decays slower by 0.1% (range: 1 to 10%). Bonus applies to [water] as well, but is only half as powerful.</font><br><hr color="fuschia"><font color="red"> Backfire: All Miscellaneous materials decay faster.</font>',
                 icon: [29, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
