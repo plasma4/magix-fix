@@ -2501,7 +2501,7 @@ if (getCookie("civ") == "0") {
                             rofpopup = true
                         }
                         if (G.getRes('land').amount == 100 && !explorepop && !G.has('scout').amount >= 1) {
-                            G.Message({ type: 'tutorial', text: '<b>Maybe it is a good time to hire a Scout!</b><br>A wanderer can\'t discover new tiles but may explore and discover secrets hidden in new territory. If you haven\'t hired a <b>Scout</b> yet, think about hiring one sometime. If you don\'t have him unlocked, focus on getting the <b>Scouting</b> research. Land becomes a must later on!', icon: [5, 28, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: '<b>Maybe it is a good time to hire a Scout!</b><br>A wanderer can\'t discover new tiles but may explore and discover secrets hidden in new territory. If you haven\'t hired a <b>Scout</b> yet, think about hiring one sometime and focus on getting the <b>Scouting</b> research if you don\'t already have it. Land becomes a must later on!', icon: [5, 28, 'magixmod'] })
                             explorepop = true
                         }
                         if (G.has('belief in the afterlife') && !bapopup && !G.has('monument-building')) {
@@ -3957,9 +3957,6 @@ if (getCookie("civ") == "0") {
                     if (G.has('sandy shores')) {
                         G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sand digging');
                     }
-                    if (G.has('salty sand')) {
-                        G.gain('salt', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('salty sand II') ? 0.0015 : 0.0075), 'salty sand');
-                    }
                 }
             });
             new G.Res({
@@ -4177,6 +4174,11 @@ if (getCookie("civ") == "0") {
                 icon: [11, 7],
                 partOf: 'misc materials',
                 category: 'misc',
+                tick: function () {
+                    if (G.has('salty sand')) {
+                        G.gain('salt', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('salty sand II') ? 0.0015 : 0.0075), 'salty sand');
+                    }
+                }
             });
             new G.Res({
                 name: 'ice',
