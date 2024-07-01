@@ -41,6 +41,11 @@ document.addEventListener("click", function (e) {
     }
 })
 
+G.setDict = function (name, what) {
+    // No more warnings :p
+    G.dict[name] = what
+}
+
 // Allow touchscreen or mobile users to change policies
 G.widget.update = function () {
     var me = this;
@@ -6508,7 +6513,7 @@ if (getCookie("civ") == "0") {
                     'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 1 [stone] for each [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
                     'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [ink] using [water] and [dyes,Dark dyes].', req: { 'ink crafting': true } },
                     'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 35 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
-                    'firstaid': { name: 'Craft first aid things', icon: [choose([22, 23]), 6, 'magixmod'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
+                    'firstaid': { name: 'Craft first aid things', icon: [8, 0, 'magix2'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
                     'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
                     'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms!', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
