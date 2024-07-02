@@ -1378,9 +1378,9 @@ G.Launch=function()
 			if (G.policy[i].startWith) G.gainPolicy(G.policy[i]);
 		}
 		
-		for (var i in G.res)
-		{
-			G.res[i].tick(G.res[i],G.tick);
+		for (var i in G.res) {
+			var item = G.res[i]
+			if (item.tick) item.tick(item, G.tick);
 		}
 		
 		G.runUnitReqs();
@@ -1943,7 +1943,7 @@ G.Launch=function()
 				});}})+
 				'<br>'+
 				G.button({text:'Wipe save',tooltip:'Clear your save completely, removing your current game<br>as well as any achievements and game data.<br>Cannot be undone!',style:'box-shadow:0px 0px 2px 1px #f00;',onclick:function(){G.dialogue.popup(function(div){
-					return '<div style="padding:16px;">Are you really sure you want to delete your save file?<br><br>'+G.button({text:'Yes!',onclick:function(){G.Clear();G.middleText('- Save wiped -');G.dialogue.close();}})+G.button({text:'No!',onclick:function(){G.dialogue.close();}})+'</div>';
+					return '<div style="padding:16px;">Are you absolutely sure you want to delete your save file?<br><br>'+G.button({text:'Yes!',onclick:function(){G.Clear();G.middleText('- Save wiped -');G.dialogue.close();}})+G.button({text:'No!',onclick:function(){G.dialogue.close();}})+'</div>';
 				});}})+
 			'</div>'+
 			G.button({text:'New game',tooltip:'Abandon your current game and start a new one.',onclick:function(){G.dialogue.popup(function(div){

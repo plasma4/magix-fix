@@ -3728,7 +3728,6 @@ if (getCookie("civ") == "0") {
                 partOf: 'food',
                 category: 'food',
             });
-            let modes4 = false
             new G.Res({
                 name: 'meat',
                 desc: '[meat,Raw meat] is gathered from dead animals and, while fairly tasty, can harbor a variety of diseases.',
@@ -6790,8 +6789,8 @@ if (getCookie("civ") == "0") {
                 modes: {
                     'clay pots': { name: 'Craft pots out of clay', icon: [1, 7, 13, 5], desc: 'Craft [pot]s from 3 [clay] each; requires [fire pit]s.' },
                     'mud pots': { name: 'Craft pots out of mud', icon: [0, 7, 13, 5], desc: 'Craft [pot]s from 10 [mud] each; requires [fire pit]s.' },
-                    'craft precious pots': { name: 'Craft precious pots', icon: [15, 8, 'magixmod'], desc: 'Your potter will craft [precious pot] out of both [clay] and [mud].', req: { 'precious pottery': true }, use: { 'knapped tools': 1, 'stone tools': 1, 'worker': 0.33 } },
-                    'craft potion pots': { name: 'Craft potion pots', icon: [14, 8, 'magixmod'], desc: 'Your potter will craft [potion pot] out of both [clay] and [mud]. These pots do not provide additional [food storage].', req: { 'precious pottery': true }, use: { 'knapped tools': 1, 'stone tools': 1, 'worker': 0.5 } },
+                    'craft precious pots': { name: 'Craft precious pots', icon: [15, 8, 'magixmod'], desc: 'Your potter will craft [precious pot]s out of both [clay] and [mud].', req: { 'precious pottery': true }, use: { 'knapped tools': 1, 'stone tools': 1, 'worker': 0.33 } },
+                    'craft potion pots': { name: 'Craft potion pots', icon: [14, 8, 'magixmod'], desc: 'Your potter will craft [potion pot]s out of both [clay] and [mud]. These pots do not provide additional [food storage].', req: { 'precious pottery': true }, use: { 'knapped tools': 1, 'stone tools': 1, 'worker': 0.5 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'clay': 3, 'fire pit': 0.01 }, into: { 'pot': 1 }, every: 3, repeat: 2, mode: 'clay pots' },
@@ -8659,7 +8658,9 @@ if (getCookie("civ") == "0") {
                 req: { 'churches': true, 'stronger faith': true },
                 effects: [
                     { type: 'gather', what: { 'faith': 1.8 }, req: { 'stronger faith II': false } },
-                    { type: 'gather', what: { 'faith': 7.2 }, req: { 'stronger faith II': true } },
+                    { type: 'gather', what: { 'faith': 7.2 }, req: { 'stronger faith II': true, 'trees of faith': false } },
+                    { type: 'gather', what: { 'faith': 9 }, req: { 'trees of faith': true } },
+                    { type: 'gather', what: { 'health': 3 }, req: { 'trees of faith': true } },
                     { type: 'gather', what: { 'influence': 0.1 }, req: { 'at1': true }, chance: 0.01 },
                     { type: 'gather', what: { 'faith': 0.3 }, req: { 'symbolism': true } },
                     { type: 'mult', value: 1.7, req: { 'symbolism III': true } },
@@ -11085,7 +11086,7 @@ if (getCookie("civ") == "0") {
                 desc: '@[firekeeper]s can now cook [cooked meat] and [cooked seafood]<>Tossing fish and meat over a sizzling fire without reducing them to a heap of ash takes a bit of practice.',
                 icon: [17, 1],
                 cost: { 'insight': 10 },
-                req: { 'fire-making': true },
+                req: { 'fire-making': true, 'rules of food': true },
             });
             new G.Tech({
                 name: 'curing', category: 'tier1',
@@ -11480,7 +11481,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'precious pottery', category: 'tier1',
-                desc: '@Improves pottery in your civilization. Now [pot] can become harder and more beautiful. Can make pots specialized for potions. //<small>These pots are really precious</small>',
+                desc: '@Improves pottery in your civilization, allowing [pot]s to become harder and more beautiful. Can make pots specialized for potions! //<small>These pots are really precious</small>',
                 icon: [16, 8, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'construction II': true },
@@ -11535,7 +11536,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ink crafting', category: 'tier1',
-                desc: 'Now [artisan] will be able to craft [ink], which can be used by [poet]s. You can craft ink using a new [artisan] mode.',
+                desc: '[artisan] will be able to craft [ink], which can be used by [poet]s. You can craft ink using a new [artisan] mode.',
                 icon: [18, 7, 'magixmod'],
                 cost: { 'insight': 360 },
                 req: { 'plain island building': true },
@@ -13733,7 +13734,7 @@ if (getCookie("civ") == "0") {
 
                 new G.Tech({
                     name: 'Expanded essence trading catalog', category: 'tier2',
-                    desc: 'Unlocks a policy that will turn on the prospected essence trading. Now [market_sell,Markets] trades [magic essences] with bulks of 150 instead of 100.',
+                    desc: 'Unlocks a policy that will turn on the prospected essence trading. Now [market_sell,Markets] trade [magic essences] with bulks of 150 instead of 100.',
                     icon: [30, 21, 'magixmod'],
                     cost: { 'insight II': 95, 'culture II': 3, 'science': 1, 'faith II': 1 },
                     req: { 'magic adept': true, 'magical presence': true },
@@ -15218,7 +15219,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mentors of nature', category: 'tier1',
-                desc: '[druid]s now generate [health]. //Some people call\'em nature\'s descendants. This may be the reason.',
+                desc: '[druid]s now generate [health]. //Some people call\'em Nature\'s Descendants, which might be part of the reason.',
                 icon: [31, 31, 'magixmod'],
                 req: { 'Wizard complex': true, 'smaller but efficient': true },
                 cost: { 'insight': 750 },
@@ -15228,7 +15229,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'no knapping anymore',
-                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Additionally, [healer]s, [digger]s, and [woodcutter]s will use now [stone tools] instead of [knapped tools]. However, it won\'t increase their efficiency! //For [moderation] it is 95% slower, while for [caretaking] it is 85% slower.',
+                desc: 'Depending on the chosen path, people will produce way less [knapped tools]. Additionally, [healer]s, [digger]s, and [woodcutter]s will use [stone tools] instead of [knapped tools] now. However, it won\'t increase their efficiency! //For [moderation] it is 95% slower, while for [caretaking] it is 85% slower.',
                 icon: [27, 31, 'magixmod'],
                 cost: { 'culture II': 10 },
                 effects: [
@@ -15799,7 +15800,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'discovery with love',
-                desc: 'From [research] you may gain now [love]. Each year you will get some [love] points. The formula for that is:<br>//<font color="aqua">Pts=amount of techs*(random number between 1 and 15)-(amount of traits/8)</font>',
+                desc: 'From [research], you may gain [love]. Every single year, you will gain some [love] points. The amount of points is based on your techs and traits!</font>',
                 icon: [3, 16, 'seasonal'],
                 cost: { 'culture': 75, 'research': 120, 'insight': 400 },
                 req: { 'parental love': true, 'time measuring 1/2': true },
@@ -15807,7 +15808,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'compliments',
-                desc: 'Now [child,Children] generate [love] points. //Not all children rather teenagers that have a need to have a second half and love her. They are going to say nice compliments each other. //Not only teens. Also any children that are good-mannered and talk good things about other people.',
+                desc: 'Now, [child,Children] generate [love] points. //Not all children rather teenagers that have a need to have a second half and love her. They are going to say nice compliments each other. //Not only teens. Also any children that are good-mannered and talk good things about other people.',
                 icon: [4, 16, 'seasonal'],
                 cost: { 'culture': 125, 'research': 120, 'faith': 100 },
                 req: { 'parental love': true, 'alphabet 3/3': true },
@@ -17537,7 +17538,7 @@ if (getCookie("civ") == "0") {
                 name: 'stronger faith II', category: 'tier1',
                 desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep.',
                 icon: [0, 35, 'magixmod', 19, 3, 'magixmod'],
-                cost: { 'insight': 2400, 'faith': 120 },
+                cost: { 'insight': 800, 'faith': 120 },
                 req: { 'stronger faith': true, '7th complex tower': true },
                 effects: [
                     {
@@ -17550,13 +17551,21 @@ if (getCookie("civ") == "0") {
             new G.Tech({
                 name: 'hotter factories', category: 'tier1',
                 desc: '[heat factory,Heat factories] are much less likely to fail their production and produce products faster.',
-                icon: [0, 35, 'magixmod', 19, 3, 'magixmod'],
+                icon: [34, 16, 'magixmod', 24, 1],
                 cost: { 'insight II': 125, 'lightning essence': 80000 },
                 req: { 'factories II': true },
                 effects: [
                 ]
             });
-            [34, 16, 'magixmod', 24, 1]
+            new G.Tech({
+                name: 'trees of faith', category: 'tier1',
+                desc: '[cathedral]s become 25% more effective and will provide [health] now.//<small>planting these unique trees help us gain a truly ultimate belief</small>',
+                icon: [36, choose([2, 3]), 'magixmod', 24, 1],
+                cost: { 'faith': 800 },
+                req: { 'stronger faith II': true, 'mentors of nature': true, 'better healing': true },
+                effects: [
+                ]
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -17603,7 +17612,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Eating [honey] is both extraordinarily satisfying and quite healthy for the body, and is even better when combined with other foods. Although it is quite difficult to find, it never spoils and provides the most [happiness] compared to any other food!',
                 icon: [6, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.1 }, 'decay': { 'honey': 1 } },
-                // partOf: 'food',
+                partOf: 'food',
                 category: 'food',
             });
             new G.Res({
@@ -17611,7 +17620,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Although [honeycomb]s may be difficult to find, they are absolutely packed with various nutrients and quite tasty! They will also never spoil, and provide the most [health] out of any food!',
                 icon: [5, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.15, 'happiness': 0.025 }, 'decay': { 'honeycomb': 1 } },
-                // partOf: 'food',
+                partOf: 'food',
                 category: 'food',
             });
 
@@ -23900,7 +23909,7 @@ if (getCookie("civ") == "0") {
                 desc: '@[firekeeper]s can now cook [cooked meat] and [cooked seafood]<>Tossing fish and meat over a sizzling fire without reducing them to a heap of ash takes a bit of practice.',
                 icon: [17, 1, 'c2'],
                 cost: { 'discernment': 11, 'creativity': 1 },
-                req: { 'fire-making': true },
+                req: { 'fire-making': true, 'rules of food': true },
             });
             new G.Tech({
                 name: 'curing', category: 'tier1',
