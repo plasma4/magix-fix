@@ -987,7 +987,7 @@ function newDayLines() {
         //show a random atmospheric message occasionally on new days
         //we pick one of the first 5 lines in the array, then push that line back at the end; this means we get a semi-random stream of lines with no frequent repetitions
         var foolsState = (yer.getMonth() == 3 && yer.getDate() == 1) || G.getSetting('fools')
-        if (foolsToggle !== foolsState) {
+        if (foolsToggle !== foolsState || G.resets <= 3) {
             foolsToggle = foolsState
             if (foolsState) {
                 G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
@@ -1006,7 +1006,7 @@ function newDayLines() {
                     'Wild thorns do nothing.', 'Something does nothing in the distance.',
                     'Strange ashes snow down.', 'A loud YEET is heard.',
                     'Memish creatures roll and scurry in the dirt', 'i++;',
-                    'Magix', 'Thanks for entering the game today',
+                    'Name: Magix', 'Thanks for entering the game today, I suppose.',
                     'Wind blows', 'Secrets await.', '<b>Do not forget to look at r/engrish</b>',
                     'Noisestorm', 'Unnoisestorm',
                     'Distant lands lie undisturbed.', '<b>What happened?</b>',
@@ -1777,7 +1777,7 @@ if (getCookie("civ") == "0") {
                             if (G.year + 1 % 100 == 0) {
                                 var str = '';
                                 str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br>';
-                                str += 'Report for a long, long time...this century:<br>';
+                                str += 'Report for this entire century:<br>';
                                 str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
                                 str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
                                 if (expTraits.length > 0) {
@@ -1838,6 +1838,20 @@ if (getCookie("civ") == "0") {
                         if (G.getRes('chranospts').amount = 1) {
                             goup = true
                             godown = false
+                        }
+                    }
+                    if (G.has('trees of faith II') && Math.random() < 0.05) {
+                        var gained = false
+                        if (!G.has('leaves of wisdom')) {
+                            G.gainTrait('leaves of wisdom')
+                            gained = true
+                        }
+                        if (!G.has('branches of wisdom')) {
+                            G.gainTrait('branches of wisdom')
+                            gained = true
+                        }
+                        if (gained) {
+                            G.Message({ type: 'important tall', text: 'Your people have gained <b>Leaves of wisdom</b> and <b>Branches of wisdom</b> at the same time. Congrats!' })
                         }
                     }
                     if (G.achievByName['mausoleum'].won > 0) {
@@ -5439,7 +5453,7 @@ if (getCookie("civ") == "0") {
 
             new G.Res({
                 name: 'light explosives',
-                desc: 'Dangerous and useful, but decay over time. May be used to break a wall or used in mining (but it may be dangerous). Light explosives are these which has small power of explosion <b>but they are still dangerous for humans.</b> There are some exceptions, though.',
+                desc: 'Dangerous and useful, but decay over time. May be used to break a wall or used in mining (but it may be dangerous). These little things have a small blast radius <b>but are still dangerous for humans.</b>',
                 icon: [19, 15, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -7919,7 +7933,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'concoctions crafting stand',
-                desc: 'There you can craft [jar for concoctions,Concoctions] which are not so safe. At the stand there are recipes already, but you will decide who you will hire.</span>',
+                desc: 'There you can craft [jar for concoctions,Concoctions], which are not so safe. At the stand there are recipes already, but you will decide who you will hire.</span>',
                 icon: [15, 16, 'magixmod'],
                 cost: {},
                 use: { 'alchemy zone': 0.3 },
@@ -7938,7 +7952,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'combat potions brewing stand',
-                desc: 'There you can craft [combat potions] which are not so safe. Alchemists are creative people who name their creations with creative names.Warning! Some modes has a chance to accidents wounding a worker',
+                desc: 'There you can craft [combat potions], which are not so safe. Alchemists are creative people who name their creations with creative names.Warning! Some modes has a chance to accidents wounding a worker',
                 icon: [14, 16, 'magixmod'],
                 cost: {},
                 use: { 'alchemy zone': 0.3 },
@@ -8031,7 +8045,7 @@ if (getCookie("civ") == "0") {
                 use: {},
                 gizmos: true,
                 modes: {
-                    'explosivesS': { name: 'Craft light explosives', icon: [19, 15, 'magixmod'], desc: 'This [pyro-artisan] will craft some [light explosives] with use of [paper], [sulfur], and [thread]', use: { 'worker': 1 } },
+                    'explosivesS': { name: 'Craft light explosives', icon: [19, 15, 'magixmod'], desc: 'This [pyro-artisan] will craft some [light explosives] with the use of [paper], [sulfur], and [thread].', use: { 'worker': 1 } },
                     //Medium explosives COMING SOON
                     //Essenced explosives COMING LATER
                     //Vortex TNT COMING EVEN LATER
@@ -8047,7 +8061,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Unit({
                 name: 'holy orchard',
-                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. Gathers falling [ambrosium leaf,Ambrosium leaves]',
+                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. Gathers falling [ambrosium leaf,Ambrosium leaves].',
                 icon: [4, 14, 'magixmod'],
                 cost: { 'basic building materials': 900 },
                 use: { 'land of the Paradise': 50, 'industry point': 5 },
@@ -10227,7 +10241,7 @@ if (getCookie("civ") == "0") {
             new G.Unit({
                 name: 'f.r.o.s.t.y',
                 displayName: 'F.R.O.S.T.Y',
-                desc: '@From snowmen created by children extracts [christmas essence]. However, there is a chance that the extraction will destroy the snowman.//It is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas]',
+                desc: '@From snowmen created by children extracts [christmas essence]. However, there is a chance that the extraction will destroy the snowman.//It is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
                 icon: [15, 12, 'seasonal'],
                 cost: { 'strong metal ingot': 100, 'hard metal ingot': 15, 'precious metal ingot': 2, 'basic building materials': 10, 'magic essences': 5000, 'platinum ore': 10 },
                 upkeep: { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 },
@@ -11162,7 +11176,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'gold-working', category: 'tier1',
-                desc: '@[furnace]s can now make [precious metal ingot]s from [gold ore]@[blacksmith workshop]s can now forge [gold block]s out of [precious metal ingot]s //<small>Oh shiny!</small>',
+                desc: '@[furnace]s can now make [precious metal ingot]s from [gold ore]@[blacksmith workshop]s can now forge [gold block]s out of [precious metal ingot]s //<small>So shiny!</small>',
                 icon: [29, 5],
                 cost: { 'insight': 40 },
                 req: { 'smelting': true },
@@ -11222,7 +11236,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'prospecting', category: 'upgrade',
-                desc: '@[mine]s can now be set to mine for specific ores // <small>Prospect it</small>',
+                desc: '@[mine]s can now be set to mine for specific ores // <small>Prospect it!</small>',
                 icon: [25, 5],
                 cost: { 'insight': 35 },
                 req: { 'mining': true, 'intuition': true },
@@ -11254,7 +11268,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'gem-cutting', category: 'tier1',
-                desc: '@[carver]s can now make [gem block]s out of [gems]< // <small>Oh shiny</small>',//TODO : desc
+                desc: '@[carver]s can now make [gem block]s out of [gems]< // <small>That\'s so shiny!</small>',//TODO : desc
                 icon: [27, 6],
                 cost: { 'insight': 20 },
                 req: { 'carving': true, 'tool-making': true },
@@ -11407,7 +11421,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'plain island building', category: 'tier1',
-                desc: 'Unlocks sheet of buildings which can be only built in new dimension.',
+                desc: 'Unlocks sheet of buildings which can only be built in new dimension.',
                 icon: [9, 0, 'magixmod'],
                 cost: { 'insight': 4, 'plain island tablet': 1 },
                 req: { 'first portal to new world': true },
@@ -11502,7 +11516,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'first aid', category: 'tier1',
-                desc: '@the [sick] and [wounded] will have a higher chance to recover, but require [first aid things]. [healer]s with the mode to heal wounded are now more efficient. <b>This research generates [health] from [healer]s at a low rate.</b><>Also adds a new mode for [artisan] which lets you craft [first aid things].',
+                desc: '@the [sick] and [wounded] will have a higher chance to recover, but require [first aid things]. [healer]s with the option to heal the wounded are now more efficient. <b>This research generates [health] from [healer]s at a low rate.</b><>Also adds a new mode for [artisan] that let you craft [first aid things].',
                 icon: [15, 9, 'magixmod'],
                 cost: { 'insight': 680, 'wisdom': 60 },
                 req: { 'better healing': true },
@@ -11718,7 +11732,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'paradise building', category: 'tier1',
-                desc: 'Unlocks sheet of buildings which can be only built in newly opened <b>Paradise</b>. //<small>I\'d construct...a floored house in the paradise</small>',
+                desc: 'Unlocks sheet of buildings which can only be built in the newly opened <b>Paradise</b>. //<small>I\'d construct...a floored house in the paradise</small>',
                 icon: [19, 13, 'magixmod'],
                 cost: { 'insight': 4, 'paradise tablet': 1 },
                 effects: [
@@ -11812,7 +11826,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ambrosium crafting', category: 'tier1',
-                desc: '@Unlocks the [ambrosium shard shack] which can craft [ambrosium shard]s with the use of [mana], [cloudy water], and [ambrosium leaf,Ambrosium leaves] of course.',
+                desc: '@Unlocks the [ambrosium shard shack], which can craft [ambrosium shard]s with the use of [mana], [cloudy water], and [ambrosium leaf,Ambrosium leaves] of course.',
                 icon: [13, 14, 'magixmod'],
                 cost: { 'insight': 980 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
@@ -11826,21 +11840,21 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'explosive crafting & mining', category: 'tier1',
-                desc: 'Unlocks the [explosive mine] <b>(well, you also need [intelligent blasting])</b>. You think it is joke but you will quickly get into big mistake. @Unlocks [pyro-artisan] (an artisan for explosives, which requires mostly [sulfur] for explosion power). Mines will start gathering some [sulfur] at <b>any</> of modes chosen. Both [mine] and [mine of the plain island] can gather it.',
+                desc: 'Unlocks the [explosive mine] <b>(well, you also need [intelligent blasting])</b>. @Unlocks the [pyro-artisan] (an artisan for [light explosives,Explosives], which requires [sulfur] for explosion power). Mines will start gathering some [sulfur] at <b>any</> of modes chosen. Both [mine] and [mine of the plain island] can gather it.',
                 icon: [20, 15, 'magixmod'],
                 cost: { 'insight': 850, 'wisdom': 10 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
             });
             new G.Tech({
                 name: 'intelligent blasting', category: 'tier1',
-                desc: 'Unlocks the [explosive mine]. With explosives supplies now miners will be able to...blast off underground. However, these mines cannot be [prospecting,prospected], but they still can be turned on/off. These mines have a larger rate of accidents than other ones which do not use explosives to mine undeground.',
+                desc: 'Unlocks the [explosive mine]. With [light explosives,Explosives], miners will be able to, well, blast off underground! These mines cannot be prospected, but they still can be turned on/off. These mines have a larger rate of accidents than normal [mine]s!',
                 icon: [14, 15, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
             });
             new G.Tech({
                 name: 'bigger potion pallet', category: 'tier1',
-                desc: 'Unlocks more potion types. These are [combat potions] which are throwable and may be use in battle. This unlocks [jar for concoctions,concoctions] that are used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
+                desc: 'Unlocks more potion types. These are [combat potions], which are throwable and may be used in battle. This unlocks [jar for concoctions,concoctions] that are used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
                 icon: [21, 16, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -12162,7 +12176,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'Improved rhetoric', category: 'tier2',
-                desc: 'People will use more words while talking. They will do their best to make the language and vocabulary survive through next generations. @provides 10 [wisdom II] @provides 5 [inspiration II]',
+                desc: 'People will use more words while talking. They will do their best to make the language and vocabulary survive through many future generations. @provides 10 [wisdom II] @provides 5 [inspiration II]',
                 icon: [27, 8, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'eotm': true, 'richer language': true, 'speech': true },
@@ -13885,7 +13899,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'embalmment', category: 'tier2',
-                desc: 'Smart people said how to make a substance that will slow down decay of corpses and discourage people from performing [ritual necrophagy,necrophagy] on them. They think about crafting something that is called [urn] and there they would "store" [corpse]s.',
+                desc: 'Smart people found out how to make a substance that will slow down the decay of corpses and discourage people from performing [ritual necrophagy,Necrophagy] on them. They think about crafting [urn]s to store [corpse]s.',
                 icon: [31, 20, 'magixmod'],
                 cost: { 'insight II': 110, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'respect for the corpse': true },
@@ -14969,7 +14983,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mirror world 1/2', category: 'tier2',
-                desc: 'Unlocks a [grand mirror] which will double your [land] amount. It compounds with bonuses from [beyond the edge] and [beyond the edge II]. The cost and display depends on your people\'s path. In fact, it is a passage to an exact copy of a world you met before your civilization set up their first shelter/dwelling. Make sure you fullfill the upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
+                desc: 'Unlocks a [grand mirror], which will double your [land] amount. It compounds with bonuses from [beyond the edge] and [beyond the edge II]. The cost and display depends on your people\'s path. In fact, it is a passage to an exact copy of a world you met before your civilization set up their first shelter/dwelling. Make sure you fullfill the upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
                 req: { 'parallel theory 3/3': true, 'wonder \'o science': true, 'bigger university': true },
                 cost: { 'insight II': 400, 'science': 62, 'culture II': 38 },
                 icon: [27, 3, 'magixmod', 10, 30, 'magixmod'],
@@ -15061,7 +15075,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'quarrying III', category: 'upgrade',
-                desc: 'Quarries can reach even deeper discovering new resources. However, some minerals can be only gathered via quarrying. @If [prospecting III] obtained it will unlock new mode that will mainly focus on gathering these minerals.',
+                desc: 'Quarries can reach even deeper discovering new resources. However, some minerals can only be gathered via quarrying. @If [prospecting III] obtained it will unlock new mode that will mainly focus on gathering these minerals.',
                 icon: [12, 0, 'magixmod'],
                 cost: { 'insight II': 170, 'science': 12, 'faith II': 4, 'culture II': 2, 'influence II': 2 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
@@ -15070,7 +15084,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'prospecting III', category: 'upgrade',
-                desc: '[prospecting] improvements: @[mine]s: Minerals from <b>Deep mining</b> (adds also any mode, but this one will only mine via <b>Deep mining</b>) @[quarry,Quarries]: Unlock a mode that will gather three times more minerals that can be only obtained by quarrying, but six times less of non-minerals!',
+                desc: '[prospecting] improvements: @[mine]s: Minerals from <b>Deep mining</b> (adds also any mode, but this one will only mine via <b>Deep mining</b>) @[quarry,Quarries]: Unlock a mode that will gather three times more minerals that can only be obtained by quarrying, but six times less of non-minerals!',
                 icon: [1, 35, 'magixmod', 11, 1, 'magixmod'],
                 cost: { 'insight II': 200, 'science': 15, 'influence II': 5 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
@@ -15223,7 +15237,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'mentors of nature', category: 'tier1',
-                desc: '[druid]s now generate [health]. //Some people call\'em Nature\'s Descendants, which might be part of the reason.',
+                desc: '[druid]s now generate [health]. //Some people call them Nature\'s Descendants, which might be part of the reason.',
                 icon: [31, 31, 'magixmod'],
                 req: { 'Wizard complex': true, 'smaller but efficient': true },
                 cost: { 'insight': 750 },
@@ -16409,7 +16423,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'ancestors world building', category: 'tier1',
-                desc: 'Unlocks sheet of buildings which can be only built in newly opened <b>ancestors world</b>. //<small>It would be nice to construct [floored house] in their world. But if I do...it\'ll insult them.</small>',
+                desc: 'Unlocks sheet of buildings which can only be built in the newly opened <b>ancestors world</b>. //<small>It would be nice to construct [floored house] in their world. But if I do...it\'ll insult them.</small>',
                 icon: [32, 33, 'magixmod'],
                 cost: { 'insight': 4, 'ancestors tablet': 1 },
                 effects: [
@@ -17200,7 +17214,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'branches of wisdom',
-                desc: 'The feeling of extending knowledge is getting stronger and stronger. It feels like a tree that grows more and more branches faster than it produces leaves for them. Suddenly this thought dissipates from your scholars, providing you: <b>1 extra technology choice when rolling researches</b>, 35 [wisdom II], and 200 [wisdom].',
+                desc: 'The feeling of slowly extending knowledge is getting stronger and stronger. It feels like a tree that grows so many branches that it may outnumber the amount of leaves. Suddenly this thought dissipates from your scholars, providing you: <b>1 extra technology choice when rolling researches</b>, 35 [wisdom II], and 200 [wisdom].',
                 icon: [26, 31, 'magixmod'],
                 req: { 'symbolism II': true, 'leaves of wisdom': false },
                 chance: 100,
@@ -17389,7 +17403,7 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Tech({
-                name: 'around the world', category: 'tier1', // New tech by @1_e0
+                name: 'around the world', category: 'tier1',
                 displayName: 'Exploration trips II',
                 desc: 'Increases the speed of [wanderer]s when exploring new tiles by 20%.// <small>We\'re gonna go around the world!</small>',
                 icon: [0, 35, 'magixmod', 36, 13, 'magixmod'],
@@ -17399,7 +17413,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'trails', category: 'tier1', // New tech by @1_e0
+                name: 'trails', category: 'tier1',
                 desc: 'Increases the speed of [wanderer]s by 15%, but decreases the speed of [scout]s by 5%. Decreases the chance of [wanderer]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [2, 2, 0, 0, 'magix2'],
                 cost: { 'insight': 10 },
@@ -17415,7 +17429,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'horses', category: 'tier1', // New tech by @1_e0
+                name: 'horses', category: 'tier1',
                 displayName: 'Adventurous people',
                 desc: 'Increases the speed of [scout]s by 15%, but decreases the speed of [wanderer]s by 5%. Decreases the chance of [scout]s getting lost.//<small>Explore the world...without getting lost.</small>',
                 icon: [24, 3, 0, 0, 'magix2'],
@@ -17432,7 +17446,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores', category: 'tier1', // New tech by @1_e0
+                name: 'sandy shores', category: 'tier1',
                 desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1000. // <small>A window...to dig...</small>',
                 icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
@@ -17441,7 +17455,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'sandy shores II', category: 'tier1', // New tech by @1_e0
+                name: 'sandy shores II', category: 'tier1',
                 desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
                 icon: [0, 35, 'magixmod', 4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 180 },
@@ -17450,7 +17464,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'concentrated juices', // New tech by @1_e0
+                name: 'concentrated juices',
                 displayName: 'moar juices II', category: 'tier1',
                 desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juices]. However, making [juices] now requires 3 times as much [water].//<small>Even MOAR JUICE!!! (But concentrated this time.)</small>',
                 icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
@@ -17460,7 +17474,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'beekeeping', category: 'tier1', // New tech by @1_e0
+                name: 'beekeeping', category: 'tier1',
                 desc: '@unlocks a new [honey]-related mode for [firekeeper]s, although it has a very large chance to fail',
                 icon: [4, 0, 'magix2'],
                 cost: { 'insight': 80 },
@@ -17470,7 +17484,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'beekeeping II', category: 'tier1', // New tech by @1_e0
+                name: 'beekeeping II', category: 'tier1',
                 desc: 'Teach your people how to preserve the honeycombs within a bee nest, increasing the chance of a successful [honey] harvest somewhat! @you can also get [honeycomb]s from bee nests slowly, which are great for your people\'s [health] @you can now set a policy that sets the honey-eating habits of your people (however, your units that require food as upkeep can choose to be picky and eat [honey] and [honeycomb]s anyway)',
                 icon: [0, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 450 },
@@ -17479,7 +17493,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'beekeeping III', category: 'tier1', // New tech by @1_e0
+                name: 'beekeeping III', category: 'tier1',
                 desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is much more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] @with a better knowledge of bees, it also makes the non-essenced method a bit better',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
@@ -17497,7 +17511,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'salty sand', category: 'tier1', // New tech by @1_e0
+                name: 'salty sand', category: 'tier1',
                 desc: 'You will be able to get [salt] from your world\'s shores by hiring [digger]s, who will process the [salt] out of [sand].',
                 icon: [11, 7, 0, 0, 'magix2'],
                 cost: { 'insight': 160 },
@@ -17506,7 +17520,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'salty sand II', category: 'tier1', // New tech by @1_e0
+                name: 'salty sand II', category: 'tier1',
                 desc: '[digger]s are now able get much more [salt] from your oceans by drying out the salty water within.',
                 icon: [0, 35, 'magixmod', 11, 7, 0, 0, 'magix2'],
                 cost: { 'insight': 400, 'wisdom': 50 },
@@ -17515,7 +17529,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'smartness of essentials', category: 'tech1', // New tech by @1_e0
+                name: 'smartness of essentials', category: 'tech1',
                 desc: '@Your people become smarter, making [essential conversion tank]s 50% faster at creating [insight II] and 20% faster at converting other essentials. @However, [essential conversion tank]s will now require twice as much [mana] for upkeep and now require 550 of the lower tier essential.',
                 icon: [6, 22, 'magixmod'],
                 cost: { 'insight II': 80 },
@@ -17529,7 +17543,7 @@ if (getCookie("civ") == "0") {
                 ],
             });
             new G.Tech({
-                name: 'science master', category: 'tier1', // New tech by @1_e0
+                name: 'science master', category: 'tier1',
                 desc: 'Getting this lets you hire [guru]s that produce [insight] and a small amount of [science]. @provides 1 bonus [science]',
                 icon: [27, 0, 'magixmod', 29, 5, 'magixmod'],
                 cost: { 'insight II': 5 },
@@ -17563,12 +17577,27 @@ if (getCookie("civ") == "0") {
             });
             new G.Tech({
                 name: 'trees of faith', category: 'tier1',
-                desc: '[cathedral]s become 25% more effective and will provide [health] now.//<small>planting these unique trees help us gain a truly ultimate belief</small>',
+                desc: '[cathedral]s become 25% more effective and will provide some [health] now.//<small>planting these unique trees help us gain a truly ultimate belief</small>',
                 icon: [36, choose([2, 3]), 'magixmod', 24, 1],
                 cost: { 'faith': 800 },
                 req: { 'stronger faith II': true, 'mentors of nature': true, 'better healing': true },
                 effects: [
                 ]
+            });
+            new G.Tech({
+                name: 'trees of faith II', category: 'tier1',
+                desc: 'The [leaves of wisdom] and [branches of wisdom] traits can now be obtained at the same time! In addition, you have a 5% chance of gaining both of them at the same time at the start of a new year. Be warned, however, as <b>getting this trait will cost some [wisdom II]</b> (you can get more, however, by adopting both traits).',
+                icon: [0, 35, 'magixmod', 36, choose([2, 3]), 'magixmod', 24, 1],
+                cost: { 'insight II': 125, 'wisdom II': 50 },
+                req: { 'trees of faith': true, 'richer language': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('leaves of wisdom').req = { 'symbolism II': true }
+                            G.getDict('branches of wisdom').req = { 'symbolism II': true }
+                        }
+                    }
+                ],
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -18039,7 +18068,7 @@ if (getCookie("civ") == "0") {
             var noteStr = 'Note: Starting this trial will cause similar effects as ascension does, but only some bonuses from achievements will carry to the Trial. These are the +1 tech choice bonus (from Row 3 completion) and a possible earlier Seraphin unlock based on your Victory points.'
             new G.Policy({
                 name: 'Patience',
-                desc: 'Starts [se01] trial. You will be warned before starting.',
+                desc: 'Starts [se01]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 29, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se01': 'on' },
@@ -18080,7 +18109,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Unhappy',
-                desc: 'Starts [se02] trial. You will be warned before starting.',
+                desc: 'Starts [se02]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 28, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se02': 'on' },
@@ -18120,7 +18149,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Cultural',
-                desc: 'Starts [se03] trial. You will be warned before starting.',
+                desc: 'Starts [se03]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 27, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se03': 'on' },
@@ -18160,7 +18189,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Hunted',
-                desc: 'Starts [se04] trial. You will be warned before starting.',
+                desc: 'Starts [se04]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 26, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se04': 'on' },
@@ -18233,7 +18262,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Unfishy (WIP)',
-                desc: 'Starts [se05] trial. You will be warned before starting.',
+                desc: 'Starts [se05]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
@@ -18244,7 +18273,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Ocean (WIP)',
-                desc: 'Starts [se06] trial. You will be warned before starting.',
+                desc: 'Starts [se06]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
@@ -18255,7 +18284,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Herbalism',
-                desc: 'Starts [se07] trial. You will be warned before starting.',
+                desc: 'Starts [se07]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 23, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
@@ -18295,7 +18324,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Buried',
-                desc: 'Starts [se08] trial. You will be warned before starting.',
+                desc: 'Starts [se08]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 22, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'voodoo spirit': false },
@@ -18325,7 +18354,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Underground (WIP)',
-                desc: 'Starts [se09] trial. You will be warned before starting.',
+                desc: 'Starts [se09]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
@@ -18336,7 +18365,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Pocket',
-                desc: 'Starts [se10] trial. You will be warned before starting.',
+                desc: 'Starts [se10]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 20, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on' },
@@ -18366,7 +18395,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Faithful',
-                desc: 'Starts [se11] trial. You will be warned before starting.',
+                desc: 'Starts [se11]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 19, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se11': 'on' },
@@ -18396,7 +18425,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Policy({
                 name: 'Dreamy',
-                desc: 'Starts [se12] trial. You will be warned before starting.',
+                desc: 'Starts [se12]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 18, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off',
                 req: { 'se10': 'on', 'ignoreItem': true },
@@ -19558,7 +19587,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though! There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [33, 21, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
@@ -19606,7 +19635,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'lush rocky substrate',
-                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less ores like [copper ore,Copper], [tin ore,Tin], [nickel ore,Nickel], [iron ore,Iron]. Also, you will find less [coal]//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
+                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less ores like [copper ore,Copper], [tin ore,Tin], [nickel ore,Nickel], [iron ore,Iron]. Also, you will find less [coal] here.//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
                 icon: [33, 19, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -19645,7 +19674,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'mudwater',
-                desc: '[mudwater], whether found in some swamps and Dead forests, can be only collected for unhealthy [muddy water].',
+                desc: '[mudwater], whether found in some swamps and Dead forests, can only be collected for unhealthy [muddy water].',
                 icon: [33, 17, 'magixmod'],
                 res: {
                     'gather': { 'muddy water': 12 },
@@ -19721,7 +19750,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'cherry blossom',
-                desc: 'The [cherry blossom]s appear only on their respective grove and grow in temperate but lush climate. //Can be chopped for [log]s and harvested for [stick]s.',
+                desc: '[cherry blossom]s appear only on their respective grove and grow in a temperate but lush climate. //These unique trees can be chopped for [log]s and harvested for [stick]s.',
                 icon: [36, choose([2, 3]), 'magixmod'],
                 res: {
                     'chop': { 'log': 2, 'stick': 4 },
@@ -24069,7 +24098,7 @@ if (getCookie("civ") == "0") {
 
             new G.Tech({
                 name: 'gem-cutting', category: 'tier1',
-                desc: '@[carver]s can now make [gem block]s out of [gems]<br>//<small>Oh shiny</small>',
+                desc: '@[carver]s can now make [gem block]s out of [gems]<br>//<small>That\'s so shiny!</small>',
                 icon: [27, 6, 'c2'],
                 cost: { 'discernment': 16, 'creativity': 8 },
                 req: { 'carving': true, 'tool-making': true },
@@ -24768,7 +24797,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Trait({
                 name: 'nudist culture',
-                desc: '@unhappiness from a lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5% (sometimes it will be 10%) less [happiness] and harming [health] by 2.5% (sometimes 4%). //<small>It is not safe to walk like that in the wilderness...however these elves think differently looks like</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is halved. @[basic clothes,Clothing] brings 5% (sometimes it will be 10%) less [happiness] and harming [health] by 2.5% (sometimes 4%).',
                 icon: [29, 16, 'c2', 24, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'strict dress code': false, 'clothing indifference': false, 'fluid dress code': false },
@@ -26673,7 +26702,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'warm rocky substrate',
-                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore] and [salt], but less precious [gems].//Quarrying underneath there provides less [fazble].',
+                desc: 'A [warm rocky substrate] is found underneath biomes with warm temperature and low humidity.//Surface [stone]s may be gathered by hand.//This soil contains low amounts of [clay] and negligible amounts of [mire], more [stone]s and occasionally [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [greenold ore] and [salt], but less precious [gems].//Quarrying underneath here provides less [fazble].',
                 icon: [7, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.003 },
@@ -26687,7 +26716,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'tundra rocky substrate',
-                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less amounts of ores like [olivnum ore,olivnum] or [tin ore,Tin]. Can\'t forget about [gems]//Quarrying underneath there provides more [limestone].',
+                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less amounts of ores like [olivnum ore,olivnum] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath here provides more [limestone].',
                 icon: [10, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.004, 'limestone': 0.0035 },
@@ -26701,7 +26730,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [olivnum ore,olivnum]. Can\'t forget about [gems]. There you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [olivnum ore,olivnum]. Can\'t forget about [gems] though, because you\'ll find more here.//Quarrying underneath here provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [8, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
@@ -26715,7 +26744,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,olivnum], and precious [gems]. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
                 icon: [9, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -26729,7 +26758,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,olivnum] amounts. Also, mining there provides way less [iron ore,Iron].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
                 icon: [6, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -26757,7 +26786,7 @@ if (getCookie("civ") == "0") {
             });
             new G.Goods({
                 name: 'dead rocky substrate',
-                desc: 'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and [clay].//Mining there is not worthy at all because there you will find almost no [tin ore,Ores]. //Same with quarrying except ([fazble] which is more often than anywhere else).',
+                desc: 'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and [clay].//Mining here is not a great idea because you will find almost no [tin ore,Ores]. //Same with quarrying (excluding [fazble], which is more often than anywhere else).',
                 icon: [4, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.004, 'limestone': 0.002 },

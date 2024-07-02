@@ -3212,7 +3212,7 @@ G.AddData({
             var costs = me.getCosts();
             var success = true;
             if (!G.testCost(costs, 1)) success = false;
-            var randomTxt = Math.round(Math.random() * 4);
+            var randomTxt = Math.round(Math.random() * 5);
             if (me.cooldown <= 0) {
                 if (randomTxt <= 1) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#fdd">There is nothing more to research for now.</font></small>'); }
@@ -3230,7 +3230,7 @@ G.AddData({
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#f7930f">Keep playing and you may discover more! Sometimes you\'ll have to wait for a trait in order to progress.</font></small>'); }
                 }
             } else {
-                G.middleText('<small><font color="#777777">Wait for the cooldown to end.</font></small>');
+                G.middleText('<small><font color="#999">Wait for the cooldown to end.</font></small>');
                 success = false;
             }
             if (success) {
@@ -3529,7 +3529,7 @@ G.AddData({
 
         G.Clear = function () {
             //erase the save and start a new one, handy when the page crashes when testing new save formats
-            console.log('Save data cleared. The page should refresh.');
+            console.log('Save data cleared. The page should refresh!');
             localStorage.setItem("civ", 0);
             G.T = 0;
             window.localStorage.setItem(G.saveTo, '');
@@ -3611,13 +3611,7 @@ G.AddData({
         /*=============================
         MAP GENERATION. PASTED TO MAKE CUSTOM BIOMES GRAPHICALLY DISPLAY ON Map
         =============================*/
-        G.LoadResources = function () {
-            var resources = [
-                'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png',
-                'img/blot.png',
-                'img/iconSheet.png?v=1'
-            ];
-        }
+        G.LoadResources = function () { }
 
         G.createMaps = function ()//when creating a new game
         {
