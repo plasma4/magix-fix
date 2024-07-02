@@ -2013,7 +2013,7 @@ G.AddData({
             tier: 'tech',
             icon: [14, 33, 'magixmod'],
             name: 'how to, spear?',
-            desc: 'Get 20 or more technologies in a single run for human race.//<small>Baby steps behind us...</small>',
+            desc: 'Get 20 or more technologies in a single run for the human race.//<small>Baby steps behind us...</small>',
             civ: 0,
             plural: false
         });
@@ -2484,7 +2484,7 @@ G.AddData({
             tier: 2,
             name: 'in the shadows',
             icon: [34, 9, 'magixmod'],
-            desc: 'Obtain 1 shadow achievement for the Human race.',
+            desc: 'Obtain 1 shadow achievement for the human race.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 70 },
                 { type: 'addFastTicksOnResearch', amount: 1 },
@@ -2727,7 +2727,7 @@ G.AddData({
             tier: '1',
             icon: [36, 28, 'magixmod'],
             name: 'first glory',
-            desc: 'Ascend for the first time while playing with the <u>human race</u>. //<small>If you rebirth you may encounter a new adventure.</small>',
+            desc: 'Ascend for the first time while playing with the human race. //<small>If you rebirth, you will encounter a new adventure!</small>',
             civ: 0,
             plural: false
         });
@@ -2804,7 +2804,7 @@ G.AddData({
             icon: [16, 24, 'magixmod'],
             tier: 'tech',
             name: 'familiar',
-            desc: 'Get 200 or more technologies in a single run for human race. //<small>Keep going like that</small>',
+            desc: 'Get 200 or more technologies in a single run for human race. //<small>Keep going like that...</small>',
             civ: 0,
             plural: false
         });
@@ -2821,7 +2821,7 @@ G.AddData({
             tier: 'tech',
             icon: [32, 19, 'c2'],
             name: 'nature\'s braincell',
-            desc: 'Get 60 or more technologies in a single run for elf race. //<small>You are doing naturally great!</small>',
+            desc: 'Get 60 or more technologies in a single run for elf race. //<small>You are doing quite great!</small>',
             civ: 1,
             plural: false
         });
@@ -2829,7 +2829,7 @@ G.AddData({
             tier: 'tech',
             icon: [13, 33, 'magixmod'],
             name: 'A+ student',
-            desc: 'Get 250 or more technologies in a single run for human race. //<small>about to become a genius</small>',
+            desc: 'Get 250 or more technologies in a single run for human race. //<small>About to become a genius</small>',
             civ: 0,
             plural: false
         });
@@ -3214,18 +3214,20 @@ G.AddData({
             if (!G.testCost(costs, 1)) success = false;
             var randomTxt = Math.round(Math.random() * 4);
             if (me.cooldown <= 0) {
-                if (randomTxt >= 0 && randomTxt <= 1) {
+                if (randomTxt <= 1) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#fdd">There is nothing more to research for now.</font></small>'); }
-                } else if (randomTxt > 1 && randomTxt <= 2) {
+                } else if (randomTxt <= 2) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#ccf">Wait patiently. There will be something to research...unless you researched everything (which takes a very long time), then yeah. There is light at the end of the tunnel!</font></small>'); }
-                } else if (randomTxt > 2 && randomTxt <= 3) {
+                } else if (randomTxt <= 3) {
                     if (me.getCards().length == 0) {
                         success = false;
-                        if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves, unfortunately.</font></small>');
-                        else G.middleText('<small><font color="#afd">There are over 350 techs for the human race! If you have that much it may be the end...<br>well, unless there are more updates.</font></small>');
+                        if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves, but the elf race can still provide bonuses! You may have finished</font></small>');
+                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race! So, just know that it will take a while to get them all...<br>well, unless there are more updates.</font></small>');
                     }
-                } else if (randomTxt > 3 && randomTxt <= 4) {
+                } else if (randomTxt <= 4) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#aaa">More techs coming soon :)</font></small>'); }
+                } else {
+                    if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#f7930f">Keep playing and you may discover more! Sometimes you\'ll have to wait for a trait in order to progress.</font></small>'); }
                 }
             } else {
                 G.middleText('<small><font color="#777777">Wait for the cooldown to end.</font></small>');
