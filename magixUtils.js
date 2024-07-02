@@ -16,7 +16,92 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
-G.loadMenu; G.loadCiv; //its rather to cover pick race menu and display menu related to picked race
+// Remove the empty tick functions for a little performance boost (how much? not sure...)
+G.Res = function (obj) {
+    this.type = 'res';
+    this.amount = 0;
+    this.used = 0;//only used by some special resources (houses occupied, workers busy...); will only be handled and saved if the resource has .displayUsed=true
+    this.mult = 1;//gain multiplier; all gains of this resource are multiplied by this; updated every tick
+    this.displayedAmount = 0;//used to tick up the displayed number
+    this.displayedUsedAmount = 0;//used to tick up the displayed number
+    this.startWith = 0;
+    this.gained = 0;//gained this tick
+    this.lost = 0;//lost this tick
+    this.gainedBy = [];//filled by unit names and other processes that create this resource; emptied after every tick
+    this.lostBy = [];//filled by unit names and other processes that use up this resource; emptied after every tick
+    this.meta = false;//does this resource have subparts?
+    this.partOf = false;//is this resource a subpart of another resource? (a resource cannot be a subresource AND have subresources of its own)
+    this.subRes = [];//subresources if this is a meta-resource; handled automatically
+    this.getMult = function () { return 1; };
+    this.getDisplayAmount = function () {
+        if (this.displayUsed) return B(this.displayedUsedAmount) + '<wbr>/' + B(this.displayedAmount);
+        else return B(this.displayedAmount);
+    };
+    this.category = '';
+    this.icon = [0, 0];
+    this.visible = false;//a resource will only be displayed if you've had some of the resource at some point (you can set .visible to force it to start visible; you can also set .hidden to override .visible)
+
+    for (var i in obj) this[i] = obj[i];
+    this.id = G.res.length;
+    if (!this.displayName) this.displayName = cap(this.name);
+    G.res.push(this);
+    G.resByName[this.name] = this;
+    G.setDict(this.name, this);
+    this.mod = G.context;
+}
+G.logic['res'] = function () {
+    //update visibility
+    var len = G.res.length;
+    for (var i = 0; i < len; i++) {
+        var res = G.res[i];
+        res.gainedBy = [];
+        res.lostBy = [];
+        res.gained = 0;
+        res.lost = 0;
+    }
+    for (var i = 0; i < len; i++) {
+        var realRes = G.res[i];
+        var res = G.resolveRes(realRes);
+        if (res != realRes) {
+            if (realRes.tick) realRes.tick(realRes, G.tick);
+            if (realRes.hidden) realRes.visible = false;
+            else if (res.amount != 0) realRes.visible = true;
+        }
+        else {
+            if (res.tick) res.tick(res, G.tick);
+            res.mult = res.getMult();
+            if (res.hidden) res.visible = false;
+            else if (res.amount != 0) res.visible = true;
+        }
+    }
+    //resolve meta-resources with sub-resources
+    var len = G.metaRes.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.resolveRes(G.metaRes[i]); me.amount = 0;
+    }
+    var len = G.subRes.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.subRes[i];
+        var meta = G.getRes(me.partOf);
+        meta.amount += me.amount;
+        meta.gained += me.gained;
+        meta.lost += me.lost;
+        for (var ii in me.gainedBy) { if (!meta.gainedBy.includes(me.gainedBy[ii])) meta.gainedBy.push(me.gainedBy[ii]); }
+        for (var ii in me.lostBy) { if (!meta.lostBy.includes(me.lostBy[ii])) meta.lostBy.push(me.lostBy[ii]); }
+    }
+}
+
+
+G.stabilizeResize = function () {
+    G.resizing = false;
+    //change page layout to fit width (for Magix, this amount is TOO LOW)
+    l("sections").style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + "px"
+    if (G.w < 950) { G.wrapl.classList.remove('narrow'); G.wrapl.classList.add('narrower'); }
+    else if (G.w < 384 * 3) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
+    else { G.wrapl.classList.remove('narrower'); G.wrapl.classList.remove('narrow'); }
+    //if (G.tab.id=='unit') G.cacheUnitBounds();
+}
+
 
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on
 function getCookie(cname) {
@@ -41,41 +126,41 @@ function getCookie(cname) {
 
 // Add more numbers
 var numberFormatters =
-[
-	rawFormatter,
-	formatEveryThirdPower([
-		' thousand',
-		' million',
-		' billion',
-		' trillion',
-		' quadrillion',
-		' quintillion',
-		' sextillion',
-		' septillion',
-		' octillion',
-		' nonillion',
-		' decillion',
-		' undecillion',
-		' duodecillion',
-		' tredecillion'
-	]),
-	formatEveryThirdPower([
-		'k',
-		'M',
-		'B',
-		'T',
-		'Qa',
-		'Qi',
-		'Sx',
-		'Sp',
-		'Oc',
-		'No',
-		'Dc',
-		'Ud',
-		'Dd',
-		'Td'
-	])
-];
+    [
+        rawFormatter,
+        formatEveryThirdPower([
+            ' thousand',
+            ' million',
+            ' billion',
+            ' trillion',
+            ' quadrillion',
+            ' quintillion',
+            ' sextillion',
+            ' septillion',
+            ' octillion',
+            ' nonillion',
+            ' decillion',
+            ' undecillion',
+            ' duodecillion',
+            ' tredecillion'
+        ]),
+        formatEveryThirdPower([
+            'k',
+            'M',
+            'B',
+            'T',
+            'Qa',
+            'Qi',
+            'Sx',
+            'Sp',
+            'Oc',
+            'No',
+            'Dc',
+            'Ud',
+            'Dd',
+            'Td'
+        ])
+    ];
 
 if (getCookie("civ") == "") {
     localStorage.setItem("civ", 0);
@@ -90,7 +175,7 @@ G.AddData({
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/magixmod.png', 'seasonal': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/seasonalMagix.png', 'c2': 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/CiV2IconSheet.png' },//just for achievs
+    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();
@@ -647,9 +732,9 @@ G.AddData({
                 (G.modsByName['Default dataset'] ? (G.traitsOwnedNames.indexOf('t11') > 0 ? '<br>' + G.button({
                     id: "t11", //<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">
                     text:
-                        '</span>Buy<img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/ico1.png" style="vertical-align:top;" width="16" height="16"/>',
+                        '</span>Buy<img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/>',
                     tooltip:
-                        'Buy <b>Golden insight</b><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b> .<br>Cost of next <b>Golden insight</b><img src="https://pipe.miroware.io/5db9be8a56a97834b159fd5b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful.',
+                        'Buy <b>Golden insight</b><img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b> .<br>Cost of next <b>Golden insight</b><img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful.',
                     onclick: function (me) {
                         var faicost = 1 * (G.getRes("new world point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
                         var inscost = 1 * (G.getRes("new world point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1);
@@ -1455,9 +1540,9 @@ G.AddData({
             str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;padding:8px 12px;height:32px;font-weight:bold;font-size:18px;font-variant:small-caps;" id="date">-</div>';
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('water')) {
-                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Empowerments.png) ;background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px;" id="empower"></div><br>';
+                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png) ;background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px;" id="empower"></div><br>';
                 } else {
-                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Empowerments.png) ;background-position-x:32px;" id="empower"></div><br>';
+                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png) ;background-position-x:32px;" id="empower"></div><br>';
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
@@ -1574,7 +1659,8 @@ G.AddData({
                 }
 
                 for (var i in G.res) {
-                    G.res[i].tick(G.res[i], G.tick);
+                    var item = G.res[i]
+                    if (item.tick) item.tick(item, G.tick);
                 }
 
                 G.runUnitReqs();
@@ -1856,7 +1942,7 @@ G.AddData({
             name: 'democration',
             wideIcon: [5, 13, 'magixmod'],
             icon: [6, 13, 'magixmod'],
-            desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glory rest made your previous civilization living in laws of justice forever. They will miss you. <b>But this provides...<font color="fuschia">+1 influence & authority</font> at the start of new runs! Also, you will get the [policies] trait immediately.</b>',
+            desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glorious rest made your previous civilization live in the laws of justice forever. They will miss you. <b>But this provides an additional <font color="fuschia">+1 influence & authority</font> at the start of new runs! Also, you will get the [policies] trait immediately.</b>',
             fromWonder: 'Democration',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -1884,7 +1970,7 @@ G.AddData({
             name: 'in the underworld',
             wideIcon: [7, 5, 'magixmod'],
             icon: [9, 5, 'magixmod'],
-            desc: 'You sent your soul to the Underworld, leaving your body that started to decay after it. But...<br><li>If you obtain <font color="green">Sacrificed for culture</font>, <font color="aqua">Insight-ly</font>, and <font color="fuschia">Democration</font> you will start new runs with [adult,The Underworld\'s Ascendant]. <li>To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.',
+            desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you obtain <font color="green">Sacrificed for culture</font>, <font color="aqua">Insight-ly</font>, and <font color="fuschia">Democration</font> at the same time, you will start new runs with [adult,The Underworld\'s Ascendant]. <li>To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.',
             fromWonder: '"In the underworld"',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -1899,7 +1985,7 @@ G.AddData({
             icon: [28, 20, 'magixmod'],
             name: 'mausoleum eternal',
             displayName: '<font color="#d4af37">Mausoleum eternal</font>',
-            desc: 'You have been laid to rest many times in the Mausoleum, an ancient stone monument the purpose of which takes root in archaic religious thought. Evolved to unforgetable historical monument. <b>Evolve the <font color="white"><b>Mausoleum</b></font> to stage 10/10, then ascend by it 11th time to obtain this massive fast tick bonus along with the <B>Mausoleum\'s</b> final level bonus.</li></b>',
+            desc: 'You have been laid to rest many times in the Mausoleum, an ancient stone monument which involves archaic religious thought. Thanks to you, it has become an unforgettable historical monument. <b>Evolve the <font color="white"><b>Mausoleum</b></font> to stage 10/10, then ascend by it for the 11th time to obtain some massive bonuses!</li></b>',
             fromWonder: 'mausoleum eternal',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 2000 },
@@ -2007,7 +2093,7 @@ G.AddData({
             name: 'magical',
             wideIcon: [9, 22, 'magixmod'],
             icon: [10, 22, 'magixmod'],
-            desc: 'Construct the Fortress of Magicians wonder. //This achievement will: @Unlock you a new theme @Increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like [hunting III] or [fishing III].',
+            desc: 'Construct the Fortress of Magicians wonder. //This achievement will: @Unlocks a new theme @Increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like [hunting III] or [fishing III].',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 15 },
@@ -3220,7 +3306,7 @@ G.AddData({
                         else if (amount < 6.45) bar = 18;
                         else if (amount < 6.7) bar = 19;
                         else bar = 20;
-                        str += '<div class="icon" style="background:url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
+                        str += '<div class="icon" style="background:url(https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
                     }
                     str += '</div>';
                     I++;
@@ -3355,12 +3441,12 @@ G.AddData({
             if (me.binary) {
                 if (me.category != "pantheon") {
                     if (mode.id == 'off') {
-                        G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/PolicySwitchOff.wav');
+                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOff.wav');
                         me.l.classList.add('off');
-                    } else { G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/PolicySwitchOn.wav'); me.l.classList.remove('off') }
+                    } else { G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOn.wav'); me.l.classList.remove('off') }
                 } else {
                     if (mode.id == 'off') {
-                        G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/spiritReject.wav');
+                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
                         me.l.classList.add('off');
                     } else {
                         G.playSound('https://orteil.dashnet.org/cookieclicker/snd/spirit.mp3');
@@ -3402,7 +3488,7 @@ G.AddData({
                                                     for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
                                                     l('mode-button-' + mode.num).classList.add('on');
                                                     G.setPolicyMode(me, mode);
-                                                    G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/PolicySwitchOn.wav');
+                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOn.wav');
                                                     if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
                                                 }
                                             }
@@ -3478,7 +3564,7 @@ G.AddData({
                             G.gainPolicy(G.policy[i]);
                         }
                         G.shouldRunReqs = true;
-                        var audio = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/spiritReject.wav');
+                        var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
                         audio.play();
                         G.middleText('<font color="#d4af37">- You are almighty! -<br><small> - (cheater) - </small></font>', 'slow');
                     }
@@ -3525,7 +3611,7 @@ G.AddData({
         =============================*/
         G.LoadResources = function () {
             var resources = [
-                'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png',
+                'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png',
                 'img/blot.png',
                 'img/iconSheet.png?v=1'
             ];
@@ -3575,7 +3661,7 @@ G.AddData({
             G.centerMap(G.currentMap);
         }
         G.getLandIconBG = function (land) {
-            return 'url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png),url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png)';
+            return 'url(https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png),url(https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png)';
         }
         G.renderMap = function (map, obj) {
             var time = Date.now();
@@ -3606,7 +3692,7 @@ G.AddData({
             var totalh = map.h;//y2-y1;
 
             var img = new Image();   // Create new img element
-            img.src = 'https://pipe.miroware.io/5db9be8a56a97834b159fd5b/terrainMagix.png';
+            img.src = 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png';
             var fog = Pic('img/blot.png');
 
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;
@@ -4514,7 +4600,7 @@ G.AddData({
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>One day elapses every second.</div>'; }, { offY: -8 });
 
-                        }//l('empower').innerHTML='<div class="image" style="width:32px;height:32px;background:url(https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Empowerments.png); '+(32*(G.year%40))+'px; 0px;"></div>';
+                        }//l('empower').innerHTML='<div class="image" style="width:32px;height:32px;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png); '+(32*(G.year%40))+'px; 0px;"></div>';
                     }
                     if (!forceTick) G.nextTick--;
                 }
@@ -5034,7 +5120,7 @@ G.AddData({
                                                             if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was brutal. Why? Just why would you do that? -<br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
                                                         }
                                                     }
-                                                    G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/WonderComplete.mp3');
+                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/WonderComplete.mp3');
                                                     me.mode = 4;
                                                     me.amount += 1;
                                                     if (G.getSetting('animations')) triggerAnim(me.l, 'plop');
@@ -5081,7 +5167,7 @@ G.AddData({
                                                     var middleText = '';
                                                     var achiev = G.getAchiev(me.unit.wonder);
                                                     var randomTxtId = Math.floor(Math.random() * 6);
-                                                    G.playSound('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/Ascending.wav');
+                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/Ascending.wav');
                                                     if (achiev) {
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
@@ -5160,7 +5246,7 @@ G.AddData({
             var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
             if (day >= 289 && day <= 305) {
                 G.middleText('<big><font color="orange">Happy Halloween!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.</small></font>', 'slow');
-                var audi = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/halloweenGreeting.mp3');
+                var audi = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/halloweenGreeting.mp3');
                 audi.play()
             }
             if (day >= 365 && day <= 366) { G.middleText('<big><font color="pink">Happy ' + (truY + 1) + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow') };
@@ -5194,7 +5280,7 @@ G.AddData({
             G.Message({ type: 'tutorial', text: '<font size="10">IT\'S OVER 9000!!!!</font>' });
             if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, it is insane! No way that can be right...</small>', 'slow');
             G.achievByName['it\'s over 9000'].won++;
-            var audio = new Audio('https://pipe.miroware.io/5db9be8a56a97834b159fd5b/EasterEgg.mp3');
+            var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/EasterEgg.mp3');
             audio.play();
         }
         //addition of policy temporary trait management

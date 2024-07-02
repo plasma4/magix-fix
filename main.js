@@ -1038,7 +1038,7 @@ G.Launch=function()
 		
 			G.doFunc('game loaded');
 			
-			G.Logic(true);//force a tick (solves some issues with display updates; this howeverr means loading a paused game, saving and reloading will make a single day go by everytime, which isn't ideal)
+			G.Logic(true);//force a tick (solves some issues with display updates; this however means loading a paused game, saving and reloading will make a single day go by everytime, which isn't ideal)
 			
 			console.log('Game loaded successfully.');
 			return true;
@@ -2120,9 +2120,9 @@ G.Launch=function()
 	//handy for getting something without knowing its type
 	//sends a warning when trying to declare something with a duplicate name
 	G.dict=[];
-	G.setDict=function(name,what,verbose)
+	G.setDict=function(name,what)
 	{
-		if (G.dict[name]) {if (verbose)console.warn('There is already something with the id "'+name+'".');return false;}
+		if (G.dict[name]) {console.warn('There is already something with the id "'+name+'".');return false;}
 		else {G.dict[name]=what;return true;}
 	}
 	G.getDict=function(name)
