@@ -1331,9 +1331,9 @@ G.Launch=function()
 			(G.resets>0?('You have '+B(G.resets)+' ascension'+(G.resets==1?'':'s')+' behind you.<br>'):'')+
 			'You choose to start somewhere...<br><br>'+
 			/*G.button({style:'display:block;width:100%;',tooltip:'Start your civilization!',text:'Well okay then',onclick:function(e){var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;}})+*/
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a harsh terrain with scarce natural resources.',text:'Awful',onclick:function(e){G.startingType=1;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a welcoming terrain full of natural resources.',text:'Pleasant',onclick:function(e){G.startingType=0;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
-			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!',text:'Random',onclick:function(e){G.startingType=2;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names;onbeforeunload=null;location.reload()}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #963;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a harsh terrain with scarce natural resources.',text:'Awful',onclick:function(e){G.startingType=1;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #693;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a welcoming terrain full of natural resources.',text:'Pleasant',onclick:function(e){G.startingType=0;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names}})+
+			G.button({style:'width:33%;min-width:75px;box-shadow:0px 0px 1px 1px #666;',/*style:'display:block;width:100%;',*/tooltip:'Start your civilization in a random place on the map.<br>Who knows how your people will fare in these strange lands!',text:'Random',onclick:function(e){G.startingType=2;var names=G.names;G.dialogue.forceClose();G.NewGameConfirm();G.names=names}})+
 			'</div>';
 		},'noClose');
 	}
@@ -1426,6 +1426,10 @@ G.Launch=function()
 				G.dialogue.getCloseButton('Got it!')+
 			'</div></div>';
 		});}})+' tips.'});
+		if (G.modsByName['MagixUtils']) {
+			onbeforeunload = null;
+			location.reload();
+		}
 	}
 	G.SelectMagix=function()
 	{

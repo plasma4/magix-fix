@@ -2233,7 +2233,7 @@ if (getCookie("civ") == "0") {
                         G.policyByName['far foraging'].visible = false;
                         if (G.checkPolicy("far foraging") == 'on') {
                             G.setPolicyModeByName('far foraging', 'off');
-                            G.getDict('far foraging').req = { 'ignoreItem': true };
+                            G.getDict('far foraging').req = { 'tribalism': false };
                             G.update['policy']();
                         }
                     }
@@ -9157,7 +9157,7 @@ if (getCookie("civ") == "0") {
                 },
                 effects: [
                 ],
-                req: { 'ignoreItem': true, 'construction II': true, 'water construction': true },
+                req: { 'tribalism': false, 'construction II': true, 'water construction': true },
                 category: 'civil',
             });
             new G.Unit({
@@ -10354,7 +10354,7 @@ if (getCookie("civ") == "0") {
                 effects: [
 
                 ],
-                req: { 'the christmas': true, 'tribalism': false, 'ignoreItem': true },
+                req: { 'the christmas': true, 'tribalism': false },
                 category: 'seasonal',
                 visible: false
             });
@@ -17638,7 +17638,8 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Res({
-                name: 'ignoreItem' // Item that is impossible to obtain to hide some things
+                name: 'ignoreItem', // A debug resource used to determine if your civ is in a drought or famine
+                hidden: true
             });
             new G.Res({
                 name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
@@ -17861,7 +17862,7 @@ if (getCookie("civ") == "0") {
                 icon: [12, 9, 'magixmod', 12, 5, 'magixmod'],
                 cost: { 'influence': 15 },
                 startMode: 'on',
-                req: { 'ignoreItem': true, 'will to know more': true },
+                req: { 'tribalism': false, 'will to know more': true },
                 category: 'Education',
             });
             new G.Policy({
@@ -18266,7 +18267,7 @@ if (getCookie("civ") == "0") {
                 icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
-                req: { 'se10': 'on', 'ignoreItem': true },
+                req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
                 ],
@@ -18277,7 +18278,7 @@ if (getCookie("civ") == "0") {
                 icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
-                req: { 'se10': 'on', 'ignoreItem': true },
+                req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
                 ],
@@ -18358,7 +18359,7 @@ if (getCookie("civ") == "0") {
                 icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
                 cost: { 'insight II': 1, 'influence II': 1 },
                 startMode: 'off',
-                req: { 'se10': 'on', 'ignoreItem': true },
+                req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
                 ],
@@ -18428,7 +18429,7 @@ if (getCookie("civ") == "0") {
                 desc: 'Starts [se12]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 18, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off',
-                req: { 'se10': 'on', 'ignoreItem': true },
+                req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
                 ],
@@ -18571,7 +18572,7 @@ if (getCookie("civ") == "0") {
                 desc: '[prisoner]s now count as [worker]s; working [prisoner]s will serve their sentences faster.',
                 icon: [7, 12, 17, 0, 'magixmod'],
                 cost: { 'influence': 2 },
-                req: { 'imprisonment II': true, 'ignoreItem': true },
+                req: { 'imprisonment II': true, 'tribalism': false },
                 category: 'work',
             });
             new G.Policy({
@@ -20407,6 +20408,14 @@ if (getCookie("civ") == "0") {
             G.funcs['new year'] = function () //new year but civ2
             {
                 if (G.on) {
+                    // Famine calculations (maybe not the best)
+                    // if (G.year == 39) {
+                    //     G.Message({ type: 'important tall', text: 'Be warned: famines and droughts may start occuring after year 50.' })
+                    // }
+                    // if (G.year == 49) {
+                    //     // Famine/drought data starts being calculated at year 50
+                    //     G.getRes('ignoreItem').amount = G.year + (Math.random() * 4 + 2)
+                    // }
                     G.isMap = G.isMapFullyExplored();
                     if (G.checkPolicy("creative foraging") == "on") {
                         if (G.getRes('creativity').amount < 1) G.setPolicyModeByName('creative foraging', 'off');
