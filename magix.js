@@ -501,8 +501,8 @@ var day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (
 var easterDay = function (Y) { var C = Math.floor(Y / 100); var N = Y - 19 * Math.floor(Y / 19); var K = Math.floor((C - 17) / 25); var I = C - Math.floor(C / 4) - Math.floor((C - K) / 3) + 19 * N + 15; I = I - 30 * Math.floor((I / 30)); I = I - Math.floor(I / 28) * (1 - Math.floor(I / 28) * Math.floor(29 / (I + 1)) * Math.floor((21 - N) / 11)); var J = Y + Math.floor(Y / 4) + I + 2 - C + Math.floor(C / 4); J = J - 7 * Math.floor(J / 7); var L = I - J; var M = 3 + Math.floor((L + 40) / 44); var D = L + 28 - 31 * Math.floor(M / 4); return new Date(Y, M - 1, D); }(yer);
 easterDay = Math.floor((easterDay - new Date(easterDay.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 var spookboost = 1;
-function c1() { G.loadMenu = 1; updateObj("civ", 0); G.NewGameWithSameMods2() };
-function c2() { G.loadMenu = 2; updateObj("civ", 1); G.NewGameWithSameMods2() };
+function c1() { G.loadMenu = 1; setObj("civ", 0); G.NewGameWithSameMods2() };
+function c2() { G.loadMenu = 2; setObj("civ", 1); G.NewGameWithSameMods2() };
 var civ1 = function () {
     G.dialogue.forceClose();
     G.dialogue.popup(function (div) {
@@ -975,7 +975,7 @@ function newDayLines() {
                     'An idiot tried to fall up.',
                     'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
                     'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
-                    'Harder but more interesting \u2014pelletsstarPL',
+                    'This is harder but more interesting \u2014pelletsstarPL',
                     'Creepers inbound!', 'It is raining.', 'Your rolling pins are rolling and pinning.',
                     '.gnivigrofnu is thgin ehT', '.noziroh eth no mrost a si erehT',
                     'Another stream on Twitch is happening.', 'plasma4 prepares the next update. Wait, is it not @1_e0?',
@@ -1074,7 +1074,7 @@ G.gain = function (what, amount, context) {
     }
 }
 
-if (getCookie("civ") != "1") {
+if (getObj("civ") != "1") {
     //////////////////////////////////////////////////////////////
     ////////ACTUAL CONTENT - CIV 1
     G.AddData({
@@ -1352,8 +1352,9 @@ if (getCookie("civ") != "1") {
             let t1vp = 0
             let madeThievesWarn = false
             let backupmesg = false
+            let droughtmesg = false
             let milleniummesg = false
-            let Secondmilleniummesg = false
+            let millenium2mesg = false
             let Fifthmilleniummesg = false
             let st2 = false
             let st3 = false
@@ -1651,6 +1652,29 @@ if (getCookie("civ") != "1") {
             };
             G.funcs['new year'] = function () {
                 if (G.on) {
+                    // Drought/famine calculations
+                    if (G.year >= 39 && G.year < 60) {
+                        G.Message({ type: 'important tall', text: 'Be warned: <b>droughts and famines may start occuring after year 50!</b> Droughts are the first sign of a potential famine, and decrease the amount of food and water gained. Famines may occur after several years of drought and are much more severe! However, they may be a key to new discoveries...', icon: [9, 10] })
+                    }
+                    var droughtYear = getObj('drought')
+                    if (droughtYear > 0) {
+                        if (droughtYear + 1 + Math.sqrt(Math.random() * 4.2) > G.year) {
+                            G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
+                            G.deleteTrait(G.traitByName['drought'])
+                            if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
+                            setObj('drought', 0)
+                        }
+                    } else if (G.year >= 49 && G.year + 2 >= G.getRes('ignoreItem').amount) {
+                        // Drought data starts being calculated at year 50
+                        G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 8)
+                    } else if (G.year == G.getRes('ignoreItem').amount - 2) {
+                        G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
+                    } else if (Math.random() < 0.8 && G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
+                        G.gainTrait(G.traitByName['drought'])
+                        setObj('drought', G.year)
+                        G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 8 + 9)
+                    }
+
                     if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
                     if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
                     G.isMap = G.isMapFullyExplored();
@@ -1739,7 +1763,7 @@ if (getCookie("civ") != "1") {
                     if (G.getSetting('annual raports'))
                         if (G.has('time measuring 1/2')) {
                             var str = '';
-                            str += 'It is now year <b>' + (G.year + 1) + '</b>.<br>';
+                            str += 'It is now year <b>' + (G.year + 1) + (G.has('drought') ? '</b> with a drought active.<br>' : '</b>.<br>');
                             str += 'Report for last year:<br>';
                             str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
                             str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
@@ -1864,9 +1888,9 @@ if (getCookie("civ") != "1") {
                         G.Message({ type: 'good', text: 'Woah! It\'s been <b>1 thousand</b> years since your tribe started their existence!<br><b>Thank you, and wow ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [27, 23, 'magixmod'] });
                         milleniummesg = true
                     }
-                    if (G.year >= 1999 && G.year <= 2005 && !Secondmilleniummesg) {
+                    if (G.year >= 1999 && G.year <= 2005 && !millenium2mesg) {
                         G.Message({ type: 'good', text: 'Amazing! It\'s been <b>2 thousand</b> years since your tribe started their wonderful existence! Also, I am sure that your adventure with Magix is not over yet.<br><b>Thank you ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [32, 30, 'magixmod'] });
-                        Secondmilleniummesg = true
+                        millenium2mesg = true
                     }
                     if (G.year >= 4999 && G.year <= 5005 && !Fifthmilleniummesg) {
                         G.Message({ type: 'good', text: 'Stunning! It\'s been <b>5 thousand</b> years after your tribe began its existence. Congratulations for playing THIS long!<br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [32, 30, 'magixmod'] });
@@ -2191,6 +2215,10 @@ if (getCookie("civ") != "1") {
             shuffle(G.props['new day lines']);
             G.funcs['new day'] = function () {
                 if (G.on) {
+                    if (!droughtmesg && G.has('drought')) {
+                        G.Message({ type: 'bad3', text: 'You are currently in a <b>drought</b>! While in a <b>drought</b>, you will gain a lot less water. In addition, they have a small chance to turn into famines, which also decrease your food gain for a small period of time. However, a drought may present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
+                        droughtmesg = true
+                    }
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
                     if (G.techN >= 80) { //since these are earlygame only we won\'t want them anymore at some point unless they get adopted for good.
                         G.getDict('scavenging').req = { 'tribalism': false };
@@ -2343,7 +2371,7 @@ if (getCookie("civ") != "1") {
                         console.log('Refresh the page.');
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', slow)
                     }
-                    updateObj("civ", 0);
+                    setObj("civ", 0);
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
                     const chances = [
                         {
@@ -2353,6 +2381,10 @@ if (getCookie("civ") != "1") {
                         {
                             type: "hurt",
                             below: 0.9
+                        },
+                        {
+                            type: "kill",
+                            below: 0.92
                         },
                         {
                             type: "nothing",
@@ -2375,6 +2407,10 @@ if (getCookie("civ") != "1") {
                         case "hurt":
                             G.lose("adult", thieves.amount * 0.25, "thieves hurting people")
                             G.gain("wounded", thieves.amount * 0.25, "thieves hurting people")
+                            break
+                        case "kill":
+                            G.lose("adult", thieves.amount * 0.06, "thieves killing people")
+                            G.gain("wounded", thieves.amount * 0.06, "thieves killing people")
                             break
                     }
                     ///////////HERBALIA BACKFIRE
@@ -3634,11 +3670,11 @@ if (getCookie("civ") != "1") {
                                 G.gain('muddy water', randomFloor(spent), 'decay');
                             }
                         } else if (G.achievByName['patience'].won >= 1) {
-                            var toSpoil = me.amount * (0.02 - (G.getRes('chranospts').amount / 1000) / 2);
+                            var toSpoil = me.amount * (0.02 - (G.getRes('chranospts').amount / 1000) / 2) * (G.has('drought') ? Math.pow((G.totalDays * 0.01 - getObj('drought') * 3) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1);
                             var spent = G.lose('water', randomFloor(toSpoil), 'decay');
                             G.gain('muddy water', randomFloor(spent), 'decay');
                         } else {
-                            var toSpoil = me.amount * 0.02;
+                            var toSpoil = me.amount * 0.02 * (G.has('drought') ? Math.pow((G.totalDays * 0.01 - getObj('drought') * 3) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1);
                             var spent = G.lose('water', randomFloor(toSpoil), 'decay');
                             G.gain('muddy water', randomFloor(spent), 'decay');
                         }
@@ -3670,11 +3706,11 @@ if (getCookie("civ") != "1") {
                         var stored = Math.min(me.amount, G.getRes('food storage').amount) / me.amount;
                         var notStored = 1 - stored;
                         if (G.checkPolicy('se10') == 'off') {
-                            var toSpoil = me.amount * 0.01 * notStored + me.amount * 0.0005 * stored;
+                            var toSpoil = me.amount * 0.01 * notStored + me.amount * 0.0005 * stored * (G.has('famine') ? 10 : 1);
                             var spent = G.lose('food', randomFloor(toSpoil), 'decay');
                             //G.gain('spoiled food',randomFloor(spent));
                         } else {
-                            var toSpoil = (me.amount * 0.01 * notStored + me.amount * 0.0005 * stored) * 1.15;
+                            var toSpoil = (me.amount * 0.01 * notStored + me.amount * 0.0005 * stored) * 1.15 * (G.has('famine') ? 10 : 1);
                             var spent = G.lose('food', randomFloor(toSpoil), 'decay');
                         }
                     }
@@ -6406,7 +6442,8 @@ if (getCookie("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 'herbalism': false } },//To keep early game possible
                     { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 't7': true } },//Herbalism
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
-                    { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3 },
+                    { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3, req: { 'drought': false } },
+                    { type: 'gather', context: 'gather', what: { 'water': 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'drought': true } },
                     { type: 'gather', context: 'gather', what: { 'herb': 0.5, 'fruit': 0.25, 'vegetable': 0.25 }, amount: 1, max: 1, req: { 'plant lore': true } },
                     { type: 'addFree', what: { 'worker': 0.1 }, req: { 'scavenging': true } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on' } },
@@ -6829,8 +6866,10 @@ if (getCookie("civ") != "1") {
                 //require:{'worker':2,'stone tools':2},
                 //upkeep:{'food':0.2},
                 effects: [
-                    { type: 'gather', what: { 'water': 20 } },
+                    { type: 'gather', what: { 'water': 20 }, req: { 'drought': false } },
+                    { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
+                    { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
                 category: 'production',
@@ -7740,7 +7779,7 @@ if (getCookie("civ") != "1") {
             new G.Unit({
                 name: ';cloudy water filter',
                 displayName: 'Cloudy water filter',
-                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [coal] and [mana], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve power and efficiency of the [;cloudy water filter] <>Conversion: [cloudy water] into [water]',
+                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [coal] and [mana], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;cloudy water filter]. <>Conversion: [cloudy water] into [water]',
                 icon: [25, 11, 'magixmod'],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1, 'mana': 1.5 },
@@ -7757,7 +7796,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Unit({
                 name: 'cloudy water filter',
-                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [sand] and [mana], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve power and efficiency of the [cloudy water filter] <>Conversion: [cloudy water] into [water]',
+                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [sand] and [mana], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [cloudy water filter]. <>Conversion: [cloudy water] into [water]',
                 icon: [25, 12, 'magixmod'],
                 cost: { 'basic building materials': 75 },
                 upkeep: { 'sand': 1, 'mana': 1 },
@@ -7775,7 +7814,7 @@ if (getCookie("civ") != "1") {
             new G.Unit({
                 name: ';water filter',
                 displayName: 'Water filter',
-                desc: 'A filter that uses land and a worker. Because the upkeep uses [coal], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve power and efficiency of the [;water filter] <>Conversion: [muddy water] into [water]',
+                desc: 'A filter that uses land and a worker. Because the upkeep uses [coal], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;water filter]. <>Conversion: [muddy water] into [water]',
                 icon: [24, 16, 'magixmod'],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1 },
@@ -7792,7 +7831,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Unit({
                 name: 'water filter',
-                desc: 'A filter that uses land and a worker. Because the upkeep uses [sand], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve power and efficiency of the [water filter] <>Conversion: [muddy water] into [water]',
+                desc: 'A filter that uses land and a worker. Because the upkeep uses [sand], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [water filter]. <>Conversion: [muddy water] into [water]',
                 icon: [23, 16, 'magixmod'],
                 cost: { 'basic building materials': 75 },
                 upkeep: { 'sand': 1 },
@@ -7876,6 +7915,7 @@ if (getCookie("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'wheat': 20 } },
+                    { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.2, req: { 'gt2': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertlizer': true, 'wizard\'s grain fertlizer': false } },
@@ -8326,12 +8366,14 @@ if (getCookie("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy well',
-                desc: '@produces fresh [cloudy water], up to 28 per day<>The [holy well] is a steady source of drinkable water.',
+                desc: '@produces fresh [cloudy water], up to 35 per day<>The [holy well] is a steady source of drinkable water, but requires some [holy essence] to start operating.',
                 icon: [10, 14, 'magixmod'],
-                cost: { 'stone': 50, 'basic building materials': 120 },
+                cost: { 'holy essence': 100, 'stone': 50, 'basic building materials': 120 },
                 use: { 'land of the Paradise': 1 },
                 effects: [
-                    { type: 'gather', what: { 'cloudy water': 28 } },
+                    { type: 'gather', what: { 'cloudy water': 35 } },
+                    { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
+                    { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 0.9, req: { 'dt7': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
@@ -8860,12 +8902,14 @@ if (getCookie("civ") != "1") {
             new G.Unit({
                 name: 'well of the Plain Island',
                 displayName: 'Well of the Island',
-                desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable water.',
+                desc: '@produces fresh [water], up to 25 per day<>The [well] is a steady source of drinkable water.',
                 icon: [25, 3],
                 cost: { 'stone': 70, 'archaic building materials': 30, 'basic building materials': 15 },
                 use: { 'land of the Plain Island': 1 },
                 effects: [
-                    { type: 'gather', what: { 'water': 20 } },
+                    { type: 'gather', what: { 'water': 25 } },
+                    { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
+                    { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 0.85, req: { 'dt8': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
@@ -9187,6 +9231,7 @@ if (getCookie("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'vegetable': 0.14 } },
+                    { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } }
                 ],
             });
@@ -9201,6 +9246,7 @@ if (getCookie("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'sugar cane': 0.85 } },
+                    { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 2.5, req: { 'more humid water': true } },
                     { type: 'mult', value: 3, req: { 'soil for moisture-loving plants': true } },
@@ -9588,7 +9634,7 @@ if (getCookie("civ") != "1") {
             new G.Unit({
                 name: 'complex of dreamers',
                 displayName: 'Complex of Dreamers',
-                desc: '@leads to the <b>Insight-ly victory</b><>The nice complex built at basis of a [Wizard Complex]. In the name of [dreamer]s. It is their home. This wonder may provide housing and...empower [insight] by itself if the final step is finished! It requires [insight] and [wisdom] during construction. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
+                desc: '@leads to the <b>Insight-ly victory</b><>The nice complex is built at the bottom of a [Wizard Complex]. In the name of [dreamer]s. It is their home. This wonder may provide housing and...empower [insight] by itself if the final step is finished! It requires [insight] and [wisdom] during construction. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
                 wonder: 'insight-ly',
                 icon: [choose([1, 4, 7]), 17, 'magixmod'],
                 wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
@@ -9606,7 +9652,7 @@ if (getCookie("civ") != "1") {
             new G.Unit({
                 name: 'pagoda of democracy',
                 displayName: 'Pagoda of Democracy',
-                desc: '@leads to the <b>Democration victory</b><>The nice pagoda built over the forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. It is [influence] and [authority] specified so it needs it while building.',
+                desc: '@leads to the <b>Democration victory</b><>The nice pagoda is looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. It is [influence] and [authority] specified so it needs it while building.',
                 wonder: 'democration',
                 icon: [6, 13, 'magixmod'],
                 wideIcon: [5, 13, 'magixmod'],
@@ -9797,7 +9843,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Unit({
                 name: 'hartar\'s statue',
-                desc: '@Leads to <b>Hunted</b> trial completion. //Statue fully related to patron of this plane: Hartar.<><font color="#ffd000">Fresh meat...might be healthy but only with sense, of course.</font>',
+                desc: '@Leads to <b>Hunted</b> trial completion. //Statue fully related to patron of this plane: Hartar.<><font color="#ffd000">Fresh meat might be healthy enough...</font>',
                 wonder: 'hunted',
                 icon: [25, 26, 'magixmod'],
                 wideIcon: [24, 26, 'magixmod'],
@@ -11645,7 +11691,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'deeper wells', category: 'upgrade',
-                desc: '@[well]s provide 5% more water. Boosts only [well] and [well of the Plain Island].',
+                desc: '@[well]s provide 5% more water. Only boosts normal [well]s.',
                 icon: [31, 15, 'magixmod'],
                 cost: { 'insight': 490, 'wisdom': 30 },
                 req: { 'agriculture': true },
@@ -11704,7 +11750,7 @@ if (getCookie("civ") != "1") {
                 name: '2nd portal sky',
                 displayName: 'The second portal',
                 category: 'tier1',
-                desc: 'After your people heard [the god\'s call], your wizards full of faith people figured out a way to activate the portal to the Paradise atop the wonder!',
+                desc: 'After your people heard [the god\'s call], your wizards full of faith figured out a way to activate a portal to Paradise!',
                 icon: [20, 3, 'magixmod'],
                 cost: { 'insight': 1595, 'culture': 300, 'mana': 2500, 'influence': 70, 'spirituality': 50, 'population': 1000 },
                 req: { 'belief in portals': true, 'first portal to new world': true, 'the god\'s call': true, 'monument-building II': true },
@@ -11805,7 +11851,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'ambrosium crafting', category: 'tier1',
-                desc: '@Unlocks the [ambrosium shard shack], which can craft [ambrosium shard]s with the use of [mana], [cloudy water], and [ambrosium leaf,Ambrosium leaves] of course.',
+                desc: '@Unlocks the [ambrosium shard shack], which can craft [ambrosium shard]s with the use of [mana], [cloudy water], and [ambrosium leaf,Ambrosium leaves].',
                 icon: [13, 14, 'magixmod'],
                 cost: { 'insight': 980 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
@@ -12654,7 +12700,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'moderation',
                 displayName: '<font color="Yellow">Moderation</font>',
-                desc: 'The time has finally come, and people seem very curious. That is a sign that they want to know more and more. This trait will unlock unique techs, traits, and units.',
+                desc: 'The time has finally come, and people seem very curious, making them want to know more and more! This trait will unlock unique techs, traits, and units.',
                 icon: [25, 17, 'magixmod'],
                 cost: {},
                 chance: 750,
@@ -12697,7 +12743,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'dt1',
                 displayName: 'Devil\'s trait #1 Lazy blacksmiths',
-                desc: 'Rates of [blacksmith workshop]s production decreased by 5% at each mode. It also affects the paradise version.',
+                desc: '[blacksmith workshop]s are 5% slower at each mode. It also affects the paradise version.',
                 icon: [26, 1, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12710,7 +12756,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'dt2',
                 displayName: 'Devil\'s trait #2 Lazy firekeepers',
-                desc: 'Rates of [firekeeper]s production decreased by 3% at each mode. // <small>Nyeeeh</small>',
+                desc: '[firekeeper]s work 3% slower at each mode. // <small>Nyeeeh</small>',
                 icon: [26, 2, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12723,7 +12769,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'dt3',
                 displayName: 'Devil\'s trait #3 Lazy carvers',
-                desc: 'Rates of [carver]s production decreased by 5% at each mode.',
+                desc: '[carver]s are 5% slower at each mode.',
                 icon: [26, 3, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12735,8 +12781,8 @@ if (getCookie("civ") != "1") {
             });
             new G.Trait({
                 name: 'dt4',
-                displayName: 'Devil\'s trait #4 Precious material unluck',
-                desc: 'All gathering of [gold ore,gold] and [platinum ore,platinum] decreased by 5%.',
+                displayName: 'Devil\'s trait #4 Unlucky metals',
+                desc: 'All gathering of [gold ore,Gold] and [platinum ore,Platinum] is decreased by 5%.',
                 icon: [26, 4, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12749,7 +12795,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'dt5',
                 displayName: 'Devil\'s trait #5 Hard material decay',
-                desc: 'All gathering of resources that are used to craft [hard metal ingot]s decreased by 5%.',
+                desc: 'All gathering of resources that are used to craft [hard metal ingot]s will be decreased by 5%.',
                 icon: [26, 5, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12762,7 +12808,7 @@ if (getCookie("civ") != "1") {
             new G.Trait({
                 name: 'dt6',
                 displayName: 'Devil\'s trait #6 Soft metal decay',
-                desc: 'All gathering of resources that are used to craft [soft metal ingot]s decreased by 5%.',
+                desc: 'All gathering of resources that are used to craft [soft metal ingot]s will be decreased by 5%.',
                 icon: [26, 6, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -14855,7 +14901,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'coordination', category: 'tier1',
-                desc: '[guard] get better coordination, the chance of successfully winning a battle of <b>guard vs thief</b> is doubled. Also, it may lead you to unlock more types of guards.',
+                desc: '[guard]s get better coordination, increasing the chance of successfully winning a battle against a thief.',
                 icon: [33, 27, 'magixmod'],
                 req: { 'battling thieves': true, 'wizard wisdom': true }, //just to keep it for later
                 cost: { 'insight': 260 },
@@ -14935,7 +14981,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'parallel theory 1/3', category: 'tier1',
-                desc: 'What if you can make mirror work like portal? //This part of theory is about whole concept.',
+                desc: 'What if you can a make mirror work like a portal? //This part of the theory is about the general concept.',
                 req: { 'physics II': true, 'mirrors': true },
                 cost: { 'insight': 1600 },
                 icon: [28, 27, 'magixmod', 9, 30, 'magixmod'],
@@ -14944,7 +14990,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'parallel theory 2/3', category: 'tier2',
-                desc: 'What if you can make mirror work like portal? //This part of theory is about portal and stability.',
+                desc: 'What if you can a make mirror work like a portal? //This part of theory is about the portal and its stability.',
                 req: { 'physics II': true, 'parallel theory 1/3': true, 'symbolism III': true },
                 cost: { 'insight II': 150 },
                 icon: [27, 27, 'magixmod', 9, 30, 'magixmod'],
@@ -14953,7 +14999,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'parallel theory 3/3', category: 'tier2',
-                desc: 'What if you can make mirror work like portal? //This part is related to the mirror world!',
+                desc: 'What if you can a make mirror work like a portal? //This part is related to the creation of the mirror world!',
                 req: { 'parallel theory 2/3': true, 'wonder \'o science': true },
                 cost: { 'insight II': 400, 'science': 60, 'culture II': 30, 'faith II': 30, 'influence II': 25 },
                 icon: [26, 27, 'magixmod', 9, 30, 'magixmod'],
@@ -15845,7 +15891,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Trait({
                 name: 'voodoo spirit',
-                desc: '@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole], and the [cemetary of Plain Island] gets 2,500 additional [burial spot]s.)',
+                desc: '@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole], and the [cemetary of Plain Island] gains 2,500 additional [burial spot]s.)',
                 icon: [24, 5, 'magixmod'],
                 effects: [
                     {
@@ -16089,7 +16135,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'spirit-summoning',
-                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely they challenge themselves to summon a demon...which rather ends up with fail and sickness. //@another source of [spookiness]. //Note: [spirit summoner] will only work during Halloween. //<small>Don\'t you dare to disturb spirits eternal sleep?</small>',
+                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely, they challenge themselves to summon a demon...which ends up with some rather concerning sickness. //@another source of [spookiness]. //Note: [spirit summoner] will only work during Halloween. //<small>Don\'t you dare to disturb spirits eternal sleep?</small>',
                 icon: [3, 9, 'seasonal'],
                 cost: { 'faith': 80, 'culture': 40 },
                 req: { "Wizard complex": true, '"dark season"': true },
@@ -17426,7 +17472,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Tech({
                 name: 'sandy shores', category: 'tier1',
-                desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1000. // <small>A window...to dig...</small>',
+                desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
                 icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
@@ -17578,6 +17624,24 @@ if (getCookie("civ") != "1") {
                     }
                 ],
             });
+            new G.Tech({
+                name: 'careful water storage', category: 'tier1',
+                desc: 'Carefully storing the [water] within your tribe is a great way to prevent it from decaying rapidly. @decreases water decay during droughts',
+                icon: [7, 6, 0, 0, 'magix2'],
+                cost: { 'insight': 80 },
+                req: { 'drought': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'deeper wells II', category: 'tier1',
+                desc: 'Making sure to have plenty of depth within your people\'s wells can ensure that they have enough when droughts or famines strike. @boosts all types of wells by 50%',
+                icon: [0, 35, 'magixmod', 31, 15, 'magixmod'],
+                cost: { 'insight': 600, 'wisdom': 50 },
+                req: { 'careful water storage': true },
+                effects: [
+                ],
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -17615,11 +17679,29 @@ if (getCookie("civ") != "1") {
                 chance: 30,
                 category: 'knowledge'
             });
+            new G.Trait({
+                name: 'drought',
+                desc: '<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types. In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long this trait stays).</b> However, during a <u style="color:#c48b10">drought</u>, you may research unique technologies!',
+                icon: [9, 10, 1, 0, 'magix2'],
+                req: { 'tribalism': false },
+                category: 'main',
+                chance: 1000,
+            });
+            new G.Trait({
+                name: 'famine',
+                desc: '<b>Your people are in a <u style="color:#c48b10">famine</u>, which simply means that [food] will spoil much faster.',
+                icon: [33, 12, 'magixmod', 1, 0, 'magix2'],
+                req: { 'drought': true },
+                category: 'main',
+                chance: 6,
+            });
 
             new G.Res({
-                name: 'ignoreItem', // A resource that tells you if a famine is active
-                displayName: 'Next predicted famine year',
-                hidden: true
+                name: 'ignoreItem', // A resource that tells you the next predicted drought
+                displayName: 'Next predicted drought year',
+                desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
+                icon: [9, 10],
+                category: 'demog'
             });
             new G.Res({
                 name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
@@ -19646,7 +19728,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Goods({
                 name: 'dead grass',
-                desc: '[dead grass] is a bad source of [herb]s; Rarely, you may gain a piece of [fruit].',
+                desc: '[dead grass] is a bad source of [herb]s, however, you may gain a piece of [fruit] when foraging.',
                 icon: [33, 15, 'magixmod'],
                 res: {
                     'gather': { 'fruit': 0.1, 'stick': 0.5 },
@@ -20388,16 +20470,6 @@ if (getCookie("civ") != "1") {
             G.funcs['new year'] = function () //new year but civ2
             {
                 if (G.on) {
-                    // Famine calculations (maybe not the best)
-                    // if (G.year == 39) {
-                    //     G.Message({ type: 'important tall', text: 'Be warned: famines and droughts may start occuring after year 50.' })
-                    // }
-                    if (G.year == 49) {
-                        // Drought data starts being calculated at year 50
-                        G.getRes('ignoreItem').amount = G.year + (Math.random() * 4 + 2)
-                    } else if (G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1))) {
-                        //     G.Message({ type: 'important tall', text: 'A famine has started!' })
-                    }
                     G.isMap = G.isMapFullyExplored();
                     if (G.checkPolicy("creative foraging") == "on") {
                         if (G.getRes('creativity').amount < 1) G.setPolicyModeByName('creative foraging', 'off');
@@ -20451,7 +20523,7 @@ if (getCookie("civ") != "1") {
                             if (G.year + 1 % 100 == 0) {
                                 var str = '';
                                 str += 'It is now Century <b>' + Math.floor(((G.year / 100) + 1)) + '</b>.<br>';
-                                str += 'Report for a long, long time...this century:<br>';
+                                str += 'Report for this entire century:<br>';
                                 str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
                                 str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
                                 if (G.has('mystic')) str += '&bull; <b>Recently wiped resource</b>: ' + resdname + '<br>';
@@ -20646,7 +20718,7 @@ if (getCookie("civ") != "1") {
                         }
                     }
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
-                    updateObj("civ", 1);
+                    setObj("civ", 1);
                     newDayLines();
 
 
@@ -22390,7 +22462,7 @@ if (getCookie("civ") != "1") {
             }
             new G.Unit({
                 name: 'gatherer',
-                startWith: 5,
+                startWith: 4,
                 desc: '@forages for basic [food], [water] and [archaic building materials,Various interesting things]<>A vital part of an early tribe, [gatherer]s venture in the wilderness to gather food, wood, and other things of note.',
                 icon: [0, 2, 'c2'],
                 cost: {},
@@ -26480,7 +26552,7 @@ if (getCookie("civ") != "1") {
             });
             new G.Goods({
                 name: 'firestoats',
-                desc: 'Besides being a source of high-quality [hide,Furs], these carnivorous dark mammals with tail and eyes that can glow in the darkness can provide [meat] and [bone]s. Rarely they can provide you some light.//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Besides being a source of high-quality [hide,Furs], these carnivorous dark mammals with tail and eyes that can glow in the darkness can provide [meat] and [bone]s. They may also provide a small amount of light for your tribe sometimes.//Carcasses can sometimes be gathered for [spoiled food].',
                 icon: [choose([4, 5]), 19, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 0.5 },
