@@ -103,7 +103,7 @@ G.stabilizeResize = function () {
 
 G.storageObject = {}
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
-function getCookie(cname) {
+function getObj(cname) {
     var storageItem = G.storageObject[cname]
     if (storageItem) {
         return storageItem
@@ -127,7 +127,7 @@ function getCookie(cname) {
     return "";
 }
 
-function updateObj(key, value) {
+function setObj(key, value) {
     G.storageObject[key] = value
 }
 
@@ -169,10 +169,10 @@ var numberFormatters =
         ])
     ];
 
-if (getCookie("civ") == "") {
-    updateObj("civ", 0);
+if (getObj("civ") == "") {
+    setObj("civ", 0);
 }
-if (getCookie("island") == "undefined") updateObj("island", "Plain Island");
+if (getObj("island") == "undefined") setObj("island", "Plain Island");
 
 
 
@@ -457,11 +457,12 @@ G.AddData({
                     }
                 });
 
-                str += G.selfUpdatingText(function txt() {
-                    var t = G.influenceTraitRemovalCooldown > 0 ? '<br>Cooldown until next available removal: <b><br>' : '';
+                str += G.selfUpdatingText(function () {
+                    var t = G.influenceTraitRemovalCooldown > 0 ? '<br>Cooldown until the next available removal: <b><br>' : '';
                     if (G.influenceTraitRemovalCooldown > 0) {
                         if (G.has('time measuring 2/2')) t += G.BT(G.influenceTraitRemovalCooldown) + '</b>';
-                        else if (G.has('time measuring 1/2')) t += ((G.influenceTraitRemovalCooldown / 300) < 1 ? "Less than one year" : G.BT(Math.floor(G.influenceTraitRemovalCooldown / 300) * 300)) + '</b>';
+                        else if (G.has('time measuring 1/2')) t += ((G.influenceTraitRemovalCooldown / 300) <= 1 ? "Within a year" : G.BT(Math.floor(G.influenceTraitRemovalCooldown / 300) * 300)) + '</b>';
+                        else t += 'Unknown'
                     }
                     return t;
                 });
@@ -3543,7 +3544,7 @@ G.AddData({
         G.Clear = function () {
             //erase the save and start a new one, handy when the page crashes when testing new save formats
             console.log('Save data cleared. The page should refresh!');
-            updateObj("civ", 0);
+            setObj("civ", 0);
             G.T = 0;
             localStorage.setItem(G.saveTo, '');
             var debug = 0;
@@ -5103,7 +5104,7 @@ G.AddData({
                                 '<div class="thing standalone' + G.getIconClasses(me, true) + '' + (instance.mode == 3 ? ' wonderUnbuilt' : ' wonderBuilt') + '" style="transform:scale(2);position:absolute;left:70px;top:52px;">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                 '<div class="fancyText title">' + me.displayName + '</div><div class="bitBiggerText scrollBox underTitle shadowed" style="text-align:center;overflow:hidden;top:118px;bottom:50px;">';
                             if (instance.mode == 3) {
-                                str += '<div class="fancyText par"><font color="' + (getCookie('civ') == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';
+                                str += '<div class="fancyText par"><font color="' + (getObj('civ') == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';
                                 if (me.finalStepDesc) str += '<div class="fancyText par">' + G.parse(me.finalStepDesc) + '</div>';
                                 str += '<div class="divider"></div>' +
                                     G.button({

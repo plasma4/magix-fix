@@ -5306,13 +5306,13 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'mana capacity',
-                desc: 'The bigger the limit, the more mana can be stored.',
+                desc: 'The higher the limit, the more mana can be stored.',
                 icon: [2, 3, 'magixmod'],
                 hidden: true,
             });
             new G.Res({
                 name: 'holy essence limit',
-                desc: 'The bigger the limit, the more essence can be stored.',
+                desc: 'The higher the limit, the more essence can be stored.',
                 icon: [20, 6, 'magixmod'],
                 hidden: true,
             });
@@ -8255,7 +8255,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mana storage',
-                desc: 'Big glass ball mana storage. This storage can waste like [fire essence storage,Essence storages]. Each one allows you to store 32.5k [mana].',
+                desc: 'Big [glass] ball for [mana] storage. This storage can waste like [fire essence storage,Essence storages]. Each one allows you to store 32.5k [mana].',
                 icon: [6, 5, 'magixmod'],
                 cost: { 'basic building materials': 400, 'glass': 400 },
                 use: { 'land': 1.2 },
@@ -8270,7 +8270,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fire essence storage',
-                desc: '@One storage allows you to store 6,000 [fire essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [fire essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [2, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8285,7 +8285,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'water essence storage',
-                desc: '@One storage allows you to store 6,000 [water essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [water essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [0, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8300,7 +8300,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lightning essence storage',
-                desc: '@One storage allows you to store 6,000 [lightning essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [lightning essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [5, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8315,7 +8315,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'dark essence storage',
-                desc: '@One storage allows you to store 6,000 [dark essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [dark essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [1, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8330,7 +8330,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'nature essence storage',
-                desc: '@One storage allows you to store 6,000 [nature essence] more<>A simple glass shielded storage with an essence faucet. ',
+                desc: '@This essence storage allows you to store 6,000 [nature essence]<>It is a simple sphere of [glass] with a small essence faucet. ',
                 icon: [3, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8345,7 +8345,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wind essence storage',
-                desc: '@One storage allows you to store 6,000 [wind essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [wind essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [4, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8360,7 +8360,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy essence storage',
-                desc: '@One storage allows you to store 6,000 [holy essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [holy essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [3, 14, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land of the Paradise': 0.8 },
@@ -8511,7 +8511,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mana maker',
-                desc: 'A man who can make mana for you.',
+                desc: 'A man who can make [mana] for you.',
                 icon: [4, 2, 'magixmod'],
                 cost: { 'insight': 1, 'stick': 2 },
                 use: { 'worker': 1 },
@@ -8616,7 +8616,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Well of mana',
-                desc: 'Source of mana. Once you spill some [mana] and [water essence] into the hole, you will get a decent source of [mana].',
+                desc: 'A source of [mana]. Once you spill some [mana] and [water essence] into the hole, you will get a decent source of [mana].',
                 icon: [6, 2, 'magixmod'],
                 cost: { 'precious building materials': 10, 'stone tools': 10, 'mana': 100, 'water essence': 15 },
                 use: { 'land': 1, 'wizard': 2 },
@@ -8741,7 +8741,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'Wizard Complex',
-                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower and consuming same mana. May provide more housing with further researches.',
+                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower and also needs [mana]. May provide more housing with further researches.',
                 icon: [3, 3, 'magixmod'],
                 cost: { 'basic building materials': 12500, 'precious building materials': 3000 },
                 use: { 'land': 9, 'worker': 10, 'wizard': 60 },
@@ -10327,7 +10327,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'christmas essence storage',
-                desc: '@One storage allows you to store 6,000 [christmas essence] more.<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [christmas essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [4, 11, 'seasonal'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -10455,7 +10455,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'halloween essence storage',
-                desc: '@One storage allows you to store 6,000 [halloween essence] more<>A simple glass shielded storage with an essence faucet.',
+                desc: '@This essence storage allows you to store 6,000 [halloween essence]<>It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [7, 8, 'seasonal'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -11354,7 +11354,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [wizard]s on your side.//With your newfound knowledge, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated: instead, they consume [mana]. Get [wizard wisdom] so that you can hire some [wizard]s!// With your newfound knowledge, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [5, 3, 'magixmod'],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
@@ -11370,7 +11370,7 @@ if (getObj("civ") != "1") {
             //New tech to allow wizards progressing
             new G.Tech({
                 name: 'mana brewery', category: 'tier1',
-                desc: 'You can find a specimen who will convert water into mana. // <small>But how?</small>',
+                desc: 'You can find a specimen who will convert [water] into [mana]. // <small>But how?</small>',
                 icon: [3, 2, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'wizardry': true },
@@ -11384,7 +11384,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'well of mana', category: 'tier1',
-                desc: 'You can now construct a well from which you can gather mana rather than water. //<small>Oh, so that\'s the power source for magic tricks...</small>',
+                desc: 'You can now construct a well from which you gather [mana]. //<small>Oh, so that\'s the power source for magic tricks...</small>',
                 icon: [4, 3, 'magixmod'],
                 cost: { 'insight': 45, 'faith': 5, 'mana': 100 },
                 req: { 'mana brewery': true, 'more useful housing': true },
@@ -11423,7 +11423,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'glass-crafting', category: 'tier1',
-                desc: 'Your [kiln]s will be able to craft glass out of sand. // <small>A window to the world...</small>',
+                desc: 'Your [kiln]s will be able to craft [glass] out of [sand]. // <small>A window to the world...</small>',
                 icon: [7, 1, 'magixmod'],
                 cost: { 'insight': 45 },
                 req: { 'masonry': true, 'smelting': true },
@@ -13170,7 +13170,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cozy building', category: 'upgrade',
-                desc: '@people now want to obtain warmth using fire. This is always a solution for cold nights if people living inside have no clothing. People add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>This tech changes the icons for some buildings and is a step to unlock more tech.',
+                desc: '@people now want to obtain warmth using fire. This is always a solution for cold nights if people living inside have no clothing. People add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>This tech changes the icons some buildings.',
                 icon: [29, 3, 'magixmod'],
                 cost: { 'insight II': 20 },
                 req: { 'sedentism': true, 'tool-making': true, 'focused scouting': true },
@@ -13187,7 +13187,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cozier building', category: 'upgrade',
-                desc: '@people except setting up a chimney started thinking about having some decor near their houses. <>Makes buildings look even better, changing the look of basic buildings and also unlocking something new.',
+                desc: '@people began thinking about having some decor near their houses. <>Getting this makes buildings look even better, changing the look of basic buildings and also unlocking something new.',
                 icon: [29, 4, 'magixmod'],
                 cost: { 'insight II': 25, 'culture II': 5 },
                 req: { 'cozy building': true, 'focused scouting': true, 'caretaking': true },
@@ -13206,7 +13206,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths IV', category: 'tier2',
-                desc: 'Provides 5 [education] and 40 [wisdom II] @Expands maths knowledge of scholars by stuff such as more complex function analysis, calculating variables in terms of other variables, solving more complex equations, introducing math logic even further. @improves average citizen\'s math knowledge. @depending on path chosen by your people scholars may be even more math-talented. //<small>thanks to the math stuff mentioned here, college is so hard</small>',
+                desc: 'Provides 5 [education] and 40 [wisdom II] @Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and overall just pushing math logic to its limits. @Improves your average citizen\'s math knowledge. @Depending on the path chosen by your people, scholars may be even more math-talented! //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
                 icon: [2, 35, 'magixmod', 8, 21, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'science': 8, 'culture II': 12 },
                 effects: [
@@ -13488,7 +13488,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'master mana-making', category: 'upgrade',
-                desc: '[mana maker] works four times as efficient due to improved technologies of crafting mana that people have discovered. @Applies visual change to [mana maker].',
+                desc: '[mana maker]s are four times faster due to improved methods of crafting [mana]. @Applies a visual change to your [mana maker]s.',
                 icon: [3, 24, 'magixmod'],
                 cost: { 'insight II': 90, 'culture II': 15 },
                 req: { 'policy revaluation': true, 'magical soil': true },
@@ -16878,7 +16878,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt28',
                 displayName: 'Devil\'s trait #28 Filthy mana',
-                desc: 'Wizardry is weakened by 5% // <small>This mana is FAKE I am SURE OF IT!</small>',
+                desc: 'Wizardry is weakened by 5% // <small>This mana is FAKE! I am SURE OF IT!</small>',
                 icon: [7, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'at9': false, 'belief in the beforelife': true },
@@ -17485,7 +17485,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'sandy shores', category: 'tier1',
-                desc: '@Your [digger]s will be able to to collect small amounts of sand from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
+                desc: '@Your [digger]s will be able to to collect small amounts of [sand] from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
                 icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
@@ -17494,7 +17494,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'sandy shores II', category: 'tier1',
-                desc: 'Your [digger]s collect twice as much sand from [sandy shores].',
+                desc: 'Your [digger]s collect twice as much [sand] from [sandy shores].',
                 icon: [0, 35, 'magixmod', 4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
@@ -17552,8 +17552,8 @@ if (getObj("civ") != "1") {
                 name: 'salty sand', category: 'tier1',
                 desc: 'You will be able to get [salt] from your world\'s shores by hiring [digger]s, who will process the [salt] out of [sand].',
                 icon: [11, 7, 0, 0, 'magix2'],
-                cost: { 'insight': 160 },
-                req: { 'sandy shores': true },
+                cost: { 'insight': 300 },
+                req: { 'essence storages': true, 'sandy shores': true },
                 effects: [
                 ],
             });
@@ -17561,7 +17561,7 @@ if (getObj("civ") != "1") {
                 name: 'salty sand II', category: 'tier1',
                 desc: '[digger]s are now able get much more [salt] from your oceans by drying out the salty water within.',
                 icon: [0, 35, 'magixmod', 11, 7, 0, 0, 'magix2'],
-                cost: { 'insight': 400, 'wisdom': 50 },
+                cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
                 effects: [
                 ],
@@ -18684,7 +18684,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'water rituals',
-                desc: 'Improves [water] production from all well types by 15%. During a drought, this effect is increased to 60%. This ritual requires 150 [magic essences] every day as upkeep instead, and because of this, their cost will not be changed by any trait or tech.',
+                desc: 'Improves [water] production from all well types by 15%. During a drought, this effect is increased to 60%. This ritual requires 150 [magic essences] every day as upkeep instead, and because of this, this ritual\'s cost will not be changed by any trait or tech.',
                 icon: [8, 12, 7, 6],
                 cost: { 'magic essences': 5000 },
                 startMode: 'off',
@@ -24724,7 +24724,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'primitive glass-crafting', category: 'tier1',
-                desc: 'Your [kiln]s will be able to craft glass out of sand after learning this. // <small>A window to the world...wait...it\'s near impossible to see any beautiful landscape here. Maybe not.</small>',
+                desc: 'Your [kiln]s will be able to craft [glass] out of [sand]. // <small>A window to the world...wait...it\'s near impossible to see any beautiful landscape here. Maybe not.</small>',
                 icon: [28, 12, 'c2'],
                 cost: { 'creativity': 30 },
                 req: { 'masonry': true, 'smelting': true },
@@ -25176,7 +25176,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon elves will now arrive in your tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated; they consume mana to be made. Get [wizard wisdom] so you can hire some [Wizard]s on your side. //<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon elves will now arrive in your tribe. They are called <b><font color="white">Wizards</font></b> and behave quite strangely sometimes. From now, wizardry and essences will start to appear. Get [wizard wisdom] so you can hire some [Wizard]s. //<small>Note: it doesn\'t mean anything bad!</small>',
                 icon: [24, 14, 'c2'],
                 cost: { 'discernment': 106, 'faith': 10, 'gentility': 16 },
                 req: { 'a power of the fortress': true, 'developed creativity': true },
