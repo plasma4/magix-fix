@@ -17,30 +17,37 @@ body {
   filter: drop-shadow(0 0 10px white);
 }
 
-.tutorialMessage>.messageContent
-{
+.tutorialMessage>.messageContent {
 	background:rgba(0,0,255,0.2);
 	box-shadow:1px 1px 0px rgba(128,255,255,0.2) inset;
 }
-.story1Message>.messageContent
-{
+.story1Message>.messageContent {
 	background:rgba(0,128,255,0.1);
 	box-shadow:1px 1px 0px rgba(0,255,0,0.2) inset;
 }
-.story2Message>.messageContent
-{
+.story2Message>.messageContent {
 	background:rgba(128,0,255,0.1);
 	box-shadow:1px 1px 0px rgba(0,255,0,0.2) inset;
 }
-.underworldigMessage>.messageContent
-{
+.underworldigMessage>.messageContent {
 	background:rgba(76,0,153,0.3);
 	box-shadow:1px 1px 0px rgba(0,255,0,0.2) inset;
 }
-.emblemobtainMessage>.messageContent
-{
+.emblemobtainMessage>.messageContent {
 	background:rgba(153,153,0,0.3);
 	box-shadow:1px 1px 0px rgba(0,255,0,0.2) inset;
+}
+.uniqueMessage>.messageContent {
+	background:rgba(145,61,55,0.2);
+	box-shadow:4px 4px 0px rgba(255,200,200,0.3) inset;
+}
+.bad2Message>.messageContent {
+	background:rgba(110,64,0,0.5);
+	box-shadow:1px 1px 0px rgba(250,250,250,0.25) inset;
+}
+.bad3Message>.messageContent {
+	background:rgba(110,64,0,0.8);
+	box-shadow:1px 1px 0px rgba(250,250,250,0.35) inset;
 }
 .wide1{width:48px;}
 .wide2{width:96px;}
@@ -49,108 +56,74 @@ body {
 .widenhigh2{width:144px;height:144px;}
 .utilframed{width:48px;}
 
-.thing>.overlay
-{
+.thing>.overlay {
 	background:url(frames.png);
 	margin:-2px;
 }
 
-.thing.utilframed>.overlay
-{
+.thing.utilframed>.overlay {
 	background:url(frames.png);
 	background-position:-338px 0px;
 }
 
-.thing.utilframed.disabled
-{
+.thing.utilframed.disabled {
 	background:#600;
 }
-.thing.utilframed.disabled>.icon
-{
+.thing.utilframed.disabled>.icon {
 	opacity:0.5;
 }
-.thing.widenhigh1>.overlay
-{
+.thing.widenhigh1>.overlay {
 	background-position:0 -48px;
 }
-.thing.widenhigh2>.overlay
-{
+.thing.widenhigh2>.overlay {
 	background-position:0px -52px;
 }
-.thing.shadowachiev>.overlay
-{
+.thing.shadowachiev>.overlay {
 	background:url(roundFrameShadowAchiev.png);
 	margin:-2px;
 }
-.thing.shadowachiev
-{
+.thing.shadowachiev {
 	border-radius:24px;
 	margin:3px;
 }
-.thing.shadowachiev>.icon
-{
+.thing.shadowachiev>.icon {
 	border-radius:24px;
 	overflow:hidden;
 }
-.thing.off.shadowachiev
-{
+.thing.off.shadowachiev {
 	opacity:0.5;
 }
-.thing.seasonalachiev>.overlay
-{
+.thing.seasonalachiev>.overlay {
 	background:url(roundFrameSeasonalAchiev.png);
 	margin:-2px;
 }
-.thing.seasonalachiev
-{
+.thing.seasonalachiev {
 	border-radius:24px;
 	margin:3px;
 }
-.thing.seasonalachiev>.icon
-{
+.thing.seasonalachiev>.icon {
 	border-radius:24px;
 	overflow:hidden;
 }
-.thing.c2achiev>.overlay
-{
+.thing.c2achiev>.overlay {
 	background:url(roundFramec2.png);
 	margin:-2px;
 }
-.thing.c2achiev
-{
+.thing.c2achiev {
 	border-radius:24px;
 	margin:3px;
 }
-.thing.c2achiev>.icon
-{
+.thing.c2achiev>.icon {
 	border-radius:24px;
 	overflow:hidden;
 }
-.thing.off.c2achiev
-{
+.thing.off.c2achiev {
 	opacity:0.5;
 }
-.thing.off.seasonalachiev
-{
+.thing.off.seasonalachiev {
 	opacity:0.5;
 }
-.uniqueMessage>.messageContent
-{
-	background:rgba(145,61,55,0.2);
-	box-shadow:4px 4px 0px rgba(255,200,200,0.3) inset;
-}
-.bad2Message>.messageContent
-{
-	background:rgba(110,64,0,0.5);
-	box-shadow:1px 1px 0px rgba(80,40,0,0.25) inset;
-}
-.bad3Message>.messageContent
-{
-	background:rgba(110,64,0,0.8);
-	box-shadow:1px 1px 0px rgba(100,50,0,0.35) inset;
-}
-.gizmoE
-{
+.gizmoE {
 	width:17px;
 	height:16px;
 	position:absolute;
