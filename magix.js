@@ -506,7 +506,7 @@ function c2() { G.loadMenu = 2; setObj("civ", 1); G.NewGameWithSameMods2() };
 var civ1 = function () {
     G.dialogue.forceClose();
     G.dialogue.popup(function (div) {
-        return '<div style="padding:16px;min-width:320px;"><div class="fancyText title"><font color="#8888ff">Start a new game - human race</font></div>' +
+        return '<div style="padding:16px;min-width:320px;"><div class="fancyText title"><font color="#8888ff">Start a new run</font></div>' +
             G.doFunc('new game blurb', 'What is your name?<br>') +
             G.field({ style: 'width:100%;', text: G.getName('ruler'), tooltip: 'Enter your name here.<br>Make it something memorable!', oninput: function (val) { G.setName('ruler', val); } }) +
             '<div class="divider"></div>' +
@@ -627,7 +627,7 @@ G.NewGame = function (doneLoading, mods) {
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
                 G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has oceans, tropics, deserts, and tundras.<br>Gameplay difficulty is higher than with the human race, but doing your job<br>here properly will let you boost both the human and elf races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. it will take a while though...')) +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has many other biomes.<br>Gameplay difficulty is higher than with the human race,<br>but helping elves out will boost both races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. it will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -1080,10 +1080,10 @@ if (getObj("civ") != "1") {
     G.AddData({
         name: 'Default dataset',
         author: 'pelletsstarPL',
-        desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people. Note that this mod uses part of the vanilla game, so credits to Orteil for the default dataset.',
+        desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people, and explore the vast oceans! Note that this mod uses part of the base game, so credits to Orteil for the default dataset.',
         engineVersion: 1,
         requires: ['MagixUtils'],
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random(), 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer');
@@ -1581,7 +1581,7 @@ if (getObj("civ") != "1") {
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
-                        'Technical note: Start a new game by opening the settings.' +
+                        'Technical note: Start a new run by opening the settings.' +
                         '</div></div>'
                 })
             }
@@ -1664,12 +1664,12 @@ if (getObj("civ") != "1") {
                             if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
                             setObj('drought', 0)
                         }
-                    } else if (G.year >= 49 && G.year + 2 >= G.getRes('ignoreItem').amount) {
+                    } else if (G.year == 49 || (G.year > 49 && G.year + 2 >= G.getRes('ignoreItem').amount)) {
                         // Drought data starts being calculated at year 50
                         G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 8)
                     } else if (G.year == G.getRes('ignoreItem').amount - 2) {
                         G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
-                    } else if (Math.random() < 0.8 && G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
+                    } else if (G.year > 49 && Math.random() < 0.8 && G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
                         G.gainTrait(G.traitByName['drought'])
                         setObj('drought', G.year)
                         G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 8 + 9)
@@ -1731,13 +1731,13 @@ if (getObj("civ") != "1") {
                                         // message.play()
                                         return '<div style="width:580px;min-height:600px;height:75%;">' +
                                             '<div class="fancyText title"><font color="pink">A whole new world</font></div>' +
-                                            '<div class="fancyText"><font color="pink">This green meteor has fallen down from space<br>It didn\'t take long to wipe everyone else off...<br>but you...suddenly became the survivor.</font></div>' +
+                                            '<div class="fancyText"><font color="#4d4">The green meteor has fallen down from space!<br>It didn\'t take long to cause damage...<br>but you suddenly became the survivor.</font></div>' +
                                             '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                             '<br><br><Br>' +
                                             '<center><table width="240" height="120"><tr background="https://file.garden/Xbm-ilapeDSxWf1b/cassete.png"><td>' +
                                             '<br><br></td></tr></table></center>' +
                                             '<div class="bulleted">You unlocked Civilization 2!</div>' +
-                                            '<div class="bulleted">Adventure with the new race will be harder than adventure with your current human race. Think about collecting more <b>Victory points</b> first!<br>You currently own ' + G.getRes('victory point').amount + ' Victory points.</div>' +
+                                            '<div class="bulleted">The adventure with the new race will be harder than adventure with your current human race. Think about collecting more <b>Victory points</b> first!<br>You currently own ' + G.getRes('victory point').amount + ' Victory points.</div>' +
                                             '<div class="bulleted">From now on, ascending/starting a new game will allow you to pick between Civilization 1 and 2.</div>' +
                                             '<div class="bulleted">You will need to finish some Civilization 2 runs in order to unlock next C1 things</div>' +
                                             '<div class="bulleted">Civilization 2 is settled in an entirely different environment!</div>' +
@@ -1763,7 +1763,7 @@ if (getObj("civ") != "1") {
                     if (G.getSetting('annual raports'))
                         if (G.has('time measuring 1/2')) {
                             var str = '';
-                            str += 'It is now year <b>' + (G.year + 1) + (G.has('drought') ? '</b> with a drought active.<br>' : '</b>.<br>');
+                            str += 'It is now year <b>' + (G.year + 1) + (G.has('drought') ? '</b> (with a drought currently active).<br>' : '</b>.<br>');
                             str += 'Report for last year:<br>';
                             str += '&bull; <b>Births</b>: ' + B(G.getRes('born this year').amount) + '<br>';
                             str += '&bull; <b>Deaths</b>: ' + B(G.getRes('died this year').amount) + '<br>';
@@ -1981,10 +1981,10 @@ if (getObj("civ") != "1") {
                                     return '<div style="width:320x;min-height:200px;height:75%;">' +
                                         '<div class="fancyText title"><font color="red">Trial failed</font></div>' +
                                         '<tt><div class="fancyText">You failed the Unhappy trial by reaching -400% unhappiness cap</tt>' +
-                                        '<br>All people murdered themselves leaving no one alive.<br>This is cruel.<br>' +
+                                        '<br>All people murdered themselves, leaving no one remaining.<br>This was quite cruel...<br>' +
                                         '<br><br>' +
-                                        'But you can try again, by reaching the Pantheon again and choosing Bersaria.</div><br>' +
-                                        'Start a new game: you know how.' +
+                                        'But you can try again by reaching the Pantheon again and choosing Bersaria.</div><br>' +
+                                        'Technical note: Start a new run by opening the settings.' +
                                         '</div></div>'
                                 })
                             }
@@ -2037,8 +2037,8 @@ if (getObj("civ") != "1") {
                                     '<tt><div class="fancyText">You failed the Cultural trial by making your making your people too culturally unbalanced.</tt>' +
                                     '<br>You have been kicked out of this plane.<br>' +
                                     '<br><br>' +
-                                    'But you can try again, by reaching the Pantheon again and choosing Tu-ria!</div><br>' +
-                                    'Start a new game: you know how.' +
+                                    'But you can try again by reaching the Pantheon again and choosing Tu-ria!</div><br>' +
+                                    'Technical note: Start a new run by opening the settings.' +
                                     '</div></div>'
                             })
                         }
@@ -2059,9 +2059,9 @@ if (getObj("civ") != "1") {
                         if (relicChance <= 10 && G.has('digging')) {
                             var cultChance = Math.round(Math.random() * 100);
                             if (cultChance <= 10) {
-                                G.Message({ type: 'bad', text: 'Your people found a relic while digging underground. Sadly this relic isn\'t related to culture in any way.', icon: [3, 12, 8, 29, 'magixmod'] })
+                                G.Message({ type: 'bad', text: 'Your people found a relic while digging underground. Sadly, this relic isn\'t related to culture in any way.', icon: [3, 12, 8, 29, 'magixmod'] })
                             } else {
-                                G.Message({ type: 'good', text: 'Your people found a relic while digging underground. This relic is related to culture increasing up your <b>Cultural balance</b>. Fantastic', icon: [4, 12, 8, 29, 'magixmod'] })
+                                G.Message({ type: 'good', text: 'Your people found a relic while digging underground. This relic is related to culture, increasing your <b>Cultural balance</b>. Fantastic!', icon: [4, 12, 8, 29, 'magixmod'] })
                                 G.gain('cultural balance', Math.round(Math.random() * 2) + 1)
                             }
                         }
@@ -2076,8 +2076,8 @@ if (getObj("civ") != "1") {
                                 '<tt><div class="fancyText">You failed the Faithful trial because you lost all Faith.</tt>' +
                                 '<br>You have been kicked out of this plane.<br>' +
                                 '<br><br>' +
-                                'But you can try again, by reaching the Pantheon again and choosing Enlightened!</div><br>' +
-                                'Start a new game: you know how.' +
+                                'But you can try again by reaching the Pantheon again and choosing Enlightened!</div><br>' +
+                                'Technical note: Start a new game by opening the settings.' +
                                 '</div></div>'
                         })
                     }
@@ -2371,7 +2371,6 @@ if (getObj("civ") != "1") {
                         console.log('Refresh the page.');
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', slow)
                     }
-                    setObj("civ", 0);
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
                     const chances = [
                         {
@@ -6176,11 +6175,11 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'snow',
-                desc: 'Cold snow can be used to craft snowmen and make snowball fights, increasing the [happiness] of children slightly. Hire a [digger] to gather it. Decreases [health] at a negligible small rate.',
+                desc: 'Cold snow can be used to craft snowmen and make snowball fights, increasing the [happiness] of children slightly. Hire a [digger] to gather it.',
                 icon: [9, 12, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
-                turnToByContext: { 'Snow': { 'health': -0.0005, 'happiness': 0.001 } },
+                turnToByContext: { 'Snow': { 'happiness': 0.001 } },
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -6320,7 +6319,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'spookiness',
-                desc: 'Seasonal essential. //Your [spookiness] can unlock new bonuses on some levels. //Obtaining Halloween traits will allow you to gain points for that essential! Depending on [happiness], you may gain it slower or faster.',
+                desc: 'Seasonal essential. //[spookiness] is able to unlock new bonuses if you progress far enough! //Obtaining Halloween traits will allow you to gain points for that essential! Depending on [happiness], you may gain it slower or faster.',
                 icon: [12, 8, 'seasonal'],
                 tick: function (me, tick) {
                     var xpreq = ((((G.getRes('spookiness').amount + 10) * 55500) ^ (G.getRes('spookiness').amount + 1)) * (G.getRes('spookiness').amount + 3)) * ((G.getRes('spookiness').amount + 1) / 1.85);
@@ -6355,11 +6354,12 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'candy',
-                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. //Spoils quite quickly. Can be used as food.',
+                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. Spoils quite quickly but count as [food], providing some [happiness].',
                 icon: [choose([3, 4]), 8, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
                 partOf: 'food',
+                turnToByContext: { 'eating': { 'happiness': 0.04 }, 'decay': { 'honey': 1 } },
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.08;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -12345,7 +12345,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a tenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather resources with a tenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [20, 1],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'active exploration': false, 'dreaming': false },
@@ -12493,7 +12493,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'juicy expertise',
-                desc: '<font color="#aaffff">After crafting [juices] for a bit, you noticed your people make the most <b>tasty drinks<b> you\'ve ever tried! Getting this trait boosts the amount of [health] and [happiness] from drinking juice by 20%.</font>',
+                desc: '<font color="#aaffff">After crafting [juices] for a bit, you noticed your people make the most <b>tasty drinks</b> you\'ve ever tried! Getting this trait boosts the amount of [health] and [happiness] from drinking juice by 20%.</font>',
                 icon: [16, 5, 'magixmod'],
                 cost: { 'juices': 6.5e3, 'wisdom': 25, 'insight': 30 },
                 chance: 6,
@@ -12834,7 +12834,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt7',
                 displayName: 'Devil\'s trait #7 Holy well drought',
-                desc: '[holy well] gathers 10% less [cloudy water] than usual.',
+                desc: '[holy well]s gain 10% less [cloudy water].',
                 icon: [26, 7, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -12847,7 +12847,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt8',
                 displayName: 'Devil\'s trait #8 Plain Island wells drought',
-                desc: '[well of the Plain Island] gathers 15% less [water] than usual.',
+                desc: '[well of the Plain Island] gain 15% less [water] than usual.',
                 icon: [26, 8, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -13842,7 +13842,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
-                desc: 'The third level of [symbolism] will make the bonus apply to more units! ([guru] gathers a quarter more [science]. Additionally, [musician], [lawyer], [mediator]. [cathedral]s get a 60% bonus instead of 40% (from [symbolism II]) //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
+                desc: 'The third level of [symbolism] will make the bonus apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'symbI': false },
@@ -15054,7 +15054,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Druidish merriment',
-                desc: '[druid] gathers 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druids] gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [27, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism2': false },
@@ -15065,7 +15065,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism2',
                 displayName: 'Faithful worship',
-                desc: '[druid] gathers 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druids] gather 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [28, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism1': false },
@@ -15506,12 +15506,12 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'deep-rooted faith',
-                desc: 'Provides @50 [spirituality II], [spirituality] @90 [inspiration II]. //Religion built for centuries or milleniums is deep-rooted, meaning that almost nothing can make this religion die.',
+                desc: 'Provides @50 [spirituality II] and 100 [spirituality] @90 [inspiration II] //Religions built from centuries or milleniums slowly become deep-rooted, meaning that almost nothing can make this religion die.',
                 icon: [35, 24, 'magixmod'],
                 cost: { 'culture II': 50, 'faith II': 35, 'insight II': 350, 'science': 60 },
                 effects: [
                     { type: 'provide res', what: { 'spirituality II': 50 } },
-                    { type: 'provide res', what: { 'spirituality': 50 } },
+                    { type: 'provide res', what: { 'spirituality': 100 } },
                     { type: 'provide res', what: { 'inspiration II': 90 } },
                 ],
                 req: { 'villas of victory': true },
@@ -15888,7 +15888,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'peace',
-                desc: 'During the <b>Valentine\'s day</b> event no [thief] or [wild corpse] will spawn. //<small>Why it is only during Valentines?</small>',
+                desc: 'During the <b>Valentine\'s day</b> event, no [thief,Thieves] or [wild corpse]s will spawn. //<small>Why it is only during Valentines?</small>',
                 icon: [6, 16, 'seasonal'],
                 cost: { 'culture': 500, 'research': 100, 'faith': 500 },
                 req: { 'compliments': true },
@@ -15904,7 +15904,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'voodoo spirit',
-                desc: '@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole], and the [cemetary of Plain Island] gains 2,500 additional [burial spot]s.)',
+                desc: '@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole] and the [cemetary of Plain Island]; the island cemetary gains 2,500 additional [burial spot]s.)',
                 icon: [24, 5, 'magixmod'],
                 effects: [
                     {
@@ -16319,7 +16319,7 @@ if (getObj("civ") != "1") {
 
                             G.getDict('spiritual piety').req = { 'ritualism II': true };
                             G.getDict('belief in revenants').req = { 'belief in the beforelife': true };
-                            G.getDict('belief in revenants').desc += "//<small>No, that cannot be it. Most likely it may be our ancestor my friend...or maybe you from your previous run...<b>who knows?</b></small>";
+                            G.getDict('belief in revenants').desc += "//<small>No, that cannot be it. Most likely it may be an ancestor...or maybe you from your previous run...<b>who knows?</b></small>";
                             G.getDict('dark side').req = { 'ancestors world building': true };
                             //ambrosium shard shack
                             G.getDict('ambrosium shard shack').icon = [13, 13, 'magixmod', 8, 9, 'magixmod'];
@@ -16651,7 +16651,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fear of revenants',
-                desc: '@[grave]s and [family graves,Cemetaries] generate [spookiness].//<small>You know that you are safe, but still you feel that you are scared while seeing these graves. That\'s such a phenomeon, isn\'t it? Others also do and feel the same.</small>',
+                desc: '@[grave]s and [family graves,Cemetaries] generate [spookiness].//<small>You know that you are safe, but still you feel that you are scared while seeing these graves, which is pretty common, right? Others also do and feel the same.</small>',
                 icon: [13, 9, 'seasonal'],
                 cost: { 'faith': 50, 'culture': 50 },
                 req: { '"dark season"': true, 'belief in revenants': true },
@@ -17354,7 +17354,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [insight] with a tenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [insight] with a tenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 2, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'carcass-looting': false },
@@ -17362,7 +17362,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'active exploration',
-                desc: '@hired [wanderer]s gather [insight] with fifteenth of the efficiency of a [dreamer] and gather resources with fifteenth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@hired [wanderer]s gather [insight] with a fifteenth of the speed of a [dreamer] and gather resources with a fifteenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 3, 'magixmod'],
                 chance: 3,
                 req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false },
@@ -17941,7 +17941,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'crafting & farm rituals',
-                desc: 'Improves [Paper-crafting shack], [Well of mana] and <b>Farms</b> efficiency by 17%. Consumes 15 [faith] and 15 [influence] every 15 days; will stop if you run out.',
+                desc: 'Improves [Paper-crafting shack], [Well of mana] and <b>Farms</b> efficiency by 17%. Consumes 15 [faith] and 15 [influence] every 20 days; will stop if you run out.',
                 icon: [8, 12, 14, 2, 'magixmod'],
                 cost: { 'faith': 5, 'influence': 5 },
                 startMode: 'off',
@@ -24278,7 +24278,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a twelfth of the efficiency of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
+                desc: '@idle [worker]s gather resources with a twelfth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
                 icon: [20, 1, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'dreaming': false, 'branching wisdom': false },
@@ -24782,7 +24782,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Natural hopefulness',
-                desc: '[druid] gathers 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druids] gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 15, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
@@ -25581,7 +25581,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the efficiency of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 17, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'carcass-looting': false },

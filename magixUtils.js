@@ -16,6 +16,50 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
+// Custom storage tools that 1) don't break the save data and 2) are saved when exporting
+G.storageObject = localStorage.getItem("legacySave-alpha")
+if (G.storageObject) {
+    G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+\}/)[0]
+    if (G.storageObject) {
+        G.storageObject = JSON.parse(G.storageObject.replaceAll('&QOT', '"'))
+    } else {
+        G.storageObject = {}
+    }
+} else {
+    G.storageObject = {}
+}
+
+// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
+function getObj(cname) {
+    var storageItem = G.storageObject[cname]
+    if (storageItem != null) {
+        return storageItem
+    }
+    var localItem = localStorage.getItem(cname)
+    if (localItem !== null) {
+        return localItem
+    }
+    if (navigator.cookieEnabled) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+    }
+    return null;
+}
+
+function setObj(key, value) {
+    G.storageObject[key] = value
+}
+
 // Remove the empty tick functions for a little performance boost (how much? not sure...)
 G.Res = function (obj) {
     this.type = 'res';
@@ -101,36 +145,6 @@ G.stabilizeResize = function () {
     //if (G.tab.id=='unit') G.cacheUnitBounds();
 }
 
-G.storageObject = {}
-// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
-function getObj(cname) {
-    var storageItem = G.storageObject[cname]
-    if (storageItem) {
-        return storageItem
-    }
-    var localItem = localStorage.getItem(cname)
-    if (localItem !== null) {
-        return localItem
-    }
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function setObj(key, value) {
-    G.storageObject[key] = value
-}
-
 // Add more numbers
 var numberFormatters =
     [
@@ -169,20 +183,17 @@ var numberFormatters =
         ])
     ];
 
-if (getObj("civ") == "") {
-    setObj("civ", 0);
-}
-if (getObj("island") == "undefined") setObj("island", "Plain Island");
+if (getObj("civ") === null) setObj("civ", 0);
+if (getObj("island") === null) setObj("island", "Plain Island");
 
 
-
-
+var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random()
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
+    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();
@@ -1174,7 +1185,7 @@ G.AddData({
                 str += me.cooldown + ';';
             }
             // storage object
-            str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT')
+            str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT') + (G.PARTY ? '$' : '')
             str += '|';
             //console.log('SAVE');
             //console.log(str);
@@ -1183,6 +1194,9 @@ G.AddData({
             //console.log(Math.ceil(byteCount(str)/1000)+'kb');
             if (!toStr) {
                 localStorage.setItem(G.saveTo, str);
+                // Clear old save data
+                localStorage.removeItem("civ");
+                localStorage.removeItem("island");
                 G.middleText('- Game saved -');
                 //console.log('Game saved successfully.');
             }
@@ -1426,9 +1440,10 @@ G.AddData({
 
                 var tSpl = str[s++].split('$')
                 var spl = tSpl[0].split(';');
-                G.getDict('research box').cooldown = parseInt(spl[0]);
-                // storage object
-                if (tSpl.length > 1) G.storageObject = JSON.parse(tSpl[1].replaceAll('&QOT', '"'));
+                var num = parseInt(spl[0]);
+                G.getDict('research box').cooldown = isFinite(num) ? num : 0;
+                // storage objects are calculated at the very start so they work properly, so we just update G.PARTY
+                if (tSpl.length > 2) G.PARTY = 1;
                 G.runUnitReqs();
                 G.runPolicyReqs();
 
@@ -2590,7 +2605,7 @@ G.AddData({
         new G.Achiev({
             tier: 5,
             name: '???',
-            icon: [0, 0],
+            icon: [0, 0, 0, 0, 'magix2'],
             desc: '???',
             visible: true,
             civ: 0,
@@ -3561,11 +3576,12 @@ G.AddData({
             var str = '' +
                 '<div style="float:left;"><center>' +
                 G.button({ text: '<font color="orange">New game</font>', tooltip: 'Instantly start a new game.', onclick: function () { G.T = 0; G.NewGameWithSameMods(); } }) +
-                G.button({ text: '<font color="lime">Load</font>', tooltip: 'Reload the save.', onclick: function () { G.T = 0; G.Load(); } }) +
+                G.button({ text: '<font color="lime">Load</font>', tooltip: 'Load the save again.', onclick: function () { G.T = 0; G.Load(); } }) +
                 G.button({ text: '<font color="pink">Clear</font>', tooltip: 'Wipe save data.', onclick: function () { G.Clear(); } }) +
                 '<br>' +
                 G.button({
-                    text: 'ALMIGHTY', tooltip: 'Unlock every tech, trait and policy instantly.', onclick: function () {
+                    text: 'ALMIGHTY', tooltip: 'Unlock every tech, trait and policy instantly. Also unlocks the elf race!', onclick: function () {
+                        G.achievByName['???'].won = 1;
                         for (var i in G.tech) {
                             if (!G.techsOwnedNames.includes(G.tech[i].name)) G.gainTech(G.tech[i]);
                         }
@@ -3589,6 +3605,7 @@ G.AddData({
                 //G.writeSettingButton({id:'tieredDisplay',name:'tieredDisplay',text:'<font color="yellow">Show tiers</font>',tooltip:'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>When in that mode, click a tech to highlight its ancestors and descendants.'})+
                 '<br>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
+                G.button({ text: '<font color="#e28">Party</font>', tooltip: 'Add some color to your gameplay!', onclick: function () { G.PARTY = G.PARTY == 0 ? 1 : 0 } }) +
                 '<br><font color="lime">Debug mode is enabled for Magix (release ' + G.releaseNumber + ')</font>' +
                 G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(the gain is ten times the amount that the add amount is)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units<br><b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
                 '</center></div>';
@@ -4373,13 +4390,20 @@ G.AddData({
 
 
             if (G.PARTY) {
+                // Messing with CSS is goofy
                 var pulse = Math.pow((G.T % 10) / 10, 0.5);
                 G.l.style.filter = 'hue-rotate(' + ((G.T * 5) % 360) + 'deg) brightness(' + (150 - 50 * pulse) + '%)';
                 G.l.style.webkitFilter = 'hue-rotate(' + ((G.T * 5) % 360) + 'deg) brightness(' + (150 - 50 * pulse) + '%)';
                 G.l.style.transform = 'scale(' + (1.02 - 0.02 * pulse) + ',' + (1.02 - 0.02 * pulse) + ') rotate(' + (Math.sin(G.T * 0.5) * 0.5) + 'deg)';
                 l('foreground').style.overflowX = 'hidden';
                 l('foreground').style.overflowY = 'hidden';
-            };
+            } else {
+                G.l.style.filter = null;
+                G.l.style.webkitFilter = null;
+                G.l.style.transform = null;
+                l('foreground').style.overflowX = null;
+                l('foreground').style.overflowY = null;
+            }
             //forceTick lets us execute logic and force a tick update
             if (G.sequence == 'loading' || G.sequence == 'checking' || G.sequence == 'updating') {
                 var done = G.LogicModLoading();
@@ -4970,6 +4994,7 @@ G.AddData({
 
 
         G.NewGameWithSameMods = function () {
+            delete G.storageObject.drought
             G.loadMenu = undefined;
             G.loadCiv = 0;
             G.setTab = function (tab) {
@@ -5015,6 +5040,8 @@ G.AddData({
         }
         G.NewGameWithSameMods2 = function () //this one does not change loadmenu
         {
+            delete G.storageObject.drought
+            G.Save()
             G.setTab = function (tab) {
                 if (tab.popup) {
                     if (G.getSetting('animations')) triggerAnim(tab.l, 'plop');
