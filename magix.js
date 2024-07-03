@@ -1205,7 +1205,7 @@ if (getObj("civ") != "1") {
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - The [belief in the beforelife,Belief in the before/afterlife] traits have a doubled chance to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait decreases positive [happiness] gain by just 2% now!<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - Unlocks <b>Mausoleum eternal</b> achievement, providing massive fast tick boosts!' : '');
+                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - Unlocks <b>Mausoleum eternal</b> achievement, providing massive benefits!' : '');
                 }
             }
             G.seasonalContent = function () {
@@ -2794,7 +2794,7 @@ if (getObj("civ") != "1") {
                     if (me.amount > 0) {
                         //note : we also sneak in some stuff unrelated to population here
                         //policy ticks
-                        if (tick % 50 == 0) {
+                        if (tick % 20 == 0) {
                             if (!G.has('policy revaluation')) {
                                 var rituals = ['fertility rituals', 'harvest rituals', 'flower rituals', 'wisdom rituals'];
                                 for (var i in rituals) {
@@ -2845,7 +2845,7 @@ if (getObj("civ") != "1") {
                                         if ((G.getRes('faith II').amount < 2)) {
                                             G.setPolicyModeByName(rituals[i], 'off');
                                         } else {
-                                            G.lose('faith II', 0.1, 'rituals')
+                                            G.lose('faith II', 0.2, 'rituals')
                                         }
                                     }
                                 }
@@ -2900,6 +2900,7 @@ if (getObj("civ") != "1") {
                             var toConsume = 0;
                             var consumeMult = 1;
                             var happinessAdd = 0;
+                            if (G.has('drought') && G.has('drought preparation')) { consumeMult *= 0.95 }
                             if (G.has('ungrateful tribe II')) { consumeMult *= 0.99 }
                             if (G.has('dry throats')) { consumeMult *= 0.85; happinessAdd -= 0.04; }
                             else if (G.has('joy of drinking')) { consumeMult *= 1.15; happinessAdd += 0.04; }
@@ -5243,6 +5244,12 @@ if (getObj("civ") != "1") {
                 desc: 'This is how many <b>Essences</b> you have in total currently. [magic essences] are important for [wizard]s and are greatly respected.',
                 icon: [20, 13, 'magixmod'],
                 meta: true,
+                tick: function (me, tick) {
+                    if (G.checkPolicy('water rituals') == 'on') {
+                        if (G.getRes('magic essences').amount <= 150) G.setPolicyModeByName('water rituals', 'off')
+                        else G.lose('magic essences', 150, 'rituals')
+                    }
+                }
             });
             //Currency
             new G.Res({
@@ -6870,6 +6877,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
+                    { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
                 category: 'production',
@@ -8373,6 +8382,8 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'cloudy water': 35 } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
+                    { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 0.9, req: { 'dt7': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
@@ -8909,6 +8920,8 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'water': 25 } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
+                    { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 0.85, req: { 'dt8': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
@@ -11971,7 +11984,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'trustworthy influence', category: 'upgrade',
-                desc: 'Makes [pagoda of democracy] increase the power of [influence,influence gathering units] per tick. Increases the gain of [chieftain]s and [clan leader]s by 5% for the rest of current run.',
+                desc: 'Makes [pagoda of democracy] increase the power of [influence,influence gathering units] per tick. Increases the gain of [chieftain]s and [clan leader]s by 5%.',
                 icon: [21, 17, 'magixmod'],
                 cost: { 'insight': 25, 'pagoda construction point': 200 },
                 req: { 'political roots': true },
@@ -13402,7 +13415,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'policy revaluation',
-                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> But...<b>all</b> rituals now cost and require [faith II]. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]. All policies and rituals will require 1 more of an [influence II,Essential II].',
+                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost and require [faith II]. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]. Rituals will also require 1 more of an [influence II,Essential II].',
                 icon: [1, 23, 'magixmod'],
                 cost: { 'insight II': 15, 'culture II': 15, 'influence II': 5 },
                 chance: 45,
@@ -13439,7 +13452,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mining strategy', category: 'tier2',
-                desc: 'Decreases accident rate at [mine]. @Increases the efficiency of [mine] by 5%. @Applies visual change to [mine] icon.',
+                desc: 'Decreases accident rate at [mine]. @Increases the efficiency of [mine] by 5%. @Applies a visual change to [mine]s.',
                 icon: [17, 23, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 2 },
                 effects: [
@@ -15378,7 +15391,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt22',
                 displayName: 'Devil\'s trait #22 Drought',
-                desc: 'Everything related to [nature essence] produces 12% less of it, excluding the [Wizard Complex].',
+                desc: 'Everything related to [nature essence] produces 12% less of it, excluding the [Wizard Complex].//<small>Not that drought though</small>',
                 icon: [34, 20, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'gt10': false, 'belief in the afterlife': true },
@@ -16875,7 +16888,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt29',
                 displayName: 'Devil\'s trait #29 Awakening of the devil',
-                desc: 'Triggers two of first 18 devil\'s traits. @has chance to get [dt9] if not obtained before during current run. //<small>dark forces are awakening</small>',
+                desc: 'Triggers two of first 18 devil\'s traits. @has a chance to get [dt9] if not obtained during this run. //<small>dark forces are awakening</small>',
                 icon: [9, 34, 'magixmod', 26, 0, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -17642,6 +17655,15 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'faith in water', category: 'tier1',
+                desc: 'Unlocks a new ritual related to [water] gathering that costs [magic essences] instead of [faith].',
+                icon: [25, 3, 0, 0, 'magix2'],
+                cost: { 'magic essences': 100000 },
+                req: { 'stronger faith II': true },
+                effects: [
+                ],
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -17694,6 +17716,14 @@ if (getObj("civ") != "1") {
                 req: { 'drought': true },
                 category: 'main',
                 chance: 6,
+            });
+            new G.Trait({
+                name: 'drought preparation',
+                desc: 'During droughts, your people will automatically consume 5% less [water].',
+                icon: [33, 12, 'magixmod', 24, 1],
+                req: { 'drought': true },
+                category: 'main',
+                chance: 25,
             });
 
             new G.Res({
@@ -18651,6 +18681,15 @@ if (getObj("civ") != "1") {
                     { type: 'make part of', what: ['honey', 'honeycomb'], parent: '' },
                 ],
                 category: 'food',
+            });
+            new G.Policy({
+                name: 'water rituals',
+                desc: 'Improves [water] production from all well types by 15%. During a drought, this effect is increased to 60%. This ritual requires 150 [magic essences] every day as upkeep instead, and because of this, their cost will not be changed by any trait or tech.',
+                icon: [8, 12, 7, 6],
+                cost: { 'magic essences': 5000 },
+                startMode: 'off',
+                req: { 'faith in water': true },
+                category: 'faith',
             });
 
             /*=====================================================================================
@@ -20896,7 +20935,7 @@ if (getObj("civ") != "1") {
                         if (G.getRes('faith').amount < (G.getRes('spirituality').amount / 3) && G.checkPolicy('mental balance') == 'on') G.setPolicyModeByName('mental balance', 'off'); //this rit is very fragile
                         //note : we also sneak in some stuff unrelated to population here
                         //policy ticks
-                        if (tick % 50 == 0) {
+                        if (tick % 40 == 0) {
                             var rituals = ['fertility rituals', 'harvest rituals', 'flower rituals', 'wisdom rituals', 'mental balance'];
                             for (var i in rituals) {
                                 if (G.checkPolicy(rituals[i]) == 'on') {
@@ -25719,7 +25758,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'fertility rituals',
-                desc: 'Improves birth rate by 20%. Consumes 1 [faith] every 20 days; will stop if you run out.',
+                desc: 'Improves birth rate by 20%. Consumes 1 [faith] every 40 days; will stop if you run out.',
                 icon: [8, 12, 'c2', 2, 3, 'c2'],
                 cost: { 'faith': 2 },
                 startMode: 'off',
@@ -25728,7 +25767,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'harvest rituals',
-                desc: 'Improves [gatherer], [hunter] and [fisher] efficiency by 10%. Consumes 1 [faith] every 20 days; will stop if you run out. //<small>mo\' food</small>',
+                desc: 'Improves [gatherer], [hunter] and [fisher] efficiency by 10%. Consumes 1 [faith] every 40 days; will stop if you run out. //<small>mo\' food</small>',
                 icon: [8, 12, 'c2', 4, 7, 'c2'],
                 cost: { 'faith': 2 },
                 startMode: 'off',
@@ -25737,7 +25776,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'flower rituals',
-                desc: 'Elves get sick slower and recover faster. Consumes 1 [faith] every 20 days; will stop if you run out.',
+                desc: 'Elves get sick slower and recover faster. Consumes 1 [faith] every 40 days; will stop if you run out.',
                 icon: [8, 12, 'c2', 4, 5, 'c2'],
                 cost: { 'faith': 2 },
                 startMode: 'off',
@@ -25746,7 +25785,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'wisdom rituals',
-                desc: 'Improves [dreamer] and [storyteller] efficiency by 10%. Consumes 1 [faith] every 20 days; will stop if you run out.',
+                desc: 'Improves [dreamer] and [storyteller] efficiency by 10%. Consumes 1 [faith] every 40 days; will stop if you run out.',
                 icon: [8, 12, 'c2', 8, 5, 'c2'],
                 cost: { 'faith': 2 },
                 startMode: 'off',

@@ -253,7 +253,8 @@
 				{
 					//note : we also sneak in some stuff unrelated to population here
 					//policy ticks
-					if (tick%50==0)
+					//ORTEIL WHY WAS THIS VALUE FIFTY!!?
+					if (tick%20==0)
 					{
 						var rituals=['fertility rituals','harvest rituals','flower rituals','wisdom rituals'];
 						for (var i in rituals)
