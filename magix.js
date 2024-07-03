@@ -493,27 +493,6 @@ G.getCostString = function (costs, verbose, neutral, mult) {
 // Custom new value for ungratefulness
 var ungrateful = 1
 
-// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on
-function getCookie(cname) {
-    var localItem = localStorage.getItem(cname)
-    if (localItem !== null) {
-        return localItem
-    }
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
 ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
 var yer = new Date();
 var mausoBonus = 0;
@@ -522,8 +501,8 @@ var day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (
 var easterDay = function (Y) { var C = Math.floor(Y / 100); var N = Y - 19 * Math.floor(Y / 19); var K = Math.floor((C - 17) / 25); var I = C - Math.floor(C / 4) - Math.floor((C - K) / 3) + 19 * N + 15; I = I - 30 * Math.floor((I / 30)); I = I - Math.floor(I / 28) * (1 - Math.floor(I / 28) * Math.floor(29 / (I + 1)) * Math.floor((21 - N) / 11)); var J = Y + Math.floor(Y / 4) + I + 2 - C + Math.floor(C / 4); J = J - 7 * Math.floor(J / 7); var L = I - J; var M = 3 + Math.floor((L + 40) / 44); var D = L + 28 - 31 * Math.floor(M / 4); return new Date(Y, M - 1, D); }(yer);
 easterDay = Math.floor((easterDay - new Date(easterDay.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 var spookboost = 1;
-function c1() { G.loadMenu = 1; localStorage.setItem("civ", 0); G.NewGameWithSameMods2() };
-function c2() { G.loadMenu = 2; localStorage.setItem("civ", 1); G.NewGameWithSameMods2() };
+function c1() { G.loadMenu = 1; updateObj("civ", 0); G.NewGameWithSameMods2() };
+function c2() { G.loadMenu = 2; updateObj("civ", 1); G.NewGameWithSameMods2() };
 var civ1 = function () {
     G.dialogue.forceClose();
     G.dialogue.popup(function (div) {
@@ -1095,7 +1074,7 @@ G.gain = function (what, amount, context) {
     }
 }
 
-if (getCookie("civ") == "0") {
+if (getCookie("civ") != "1") {
     //////////////////////////////////////////////////////////////
     ////////ACTUAL CONTENT - CIV 1
     G.AddData({
@@ -2364,7 +2343,7 @@ if (getCookie("civ") == "0") {
                         console.log('Refresh the page.');
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', slow)
                     }
-                    localStorage.setItem("civ", 0);
+                    updateObj("civ", 0);
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
                     const chances = [
                         {
@@ -17638,7 +17617,8 @@ if (getCookie("civ") == "0") {
             });
 
             new G.Res({
-                name: 'ignoreItem', // A debug resource used to determine if your civ is in a drought or famine
+                name: 'ignoreItem', // A resource that tells you if a famine is active
+                displayName: 'Next predicted famine year',
                 hidden: true
             });
             new G.Res({
@@ -20148,7 +20128,7 @@ if (getCookie("civ") == "0") {
             }
         }
     });
-} else if (getCookie("civ") == "1") {
+} else {
     G.AddData({
         name: 'Elves',
         author: 'pelletsstarPL',
@@ -20412,10 +20392,12 @@ if (getCookie("civ") == "0") {
                     // if (G.year == 39) {
                     //     G.Message({ type: 'important tall', text: 'Be warned: famines and droughts may start occuring after year 50.' })
                     // }
-                    // if (G.year == 49) {
-                    //     // Famine/drought data starts being calculated at year 50
-                    //     G.getRes('ignoreItem').amount = G.year + (Math.random() * 4 + 2)
-                    // }
+                    if (G.year == 49) {
+                        // Drought data starts being calculated at year 50
+                        G.getRes('ignoreItem').amount = G.year + (Math.random() * 4 + 2)
+                    } else if (G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1))) {
+                        //     G.Message({ type: 'important tall', text: 'A famine has started!' })
+                    }
                     G.isMap = G.isMapFullyExplored();
                     if (G.checkPolicy("creative foraging") == "on") {
                         if (G.getRes('creativity').amount < 1) G.setPolicyModeByName('creative foraging', 'off');
@@ -20664,7 +20646,7 @@ if (getCookie("civ") == "0") {
                         }
                     }
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
-                    localStorage.setItem("civ", 1);
+                    updateObj("civ", 1);
                     newDayLines();
 
 

@@ -91,10 +91,9 @@ G.logic['res'] = function () {
     }
 }
 
-
+//change page layout to fit width (for Magix, the defaults are TOO LOW, sadly)
 G.stabilizeResize = function () {
     G.resizing = false;
-    //change page layout to fit width (for Magix, this amount is TOO LOW)
     l("sections").style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + "px"
     if (G.w < 950) { G.wrapl.classList.remove('narrow'); G.wrapl.classList.add('narrower'); }
     else if (G.w < 384 * 3) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
@@ -102,9 +101,13 @@ G.stabilizeResize = function () {
     //if (G.tab.id=='unit') G.cacheUnitBounds();
 }
 
-
-// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on
+G.storageObject = {}
+// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
 function getCookie(cname) {
+    var storageItem = G.storageObject[cname]
+    if (storageItem) {
+        return storageItem
+    }
     var localItem = localStorage.getItem(cname)
     if (localItem !== null) {
         return localItem
@@ -122,6 +125,10 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function updateObj(key, value) {
+    G.storageObject[key] = value
 }
 
 // Add more numbers
@@ -163,9 +170,9 @@ var numberFormatters =
     ];
 
 if (getCookie("civ") == "") {
-    localStorage.setItem("civ", 0);
+    updateObj("civ", 0);
 }
-if (getCookie("island") == "undefined") localStorage.setItem('island', "Plain Island");
+if (getCookie("island") == "undefined") updateObj("island", "Plain Island");
 
 
 
@@ -1165,6 +1172,8 @@ G.AddData({
                 var me = G.chooseBox[i];
                 str += me.cooldown + ';';
             }
+            // storage object
+            str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT')
             str += '|';
             //console.log('SAVE');
             //console.log(str);
@@ -1172,7 +1181,7 @@ G.AddData({
             str = b64EncodeUnicode(str);
             //console.log(Math.ceil(byteCount(str)/1000)+'kb');
             if (!toStr) {
-                window.localStorage.setItem(G.saveTo, str);
+                localStorage.setItem(G.saveTo, str);
                 G.middleText('- Game saved -');
                 //console.log('Game saved successfully.');
             }
@@ -1413,8 +1422,12 @@ G.AddData({
                         }
                     }
                 }
-                var spl = str[s++].split(';');
+
+                var tSpl = str[s++].split('$')
+                var spl = tSpl[0].split(';');
                 G.getDict('research box').cooldown = parseInt(spl[0]);
+                // storage object
+                if (tSpl.length > 1) G.storageObject = JSON.parse(tSpl[1].replaceAll('&QOT', '"'));
                 G.runUnitReqs();
                 G.runPolicyReqs();
 
@@ -3530,9 +3543,9 @@ G.AddData({
         G.Clear = function () {
             //erase the save and start a new one, handy when the page crashes when testing new save formats
             console.log('Save data cleared. The page should refresh!');
-            localStorage.setItem("civ", 0);
+            updateObj("civ", 0);
             G.T = 0;
-            window.localStorage.setItem(G.saveTo, '');
+            localStorage.setItem(G.saveTo, '');
             var debug = 0;
             if (G.getSetting('debug')) debug = 1;
             G.Reset(true);
