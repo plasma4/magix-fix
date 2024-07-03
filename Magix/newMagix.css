@@ -139,6 +139,16 @@ body {
 	background:rgba(145,61,55,0.2);
 	box-shadow:4px 4px 0px rgba(255,200,200,0.3) inset;
 }
+.bad2Message>.messageContent
+{
+	background:rgba(110,64,0,0.5);
+	box-shadow:1px 1px 0px rgba(80,40,0,0.25) inset;
+}
+.bad3Message>.messageContent
+{
+	background:rgba(110,64,0,0.8);
+	box-shadow:1px 1px 0px rgba(100,50,0,0.35) inset;
+}
 .gizmoE
 {
 	width:17px;
