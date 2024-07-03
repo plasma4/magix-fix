@@ -4637,7 +4637,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'spoiled juices',
-                desc: 'This stat shows you how much spoiled juice of any type you have in total. Spoiled juice decreases [happiness] and [health] even faster than plain old [muddy water]. It also can be used in few crafts, such as muddy water.',
+                desc: 'This stat shows you how many of your [juices] have spoiled. These nasty drinks decrease [happiness] and [health] even faster than plain old [muddy water]!',
                 icon: [14, 5, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -4672,7 +4672,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'sugar',
-                desc: 'If you want to start crafting tasty juices, [sugar] is a must.',
+                desc: 'If you want to start crafting tasty [juices], [sugar] is a must.',
                 icon: [15, 2, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -4861,7 +4861,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'pot of vodka',
-                desc: 'Dangerous for health: a bad alcohol drink.',
+                desc: 'Dangerous for [health]: a bad alcohol drink.',
                 icon: [10, 10, 'magixmod'],
                 category: 'alchemypotions',
                 tick: function (me, tick) {
@@ -4912,7 +4912,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'armor set',
-                desc: 'A solid, durable [armor set] made for soldiers can protect against common threats like ambushes. @Number to the left means how much is now used, to the right how much is in stock.',
+                desc: 'A solid, durable [armor set] made for soldiers can protect against common threats like ambushes.' + numbersInfo,
                 icon: [16, 11, 'magixmod'],
                 displayUsed: true,
                 category: 'gear',
@@ -5484,9 +5484,9 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'meals',
-                desc: '[meals] are tastier than common food that is part of a [meals,meal]. It makes people happier faster than normal [food]. Decently healthy.',
-                icon: [22, 13, 'magixmod'],
-                turnToByContext: { 'eating': { 'health': 0.024, 'happiness': 0.045, 'bone': 0.1 }, 'decay': { 'spoiled food': 0.8 } },
+                desc: '[meals] are tastier than common food that is part of a [meals,meal]. It makes people happier faster than normal [food] and are quite healthy!',
+                icon: [9, 0, 'magix2'],
+                turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.05, 'bone': 0.1 }, 'decay': { 'meals': 0.2, 'spoiled food': 0.8 } },
                 category: 'food',
                 partOf: 'food',
             });
@@ -7941,19 +7941,19 @@ if (getObj("civ") != "1") {
                 upkeep: { 'fire pit': 0.2, 'food': 0.2 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad (worth 1 [meals,Meal]) using [fruit]s and [vegetable]s. As an extra spice, 1 piece of [herb] is added.' },
-                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1 [meals,Meal])' },
-                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb]s as a spice to improve its taste to craft well-prepared meat(worth 1 [meals,Meal])' },
-                    'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat] and 1 [salt] cooks tasty cutlets (worth 1.5 [meals,Meal])' },
-                    'sandwich': { name: 'Sandwiches', icon: [23, 14, 'magixmod'], desc: 'Can make 4 big, healthy, tasty sandwiches (worth 1.5 of [meals,Meal]]) using 2 [vegetable]s and 1 [bread, loaf of bread].' },
+                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad (worth 1 [meals,Meal]) using [fruit]s and [vegetable]s.' },
+                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s to improve its taste, crafting well-prepared meat (worth 1 [meals,Meal]).' },
+                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb]s to improve its taste, crafting well-prepared seafood (worth 1 [meals,Meal]).' },
+                    'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat] and 1 [salt] to cook some roast cutlets of various meats (worth one and a half [meals,Meal] and providing a little [happiness]).', req: { 'art of cooking II': true } },
+                    'sandwich': { name: 'Sandwiches', icon: [23, 14, 'magixmod'], desc: 'Can make 4 giant healthy sandwiches (worth 2 [meals] and providing a little [happiness]) using 3 [vegetable]s and 1 loaf of fresh [bread].', req: { 'art of cooking II': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'fruit': 1, 'vegetable': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 2, mode: 'salad' },
                     { type: 'convert', from: { 'cooked meat': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
                     { type: 'convert', from: { 'cured meat': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
                     { type: 'convert', from: { 'cooked seafood': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
-                    { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5 }, every: 4, mode: 'cutlet' },
-                    { type: 'convert', from: { 'cured seafood': 1, 'herb': 1 }, into: { 'meals': 1.5 }, every: 4, mode: 'sandwich' },
+                    { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5, 'happiness': 0.02 }, every: 3, mode: 'cutlet' },
+                    { type: 'convert', from: { 'vegetables': 3, 'bread': 1, 'health': 0.04 }, into: { 'meals': 2 }, every: 4, mode: 'sandwich' },
                 ],
                 req: { 'art of cooking': true },
                 gizmos: true,
@@ -8189,7 +8189,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mediator',
-                desc: 'Solves people\' arguments with the help of the law to prevent unfair things from happening. Generates [happiness] and [influence] every now and then. @every 75 [mediator]s reduce the cooldown until the next trait removal by 1 tick if the cooldown is longer than a decade.',
+                desc: 'Solves people\'s arguments with the help of the law to prevent unfair things from occuring. Generates [happiness] and [influence] every now and then. @every 75 [mediator]s reduce the cooldown until the next trait removal by 1 tick if the cooldown is longer than a decade.',
                 icon: [9, 13, 'magixmod'],
                 cost: {},
                 upkeep: { 'food': 0.2 },
@@ -9210,7 +9210,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'artisan of juice',
-                desc: '@This subclass of [artisan] can make juices for you. He can extract [sugar] out of [sugar cane]. You can also switch modes to start crafting [juices]!',
+                desc: '@This subclass of [artisan] can make [sugar] from [sugar cane] and then make delicious [juices]!',
                 icon: [15, 5, 'magixmod'],
                 cost: {},
                 use: {},
@@ -9219,7 +9219,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'sugar': { name: 'Extract sugar out of cane', icon: [15, 2, 'magixmod'], desc: 'This artisan will only extract [sugar] out of [sugar cane]. At least he will craft needed ingredient of tasty [juices].', use: { 'worker': 1 } },
                     'juicesF': { name: 'Craft juices out of fruits', icon: [14, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [fruit]s, [sugar] and [water]. They have a good taste. <b>:)</b>', use: { 'worker': 1 } },
-                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable]s, [sugar] and [water]. They have a good taste. //Since you cannot craft juice of every vegetable, it is a little less efficient, but still has a good use if you do not have many fruits to spend. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
+                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable]s, [sugar] and [water]. They have a good taste. //Since you cannot craft juice out of all [vegetable]s, it is a little less efficient, but still has a good use if you do not have many fruits to spend. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'sugar cane': 1.5 }, into: { 'sugar': 1 }, every: 5, mode: 'sugar' },
@@ -11519,7 +11519,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'juice-crafting', category: 'tier1',
-                desc: '@Makes juices possible to be crafted. Any [fruit] + [sugar] + [water] = [juices]. Be careful, however, as [juices] may spoil. Spoiled juice makes your people even more unhappy and unhealthy than normal muddy water.',
+                desc: '@Allows you to craft [juices] from [fruit], [sugar], and [water]. Be careful, however, as [juices] may spoil. [spoiled juices] make your people even more unhappy and unhealthy than normal muddy water.',
                 icon: [16, 4, 'magixmod'],
                 cost: { 'insight': 450, 'wisdom': 50 },
                 req: { 'agriculture': true, 'gardening': true },
@@ -11927,7 +11927,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art of cooking', category: 'tier1',
-                desc: '<font color="fuschia">Unlocks the [chef]. Talented with art of cooking, a worker may make delectable and very decent food [meals]. A [meals,Meal] makes people even happier!</font>',
+                desc: '<font color="fuschia">Unlocks the [chef]. Chefs know the art of cooking, and may make delectable [meals] for your people! [meals] make people even happier!</font>',
                 icon: [23, 13, 'magixmod'],
                 cost: { 'insight': 535, 'wisdom': 30, 'culture': 400, 'inspiration': 200 },
                 req: { 'cooking II': true },
@@ -12596,7 +12596,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'cooking II',
-                desc: 'Your [population,people] now can use various ingredients to cook and make even better, tastier dishes. <><b>bon apetit</b>',
+                desc: 'Your [population,people] now can use various ingredients to cook and make even better-tasting dishes. <><b>bon apetit</b>',
                 icon: [22, 10, 'magixmod'],
                 cost: { 'insight': 250, 'wisdom': 15 },
                 chance: 300,
@@ -17664,6 +17664,13 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'art of cooking II', category: 'tier1',
+                desc: 'Unlocks 2 new modes for your [chef]s, which may provide additional [happiness] or [health] when produced.',
+                icon: [0, 35, 'magixmod', 23, 13, 'magixmod'],
+                cost: { 'insight': 600, 'wisdom': 50, 'culture': 600 },
+                req: { 'art of cooking': true },
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -18670,7 +18677,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'eat honey and honeycombs', // New policy by @1_e0
                 desc: 'Your people will eat [honey] and [honeycomb]s, which makes them both happy and healthy.',
-                icon: [5, 0, 'magix2'],
+                icon: [6, 12, 6, 0, 'magix2'],
                 cost: { 'influence': 1 },
                 startMode: 'on',
                 req: { 'beekeeping II': true },
