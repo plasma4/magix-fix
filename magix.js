@@ -1209,18 +1209,18 @@ if (getObj("civ") != "1") {
                 }
             }
             G.seasonalContent = function () {
-                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Christmas.</font>';
-                G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 80 extra [water]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines.</font>';
-                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herb]s. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines.</font>';
-                G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Valentines. </font>';
-                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween. </font>';
-                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
-                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
-                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [holy wizard tower,Wizard towers] are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when halloween ends, you will start losing that bonus, meaning that after that you won\'t be able to get this buff stacks again until next Halloween.</font>';
+                G.getDict('xmas1').desc = 'The spirits of the Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas2').desc = 'The spirits of the Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas3').desc = 'The spirits of the Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="red">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 80 extra [water]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herb]s. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="red">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [holy wizard tower,Wizard towers] are 1% more efficient. //<font color="red">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
                 var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
                 if (day + leap >= 289 && day + leap <= 305) {
                     G.getDict('"dark season"').req = { 'tribalism': true, 'culture of celebration': true, 'sedentism': true, 'intuition': true };
@@ -2414,23 +2414,13 @@ if (getObj("civ") != "1") {
                     }
                     ///////////HERBALIA BACKFIRE
                     if (G.checkPolicy('se07') == 'on') {
-                        if (G.getRes('happiness').amount > 0) {
-                            var toSpoil = G.getRes('happiness').amount * 0.00155;
-                            var spent = changeHappiness(-randomFloor(toSpoil), 'Herbalia');
-                        } else {
-                            var toSpoil = -G.getRes('happiness').amount * 0.00155;
-                            var spent = changeHappiness(-randomFloor(toSpoil), 'Herbalia');
-                        }
+                        var toSpoil = -G.getRes('happiness').amount * 0.00155;
+                        var spent = changeHappiness(-randomFloor(toSpoil), 'Herbalia');
                     }
                     ///////////BERSARIA BACKFIRE
                     if (G.checkPolicy('se02') == 'on') {
-                        if (G.getRes('happiness').amount > 0) {
-                            var toSpoil = G.getRes('happiness').amount * 0.00295;
-                            var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
-                        } else {
-                            var toSpoil = -G.getRes('happiness').amount * 0.00295;
-                            var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
-                        }
+                        var toSpoil = -G.getRes('happiness').amount * 0.00295;
+                        var spent = changeHappiness(-randomFloor(toSpoil), 'Bersaria');
                     }
                     //BURIODAK HEALTH HARM
                     if (G.checkPolicy('se08') == 'on') {
@@ -4479,7 +4469,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark essence',
-                desc: '[dark essence] may be used used to make black holes for graves or to even bigger spells like a mirror world.',
+                desc: '[dark essence] may be used to make black holes for graves or to even bigger spells like a mirror world.',
                 icon: [1, 3, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4758,7 +4748,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'alchemy zone',
-                desc: 'This part of the land will be occupied by [alchemist]s (and their seats). Here they brew potions, antidotums and many more.',
+                desc: 'This part of the land will be occupied by [alchemist]s (and their seats). Here they brew potions and craft many other drinks!',
                 icon: [17, 7, 'magixmod'],
                 category: 'main',
                 displayUsed: true,
@@ -5899,7 +5889,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'firecracker',
-                desc: 'Firecrackers are fireworks but without thread.',
+                desc: '[firecracker]s are fireworks but without [thread] attached.',
                 icon: [3, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -5910,7 +5900,6 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'corpsedecaypoint',
-                displayName: 'Corpse decay point (from wonder construction)',
                 hidden: true,
             });
             new G.Res({
@@ -6207,7 +6196,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'child of Christmas',
-                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them say they are elves, Claus\'s helpers and many more.//After a while, they will grow up into [adult]s.//These children drink and eat half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
+                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them even say they are elves, although this isn\'t confirmed!//After a while, they will grow up into [adult]s.//These children also eat and drink half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
                 partOf: 'population',
                 icon: [13, 11, 'seasonal'],
                 hidden: true,
@@ -6216,7 +6205,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'christmas ornament',
-                desc: 'The [artisan of christmas] can craft this. It is used to decorate christmas trees, lamps and many more. On decay may provide some [christmas essence].',
+                desc: 'The [artisan of christmas] can craft this. It is used to decorate christmas trees, lamps, and many more. On decay, these may provide some [christmas essence].',
                 icon: [choose([6, 7]), 11, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -6547,7 +6536,7 @@ if (getObj("civ") != "1") {
                     'wheat': { name: 'Craft flour', icon: [23, 10, 'magixmod'], desc: 'Turn [wheat] into [flour].', req: { 'flour-crafting I': true }, use: { 'knapped tools': 1 } },
                     'wands': { name: 'Craft wands', icon: [6, 4, 'magixmod'], desc: 'Your artisan will craft an important tool used by wizards. Uses 4 [stick]s and 1 [stone] for each [wand].', req: { 'wizardry': true }, use: { 'stone tools': 2 } },
                     'ink': { name: 'Craft ink', icon: [18, 6, 'magixmod'], desc: 'Your artisan will craft [ink] using [water] and [dyes,Dark dyes].', req: { 'ink crafting': true } },
-                    'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 35 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
+                    'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 30 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
                     'firstaid': { name: 'Craft first aid things', icon: [8, 0, 'magix2'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
                     'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
@@ -6568,7 +6557,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'stick': 15 }, into: { 'basket': 1 }, every: 12, mode: 'baskets' },
                     { type: 'convert', from: { 'stick': 4, 'stone': 1 }, into: { 'wand': 1 }, every: 8, mode: 'wands' },
                     { type: 'convert', from: { 'dyes': 1, 'mud': 0.0015, 'water': 0.015 }, into: { 'ink': 0.75 }, every: 6, mode: 'ink' },
-                    { type: 'convert', from: { 'thread': 35, 'dried leather': 1 }, into: { 'fishing net': 1 }, every: 7, mode: 'net' },
+                    { type: 'convert', from: { 'thread': 30, 'dried leather': 1 }, into: { 'fishing net': 1 }, every: 7, mode: 'net' },
                     { type: 'convert', from: { 'thread': 1.5, 'herb': 0.75 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
                     { type: 'convert', from: { 'thread': 0.5, 'herb': 1 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
                     { type: 'convert', from: { 'thread': 2, 'herb': 1.5, 'hide': 1 }, into: { 'first aid things': 1 }, every: 9, mode: 'firstaid' },
@@ -7802,6 +7791,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.75, req: { 'better filtering': true } },
                     { type: 'mult', value: 1.1, req: { 'faithful cloudy water filtering': true } },
                     { type: 'mult', value: 1.75, req: { 'magical filtering': true } },
+                    { type: 'mult', value: 2, req: { 'magical filtering II': true } },
                     { type: 'mult', value: 2, req: { 'supreme cloudy fast filtering': true } },
                 ],
             });
@@ -7819,6 +7809,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.75, req: { 'better filtering': true } },
                     { type: 'mult', value: 1.1, req: { 'faithful cloudy water filtering': true } },
                     { type: 'mult', value: 1.75, req: { 'magical filtering': true } },
+                    { type: 'mult', value: 2, req: { 'magical filtering II': true } },
                     { type: 'mult', value: 2, req: { 'supreme cloudy fast filtering': true } },
                 ],
             });
@@ -9163,7 +9154,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'florist',
                 startWith: 0,
-                desc: '@subclass of gatherer which collects [flowers] rather than [food] and [water] @has its use in both healing and painting',
+                desc: '@a subclass of [gatherer]s that collect [flowers] @has its use in both healing and painting',
                 icon: [7, 11, 'magixmod'],
                 cost: {},
                 req: { 'a gift from the mausoleum': true, 'plant lore II': true },
@@ -9527,14 +9518,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'dark wormhole',
-                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. The wormhole provides over 20M[burial spot] but requires some upkeep. It just looks cheap for now though. Oh, and the [dark wormhole] may get new abilities!',
+                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. The wormhole provides 2.4M [burial spot]s but requires some upkeep. The [dark wormhole] may get new abilities later on...',
                 icon: [13, 22, 'magixmod'],
                 cost: { 'gem block': 4, 'precious building materials': 5e3 },
                 effects: [
                     { type: 'provide', what: { 'burial spot': 2.4e7 } },
                     { type: 'provide', what: { 'corpsedecaypoint': 1 } },
                 ],
-                upkeep: { 'dark essence': 30, 'mana': 90, 'magic essences': 1 },
+                upkeep: { 'dark essence': 100, 'mana': 50 },
                 use: { 'land of the Underworld': 10, 'worker': 5, 'worker': 3 },
                 req: { 'burial wormhole 2/2': true },
                 limitPer: { 'land': 3000, 'population': 50000 },
@@ -11597,7 +11588,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'poetry', category: 'tier1',
-                desc: 'A beautiful art of culture. Poems, stories, essays, novels and many more can be written down and be cherished for generations.',
+                desc: 'A beautiful art of culture. Poems, stories, essays, novels and so much more can now be written down and be cherished for generations!',
                 icon: [18, 8, 'magixmod'],
                 cost: { 'insight': 650, 'culture': 300, 'inspiration': 25 },
                 req: { 'plain island building': true, 'ink crafting': true },
@@ -11804,7 +11795,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: '7th essence', category: 'tier1',
-                desc: 'Discovers another essence which can be felt in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower]. <small>Shouldn\'t holy essence vaporize dark essence though?</small>',
+                desc: 'Discovers another essence which can be felt in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower].//<small>But shouldn\'t holy essence vaporize dark essence?</small>',
                 icon: [20, 6, 'magixmod', 8, 12, 23, 1],
                 cost: { 'insight': 1325 },
                 effects: [
@@ -12500,7 +12491,7 @@ if (getObj("civ") != "1") {
                 cost: { 'juices': 6.5e3, 'wisdom': 25, 'insight': 30 },
                 chance: 6,
                 category: 'knowledge',
-                req: { 'beekeeping III': true, 'juice-crafting': true },
+                req: { 'beekeeping II': true, 'juice-crafting': true },
             });
             new G.Trait({
                 name: 'nutrition',
@@ -12580,7 +12571,8 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'land acknowledge',
-                desc: 'Your people will easier acknowledge new lands thanks to Paradise exploration. This trait does not add any bonuses!',
+                displayName: 'Acknowledging of lands',
+                desc: 'Your people will acknowledge new lands faster thanks to Paradise exploration. This knowledge unlocks a few new things...',
                 icon: [21, 10, 'magixmod'],
                 cost: {},
                 chance: 100,
@@ -12589,10 +12581,10 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'treeplanting',
-                desc: '<font color="#aaffff">May begin the orchards\' existence.</font>',
+                desc: '<font color="#aaffff">May the orchards\' existence begin.</font>',
                 icon: [8, 12, 6, 1],
                 cost: { 'insight': 250, 'wisdom': 15 },
-                chance: 100,
+                chance: 30,
                 category: 'knowledge',
                 req: { '2nd portal sky': true, 'paradise building': true },
             });
@@ -13064,7 +13056,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ancestors world crafting', category: 'tier1',
-                desc: '@Some buildings / crafting shacks from mortal world can be built in ancestors world as a separated unit.',
+                desc: '@Some buildings or crafting shacks from the mortal world can be built in ancestors world as a separated unit.',
                 icon: [0, 14, 'magixmod', 0, 18, 'magixmod'],
                 cost: { 'insight': 650 },
                 req: { 'ambrosium treeplanting': true, 'ancestors world building': true },
@@ -13117,7 +13109,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'underworld\'s ascendant', displayName: 'The Underworld\'s Ascendant', category: 'misc',
-                desc: 'You managed to do few other feats to attract new things. And you attracted: @ +1 [adult]. This is [adult,The Underworld\'s Ascendant]. //<small>console.log("Hello Underworld")</small>',
+                desc: 'You managed to do few large feats to attract someone new! You also attracted +1 [adult], who is [adult,The Underworld\'s Ascendant] //<small>console.log("Hello Underworld")</small>',
                 icon: [15, 19, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13890,7 +13882,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'power of the faith', category: 'religion',
-                desc: 'Now the [crafting & farm rituals] bonus applies to: @[blacksmith workshop] (mortal and paradise version) @[carpenter workshop] (mortal and paradise version)@[holy orchard]@[artisan](This is including the juice, pyro and normal types. The bonus for juice and pyro: quarter while for normal it is 3%.)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase the amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
+                desc: 'Now the [crafting & farm rituals] bonus applies in various amounts to: @[blacksmith workshop]s (both the normal and paradise version) @[carpenter workshop]s (both the normal and paradise version)@[holy orchard]s@[artisan]s (including some subtypes)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase the amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
                 icon: [24, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'insight II': 135, 'science': 5, 'faith': 26 },
                 req: { 'symbolism III': true },
@@ -13909,7 +13901,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'backshift at farms', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, [hovel with garden] provides 10% more.',
+                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, each [hovel with garden] is 10% more effective.',
                 icon: [31, 14, 'magixmod'],
                 cost: { 'insight II': 180, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'improved windmill motors': true, 'moderation': true },
@@ -15032,9 +15024,9 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mirror world 2/2', category: 'tier2',
-                desc: 'The amount of main [land] you have is doubled. Enjoy...but it is seriously time to stop. // <b>The more worlds you open the more unstable the world will become...</b>',
+                desc: 'The amount of main [land] you have is doubled. Enjoy...but it is seriously time to stop. // <b>The more worlds you open the more unstable your world will become...</b>',
                 req: { 'mirror world 1/2': true },
-                cost: { 'insight II': 420, 'science': 62, 'culture II': 38, 'faith II': 30, 'tablet \'o mirror': 1 },
+                cost: { 'insight II': 425, 'science': 62, 'culture II': 38, 'faith II': 30, 'dark essence': 200000, 'tablet \'o mirror': 1 },
                 icon: [27, 2, 'magixmod', 10, 30, 'magixmod'],
                 effects: [
                 ]
@@ -15048,7 +15040,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'druidism', category: 'tier1',
-                desc: '@Unlocks the [druid] @Gathers more [faith] and [happiness] than [soothsayer] but is limited.',
+                desc: '@unlocks [druid]s, who gather more [faith] and [happiness] than [soothsayer]s (although with a limit)',
                 icon: [25, 30, 'magixmod'],
                 cost: { 'insight': 35, 'faith': 5, 'culture': 25, 'influence': 10 },
                 req: { 'ritualism': true, 'symbolism': true, 'language': true },
@@ -15351,7 +15343,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pumpkins II', category: 'seasonal',
-                desc: 'You can find pumpkins that will give you [insight,Essentials], [juices] and many more. //<small>Do you like pumpkins?</small>',
+                desc: 'You can find pumpkins that will give you [insight,Essentials], [juices], and various other benefits! //<small>Do you like pumpkins?</small>',
                 icon: [0, 35, 'magixmod', 10, 7, 'seasonal'],
                 req: { 'pumpkins': true, 'alchemy': true },
                 cost: { 'insight': 1000 },
@@ -17316,7 +17308,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(sums)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc. @this tech decreases [insight II] cost of a few specified future researches by 20%.',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc.//<small>Fibonacci, here we go...</small>',
                 icon: [3, 35, 'magixmod', 17, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17327,7 +17319,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(3dgeo)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry. @this tech decreases [insight II] cost of a few specified future researches by 20%.//<small>It is x axis, y axis, and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
                 icon: [3, 35, 'magixmod', 18, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17338,7 +17330,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(algebra)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will master algebra. @this tech decreases the [insight II] cost of a few specified future researches by 20%.',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will master algebra.//<small>3 variable equations?</small>',
                 icon: [3, 35, 'magixmod', 19, 28, 'magixmod'],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -17596,7 +17588,7 @@ if (getObj("civ") != "1") {
                 name: 'stronger faith II', category: 'tier1',
                 desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep.',
                 icon: [0, 35, 'magixmod', 19, 3, 'magixmod'],
-                cost: { 'insight': 800, 'faith': 120 },
+                cost: { 'insight': 800, 'faith': 200 },
                 req: { 'stronger faith': true, '7th complex tower': true },
                 effects: [
                     {
@@ -17629,7 +17621,7 @@ if (getObj("civ") != "1") {
                 desc: 'The [leaves of wisdom] and [branches of wisdom] traits can now be obtained at the same time! In addition, you have a 5% chance of gaining both of them at the same time at the start of a new year. Be warned, however, as <b>getting this trait will cost some [wisdom II]</b> (you can get more, however, by adopting both traits).',
                 icon: [0, 35, 'magixmod', 36, choose([2, 3]), 'magixmod', 24, 1],
                 cost: { 'insight II': 125, 'wisdom II': 50 },
-                req: { 'trees of faith': true, 'richer language': true },
+                req: { 'treeplanting': true, 'trees of faith': true, 'richer language': true },
                 effects: [
                     {
                         type: 'function', func: function () {
@@ -17675,7 +17667,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'magical filtering II', category: 'upgrade',
-                desc: 'Use the power of water, wind, and clouds! @filters that produce [cloud]s work twice as fast',
+                desc: 'Use the power of water, wind, and clouds! @your filters that process [cloudy water] work twice as fast',
                 icon: [0, 35, 'magixmod', 25, 8, 'magixmod'],
                 cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 50000 },
                 req: { 'magical filtering': true }
@@ -18003,10 +17995,10 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'theme changer',
-                desc: 'Let your population enjoy the power of colour! Does not apply to popups, however. The theme updates every ten ticks. //<small>Life has its theme too...</small>',
+                desc: 'Let your population enjoy various themes! Does not apply to popups, however, and only switches every ten days. //<small>Life has its theme too...</small>',
                 icon: [28, 21, 'magixmod'],
                 cost: {},
-                req: { 'life has its theme': true },
+                req: { 'life has its theme': false },
                 modes: {
                     'Default': { name: 'Default', desc: 'Switches to the default theme.', icon: [4, 22, 'magixmod'] },
                     'Green': { name: 'Green', desc: 'Switches to the green theme.', icon: [3, 22, 'magixmod'] },
@@ -18027,7 +18019,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se02',
                 displayName: 'Bersaria the Seraphin of Madness',
-                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="red">Backfire: Harms [happiness] and creates thieves 1% more. </font>',
+                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="red">Backfire: Harms [happiness] and creates thieves 1% more.</font>',
                 icon: [28, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18091,7 +18083,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se07',
                 displayName: 'Herbalia the Seraphin of Recovery',
-                desc: '<font color="lime">Boosts your [health] level. [healer]s are 25% more efficient.</font><br><hr color="fuschia"><font color="red">Backfire: the upper limit of [happiness] is now 175%. [gatherer] gains 15% less.</font>',
+                desc: '<font color="lime">Boosts your [health] level. [healer]s are 25% more efficient.</font><br><hr color="fuschia"><font color="red">Backfire: the upper limit of [happiness] is now 175%, and it decreases [happiness] when it is negative. [gatherer]s will also gain 15% less.</font>',
                 icon: [23, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -23460,7 +23452,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'florist',
                 startWith: 0,
-                desc: '@subclass of gatherer which collects [flowers] rather than [food] and [water] @has its use in both healing and painting',
+                desc: '@a subclass of [gatherer]s that collect [flowers] @has its use in both healing and painting',
                 icon: [27, 4, 'c2'],
                 cost: {},
                 req: { 'a power of the fortress': true, 'plant lore II': true },
@@ -24277,7 +24269,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'water courage',
-                desc: '<font color="#e6ffee">Elves are less afraid of water. //Obtaining this knowledge trait will allow elves later to use boats as a way to travel or explore the mystic world filled with secreats. </font><br>//<small>So elves are hydrophobic?</small>',
+                desc: '<font color="#e6ffee">Elves will become less afraid of water. //Obtaining this knowledge trait will allow elves to eventually use boats as a way to travel or explore the mysterious world filled with secrets within.</font><br>//<small>So elves are hydrophobic?</small>',
                 icon: [29, 9, 'c2'],
                 cost: { 'creativity': 1 },
                 chance: 1,
@@ -24761,7 +24753,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'druidism', category: 'tier1',
-                desc: '@unlocks [druid] @Gathers more [faith] and [happiness] than [soothsayer]s, but at a limited rate. //<small>Nature sometimes can be swift and terrible. Keep that in mind, my friend.</small>',
+                desc: '@unlocks [druid]s, who gather more [faith] and [happiness] than [soothsayer]s (although with a limit) //<small>Nature sometimes can be swift and terrible. Keep that in mind, my friend.</small>',
                 icon: [27, 14, 'c2'],
                 cost: { 'faith': 8, 'discernment': 24, 'gentility': 18 },
                 req: { 'ritualism': true, 'symbolism': true, 'language': true },
