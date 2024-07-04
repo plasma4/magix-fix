@@ -20,7 +20,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 try {
     G.storageObject = localStorage.getItem("legacySave-alpha")
     if (G.storageObject) {
-        G.storageObject = unescape(b64DecodeUnicode(G.storageObject))
+        G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+?\}/)
         if (G.storageObject) {
             G.storageObject = G.storageObject[G.storageObject.length - 1]
             if (G.storageObject) {
@@ -71,6 +71,11 @@ function getObj(cname) {
 
 function setObj(key, value) {
     G.storageObject[key] = value
+}
+
+function unitAmount(res, res2, cap) {
+    var item = G.unitByName[res]
+    return (item.amount - item.idle) * Math.min(res2 == null ? 1 : G.getAmount(res2), cap == null ? Infinity : cap)
 }
 
 // Remove the empty tick functions for a little performance boost (how much? not sure...)

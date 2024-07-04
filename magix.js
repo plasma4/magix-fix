@@ -1044,7 +1044,7 @@ function AoD() {
 }
 function islandName() {
     var rawName = G.getName('island')
-    return rawName == 'undefined' || rawName == 'plain island' ? 'Plain Island' : rawName
+    return rawName == 'undefined' ? 'Plain Island' : rawName
 }
 function changeHappiness(amount, description) {
     G.gain('happiness', amount, description)
@@ -2454,13 +2454,13 @@ if (getObj("civ") != "1") {
                         if (!G.has('tool refinery 2/2')) {
                             var toSpoil = (G.getRes('stone tools').amount * 0.0004); G.lose(('stone tools'), randomFloor(toSpoil), 'decay');
                         } else {
-                            var toSpoil = (G.getRes('stone tools').amount * 0.0002); G.lose(('stone tools'), randomFloor(toSpoil), 'decay');
+                            var toSpoil = (G.getRes('stone tools').amount * 0.00015); G.lose(('stone tools'), randomFloor(toSpoil), 'decay');
                         };
                         var toSpoil = (G.getRes('knapped tools').amount * 0.00055); G.lose(('knapped tools'), randomFloor(toSpoil), 'decay');
                         if (!G.has('tool refinery 2/2')) {
                             var toSpoil = (G.getRes('stone weapons').amount * 0.0004 * (G.has('ground weapons') ? 1 : 0.95)); G.lose(('stone weapons'), randomFloor(toSpoil), 'decay');
                         } else {
-                            var toSpoil = (G.getRes('stone weapons').amount * 0.0002 * (G.has('ground weapons') ? 1 : 0.95)); G.lose(('stone weapons'), randomFloor(toSpoil), 'decay');
+                            var toSpoil = (G.getRes('stone weapons').amount * 0.0001 * (G.has('ground weapons') ? 1 : 0.95)); G.lose(('stone weapons'), randomFloor(toSpoil), 'decay');
                         };
                         var toSpoil = (G.getRes('bow').amount * 0.0005 * (G.has('ground weapons') ? 1 : 0.95)); G.lose(('bow'), randomFloor(toSpoil), 'decay');
                         var toSpoil = (G.getRes('wand').amount * 0.0006); G.lose(('wand'), randomFloor(toSpoil), 'decay');
@@ -2473,7 +2473,7 @@ if (getObj("civ") != "1") {
                     }
 
                     if (G.policy.length >= 15 && !pol15 && G.policy.length <= 18) {
-                        G.Message({ type: 'important', text: 'Your rules and the fact that you are leading this tribe have become accepted. People are bound to you.', icon: [11, 4] }); pol15 = true;
+                        G.Message({ type: 'important', text: 'Your rules and the fact that you are leading this tribe has been accepted! People have become bound to you.', icon: [11, 4] }); pol15 = true;
                     }
                     if (G.getSetting('story messages') || G.resets <= 3) {
                         if ((G.has('canoes') || G.has('rafts')) && !canoestory && !G.has('boat building')) {
@@ -2481,7 +2481,7 @@ if (getObj("civ") != "1") {
                             canoestory = true
                         }
                         if (G.has('sedentism') && !sedestory && !G.has('building')) {
-                            G.Message({ type: 'important', text: 'Your people are now going to set up the first dwellings. Aren\'t you happy that it may mean your tribe will have more people?', icon: [12, 4] })
+                            G.Message({ type: 'important', text: 'Your people are now able to set up their very first dwellings. Aren\'t you happy that your tribe may finally grow larger?', icon: [12, 4] })
                             sedestory = true
                         }
                         if (G.has('boat building') && !boatstory && !G.has('stronger faith')) {
@@ -3985,7 +3985,8 @@ if (getObj("civ") != "1") {
                 category: 'build',
                 tick: function () {
                     if (G.has('sandy shores')) {
-                        G.gain('sand', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('sandy shores II') ? 0.008 : 0.004), 'sand digging');
+                        // The cap is at 100 because your discovered [wtr] is ten times that amount!
+                        G.gain('sand', unitAmount('digger', 'wtr', 100) * (G.has('sandy shores II') ? 0.06 : 0.03), 'sand digging');
                     }
                 }
             });
@@ -4206,7 +4207,8 @@ if (getObj("civ") != "1") {
                 category: 'misc',
                 tick: function () {
                     if (G.has('salty sand')) {
-                        G.gain('salt', Math.min(G.getAmount('wtr'), 1000) * G.getUnitAmount('digger') * (G.has('salty sand II') ? 0.0015 : 0.0075), 'salty sand');
+                        // The cap is at 100 because your discovered [wtr] is ten times that amount!
+                        G.gain('salt', unitAmount('digger', 'wtr', 100) * (G.has('salty sand II') ? 0.012 : 0.07), 'salty sand');
                     }
                 }
             });
@@ -5484,7 +5486,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'meals',
-                desc: '[meals] are tastier than common food that is part of a [meals,meal]. It makes people happier faster than normal [food] and are quite healthy!',
+                desc: '[meals] are tastier than most types of [food]. It makes people happier faster than normal [food] and are quite healthy!',
                 icon: [9, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.05, 'bone': 0.1 }, 'decay': { 'meals': 0.2, 'spoiled food': 0.8 } },
                 category: 'food',
@@ -7941,19 +7943,19 @@ if (getObj("civ") != "1") {
                 upkeep: { 'fire pit': 0.2, 'food': 0.2 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad (worth 1 [meals,Meal]) using [fruit]s and [vegetable]s.' },
-                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s to improve its taste, crafting well-prepared meat (worth 1 [meals,Meal]).' },
+                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cooks salad using [vegetable]s and [herb]s, which produces a full [meals,Meal].' },
+                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb]s to improve its taste, crafting a well-prepared [meals,Meal].' },
                     'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb]s to improve its taste, crafting well-prepared seafood (worth 1 [meals,Meal]).' },
-                    'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat] and 1 [salt] to cook some roast cutlets of various meats (worth one and a half [meals,Meal] and providing a little [happiness]).', req: { 'art of cooking II': true } },
-                    'sandwich': { name: 'Sandwiches', icon: [23, 14, 'magixmod'], desc: 'Can make 4 giant healthy sandwiches (worth 2 [meals] and providing a little [happiness]) using 3 [vegetable]s and 1 loaf of fresh [bread].', req: { 'art of cooking II': true } },
+                    'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat] and 1 [salt] to cook some roast cutlets of various meats (worth one and a half [meals,Meal] and providing a little [happiness] due to the intense smell).', req: { 'art of cooking II': true } },
+                    'sandwich': { name: 'Sandwiches', icon: [23, 14, 'magixmod'], desc: 'They will make 4 giant healthy sandwiches (worth 2 [meals] and providing some [health]) using 3 [vegetable]s and 1 loaf of fresh [bread].', req: { 'art of cooking II': true } },
                 },
                 effects: [
-                    { type: 'convert', from: { 'fruit': 1, 'vegetable': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 2, mode: 'salad' },
-                    { type: 'convert', from: { 'cooked meat': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
-                    { type: 'convert', from: { 'cured meat': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
-                    { type: 'convert', from: { 'cooked seafood': 1, 'herb': 1 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
-                    { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5, 'happiness': 0.02 }, every: 3, mode: 'cutlet' },
-                    { type: 'convert', from: { 'vegetables': 3, 'bread': 1, 'health': 0.04 }, into: { 'meals': 2 }, every: 4, mode: 'sandwich' },
+                    { type: 'convert', from: { 'vegetable': 2, 'herb': 1 }, into: { 'meals': 1 }, every: 2, mode: 'salad' },
+                    { type: 'convert', from: { 'cooked meat': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
+                    { type: 'convert', from: { 'cured meat': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
+                    { type: 'convert', from: { 'cooked seafood': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
+                    { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5, 'happiness': 0.04 }, every: 4, mode: 'cutlet' },
+                    { type: 'convert', from: { 'vegetables': 3, 'bread': 1, 'health': 0.06 }, into: { 'meals': 2 }, every: 4, mode: 'sandwich' },
                 ],
                 req: { 'art of cooking': true },
                 gizmos: true,
@@ -8981,7 +8983,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Carpenter workshop',
-                desc: '@processes wood<>The [carpenter workshop,Carpenter] is equipped with all kinds of tools to coerce wood into more useful shapes.',
+                desc: '@processes wood<>Each [Carpenter workshop,Carpenter] is equipped with all kinds of tools to coerce wood into more useful shapes.',
                 icon: [16, 14, 'magixmod', 20, 14, 'magixmod'],
                 cost: { 'basic building materials': 150 },
                 use: { 'land of the Paradise': 1, 'industry point': 1 },
@@ -9467,7 +9469,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Hardened house',
-                desc: '@provides 16 [housing]<>This is a huge house that can fit 2 or 3 large families at the same time! Due to its capacity, it is a far more limited type of housing. Inside of this [hardened house], people feel safe and they will probably never even think about moving away!',
+                desc: '@provides 16 [housing]<>This is a huge house that can fit 2 or 3 large families at the same time. Due to its capacity, it is a far more limited type of [housing]! Inside of this [hardened house], people feel safe and will probably never even think about moving away.',
                 icon: [4, 21, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'glass': 5 },
                 use: { 'land of the Paradise': 1 },
@@ -9751,7 +9753,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'heavy warehouse',
-                desc: '@provides 9,000 [material storage]<>A large and hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.//<small>storage9000</small>',
+                desc: '@provides 9,000 [material storage]<>A large and very hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.//<small>storage9000</small>',
                 icon: [30, 12, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'cobalt ingot': 1000, 'precious building materials': 100 },
                 use: { 'land of the Underworld': 5 },
@@ -9767,12 +9769,12 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'temple of the Paradise',
-                desc: '@leads to the <b>Victory next to the God</b>. //A big, precious temple which is the homeland of Seraphins and the God. It is a temple that is supported by a gigantic cloud. It is glowing with ambrosium.',
+                desc: '@leads to the <b>Victory next to the God</b>. //A big, precious temple which is the homeland of Seraphins and the God. It is a temple that is supported by a gigantic [cloud] fused together. It glows with [ambrosium shard,Ambrosium]!',
                 wonder: 'next to the God',
                 icon: [9, 25, 'magixmod'],
                 wideIcon: [8, 25, 'magixmod'],
-                cost: { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 45000, 'ambrosium shard': 10000 },
-                costPerStep: { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'cloud': 4500, 'faith II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
+                cost: { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 40000, 'ambrosium shard': 10000 },
+                costPerStep: { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'cloud': 4444, 'faith II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
                 steps: 400,
                 messageOnStart: 'The construction of The <b>Temple of The Paradise</b> has been started. Now you are full of hope that it will someday make the God appear next to you and show his true good-natured face.',
                 finalStepCost: { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 15, 'faith': 725, 'spirituality': 25, 'godTemplePoint': -100 },
@@ -10083,7 +10085,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fort',
-                desc: '@provides 30 housing. Uses 6 guards to protect citizens from cruel and possesed dark powers.',
+                desc: '@provides 30 [housing]. Uses 6 guards to protect citizens from cruel and possesed dark powers.',
                 icon: [8, 6, 'magixmod'],
                 cost: { 'basic building materials': 800, 'strong metal ingot': 400, 'cobalt ingot': 100 },
                 effects: [
@@ -11781,30 +11783,30 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'dark-essenced ingredients', category: 'tier1',
-                desc: 'Unlocks sheet of ingredients made with [dark essence] as a part of recipe.',
+                desc: 'Unlocks a sheet of ingredients made with [dark essence] as a part of a mysterious recipe.',
                 icon: [20, 5, 'magixmod'],
                 cost: { 'insight': 450, 'dark essence': 4e3, 'wisdom': 10 },
                 req: { 'ingredient crafting': true },
             });
             new G.Tech({
                 name: 'wind-essenced ingredients', category: 'tier1',
-                desc: 'Unlocks sheet of ingredients made with [wind essence] as a part of recipe.',
+                desc: 'Unlocks a sheet of ingredients made with [wind essence] as a part of a mysterious recipe.',
                 icon: [15, 13, 'magixmod'],
                 cost: { 'insight': 450, 'wind essence': 4e3, 'wisdom': 10 },
                 req: { 'ingredient crafting': true },
             });
             new G.Tech({
                 name: 'nature-essenced ingredients', category: 'tier1',
-                desc: 'Unlocks sheet of ingredients made with [nature essence] as a part of recipe.',
+                desc: 'Unlocks a sheet of ingredients made with [nature essence] as a part of a mysterious recipe.',
                 icon: [18, 13, 'magixmod'],
                 cost: { 'insight': 450, 'nature essence': 4e3, 'wisdom': 10 },
                 req: { 'ingredient crafting': true },
             });
             new G.Tech({
                 name: '7th essence', category: 'tier1',
-                desc: 'Discovers another essence which can be feeled in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower]. <small>Shouldn\'t holy essence vaporize dark essence?</small>',
+                desc: 'Discovers another essence which can be felt in Paradise\'s air. Needs some things to be gathered.@Unlocks the [holy wizard tower]. <small>Shouldn\'t holy essence vaporize dark essence though?</small>',
                 icon: [20, 6, 'magixmod', 8, 12, 23, 1],
-                cost: { 'insight': 1300 },
+                cost: { 'insight': 1325 },
                 effects: [
                     { type: 'provide res', what: { 'science': 2 } },
                 ],
@@ -12031,33 +12033,33 @@ if (getObj("civ") != "1") {
                 name: 'faithful cloudy water filtering', category: 'upgrade',
                 desc: 'Improve your [cloudy water] filters, making them 10% faster!',
                 icon: [25, 10, 'magixmod'],
-                cost: { 'insight': 710, 'wisdom': 50, 'faith': 180, 'cloud': 550 },
+                cost: { 'insight': 700, 'wisdom': 50, 'faith': 180, 'cloud': 600 },
                 req: { 'gt1': true }
             });
             new G.Tech({
                 name: 'magical filtering', category: 'upgrade',
                 desc: 'Using a little bit of magic for filtering will make filters that convert [cloudy water] or [muddy water] work 75% faster.<>Upkeep costs won\'t increase.',
                 icon: [25, 8, 'magixmod'],
-                cost: { 'insight': 1295, 'wisdom': 25, 'wind essence': 775, 'cloud': 1990 },
+                cost: { 'insight': 1300, 'wisdom': 25, 'water essence': 2500, 'cloud': 2000 },
                 req: { 'gt1': true, 'gt2': true, 'faithful cloudy water filtering': true }
             });
             new G.Tech({
                 name: 'improved furnace construction', category: 'upgrade',
-                desc: 'People figured a way to make a [furnace] produce more at the same costs of run and upkeep. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [furnace]s will work 20% more efficient. <>If they have chosen [caretaking], then [furnace]s will work 10% more efficient.',
+                desc: 'People figured a way to make [furnace]s produce more by improving their design without any cost increases. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [furnace]s will work 20% more efficient. <>If they have chosen [caretaking], then [furnace]s will work 10% more efficient.',
                 icon: [1, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'focused gathering', category: 'upgrade',
-                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking], then [gatherer]s will work 12.5% more.',
+                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking], then [gatherer]s will work 12.5% more.',
                 icon: [2, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'bigger fires', category: 'upgrade',
-                desc: '[firekeeper]s figured out how to make bigger fires. They will need to use more [stick]s but most important thing is that there will be profit <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [firekeeper]s will work 5% more efficient. <>If they have chosen [caretaking], then [firekeeper]s will work 8% more efficient.',
+                desc: '[firekeeper]s figured out how to make bigger fires. They will need to use more [stick]s but most important thing is that there will be profit <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [firekeeper]s will work 5% more efficient. <>If they have chosen [caretaking], then [firekeeper]s will work 8% more efficient.',
                 icon: [3, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
@@ -13224,7 +13226,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise housing conceptions', category: 'tier1',
-                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock for you new neat housing. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like it does at your mortal world.',
+                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like it does at your mortal world.',
                 icon: [0, 21, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 390, 'inspiration': 16, 'faith': 259 },
                 req: { 'paradise building': true },
@@ -13275,28 +13277,28 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'more experienced healers', category: 'upgrade',
-                desc: 'All [healer]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [healer]s will work 3% more efficient. <>If they have chosen [caretaking], then [healer]s will work 9% more efficient.',
+                desc: 'All [healer]s are more efficient. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [healer]s will work 3% more efficient. <>If they have chosen [caretaking], then [healer]s will work 9% more efficient.',
                 icon: [14, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'better kiln construction', category: 'upgrade',
-                desc: 'All [kiln]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [kiln]s will work 10% more efficient. <>If they have chosen [caretaking], then [kiln]s will work 5% more efficient.',
+                desc: 'All [kiln]s are more efficient. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [kiln]s will work 10% more efficient. <>If they have chosen [caretaking], then [kiln]s will work 5% more efficient.',
                 icon: [15, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'inspirated carvers', category: 'upgrade',
-                desc: '[carver]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [carver]s will work 3% more efficient. <>If they have chosen [caretaking], then [carver]s will work 6% more efficient.',
+                desc: '[carver]s are more efficient. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [carver]s will work 3% more efficient. <>If they have chosen [caretaking], then [carver]s will work 6% more efficient.',
                 icon: [16, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
             });
             new G.Tech({
                 name: 'mo\' concrete', category: 'upgrade',
-                desc: '[concrete making shack]s are more efficient. <>This technology will give you bonus depending on path your people have chosen. <>If they have chosen [moderation], then [concrete making shack]s will work 20% more efficient. <>If they have chosen [caretaking], then [concrete making shack]s will work 5% more efficient.',
+                desc: '[concrete making shack]s are more efficient. <>This technology will give you a bonus depending on path your people have chosen. <>If they have chosen [moderation], then [concrete making shack]s will work 20% more efficient. <>If they have chosen [caretaking], then [concrete making shack]s will work 5% more efficient.',
                 icon: [17, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
@@ -15305,7 +15307,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'villas of victory', category: 'tier2',
-                desc: 'Provides 15 [inspiration II],5 [spirituality II] and [authority II]. //Unlocks villa of victory. New way to give people housing...//This unit will provide amount of housing equal to result of this equation equation: <font color="aqua">(victory points+1)*5</font>',
+                desc: 'Provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]. //Unlocks a rather unique way to give people [housing]...//This unit will provide amount of housing equal to result of this equation equation: <font color="aqua">(victory points+1)*5</font>',
                 icon: [0, 31, 'magixmod'],
                 req: { 'bigger university': true },
                 cost: { 'insight II': 325, 'science': 50, 'culture II': 25 },
@@ -15489,7 +15491,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tool refinery 1/2', category: 'tier1',
-                desc: 'Old...not so primitive, but still old and easily craftable. Is there a way to make them decay slower? People will (hopefully) figure it out later.',
+                desc: 'Many of your tools old and easily craftable, but still decay over time!. Is there a way to make them decay slower? People will (hopefully) figure it out later.',
                 icon: [27, 3, 'magixmod', 25, 31, 'magixmod'],
                 req: { 'paradise crafting': true },
                 cost: { 'insight': 1500, 'wisdom': 15 },
@@ -15531,9 +15533,9 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tool refinery 2/2', category: 'tier2',
-                desc: '[stone tools,Stone tools] become [stone tools,Refined tools], making them decay slower. Also, [artisan]s are no longer able to craft them. Obtain [factories II] or [manufacture units II] to unlock a unit that will let you craft them again if you do not have it yet.',
+                desc: '[stone tools,Stone tools] become refined, making them decay slower. Also, [artisan]s are no longer able to craft them. Obtain [factories II] or [manufacture units II] to unlock a unit that will let you craft them again if you do not have it yet!',
                 icon: [27, 2, 'magixmod', 25, 31, 'magixmod'],
-                req: { 'outstanding wisdom': true, 'wonder \'o science': true },
+                req: { 'tool refinery 1/2': true, 'outstanding wisdom': true, 'wonder \'o science': true },
                 cost: { 'insight II': 150, 'science': 5 },
                 chance: 3,
                 effects: [
@@ -16576,7 +16578,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ancestors world housing conceptions', category: 'tier1',
-                desc: 'This technology doesn\'t unlock new housing yet. But, in the future, you will obtain a similar technology that finally will unlock you new housing.',
+                desc: 'This technology doesn\'t unlock new housing yet. But, in the future, you will obtain a similar technology that finally will unlock new [housing].',
                 icon: [6, 8, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 390, 'inspiration': 16, 'faith': 259 },
                 req: { 'ancestors world building': true },
@@ -17104,7 +17106,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'city planning II', category: 'upgrade',
-                desc: '@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12 per architect). <> They can also plan for you some decorations. //<small>This knowledge may make cities constructed by your civilization look much less cluttered. Who knows if they have an idea for some decorations...maybe not.</small>',
+                desc: '@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12 per architect). <> They can also plan some decorations for everyone around! //<small>This knowledge may make cities constructed by your civilization look much less cluttered and better-looking...who knows what decorations they can come up with?</small>',
                 icon: [31, 34, 'magixmod'],
                 cost: { 'insight': 668, 'wisdom': 2 },
                 req: { 'construction II': true, 'architects knowledge': true, 'will to know more': true },
@@ -17485,7 +17487,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'sandy shores', category: 'tier1',
-                desc: '@Your [digger]s will be able to to collect small amounts of [sand] from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000. // <small>A window...to dig...</small>',
+                desc: '@Your [digger]s will be able to to collect small amounts of [sand] from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000 and is based on your <b>explored water</b>. // <small>A window...to dig...</small>',
                 icon: [4, 9, 0, 0, 'magix2'],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
@@ -17559,7 +17561,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'salty sand II', category: 'tier1',
-                desc: '[digger]s are now able get much more [salt] from your oceans by drying out the salty water within.',
+                desc: '[digger]s are now able to get much more [salt] from your oceans by drying out the salty water within.',
                 icon: [0, 35, 'magixmod', 11, 7, 0, 0, 'magix2'],
                 cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
@@ -17666,10 +17668,17 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art of cooking II', category: 'tier1',
-                desc: 'Unlocks 2 new modes for your [chef]s, which may provide additional [happiness] or [health] when produced.',
+                desc: 'Cooking is complex, but your [chef]s are willing to learn! Getting this unlocks 2 new modes for your [chef]s, which may provide additional [happiness] or [health] when produced.',
                 icon: [0, 35, 'magixmod', 23, 13, 'magixmod'],
                 cost: { 'insight': 600, 'wisdom': 50, 'culture': 600 },
                 req: { 'art of cooking': true },
+            });
+            new G.Tech({
+                name: 'magical filtering II', category: 'upgrade',
+                desc: 'Use the power of water, wind, and clouds! @filters that produce [cloud]s work twice as fast',
+                icon: [0, 35, 'magixmod', 25, 8, 'magixmod'],
+                cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 50000 },
+                req: { 'magical filtering': true }
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
