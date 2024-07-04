@@ -12517,7 +12517,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'better healing',
-                desc: '<font color="#aaffff">After being able to get [healer]s, your dreamers started thinking how to boost healing and decrease the amount of failed healing attempts. @This trait unlocks you [first aid], a new tech!</font>',
+                desc: '<font color="#aaffff">After being able to get [healer]s, your dreamers started thinking how to boost healing and decrease the amount of failed healing attempts. @This knowledge also unlocks [first aid], a new tech!</font>',
                 icon: [8, 12, 3, 5, 22, 1],
                 cost: { 'insight': 50 },
                 chance: 120,
@@ -13504,7 +13504,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'magical presence', category: 'misc',
                 displayName: '<font color="silver">Magical presence</font>',
-                desc: 'You feel some weird stuff inside of your body. Sometimes it is warm, and at other times it makes you feel weird, but there doesn\'t seem to be anything bad that this presence has made. @Increases the efficiency of all [holy wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks you a new theme (check [theme changer]).',
+                desc: 'You feel some weird stuff inside of your body. Sometimes it is warm, and at other times it makes you feel weird, but there doesn\'t seem to be anything bad that this presence has made. @Increases the efficiency of all [holy wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks a new theme (check the [theme changer])',
                 icon: [4, 12, 'magixmod', 2, 24, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false }
@@ -17688,10 +17688,13 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'power from beneath', category: 'tier1',
-                desc: 'You notice that the deeper you go into the Underworld, the hotter it becomes. However, [wind essence] and some basic walls seem to do the trick of cooling everything down! @Provides 10 [land of the Underworld]',
-                icon: [6, 0, 'magix2', 1, 2, 'magixmod', 24, 1],
-                cost: { 'insight': 200, 'basic building materials': 5000, 'wind essence': 60000 },
+                desc: 'You notice that the deeper you go into the Underworld, the hotter it becomes. However, [wind essence] and some basic walls seem to do the trick of cooling everything down! @Provides 50 [land of the Underworld]',
+                icon: [10, 19, 'magixmod', 24, 1],
+                cost: { 'insight': 200, 'basic building materials': 5000, 'wind essence': 64000 },
                 req: { 'underworld\'s ascendant': true, 'underworld building 2/2': true },
+                effects: [
+                    { type: 'provide', what: { 'land of the Underworld': 50 } }
+                ],
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
