@@ -17,17 +17,25 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 // Custom storage tools that 1) don't break the save data and 2) are saved when exporting
-G.storageObject = localStorage.getItem("legacySave-alpha")
-if (G.storageObject) {
-    G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+?\}/)
-    G.storageObject = G.storageObject[G.storageObject.length - 1]
+try {
+    G.storageObject = localStorage.getItem("legacySave-alpha")
     if (G.storageObject) {
-        G.storageObject = JSON.parse(G.storageObject.replaceAll('&QOT', '"'))
+        G.storageObject = unescape(b64DecodeUnicode(G.storageObject))
+        if (G.storageObject) {
+            G.storageObject = G.storageObject[G.storageObject.length - 1]
+            if (G.storageObject) {
+                G.storageObject = JSON.parse(G.storageObject.replaceAll('&QOT', '"'))
+            } else {
+                G.storageObject = {}
+            }
+        } else {
+            G.storageObject = {}
+        }
     } else {
         G.storageObject = {}
     }
-} else {
-    G.storageObject = {}
+} catch (e) {
+    console.warn("Storage data could not be obtained.")
 }
 
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
@@ -36,9 +44,13 @@ function getObj(cname) {
     if (storageItem != null) {
         return storageItem
     }
-    var localItem = localStorage.getItem(cname)
-    if (localItem !== null) {
-        return localItem
+    try {
+        var localItem = localStorage.getItem(cname)
+        if (localItem !== null) {
+            return localItem
+        }
+    } catch (e) {
+
     }
     if (navigator.cookieEnabled) {
         let name = cname + "=";

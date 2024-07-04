@@ -5062,7 +5062,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'withering salt',
-                desc: '[salt] + [dark essence]. Part of a few Dark Potions. Do not use it for meals, kills people from inside very quickly',
+                desc: '[salt] + [dark essence]. Part of a few Dark Potions. Do not use it for any food, as it is very deadly to the body!',
                 icon: [20, 10, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5072,7 +5072,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'herb of the undead',
-                desc: '[herb] + [dark essence] + [fruit]. Used to be one of ingredients of the Defense Dark Potions. Weakens deadly power of [dark essence], does not weaken potions effect',//Coming very very soon types of potions
+                desc: '[herb] + [dark essence] + [fruit].. Weakens the deadly power of [dark essence]!',//Coming very very soon types of potions
                 icon: [20, 11, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5082,7 +5082,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'scobs of life',
-                desc: '[scobs] + [nature essence] + [water] + [mana]. Used in Nature Combat Potions. One of strongest and most allergic for undead ingredient.',
+                desc: '[scobs] + [nature essence] + [water] + [mana]. These are used in potions involving nature. Most people, however, have a mild allergy to it.',
                 icon: [17, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5092,7 +5092,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'grass of growing',
-                desc: '[herb] + [mana] + [nature essence]. Used in Nature Defense Potions. This grass can be friend of soldiers. Can be used to craft only one potion which will overgrow person who drank it and will work as green, natural camouphlage.',
+                desc: '[herb] + [mana] + [nature essence]. Used in various nature-based potions. This grass can be the friend of soldiers and people who are trying to hide!',
                 icon: [16, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5102,7 +5102,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'windy sugar',
-                desc: '[sugar] + [mana] + [wind essence]. Used in combat. Sweet, tasty but unstable(moves, swirls, levitates over time)',
+                desc: '[sugar] + [mana] + [wind essence]. Used in combat. Sweet and tasty but pretty unstable (as it moves, swirls, levitates over time).',
                 icon: [14, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5118,7 +5118,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to Paradise. Out of portal a Tablet fall and falls next to your feet. Big golden portal shines and you can see what is beyond it. You come through and notice it is perfect to live. Now it is time for more discoveries.</b>', icon: [8, 4, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to Paradise. Out of the portal a Tablet falls and falls next to your feet. A large golden portal shines and you can see what is beyond it. You come through and notice it is perfect to live. Now it is time for more discoveries.</b>', icon: [8, 4, 'magixmod'] });
                         madeUnlockMessageP = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
@@ -6028,7 +6028,7 @@ if (getObj("civ") != "1") {
                 icon: [11, 30, 'magixmod'],
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !MirrorMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold in touch and perfectly symetrical. A Tablet has a warning carved onto it.<br></b><li>Pro tip: hover on Tablet in <b>Essentials resource category</b> to read a unique message.', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold to the touch and perfectly symmetrical. A Tablet has a warning carved onto it.<br></b><li>Pro tip: hover on Tablet in <b>Essentials resource category</b> to read a unique message.', icon: [12, 19, 'magixmod'] });
                         MirrorMESG = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
@@ -6405,7 +6405,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a passage to the ancestors world. Out of a portal, a Tablet falls and falls next to your feet. A big ruby portal shines and you can see what is beyond it. You come through and notice there is perfect moderate heat and autumn is everywhere. Now it is time for more discoveries.</b>', icon: [30, 33, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a passage to the ancestors world. Out of the portal, a strange Tablet falls and falls next to your feet. A big ruby portal shines and you can now see what is beyond it! You come through and notice there is perfect moderate heat and autumn is everywhere. Now it is time for more discoveries.</b>', icon: [30, 33, 'magixmod'] });
                         madeUnlockMessageP = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
