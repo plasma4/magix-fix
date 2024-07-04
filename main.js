@@ -1051,7 +1051,6 @@ G.Launch=function()
 		//erase the save and start a new one, handy when the page crashes when testing new save formats
 		var i = 0
 		var localItem = ""
-		localStorage.removeItem("civ")
 		while (localItem !== null) {
 			localStorage.removeItem("nelOffline"+i)
 			localItem=localStorage.getItem("nelOffline"+(++i))
@@ -2988,13 +2987,13 @@ G.Launch=function()
 			var res=G.resolveRes(realRes);
 			if (res!=realRes)
 			{
-				realRes.tick(realRes,G.tick);
+				if (realRes.tick) realRes.tick(realRes,G.tick);
 				if (realRes.hidden) realRes.visible=false;
 				else if (res.amount!=0) realRes.visible=true;
 			}
 			else
 			{
-				res.tick(res,G.tick);
+				if (res.tick) res.tick(res,G.tick);
 				res.mult=res.getMult();
 				if (res.hidden) res.visible=false;
 				else if (res.amount!=0) res.visible=true;

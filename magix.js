@@ -1665,14 +1665,18 @@ if (getObj("civ") != "1") {
                             setObj('drought', 0)
                         }
                     } else if (G.year == 49 || (G.year > 49 && G.year + 2 >= G.getRes('ignoreItem').amount)) {
+                        G.Message({ type: 'bad2', text: 'From now on, <b>droughts</b> may start occuring. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                         // Drought data starts being calculated at year 50
-                        G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 8)
-                    } else if (G.year == G.getRes('ignoreItem').amount - 2) {
+                        G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
+                    } else if (droughtYear === 0) {
+                        G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to happen.', icon: [9, 10] })
+                        setObj('drought', -1)
+                    } else if (G.year === G.getRes('ignoreItem').amount - 2) {
                         G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
-                    } else if (G.year > 49 && Math.random() < 0.8 && G.year == G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
+                    } else if (G.year > 49 && Math.random() < 0.8 && G.year === G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
                         G.gainTrait(G.traitByName['drought'])
                         setObj('drought', G.year)
-                        G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 8 + 9)
+                        G.getRes('ignoreItem').amount = G.year + Math.round(Math.random() * 8 + 6)
                     }
 
                     if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
@@ -2772,7 +2776,7 @@ if (getObj("civ") != "1") {
                 name: 'population',
                 desc: 'Your [population] represents everyone living under your rule. These are the people that look to you for protection, survival, and glory.',
                 meta: true,
-                colorGood: 'green', colorBad: 'red',
+                colorGood: 'green', colorBad: '#f44',
                 visible: true,
                 icon: [0, 3],
                 tick: function (me, tick) {
@@ -3258,20 +3262,20 @@ if (getObj("civ") != "1") {
                 desc: '[adult,People] can fall [sick,sick] when your [health] levels are too low. They do not [worker,work], but may be healed over time.',
                 partOf: 'population',
                 icon: [6, 3],
-                colorBad: '#F44', colorGood: '#F44'
+                colorBad: 'lime', colorGood: '#f44'
             });
             new G.Res({
                 name: 'wounded',
                 desc: '[adult,People] may get [wounded,wounded] due to work injuries, or from war. They do not [worker,work], but may slowly get better over time.',
                 partOf: 'population',
                 icon: [7, 3],
-                colorBad: '#F44', colorGood: '#F44'
+                colorBad: 'lime', colorGood: '#f44'
             });
             new G.Res({
                 name: 'corpse',
                 desc: '[corpse,Corpses] are the remains of [population,People] that died, whether from old age, an accident, disease, starvation, or a brutal war.//Corpses left in the open air tend to spread diseases and make people unhappy, which tend to get even worse as superstitions develop. To mitigate this, you need a [burial spot] for each corpse.',
                 startWith: 0,
-                colorGood: '#F44', colorBad: 'lime',
+                colorBad: 'lime', colorGood: '#f44',
                 icon: [8, 3],
                 tick: function (me, tick) {
                     var graves = G.getRes('burial spot');
@@ -3455,7 +3459,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 visible: true,
                 icon: [3, 4],
-                colorGood: 'lime', colorBad: '#F44',
+                colorGood: 'lime', colorBad: '#f44',
                 fractional: true,
                 tick: function (me, tick) {
                     // Calculate ungratefulness
@@ -3517,7 +3521,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 visible: true,
                 icon: [3, 5],
-                colorGood: 'lime', colorBad: '#F44',
+                colorGood: 'lime', colorBad: '#f44',
                 fractional: true,
                 tick: function (me, tick) {
                     if (tick % 99 == 44) {
@@ -5701,7 +5705,7 @@ if (getObj("civ") != "1") {
                         u2popup = true
                     }
                     if (me.amount == 600 && !G.has('a feeling from the Underworld') && !u3popup) {
-                        G.Message({ type: 'underworldig', text: 'You see wizards using magic to cool down the world so people can continue digging down. Dark voices yell and make many people nearby scared. This doesn\'t seem good at all!<br><b><font color="teal">You want to see fear...<br>Please don\'t show me even a tear...<br>You hear...<br>"I yell so you FEAR!!!!!!"</font></b>', icon: [2, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'You see wizards using magic to cool down the world so people can continue digging down. Dark voices yell and make many people nearby scared. This doesn\'t seem good at all!<br><b><font color="teal">You want to see fear...but it keeps happening. Strange yells echo, clearly trying to cause fear in the minds of your people...</font></b>', icon: [2, 19, 'magixmod'] });
                         u3popup = true
                     }
                     if (me.amount == 750 && !G.has('a feeling from the Underworld') && !u4popup) {
@@ -5720,7 +5724,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'land of the Underworld',
-                desc: 'The land you got from activating a portal to the Underworld, which is a place with new buildings.',
+                desc: 'The land you got from activating a portal to the Underworld, which is a place with new buildings. You may get more after unlocking new researches...',
                 icon: [10, 19, 'magixmod'],
                 displayUsed: true,
                 partOf: 'tl',
@@ -6791,10 +6795,13 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'seafood': 1, 'fire pit': 0.01 }, into: { 'cooked seafood': 1 }, every: 1, repeat: 5, mode: 'cook' },
                     { type: 'convert', from: { 'meat': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
                     { type: 'convert', from: { 'seafood': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
-                    { type: 'gather', context: 'honey', what: { 'honey': 20 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 25 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 20 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false, 'plant-loving bees': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 25 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 30 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false, 'plant-loving bees': true } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 37.5 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': true } },
                     { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, max: 6, mode: 'honeycombs' },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 2 }, every: 1, chance: 1 / 1.5, mode: 'honey2' },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 40 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': false } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': true } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -13069,14 +13076,14 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 category: 'misc',
                 name: 'artistic gray cells', displayName: '<font color="#00C000">Artistic gray cells</font>',
-                desc: 'You see flashes of culture...But who were these people? These flashes and hypnagogia made you inspired. Ancestors of culture gives you their power...watch over you giving to you: @+3 [culture] @+3 [inspiration] @Also autohires 1 free [storyteller], but this free one works at 1/2000th the rate of a normally hired [storyteller].',
+                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. Ancestors of culture give you their power...providing you with various boosts: @+3 [culture] @+3 [inspiration] @Also autohires 1 free [storyteller], but this free one works at 1/2000th the rate of a normally hired [storyteller].',
                 icon: [4, 12, 'magixmod', 6, 12, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false },
             });
             new G.Tech({
                 name: 'genius feeling', displayName: '<font color="aqua">Genius feeling</font>', category: 'misc',
-                desc: 'You feel like you are genius (or at least, quite smart). Your people noticed it. That may help and decide for their fate. @You gain +6 [insight]. // <small>That\'s gorgeous...</small>',
+                desc: 'You feel like you are genius (or at least, quite smart). Your people noticed it. That may help and decide for their fate. @You gain +6 [insight] and +6% [dreamer] speed! // <small>That\'s gorgeous...</small>',
                 icon: [4, 12, 'magixmod', choose([1, 4, 7]), 17, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false }
@@ -13099,7 +13106,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'a feeling from the Underworld', category: 'misc',
-                desc: 'You feel some warmth. It is not usual warmth. A call from Underworld. @<b>Allows you to finish unlocking the Underworld!',
+                desc: 'You feel some warmth. It is not a usual warmth. It appears to be a rather strange call from the Underworld... @<b>Allows you to finish unlocking the Underworld!',
                 icon: [8, 12, 9, 5, 'magixmod'],
                 cost: {},
                 effects: [
@@ -17672,6 +17679,20 @@ if (getObj("civ") != "1") {
                 cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 50000 },
                 req: { 'magical filtering': true }
             });
+            new G.Tech({
+                name: 'plant-loving bees', category: 'tier1',
+                desc: 'Use some [nature essence] and gather some nearby plants to increase all [honey] gain by 50%.',
+                icon: [6, 0, 'magix2', 1, 2, 'magixmod', 24, 1],
+                cost: { 'insight': 400, 'nature essence': 5000, 'honey': 1200, 'faith': 15 },
+                req: { 'beekeeping II': true, 'wizard wisdom': true, 'druidism': true, 'plant lore II': true },
+            });
+            new G.Tech({
+                name: 'power from beneath', category: 'tier1',
+                desc: 'You notice that the deeper you go into the Underworld, the hotter it becomes. However, [wind essence] and some basic walls seem to do the trick of cooling everything down! @Provides 10 [land of the Underworld]',
+                icon: [6, 0, 'magix2', 1, 2, 'magixmod', 24, 1],
+                cost: { 'insight': 200, 'basic building materials': 5000, 'wind essence': 60000 },
+                req: { 'underworld\'s ascendant': true, 'underworld building 2/2': true },
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -19883,7 +19904,7 @@ if (getObj("civ") != "1") {
 
             new G.Goods({ // By @1_e0
                 name: 'bee nest',
-                desc: 'Each bee nest is full of tiny cells and a small source of [honey] or [honeycomb]s. Bees also help pollinate nearby [flowers], ensuring that they grow properly.',
+                desc: 'Each bee nest is full of tiny cells and provides a small source of [honey] or [honeycomb]s. Bees also help pollinate nearby [flowers], ensuring that they grow properly.',
                 res: {
                     'honey': { 'honey': 0.1 },
                     'honeycomb': { 'honeycomb': 0.05 }
@@ -20932,7 +20953,7 @@ if (getObj("civ") != "1") {
                 name: 'population',
                 desc: 'Your [population] represents everyone living under your rule. These are the elves that look to you for protection, survival, and glory.',
                 meta: true,
-                colorGood: 'green', colorBad: 'red',
+                colorGood: 'green', colorBad: '#f44',
                 visible: true,
                 icon: [0, 3, 'c2'],
                 tick: function (me, tick) {
@@ -21314,7 +21335,7 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 icon: [6, 3, 'c2'],
                 category: 'demog',
-                colorBad: '#F44', colorGood: '#F44'
+                colorBad: 'lime', colorGood: '#f44'
             });
             new G.Res({
                 name: 'wounded',
@@ -21322,13 +21343,13 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 icon: [7, 3, 'c2'],
                 category: 'demog',
-                colorBad: '#F44', colorGood: '#F44'
+                colorBad: 'lime', colorGood: '#f44'
             });
             new G.Res({
                 name: 'corpse',
                 desc: '[corpse,Corpses] are the remains of [population,Elves] that died, whether from old age, accident, disease, starvation or war.//Corpses left in the open air tend to spread diseases and make elves unhappy, which gets even worse as superstitions develop. To mitigate this, you need to create a [burial spot] for each corpse.',
                 startWith: 0,
-                colorGood: '#F44', colorBad: 'lime',
+                colorBad: 'lime', colorGood: '#f44',
                 icon: [8, 3, 'c2'],
                 tick: function (me, tick) {
                     var graves = G.getRes('burial spot');
@@ -21464,7 +21485,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 visible: true,
                 icon: [3, 4, 'c2'],
-                colorGood: 'lime', colorBad: '#F44',
+                colorGood: 'lime', colorBad: 'green',
                 fractional: true,
                 tick: function (me, tick) {
                     if (tick % 99 == 44) {
@@ -21500,7 +21521,7 @@ if (getObj("civ") != "1") {
                 desc: '[health] represents the average physical condition of your [population].//Lower health tends to make elves [sick] and unhappy, while higher health will make elves happier.//Health can be affected by a number of things: eating raw or spoiled [spoiled food], drinking [muddy water], poor living conditions, and ongoing plagues.',
                 startWith: 0,
                 visible: true,
-                colorGood: 'lime', colorBad: '#F44',
+                colorGood: 'lime', colorBad: '#f44',
                 icon: [3, 5, 'c2'],
                 fractional: true,
                 tick: function (me, tick) {
