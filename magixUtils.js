@@ -19,7 +19,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 // Custom storage tools that 1) don't break the save data and 2) are saved when exporting
 G.storageObject = localStorage.getItem("legacySave-alpha")
 if (G.storageObject) {
-    G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+\}/)
+    G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+?\}/)
     G.storageObject = G.storageObject[G.storageObject.length - 1]
     if (G.storageObject) {
         G.storageObject = JSON.parse(G.storageObject.replaceAll('&QOT', '"'))
