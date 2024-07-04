@@ -1652,9 +1652,9 @@ G.AddData({
             }
             l('fastTicks').onmouseover = function (e) {
                 if (G.getSetting('debug')) {
-                    l('fastTicks').style.cursor = 'pointer'
+                    l('fastTicks').style.cursor = 'pointer';
                 } else {
-                    l('fastTicks').style.cursor = 'default'
+                    l('fastTicks').style.cursor = null;
                 }
             };
             l('fastTicks').onclick = function (e) {
@@ -1673,7 +1673,7 @@ G.AddData({
         ==========================*/
         if (G.modsByName['Elves']) {
             G.NewGameConfirm = function () {
-                //the player has selected a starting location; launch the game proper
+                //the player has selected a starting location; launch the game properly
                 //G.Reset();
                 G.sequence = 'main';
                 G.T = 0;

@@ -3413,7 +3413,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'wtr',
                 displayName: 'Water',
-                desc: 'Every tile of ocean you own grants you some [wtr] (100 per fully-explored ocean tile normally) upon which you...cannot construct much. You can only use 10% of the water in the entire world. If for some reason you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
+                desc: 'Every tile of ocean you own grants you some [wtr] (100 for every fully explored ocean tile normally) upon which you...cannot construct a lot. //You can only use 10% of the water in the whole world! If, for some reason, you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.<>The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total',
                 icon: [25, 18, 'magixmod'],
                 displayUsed: true,
                 getDisplayAmount: function () {
@@ -12481,7 +12481,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Trait({
                 name: 'belief in portals',
-                desc: '@Makes wizards want to create a new dimension. //<small>Will it succeed?</small>',
+                desc: 'This belief makes wizards want to create a new dimension. //<small>Will it succeed?</small>',
                 icon: [2, 1, 'magixmod'],
                 cost: { 'culture': 30, 'faith': 3 },
                 chance: 10,
@@ -12751,7 +12751,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dark side',
-                desc: '@people believe that if there are good deities and helpful spirits then there must be something opposite to them, some of terror and pain',
+                desc: 'People now believe that if there are good deities and helpful spirits, then there must be something opposite to them; some of terror and evil pain...',
                 icon: [11, 19, 'magixmod'],
                 cost: { 'spirituality': 10, 'faith': 200 },
                 chance: 375,
@@ -15060,7 +15060,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Druidish merriment',
-                desc: '[druids] gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [27, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism2': false },
@@ -15071,7 +15071,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism2',
                 displayName: 'Faithful worship',
-                desc: '[druids] gather 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s gather 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [28, 30, 'magixmod'],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism1': false },
@@ -21472,7 +21472,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'wtr',
                 displayName: 'Water',
-                desc: 'Every tile of ocean you own grants you some [wtr] (100 per fully-explored ocean tile normally) upon which you...cannot construct much. You can only use 10% of the water in the entire world. If for some reason you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
+                desc: 'Every tile of ocean you own grants you some [wtr] (100 for every fully explored ocean tile normally) upon which you...cannot construct a lot. //You can only use 10% of the water in the whole world! If, for some reason, you find yourself with less available water than your buildings are using, some of them will start to slowly crumble away.<>The number on the left is how much water is occupied, the number on the middle is how much [wtr] you can use, while the number on the right is how much explored water you have in total.',
                 icon: [15, 4, 'c2'],
                 displayUsed: true,
                 getDisplayAmount: function () {
@@ -24845,7 +24845,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Natural hopefulness',
-                desc: '[druids] gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 15, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
