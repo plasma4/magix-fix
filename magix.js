@@ -2856,8 +2856,8 @@ if (getObj("civ") != "1") {
                                         if ((G.getRes('faith').amount <= 0) || (G.getRes('influence').amount <= 0)) {
                                             G.setPolicyModeByName(rituals[i], 'off');
                                         } else {
-                                            G.lose('faith', 15, 'rituals')
-                                            G.lose('influence', 15, 'rituals')
+                                            G.lose('faith', 10, 'rituals')
+                                            G.lose('influence', 10, 'rituals')
                                         }
                                     } else {
                                         if ((G.getRes('faith II').amount <= 0) || (G.getRes('influence II').amount <= 0)) {
@@ -17948,7 +17948,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'crafting & farm rituals',
-                desc: 'Improves [Paper-crafting shack], [Well of mana] and <b>Farms</b> efficiency by 17%. Consumes 15 [faith] and 15 [influence] every 20 days; will stop if you run out.',
+                desc: 'Improves [Paper-crafting shack]s, [Well of mana,Wells of mana], and <b>Farms</b> by various amounts. Consumes 10 [faith] and 10 [influence] every 20 days; will stop if you run out.',
                 icon: [8, 12, 14, 2, 'magixmod'],
                 cost: { 'faith': 5, 'influence': 5 },
                 startMode: 'off',
@@ -18102,7 +18102,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se09',
                 displayName: 'Moai the Seraphin of the Stone',
-                desc: '<font color="lime">All [mine]s are 25% more efficient. (Doesn\'t apply to [gems] and only applies to modes from [prospecting,prospecting I] not to <b>any</b>.) Also, [digger] is 2% more efficient. [carver] works 3% faster at modes related to [stone].</font><br><hr color="fuschia"><font color="red">Backfire: [well]s are 15% less efficient (not including [Well of mana]) and [artisan]s are 7.5% less efficient.</font>',
+                desc: '<font color="lime">All [mine]s are 25% more efficient. (Doesn\'t apply to [gems] and only applies to modes from [prospecting,prospecting I] not to <b>any</b>.) Also, [digger] is 2% more efficient. [carver] works 3% faster at modes related to [stone].</font><br><hr color="fuschia"><font color="red">Backfire: [well]s are 15% less efficient (not including [Well of mana,Wells of mana]) and [artisan]s are 7.5% less efficient.</font>',
                 icon: [21, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18576,7 +18576,7 @@ if (getObj("civ") != "1") {
                 new G.Policy({
                     name: 'eat meals',
                     desc: 'Decide if your people can eat [meals] or not.',
-                    icon: [6, 12, 22, 13, 'magixmod'],
+                    icon: [6, 12, 9, 0, 'magix2'],
                     cost: { 'influence': 2 },
                     startMode: 'on',
                     req: { 'cooking II': true },
@@ -18623,7 +18623,7 @@ if (getObj("civ") != "1") {
                 new G.Policy({
                     name: 'eat meals',
                     desc: 'Decide if your people can eat [meals] or not.',
-                    icon: [6, 12, 22, 13, 'magixmod'],
+                    icon: [6, 12, 9, 0, 'magix2'],
                     cost: { 'influence': 0 },
                     startMode: 'on',
                     req: { 'cooking II': true },
