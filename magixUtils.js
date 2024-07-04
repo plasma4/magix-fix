@@ -5012,7 +5012,8 @@ G.AddData({
 
 
         G.NewGameWithSameMods = function () {
-            delete G.storageObject.drought
+            delete G.storageObject.drought;
+            G.Save();
             G.loadMenu = undefined;
             G.loadCiv = 0;
             G.setTab = function (tab) {
@@ -5058,8 +5059,8 @@ G.AddData({
         }
         G.NewGameWithSameMods2 = function () //this one does not change loadmenu
         {
-            delete G.storageObject.drought
-            G.Save()
+            delete G.storageObject.drought;
+            G.Save();
             G.setTab = function (tab) {
                 if (tab.popup) {
                     if (G.getSetting('animations')) triggerAnim(tab.l, 'plop');

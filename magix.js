@@ -2787,6 +2787,15 @@ if (getObj("civ") != "1") {
                     if (me.amount > 0) {
                         //note : we also sneak in some stuff unrelated to population here
                         //policy ticks
+                        if (G.checkPolicy('water rituals') == 'on') {
+                            if (G.getRes('magic essences').amount <= 150) G.setPolicyModeByName('water rituals', 'off')
+                            else G.lose('magic essences', 150, 'rituals')
+                        }
+                        if (G.checkPolicy('love of honey') == 'on') {
+                            if (G.getRes('nature essence').amount <= 250) G.setPolicyModeByName('love of honey', 'off')
+                            else G.lose('nature essence', 250, 'rituals')
+                        }
+
                         if (tick % 20 == 0) {
                             if (!G.has('policy revaluation')) {
                                 var rituals = ['fertility rituals', 'harvest rituals', 'flower rituals', 'wisdom rituals'];
@@ -5238,13 +5247,7 @@ if (getObj("civ") != "1") {
                 name: 'magic essences',
                 desc: 'This is how many <b>Essences</b> you have in total currently. [magic essences] are important for [wizard]s and are greatly respected.',
                 icon: [20, 13, 'magixmod'],
-                meta: true,
-                tick: function (me, tick) {
-                    if (G.checkPolicy('water rituals') == 'on') {
-                        if (G.getRes('magic essences').amount <= 150) G.setPolicyModeByName('water rituals', 'off')
-                        else G.lose('magic essences', 150, 'rituals')
-                    }
-                }
+                meta: true
             });
             //Currency
             new G.Res({
@@ -6799,9 +6802,11 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'honey', what: { 'honey': 25 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': false } },
                     { type: 'gather', context: 'honey', what: { 'honey': 30 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false, 'plant-loving bees': true } },
                     { type: 'gather', context: 'honey', what: { 'honey': 37.5 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, max: 6, mode: 'honeycombs' },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, max: 6, mode: 'honeycombs', req: { 'love of honey': false } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2.5 }, max: 6, mode: 'honeycombs', req: { 'love of honey': true } },
                     { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 40 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': false } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': true } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': false } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 96 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': true } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -17688,12 +17693,22 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'power from beneath', category: 'tier1',
-                desc: 'You notice that the deeper you go into the Underworld, the hotter it becomes. However, [wind essence] and some basic walls seem to do the trick of cooling everything down! @Provides 50 [land of the Underworld]',
+                desc: 'You notice that the deeper you go into the Underworld, the hotter it becomes. However, [wind essence] and some simple walls seem to do the trick of cooling everything down! @provides 50 [land of the Underworld]',
                 icon: [10, 19, 'magixmod', 24, 1],
                 cost: { 'insight': 200, 'basic building materials': 5000, 'wind essence': 64000 },
                 req: { 'underworld\'s ascendant': true, 'underworld building 2/2': true },
                 effects: [
-                    { type: 'provide', what: { 'land of the Underworld': 50 } }
+                    { type: 'provide res', what: { 'land of the Underworld': 50 } }
+                ],
+            });
+            new G.Tech({
+                name: 'superior honey', category: 'tier1',
+                desc: 'Your people love [honey] so much that they can\'t wait for more of it! @Increases the [happiness] gain from eating [honey] and [honeycomb]s by 20% @Unlocks a new ritual related to them',
+                icon: [10, 19, 'magixmod', 24, 1],
+                cost: { 'insight': 1500, 'honey': 2500, 'nature essence': 10000 },
+                req: { 'plant-loving bees': true, 'care for nature II': true },
+                effects: [
+                    { type: 'function', func: function () { G.getDict('honey').turnToByContext['eating']['happiness'] *= 1.2; G.getDict('honeycomb').turnToByContext['eating']['happiness'] *= 1.2; } },
                 ],
             });
 
@@ -17756,6 +17771,13 @@ if (getObj("civ") != "1") {
                 req: { 'drought': true },
                 category: 'main',
                 chance: 25,
+            });
+            new G.Trait({ // New trait by @1_e0
+                name: 'care for nature II',
+                desc: '@people now respect nature even more @may result in more advanced techs',
+                icon: [0, 35, 'magixmod', 2, 0, 'magix2'],
+                chance: 50,
+                req: { 'faith in water': true, 'beekeeping III': true },
             });
 
             new G.Res({
@@ -18721,6 +18743,15 @@ if (getObj("civ") != "1") {
                 cost: { 'magic essences': 5000 },
                 startMode: 'off',
                 req: { 'faith in water': true },
+                category: 'faith',
+            });
+            new G.Policy({
+                name: 'love of honey',
+                desc: 'Improves [honeycomb] gain by 25% and essenced [honey] gain by 60%. This ritual requires 250 [nature essence] every day as upkeep instead, and because of this, this ritual\'s cost will not be changed by any trait or tech.',
+                icon: [8, 12, 7, 6],
+                cost: { 'nature essence': 10000 },
+                startMode: 'off',
+                req: { 'superior honey': true },
                 category: 'faith',
             });
 
