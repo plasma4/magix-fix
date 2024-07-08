@@ -4,14 +4,19 @@
  Paste the script below into the console.
 javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),onbeforeunload=null,location.reload()
 
->>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
+>>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your browser's bookmark bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
   - IF YOU ARE STARTING FROM A NEW GAME:
- To set up this mod, go to Orteil's NeverEnding Legacy and click on the Load Mod button. There, paste in the following 2 lines:
+ To set up this mod, go to Orteil's NeverEnding Legacy and click on the Load Mod button. From the text box that pops up, delete the default text and paste in the following 2 lines:
 https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js
 https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
->>> Upon loading it, you should find that it works. This should properly set up the mod.
+>>> If you pasted them in with that order and deleted the default text, it should work!
+==========
+  - DOWNLOADING MAGIX LOCALLY:
+ If you wish to download Magix in a local copy for offline use or modding, you can do so download the .zip file at https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip to get started!
+
+>>> You next step should be to extract the .zip file (to ensure assets work properly) and to open the index.html file. Congrats! You can now use Magix or load other mods in without internet.
 */
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
@@ -39,13 +44,13 @@ try {
 }
 
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
-function getObj(cname) {
-    var storageItem = G.storageObject[cname]
+function getObj(key) {
+    var storageItem = G.storageObject[key]
     if (storageItem != null) {
         return storageItem
     }
     try {
-        var localItem = localStorage.getItem(cname)
+        var localItem = localStorage.getItem(key)
         if (localItem !== null) {
             return localItem
         }
@@ -53,7 +58,7 @@ function getObj(cname) {
 
     }
     if (navigator.cookieEnabled) {
-        let name = cname + "=";
+        let name = key + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
         for (let i = 0; i < ca.length; i++) {
@@ -67,6 +72,11 @@ function getObj(cname) {
         }
     }
     return null;
+}
+
+G.setDict = function (name, what) {
+    // No more warnings :p
+    G.dict[name] = what
 }
 
 function setObj(key, value) {
@@ -243,7 +253,7 @@ G.AddData({
         }
 
         /*==========================
-        TABS  (just fucking clean up that damn mess)
+        TABS (yeah, this needs some changing and touch-ups, eh?)
         ==========================*/
         function tabs() {
             var tabIds = [];
@@ -345,7 +355,7 @@ G.AddData({
                 str += '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                     G.button({
                         id: 'display',
-                        text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Linear display:' + (G.getSetting('linearDp') == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
+                        text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Wide display: ' + (G.getSetting('linearDp') == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
                         tooltip: 'Toggle between displaying policy categories in bulk or one category per line.',
                         onclick: function () { linearDisplay('policy'); G.update['policy'](); }
                     });
@@ -465,7 +475,7 @@ G.AddData({
             str += '<div style=position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                 G.button({
                     id: 'display',
-                    text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Linear display:' + (G.getSetting('linearDt') == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
+                    text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Wide display: ' + (G.getSetting('linearDt') == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
                     tooltip: 'Toggle between displaying trait categories in bulk or one category per line.',
                     onclick: function () { linearDisplay('trait'); G.update['trait']() }
                 });
@@ -477,9 +487,9 @@ G.AddData({
                     id: 'traitManagement',
                     name: 'traitManagement',
                     classes: G.getSetting('traitRemovalMode') ? ["on"] : [],
-                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait at the cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time, and has a cooldown.<br>Also, temporary traits that became permanent may also be removed, but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> Sometimes, some traits that negatively affect your civilization may be a key to traits that will support you.',
+                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait at the cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time, and has a cooldown.<br>Also, temporary traits that became permanent may also be removed, but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> (Sometimes, some traits that negatively affect your civilization may be a key to traits or unlocks that will support you.)',
                     text: 'Manage temporary traits',
-                    style: 'box-shadow:-1px 0px 2px 2px #f00;',
+                    style: 'box-shadow:-1px 0px 2px 2px red;',
                     onclick: function () {
                         G.setSetting('traitRemovalMode', !G.getSetting('traitRemovalMode'));
                         G.update['trait']();
@@ -786,11 +796,11 @@ G.AddData({
                         G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
                     }
                 }) : "") : "")
-                + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You need " + B(G.herbReq) + " <font color='lime'>Herb essence</font> to please people in this plane.</div>" : "") +
+                + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(G.herbReq) + " <font color='lime'>Herb essence</font> to please your people here.</div>" : "") +
                 '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                 G.button({
                     id: 'display',
-                    text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Linear display:' + (G.getSetting("linearDu") == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
+                    text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Wide display: ' + (G.getSetting("linearDu") == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
                     tooltip: 'Toggle between displaying unit categories in bulk or one category per line.',
                     onclick: function () { linearDisplay('unit'); G.update['unit']() }
                 });
@@ -1222,6 +1232,7 @@ G.AddData({
         }
 
         G.Load = function (doneLoading) {
+            document.title = "NeverEnding Legacy"
             G.middleText('<p id="loading">Loading save...</p>', "slow");
             if (G.importStr) { var local = G.importStr; }
             else {
@@ -1543,7 +1554,7 @@ G.AddData({
             var expiration = (typeof (me.lifetime) === 'function' ? me.yearOfObtainment + me.lifetime() + 1 : me.yearOfObtainment + me.lifetime + 1);
             var lt = typeof (me.lifetime) === 'function' ? me.lifetime() : me.lifetime;
             if (G.getSetting('traitRemovalMode') && G.tab.id == 'trait') //display only when this mode is active
-                if (G.tabId = 'trait' && lt == undefined) str += '<small><font color="#fcc"><center>This trait <u>cannot</u> be managed</center></font></small>';
+                if (G.tab.id = 'trait' && lt == undefined) str += '<small><font color="#fcc"><center>This trait <u>cannot</u> be managed</center></font></small>';
                 else str += '<small><font color="#cfc"><center>This trait <u>can</u> be managed</center></font></small>';
             str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>';
             str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
@@ -1570,7 +1581,15 @@ G.AddData({
                 str += '</small></li></font>';
             }
             str += '</div>';
-            if (showCost || G.getSetting('debug')) str += '<div class="info">Cost: ' + G.getCostString(me.cost, true) + '</div>';
+            if (showCost || G.getSetting('debug')) {
+                var costData = G.getCostString(me.cost, true);
+                if (costData.length > 0) {
+                    str += '<div class="info">Cost: ' + costData + '</div>';
+                }
+            }
+            if (G.getSetting('debug') && G.tab.id == 'trait' && isFinite(me.chance)) {
+                str += !G.req || G.req.tribalism !== false ? 'Chance: ' + (300 / me.chance).toFixed(3) : "This trait cannot be obtained normally.";
+            }
 
             str += G.debugInfo(me);
 
@@ -1584,12 +1603,12 @@ G.AddData({
             if (G.year % 40 >= 20) i = 39 - G.year % 40;
             else { i = G.year % 40 };
             var str = '';
-            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;padding:8px 12px;height:32px;font-weight:bold;font-size:18px;font-variant:small-caps;" id="date">-</div>';
+            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;padding:8px 12px;height:32px;font-weight:bold;font-size:18px;" id="date">-</div>';
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('water')) {
-                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png) ;background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px;" id="empower"></div><br>';
+                    str += '<div class="pixelate framed fancyText bgMid" style="height:32px;width:32px;display:inline-block;padding:0;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
                 } else {
-                    str += '<div class="framed fancyText bgMid" style="height:30px;width:30px;display:inline-block;padding:8px 12px;font-weight:bold;font-size:18px;font-variant:small-caps;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png) ;background-position-x:32px;" id="empower"></div><br>';
+                    str += '<div class="pixelate framed fancyText bgMid" style="height:32px;width:32px;display:inline-block;padding:0;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
@@ -1639,13 +1658,13 @@ G.AddData({
             var empowermentsDesc = [
                 '<div class="barred">Current aura: <font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br><li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%.</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water.</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower.</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
                 '<div class="barred">Current aura: <font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br><li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%.</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>The efficiency of farms and florists is decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
-                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br><li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br>so it has very big chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br><li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br>so it has very large chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
                 '<div class="barred">Current aura: <font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br><li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster.</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by ' + (5 + (1 * i)).toFixed(2) + '%.</li><li>Every year, one random resource gets totally wiped!br>(<b>Warning:</b>if the choice will land on any essentials, it will<br>wipe all other essentials except those that<br>limit the amount of other essentials.)</li></font>',
                 '<div class="barred">Current aura: <font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br><li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%.</li><li>Diggers,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water.</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster.</li><li>There are ' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
             ];
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('Water')) {
-                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by the effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras.<br>Each one boosts and weakens some things and each one will persist through<br>the rest of the current run.</div><div class="par">Auras cycle, so at the middle point of a cycle, they are the most powerful.</div>' + empowermentsDesc[G.auratext] });
+                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by the effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras.<br>Each one boosts and weakens some things and each one will persist through<br>the rest of the current run.</div><div class="par">Auras cycle, so their power will be at their peak in the middle of one.</div>' + empowermentsDesc[G.auratext] });
                 } else {
                     G.addTooltip(l('empower'), function () { return (G.achievByName["druidish heart"].won > 0 ? '<div class="barred">???</div><div class="par">' + (G.has("time measuring 1/2") ? 'Once year ' + (236 - G.techN - G.traitN) : 'Once this moment ') + 'strikes, you will see what\'s there.<br>For now, wait.</div>' : '<div class="barred">???</div><div class="par">Once it shows up, you will see what\'s there.<br>For now, wait.</div>') });
                 }
@@ -1736,15 +1755,15 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            document.title = 'Start: NeverEnding Legacy';
+            document.title = 'Elf setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">\xd71</div>', '1 Elder') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">\xd72</div>', '2 Children') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">\xd7175</div>', '175 Herbs') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7200</div>', '200 Water') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">\xd725</div>', '25 Fruits') +
                 (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br>and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
@@ -1755,11 +1774,11 @@ G.AddData({
             document.title = 'Setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x300</div>', '300 Herbs') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x250</div>', '250 Water') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">\xd71</div>', '1 Elder') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">\xd72</div>', '2 Children') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">\xd7300</div>', '300 Herbs') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7250</div>', '250 Water') +
                 (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
@@ -1975,7 +1994,7 @@ G.AddData({
             name: 'sacrificed for culture',
             wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
             icon: [6, 12, 'magixmod'],
-            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you, but you will obtain <b><font color="green">+3 culture and inspiration</font></b> at the start of new runs!',
+            desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you, but you will get <b><font color="#4d2">+3 culture and inspiration</font></b> at the start of new runs!',
             fromWonder: 'sacrificed for culture',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
@@ -2044,7 +2063,7 @@ G.AddData({
             tier: 2,
             icon: [25, 19, 'magixmod'],
             name: 'level up',
-            desc: 'Obtain <font color="white"><b>Evolution of the minds</b></font> trait during a run. This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
+            desc: 'Obtain <font color="white"><b>Evolution of the minds</b></font> during a run. This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
             civ: 0,
             plural: false
         });
@@ -2160,7 +2179,7 @@ G.AddData({
             icon: [23, 24, 'magixmod'],
             tier: 1,
             name: '3rd party',
-            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you use one of the mods below:</b> @Market mod @Coal mod @Laws Of Food @Laws Of Food Free Version @Thot mod // <font color="fuschia">This achievement will NOT be required to complete this achievement row.</font>',
+            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you install a separate mod at the start of the game (just note that getting this achievement does not provide any benefits).</b> // <font color="fuschia">This achievement will NOT be required to complete this achievement row.</font>',
             civ: "overall",
             plural: false
         });
@@ -2326,7 +2345,7 @@ G.AddData({
             displayName: '<font color="#d4af37">Next to the deities</font>',
             wideIcon: [0, 9, 'magixmod'],
             icon: [1, 9, 'magixmod'],
-            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @Chance for [culture of the afterlife] or [culture of the beforelife] (depending on chosen path) is tripled. Same to <B>God\'s/Ancestors call</b>. @<b>An opposite side of belief</b> has a 1.1 times higher chance of being gained. @You will start new runs with +1 [faith] and [spirituality] @You will unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that will finally unlock it for you). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
+            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @The chances for [culture of the afterlife] or [culture of the beforelife] are tripled. Same to <B>God\'s/Ancestors call</b>. @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] @You will unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
             fromWonder: 'next to the God',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 250 },
@@ -2575,7 +2594,7 @@ G.AddData({
             tier: 2,
             name: 'so adorable',
             icon: [8, 15, 'seasonal', 14, 17, 'seasonal'],
-            desc: 'Reach [love] <font color="yellow">Level 10</font> during Valentine\'s day seasonal event.',
+            desc: 'Reach [love] <font color="yellow">Level 10</font> during the Valentines event.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -2589,7 +2608,7 @@ G.AddData({
             tier: 2,
             name: 'obsessed?',
             icon: [9, 15, 'seasonal', 16, 17, 'seasonal'],
-            desc: 'Reach [love] <font color="yellow">Level 15</font> during Valentine\'s day seasonal event. //This is probably obsession...',
+            desc: 'Reach [love] <font color="yellow">Level 15</font> during the Valentines event. //This is probably obsession...',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -2822,7 +2841,7 @@ G.AddData({
             tier: 2,
             name: 'spooktober',
             icon: [8, 16, 'seasonal', 17, 8, 'seasonal'],
-            desc: 'Reach [spookiness] <font color="yellow">Level 10</font> during the Halloween seasonal event.',
+            desc: 'Reach [spookiness] <font color="yellow">Level 10</font> during the Halloween event.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -2836,7 +2855,7 @@ G.AddData({
             tier: 2,
             name: 'spookyear',
             icon: [9, 16, 'seasonal', 18, 8, 'seasonal'],
-            desc: 'Reach [spookiness] <font color="yellow">Level 15</font> during the Halloween seasonal event. //boo',
+            desc: 'Reach [spookiness] <font color="yellow">Level 15</font> during the Halloween event. //<small><b>boo</b></small>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -2931,7 +2950,7 @@ G.AddData({
             tier: 2,
             icon: [36, 25, 'magixmod'],
             name: 'the day of rise',
-            desc: 'Maintain this save for at least <b>one day</b>.',
+            desc: 'Maintain this save for at least <b>one day</b>. //<small>Well, thanks for playing this game, I guess!</small>',
             civ: "overall",
             plural: false
         });
@@ -2939,7 +2958,7 @@ G.AddData({
             tier: 2,
             icon: [36, 24, 'magixmod'],
             name: 'authority\'s week',
-            desc: 'Maintain this save for at least <b>one week</b>.',
+            desc: 'Maintain this save for at least <b>one week</b>. //<small>You\'re about 2% of the way there...</small>',
             civ: "overall",
             plural: false
         });
@@ -2947,7 +2966,7 @@ G.AddData({
             tier: 2,
             icon: [36, 23, 'magixmod'],
             name: 'golden month',
-            desc: 'Maintain this save for at least <b>one month</b>.',
+            desc: 'Maintain this save for at least <b>one month</b>. //<small>We hope that you enjoyed this game!</small>',
             civ: "overall",
             plural: false
         });
@@ -2955,8 +2974,21 @@ G.AddData({
             tier: 0,
             icon: [36, 22, 'magixmod'],
             name: 'so much to do, so much to see',
-            desc: 'Maintain this save for at least <b>one year</b>!',
+            desc: 'Maintain this save for at least <b>one year</b>! //<small>Wow...congrats!</small>',
             civ: "overall",
+            special: "shadow",
+            visible: false,
+            plural: false
+        });
+        new G.Achiev({
+            tier: 0,
+            icon: [16, 0, 'magix2'],
+            name: 'an ocean\'s voyage',
+            desc: 'While in the [t6,Ocean trial], manage to get the [Wizard complex] tech to gain all <b>seven</b> trial-related upgrades! //<small>How did you get that far with the world practically falling apart?</small>',
+            effects: [
+                { type: 'addFastTicksOnStart', amount: 500 },
+            ],
+            civ: 0,
             special: "shadow",
             visible: false,
             plural: false
@@ -3110,9 +3142,8 @@ G.AddData({
                                 /*me.visible==true ? */
                                 div.onclick = function (me, div) {
                                     return function () {
-                                        console.log(me.name);
-
                                         if (G.getSetting('debug')) {
+                                            console.log("Toggled " + me.name);
                                             if (me.won) me.won = 0; else me.won = 1;
                                             if (me.won) div.classList.remove('off');
                                             else div.classList.add('off');
@@ -3177,7 +3208,7 @@ G.AddData({
                                         if (me.name == 'here you go...again' && me.won == 0 && control > 1) {
                                             me.won = 1;
                                             G.dialogue.forceClose();
-                                            G.middleText('And the secret strikes again...<br><small>it wasn\'t that big secret again was it?</small>', 'slow');
+                                            G.middleText('And the secret strikes again...<br><small>it wasn\'t that big of a secret again, was it?</small>', 'slow');
                                         } else if (me.name == 'here you go...again' && me.won == 0) {
                                             control++;
                                         }
@@ -3268,8 +3299,8 @@ G.AddData({
                 } else if (randomTxt <= 3) {
                     if (me.getCards().length == 0) {
                         success = false;
-                        if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves, but the elf race can still provide bonuses! You may have finished</font></small>');
-                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race! So, just know that it will take a while to get them all...<br>well, unless there are more updates.</font></small>');
+                        if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves for now, but the elf race can still provide bonuses!</font></small>');
+                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race! So, just know that it will take a while get many of them...<br>well, unless there are more updates.</font></small>');
                     }
                 } else if (randomTxt <= 4) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#aaa">More techs coming soon :)</font></small>'); }
@@ -3524,7 +3555,8 @@ G.AddData({
                         for (var i in proto.modes) {
                             var mode = proto.modes[i];
                             if (!mode.req || G.checkReq(mode.req)) {
-                                l('mode-button-' + mode.num).onmouseup = function (target, mode, div) {
+                                modeTarget = l('mode-button-' + mode.num)
+                                modeTarget.onmouseup = function (target, mode) {
                                     return function () {
                                         //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                         if (G.speed > 0) {
@@ -3547,8 +3579,8 @@ G.AddData({
                                     };
                                 }(me, mode, div);
 
-                                if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), me.amount)) addHover(l('mode-button-' + mode.num), 'hover');//fake mouseover because :hover doesn't trigger when mouse is down
-                                G.addTooltip(l('mode-button-' + mode.num), function (me, target) {
+                                if (!me.mode.use || G.testUse(G.subtractCost(me.mode.use, mode.use), me.amount)) addHover(modeTarget, 'hover');//fake mouseover because :hover doesn't trigger when mouse is down
+                                G.addTooltip(modeTarget, function (me, target) {
                                     return function () {
                                         var proto = target;
                                         //var uses=G.subtractCost(target.mode.use,me.use);
@@ -3601,17 +3633,18 @@ G.AddData({
                     text: 'ALMIGHTY', tooltip: 'Unlock every tech, trait and policy instantly. Also unlocks the elf race!', onclick: function () {
                         G.achievByName['???'].won = 1;
                         for (var i in G.tech) {
-                            if (!G.techsOwnedNames.includes(G.tech[i].name)) G.gainTech(G.tech[i]);
+                            var tech = G.tech[i]
+                            if (!tech.skip && !G.techsOwnedNames.includes(tech.name)) G.gainTech(tech);
                         }
                         for (var i in G.trait) {
-                            if (G.trait[i].displayName.indexOf("Trial") >= 0) continue;
-                            if (!G.traitsOwnedNames.includes(G.trait[i].name)) {
-                                G.gainTrait(G.trait[i]);
-                                G.trait[i].yearOfObtainment = G.year;
+                            var trait = G.trait[i]
+                            if (!trait.skip && !G.traitsOwnedNames.includes(trait.name)) {
+                                G.gainTrait(trait);
+                                trait.yearOfObtainment = G.year;
                             }
                         }
                         for (var i in G.policy) {
-                            G.gainPolicy(G.policy[i]);
+                            if (!G.policy[i].skip) G.gainPolicy(G.policy[i]);
                         }
                         G.shouldRunReqs = true;
                         var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
@@ -3698,7 +3731,7 @@ G.AddData({
             } else {
                 exp = 10 + bonus;
             };
-            tile.explored = (exp) / 100;//create one tile and from 9 to 11 % of it will be explored already. Oh and +1 to 5 percent depending on how evolved your mauso is, for c2 its constant 10%
+            tile.explored = (exp) / 100;//create one tile and 9-11% of it will be explored already. Oh, and +1 to 5 percent depending on how evolved your mauso is, for c2 its constant 10%
 
             G.updateMapForOwners(G.currentMap);
 
@@ -3712,7 +3745,7 @@ G.AddData({
             var time = Date.now();
             var timeStep = Date.now();
             var verbose = false;
-            var breakdown = false;//visually break down map-drawing into steps, handy to understand what's happening
+            var breakdown = false;//visually break down the drawing of the map into steps, which is handy to understand what's happening
             var toDiv = l('mapBreakdown');
             if (breakdown) toDiv.style.display = 'block';
 
@@ -4656,8 +4689,11 @@ G.AddData({
                     }
                     if (!forceTick) G.nextTick--;
                 }
+                if (!isFinite(G.fastTicks)) {
+                    G.fastTicks = 0;
+                }
                 if (!G.has('time measuring 2/2') && !G.has('time measuring 1/2')) {
-                    l('fastTicks').innerHTML = '' + B(G.fastTicks) + ' fast ticks';
+                    l('fastTicks').innerHTML = '' + B(G.fastTicks) + (G.fastTicks == 1 ? ' fast tick' : ' fast ticks');
                 } else if (G.has('time measuring 1/2') && !G.has('time measuring 2/2')) {
                     l('fastTicks').innerHTML = '' + B(G.fastTicks / 300) + ' years';
                 } else if (G.has('time measuring 1/2') && G.has('time measuring 2/2')) {
@@ -5002,7 +5038,7 @@ G.AddData({
         G.initializeFixIcons = function () {
             if (G.parse("http://").search("http://") == -1) {
                 G.fixTooltipIcons();
-                setTimeout(G.initializeFixIcons, 500);    // check again to make sure this version of the function stays applied during page load
+                setTimeout(G.initializeFixIcons, 500); // check again to make sure this version of the function stays applied during page load
             }
         }
         G.initializeFixIcons();
@@ -5141,7 +5177,7 @@ G.AddData({
                 }
                 else if (me.mode == 3 || me.mode == 4) {
                     var displayAscend = true;
-                    //building complete; applying final step
+                    //building complete; applying the final step
                     //this also handles the step afterwards, when we click the final wonder
                     G.dialogue.popup(function (me, instance) {
                         return function (div) {

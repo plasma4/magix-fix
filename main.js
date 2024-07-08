@@ -574,7 +574,7 @@ G.Launch=function()
 	}
 	G.Import=function(str)
 	{
-		// Some mods override the G.Load function for various reasons, so we add an extra step here
+		// Magix will override the G.Load function, so we add an extra step here
 		try {
 			G.importStr=b64EncodeUnicode(escape(unescape(b64DecodeUnicode(str)).replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js")));
 		} catch (e) {
@@ -7483,19 +7483,32 @@ G.Launch=function()
 			let script=document.createElement('script');
 			script.id='dataScript-'+mod.id;
 			G.modsByScript['dataScript-'+mod.id]=mod;
-			if (mod.url.slice(0, 4) !== 'http') {
-				script.setAttribute('src','data.js');
+			var isMagixMod = ['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url);
+			if ((offlineMode && isMagixMod) || directAccessMode || mod.url.slice(0, 4) !== 'http') {
+				if (!magixNote) {
+					if (isMagixMod) {
+						console.warn("Magix was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!");
+					}
+					magixNote=true;
+				}
+				script.setAttribute('src',isMagixMod?mod.url.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/", ""):mod.url);
 				document.head.appendChild(script);	
 				script.onload=function() {
 					mod.loaded=true;
 				}
 			} else {
+				// A rather strange function with the purpose of trying to get files that don't work with XMLHttpRequests or when you don't have internet
+				var triedOffline = false
 				function tryOffline() {
-					var offlineScript=localStorage.getItem("nelOffline");
+					if (triedOffline) {
+						return
+					}
+					triedOffline = true
+					var offlineScript=localStorage.getItem("nelOffline"+i);
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
 							if (!magixNote) {
-								console.warn(offlineMode ? "Magix was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!" : "Magix was loaded locally because you don't have internet. It may not be the newest version.");
+								console.warn("Magix was loaded locally because you don't have internet. It may not be the newest version.");
 							}
 							magixNote=true;
 							script.setAttribute('src','magixUtils.js');
@@ -7510,23 +7523,32 @@ G.Launch=function()
 							script.onload=function() {
 								mod.loaded=true;
 							}
-						} else if (mod.url !== "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
-							alert("An offline version of a mod could not be loaded in. You can try to download it first with internet and use that file as the mod.");
+						} else if (!isMagixMod) {
+							console.warn("An offline version of a mod could not be loaded in with XML requests, so it will be imported directly. You can try to download it first with internet and use that file as the mod (be warned: this file will NOT work offline). Note that assets may be broken in this case and some file hosting services may cache files, so you should consider downloading the resources and scripts to a local copy for proper usage.");
+							console.log("DEVELOPER NOTE: Files will not work offline in this case, so try downloading them locally instead; if you do not want to bother with downloading files locally, go to localDevelopment.js and set directAccessMode to true.");
+							script.setAttribute('src',mod.url);
+							document.head.appendChild(script);	
+							script.onload=function() {
+								mod.loaded=true;
+							}
+							setTimeout(function() {
+								if (!mod.loaded) {
+									alert("It appears that the mod URL you have provided could not be loaded. You may want to locally download the scripts and assets to make it work properly.");
+								}
+							}, 2500);
 						}
 						return;
 					}
 					var enter=offlineScript.indexOf("\n");
 					if (offlineScript.slice(0,enter)!=mod.url) {
-						alert("The mod links do not match, so an offline version of a mod could not be loaded in.");
+						localStorage.removeItem("nelOffline"+i);
+						alert("The mod links do not match, so an offline version of a mod could not be loaded in. We\'re not sure why this has happened: try reloading.");
 						return;
 					}
 					script.innerHTML=offlineScript.slice(enter+1);
 					document.head.appendChild(script);
 				}
-				if (offlineMode) {
-					tryOffline()
-					continue
-				}
+				setTimeout(tryOffline, 1000);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
