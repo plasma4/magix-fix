@@ -3633,7 +3633,7 @@ if (getObj("civ") != "1") {
                 icon: [12, 5],
                 tick: function (me, tick) {
                     var amount = 0;
-                    amount += G.getRes('precious pot').amount * 27;
+                    amount += G.getRes('precious pot').amount * 30;
                     amount += G.getRes('basket').amount * 10;
                     amount += G.getRes('pot').amount * 25;
                     amount += G.getRes('ice').amount;
@@ -4249,7 +4249,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'ice',
-                desc: 'Can be used to preserve [food] longer.//Will also melt into [water] over time.',
+                desc: 'Can be used to preserve 1 piece of [food] longer.//Will also melt into [water] eventually.',
                 icon: [12, 7],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -4638,7 +4638,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'thread',
-                desc: 'This item is really in need if you want to get at higher level of sewing.',
+                desc: 'You\'ll need this item to get your people better at sewing.',
                 icon: [13, 9, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -4685,11 +4685,11 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'bamboo',
-                desc: 'This tropical material can be used for archaic constructions.',
+                desc: 'This tropical material can be used for archaic constructions, but decays somewhat quickly.',
                 icon: [14, 4, 'magixmod'],
                 partOf: 'archaic building materials',
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.09;
+                    var toSpoil = me.amount * 0.08;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 category: 'build',
@@ -4740,13 +4740,13 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'precious pot',
-                desc: 'A harder and more beautiful pot. Each one stores 27 [food]. It decays even slower and grants a small amount of [culture] on decay.',
+                desc: 'A harder and more beautiful version of a [pot]. Each one stores 30 [food]. It decays quite slowly and grants a little [culture] on decay.',
                 icon: [15, 8, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-                    G.pseudoGather(G.getRes('culture'), randomFloor(spent));
+                    G.pseudoGather(G.getRes('culture'), randomFloor(spent * 0.8));
                 },
             });
             new G.Res({
@@ -6435,12 +6435,12 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'candy',
-                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. Spoils quite quickly but count as [food], providing some [happiness].',
+                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. Spoils quite quickly but count as [food], providing some [happiness] (and will harm [health] a little as well).',
                 icon: [choose([3, 4]), 8, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
                 partOf: 'food',
-                turnToByContext: { 'eating': { 'happiness': 0.04 }, 'decay': { 'honey': 1 } },
+                turnToByContext: { 'eating': { 'happiness': 0.035, 'health': -0.01 } },
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.08;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -11662,7 +11662,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'first aid', category: 'tier1',
-                desc: '@the [sick] and [wounded] will have a higher chance to recover, but require [first aid things]. [healer]s with the option to heal the wounded are now more efficient. <b>This research generates [health] from [healer]s at a low rate.</b><>Also adds a new mode for [artisan] that let you craft [first aid things].',
+                desc: '@The [sick] and [wounded] will have a higher chance to recover, but require [first aid things]. [healer]s with the option to heal the wounded are now more efficient. <b>This research generates [health] from [healer]s at a low rate.</b><>Also adds a new mode for [artisan]s that will let you craft [first aid things].',
                 icon: [15, 9, 'magixmod'],
                 cost: { 'insight': 680, 'wisdom': 60 },
                 req: { 'better healing': true },
@@ -22622,12 +22622,12 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'ice',
-                desc: 'Can be used to preserve [food] longer.//Will melt into [water] eventually.',
+                desc: 'Can be used to preserve 1 piece of [food] longer.//Will melt into [water] eventually.',
                 icon: [12, 7, 'c2'],
                 partOf: 'misc materials',
                 category: 'misc',
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.02;
+                    var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     G.gain('water', randomFloor(spent * 10), 'ice melting');
                 },
