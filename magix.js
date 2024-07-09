@@ -5896,11 +5896,11 @@ if (getObj("civ") != "1") {
             let RollGathererIcon = 0
             new G.Res({
                 name: 'hardened clothes',
-                desc: 'Sewn together from [dried leather] and embroidered with [thread]s.//[population,People] that wear [hardened clothes,Hardened clothing] become more happy and healthy, and also feel quite safe. This also decays slower and will update what your [gatherer]s look like every so often.' + clothesInfo,
+                desc: 'Sewn together from [dried leather] and embroidered with [thread]s with very slow decay.//[population,People] that wear [hardened clothes,Hardened clothing] become more happy and healthy, and also feel quite safe. This also decays slower and will update what your [gatherer]s look like every so often.' + clothesInfo,
                 icon: [choose([27, 28]), choose([0, 1]), 'magixmod'],
                 category: 'gear',
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.00009;
+                    var toSpoil = me.amount * 0.00008;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     if (G.has('magical presence') && (RollGathererIcon-- < 0)) {//It was rolling an icon every tick so i slide in this code right there
                         G.getDict('gatherer').icon = [choose([9, 10, 11, 12, 13]), 24, 'magixmod']
@@ -8077,6 +8077,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'combat potions brewing stand',
+                displayName: 'combat potion brewing stand',
                 desc: 'Here you can craft [combat potions]! Alchemists are creative people who name their creations, and each one is uniquely made.',
                 icon: [14, 16, 'magixmod'],
                 cost: {},
@@ -9195,7 +9196,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'alcohol drinks brewing stand',
-                desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,alcohol]. These are tasty but harm [health]. Can craft [wine] or [pot of vodka].',
+                desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,Alcohol], which are tasty but will harm [health]. This stand will be able to craft either [wine] or [pot of vodka].',
                 icon: [19, 8, 'magixmod'],
                 cost: { 'basic building materials': 4.3 },
                 req: { 'alchemy': true, 'alcohol brewing': true },
@@ -9234,7 +9235,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'school of alchemy',
-                desc: '@The building where people may learn the basics of alchemy. Needs water to work though! //<small>you know why it does need water</small>',
+                desc: '@The building where people may learn the basics of alchemy. Needs water to work though! //<small>you know why it needs water</small>',
                 icon: [5, 6, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'glass': 5 },
                 use: { 'land of the Plain Island': 1, 'worker': 3 },
@@ -9248,7 +9249,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'drying rack',
-                desc: '@This small rack may dry [leather], making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!',
+                desc: '@This small rack may dry [leather], turning it into [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!',
                 icon: [13, 3, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 use: { 'land': 0.75 },
@@ -12243,7 +12244,7 @@ if (getObj("civ") != "1") {
                             G.getDict('potter').desc = '@uses [clay] or [mud] to craft goods<>The [potter] shapes their clay with great care, for it might mean the difference between fresh water making it to their home safely - or spilling uselessly into the dirt.<br><b><font color="fuschia"> Because of [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                             G.getDict('drying rack').icon = [28, 2, 'magixmod', 13, 3, 'magixmod'];
                             G.getDict('drying rack').visible = false;
-                            G.getDict('drying rack').desc = '@This small rack may dry [leather], making it become [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!<br><b><font color="fuschia"> Because of [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
+                            G.getDict('drying rack').desc = '@This small rack may dry [leather], turning it into [dried leather]. [dried leather] is used to make even harder clothing, which decays much slower!<br><b><font color="fuschia"> Because of [factories I], this unit becomes useless and won\'t produce anything anymore.</font></b>';
                         }
                     }
                 ],
@@ -16863,7 +16864,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 4% //<small>Dress code will really really vary looks like.</small>',
                 icon: [9, 15, 'magixmod', 24, 34, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'clothing unconcern': false, 'nudist culture': false, 'strict dress code': false },
@@ -25438,7 +25439,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 6% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 4% //<small>Dress code will really really vary looks like.</small>',
                 icon: [9, 15, 'magixmod', 30, 16, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
