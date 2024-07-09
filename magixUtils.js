@@ -212,9 +212,6 @@ var numberFormatters =
     ];
 
 if (getObj("civ") === null) setObj("civ", 0);
-if (getObj("island") === null) setObj("island", "Plain Island");
-
-
 var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random()
 G.AddData({
     name: 'MagixUtils',
