@@ -10044,7 +10044,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'temple of the Dead',
-                desc: '@Leads to <b>Buried</b> trial completion. //A very dark temple built in dead and hostile terrain. A lot of graves are around. That may attract Buri\'o dak.<><font color="#FF00FF">Why is everyone afraid of death? Just face it.</font>',
+                desc: '@Leads to <b>Buried</b> trial completion. //A very dark temple built in dead and hostile terrain. A lot of graves are around. That may attract Buri\'o dak.<><font color="#f08">Why is everyone afraid of death? Just face it.</font>',
                 wonder: 'buried',
                 icon: [1, 26, 'magixmod'],
                 wideIcon: [0, 26, 'magixmod'],
@@ -10060,7 +10060,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'faithsoleum',
-                desc: '@Leads to <b>Faithful</b> trial completion. //The Faithsoleum is full of light and sparks of religion as far as the human eye can see. Its eye is the symbol of An Enlightened Seraphin of Faith!<><font color="yellow">Worship to victory.</font>',
+                desc: '@Leads to <b>Faithful</b> trial completion. //The Faithsoleum is full of light and sparks of religion as far as the human eye can see. Its eye is the symbol of An Enlightened Seraphin of Faith!<><font color="yellow">Worship to victory...</font>',
                 wonder: 'faithful',
                 icon: [1, 27, 'magixmod'],
                 wideIcon: [0, 27, 'magixmod'],
@@ -10992,7 +10992,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'canoes', category: 'tier1',
                 //TODO : fishing boats
-                desc: '@Allows exploration through ocean shores @[canoes] are inefficient on the <b>Tundra</b>, <b>Swamplands</b>, <b>Jungle</b>, and <b>Boreal forest</b> biomes<> //[canoes] are a good and safe way to explore ocean shores, but slow. Depending on your closest location, consider picking [rafts] instead and make this tech be obtainable in a slightly later game stage.',
+                desc: '@Allows exploration through ocean shores @[canoes] are inefficient on the <b>Tundra</b>, <b>Swamplands</b>, <b>Jungle</b>, and <b>Boreal forest</b> biomes<>[canoes] are a good and safe way to explore ocean shores, but slow. Depending on your closest location, consider picking [rafts] instead and make this tech be obtainable in a slightly later game stage.',
                 icon: [26, 7],
                 cost: { 'insight': 15 },
                 req: { 'tool-making': true, 'woodcutting': true, 'rafts': false },
@@ -11216,7 +11216,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bows', category: 'tier1',
-                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<> <b>Bow hunting</b> mode has only 40% of its normal efficiency (slower than without tools). To make it faster than the default mode, obtain the [aiming] research.',//TODO : desc
+                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<><b>Bow hunting</b> has only 40% of its normal efficiency (slower than without tools). To make it faster than the default mode, obtain the [aiming] research.',//TODO : desc
                 icon: [27, 1],
                 cost: { 'insight': 20 },
                 req: { 'spears': true },
@@ -11339,7 +11339,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'chieftains', category: 'tier1',
-                desc: '@unlocks [chieftain]s, which generate [influence]@provides 5 [authority]<> [chieftain]s lead to better outcomes when there is a struggle within your tribe.',
+                desc: '@unlocks [chieftain]s, which generate [influence]@provides 5 [authority]<>[chieftain]s lead to better outcomes when there is a struggle within your tribe.',
                 icon: [22, 6],
                 cost: { 'insight': 10 },
                 req: { 'oral tradition': true },
@@ -12214,7 +12214,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'manufacture units I', category: 'tier1',
-                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <> <font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become useless and won\'t produce anything anymore.</font> ',
+                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <><font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become useless and won\'t produce anything anymore.</font> ',
                 icon: [17, 18, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 5, 'stone': 1365 },//Stones are there to make tech at same level as Factories I
                 req: { 'workstation planning': true, 'manufacturing': true },
@@ -12667,7 +12667,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'the god\'s call',
                 displayName: 'The God\'s call',
-                desc: '<b>The god...he called your people...to his world...full of hopes...full of new adventures...to...his...Paradise...</b>',
+                desc: '<b>Your god...he called your people to his world...full of hopes, full of new adventures, and full of new ideas.</b>//<small>To his Paradise!</small>',
                 icon: [20, 2, 'magixmod'],
                 cost: { 'insight': 650, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 175,
@@ -13247,7 +13247,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'focused scouting', category: 'upgrade',
-                desc: '@[scout]s and [wanderer]s become smarter by discovering new safer techniques of exploring, like advanced star navigation. It may make exploring safer...<>This tech will allow you to explore further worlds with same units. //This increases the exploration cap.',
+                desc: '@[scout]s and [wanderer]s become smarter by discovering new safer techniques of exploring, like advanced star navigation. It may make exploring safer...<>This tech will allow you to find new adventures and places with the same units. //Increases the exploration cap.',
                 icon: [10, 21, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'tool-making': true, 'richer language': true, 'well-digging': true },
@@ -14483,7 +14483,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'enchanted shovels', category: 'upgrade',
-                desc: 'Bigger shovels make [digger]s 12.5% more efficient. <> Now their shovels are enchanted by wind so despite that they are bigger they are still light.',
+                desc: 'Bigger shovels make [digger]s 12.5% more efficient. <>Now their shovels are enchanted by wind, meaning that they stay light but will still grow larger!',
                 icon: [15, 28, 'magixmod'],
                 req: { 'leaves of wisdom': true },
                 cost: { 'insight II': 150 },
@@ -16363,21 +16363,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases the exploration cap.',
                 icon: [9, 9, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases the exploration cap.',
                 icon: [10, 9, 'magixmod'],
                 cost: { 'insight': 1200 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true, 'plain island building': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier2',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> the exploration cap.',
                 icon: [11, 9, 'magixmod'],
                 cost: { 'insight II': 85 },
                 req: { 'map details': true, 'focused scouting': true },
@@ -16824,7 +16824,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid heart',
-                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometimes.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>[happiness] gain from having heat sources will also switch between: @being increased by 5% @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometimes.</small>',
                 icon: [9, 15, 'magixmod', 23, 34, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'neutral heart': false, 'oral tradition': true },
@@ -16864,7 +16864,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 4% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a quarter @being reduced by a quarter <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Dress code will kind of vary for your people, it seems.</small>',
                 icon: [9, 15, 'magixmod', 24, 34, 'magixmod'],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'clothing unconcern': false, 'nudist culture': false, 'strict dress code': false },
@@ -17073,7 +17073,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at8',
                 displayName: 'Ancestors trait #8 Mistress of the forests blessing',
-                desc: 'Every good provides 1% more from chopping. //<small>"Her blessing is real! I just have enough wood for this winter," an old woodcutter says.</small>',
+                desc: 'Every good provides 1% more from chopping. //<small>\u201cHer blessing is real! I have just enough wood I need for this winter,\u201d an old woodcutter says.</small>',
                 icon: [4, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('chop', 1.01) } }],
@@ -17225,14 +17225,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'city planning II', category: 'upgrade',
-                desc: '@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12 per architect). <> They can also plan some decorations for everyone around! //<small>This knowledge may make cities constructed by your civilization look much less cluttered and better-looking...who knows what decorations they can come up with?</small>',
+                desc: '@[architect]s can construct 2 more buildings each (so instead 10 houses per 1 architect, now it will be 12 per architect). <>They may also plan some decorations for everyone around! //<small>This knowledge may make cities constructed by your civilization look much less cluttered and better-looking...who knows what decorations they can come up with?</small>',
                 icon: [31, 34, 'magixmod'],
                 cost: { 'insight': 668, 'wisdom': 2 },
                 req: { 'construction II': true, 'architects knowledge': true, 'will to know more': true },
             });
             new G.Tech({
                 name: 'city planning III', category: 'upgrade',
-                desc: '@[architect]s can construct 3 more building each (so instead 12 houses per 1 architect, now it will be 15). <> Also, with each construction setup that an [architect] builds, you will get [happiness].//<small>"Now that street I walk every day looks stunning," says an elder who lived has lived in the same house since their birth.</small>',
+                desc: '@[architect]s can construct 3 more building each (so instead 12 houses per 1 architect, now it will be 15). <>Also, with each construction setup that an [architect] builds, you will get some [happiness].//<small>\u201cNow that street I walk along every day looks stunning,\u201d says an elder who lived has lived in the same house since their birth.</small>',
                 icon: [32, 34, 'magixmod'],
                 cost: { 'insight II': 75, 'science': 10 },
                 req: { 'city planning II': true, 'caretaking': true, 'eotm': true },
@@ -17424,7 +17424,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'physics III', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now also people can understand 3dimensional world more. //<small> It is x axis, y axis and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now also people can understand 3dimensional world more. //<small>It is x axis, y axis and z axis</small>',
                 icon: [1, 35, 'magixmod', 16, 28, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 100 },
                 effects: [
@@ -18089,7 +18089,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 't6',
-                displayName: 'Unfishy\'s Trial',
+                displayName: 'Fishyar\'s Trial',
                 desc: 'You are currently in the <b>Unfishy</b> trial.',
                 icon: [15, 0, 'magix2', 5, 22, 'magixmod'],
                 req: { 'tribalism': false },
@@ -18781,7 +18781,7 @@ if (getObj("civ") != "1") {
 
             new G.Policy({
                 name: 'reset health level',
-                desc: 'Only available while in Hunted. Resets your [health] back to 0%. Available only once per Hunted attempt.',
+                desc: 'Only available while in Hunted and will reset your [health] back to 0%. Available only once per Hunted attempt.',
                 icon: [21, 29, 'magixmod'],
                 cost: { 'influence': 1 },
                 startMode: 'inactive',
@@ -18808,7 +18808,7 @@ if (getObj("civ") != "1") {
                             G.dialogue.popup(function (div) {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Anti-Fish - -</font></div>' +
-                                    '<div class="fancyText">Unfishy\'s<br></div><br>' +
+                                    '<div class="fancyText">The Fishyar<br></div><br>' +
                                     '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/5.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
@@ -24632,7 +24632,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'bellwethers', category: 'tier1',
-                desc: '@unlocks [bellwether]s, which generate [influence]@provides 5 [authority]<> [bellwether]s lead to better outcomes when there is a struggle within your tribe. //<small>ding ding ding</small>',
+                desc: '@unlocks [bellwether]s, which generate [influence]@provides 5 [authority]<>[bellwether]s lead to better outcomes when there is a struggle within your tribe. //<small>ding ding ding</small>',
                 icon: [22, 6, 'c2'],
                 cost: { 'discernment': 18, 'gentility': 4, 'creativity': 1, 'influence': 1 },
                 req: { 'oral tradition 2/2': true },
@@ -25193,21 +25193,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases the exploration cap.',
                 icon: [28, 13, 'c2'],
                 cost: { 'discernment': 48, 'creativity': 6 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases the exploration cap.',
                 icon: [29, 13, 'c2'],
                 cost: { 'discernment': 104, 'creativity': 16 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> the exploration cap.',
                 icon: [30, 13, 'c2'],
                 cost: { 'discernment': 660, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
@@ -25399,7 +25399,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid heart',
-                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a fifth of normal @being reduced by a quarter <>Happiness from having heat sources will also switch between: @being increased by 5% <> @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometime.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by a fifth of normal @being reduced by a quarter <>[happiness] gain from having heat sources will also switch between: @being increased by 5% @being decreased by 5% //<small>Your tribe probably is not going to clearly state if they are fine with cold nights or they prefer warmth and safety. That\'s why they will change their statement sometime.</small>',
                 icon: [9, 15, 'magixmod', 30, 15, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'neutral heart': false, 'oral tradition 1/2': true },
@@ -25439,7 +25439,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>Happiness from having clothing will also switch between: @being increased by 4% <> @being reduced by 4% //<small>Dress code will really really vary looks like.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Dress code will kind of vary for your people, it seems.</small>',
                 icon: [9, 15, 'magixmod', 30, 16, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
@@ -25462,7 +25462,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition, half of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Even in real life there are some countries that put worms into dishes. Surprisingly, elves are happy about that.</small>',
+                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition, half of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Some countries that put worms into dishes and enjoy it! Surprisingly, elves are happy about that as well...</small>',
                 icon: [8, 11, 24, 1, 'c2'],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
@@ -25493,7 +25493,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'consumption stability',
-                desc: '@Elves\'s [food] consumption isn\'t affected by this trait in any way. @may unlock more food habit traits //<small>What else do you need except breakfast, lunch, and dinner? Looks like your tribe doesn\'t need too much food.</small>',
+                desc: '@The [food] consumption of your [population,elves] isn\'t affected by this trait in any way. @may unlock more food habit traits //<small>What else do you need except breakfast, lunch, and dinner? Looks like your tribe doesn\'t need too much food.</small>',
                 icon: [10, 15, 'magixmod', 19, 1, 'c2'],
                 cost: { 'gentility': 7.5 },
                 chance: 40,
