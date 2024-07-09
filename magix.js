@@ -1678,12 +1678,12 @@ if (getObj("civ") != "1") {
                         if (droughtYear > 0) {
                             if (droughtYear + 1 + Math.sqrt(Math.random() * 4.2) > G.year) {
                                 G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
-                                G.deleteTrait(G.traitByName['drought'])
+                                if (G.has('drought')) G.deleteTrait(G.traitByName['drought'])
                                 if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
                                 setObj('drought', 0)
                             }
                         } else if (G.year === 49 || (G.year > 49 && (G.year - 2 >= G.getRes('ignoreItem').amount))) {
-                            if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen after a few years. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
+                            if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                             // Drought data starts being calculated at year 50
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
@@ -3054,7 +3054,7 @@ if (getObj("civ") != "1") {
                         }
 
                         //clothing
-                        var objects = { 'hardened clothes': [0.14, 0.2], 'colored clothing': [0.125, 0.1], 'basic clothes': [0.1, 0.1], 'primitive clothes': [0, 0] };
+                        var objects = { 'hardened clothes': [0.14, 0.2], 'colored clothing': [0.125, 0.1], 'basic clothes': [0.1, 0.1], 'primitive clothes': [0.02, 0.03] };
                         var leftout = me.amount;
                         var prev = leftout;
                         var fulfilled = 0;
@@ -5920,7 +5920,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'essenced seeds',
-                desc: 'The creation that uses [magic essences] + [mana] + [seeds,seeds]. These can be used to start farming magic flowers that will allow you to gather even more essences.',
+                desc: 'A magic-infused creation that uses [magic essences], [mana], and [seeds,Normal seeds]. These can be used to start farming magic flowers that will allow you to gather even more essences.',
                 icon: [27, 10, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -6114,11 +6114,11 @@ if (getObj("civ") != "1") {
             let MirrorMESG = false
             new G.Res({
                 name: 'tablet \'o mirror',
-                desc: 'A thing you will get from opening the [grand mirror]. Not needed to unlock further researching though. It is a pass for further adventures and discoveries. You can obtain only one Temple of this type. <b>You are cloning the world via magic, but the more portals you open, the more unstability you bring to you and your people! It is time to stop...before something bad happens.</b>',
+                desc: 'A thing you will get from opening the <b>Grand mirror</b> that allows you to clone your [land] and [wtr]. You can obtain only <b>one</b> Tablet of this type! //<small><b>You are cloning the world via magic, but the more portals you open, the more unstability you bring to you and your people! It is time to stop...before something bad happens.</b></small>',
                 icon: [11, 30, 'magixmod'],
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !MirrorMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold to the touch and perfectly symmetrical. A Tablet has a warning carved onto it.<br></b><li>Pro tip: hover on Tablet in <b>Essentials resource category</b> to read a unique message.', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold to the touch and perfectly symmetrical. A Tablet has a warning carved onto it, and you\'ve unlocked a new resource!</b>', icon: [12, 19, 'magixmod'] });
                         MirrorMESG = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
@@ -6646,7 +6646,7 @@ if (getObj("civ") != "1") {
                     'firstaid': { name: 'Craft first aid things', icon: [8, 0, 'magix2'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
                     'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
-                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms!', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
+                    'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,Normal seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms!', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'knapped tools': 1 }, every: 5, mode: 'knap' },
@@ -7275,9 +7275,9 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'normal': { name: 'Normal', icon: [16, 1, 'magixmod'], desc: 'This [healer] will heal [population,people] both [sick] and [wounded] but very slowly.', use: { 'knapped tools': 1 }, req: {} },
-                    'wounded': { name: 'Heal wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with doubled efficiency (faster with [first aid]).', use: { 'knapped tools': 1, 'flowers': 1 }, req: {} },
-                    'sick': { name: 'Heal sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people but with doubled efficiency, requiring [flowers] as well.', use: { 'knapped tools': 1 }, req: { 'plant lore II': true } },
-                    'brews': { name: 'Heal sick with brews', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people using [medicament brew]s, which is 20% faster than with [flowers].', use: { 'stone tools': 1 }, req: { 'plant lore II': true, 'medicament brews': true } },
+                    'wounded': { name: 'Heal the wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with doubled efficiency (faster with [first aid]).', use: { 'knapped tools': 1, 'flowers': 1 }, req: {} },
+                    'sick': { name: 'Heal the sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people but with doubled efficiency, requiring [flowers] as well.', use: { 'knapped tools': 1 }, req: { 'plant lore II': true } },
+                    'brews': { name: 'Heal the sick with brews', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people using [medicament brew]s, which is 20% faster than with [flowers].', use: { 'stone tools': 1 }, req: { 'plant lore II': true, 'medicament brews': true } },
                 },
                 effects: [
                     {
@@ -7293,13 +7293,15 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'off' } },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'adult': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'off' } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': false } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': true } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': false } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'nutrition': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'meat diet': true } },
                     { type: 'mult', value: 1.03, req: { 'more experienced healers': true, 'moderation': true } },
@@ -8241,7 +8243,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'guru',
-                desc: '@Someone who can get [insight] and a tiny, tiny amount of [science] as well. [science] is a key to get more complicated researches.',
+                desc: '@Someone who can get [insight] and a tiny, tiny amount of [science] as well. [science] is a key for getting more complicated researches.',
                 icon: [6, 14, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -8266,11 +8268,11 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Floored warehouse',
-                desc: '@provides 3,000 [material storage] and 3,000 [food storage].<>A large building for storing materials and food. Staffed with four guards to prevent theft even if it will be constructed in Paradise.',
+                desc: '@provides 3,000 [material storage] and 3,000 [food storage].<>A large building for storing materials and food. Staffed with a single guard to prevent theft (even if it\'s built in Paradise).',
                 icon: [5, 14, 'magixmod'],
                 cost: { 'basic building materials': 8500 },
                 use: { 'land of the Paradise': 4, 'industry point': 0.2 },
-                staff: { 'worker': 4 },
+                staff: { 'worker': 1 },
                 effects: [
                     { type: 'provide', what: { 'added material storage': 3000 } },
                     { type: 'provide', what: { 'food storage': 3000 } },
@@ -8283,7 +8285,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lawyer',
-                desc: 'Lawyer will share code of law to people and comparing people\'s decisions with code of law. @every 50 [lawyer]s provide 1 [authority]. @reduces cooldown until the next trait removal by 1 tick for every 100 [lawyer]s.',
+                desc: 'Lawyer will share code of law to people and comparing people\'s decisions with code of law. @every 50 [lawyer]s provide 1 [authority] @every 100 [lawyer]s will reduce the cooldown until the next trait removal by 1 tick',
                 icon: [10, 13, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -9399,7 +9401,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'essential conversion tank',
-                desc: '@A tank that converts 500 [insight], [culture], [faith] and [influence] into their respective second tiers. <>You can specify which essential this tank will convert by using modes for this unit. It can only cause convertion when you have more than 600 of that [insight,Essential].',
+                desc: '@A tank that converts 500 [insight], [culture], [faith] and [influence] into their respective second tiers. <>You can specify which essential this tank will convert by switching the mode of this unit. It will only be able to convert when you obtain enough of that [insight,Essential]!',
                 icon: [26, 19, 'magixmod'],
                 cost: { 'glass': 500, 'basic building materials': 150 },
                 req: { 'eotm': true },
@@ -9547,7 +9549,7 @@ if (getObj("civ") != "1") {
                 icon: [6, 21, 'magixmod'],
                 cost: { 'lumber': 150 },
                 use: { 'land of the Paradise': 0.33 },
-                limitPer: { 'land': 2, 'population': 100 },
+                limitPer: { 'land': 5, 'population': 80 },
                 effects: [
                     { type: 'provide', what: { 'housing': 2 } },
                 ],
@@ -9560,7 +9562,7 @@ if (getObj("civ") != "1") {
                 icon: [3, 21, 'magixmod'],
                 cost: { 'basic building materials': 150 },
                 use: { 'land of the Paradise': 1 },
-                limitPer: { 'land': 10, 'population': 110 },
+                limitPer: { 'land': 10, 'population': 100 },
                 effects: [
                     { type: 'provide', what: { 'housing': 5 } },
                 ],
@@ -9573,7 +9575,7 @@ if (getObj("civ") != "1") {
                 icon: [2, 21, 'magixmod'],
                 cost: { 'basic building materials': 200 },
                 use: { 'land of the Paradise': 1 },
-                limitPer: { 'land': 15, 'population': 120 },
+                limitPer: { 'land': 15, 'population': 125 },
                 effects: [
                     { type: 'provide', what: { 'housing': 6 } },
                 ],
@@ -10275,8 +10277,8 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'grand mirror',
                 desc: 'A door to a world that is an exact copy of the mortal world. //<b><font color="fuschia">Isn\'t it weird that you have a MIRRORED world and only the terrain duplicated? Well...maybe it is better for you.</font></b>',
-                icon: [0, 0],
-                wideIcon: [0, 0],
+                icon: [32, 0, 'magix2'],
+                wideIcon: [32, 0, 'magix2'],
                 wonder: '.',
                 steps: 50,
                 finalStepDesc: 'Perform the final step to gain a [tablet \'o mirror]. You will need it.',
@@ -10731,7 +10733,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'transcendentalist',
-                desc: '@The one who can transmute [insight,Essentials], forming them into [science], which is used by much more complicated researches and technologies. @The methodology used is very arcane, yet it is still able to convert [insight] into [science]...',
+                desc: '@[transcendentalist]s will be able to transmute [insight,Essentials], forming them into [science] @[science] will be used by much more complicated researches and technologies<>The methodology used is pretty arcane, but luckily it still works!',
                 icon: [18, 34, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -11755,7 +11757,8 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'healing with brews', category: 'tier1',
-                desc: '@[sick] people will have a larger chance to get recovered.',
+                displayName: 'better healing brews',
+                desc: '@[sick] people will have a larger chance to get recovered when treated by [healer]s that use [medicament brews,Brews]',
                 icon: [19, 6, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'better healing': true, 'medicaments brewing': true },
@@ -12295,7 +12298,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'even mo\' floorz', category: 'upgrade',
-                desc: '[floored house]s will have a gain 2 additional floors (which will allow 20 more people to live in each [floored house]), increasing its total capacity to 60.',
+                desc: '[floored house]s will have gain 2 additional floors (which will allow 20 more people to live in each [floored house]), increasing its total capacity to 60.',
                 icon: [16, 19, 'magixmod'],
                 cost: { 'insight II': 30, 'science': 5, 'culture II': 5 },
                 req: { 'physics II': true, 'mo\' floorz': true },
@@ -12344,7 +12347,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'code of law II', category: 'tier2',
-                desc: 'The [code of law] will get more exact and more liberal. People will be full of hope if for example some burglar will rob them...this new [code of law] gives a hope that the burglar will be punished. @provides 3 [authority II]',
+                desc: 'The [code of law] will get more exact and specific. This new [code of law] will result in more complex punishment systems for potential burglars to ensure justice is served. @provides 3 [authority II]',
                 icon: [0, 35, 'magixmod', 27, 6, 'magixmod'],
                 cost: { 'insight II': 10, 'influence II': 4, 'culture II': 6 },
                 req: { 'eotm': true, 'richer language': true, 'code of law': true },
@@ -12378,7 +12381,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'seed-enchanting', category: 'tier2',
-                desc: '@unlocks a new mode for [artisan] that will allow them to enchant [seeds], turning them into [essenced seeds,essenced]. Planting and taking care of them can make you plant magic plants that will help you gather essences.',
+                desc: '@unlocks a new mode for [artisan] that will allow them to enchant [seeds], turning them into [essenced seeds]! Planting and taking care of these special items will enable you to plant magical plants that help you gather essences.',
                 icon: [27, 17, 'magixmod'],
                 cost: { 'insight II': 14, 'science': 1 },
                 req: { 'eotm': true, 'magical soil': true },
@@ -12410,7 +12413,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'grain fertlizer', category: 'upgrade',
-                desc: 'Multiplies the efficiency of all [wheat,wheat-based] units like [bakery,Bakeries], [wheat farm]s, and [windmill]s by 1.5.',
+                desc: 'Multiplies the efficiency of all [bakery,Bakeries], [wheat farm]s, and [windmill]s by 1.5.',
                 icon: [27, 4, 'magixmod'],
                 cost: { 'insight II': 30 },
                 req: { 'magical soil': true },
@@ -12551,7 +12554,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'ritual necrophagy',
-                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
+                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -12581,7 +12584,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'insect-eating',
-                desc: '@your people are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b> //<small>Sometimes it is a need to eat a worm in order to survive when you have nothing left to eat.</small>',
+                desc: '@your people are no longer unhappy when eating [bugs]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b> //<small>Sometimes it is a need to eat a worm in order to survive when you have nothing left to eat.</small>',
                 icon: [8, 11, 22, 1],
                 chance: 5,
                 req: { 'insects as food': 'on', 'decent nourishment': false, 'worm culture': false },
@@ -13292,7 +13295,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cozy building', category: 'upgrade',
-                desc: '@people now want to obtain warmth using fire. This is always a solution for cold nights if people living inside have no clothing. People add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>This tech changes the icons some buildings.',
+                desc: '@People now want to obtain warmth using various heat sources! This is always a solution for cold nights if people living inside have no clothing. People will now add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>Because of this, some buildings will look different!',
                 icon: [29, 3, 'magixmod'],
                 cost: { 'insight II': 20 },
                 req: { 'sedentism': true, 'tool-making': true, 'focused scouting': true },
@@ -13353,7 +13356,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise housing', category: 'tier2',
-                desc: 'Unlocks housing which is unique for the Paradise. Each of the types is limited at some way. Paradise is not like the first island, as it is not a spot where you can build as much housing as you wish; Paradise isn\'t and never will be totally yours. <>Unlocks [treehouse]s, [cozy lodge]s, [Hardened house]s, and [cozy paradise hut]s. Interestingly, Paradise is a lush world, so your people do not need to construct chimneys for their houses at all.',
+                desc: 'Unlocks new buildings which are unique to the Paradise, however, every type of [housing] will be limited in some way. Paradise is not like the first island, as it is not a spot where you can build as much housing as you wish; Paradise isn\'t and never will be totally yours. <>Unlocks [treehouse]s, [cozy lodge]s, [Hardened house]s, and [cozy paradise hut]s. Interestingly, Paradise is a lush world, so your people do not need to construct chimneys for their houses at all.',
                 icon: [1, 21, 'magixmod'],
                 cost: { 'insight II': 70 },
                 req: { 'paradise building': true, 'paradise housing conceptions': true, 'cozy building': true },
@@ -13380,20 +13383,23 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'music', category: 'tier2',
-                desc: 'People can now use music as one of the pillars of cultural heritage. May make musicians appear later on!',
+                desc: 'People can now use music as one of the pillars of cultural heritage. @unlocks a new tech that lets you unlock [musician]s @makes [storyteller]s a more limited until you unlock that tech',
                 icon: [29, 17, 'magixmod'],
                 cost: { 'insight II': 15, 'culture II': 25 },
                 req: { 'symbolism II': true, 'ritualism II': true },
+                effects: [
+                    { type: 'function', func: function () { G.getDict('storyteller').limitPer = { 'population': 40 } } }
+                ],
             });
             new G.Tech({
                 name: 'music instruments', category: 'tier2',
                 displayName: 'musical instruments',
-                desc: 'You unlock the [musician], which uses instruments gathered from materials around the tribe. However, [storyteller]s become a little limited.',
+                desc: 'You unlock the [musician], which uses instruments gathered from materials around the tribe. [storyteller]s will also no longer be so limited.',
                 icon: [29, 18, 'magixmod'],
                 cost: { 'insight II': 10, 'culture II': 25 },
                 req: { 'music': true },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('storyteller').limitPer = { 'population': 40 } } }
+                    { type: 'function', func: function () { G.getDict('storyteller').limitPer = { 'population': 8 } } }
                 ],
             });
             new G.Tech({
@@ -14003,7 +14009,7 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             if (G.has('ritual necrophagy')) G.deleteTrait('ritual necrophagy');
-                            G.traitByName['art of death'].desc = '@[corpse]s and their parts can now only be the <u>topic</u> of an art (thanks to [respect for the corpse]).@<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>';
+                            G.traitByName['art of death'].desc = '@[corpse]s and their parts can now only be the <u>topic</u> of an art (thanks to [respect for the corpse]).@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>';
                         }
                     }
                 ],
@@ -15029,7 +15035,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge', category: 'tier1', //despite of costs it doesn\'t do much
-                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
+                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will be reset to 0 even if  some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
                 req: { 'policy revaluation': true, 'focused scouting': true },
                 cost: { 'insight II': 45, 'influence': 255 },
                 icon: [33, 26, 'magixmod']
@@ -15066,7 +15072,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'valid portal frame', category: 'tier1',
-                desc: 'Before wizards will be able to open a gate to a new world they must know some rules. Without a fixed portal frame a portal will not open (and may even explode in their faces). //<small><b>Rule 3:</b> A portal\'s passageway should should be a correctly cut perfect square to make the passage safe and stable.</small>',
+                desc: 'Before wizards will be able to open a gate to a new world, they must first learn some rules. Without a properly placed portal frame, a portal will not open (and may even explode in their faces)! //<small><b>Rule 3:</b> A portal\'s passageway should should be a correctly cut perfect square to make the passage safe and stable.</small>',
                 icon: [10, 29, 'magixmod'],
                 req: { 'Wizard complex': true, 'belief in portals': true },
                 cost: { 'insight': 1015 },
@@ -15102,7 +15108,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will go 0 even if for this tech some of them are not required (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 even if  some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="red">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 35, 'magixmod', 0, 30, 'magixmod'],
@@ -16889,7 +16895,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'decent nourishment',
-                desc: '@unhappiness from eating [bugs] and [spoiled food] is doubled. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if this is only food you have?...Here\'s some advice: do not even think about serving them any sort of worms at all. Just throw it all away or eat it yourself!</small>',
+                desc: '@unhappiness from eating [bugs] and [spoiled food] is doubled. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if this is only food you have?...Here\'s some advice: do not even think about serving them any sort of worms at all. Just throw it all away or eat it yourself!</small>',
                 icon: [8, 11, 26, 0, 'magixmod'],
                 chance: 5,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'worm culture': false },
@@ -16902,7 +16908,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your people are no longer unhappy when eating [bugs]. @in addition, one-third of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>There are some countries that put worms into dishes. Consumers are happy about that, as they say it improves the dish\'s taste!</small>',
+                desc: '@your people are no longer unhappy when eating [bugs]. @in addition, one-third of its [happiness] harm will turn into a <b>boost</b>. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>There are some countries that put worms into dishes. Consumers are happy about that, as they say it improves the dish\'s taste!</small>',
                 icon: [8, 11, 24, 1],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
@@ -16934,7 +16940,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid, meaning that its effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: 'unhappiness from death is fluid, meaning that its effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 25, 34, 'magixmod'],
                 cost: { 'culture': 4, 'insight': 1 },
                 chance: 50,
@@ -17399,7 +17405,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness] (depending on your civilization\'s [fear of death,death attitude]).@<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness] (depending on your civilization\'s [fear of death,death attitude]).@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -17409,7 +17415,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 750,
@@ -17418,7 +17424,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@A [corpse,Dead person\'s] belongings are preserved and left for the family instead of being taken for common use (unless the person didn\'t have one). @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@A [corpse,Dead person\'s] belongings are preserved and left for the family instead of being taken for common use (unless the person didn\'t have one). @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -17987,7 +17993,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smarter people', category: 'tier1',
-                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s',
+                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s (this, however, requires you to unlock the ancestors world)',
                 icon: [23, 19, 'magixmod', 0, 0, 'magix2'],
                 cost: { 'insight': 4000, 'influence': 1000 },
                 req: { 'power from beneath': true },
@@ -18127,7 +18133,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'scientific minds',
-                desc: 'Your people have gained a deeper cultural appreciation of [science]. @with so many minds of science, your people will gain [science] <b>extremely slowly</b> (but based on your [culture II] amount) @provides 1 [education] and 1 [inspiration II]',
+                desc: 'Your people have gained a deeper cultural appreciation of [science]. @With so many minds of science, your people will gain [science] <b>extremely slowly</b> (but based on your [culture II] amount). @provides 1 [education] and 1 [inspiration II]',
                 icon: [choose([3, 4, 5, 6]), 27, 'magixmod', 0, 0, 'magix2'],
                 cost: { 'culture II': 5 },
                 chance: 6,
@@ -20425,7 +20431,7 @@ if (getObj("civ") != "1") {
 
             new G.Goods({ // By @1_e0
                 name: 'bee nest',
-                desc: 'Each bee nest is full of tiny cells and provides a small source of [honey] or [honeycomb]s. Bees may also help pollinate nearby [flowers], ensuring that they grow properly.',
+                desc: 'Each bee nest is full of tiny cells may provide a small source of [honey] and [honeycomb]s. Bees may also help pollinate nearby [flowers], ensuring that they grow properly.',
                 res: {
                     'honey': { 'honey': 0.1, 'honeycomb': 0.05 }
                 },
@@ -21624,7 +21630,7 @@ if (getObj("civ") != "1") {
                         }
 
                         //clothing
-                        var objects = { 'basic clothes': [0.1, 0.1], 'primitive clothes': [0, 0] };
+                        var objects = { 'basic clothes': [0.1, 0.1], 'primitive clothes': [0.02, 0.03] };
                         var leftout = me.amount;
                         var prev = leftout;
                         var fulfilled = 0;
@@ -24928,7 +24934,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'ritual necrophagy',
-                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving a dead one for animals to devour...but sometimes you have no choice...no...choice.</small>',
+                desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving a dead one for animals to devour...but sometimes you have no choice...no...choice.</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 500,
@@ -24957,7 +24963,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'insect-eating',
-                desc: '@your elves are no longer unhappy when eating [bugs]. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b><br>//<small>This world may have <b>bugs</b> that can eat elves...literally. Maybe. Sorry to scare ya.</small>',
+                desc: '@your elves are no longer unhappy when eating [bugs]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b><br>//<small>This world may have <b>bugs</b> that can eat elves...literally. Maybe. Sorry to scare ya.</small>',
                 icon: [12, 19, 'c2', 22, 1, 'c2'],
                 chance: 5,
                 req: { 'insects as food': 'on' },
@@ -25483,7 +25489,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'decent nourishment',
-                desc: '@unhappiness from eating [bugs] and [spoiled food] is multiplied by 1.33 @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if it is the only food in this wilderness? Will you still demand <b>decent nourishment</b>?</small>',
+                desc: '@unhappiness from eating [bugs] and [spoiled food] is multiplied by 1.33 @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>But what if it is the only food in this wilderness? Will you still demand <b>decent nourishment</b>?</small>',
                 icon: [8, 11, 26, 0, 'magixmod'],
                 chance: 5,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'worm culture': false },
@@ -25496,7 +25502,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'worm culture',
-                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition, half of its [happiness] harm will turn into a <b>boost</b>. @<b><font color=\'red\'>Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Some countries that put worms into dishes and enjoy it! Surprisingly, elves are happy about that as well...</small>',
+                desc: '@your elves are no longer unhappy when eating [bugs]. @in addition, half of its [happiness] harm will turn into a <b>boost</b>. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a chance of becoming permanent.</font></b>//<small>Some countries that put worms into dishes and enjoy it! Surprisingly, elves are happy about that as well...</small>',
                 icon: [8, 11, 24, 1, 'c2'],
                 chance: 15,
                 req: { 'insects as food': 'on', 'insect-eating': false, 'decent nourishment': false },
@@ -25509,7 +25515,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid, meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: 'unhappiness from death is fluid, meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 26, 16, 'c2'],
                 cost: { 'gentility': 12, 'creativity': 3 },
                 chance: 30,
@@ -25607,7 +25613,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness] (depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness] (depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false },
@@ -25615,7 +25621,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 750,
@@ -25624,7 +25630,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@A [corpse,corpse\'s] belongings are preserved and left for the family instead of being taken for common use (unless the elf didn\'t have one). @<b><font color=\'red\'>Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@A [corpse,corpse\'s] belongings are preserved and left for the family instead of being taken for common use (unless the elf didn\'t have one). @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 500,
