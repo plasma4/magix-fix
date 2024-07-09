@@ -117,6 +117,93 @@ G.Res = function (obj) {
     G.setDict(this.name, this);
     this.mod = G.context;
 }
+G.NewGameConfirm = function () {
+    //the player has selected a starting location; launch the game proper
+    //G.Reset();
+    G.sequence = 'main';
+    G.T = 0;
+
+    G.rememberAchievs = true;
+    for (var i in G.savedAchievs) {
+        //reload achievements
+        if (G.modsByName[i] && G.modsByName[i].achievs) {
+            for (var ii in G.savedAchievs[i]) {
+                if (G.modsByName[i].achievs[ii]) G.modsByName[i].achievs[ii].won = G.savedAchievs[i][ii];
+            }
+        }
+    }
+
+    //init everything
+
+    G.createMaps();
+
+    for (var i in G.res) {
+        G.res[i].amount = G.res[i].startWith;
+    }
+    for (var i in G.tech) {
+        if (G.tech[i].startWith) G.gainTech(G.tech[i]);
+    }
+    for (var i in G.trait) {
+        if (G.trait[i].startWith) G.gainTrait(G.trait[i]);
+    }
+    for (var i in G.policy) {
+        if (G.policy[i].startWith) G.gainPolicy(G.policy[i]);
+    }
+
+    for (var i in G.res) {
+        var item = G.res[i]
+        if (item.tick) item.tick(item, G.tick);
+    }
+
+    G.runUnitReqs();
+    G.runPolicyReqs();
+
+    G.applyAchievEffects('new');
+
+    G.updateEverything();
+    G.createTopInterface();
+    G.createDebugMenu();
+
+    for (var i in G.unit) {
+        if (G.unit[i].startWith) { G.buyUnitByName(G.unit[i].name, G.unit[i].startWith); }
+    }
+
+    l('blackBackground').style.opacity = 0;
+
+    G.setSetting('forcePaused', 0);
+    G.setSetting('paused', 0);
+    G.setSetting('fast', 0);
+
+    G.animIntro = true;
+    G.introDur = G.fps * 3;
+
+    G.doFunc('new game');
+
+    G.Message({
+        type: 'important', text: 'If this is your first time playing, you may want to consult some quick ' + G.button({
+            text: 'Getting started', tooltip: 'Read a few tips on how to make it past the stone age.', onclick: function () {
+                G.dialogue.popup(function (div) {
+                    return '<div style="width:480px;min-height:320px;height:75%;">' +
+                        '<div class="fancyText title">A few tips on how to not die horribly:</div>' +
+                        '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:16px;">' +
+                        '<div style="float:right;margin:8px;width:121px;text-align:center;line-height:80%;"><img style="box-shadow:2px 2px 2px 1px #000;" src="img/helpLocation.jpg"/><br><small>Mouse over these buttons for more explanations!</small></div>' +
+                        '<div class="bulleted">early on, focus most of your workers on food gathering</div>' +
+                        '<div class="bulleted">assign a few spare workers as dreamers, in order to get some Insight which you can use to research technologies</div>' +
+                        '<div class="bulleted">check the territory tab and click your starting location; if you\'ve got very few sources of food or water, you might want to restart the game</div>' +
+                        '<div class="bulleted">don\'t bother researching fishing or hunting if none of your tiles have animals or fish!</div>' +
+                        '<div class="bulleted">enabling elder/child work policies can be useful if you need extra workers, but may prove detrimental to your people\'s health</div>' +
+                        '<div class="bulleted">if things get too hectic, you can pause the game and take your time</div>' +
+                        '<div class="bulleted">this is an early alpha, so you don\'t have to worry about meeting other civilizations just yet</div>' +
+                        '<div class="bulleted">sometimes things just go wrong; don\'t lose hope, you can always start over!</div>' +
+                        '</div>' +
+                        '</div><div class="buttonBox">' +
+                        G.dialogue.getCloseButton('Got it!') +
+                        '</div></div>';
+                });
+            }
+        }) + ' tips.'
+    });
+}
 G.logic['res'] = function () {
     //update visibility
     var len = G.res.length;
