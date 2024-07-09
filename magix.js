@@ -270,7 +270,7 @@ G.selectModeForUnit = function (me, div) {
 
 G.update['unit'] = function () {
     l('unitDiv').innerHTML =
-        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be assigned over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
+        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be assigned over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a working unit in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
         '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
         G.button({
             id: 'removeBulk',
@@ -790,8 +790,9 @@ var unitGetsConverted = function (into, min, max, mesg, message, single, plural)
 }
 var archaeologyRare = function () //mesg can toggle message
 {
-    //for rare findings and up
+    //for rare findings and up (however, this has a chance to fail, although the failing chance is decreased based on your archaeologist amount)
     return function (me) {
+        alert("discoveries")
         var rarities = ['Rare', 'Unique', 'Legendary', 'Magnificient', 'Fabled', 'Ethereal', 'Omnipotent', 'Transcendent', 'Godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var mesgType = ['tutorial', 'unique', 'emblemobtain', 'magnificient', 'fabled', 'ethereal', 'omnipotent', 'transcendent', 'godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var vals = [3, 6, 10];
@@ -883,7 +884,7 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: 'Our ' + (G.getUnitAmount('archaeologist') > 1 ? 'archaeologists' : 'archaeologist') + ('aeiou'.includes(rarity[0]) ? ' have found an <b>' : ' have found a <b>') + rarity + '</b> relic.<br>It is a rather ' + choose(["interesting", "strange", "facinating"]) + ' <b>' + itemName + '</b>. This finding provides you with <u>' + vals[rarities.indexOf(rarity)] + ' ' + G.getRes(gain).displayName + choose(['</u>.<br>Pretty good!', '</u>.<br>Great!', '</u>.<br>Nice!']),
+                text: (G.getUnitAmount('archaeologist') === 1 ? "Your archaeologists" : "Your archaeologists (well, one archaeologist I suppose, but whatever)") + ("aeiou".includes(rarity[0]) ? " have found an <b>" : " have found a <b>") + rarity + "</b> relic.<br>It is " + choose(["a rather ", "a relatively ", "a cool and ", "an extremely "]) + choose(["interesting", "strange", "facinating", "useful"]) + " <b>" + itemName + "</b>. This finding provides you with <u>" + vals[rarities.indexOf(rarity)] + " " + G.getRes(gain).displayName + choose(["</u>.<br>Pretty good!", "</u>.<br>Great!", "</u>.<br>Nice!", "</u>.<br>Not bad!", "</u>.<br> That's something, isn't it?", "</u>.<br>Kind of interesting, really..."]),
                 icon: [23, 33, 'magixmod']
             });
         }
@@ -1426,7 +1427,7 @@ if (getObj("civ") != "1") {
                 theme();
                 G.ta = 1;
                 if (G.achievByName['fortress eternal'].won > 0) G.gain("insight", 1);
-                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 if (G.achievByName['sacrificed for culture'].won == 1 && G.achievByName['the fortress'].won <= 3)
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
                 document.title = 'NeverEnding Legacy';
@@ -1569,11 +1570,11 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 50 && G.techN < 82) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is but a long-lost memory, probably a sidenote in a history book.<br><font color="lime">Everyone is dead.</font>', icon: [5, 4] });
                 } else if (G.techN >= 82 && G.techN < 116) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely a interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely an interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
                 } else if (G.techN >= 116 && G.techN < 148) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely an interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 148 && G.techN < 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely an interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died, but your legacy isn\'t a <b>lost memory</b>. It is surely an interesting, long note in some history book.<br><font color="lime">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
@@ -1625,7 +1626,7 @@ if (getObj("civ") != "1") {
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.<br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> to join the community!', icon: [0, 3] });
                     //Had to paste it there because if you obtain and you will unlock 5th choice after page refresh you can still pick 1 of 4 instead of 1 of 5
-                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                     if (G.achievByName['talented?'].won > 0) G.getDict('research box').choicesN++;
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
@@ -6228,14 +6229,14 @@ if (getObj("civ") != "1") {
             new G.Res({//WIP
                 name: 'modernium ore',
                 desc: 'A red ore with a pinkish tint. Interesting but is sadly a waste.',
-                // desc: 'A red ore with a pinkish tint. Getting a ingot from it, however, requires a bit of luck. At least it can be smelt into random things like [coal]. Only obtainable if people will be led by [moderation]. Mind you, work on this ore isn\'t complete!',
+                // desc: 'A red ore with a pinkish tint. Getting an ingot from it, however, requires a bit of luck. At least it can be smelt into random things like [coal]. Only obtainable if people will be led by [moderation]. Mind you, work on this ore isn\'t complete!',
                 icon: [10, 8, 'magixmod'],
                 category: 'ore',
             });
             new G.Res({//WIP
                 name: 'caretakium ore',
                 desc: 'A dark green ore that is of some interest but has no use.',
-                // desc: 'A dark green ore. Getting a ingot from it, however, requires a bit of luck. At least it can be used in some other purposes like forging blocks. Some people say it can be like a herb...but unedible. Only obtainable if people will be led by [caretaking]. Mind you, work on this ore isn\'t complete!',
+                // desc: 'A dark green ore. Getting an ingot from it, however, requires a bit of luck. At least it can be used in some other purposes like forging blocks. Some people say it can be like a herb...but unedible. Only obtainable if people will be led by [caretaking]. Mind you, work on this ore isn\'t complete!',
                 icon: [10, 7, 'magixmod'],
                 category: 'ore',
             });
@@ -10614,7 +10615,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'archaeologist',
-                desc: '@digs in the ground to find some [relic]s. Good source of essentials, as finding treasures won\'t just give you [insight]. Depending on what [archaeologist] found you can also gain [culture], [faith], or [influence]. If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
+                desc: '@digs in the ground to find some [relic]s and also providing a good source essentials, as finding treasures won\'t just give you [insight]. Depending on what your [archaeologist]s found, you may even gain [culture], [faith], or [influence]! If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
                 icon: [22, 33, 'magixmod'],
                 use: { 'worker': 1, 'metal tools': 2 },
                 upkeep: { 'food': 1, 'water': 1 },
@@ -10626,7 +10627,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'insight': 0.75 }, chance: 1 / 100 },
                     { type: 'gather', what: { 'culture': 0.75 }, chance: 1 / 75 },
                     { type: 'gather', what: { 'influence': 0.75 }, chance: 1 / 112 },
-                    { type: 'function', func: archaeologyRare(), chance: 1 / 1100 },
+                    { type: 'function', func: archaeologyRare(), chance: 1 / 1200 },
                     { type: 'mult', value: 0.2, req: { 'out of relics': true } },
                     { type: 'mult', value: 1.2, req: { 'better seeking': true } },
                 ],
@@ -11504,20 +11505,20 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'well of mana', category: 'tier1',
-                desc: 'You can now construct a well from which you gather [mana]. //<small>Oh, so that\'s the power source for magic tricks...</small>',
+                desc: 'You may now construct a new type of well that will gather [mana] for you. //<small>Oh, so THAT is the power source for magic tricks...</small>',
                 icon: [4, 3, 'magixmod'],
                 cost: { 'insight': 45, 'faith': 5, 'mana': 100 },
                 req: { 'mana brewery': true, 'more useful housing': true },
             });
             new G.Tech({
                 name: 'wizard towers', category: 'tier1',
-                desc: 'Now you can build wizard towers which can produce a variety of [magic essences,Essences]. The type made depends on what type of tower you build. Wizard towers also provide additional housing, but making [magic essences,Essences] consumes [mana]. @unlocks [fire wizard tower], [water wizard tower], [nature wizard tower], [dark wizard tower], [lightning wizard tower], and [wind wizard tower].',
+                desc: 'Now you can build wizard towers which can produce a variety of [magic essences,Essences]. The type made depends on what type of tower you build. Wizard towers also provide additional housing, but making [magic essences,Essences] will require [mana] as upkeep. @unlocks six towers: [fire wizard tower]s, [water wizard tower]s, [nature wizard tower]s, [dark wizard tower]s, [lightning wizard tower]s, and [wind wizard tower]s',
                 icon: [6, 0, 'magixmod'],
                 cost: { 'insight': 125, 'culture': 30, 'mana': 250, 'influence': 10 },
                 req: { 'mana brewery': true, 'more useful housing': true },
                 effects: [
                 ],
-                tutorialMesg: ['tutorial', 'You unlocked <b>Wizard towers</b>.<br>These towers provide housing and produce Essences using Mana. Make sure that you have enough <b>Mana</b> income and some <b>Wizards</b> to upkeep at least one of the towers. Also, make sure that you have <b>Essence storages</b>.', [20, 13, 'magixmod']]
+                tutorialMesg: ['tutorial', 'You have unlocked <b>Wizard towers</b>!<br>These towers will provide housing and produce Essences by consuming Mana. Make sure that you have enough <b>Mana</b> production and some <b>Wizards</b> to keep the towers working properly. Be sure to also obtain the <b>Essence storages</b> needed for your essence types!', [20, 13, 'magixmod']]
             });
             new G.Tech({
                 name: 'wizard wisdom', category: 'tier1',
@@ -11536,7 +11537,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'first portal to new world', category: 'tier1',
-                desc: 'Your wizards discovered a way to make a portal and can\'t wait to open a new dimension now. What would it mean? It means more places to build, more unlocks, and more everything!',
+                desc: 'Your wizards discovered a way to make a portal and can\'t wait to open a new dimension now. What would it mean? It would mean more places to build, more unlocks, and more everything!',
                 icon: [2, 1, 'magixmod'],
                 cost: { 'insight': 1400, 'culture': 30, 'mana': 2500, 'influence': 70 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard wisdom': true, 'Wizard complex': true, 'belief in portals': true, 'valid portal frame': true },
@@ -14321,7 +14322,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'philosophy', category: 'tier1',//Unlocks thot if Thot(actually Philosopher) Mod installed :)
-                desc: 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus." : "") + '',
+                desc: 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 50%. //Some people start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus." : "") + '',
                 icon: [23, 27, 'magixmod'],
                 req: { 'alphabet 2/3': true },
                 cost: { 'insight': 400 },
@@ -14442,7 +14443,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'improved construction', category: 'upgrade',
-                desc: 'All buildings that can waste will decay a little slower. It won\'t increase building costs.',
+                desc: 'All buildings that can waste will decay a little slower. This won\'t increase building costs or [land] usage.',
                 icon: [11, 27, 'magixmod'],
                 req: { 'construction III': true, 'moderation': true },
                 cost: { 'insight II': 200, 'science': 14, 'influence II': 1 },
@@ -14452,12 +14453,18 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mo\' shelterz', category: 'upgrade',
-                desc: 'Decreases the [land] limit for [paradise shelter]s by 4 points. It means more shelters, after all. <>More shelters = more housing = more people!@provides 15 [wisdom II]',
+                desc: 'Decreases the [land] and [population] limits of [treehouse]s and [cozy lodge]s slightly. @provides 15 [wisdom II] //<small>More shelters = more housing = more people!</small>',
                 icon: [10, 27, 'magixmod'],
                 req: { 'paradise shelters': true, 'caretaking': true },
-                cost: { 'insight II': 201, 'science': 14, 'influence II': 1 },
+                cost: { 'insight II': 250, 'science': 14, 'influence II': 1 },
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 15 } },
+                    {
+                        type: 'function', func: function () {
+                            G.unitByName['treehouse'].limitPer = { 'land': 4, 'population': 40 };
+                            G.unitByName['cozy lodge'].limitPer = { 'land': 8, 'population': 75 };
+                        }
+                    }
                 ],
             });
             new G.Tech({
@@ -14472,7 +14479,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smaller shacks', displayName: '<font color="orange">Smaller shacks</font>',
-                desc: '<font color="#aaffff">All [blacksmith workshop,Crafting units] and: [well]s, [water filter]s (Caretaking filters uses 0.1 less land and Moderation filters will use 0.2 less land), [wheat farm]s and [crematorium]s will use 15% less land.</font>',
+                desc: '<font color="#aaffff">All [blacksmith workshop,Crafting units], [well]s, and [water filter]s will use less (with Caretaking, filters will use 0.4 less [land] while with Moderation, filters will use 0.2 less [land]). In addition, [wheat farm]s and [crematorium]s will use 15% less [land].</font>',
                 icon: [32, 20, 'magixmod'],
                 cost: {},
                 effects: [
@@ -16015,7 +16022,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'lovely monument',
-                desc: 'You can now start constructing the [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
+                desc: 'You will now be able to construct the [fortress of love]. //<small><font color="pink">A place for all Senpais...aww</font></small>',
                 icon: [7, 16, 'seasonal'],
                 cost: { 'culture II': 25, 'research': 150, 'insight II': 15 },
                 req: { 'parental love': true, 'compliments': true, 'alphabet 3/3': true, 'monument-building II': true },
@@ -20903,7 +20910,7 @@ if (getObj("civ") != "1") {
                 };
                 G.ta = 1;
                 document.title = 'NeverEnding Legacy';
-                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                 fortress();
                 G.fastTicks = G.fastTicks2;
@@ -20939,11 +20946,11 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 50 && G.techN < 82) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is but a long-lost memory, probably a sidenote in a history book.<br><font color="lime">Everyone is dead.</font>', icon: [5, 4] });
                 } else if (G.techN >= 82 && G.techN < 116) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely a interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not-so-long-lost memory</b>, and most likely an interesting sidenote in a history book of elves or...humans...who knows?<br><font color="lime">Everyone is dead but many relics of your tribe are left.</font>', icon: [5, 4] });
                 } else if (G.techN >= 116 && G.techN < 148) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization is no more, and your legacy is <b>not lost memory</b>, and surely an interesting sidenote in a history book.<br><font color="lime">Everyone is dead but many relics and constructions of your tribe are left waiting to be discovered by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 148 && G.techN < 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely a interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died but your legacy is <b>not a lost memory</b>, and surely an interesting sidenote in a history book.<br><font color="lime">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> civilization exists no longer, everyone died, but your legacy isn\'t a <b>lost memory</b>. It is surely an interesting, long note in some history book.<br><font color="lime">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
@@ -21005,12 +21012,12 @@ if (getObj("civ") != "1") {
                     if (G.has('earth')) {
                         if (G.getDict("archaeologist").effects[G.getDict("archaeologist").effects.length] == "undefined") G.getDict("archaeologist").effects.push = { type: 'mult', value: 1 - (0.002 * i) };
                         else G.getDict("archaeologist").effects[(G.getDict("archaeologist").effects.length) - 1] = { type: 'mult', value: 1 - (0.002 * i) };
-                        if (i > 14 && i < 23) G.getDict('mine').effects[8] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, killing all the miners', 'mines collapsed, killing all the miners'), chance: 1 / (40 - i) };
-                        else G.getDict('mine').effects[8] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding the miners'), chance: 1 / (45 - i) };
+                        if (i > 14 && i < 23) G.getDict('mine').effects[27] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, killing all the miners', 'mines collapsed, killing all the miners'), chance: 1 / (40 - i) };
+                        else G.getDict('mine').effects[27] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding the miners'), chance: 1 / (45 - i) };
                         if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects[length] = { type: 'mult', value: 1 + (0.001 * i) };
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
-                        if (i > 14 && i < 23) G.getDict('quarry').effects[3] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, killing all the workers', 'quarries collapsed, killing all the workers'), chance: 1 / (40 - i) };
-                        else G.getDict('quarry').effects[3] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / (45 - i) };
+                        if (i > 14 && i < 23) G.getDict('quarry').effects[13] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, killing all the workers', 'quarries collapsed, killing all the workers'), chance: 1 / (40 - i) };
+                        else G.getDict('quarry').effects[13] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / (45 - i) };
                         if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 + (0.001 * i) };
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
                         if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
@@ -21055,7 +21062,7 @@ if (getObj("civ") != "1") {
                         G.getDict('wolvoes').mult = 4.8 * (1 - (i * 0.02));
                     }
                     if (G.releaseNumber == undefined) G.Load();
-                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies [symbolism] bonus for him equal to new [dreamer] bonus.';
+                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 }
             }
             G.funcs['new year'] = function () //new year but civ2
@@ -21323,7 +21330,7 @@ if (getObj("civ") != "1") {
                             var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/JustPlainLucky.mp3');
                             audio.play();
                         }
-                        G.middleText('<font color="#d4af37">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number -' + G.achievByName['just plain lucky'].won + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'time' : 'times') + '<br>Impressive.<br>Anyway, enjoy the game!</small>', 'slow');
+                        G.middleText('<font color="#d4af37">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number ' + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'for the first time' : (G.achievByName['just plain lucky'].won + 'times already')) + '<br>Impressive.<br>Anyway, enjoy the game!</small>', 'slow');
                     }
 
                     if (G.year > 19)//Gear decaying at year 20 and later
@@ -25301,7 +25308,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'philosophy', category: 'tier1',//Unlocks thot if Thot(actually Philosopher) Mod installed :)
-                desc: 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Many elves start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies [symbolism] bonus for him reduced by 10% comparing to new [dreamer] bonus." : "") + '',
+                desc: 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Many elves start wondering why things aren\'t different than they are.' + (G.modsByName['Thot Mod'] ? "Also unlocks [thot] and applies the [symbolism] bonus for him reduced by 10% comparing to new [dreamer] bonus." : "") + '',
                 icon: [29, 14, 'c2'],
                 req: { 'alphabet 2/3': true },
                 cost: { 'discernment': 135, 'creativity': 70, 'gentility': 35 },
@@ -25398,7 +25405,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'out of relics',
-                desc: 'Most of the relics have been found. From now on, [archaeologist]s will dig out stuff left by previous generations. Luckily, there is still a chance to find a rare finding based on the current rarity levels. @[archaeologist]s are 80% less efficient. @This trait will automatically disappear after several hundred years after your civilization evolves for many generations.',
+                desc: 'Most of the relics have been found. From now on, [archaeologist]s will dig out stuff left by previous generations. Luckily, will still be a chance to find a rare finding based on the current rarity levels! @[archaeologist]s will become 80% less efficient. @This trait will automatically disappear after several hundred years after your civilization evolves for many generations.',
                 icon: [3, 12, 26, 15, 'c2'],
                 cost: {},
                 req: { 'archaeology': true, 'tribalism': false },

@@ -1660,13 +1660,13 @@ G.AddData({
             var empowermentsDesc = [
                 '<div class="barred">Current aura: <font color="#ccccff">Ice</b></div><br><B>Effects of ice in its current phase:</b><br><li>Your food gathering is decreased by ' + (3 * i).toFixed(2) + '%.</li><li>Firekeepers are ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>You gain ' + (0.25 * i).toFixed(2) + '% more fresh water.</li><li>Water and food spoils ' + (0.6 * i).toFixed(2) + '% slower.</li><li>You gain ' + (0.2 * i).toFixed(2) + '% more ice from digging.</li></font>',
                 '<div class="barred">Current aura: <font color="#f0bb6c">Warmth</b></div><br><B>Effects of warmth in its current phase:</b><br><li>Your water gathering is decreased by ' + (2.4 * i).toFixed(2) + '%.</li><li>Fishing is ' + (0.75 * i).toFixed(2) + '% less efficient.</li><li>Food spoilage is ' + (0.4 * i).toFixed(2) + '% faster and gathering is ' + (0.4 * i) + '% less efficient.</li><li>The efficiency of farms and florists is decreased by ' + (0.4 * i).toFixed(2) + '%.</li></font>',
-                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br><li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura has the biggest power, all accidents in mines and quarries are very violent (before and after for 3 years),<br>so it has very large chance to kill instead of just wounding workers.</li><br><li>As the ground is unstable, it lowers Archaeologist\'s efficiency<br>by ' + (0.2 * i).toFixed(2) + '%.</li></font>',
+                '<div class="barred">Current aura: <font color="#c3bbcf">Earth</b></div><br><B>Effects of earth in its current phase:</b><br><li>Units using land waste/collapse ' + (30 * i) + '% more often.</li><li>Furnaces and blacksmiths are ' + (0.2 * i).toFixed(2) + '% more efficient.</li><li>Mines and quarries are ' + (0.1 * i).toFixed(2) + '% more efficient.</li><li>The accident rate for mining units is increased by ' + (8 * i).toFixed(2) + '%.</li><li>When the Earth aura is the most powerful, all accidents in mines and quarries become very violent (before and after for 3 years),<br>so it has very large chance to kill instead of just wounding workers.</li><br><li>With such unstable ground, archaeologists become ' + (0.2 * i).toFixed(2) + '% slower.</li></font>',
                 '<div class="barred">Current aura: <font color="#fa7df2">Mystic</b></div><br><B>Effects of mystic in its current phase:</b><br><li>All non-magic resources decay ' + (6 + (1 * i)).toFixed(2) + '% faster.</li><li>Magical units are ' + (2 * i).toFixed(2) + '% more efficient.</li><li>Disease and death rate increased by ' + (5 + (1 * i)).toFixed(2) + '%.</li><li>Every year, one random resource gets totally wiped!br>(<b>Warning:</b>if the choice will land on any essentials, it will<br>wipe all other essentials except those that<br>limit the amount of other essentials.)</li></font>',
                 '<div class="barred">Current aura: <font color="#4d88ff">Water</b></div><br><B>Effects of water in its current phase:</b><br><li>Farm efficiency is increased by ' + (2 * i).toFixed(2) + '%.</li><li>Diggers,mines and quarries are ' + (2.5 * i).toFixed(2) + '% less efficient.</li><li>Wells gain ' + (0.6 * i).toFixed(2) + '% more fresh water.</li><li>Water spoils ' + (0.25 * i).toFixed(2) + '% faster.</li><li>There are ' + (0.2 * i).toFixed(2) + '% more mushrooms.</li></font>',
             ];
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('Water')) {
-                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by the effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras.<br>Each one boosts and weakens some things and each one will persist through<br>the rest of the current run.</div><div class="par">Auras cycle, so their power will be at their peak in the middle of one.</div>' + empowermentsDesc[G.auratext] });
+                    G.addTooltip(l('empower'), function () { return '<div class="barred">Aura</div><div class="par">Auras affect you by the effects of <b>Pressure</b>.</div><div class="par"> Auras have cycles and trigger at year ' + (236 - G.techN - G.traitN) + '.</div><div class="par">There are 5 different auras.<br>Each one boosts and weakens some things and each one will persist through<br>the rest of this run.</div><div class="par">Auras cycle, so the aura\'s power will be at its peak during the middle of a cycle.</div>' + empowermentsDesc[G.auratext] });
                 } else {
                     G.addTooltip(l('empower'), function () { return (G.achievByName["druidish heart"].won > 0 ? '<div class="barred">???</div><div class="par">' + (G.has("time measuring 1/2") ? 'Once year ' + (236 - G.techN - G.traitN) : 'Once this moment ') + 'strikes, you will see what\'s there.<br>For now, wait.</div>' : '<div class="barred">???</div><div class="par">Once it shows up, you will see what\'s there.<br>For now, wait.</div>') });
                 }
@@ -2065,7 +2065,7 @@ G.AddData({
             tier: 2,
             icon: [25, 19, 'magixmod'],
             name: 'level up',
-            desc: 'Obtain <font color="white"><b>Evolution of the minds</b></font> during a run. This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
+            desc: 'Obtain the [eotm] trait during a legacy! This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
             civ: 0,
             plural: false
         });
@@ -2073,7 +2073,7 @@ G.AddData({
             tier: 'population',
             icon: [36, 31, 'magixmod'],
             name: 'wild tribe',
-            desc: 'Manage to get 1k [population,people] in one run.',
+            desc: 'Manage to get 1k [population,people] in one legacy.',
             civ: 0,
             plural: false
         });
@@ -2081,7 +2081,7 @@ G.AddData({
             tier: 'tech',
             icon: [14, 33, 'magixmod'],
             name: 'how to, spear?',
-            desc: 'Get 20 or more technologies in a single run for the human race.//<small>Baby steps behind us...</small>',
+            desc: 'Get 20 or more technologies in a single legacy for the human race.//<small>Baby steps behind us...</small>',
             civ: 0,
             plural: false
         });
@@ -2173,7 +2173,7 @@ G.AddData({
             tier: 'tech',
             icon: [23, 21, 'magixmod'],
             name: 'apprentice',
-            desc: 'Get 100 or more technologies in a single run for the human race.',
+            desc: 'Get 100 or more technologies in a single legacy for the human race.',
             civ: 0,
             plural: false
         });
@@ -2418,7 +2418,7 @@ G.AddData({
             tier: 'population',
             icon: [36, 30, 'magixmod'],
             name: 'rising star',
-            desc: 'Manage to get 10k [population,people] in one run. //<small>Keep it up!</small>',
+            desc: 'Manage to get 10k [population,people] in one legacy. //<small>Keep it up!</small>',
             civ: 0,
             plural: false
         });
@@ -2502,7 +2502,7 @@ G.AddData({
             tier: 0,
             name: 'speedresearcher',
             icon: [35, 7, 'magixmod'],
-            desc: 'Get at least 60 techs within the first 10 minutes of the current run.',
+            desc: 'Get at least 60 techs within the first 10 minutes of a legacy.',
             effects: [
             ],
             visible: false,
@@ -2513,7 +2513,7 @@ G.AddData({
             tier: 0,
             name: 'speedresearcher II',
             icon: [35, 6, 'magixmod'],
-            desc: 'Get at least 100 techs within the first 10 minutes of the current run.',
+            desc: 'Get at least 100 techs within the first 10 minutes of a legacy.',
             effects: [
             ],
             visible: false,
@@ -2564,7 +2564,7 @@ G.AddData({
             tier: 0,
             name: 'capital of christmas',
             icon: [1, 12, 'seasonal'],
-            desc: 'Finish [wonderful fortress of christmas]. //You\'ll unlock a special buff that lasts only during Christmas and the 7 next runs after [the christmas,<font color="Aqua">Christmas</font>] ends. Merry Christmas!',
+            desc: 'Finish [wonderful fortress of christmas]. //You\'ll unlock a special buff that lasts only during Christmas and the 7 next runs once [the christmas,<font color="Aqua">Christmas</font>] ends. Merry Christmas!',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -2671,7 +2671,7 @@ G.AddData({
             tier: 2,
             name: 'fortress eternal',
             displayName: '<font color="#Da4f37">fortress eternal</font>',
-            desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Reach 10/10 for the Fortress to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for C2. @+1 <b>Insight</b> for C1 at the start of run with people.',
+            desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Evolve the Fortress to 10/10 to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for the second civilization. @You also gain +1 <b>Insight</b> for the human race at the very start.',
             //fromWonder:'the fortress',
             icon: [1, 24, 'c2'],
             wideIcon: [0, 24, 'c2'],
@@ -2718,7 +2718,7 @@ G.AddData({
         new G.Achiev({
             tier: 'population',
             name: 'pressure vaccine',
-            desc: 'Push <b>Pressure</b> enough to be capable of having 85k [population,Elves]. //<small>Don\'t get overlighted.</small>',
+            desc: 'Push <b>Pressure</b> enough to be capable of having 85k [population,Elves]. //<small>Don\'t get too excited...</small>',
             icon: [32, 11, 'c2'],
             effects: [
                 { type: 'pressure', amount: 450 }
@@ -2729,7 +2729,7 @@ G.AddData({
         new G.Achiev({
             tier: 'population',
             name: 'pressure wiper',
-            desc: 'Push <b>Pressure</b> enough to be capable of having 175k [population,Elves].',
+            desc: 'Push <b>Pressure</b> enough to be capable of having 175k [population,Elves]. //<small>Do you really feel THAT pressured to remove Pressure?</small>',
             icon: [32, 12, 'c2'],
             effects: [
                 { type: 'pressure', amount: 770 }
@@ -2740,7 +2740,7 @@ G.AddData({
         new G.Achiev({
             tier: 'population',
             name: 'pressure purgator',
-            desc: 'Push <b>Pressure</b> enough to be capable of having 300k [population,Elves]. //<small>Now go for 1M...2k yrs later</small>',
+            desc: 'Push <b>Pressure</b> enough to be capable of having 300k [population,Elves]. //<small>Now go for 1M...a bajillion later</small>',
             icon: [32, 13, 'c2'],
             effects: [
                 { type: 'pressure', amount: 1250 }
@@ -2751,7 +2751,7 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'limit reached',
-            desc: 'Use up all the <b>Pressure resistance</b> for the first time. //@<font color="red">Note: you will need to have <b>Pressure resistance</b> at a minimum of level 1000.</font>',
+            desc: 'Use up all the <b>Pressure resistance</b> for the first time. //@<font color="red">Note: you will need to have <b>Pressure resistance</b> at a minimum of level 1000 to get this.</font>',
             icon: [32, 14, 'c2'],
             civ: 1, plural: false,
             special: 'c2',
@@ -2783,7 +2783,7 @@ G.AddData({
             tier: 'population',
             icon: [35, 27, 'magixmod'],
             name: 'a huge city made of the smaller cities',
-            desc: 'Manage to get 1M [population,people] in one run. //<small>Unbelieveable...</small>',
+            desc: 'Manage to get 1M [population,people] in one run. //<small>Unbelievable...</small>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 25 },
                 { type: 'addFastTicksOnResearch', amount: 5 }
@@ -2803,7 +2803,7 @@ G.AddData({
             tier: '1',
             icon: [32, 15, 'c2'],
             name: 'druidish heart',
-            desc: 'Ascend for the first time while playing with the <u>elf race</u>. //<small>If you rebirth, you may encounter a new adventure...again, right?</small>',
+            desc: 'Ascend for the first time while playing with the <u>elf race</u>. //<small>If you rebirth, you may encounter a new adventure...like, one more time, right?</small>',
             civ: 1,
             special: 'c2',
             plural: false
@@ -2812,7 +2812,7 @@ G.AddData({
             tier: 2,
             name: 'In the shadows',
             icon: [32, 16, 'c2'],
-            desc: 'Obtain 1 shadow achievement for the Elf race.',
+            desc: 'Obtain 1 shadow achievement for the elf race.',
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 70 },
                 { type: 'addFastTicksOnResearch2', amount: 1 },
@@ -2933,7 +2933,7 @@ G.AddData({
             tier: 0,
             name: 'speeddiscoverer',
             icon: [32, 17, 'c2'],
-            desc: 'Get at least 50 techs within the first 30 minutes of the current run.',
+            desc: 'Get at least 50 techs within the first 30 minutes of a legacy.',
             effects: [
             ],
             visible: false,
@@ -5260,7 +5260,6 @@ G.AddData({
                                                     G.dialogue.close();
                                                     var middleText = '';
                                                     var achiev = G.getAchiev(me.unit.wonder);
-                                                    var randomTxtId = Math.floor(Math.random() * 6);
                                                     G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/Ascending.wav');
                                                     if (achiev) {
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
@@ -5268,7 +5267,7 @@ G.AddData({
                                                     }
                                                     document.title = 'Ascending: NeverEnding Legacy';
                                                     G.theme = G.theme;
-                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 5000);
+                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 2000);
                                                     if (G.modsByName['Default dataset']) {
                                                         G.achievByName['first glory'].won++;
                                                         if (G.checkPolicy('theme changer') == 'default') G.theme = 0;
