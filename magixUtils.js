@@ -2111,7 +2111,7 @@ G.AddData({
             tier: 3,
             icon: [27, 21, 'magixmod'],
             name: 'extremely smart',
-            desc: 'Get your <b>Insight II</b> amount equal to your <b>Wisdom II</b>. It is not as easy as you think it may be!',
+            desc: 'Get your [insight II] amount equal to your [wisdom II]! It may be a bit harder than you think...',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 1000 },
                 { type: 'addFastTicksOnResearch', amount: 100 }
@@ -2123,7 +2123,7 @@ G.AddData({
             tier: 1,
             icon: [29, 21, 'magixmod'],
             name: 'experienced',
-            desc: 'To get this achievement you need to complete the other achievements in this tier along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
+            desc: 'To get this achievement you need to complete the other achievements in this tier, along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2147,7 +2147,7 @@ G.AddData({
             tier: 3,
             icon: [12, 22, 'magixmod'],
             name: 'man of essences',
-            desc: 'Obtain [magic adept] trait. Manage to get 2.1M [magic essences]. //Obtaining it may unlock a new wonder.',
+            desc: 'Obtain the [magic adept] trait. Manage to get 2.1M [magic essences]. //Obtaining it may unlock a new wonder.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 40 },
             ],
