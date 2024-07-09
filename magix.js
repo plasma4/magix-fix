@@ -48,7 +48,10 @@ document.addEventListener("click", function (e) {
 
 // Detect non-fixed MagixUtils
 if (!window.getObj && window.getCookie) {
-    alert("It appears that you have not imported the fixed version of MagixUtils. Try reimporting with the correct link (https://file.garden/ZmatEHzFI2_QBuAF/magix.js).")
+    G.dialogue.popup(function () {
+        return "It appears that you have not imported the fixed version of MagixUtils. Try reimporting with the correct link (https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js)."
+    }, 'noClose')
+    throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
 }
 
 G.setDict = function (name, what) {

@@ -22,15 +22,16 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 // Custom storage tools that 1) don't break the save data and 2) are saved when exporting
+var conflictingStorageObjects = ["civ"]
 G.storageObject = {}
 try {
     G.storageObject = localStorage.getItem("legacySave-alpha")
     if (G.storageObject) {
-        G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\{.+?\}/)
+        G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\$\{.+?\}/)
         if (G.storageObject) {
             G.storageObject = G.storageObject[G.storageObject.length - 1]
             if (G.storageObject) {
-                G.storageObject = JSON.parse(G.storageObject.replaceAll('&QOT', '"'))
+                G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
             }
         }
     }
@@ -1326,6 +1327,42 @@ G.AddData({
             str = unescape(str);
             //console.log(str);
             if (str != 'null' && str != '') {
+                var oldStorage = G.storageObject;
+                try {
+                    G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/)
+                    if (G.storageObject) {
+                        G.storageObject = G.storageObject[G.storageObject.length - 1]
+                        if (G.storageObject) {
+                            G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
+                            for (var i = 0; i < conflictingStorageObjects.length; i++) {
+                                var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
+                                var newItem = G.storageObject[key];
+                                if (oldStorage[key] !== newItem) {
+                                    G.dialogue.popup(function (div) {
+                                        return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
+                                            text: 'Yes', onclick: function () {
+                                                try {
+                                                    localStorage.setItem(G.saveTo, local);
+                                                    location.reload();
+                                                } catch (e) {
+                                                    throw TypeError("The game failed to store the data locally.");
+                                                }
+                                            }
+                                        }) + G.button({
+                                            text: 'No', onclick: function () {
+                                                G.dialogue.close();
+                                            }
+                                        }) + '</div>';
+                                    })
+                                    return false
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Storage data could not be obtained.")
+                    G.storageObject = oldStorage
+                }
                 G.Reset();
                 G.resetSettings();
 
@@ -1450,113 +1487,106 @@ G.AddData({
                 G.updateMapForOwners(map);
                 G.centerMap(map);
 
-                try {
-                    //techs & traits
-                    var spl = str[s++].split(';');
-                    //console.log('Techs : '+spl);
-                    var len = spl.length;
-                    for (var i = len - 1; i >= 0; i--) { if (spl[i] != '') { G.gainTech(G.know[parseInt(spl[i])]); } }
+                //techs & traits
+                var spl = str[s++].split(';');
+                //console.log('Techs : '+spl);
+                var len = spl.length;
+                for (var i = len - 1; i >= 0; i--) { if (spl[i] != '') { G.gainTech(G.know[parseInt(spl[i])]); } }
 
-                    var spl = str[s++].split(';');
-                    //console.log('Traits : '+spl);
-                    var len = spl.length;
-                    for (var i = len - 1; i >= 0; i--) {
-                        if (spl[i] != '') {
-                            var spl2 = spl[i].split(',');
-                            G.gainTrait(G.know[parseInt(spl2[0])]);
-                            if (G.releaseNumber > 54) G.know[parseInt(spl2[0])].yearOfObtainment = parseFloat(spl2[1]);
-                        }
+                var spl = str[s++].split(';');
+                //console.log('Traits : '+spl);
+                var len = spl.length;
+                for (var i = len - 1; i >= 0; i--) {
+                    if (spl[i] != '') {
+                        var spl2 = spl[i].split(',');
+                        G.gainTrait(G.know[parseInt(spl2[0])]);
+                        if (G.releaseNumber > 54) G.know[parseInt(spl2[0])].yearOfObtainment = parseFloat(spl2[1]);
                     }
-
-                    //policies
-                    var spl = str[s++].split(';');
-                    //console.log('Policies : '+spl);
-                    var len = spl.length;
-                    for (var i = len - 1; i >= 0; i--) {
-                        if (spl[i] != '') {
-                            var spl2 = spl[i].split(',');
-                            var me = G.policy[parseInt(spl2[0])];
-                            G.gainPolicy(me);
-                            me.mode = me.modesById[parseInt(spl2[1])];
-                        }
-                    }
-
-                    //res
-                    var spl = str[s++].split(';');
-                    //console.log('Resources : '+spl);
-                    var len = G.res.length;
-                    for (var i = 0; i < len; i++) {
-                        if (spl[i]) {
-                            var me = G.res[i];
-                            var spl2 = spl[i].split(',');
-                            if (parseInt(spl2[spl2.length - 1]) == 1) me.visible = true; else me.visible = false;
-                            if (!me.meta) me.amount = parseFloat(spl2[0]);
-                            if (me.displayUsed) me.used = parseFloat(spl2[1]);
-                        }
-                    }
-
-                    //units
-                    var spl = str[s++].split(';');
-                    //console.log('Units : '+spl);
-                    var len = spl.length;
-                    for (var i = len - 1; i >= 0; i--) {
-                        if (spl[i] != '') {
-                            var spl2 = spl[i].split(',');
-                            //unit id, amount, and if unit has gizmos : mode, percent
-                            var obj = {
-                                id: G.unitN,
-                                unit: G.unit[parseInt(spl2[0])],
-                                amount: parseFloat(spl2[1]),
-                                targetAmount: ((typeof spl2[4] !== 'undefined') ? parseFloat(spl2[4]) : parseFloat(spl2[1])),
-                                idle: ((typeof spl2[5] !== 'undefined') ? parseFloat(spl2[5]) : 0),
-                                displayedAmount: 0,
-                                mode: parseInt(spl2[2]) || 0,
-                                percent: parseInt(spl2[3]),
-                                popups: []
-                            };
-                            G.unitsOwned.unshift(obj);
-                            var unit = G.unitsOwned[0];
-                            if (unit.unit.modesById[0]) unit.mode = unit.unit.modesById[unit.mode];
-                            G.unitsOwnedNames.unshift(G.unit[parseInt(spl2[0])].name);
-                            G.unitN++;
-                        }
-                    }
-
-                    //assign unit .splitOf
-                    var prev = 0;
-                    var len = G.unitsOwned.length;
-                    for (var i = 0; i < len; i++) {
-                        var me = G.unitsOwned[i];
-                        if (prev && me.unit.id == prev.unit.id) me.splitOf = prev;
-                        else prev = me;
-                    }
-                    prev = 0;
-
-                    //chooseboxes
-                    var spl = str[s++].split(';');
-                    var len = spl.length;
-                    for (var i = len - 1; i >= 0; i--) {
-                        if (spl[i] != '') {
-                            G.chooseBox[i].choices = [];
-                            var spl2 = spl[i].split(',');
-                            for (var ii in spl2) {
-                                if (ii == 0) G.chooseBox[i].roll = parseFloat(spl2[ii]);
-                                else G.chooseBox[i].choices[ii - 1] = G.know[parseInt(spl2[ii])];
-                            }
-                        }
-                    }
-
-                    var tSpl = str[s++].split('$')
-                    var spl = tSpl[0].split(';');
-                    var num = parseInt(spl[0]);
-                    G.getDict('research box').cooldown = isFinite(num) ? num : 0;
-                    // storage objects are calculated at the very start so they work properly, so we just update G.PARTY
-                    if (tSpl.length > 2) G.PARTY = 1;
-                } catch (e) {
-                    alert("Hmm...it seems like there was an issue with importing the save. Try importing your save after wiping the current one and starting a new game with the Magix mod to make sure data doesn\'t get corrupted.")
-                    console.warn(e);
-                    return false;
                 }
+
+                //policies
+                var spl = str[s++].split(';');
+                //console.log('Policies : '+spl);
+                var len = spl.length;
+                for (var i = len - 1; i >= 0; i--) {
+                    if (spl[i] != '') {
+                        var spl2 = spl[i].split(',');
+                        var me = G.policy[parseInt(spl2[0])];
+                        G.gainPolicy(me);
+                        me.mode = me.modesById[parseInt(spl2[1])];
+                    }
+                }
+
+                //res
+                var spl = str[s++].split(';');
+                //console.log('Resources : '+spl);
+                var len = G.res.length;
+                for (var i = 0; i < len; i++) {
+                    if (spl[i]) {
+                        var me = G.res[i];
+                        var spl2 = spl[i].split(',');
+                        if (parseInt(spl2[spl2.length - 1]) == 1) me.visible = true; else me.visible = false;
+                        if (!me.meta) me.amount = parseFloat(spl2[0]);
+                        if (me.displayUsed) me.used = parseFloat(spl2[1]);
+                    }
+                }
+
+                //units
+                var spl = str[s++].split(';');
+                //console.log('Units : '+spl);
+                var len = spl.length;
+                for (var i = len - 1; i >= 0; i--) {
+                    if (spl[i] != '') {
+                        var spl2 = spl[i].split(',');
+                        //unit id, amount, and if unit has gizmos : mode, percent
+                        var obj = {
+                            id: G.unitN,
+                            unit: G.unit[parseInt(spl2[0])],
+                            amount: parseFloat(spl2[1]),
+                            targetAmount: ((typeof spl2[4] !== 'undefined') ? parseFloat(spl2[4]) : parseFloat(spl2[1])),
+                            idle: ((typeof spl2[5] !== 'undefined') ? parseFloat(spl2[5]) : 0),
+                            displayedAmount: 0,
+                            mode: parseInt(spl2[2]) || 0,
+                            percent: parseInt(spl2[3]),
+                            popups: []
+                        };
+                        G.unitsOwned.unshift(obj);
+                        var unit = G.unitsOwned[0];
+                        if (unit.unit.modesById[0]) unit.mode = unit.unit.modesById[unit.mode];
+                        G.unitsOwnedNames.unshift(G.unit[parseInt(spl2[0])].name);
+                        G.unitN++;
+                    }
+                }
+
+                //assign unit .splitOf
+                var prev = 0;
+                var len = G.unitsOwned.length;
+                for (var i = 0; i < len; i++) {
+                    var me = G.unitsOwned[i];
+                    if (prev && me.unit.id == prev.unit.id) me.splitOf = prev;
+                    else prev = me;
+                }
+                prev = 0;
+
+                //chooseboxes
+                var spl = str[s++].split(';');
+                var len = spl.length;
+                for (var i = len - 1; i >= 0; i--) {
+                    if (spl[i] != '') {
+                        G.chooseBox[i].choices = [];
+                        var spl2 = spl[i].split(',');
+                        for (var ii in spl2) {
+                            if (ii == 0) G.chooseBox[i].roll = parseFloat(spl2[ii]);
+                            else G.chooseBox[i].choices[ii - 1] = G.know[parseInt(spl2[ii])];
+                        }
+                    }
+                }
+
+                var tSpl = str[s++].split('$')
+                var spl = tSpl[0].split(';');
+                var num = parseInt(spl[0]);
+                G.getDict('research box').cooldown = isFinite(num) ? num : 0;
+                if (tSpl.length >= 3) G.PARTY = 1; // new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
 
                 G.runUnitReqs();
                 G.runPolicyReqs();
