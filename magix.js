@@ -1680,8 +1680,8 @@ if (getObj("civ") != "1") {
                                 if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
                                 setObj('drought', 0)
                             }
-                        } else if (G.year == 49 || (G.year > 49 && (G.year + 2) > G.getRes('ignoreItem').amount)) {
-                            G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
+                        } else if (G.year === 49 || (G.year > 49 && (G.year + 2 > G.getRes('ignoreItem').amount))) {
+                            G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen after a few years. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                             // Drought data starts being calculated at year 50
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
@@ -2017,41 +2017,42 @@ if (getObj("civ") != "1") {
                         }
                     }
                     //SLEPPY INSIGHT v2 optimized and balanced
+                    var insightName = 'insight' + (G.has("eotm") ? " II" : "")
                     switch (G.checkPolicy('sleepy insight')) {
                         case "-3":
                             var bonus = Math.floor(Math.random() * 14) + 13;
-                            if (Math.random() * 100 <= 8.25 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            if (Math.random() * 100 <= 8.25 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "-2":
                             var bonus = Math.floor(Math.random() * 9) + 9;
-                            if (Math.random() * 100 <= 13.5 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            if (Math.random() * 100 <= 13.5 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "-1":
                             var bonus = Math.floor(Math.random() * 7) + 5;
-                            if (Math.random() * 100 <= 15 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            if (Math.random() * 100 <= 15 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "0":
                             var bonus = Math.floor(Math.random() * 6) + 3;
-                            if (Math.random() * 100 <= 21 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            if (Math.random() * 100 <= 21 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "+1":
                             var bonus = Math.floor(Math.random() * 4) + 1;
-                            if (Math.random() * 100 <= 24 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            if (Math.random() * 100 <= 24 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "+2":
-                            var bonus = Math.floor(Math.random() * 1.75) + 0.25;
-                            if (Math.random() * 100 <= 28.5 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            var bonus = Math.random() * 1.75 + 0.25;
+                            if (Math.random() * 100 <= 28.5 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                         case "+3":
-                            var bonus = Math.floor(Math.random() * 1.35) + 1.15;
-                            if (Math.random() * 100 <= 30.75 && G.getRes('insight').amount < G.getRes('wisdom').amount - bonus)
-                                G.gain('insight' + (G.has("eotm") ? " II" : ""), bonus, 'Sleepy Insight');
+                            var bonus = Math.random() * 1.35 + 1.15;
+                            if (Math.random() * 100 <= 30.75 && G.getRes(insightName).amount < G.getRes('wisdom').amount - bonus)
+                                G.gain(insightName, bonus, 'Sleepy insight');
                             break;
                     }
                     if (G.has('t3')) {
@@ -7985,7 +7986,7 @@ if (getObj("civ") != "1") {
                 upkeep: { 'log': 0.6 },
                 effects: [
                     { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1 / 25, req: { 'baking': true, 'baking II': false } },
-                    { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 4 / 5, req: { 'baking': true, 'baking II': true } },
+                    { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking': true, 'baking II': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertlizer': true } }
                 ],
                 req: { 'baking': true },
@@ -9737,12 +9738,12 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fortress of cultural legacy',
                 displayName: 'Fortress of Cultural Legacy',
-                desc: '@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gain by 20% if finished! It is [culture] and [inspiration] specified so it needs it while building. <>Inside of the Fortress, people store the most important and most beautiful arts, statues, and sculptures. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
+                desc: '@leads to the <b>Sacrificed for culture victory</b><>The fortresss built out  of [precious building materials]. In the name of [storyteller,people of culture]. It is their home a place where they may give their creations for future generations. This wonder may...empower [culture] by itself and increase [culture] gain by 20% if finished! This wonder is tied to [culture] and [inspiration] so they will be required during construction. <>Inside of the Fortress, people store the most important and most beautiful arts, statues, and sculptures. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
                 wonder: 'sacrificed for culture',
                 icon: [6, 12, 'magixmod'],
                 wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'precious building materials': 400, 'inspiration': 10 },
-                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'culture': 450, 'inspiration': 1, 'glass': 1, 'fortress construction point': -1 },
+                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'culture': 400, 'inspiration': 1, 'glass': 1, 'fortress construction point': -1 },
                 steps: 200,
                 messageOnStart: 'You began the construction of <b>Fortress of Cultural Legacy</b>. This will make people come inside to watch the arts of the centuries. <b>Unleash unbreakable cultural roots!</b>',
                 finalStepCost: { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'gem block': 50, 'culture': 650 },
@@ -9754,17 +9755,17 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'complex of dreamers',
                 displayName: 'Complex of Dreamers',
-                desc: '@leads to the <b>Insight-ly victory</b><>The nice complex is built at the bottom of a [Wizard Complex]. In the name of [dreamer]s. It is their home. This wonder may provide housing and...empower [insight] by itself if the final step is finished! It requires [insight] and [wisdom] during construction. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
+                desc: '@leads to the <b>Insight-ly victory</b><>This fascinating complex is built at the bottom of a [Wizard Complex] to support [dreamer]s. This wonder will empower [insight] if the final step is finished! It requires plenty of [insight] and [wisdom] during construction. <>The core collects all ideas and dreams of all [dreamer]s, philosophers and others who use and spread knowledge.',
                 wonder: 'insight-ly',
                 icon: [choose([1, 4, 7]), 17, 'magixmod'],
                 wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 500, 'wisdom': 10 },
-                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'insight': 450, 'wisdom': 1, 'complex construction point': -1 },
+                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'insight': 800, 'wisdom': 2, 'complex construction point': -1 },
                 steps: 200,
-                messageOnStart: 'You began the construction of Complex of Dreamers. The complex looks like it\'s not from this world when night falls.',
-                finalStepCost: { 'wisdom': 125, 'population': 2500, 'precious building materials': 4500, 'gem block': 50, 'insight': 1000 },
+                messageOnStart: 'You began the construction of Complex of Dreamers. The complex looks like it\'s not from this world when night arrives.',
+                finalStepCost: { 'wisdom': 200, 'population': 2500, 'precious building materials': 4500, 'gem block': 50, 'insight': 2500 },
                 finalStepDesc: 'To complete the wonder and make your whole civilization much smarter, you will need to perform a final step.',
-                use: { 'land': 25, 'worker': 10, 'metal tools': 10 },
+                use: { 'Wizard Complex': 1, 'worker': 10, 'metal tools': 10 },
                 upkeep: { 'mana': 15 },
                 req: { 'monument-building': true, 'roots of insight': true },
                 category: 'discovery',
@@ -9772,12 +9773,12 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'pagoda of democracy',
                 displayName: 'Pagoda of Democracy',
-                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. It is [influence] and [authority] specified so it needs it while building.',
+                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. This wonder is tied to [influence] and [authority] so they will be required during construction.',
                 wonder: 'democration',
                 icon: [6, 13, 'magixmod'],
                 wideIcon: [5, 13, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 500 },
-                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'influence': 45, 'authority': 0.25, 'pagoda construction point': -1 },
+                costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'influence': 60, 'authority': 0.25, 'pagoda construction point': -1 },
                 steps: 200,
                 messageOnStart: 'You began the construction of Pagoda of Democracy. Over the blossoms it looks like the most beautiful place you have ever seen. Some people say that the Pagoda is even taller than the Mausoleum!',
                 finalStepCost: { 'authority': 25, 'population': 2000, 'precious building materials': 4500, 'gem block': 50 },
@@ -12063,14 +12064,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'baking', category: 'tier1',
-                desc: '<li>Unlocks the [bakery]. To bake [bread] effectively, you will need upgrades.//For now, your people will have a high chance to fail baking loaf of bread, making it neither edible nor nutrient.</li>',
+                desc: '<li>Unlocks the [bakery]. To bake [bread] more effectively, however, you will need more upgrades!//For now, your people will have a high chance to fail [bread]-baking, making it neither edible nor nutritious.</li>',
                 icon: [9, 8, 'magixmod'],
                 cost: { 'insight': 600 },
                 req: { 'flour-crafting I': true, 'construction II': true },
             });
             new G.Tech({
                 name: 'baking II', category: 'tier2',
-                desc: '<li>Baking [bread] is way more successful.</li>//<small>Not only does the [bread] actually look like its edible now, but it also allows you to produce bread faster.</small>',
+                desc: '<li>Baking [bread] is way more successful.</li>//<small>Not only does the [bread] actually look like its edible now, but you\'ll also produce bread faster.</small>',
                 icon: [0, 35, 'magixmod', 22, 12, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'baking': true, 'eotm': true },
@@ -12312,7 +12313,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'richer language', category: 'tier2',
-                desc: 'Language they use for everyday life will become even more richer. Your people will develop a more advanced grammar, a larger vocabulary, and much more. @provides 10 [wisdom II] //<small>This is some sign of sometime really smart, isn\'t it? They have a world that has over 20 synonyms. Can you believe it?</small>',
+                desc: 'Language everyone uses for everyday life will become even richer. Your people will develop a more advanced grammar, a larger vocabulary, and more terms for describing objects and others! @provides 10 [wisdom II] //<small>This is some sign of sometime really smart, isn\'t it? They have a world that has over 20 synonyms. Can you believe it?</small>',
                 icon: [27, 7, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'eotm': true, 'language': true },
@@ -12511,14 +12512,14 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'dark decay': 150 } },
                     {
                         type: 'function', func: function () {
-                            if (G.getRes('victory point').amount > 75) {
+                            if (G.getRes('victory point').amount > 60) {
                                 for (var i = 1; i <= 12; i++) {
                                     if (G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'] != undefined)
                                         delete G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'];
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> to be available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 24, 1] });
+                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 24, 1] });
                                 }
                             }
                             mausoleumEvolve();
@@ -13100,7 +13101,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'eotm',
                 displayName: 'Evolution of the minds',
-                desc: 'Replaces [insight], [culture], [faith], and [influence] with [insight II], [culture II], [faith II], and [influence II]. @To obtain them, you will unlock a special unit that will convert every 500 of a [insight,Tier I Essential] into 1 [insight II,Tier II Essential]. In addition, [storyteller]s, [dreamer]s, [chieftain]s, and [clan leader]s become <b>90% less efficient</b> because this evolution is a disaster for them all. @Researches in the <b>Research tab</b> will require [insight II] and [science] rather than just [insight]. @You will still require units you used to gather lower essentials! (Lower essentials have been hidden, but remember that you still need [wizard]s for [wisdom], for example.) @[flower rituals] and [wisdom rituals] will be no longer available until [ritualism II] is researched. @[sleepy insight] now gives [insight II] instead of [insight] with identical chances.' + (G.modsByName["Thot Mod"] != undefined ? " @your [thot] limit is increased but becomes an extra quarter more efficient." : "") + '',
+                desc: 'Replaces [insight], [culture], [faith], and [influence] with [insight II], [culture II], [faith II], and [influence II]. @To obtain them, you will unlock a special unit that will convert every 500 of a [insight,Tier I Essential] into 1 [insight II,Tier II Essential]. In addition, [storyteller]s, [dreamer]s, [chieftain]s, and [clan leader]s become <b>90% less efficient</b> because this evolution is a disaster for them all. @Researches in the <b>Research tab</b> will require [insight II] and [science] rather than just [insight]. @You will still require units you used to gather lower essentials! (Lower essentials have been hidden, but remember that you still need [wizard]s for [wisdom]...) @[flower rituals] and [wisdom rituals] will be no longer available until [ritualism II] is researched. @[sleepy insight] now gives [insight II] instead of [insight] with identical chances.' + (G.modsByName["Thot Mod"] != undefined ? " @your [thot] limit is increased but becomes an extra quarter more efficient." : "") + '',
                 icon: [25, 19, 'magixmod'],
                 cost: { 'culture': 1000, 'insight': 1000, 'influence': 300, 'faith': 300 },
                 chance: 150,
@@ -13126,6 +13127,7 @@ if (getObj("civ") != "1") {
                                     G.know[i].cost[newEss[j]] = Math.ceil(prev / 500) * 3;
                                 }
                             }
+                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.'
                             if (!G.has('ritualism II')) {
                                 G.getDict('wisdom rituals').icon = [8, 12, 23, 19, 'magixmod']
                                 G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
@@ -13137,7 +13139,7 @@ if (getObj("civ") != "1") {
                             }
                             if (G.getRes('victory point').amount > 0 && !G.has('pantheon key')) {
                                 G.gainTech(G.techByName['pantheon key']);
-                                G.Message({ type: "important tall", text: 'Being victorious has brought something that should be available later. You look into your pocket and feel something has appeared in it. You take it out to see shiny <b>Pantheon key</b>', icon: [4, 25, 'magixmod', 24, 1] });
+                                G.Message({ type: "important tall", text: 'Being victorious has brought something that should be available later. You look into your pocket and feel something has appeared in it. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 24, 1] });
                             }
                             if (G.modsByName['Thot Mod']) {
                                 G.unitByName['thot'].effects.push({ type: 'mult', value: 1.25, req: { 'eotm': true } });
@@ -13327,7 +13329,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fires from logs', category: 'tier2',
-                desc: '[firekeeper] can start fires out of [log]s as well.//<small>So...coal or logs?</small>',
+                desc: '[firekeeper]s will be able to start fires out of [log]s as well.//<small>So...coal or logs?</small>',
                 icon: [9, 21, 'magixmod', 23, 1],
                 cost: { 'insight II': 10 },
                 req: { 'eotm': true },
@@ -14961,7 +14963,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus4',
                 displayName: '. . .',
-                desc: 'You have . . . \'s attention. But who is he? Feels like that entity or whoever is proud of your strength.',
+                desc: 'You have . . . \'s attention. But who is he? Feels like that entity or whoever is quite proud of your strength.',
                 icon: [32, 2, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15024,7 +15026,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'sleep-speech', category: 'tier1',
-                desc: '@Unlocks a special ability related to dreaming potential: <b>Sleepy insight</b>. @Sleepy insight can be controlled by its policy that will decide the chance for bonus and power of it.<>Sleepy insight gives you a chance to obtain some [insight] at start of the new year. (The amount and chance can be controlled by its policy!)',
+                desc: '@Unlocks a special ability related to dreaming potential: <b>Sleepy insight</b>. @Sleepy insight can be controlled by its policy that will decide the chance for bonus and power of it.<>Sleepy insight gives you a chance to obtain some [insight] when a new year begins. (The amount and chance can be controlled by its policy!)',
                 req: { 'ritualism': true, 'genius feeling': true },
                 cost: { 'insight': 17, 'influence': 3 },
                 icon: [33, 25, 'magixmod']
@@ -15423,7 +15425,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'villas of victory', category: 'tier2',
-                desc: 'Provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]. //Unlocks a rather unique way to give people [housing]...//This unit will provide amount of housing equal to result of this equation equation: <font color="aqua">(victory points+1)*5</font>',
+                desc: 'Provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]. //Unlocks a rather unique way to give people [housing]...//This unit will provide more [housing] based on your [victory point]s.',
                 icon: [0, 31, 'magixmod'],
                 req: { 'bigger university': true },
                 cost: { 'insight II': 325, 'science': 50, 'culture II': 25 },
@@ -15597,7 +15599,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt12',
                 displayName: 'God\'s trait #12 Dark bait',
-                desc: '[dark essence] becomes the Trend of Gods. Everything related to [dark essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>Attention! This night will be the darkest one universe had ever seen...wait, universe?</small>',
+                desc: '[dark essence] becomes the Trend of Gods. Everything related to [dark essence] (except [Wizard Complex]) produces 2% more of this Essence. //<small>The attention! This night will be the darkest one universe had ever seen...wait, universe?</small>',
                 icon: [35, 18, 'magixmod'],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [
@@ -16427,14 +16429,14 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.getDict('7th essence').req = { '2nd portal past': true, 'ancestors world building': true };
-                            if (G.getRes('victory point').amount > 75) {
+                            if (G.getRes('victory point').amount > 60) {
                                 for (var i = 1; i <= 12; i++) {
                                     if (G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'] != undefined)
                                         delete G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'];
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> to be available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
+                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
                                 }
                             }
 
@@ -16650,7 +16652,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus5',
                 displayName: '. . .',
-                desc: 'Attention of . . . is getting stronger. A whole bunch of thoughts, "what ifs" etc. constantly try to merge into one. Feels like that entity is very proud of your strength.',
+                desc: 'The attention of . . . is getting stronger. A whole bunch of thoughts, questions, and strange feelings constantly try to merge into one. Feels like that entity feels quite proud of your strength.',
                 icon: [32, 1, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -16659,7 +16661,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus6',
                 displayName: '. . .',
-                desc: 'Attention of that unidentified entity feels like it is fully granted. //<small>13th Seraphin, isn\'t he?</small>',
+                desc: 'The attention of that unidentified entity feels like it is fully granted. //<small>13th Seraphin, isn\'t he?</small>',
                 icon: [32, 0, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -18765,9 +18767,9 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'sleepy insight',
-                desc: 'You get a chance to obtain some amount of [insight] at start of new year. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
+                desc: 'At the start of a new year, you have a chance to gain some [insight]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
                 icon: [8, 12, 33, 24, 'magixmod'],
-                cost: { 'faith': 10, 'insight': 1 },
+                cost: { 'faith': 10, 'insight': 2 },
                 startMode: '0',
                 req: { 'ritualism': true, 'sleep-speech': true },
                 category: 'faith',
