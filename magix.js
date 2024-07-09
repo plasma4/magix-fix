@@ -792,7 +792,6 @@ var archaeologyRare = function () //mesg can toggle message
 {
     //for rare findings and up (however, this has a chance to fail, although the failing chance is decreased based on your archaeologist amount)
     return function (me) {
-        alert("discoveries")
         var rarities = ['Rare', 'Unique', 'Legendary', 'Magnificient', 'Fabled', 'Ethereal', 'Omnipotent', 'Transcendent', 'Godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var mesgType = ['tutorial', 'unique', 'emblemobtain', 'magnificient', 'fabled', 'ethereal', 'omnipotent', 'transcendent', 'godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var vals = [3, 6, 10];
@@ -21012,12 +21011,12 @@ if (getObj("civ") != "1") {
                     if (G.has('earth')) {
                         if (G.getDict("archaeologist").effects[G.getDict("archaeologist").effects.length] == "undefined") G.getDict("archaeologist").effects.push = { type: 'mult', value: 1 - (0.002 * i) };
                         else G.getDict("archaeologist").effects[(G.getDict("archaeologist").effects.length) - 1] = { type: 'mult', value: 1 - (0.002 * i) };
-                        if (i > 14 && i < 23) G.getDict('mine').effects[27] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, killing all the miners', 'mines collapsed, killing all the miners'), chance: 1 / (40 - i) };
-                        else G.getDict('mine').effects[27] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding the miners'), chance: 1 / (45 - i) };
+                        if (i > 14 && i < 23) G.getDict('mine').effects[9] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, killing all the miners', 'mines collapsed, killing all the miners'), chance: 1 / (40 - i) };
+                        else G.getDict('mine').effects[9] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding the miners'), chance: 1 / (45 - i) };
                         if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects[length] = { type: 'mult', value: 1 + (0.001 * i) };
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
-                        if (i > 14 && i < 23) G.getDict('quarry').effects[13] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, killing all the workers', 'quarries collapsed, killing all the workers'), chance: 1 / (40 - i) };
-                        else G.getDict('quarry').effects[13] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / (45 - i) };
+                        if (i > 14 && i < 23) G.getDict('quarry').effects[4] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, killing all the workers', 'quarries collapsed, killing all the workers'), chance: 1 / (40 - i) };
+                        else G.getDict('quarry').effects[4] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / (45 - i) };
                         if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 + (0.001 * i) };
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
                         if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
