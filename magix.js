@@ -1676,7 +1676,7 @@ if (getObj("civ") != "1") {
                     if (!G.has('trial')) {
                         var droughtYear = getObj('drought')
                         if (droughtYear > 0) {
-                            if (droughtYear + 1 + Math.sqrt(Math.random() * 4.2) > G.year) {
+                            if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) - 0.9) > G.year) {
                                 G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
                                 if (G.has('drought')) G.deleteTrait(G.traitByName['drought'])
                                 if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
@@ -7069,7 +7069,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'mine', what: { 'gold ore': 50 }, max: 30, mode: 'gold' },
                     { type: 'gather', context: 'mine', what: { 'nickel ore': 40 }, max: 25, mode: 'nickel' },
                     { type: 'gather', context: 'mine', what: { 'various stones': 30 }, max: 25, mode: 'ostones' },
-                    { type: 'gather', context: 'mine', what: { 'sulfur': 35 }, max: 51, req: { 'explosive crafting & mining': true } },
+                    { type: 'gather', context: 'mine', what: { 'sulfur': 35 }, max: 50, req: { 'explosive crafting & mining': true }, notMode: 'off' },
                     { type: 'mult', value: 0.95, req: { 'dt4': true }, mode: 'gold' },
                     { type: 'mult', value: 0.95, req: { 'dt5': true }, mode: 'iron' },
                     { type: 'mult', value: 0.95, req: { 'dt5': true }, mode: 'nickel' },
@@ -9079,7 +9079,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'terrain conservator',
-                desc: '@Each one hired [terrain conservator] will convert 25 [land of the Plain Island] into 25 [alchemy zone].',
+                desc: '@A hired [terrain conservator] will convert 25 [land of the Plain Island] into 25 [alchemy zone]s.',
                 icon: [17, 6, 'magixmod'],
                 gizmos: true,
                 modes: {
@@ -11653,21 +11653,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'precious pottery', category: 'tier1',
-                desc: '@Improves pottery in your civilization, allowing [pot]s to become harder and more beautiful. Can make pots specialized for potions! //<small>These pots are really precious</small>',
+                desc: '@Improves pottery in your civilization, you to craft more beautiful [precious pot]s and useful [potion pot]s. //<small>These pots sure are really precious...</small>',
                 icon: [16, 8, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'construction II': true },
             });
             new G.Tech({
                 name: 'alchemy', category: 'tier1',
-                desc: '@Now you may start a new adventure with...potions!',
+                desc: '@Now you may start a new adventure with...potions! <small>splash potions when though</small>',
                 icon: [16, 9, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'maths III': true },
             });
             new G.Tech({
                 name: 'terrain conservacy', category: 'tier1',
-                desc: '@Unlocks a subclass of [architect] who set up [alchemy zone]s. Some units will use [alchemy zone]s instead of [land]!',
+                desc: '@Unlocks a subclass of [architect] whose job is to set up [alchemy zone]s. Some units will use [alchemy zone]s instead of [land].',
                 icon: [17, 5, 'magixmod', 24, 1],
                 cost: { 'insight': 940, 'wisdom': 60 },
                 req: { 'alchemy': true, 'map details': true },
@@ -11891,7 +11891,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise building', category: 'tier1',
-                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. //<small>I\'d construct...a huge campfire</small>',
+                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<small>I\'d construct...a huge campfire</small>',
                 icon: [19, 13, 'magixmod'],
                 cost: { 'insight': 4, 'paradise tablet': 1 },
                 effects: [
@@ -12000,7 +12000,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'explosive crafting & mining', category: 'tier1',
-                desc: 'Unlocks the [explosive mine] <b>(well, you also need [intelligent blasting])</b>. @Unlocks the [pyro-artisan] (an artisan for [light explosives,Explosives], which requires [sulfur] for explosion power). Mines will start gathering some [sulfur] at <b>any</> of modes chosen. Both [mine] and [mine of the plain island] can gather it.',
+                desc: 'Unlocks the [explosive mine] <b>(well, you also need [intelligent blasting])</b>. @Unlocks the [pyro-artisan] (an artisan for [light explosives,Explosives], which requires [sulfur] for explosion power). Mines will start gathering some [sulfur] with the <b>ALL</b> modes selected. Both [mine] and [mine of the plain island] can gather it.',
                 icon: [20, 15, 'magixmod'],
                 cost: { 'insight': 850, 'wisdom': 10 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
@@ -12288,7 +12288,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'physics II', category: 'tier1',
-                desc: 'Provides 5 [education] @People understand physics and weird anomalies in the world more.',
+                desc: '@People understand physics and weird anomalies in the world more. @provides 5 [education]',
                 icon: [0, 35, 'magixmod', 21, 19, 'magixmod'],
                 cost: { 'insight': 1100, 'science': 4, 'culture': 100 },
                 effects: [
@@ -12606,7 +12606,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'will to know more',
-                desc: '<font color="#aaffff">@After opening a portal to a strange new island, people started to become more curious. @Curiosity has gotten even stronger with this trait!</font>',
+                desc: '<font color="#aef">@After opening a portal to a strange new island, people started to become more curious. @Curiosity has gotten even stronger with this trait!</font>',
                 icon: [8, 12, 8, 5, 22, 1],
                 cost: { 'culture': 5, 'wisdom': 25 },
                 chance: 3,
@@ -12639,7 +12639,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'better healing',
-                desc: '<font color="#aaffff">After being able to get [healer]s, your dreamers started thinking how to boost healing and decrease the amount of failed healing attempts. @This knowledge also unlocks [first aid], a new tech!</font>',
+                desc: '<font color="#adb">After being able to get [healer]s, your dreamers started thinking how to boost healing and decrease the amount of failed healing attempts. @This knowledge also unlocks [first aid], a new tech!</font>',
                 icon: [8, 12, 3, 5, 22, 1],
                 cost: { 'insight': 50 },
                 chance: 120,
@@ -12710,7 +12710,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'treeplanting',
-                desc: '<font color="#aaffff">May the existence of orchards begin!</font>',
+                desc: '<font color="#adb">May the existence of orchards begin!</font>',
                 icon: [8, 12, 6, 1],
                 cost: { 'insight': 250, 'wisdom': 15 },
                 chance: 30,
@@ -12860,7 +12860,7 @@ if (getObj("civ") != "1") {
             //Another knowledge
             new G.Trait({
                 name: 'measuring system',
-                desc: '<font color="#aaffff">People noticed that they will need a measuring system to make constructing and planning easier...so they created their own system of measuring things.</font> //<small>truly a microsity</small>',
+                desc: '<font color="#fac">People noticed that they will need a measuring system to make constructing and planning easier...so they created their own system of measuring things.</font> //<small>truly a microsity</small>',
                 icon: [13, 18, 'magixmod'],
                 cost: { 'wisdom': 75 },
                 chance: 475,
@@ -13331,7 +13331,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths IV', category: 'tier2',
-                desc: 'Provides 5 [education] and 40 [wisdom II] @Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and overall just pushing math logic to its limits. @Improves your average citizen\'s math knowledge. @Depending on the path chosen by your people, scholars may be even more math-talented! //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
+                desc: '@Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and overall just pushing math logic to its limits. @Improves your average citizen\'s math knowledge. @Depending on the path chosen by your people, scholars may be even more math-talented! @provides 5 [education] and 40 [wisdom II] //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
                 icon: [2, 35, 'magixmod', 8, 21, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'science': 8, 'culture II': 12 },
                 effects: [
@@ -13482,7 +13482,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smaller but efficient', displayName: '<font color="orange">Smaller but efficient</font>',
-                desc: '<font color="#aaffff">[brick house with a silo], [house], [hovel], [hut], [shelter on water], [branch shelter] and [mud shelter] now use 0.9 [land] instead of 1 full piece of [land].</font> //<small>*Insert claustrophobic feelings here*</small>',
+                desc: 'The [brick house with a silo], [house], [hovel], [hut], [shelter on water], [branch shelter] and [mud shelter] buildings will only use <b>0.9</b> [land] rather than 1 full piece of [land]. //<small>*Insert claustrophobic feelings here*</small>',
                 icon: [28, 23, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13710,7 +13710,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'camp-cooking', category: 'tier2',
-                desc: '<font color="#aaffff">Each [fishers & hunters camp] uses 1 more [fire pit], but from now on, they will be able to make some [cooked meat] for you!</font>',
+                desc: '<font color="#aaffff">Every [fishers & hunters camp] will use 1 additional [fire pit], but from now on, they will be able to make some [cooked meat] for you!</font>',
                 icon: [15, 24, 'magixmod'],
                 cost: { 'insight II': 100 },
                 req: { 'hunters & fishers unification': true },
@@ -13768,7 +13768,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 1/5', category: 'tier2',
-                desc: 'Provides @10 [wisdom II] and 2 [inspiration II]. //This part of doctrine is about conception of making a small plane where the [corpse]s will lie in the way that will allow to fit over millions of [corpse]s. //Your [wizard]s seem really impressed reading and forwarding the doctrine.',
+                desc: 'This part of the doctrine is about conception of making a small plane where the [corpse]s will lie in the way that will allow to fit over millions of [corpse]s. //Your [wizard]s seem really impressed reading about the doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [21, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 100, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 10 },
                 req: { 'burial wormhole 1/2': true },
@@ -13780,7 +13780,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 2/5',
-                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is about spells or rituals that will sucessfully make a wormhole working and stable. //Your [wizard]s seem quite interested in making the first wormhole, but they want a finished doctrine first. They don\'t want to do it by themselves so they will calmly wait for the finished doctrine.</font>',
+                desc: 'This part of the doctrine is about spells or rituals that will sucessfully make a wormhole working and stable. //Your [wizard]s seem quite interested in making the first wormhole, but they want a finished doctrine first. They don\'t want to do it by just themselves, however, so they will calmly wait for the finished doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [20, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 105, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 15, 'wisdom': 100 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 1/5': true },
@@ -13793,7 +13793,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 3/5', category: 'tier2',
-                desc: 'Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine is filled with valuable info about stability of various objects. Wormholes and portals must be stable. If anybody would enter an unstable world nobody knows what would happen to them. //Your [wizard]s feel goosebumps.',
+                desc: 'This part of the doctrine is filled with valuable info about stability of various objects. Wormholes and portals must be stable. If anybody would enter an unstable world nobody knows what would happen to them. //Your [wizard]s feel goosebumps. @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [19, 22, 'magixmod', 15, 22, 'magixmod'],
                 cost: { 'insight II': 105, 'science': 7, 'faith II': 4, 'influence II': 5, 'culture II': 10, 'wisdom': 50 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 2/5': true },
@@ -13804,7 +13804,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 4/5', category: 'tier2',
-                desc: '<font color="#aaffff">Provides @10 [wisdom II] and 2 [inspiration II]. //This part of the doctrine describes ways of keeping the wormhole active. It is an important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> ',
+                desc: '<font color="#aaffff">This part of the doctrine describes ways of keeping the wormhole active. It is an important thing too because if it runs out of power, a ton of corpses will explode out of the wormhole and people will be really, really mad. //Your [wizard]s know exactly how big of an issue will happen if the wormhole will run out of power.</font> @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [18, 22, 'magixmod', 15, 22, 'magixmod'],
                 cost: { 'insight II': 130, 'science': 7, 'faith II': 4, 'influence II': 5, 'culture II': 27 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 3/5': true },
@@ -13817,7 +13817,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 5/5', category: 'tier2',
-                desc: 'Provides 7 [inspiration II]. //This part of the doctrine is about miscellaneous information related to the wormhole. //Your [wizard]s feel secure. They may start thinking about running the first dark wormhole.',
+                desc: 'This part of the doctrine is about miscellaneous information related to the wormhole. //Your [wizard]s feel secure. They may start thinking about running the first [dark wormhole]! @provides 7 [inspiration II]',
                 icon: [17, 22, 'magixmod', 14, 22, 'magixmod'],
                 cost: { 'insight II': 140, 'science': 7, 'faith II': 3, 'influence II': 5, 'culture II': 30, 'wisdom': 50 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 4/5': true },
@@ -15441,7 +15441,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'villas of victory', category: 'tier2',
-                desc: 'Provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]. //Unlocks a rather unique way to give people [housing]...//This unit will provide more [housing] based on your [victory point]s.',
+                desc: 'Unlocks a rather unique way to give people [housing]...//This unit will provide more [housing] based on the amount of [victory point]s you have. @provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]',
                 icon: [0, 31, 'magixmod'],
                 req: { 'bigger university': true },
                 cost: { 'insight II': 325, 'science': 50, 'culture II': 25 },
@@ -15454,7 +15454,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'dynamics', category: 'tier1',
-                desc: 'Provides 25 [wisdom] for free. The tech that will help people get to way more complicated researches.',
+                desc: 'Provides 25 [wisdom] for free. This tech will help people get to understand more complicated concepts in this expansive world!',
                 icon: [32, 31, 'magixmod'],
                 req: { 'physics': true, 'gt3': true },
                 cost: { 'insight': 1400, 'science': 1 },
@@ -15642,7 +15642,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'deep-rooted faith',
-                desc: 'Provides @50 [spirituality II] and 100 [spirituality] @90 [inspiration II] //Religions built from centuries or milleniums slowly become deep-rooted, meaning that almost nothing can make this religion die.',
+                desc: 'Religions built from centuries or millenniums will slowly become deep-rooted, meaning that almost nothing can make their religion die. @provides 50 [spirituality II], 100 [spirituality], and 90 [inspiration II]',
                 icon: [35, 24, 'magixmod'],
                 cost: { 'culture II': 50, 'faith II': 35, 'insight II': 350, 'science': 60 },
                 effects: [
@@ -15656,7 +15656,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'dynamics II', category: 'tier2',
-                desc: '@Way more descriptions of dynamics. @Gravity description @provides 2 [education] and 25 [wisdom II] @upon obtain provides exclusively 2 [faith II] and 2 [influence II] @Thanks to more exact descriptions, higher-level researches may become easier.',
+                desc: 'You people will understand dynamics much better, and know exactly how gravity behaves. @Thanks to a more exact understanding of the world, higher-level researches may become easier. @provides 2 [education] and 25 [wisdom II]',
                 icon: [0, 35, 'magixmod', 33, 31, 'magixmod'],
                 req: { 'physics II': true, 'gt3': true, 'doctrine of the dark wormhole 3/5': true },
                 cost: { 'insight II': 200, 'science': 15 },
@@ -17993,7 +17993,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smarter people', category: 'tier1',
-                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s (this, however, requires you to unlock the ancestors world)',
+                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s (this, however, requires you to unlock a special world)',
                 icon: [23, 19, 'magixmod', 0, 0, 'magix2'],
                 cost: { 'insight': 4000, 'influence': 1000 },
                 req: { 'power from beneath': true },
