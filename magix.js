@@ -1680,8 +1680,8 @@ if (getObj("civ") != "1") {
                                 if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
                                 setObj('drought', 0)
                             }
-                        } else if (G.year === 49 || (G.year > 49 && (G.year + 2 > G.getRes('ignoreItem').amount))) {
-                            G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen after a few years. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
+                        } else if (G.year === 49 || (G.year > 49 && (G.year - 2 >= G.getRes('ignoreItem').amount))) {
+                            if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen after a few years. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                             // Drought data starts being calculated at year 50
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
