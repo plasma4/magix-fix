@@ -1888,11 +1888,11 @@ if (getObj("civ") != "1") {
                     if (G.achievByName['mausoleum'].won > 0) {
                         if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t2')) {
                             G.getDict('battling thieves').req = { 'hunting': true };
-                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring now. Soon your people will start to punish them, so craft equipment for them so it will be even easier to deal with them! Thieves are unhappy adults. They will show their unhappiness by commiting crimes. Even 200% <font color="aqua">Happiness</font> won\'t decrease their spawn rate to 0. Adults (and more rarely, Elders) may die after encountering a Thief. Expect them at a more advanced game stage.', icon: [23, 1, 'magixmod'] });
+                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="aqua">Happiness</font> won\'t decrease their spawn rate to 0. Adults (and more rarely, old people) may die after encountering a Thief. Expect them at a more advanced game stage.', icon: [23, 1, 'magixmod'] });
                             madeThievesWarn = true
                         } else if (G.has('t1') || G.has('t2')) {
                             if (G.year >= 109 && G.year <= 121 && !madeThievesWarn) {
-                                G.Message({ type: 'important', text: 'You got used to Thieves and the fact that they appear after year 110. But in this plane Thieves don\'t exist. It is good for you.', icon: [28, 2, 'magixmod', 23, 0, 'magixmod'] });
+                                G.Message({ type: 'important', text: 'You got used to Thieves and the fact that they tend to appear. But in this plane, Thieves don\'t exist. It is quite good for you!', icon: [28, 2, 'magixmod', 23, 0, 'magixmod'] });
                                 madeThievesWarn = true
                             }
                         }
@@ -5715,7 +5715,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
                         if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { //Spawning rate
-                            var n = G.getRes('adult').amount * 0.000000125 * (300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200)) * (G.has('at5') ? 0.75 : 1);
+                            var n = G.getRes('adult').amount * 0.000000125 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.min(Math.max(0.01 * G.year - 0.2, 0.9), 1.15);
                             if (G.checkPolicy('se02') == 'on') {
                                 G.gain('thief', n * 1.01, 'unhappiness');
                             } else {
@@ -7226,13 +7226,13 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'lumber': { name: 'Cut logs into lumber', icon: [1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1, 'land': 1 }, req: {} },
-                    'lumberW': { name: 'Settle workshop on water to cut logs', icon: [2, 28, 'magixmod', 1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1, 'wtr': 1 }, req: { 'construction II': true, 'water construction': true } },
+                    'lumberW': { name: 'Settle a workshop on water to cut logs', icon: [2, 28, 'magixmod', 1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1, 'wtr': 1 }, req: { 'construction II': true, 'water construction': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumber' },
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumberW' },
                     { type: 'mult', value: 0.8, req: { 'dt17': true } },
-                    { type: 'mult', value: 2.25, req: { 'moderated carpentry': true } },
+                    { type: 'mult', value: 3, req: { 'moderated carpentry': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'waste', chance: 0.001 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.0002 / 1000, req: { 'construction III': true, 'improved construction': false } },
@@ -9107,7 +9107,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumber' },
                     { type: 'mult', value: 0.8, req: { 'dt17': true } },
-                    { type: 'mult', value: 2.25, req: { 'moderated carpentry': true } },
+                    { type: 'mult', value: 3, req: { 'moderated carpentry': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'waste', chance: 0.001 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.0002 / 1000, req: { 'construction III': true, 'improved construction': false } },
@@ -9730,7 +9730,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'the cemetarium',
                 displayName: 'The Cemetarium',
-                desc: '@leads to the <b>Deadly escape</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm is around it, providing a burial for [wild corpse]s. Even if most souls are dark, some light souls also live here. For each step that you perform for the building, you will get 6,000 [burial spot]s! <i>Let these corpses go into their rightenous home please!</i>',
+                desc: '@leads to <b>Deadly, revenantic</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm is around it, providing a burial for [wild corpse]s. Even if most souls are dark, some light souls also live here. For each step that you perform for the building, you will get 6,000 [burial spot]s! <i>Let these corpses go into their rightenous home please!</i>',
                 wonder: 'deadly, revenantic',
                 icon: [1, 16, 'magixmod'],
                 wideIcon: [0, 16, 'magixmod'],
@@ -12307,7 +12307,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'moderated carpentry', category: 'tier2',
-                desc: 'A [carpenter workshop] is more expensive but its production is doubled. <>It also applies visual changes to Paradise and normal [carpenter workshop]s! <>This tech boosts both types.',
+                desc: '[carpenter workshop]s use more materials and [land] but its production is tripled. <>It also applies visual changes to both Paradise and normal [carpenter workshop]s because this tech will boost both types (however, the [wtr] edition is not boosted).',
                 icon: [29, 16, 'magixmod'],
                 cost: { 'insight II': 10 },
                 req: { 'moderation': true, 'eotm': true, 'oil-digging': true },
@@ -12315,11 +12315,9 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.getDict('carpenter workshop').icon = [28, 16, 'magixmod', 25, 2];
-                            G.getDict('carpenter workshop').modes['lumber'].use = { 'land': 2, 'worker': 2, 'stone tools': 3 };
-                            G.getDict('carpenter workshop').cost = { 'basic building materials': 100, 'basic factory equipment': 3 };
+                            G.getDict('carpenter workshop').modes['lumber'].use = { 'land': 2, 'log': 5, 'worker': 2, 'stone tools': 3 };
                             G.getDict('Carpenter workshop').icon = [28, 17, 'magixmod', 20, 14, 'magixmod'];
                             G.getDict('Carpenter workshop').modes['lumber'].use = { 'land of the Paradise': 2, 'worker': 2, 'stone tools': 3, 'industry point': 1 };
-                            G.getDict('Carpenter workshop').cost = { 'basic building materials': 150, 'basic factory equipment': 3 };
                         }
                     }
                 ],
@@ -13274,7 +13272,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bigger kilns', category: 'upgrade',
-                desc: '@People can build bigger [kiln]s that are more efficient. <>Increases the efficiency of all [Kiln] types by +150% (additive) but doubles the upkeep cost of this unit. <>In addition, this tech changes their visual look.',
+                desc: '@People can build bigger and more compact [kiln]s that are more efficient and use the same amount of [land]. <>Increases the efficiency of all [Kiln] types by 50% but doubles the upkeep cost of this unit. <>In addition, this tech changes their visual look.',
                 icon: [21, 21, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'Improved rhetoric': true, 'construction II': true, 'masonry': true, 'weaving II': true, 'prospecting II': true },
@@ -13439,7 +13437,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'oil-digging', category: 'tier2',
-                desc: '[quarry,Quarries] can dig for [oil] that can be used in the future as fuel. //<small>At least we have something to fuel a car now!</small>',
+                desc: '[quarry,Quarries] can dig for [oil] that can be used as fuel. //<small>At least we have something to fuel a car now!</small>',
                 icon: [29, 2, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true },
@@ -19017,7 +19015,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above you will start losing money because of thievery. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35% (additive). (The one that applies bonus for beating for it the second time will increase the effect to 55%)<br><Br><BR>' +
+                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above, you will start losing money because of thievery. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35%. (The one that applies a bonus for beating this trial the second time will increase the effect to 55%.)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({ text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () { G.dialogue.close(); G.dialogue.popup(function (div) { G.getRes('beyond').amount = 0; G.unitsOwned.length = 0; G.policy.length = 0; G.traitsOwned.length = 0; G.techsOwned.length = 0; G.NewGameConfirm(); G.getRes('burial spot').used = 0; G.getRes('worker').used = 0; G.getRes('stone weapons').used = 0; G.getRes('armor set').used = 0; G.getRes('metal weapons').used = 0; G.getRes('fishing net').used = 0; G.getRes('knapped tools').used = 0; G.getRes('stone tools').used = 0; G.getRes('land').used = 0; G.getRes('metal tools').used = 0; G.getRes('worker').used = 0; G.getRes('wand').used = 0; G.getRes('alchemist').used = 0; G.getRes('corpse').amount = 0; G.getRes('beyond').amount = 0; G.techN = 0; G.traitN = 0; G.fastTicks = 0; G.doFunc('new game'); G.gainTrait(G.traitByName['t10']); var trial = G.traitByName['trial']; G.gainTrait(trial); G.year = 0; G.day = 0; G.getRes('health').amount = 0; G.getRes('happiness').amount = 0; G.middleText('The Pocket trial has been started. You are in Mammun\'s plane', 'slow'); G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay') + '' }) } }) + '' + G.button({ tooltip: 'Start preparing', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.setPolicyModeByName('Pocket', 'off') } }) + '</center>' +
                                     '</div>' +
@@ -22390,14 +22388,14 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'shroom stem',
-                desc: 'Chopped [shroom stem]s can be used as a building material, but cannot be processed into goods like lumber and may not be burned for [coal]. Quite a strange material.',
+                desc: 'Chopped [shroom stem]s can be used as a building material, but cannot be processed into goods like [lumber] and may not be burned for [coal]. Quite a strange material indeed!',
                 icon: [0, 10, 'c2'],
                 partOf: 'basic building materials',
                 category: 'build',
             });
             new G.Res({
                 name: 'lumber',
-                desc: '[log]s that have been processed into planks, making them an adaptable and resilient building material.',
+                desc: '[log]s that have been processed into planks, making them a rather adaptable and resilient building material.',
                 icon: [1, 8, 'c2'],
                 partOf: 'basic building materials',
                 category: 'build',
@@ -25011,7 +25009,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'upscale', category: 'anomaly',
-                desc: 'Increases the costs of rolling/rerolling in the tech tab. Also, the [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. You may need to prepare for the next anomalies.</small>',
+                desc: 'Increases the costs of rolling/rerolling in the tech tab. Also, the [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. You may need to prepare for the next anomalies!</small>',
                 icon: [28, 11, 'c2'],
                 req: { 'language': true, 'cities': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
