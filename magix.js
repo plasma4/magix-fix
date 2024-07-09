@@ -1680,7 +1680,7 @@ if (getObj("civ") != "1") {
                                 if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
                                 setObj('drought', 0)
                             }
-                        } else if (G.year == 49 || (G.year > 49 && G.year + 2 >= G.getRes('ignoreItem').amount)) {
+                        } else if (G.year == 49 || (G.year > 49 && (G.year + 2) > G.getRes('ignoreItem').amount)) {
                             G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                             // Drought data starts being calculated at year 50
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
@@ -2658,13 +2658,13 @@ if (getObj("civ") != "1") {
                 if (pop > 0) {
                     toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
-                    var text = 'unknown'; if (stat <= -200 && G.has('t2')) text = 'irreversibly unhappy & miserable'; else if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat <= 200) text = 'high'; else if (stat >= 200) text = 'euphoric';
+                    var text = 'elated and eternally jubilant'; if (stat <= -200) text = G.has('t2') ? 'irreversibly miserable' : 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high'; else if (stat < 350) text = 'euphoric';
                     toParse += 'Happiness: <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
-                    var text = 'unknown'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming'; else if (stat >= 200) text = 'examplary';
+                    var text = 'exemplary'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming';
                     toParse += 'Health: <b>' + text + '</b>//';
                     var stat = G.techN;
-                    var text = 'unknown'; if (stat <= 28) text = 'pre-prehistoric'; else if (stat <= 50) text = 'prehistoric'; else if (stat <= 100) text = 'skilled'; else if (stat <= 170) text = 'decent technologically'; else if (stat <= 240) text = 'expanded'; else if (stat <= 325) text = 'advanced'; else if (stat <= 400) text = 'modern'; else if (stat <= 500) text = 'truly advanced'; else if (stat > 500) text = 'the most advanced';
+                    var text = 'the most advanced'; if (stat <= 28) text = 'pre-prehistoric'; else if (stat <= 50) text = 'prehistoric'; else if (stat <= 100) text = 'skilled'; else if (stat <= 100) text = 'proficient'; else if (stat <= 170) text = 'decent technologically'; else if (stat <= 240) text = 'expanded'; else if (stat <= 325) text = 'advanced'; else if (stat <= 400) text = 'modern'; else if (stat <= 425) text = 'truly advanced';
                     toParse += 'Technological stage: <b>' + text + '</b>//';
                     if (G.has('wizardry')) {
                         var text = 'None'; if (G.has('patron1')) text = '<font color="orange">Fire: ' + G.getTrait('patron1').displayName + '</font>'; else if (G.has('patron2')) text = '<font color="lime">Nature: ' + G.getTrait('patron2').displayName + '</font>'; else if (G.has('patron3')) text = '<font color="#bbbbff">Wind: ' + G.getTrait('patron3').displayName + '</font>'; else if (G.has('patron4')) text = '<font color="purple">Dark: ' + G.getTrait('patron4').displayName + '</font>'; else if (G.has('patron5')) text = '<font color="yellow">Lightning: ' + G.getTrait('patron5').displayName + '</font>'; else if (G.has('patron6')) text = '<font color="#6699FF">Water: ' + G.getTrait('patron6').displayName + '</font>'; else if (G.has('patron7')) text = '<font color="white">Time: ' + G.getTrait('patron7').displayName + '</font>'; else if (G.has('patron8')) text = '<font color="#FF9960">Homepeace: ' + G.getTrait('patron8').displayName + '</font>'; else if (G.has('unknown patron')) text = '<font color="#bbb">Unknown</font>';
@@ -12452,7 +12452,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a tenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather resources with a tenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [20, 1],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'active exploration': false, 'dreaming': false },
@@ -12469,7 +12469,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'ground tools',
-                desc: '@[artisan]s and [carver]s use ground tools allowing them to craft their stuff 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas] (with [culture of celebration] obtained), but it is only a 10% boost in their case.',
+                desc: '@[artisan]s and [carver]s use ground tools, allowing them to craft their stuff between 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas] (with [culture of celebration] obtained), but provides only a 10% boost.',
                 icon: [15, 10, 'magixmod'],
                 cost: { 'insight': 7 },
                 chance: 10,
@@ -12731,18 +12731,18 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'healthy life',
-                desc: 'Intelligent people came with doctrines of healthier life, all because of moderation. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple moderation. People got even healthier and feel even better. @This trait makes people generate [health]. Each person will add some [health]. People won\'t eat even more food, so do not worry.',
+                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of moderation. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait makes people generate [health]. Each person will add some [health]. People won\'t eat even more food, so do not worry.',
                 icon: [22, 1, 'magixmod'],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
-                chance: 330,
+                chance: 200,
                 req: { 'culture of moderation': true },
             });
             new G.Trait({
                 name: 'political roots',
                 desc: 'Your people seem like they want political things go with old traditions. @Unlocks the [pagoda of democracy]: a political wonder.',
                 icon: [20, 17, 'magixmod'],
-                cost: { 'influence': 100 },
-                chance: 450,
+                cost: { 'influence': 125 },
+                chance: 250,
                 req: { 'will to know more': true, 'cultural roots': false, 'roots of insight': false },
                 category: 'main'
             });
@@ -12751,16 +12751,16 @@ if (getObj("civ") != "1") {
                 desc: 'Your people seem like they cultivate traiditions born at their generation and share\'em to future times. @Unlocks the [fortress of cultural legacy]: a cultural wonder.',
                 icon: [19, 17, 'magixmod'],
                 cost: { 'culture': 300 },
-                chance: 450,
+                chance: 250,
                 req: { 'will to know more': true, 'political roots': false, 'roots of insight': false },
                 category: 'main'
             });
             new G.Trait({
                 name: 'roots of insight',
-                desc: 'Your people seem like they are born for discoveries. @Unlocks the [complex of dreamers]: a wonder of insight.',
+                desc: 'Your people seem like they are born for discoveries. @Unlocks the [complex of dreamers]: an [insight]-based wonder.',
                 icon: [18, 17, 'magixmod'],
                 cost: { 'wisdom': 100 },
-                chance: 450,
+                chance: 250,
                 req: { 'will to know more': true, 'cultural roots': false, 'political roots': false },
                 category: 'main'
             });
@@ -12778,7 +12778,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt2',
                 displayName: 'God\'s trait #2 Wheat rush',
-                desc: '[wheat farm,Wheat farms] gather 10% more [wheat]. //<small>How divine</small>',
+                desc: '[wheat farm,Wheat farms] gather 10% more [wheat]. //<small>How divine...</small>',
                 icon: [21, 13, 'magixmod'],
                 cost: {},
                 chance: 275,
@@ -12788,7 +12788,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt3',
                 displayName: 'God\'s trait #3 Superior gurus',
-                desc: '@[guru]s will gather 50% more insight and are unlocked if you don\'t already have them!',
+                desc: '@[guru]s will gather 50% more insight and are unlocked if you don\'t already have them! //<small>guruful i guess</small>',
                 icon: [21, 12, 'magixmod'],
                 cost: {},
                 chance: 275,
@@ -12801,7 +12801,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt4',
                 displayName: 'God\'s trait #4 Potter\'s frenzy',
-                desc: 'Increases the efficiency of [factory of pots] and [hut of potters] by a quarter without harming any [happiness].',
+                desc: 'Increases the efficiency of [factory of pots] and [hut of potters] by a quarter without harming any [happiness]. //<small>we must make as many pots as we can</small>',
                 icon: [21, 18, 'magixmod'],
                 cost: { 'faith': 100 },
                 chance: 275,
@@ -12811,7 +12811,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt5',
                 displayName: 'God\'s trait #5 Colored life',
-                desc: 'Increases the efficiency of [hovel of colours] by a quarter without harming any [happiness].',
+                desc: 'Increases the efficiency of [hovel of colours] by a quarter without harming any [happiness]. //<small>first you put the materials here...</small>',
                 icon: [22, 18, 'magixmod'],
                 cost: { 'faith': 100 },
                 chance: 275,
@@ -14348,11 +14348,12 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'mastered caligraphy', category: 'tier2',
-                desc: '<font color="#aaffff">Most of people in your population can write and their writings are pretty easy to read. Amount of almost unreadeable writings is slightly decreased.<br>Provides 5 [education].</font>',
+                desc: '<font color="#aaffff">Most of your people can write and their writing skills are steadily improving! Amount of almost unreadeable writings is slightly decreased.<br>Provides 5 [education] and 5 [wisdom II]</font>',
                 icon: [15, 27, 'magixmod'],
                 req: { 'eotm': true },
                 cost: { 'insight II': 15, 'culture II': 15 },
                 effects: [
+                    { type: 'provide res', what: { 'wisdom II': 5 } },
                     { type: 'provide res', what: { 'education': 5 } },
                 ],
                 category: 'knowledge',
@@ -14382,7 +14383,7 @@ if (getObj("civ") != "1") {
                 req: { 'leaves of wisdom': true, 'power of the faith': true },
                 cost: { 'insight II': 150, 'faith II': 14, 'science': 16, 'influence II': 15 },
                 effects: [
-                    { type: 'provide res', what: { 'wisdom II': 15 } },
+                    { type: 'provide res', what: { 'wisdom II': 20 } },
                 ],
             });
             new G.Trait({
@@ -17467,7 +17468,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses granting some [meat] and [bone]s from dead [foxes,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 1, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'dreaming': false },
@@ -17475,7 +17476,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [insight] with a tenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [insight] with a tenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 2, 'magixmod'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'active exploration': false, 'carcass-looting': false },
@@ -17483,7 +17484,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'active exploration',
-                desc: '@hired [wanderer]s gather [insight] with a fifteenth of the speed of a [dreamer] and gather resources with a fifteenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@hired [wanderer]s gather [insight] with a fifteenth of the speed of a [dreamer] and gather resources with a fifteenth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [21, 3, 'magixmod'],
                 chance: 3,
                 req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false },
@@ -17519,7 +17520,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'symbolic culture colors',
-                desc: '@another [culture] point can be refunded every trait obtained if the trait lifetime is over 150 years, and the amount needed for each refund is reduced to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b> @<b><font color="red">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
+                desc: '@another [culture] point will be refunded for every trait obtained if the trait. In addition, the amount needed for each refund is reduced to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III]. @this trait is where new small but important breakthroughts have been made @<b><font color="red">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 35, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -17531,7 +17532,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'symbolic knowledge colors',
-                desc: '@another [insight] point can be refunded every research, and the amount needed for each refund is reduced to 100. Having [symbolic culture colors] or <b>this</b> trait allows to get [coloral symbolism III] in the lategame stage. @consider this trait as: <b>Coloral symbolism II</b> @<b><font color="red">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
+                desc: '@another [insight] point can be refunded every research, and the amount needed for each refund is reduced to 100. Having [symbolic culture colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="red">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 36, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -17543,7 +17544,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'coloral symbolism III',
-                desc: '@[dreamer] bonus is increased by 15%. @[lawyer]s, [chieftain]s, [druid]s, [cathedral]s and [guru]s are 20% more efficient. //</font></b>',
+                desc: '@[dreamer] bonus is increased by 15%. @[lawyer]s, [chieftain]s, [druid]s, [cathedral]s, and [guru]s are 20% more efficient. //</font></b>',
                 icon: [1, 35, 'magixmod', 36, 14, 'magixmod'],
                 cost: { 'culture II': 50, 'insight II': 100, 'science': 10 },
                 chance: 125,
@@ -21325,13 +21326,13 @@ if (getObj("civ") != "1") {
                 if (pop > 0) {
                     toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
-                    var text = 'unknown'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat <= 200) text = 'high'; else if (stat >= 200) text = 'euphoric';
+                    var text = 'elated and eternally jubilant'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high'; else if (stat < 350) text = 'euphoric';
                     toParse += 'Happiness: <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
-                    var text = 'unknown'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming'; else if (stat >= 200) text = 'examplary';
+                    var text = 'exemplary'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming';
                     toParse += 'Health: <b>' + text + '</b>//';
                     var stat = G.techN;
-                    var text = 'unknown'; if (stat <= 12) text = 'pre-prehistoric'; else if (stat <= 40) text = 'prehistoric'; else if (stat <= 60) text = 'skilled'; else if (stat <= 140) text = 'great'; else if (stat <= 200) text = 'expansive'; else if (stat <= 250) text = 'complex'; else if (stat <= 300) text = 'quite advanced'; else if (stat <= 350) text = 'post-modern'; else if (stat <= 400) text = 'truly advanced'; else if (stat >= 450) text = 'the most advanced';
+                    var text = 'the most advanced'; if (stat <= 8) text = 'pre-prehistoric'; else if (stat <= 15) text = 'prehistoric'; else if (stat <= 28) text = 'skilled'; else if (stat <= 40) text = 'proficient'; else if (stat <= 55) text = 'decent technologically'; else if (stat <= 70) text = 'expanded'; else if (stat <= 100) text = 'advanced'; else if (stat <= 135) text = 'modern'; else if (stat <= 180) text = 'truly advanced';
                     toParse += 'Technological stage: <b>' + text + '</b>//';
                 }
                 else toParse += 'All ' + G.getName('inhabs') + ' have died out.';
@@ -24184,7 +24185,7 @@ if (getObj("civ") != "1") {
                     var batterycost = (G.achievByName['the fortress'].won >= 5 ? 25 : 0);
                     var costbat = B((100 - batterycost) * upscaleBat);
                     costsStr = costsStr.replace(costbat, '&nbsp;' + (100 - batterycost + '%'));
-                    if (costsStr) str += '<b><i><font color="#aff">(' + costsStr + ')</font></i></b>';
+                    if (costsStr) str += ' <b><i><font color="#aff">(' + costsStr + ')</font></i></b>';
                     return str;
                 },
                 buttonTooltip: function () {
@@ -24783,7 +24784,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a twelfth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
+                desc: '@idle [worker]s gather resources with a twelfth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
                 icon: [20, 1, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'dreaming': false, 'branching wisdom': false },
@@ -26083,7 +26084,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'carcass-looting',
-                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@[gatherer]s can loot carcasses, granting some [meat] and [bone]s from dead [mosseer,Animals]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 18, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'dreaming': false },
@@ -26091,7 +26092,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dreaming',
-                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@idle [worker]s gather [discernment] and [creativity] with a fifteenth of the speed of a [dreamer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 17, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'scavenging': false, 'branching wisdom': false, 'carcass-looting': false },
@@ -26099,7 +26100,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'branching wisdom',
-                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various periods of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. During lategame, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@at a cost of 3 [creativity] and 3 [discernment] adds one tech choice for various periods of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
                 icon: [29, 19, 'c2'],
                 chance: 3,
                 cost: { 'discernment': 3, 'creativity': 3 },
