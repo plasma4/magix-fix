@@ -12,8 +12,8 @@
 VERSION=1;//increment by 1 with every major change; will make old datasets incompatible
 SAVESLOT='alpha';//actual slot will be 'legacySave-'+SAVESLOT
 UPDATELOG=[
-	{date:'2013-2014',title:'Prototype',text:['started working on a prototype for a cross between Civilization and an idle game after the sudden success of my game, <a href="//orteil.dashnet.org/cookieclicker/" target="_blank">Cookie Clicker</a>','encountered some issues with gameplay design and ended up putting the project on hold']},
-	{date:'2015',title:'Prototype, part II',text:['the broken, buggy prototype has been <a href="//orteil.dashnet.org/experiments/legacy/" target="_blank">put online for all to see</a>']},
+	{date:'2013-2014',title:'Prototype',text:['started working on a prototype for a cross between Civilization and an idle game after the sudden success of my game, <a href="https://orteil.dashnet.org/cookieclicker/" target="_blank">Cookie Clicker</a>','encountered some issues with gameplay design and ended up putting the project on hold']},
+	{date:'2015',title:'Prototype, part II',text:['the broken, buggy prototype has been <a href="https://orteil.dashnet.org/experiments/legacy/" target="_blank">put online for all to see</a>']},
 	{date:'2016',title:'Return of the Prototype',text:['motivated by the positive response to the previous prototype, a new version was started from scratch with fresh new ideas']},
 	{date:'3/23/2017',title:'Alpha launch',text:['a playable alpha is launched publicly','at this point, the game features 54 technologies, 42 units, and 91 resources']},
 	{date:'3/24/2017',title:'Alpha patch',text:['added an outline to your explored territory on the map','hunters dying, quarries/mines collapsing and scouts getting lost should no longer disproportionately harm your population; those effects have also been made less frequent','people get sick less often','added a new policy to control birth rate','mines can now mine for salt','resources now display how much you\'re gaining and losing every tick']},
@@ -8348,8 +8348,8 @@ window.onload=function()
 			l('deleteOnLoadContent').innerHTML=''+
 				'<div class="framed bgDark fancyText bitBiggerText" style="width:480px;margin:auto;padding:16px 24px;">'+
 				'<div class="barred">Oops. Wrong address!</div>'+
-				'<div>It looks like you\'re accessing NeverEnding Legacy from another URL than the official one.<br>'+
-				'You can <a href="//orteil.dashnet.org/legacy/" target="_blank">play NeverEnding Legacy over here</a>!'+
+				'<div>It looks like you\'re accessing NeverEnding Legacy from another URL than the file version.<br>'+
+				'You can <a href="https://orteil.dashnet.org/legacy/" target="_blank">play NeverEnding Legacy over here</a>!'+
 				'</div></div>';
 		}
 		else
