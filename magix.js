@@ -7260,7 +7260,6 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'faith': 0.05 }, req: { 'symbolism': true, 'symbolism II': false }, chance: 1 / 6.5 },
                     { type: 'gather', what: { 'faith': 0.07 }, req: { 'symbolism II': true }, chance: 1 / 6.5 },
                     { type: 'mult', value: 2 / 3, req: { 'dt16': true } },
-                    { type: 'mult', value: 0.1, req: { 'se03': 'on' } },
                     { type: 'mult', value: 1.25, req: { 'se11': 'on' } },
                     { type: 'mult', value: 0.95, req: { 'se03': 'on' } },
                 ],
@@ -7310,6 +7309,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.03, req: { 'more experienced healers': true, 'moderation': true } },
                     { type: 'mult', value: 1.06, req: { 'more experienced healers': true, 'caretaking': true } },
                     { type: 'mult', value: 1.25, req: { 'se07': 'on' } },
+                    { type: 'mult', value: 0.95, req: { 'se08': 'on' } },
                 ],
                 gizmos: true,
                 req: { 'healing': true },
@@ -8092,7 +8092,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'combat potions brewing stand',
-                displayName: 'combat potion brewing stand',
+                displayName: 'Combat potion brewing stand',
                 desc: 'Here you can craft [combat potions]! Alchemists are creative people who name their creations, and each one is uniquely made.',
                 icon: [14, 16, 'magixmod'],
                 cost: {},
@@ -9602,16 +9602,17 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'musician',
-                desc: '@generates [culture] every now and then<>[musician]s gather the tribe together during twilight to sing and play songs that people know to entertain them, providing significant [happiness] and [culture]! //<small>(Their favorite note is C#. Maybe it means something?)</small>',
+                desc: '@generates [culture] and [happiness] every day<>[musician]s gather the tribe together during twilight to sing and play songs that people know to entertain them, providing significant [happiness] and [culture]! //<small>(Their favorite note is C#. Maybe it means something?)</small>',
                 icon: [28, 18, 'magixmod'],
-                cost: {},
+                cost: { 'basic building materials': 10 },
                 use: { 'worker': 1 },
                 upkeep: { 'food': 0.1 },
                 limitPer: { 'population': 400 },
                 effects: [
-                    { type: 'gather', what: { 'happiness': 0.08 } },
-                    { type: 'gather', what: { 'culture': 0.1 } },
+                    { type: 'gather', what: { 'happiness': 0.28 } },
+                    { type: 'gather', what: { 'culture': 0.125 } },
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
+                    { type: 'mult', value: 2, req: { 'se03': 'on' } },
                 ],
                 req: { 'oral tradition': true, 'music instruments': true },
                 category: 'cultural',
@@ -9842,7 +9843,7 @@ if (getObj("civ") != "1") {
             //Seasonal content units
             new G.Unit({
                 name: 'artisan of new year',
-                displayName: 'artisan of the New Year',
+                displayName: 'Artisan of the New Year',
                 desc: 'This guy can craft New Year fireworks as a celebration, and will consume [paper] and [thread] to finish it up.',
                 icon: [19, 0, 'seasonal'],
                 cost: {},
@@ -11764,7 +11765,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'healing with brews', category: 'tier1',
-                displayName: 'better healing brews',
+                displayName: 'Better healing brews',
                 desc: '@[sick] people will have a larger chance to get recovered when treated by [healer]s that use [medicament brews,Brews]',
                 icon: [19, 6, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
@@ -13398,7 +13399,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'music instruments', category: 'tier2',
-                displayName: 'musical instruments',
+                displayName: 'Musical instruments',
                 desc: 'You unlock the [musician], which uses instruments gathered from materials around the tribe. [storyteller]s will also no longer be so limited.',
                 icon: [29, 18, 'magixmod'],
                 cost: { 'insight II': 10, 'culture II': 25 },
@@ -17656,7 +17657,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'concentrated juices',
-                displayName: 'moar juices II', category: 'tier1',
+                displayName: 'Moar juices II', category: 'tier1',
                 desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juices]. However, making [juices] now requires 3 times as much [water].//<small>Even MOAR JUICE!!! (But concentrated this time.)</small>',
                 icon: [0, 35, 'magixmod', 17, 4, 'magixmod'],
                 cost: { 'insight': 1600 },
@@ -17932,7 +17933,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ocean reversion', category: 'tier1',
                 desc: '@[land] decay is reverted by 1 every 5 ticks',
-                icon: [14, 4, 'magix2', 24, 1],
+                icon: [15, 0, 'magix2', 24, 1],
                 cost: { 'insight': 25 },
                 req: { 'ocean decay II': true },
                 skip: true,
@@ -18125,7 +18126,7 @@ if (getObj("civ") != "1") {
                 skip: true
             });
             new G.Trait({
-                name: 't6',
+                name: 't5',
                 displayName: 'Fishyar\'s Trial',
                 desc: 'You are currently in the <b>Unfishy</b> trial.',
                 icon: [15, 0, 'magix2', 5, 22, 'magixmod'],
@@ -18512,7 +18513,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se03',
                 displayName: 'Tu-ria the Seraphin of Inspiration',
-                desc: '<font color="lime">Increases [culture] gathering by 100% and decreases the limit for [musician] and [storyteller] by 50 [population].</font><br><hr color="fuschia"><font color="red">Backfire: [dreamer]s and [faith,faith units] gather 5% less [insight] and [faith].</font>',
+                desc: '<font color="lime">Doubles [culture] gathering and decreases the [population] limit of [musician]s.</font><br><hr color="fuschia"><font color="red">Backfire: [dreamer]s gather 5% less [insight] and [faith,faith units] gather 5% less [faith].</font>',
                 icon: [27, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18521,8 +18522,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('storyteller').limitPer = { 'population': 350 };
-                            G.getDict('musician').limitPer = { 'population': 350 }
+                            G.getDict('musician').limitPer = { 'population': 250 }
                         }
                     }
                 ],
@@ -18530,7 +18530,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se04',
                 displayName: 'Hartar the Seraphin of Hunting',
-                desc: '<font color="lime">Increases the efficiency of hunting units by 35%. After [hunters & fishers unification] increases income of [meat] by this %.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se04] blocks you from [se05] unless you unchoose that, although it isn\'t worth it.',
+                desc: '<font color="lime">Increases the efficiency of hunting units by 35%. After [hunters & fishers unification] increases income of [meat] by this %.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se04] blocks you from [se05] unless you unselect this Seraphin.',
                 icon: [26, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18543,7 +18543,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se05',
                 displayName: 'Fishyar the Seraphin of Fishing',
-                desc: '<font color="lime">Increases the efficiency of fishing units by 35%. After [hunters & fishers unification] increases income of [seafood] by this %.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se05] blocks you from [se04] unless you unchoose that, although it isn\'t worth it.',
+                desc: '<font color="lime">Increases the efficiency of fishing units by 35%. After [hunters & fishers unification], it increases income of [seafood] by that amount as well.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se05] blocks you from [se04] unless you unselect this Seraphin.',
                 icon: [25, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18556,8 +18556,8 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se06',
                 displayName: 'Posi\'zul the Seraphin of Water',
-                desc: '<font color="lime">Decreases the rate of [water] spoiling and increases the speed of all well types by 25%.</font><br><hr color="fuschia"><font color="red">Backfire: Increases your food spoiling rate slightly.</font>',
-                icon: [24, 25, 'magixmod'],
+                desc: '<font color="lime">Decreases the rate of [water] spoiling and increases the speed of all well types by 25%.</font><br><hr color="fuschia"><font color="red">Backfire: Increases your [food] spoiling rate slightly.</font>',
+                icon: [15, 0, 'magix2'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
                 req: { 'pantheon key': true },
@@ -18567,7 +18567,7 @@ if (getObj("civ") != "1") {
                 name: 'se07',
                 displayName: 'Herbalia the Seraphin of Recovery',
                 desc: '<font color="lime">Boosts your [health] level. [healer]s are 25% more efficient.</font><br><hr color="fuschia"><font color="red">Backfire: the upper limit of [happiness] is now 175%, and [happiness] decreases a little faster when negative. [gatherer]s will also gain 15% less.</font>',
-                icon: [23, 25, 'magixmod'],
+                icon: [14, 0, 'magix2'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
                 req: { 'pantheon key': true },
@@ -18576,7 +18576,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se08',
                 displayName: 'Buri\'o dak the Seraphin of Burial',
-                desc: '<font color="lime">Now 1 [burial spot] can store 1.1 [corpse]s or 5 [urn]s.</font><br><hr color="fuschia"><font color="red">Backfire: Harms your [health] and decreases [healer] efficiency by 5%.</font>',
+                desc: '<font color="lime">Each [burial spot] will now be able to store 1.1 [corpse]s or 5 [urn]s.</font><br><hr color="fuschia"><font color="red">Backfire: Harms your [health] by a very very small amount and decreases [healer] efficiency by 5%.</font>',
                 icon: [22, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18606,7 +18606,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se11',
                 displayName: 'An Enlightened Seraphin of Faith',
-                desc: '<font color="lime">All [faith] gathering is increased by 25%.</font><br><hr color="fuschia"><font color="red">Backfire: All [influence] and [insight] units are weakened by 25% (including [guru]s)!</font>',
+                desc: '<font color="lime">All [faith] gathering is increased by 25%.</font><br><hr color="fuschia"><font color="red">Backfire: All [influence] and [insight] units are weakened by 25% (including [guru]s).</font>',
                 icon: [19, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18616,7 +18616,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se12',
                 displayName: 'Okar the Seer the Seraphin of Knowledge',
-                desc: '<font color="lime">[guru] and [dreamer]s are 50% more efficient.</font><br><hr color="fuschia"><font color="red">Backfire: [dreamer]s and [guru] require [food] and [water] as an upkeep. Weakens [gatherer] and [florist] by 20%. [culture] gain is lowered by 10%.</font>',
+                desc: '<font color="lime">[guru] and [dreamer]s are 50% more efficient.</font><br><hr color="fuschia"><font color="red">Backfire: [dreamer]s and [guru] require [food] and [water] as an upkeep. Weakens [gatherer]s and [florist]s by 20%. [culture] gain from units will be lowered by 10%.</font>',
                 icon: [18, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18849,8 +18849,7 @@ if (getObj("civ") != "1") {
                 displayName: 'Unfishy',
                 desc: 'Starts [se05]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
+                startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
@@ -18890,9 +18889,8 @@ if (getObj("civ") != "1") {
                 name: 'Ocean (WIP)',
                 displayName: 'Ocean',
                 desc: 'Starts [se06]. (You will be warned before starting.)',
-                icon: [24, 18, 'magixmod', 24, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
+                icon: [24, 18, 'magixmod', 15, 0, 'magix2', 1, 22, 'magixmod'],
+                startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
                 category: 'trial',
                 effects: [
@@ -18931,7 +18929,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'Herbalism',
                 desc: 'Starts [se07]. (You will be warned before starting.)',
-                icon: [24, 18, 'magixmod', 23, 25, 'magixmod', 1, 22, 'magixmod'],
+                icon: [24, 18, 'magixmod', 14, 0, 'magix2', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
                 category: 'trial',
@@ -19002,8 +19000,7 @@ if (getObj("civ") != "1") {
                 name: 'Underground (WIP)',
                 desc: 'Starts [se09]. (You will be warned before starting.)',
                 icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
-                cost: { 'insight II': 1, 'influence II': 1 },
-                startMode: 'off',
+                startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'tribalism': false },
                 category: 'trial',
                 effects: [
