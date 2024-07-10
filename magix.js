@@ -664,6 +664,7 @@ G.NewGame = function (doneLoading, mods) {
         civ2();
     };
 }
+
 function vpcalc() {
     G.getRes('victory point').amount = 0
     var a1 = G.achievByName['patience'].won
@@ -886,13 +887,84 @@ var archaeologyRare = function () //mesg can toggle message
         if (G.getSetting('relic messages')) {
             G.Message({
                 type: mesgType[rarities.indexOf(rarity)],
-                text: (G.getUnitAmount('archaeologist') === 1 ? "Your archaeologists" : "Your archaeologists (well, one archaeologist I suppose, but whatever)") + ("aeiou".includes(rarity[0]) ? " have found an <b>" : " have found a <b>") + rarity + "</b> relic.<br>It is " + choose(["a rather ", "a relatively ", "a cool and ", "an extremely "]) + choose(["interesting", "strange", "facinating", "useful"]) + " <b>" + itemName + "</b>. This finding provides you with <u>" + vals[rarities.indexOf(rarity)] + " " + G.getRes(gain).displayName + choose(["</u>.<br>Pretty good!", "</u>.<br>Great!", "</u>.<br>Nice!", "</u>.<br>Not bad!", "</u>.<br> That's something, isn't it?", "</u>.<br>Kind of interesting, really..."]),
+                text: (G.getUnitAmount('archaeologist') === 1 ? "Your archaeologists (well, one archaeologist I suppose, but whatever)" : "Your archaeologists") + ("aeiou".includes(rarity[0]) ? " have found an <b>" : " have found a <b>") + rarity + "</b> relic.<br>It is " + choose(["a rather ", "a relatively ", "a cool and ", "an extremely "]) + choose(["interesting", "strange", "facinating", "useful"]) + " <b>" + itemName + "</b>. This finding provides you with <u>" + vals[rarities.indexOf(rarity)] + " " + G.getRes(gain).displayName + choose(["</u>.<br>Pretty good!", "</u>.<br>Great!", "</u>.<br>Nice!", "</u>.<br>Not bad!", "</u>.<br> That's something, isn't it?", "</u>.<br>Kind of interesting, really..."]),
                 icon: [23, 33, 'magixmod']
             });
         }
         //G.getDict('archaeologist').effects[4].chance=(1/(G.getUnitAmount('archaeologist')/2 < 1 ? 1 : G.getUnitAmount('archaeologist')/2))/1100; //balancing rare relics
     }
 }
+var updateNewDayLines = function (fools) {
+    if (fools) {
+        G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
+            'Mantisk blades have been discovered.', 'You met a friend today.',
+            'Creatures are lurking.', 'Danger abounds.',
+            'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
+            'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
+            'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
+            'This is harder but more interesting \u2014pelletsstarPL',
+            'Creepers inbound!', 'It is raining.', 'Your rolling pins are rolling and pinning.',
+            '.gnivigrofnu is thgin ehT', '.noziroh eth no mrost a si erehT',
+            'Another stream on Twitch is happening.', 'plasma4 prepares the next update. Wait, is it not @1_e0?',
+            'Another covid-der in the tribe.', 'Someone hits another person with a broom.',
+            'friends meet during the night', 'Gatherer said another BRUH today.', '<font color="pink">Purchase the full version of Magix to unlock special content. $0 after you buy it for $999.</font>',
+            'README.txt', 'README.png', '<font color="pink">Hey, over here!</font>',
+            'Wild thorns do nothing.', 'Something does nothing in the distance.',
+            'Strange ashes snow down.', 'A loud YEET is heard.',
+            'Memish creatures roll and scurry in the dirt', 'i++;',
+            'Name: Magix', 'Thanks for entering the game today, I suppose.',
+            'Wind blows or something. Maybe it\'s air.', 'Secrets await.', '<b>Do not forget to look at r/engrish</b>',
+            'Noisestorm', 'Unnoisestorm',
+            'Distant lands lie undisturbed.', '<b>What happened?</b>',
+            'A warm breeze is blowing.', 'sheesh',
+            'jeez', '...gosh', 'You spin me round...',
+            'QUACK!', 'beep beep boop',
+            'Blab', 'blep', 'Moist cookies \u2014grandma',
+            'Is this about cookies?', 'mispeled',
+            'What is this mod called again?', '[null] [undefined] [NaN]',
+            'Are you sure you like these messages?', 'NeverEnding Legacy or NeverEnding waiting?',
+            'How many secrets are left?', 'so uh what is the point of this game'
+        ];
+    } else {
+        G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
+            'Creatures are lurking.', 'Danger abounds.',
+            'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
+            'This is a cold night.', 'No sound but the low hum of a gray sky.',
+            'The darkness is terrifying.', 'Clouds twist in complicated shapes.',
+            'It is raining.', 'Dark birds caw ominously in the distance.',
+            'There is a storm on the horizon.', 'The night is unforgiving.',
+            'Creatures crawl in the shadows.', 'A stream burbles quietly nearby.',
+            'In the distance, a prey falls to a pack of beasts.', 'An unexplained sound echoes on the horizon.',
+            'Everything stands still in the morning air.', 'A droning sound fills the sky.',
+            'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
+            'Wild thorns scratch the ankles.', 'Something howls in the distance.',
+            'Strange ashes snow down slowly from far away.', 'A blood-curdling wail is heard.',
+            'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
+            'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
+            'Wind blows from the north.', 'Secrets await.',
+            'Discover what is unknown.', 'A morning fog welcomes you.',
+            'An eerie glow from above illuminates the night.',
+            'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
+            'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
+            'What a cloudy day today!', 'The air is strangely dry today.',
+            'Wild brambles look scary even from far away.', 'Some dangerous creature sleeps calmly.',
+            'From far away a falling tree can be heard.', 'There is no wind today.',
+            'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
+            'Uncover the secrets.', 'Merge with nature.',
+            'Discover the undiscovered.', 'This is a lush evening.',
+            'Another sea wave crashes against a tall cliff.', 'What a storm!',
+            'The air has a welcoming feel to it.', 'Your people went hiking today.',
+            'The temperature feels just right today!', 'From somewhere a bug stings you.',
+            'Today is a day of rest.', '<b>What will you discover?</b>',
+            'A slow trickle of water can be heard nearby.', 'Lands from far away remain calm.',
+            'Birds are flying around today.', 'The sun has finally shown itself.',
+            'Night has fallen.', 'Your tribe watched sunset tonight in awe.',
+            'A rather strange hum can be heard.', 'Mysteries abound.'
+        ];
+    }
+    shuffle(G.props['new day lines']);
+}
+
 G.isMapFullyExplored = function () {
     for (var x = 0; x < G.maps[0].w; x++) {
         for (var y = 0; y < G.maps[0].h; y++) {
@@ -994,66 +1066,7 @@ function newDayLines() {
         var foolsState = (yer.getMonth() == 3 && yer.getDate() == 1) || G.getSetting('fools')
         if (foolsToggle !== foolsState && G.resets >= 3) {
             foolsToggle = foolsState
-            if (foolsState) {
-                G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
-                    'Mantisk blades have been discovered.', 'You met a friend today.',
-                    'Creatures are lurking.', 'Danger abounds.',
-                    'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
-                    'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
-                    'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
-                    'This is harder but more interesting \u2014pelletsstarPL',
-                    'Creepers inbound!', 'It is raining.', 'Your rolling pins are rolling and pinning.',
-                    '.gnivigrofnu is thgin ehT', '.noziroh eth no mrost a si erehT',
-                    'Another stream on Twitch is happening.', 'plasma4 prepares the next update. Wait, is it not @1_e0?',
-                    'Another covid-der in the tribe.', 'Someone hits another person with a broom.',
-                    'friends meet during the night', 'Gatherer said another BRUH today.', '<font color="pink">Purchase the full version of Magix to unlock special content. $0 after you buy it for $999.</font>',
-                    'README.txt', 'README.png', '<font color="pink">Hey, over here!</font>',
-                    'Wild thorns do nothing.', 'Something does nothing in the distance.',
-                    'Strange ashes snow down.', 'A loud YEET is heard.',
-                    'Memish creatures roll and scurry in the dirt', 'i++;',
-                    'Name: Magix', 'Thanks for entering the game today, I suppose.',
-                    'Wind blows or something. Maybe it\'s air.', 'Secrets await.', '<b>Do not forget to look at r/engrish</b>',
-                    'Noisestorm', 'Unnoisestorm',
-                    'Distant lands lie undisturbed.', '<b>What happened?</b>',
-                    'A warm breeze is blowing', 'sheesh',
-                    'jeez', '...gosh', 'You spin me round...',
-                    'QUACK!', 'beep beep boop',
-                    'Blab', 'blep', 'Moist cookies \u2014grandma',
-                    'Is this about cookies?', 'mispeled',
-                    'What is this mod called again?', '[null] [undefined] [NaN]'
-                ];
-                shuffle(G.props['new day lines']);
-            } else {
-                G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
-                    'Creatures are lurking.', 'Danger abounds.',
-                    'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
-                    'This is a cold night.', 'No sound but the low hum of a gray sky.',
-                    'The darkness is terrifying.', 'Clouds twist in complicated shapes.',
-                    'It is raining.', 'Dark birds caw ominously in the distance.',
-                    'There is a storm on the horizon.', 'The night is unforgiving.',
-                    'Creatures crawl in the shadows.', 'A stream burbles quietly nearby.',
-                    'In the distance, a prey falls to a pack of beasts.', 'An unexplained sound echoes on the horizon.',
-                    'Everything stands still in the morning air.', 'A droning sound fills the sky.',
-                    'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
-                    'Wild thorns scratch the ankles.', 'Something howls in the distance.',
-                    'Strange ashes snow down slowly from far away.', 'A blood-curdling wail is heard.',
-                    'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
-                    'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
-                    'Wind blows from the north.', 'Secrets await.',
-                    'Discover what is unknown.', 'A morning fog welcomes you.',
-                    'An eerie glow from above illuminates the night.',
-                    'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
-                    'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
-                    'What a cloudy day today.', 'The air is strangely dry today.',
-                    'Wild brambles look scary even from far away.', 'Some dangerous creature sleeps calmly.',
-                    'From far away a falling tree can be heard.', 'There is no wind today.',
-                    'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
-                    'Uncover the secrets.', 'Merge with nature.',
-                    'Discover the undiscovered.', 'This is a lush evening.',
-                    'Another sea wave crashes against a tall cliff.', 'What a storm!'
-                ];
-                shuffle(G.props['new day lines']);
-            }
+            updateNewDayLines(foolsState)
         }
         var i = Math.floor(Math.random() * 5);
         var msg = G.props['new day lines'].splice(i, 1)[0];
