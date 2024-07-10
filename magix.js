@@ -894,9 +894,9 @@ var archaeologyRare = function () //mesg can toggle message
         //G.getDict('archaeologist').effects[4].chance=(1/(G.getUnitAmount('archaeologist')/2 < 1 ? 1 : G.getUnitAmount('archaeologist')/2))/1100; //balancing rare relics
     }
 }
-var updateNewDayLines = function (fools) {
+var updateNewDayLines = function (fools, civ2) {
     if (fools) {
-        G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
+        G.props['new day lines'] = [ // Fools mode/April Fools active
             'Mantisk blades have been discovered.', 'You met a friend today.',
             'Creatures are lurking.', 'Danger abounds.',
             'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
@@ -922,11 +922,13 @@ var updateNewDayLines = function (fools) {
             'Blab', 'blep', 'Moist cookies \u2014grandma',
             'Is this about cookies?', 'mispeled',
             'What is this mod called again?', '[null] [undefined] [NaN]',
-            'Are you sure you like these messages?', 'NeverEnding Legacy or NeverEnding waiting?',
-            'How many secrets are left?', 'so uh what is the point of this game'
+            'Do you enjoy these weird messages or not?', 'NeverEnding Legacy or NeverEnding Waiting?',
+            'How many secrets are left?', 'A meme appears in the shadows.',
+            'You thought of a neat idea, but forgot it when you woke up!', '<b>what was that? did you see it?</b>',
+            'You thought of a neat idea, but forgot it when you woke up...again. How is this happening?', 'Someone manages to slip on a banana peel.'
         ];
     } else {
-        G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
+        G.props['new day lines'] = [ // Normal quotes
             'Creatures are lurking.', 'Danger abounds.',
             'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
             'This is a cold night.', 'No sound but the low hum of a gray sky.',
@@ -938,7 +940,7 @@ var updateNewDayLines = function (fools) {
             'Everything stands still in the morning air.', 'A droning sound fills the sky.',
             'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
             'Wild thorns scratch the ankles.', 'Something howls in the distance.',
-            'Strange ashes snow down slowly from far away.', 'A blood-curdling wail is heard.',
+            'Strange ashes fall from afar.', 'A blood-curdling wail is heard.',
             'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
             'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
             'Wind blows from the north.', 'Secrets await.',
@@ -947,20 +949,30 @@ var updateNewDayLines = function (fools) {
             'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
             'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
             'What a cloudy day today!', 'The air is strangely dry today.',
-            'Wild brambles look scary even from far away.', 'Some dangerous creature sleeps calmly.',
+            'Wild brambles look scary even from far away.', 'Your tribe has had a good sleep.',
             'From far away a falling tree can be heard.', 'There is no wind today.',
-            'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
+            'Just another day in your tribe!', 'A meowing sound can be heard in the distance...',
             'Uncover the secrets.', 'Merge with nature.',
             'Discover the undiscovered.', 'This is a lush evening.',
             'Another sea wave crashes against a tall cliff.', 'What a storm!',
-            'The air has a welcoming feel to it.', 'Your people went hiking today.',
-            'The temperature feels just right today!', 'From somewhere a bug stings you.',
+            'The air has had a welcoming feel to it recently.', 'Your people went hiking today.',
+            'The temperature feels just right today!', 'From somewhere an annoying bug stings you.',
             'Today is a day of rest.', '<b>What will you discover?</b>',
             'A slow trickle of water can be heard nearby.', 'Lands from far away remain calm.',
-            'Birds are flying around today.', 'The sun has finally shown itself.',
-            'Night has fallen.', 'Your tribe watched sunset tonight in awe.',
-            'A rather strange hum can be heard.', 'Mysteries abound.'
+            'Birds have been migrating recently.', 'The sun has finally shown itself.',
+            'Night has fallen.', 'Your tribe watched the sunset tonight in awe.',
+            'A weird low hum can be heard.', 'Mysteries abound.',
+            'You thought of a neat idea, but forgot it when you woke up!', 'Finally, there is quiet.',
+            'Various creatures chirp and howl.', 'It sounds like a strange creature is approaching...',
+            'Rain has not fallen for the past few days.', 'Your tribe is itching to research more.'
         ];
+    }
+    if (civ2) {
+        G.props['new day lines'].push('The wilderness feels like it is surrounding you.');
+        G.props['new day lines'].push('Something mysterious seems to approach.');
+        G.props['new day lines'].push('The moon is strangely bright today.');
+        G.props['new day lines'].push('Sleep is difficult tonight.');
+        G.props['new day lines'].push('You feel a strange longing.');
     }
     shuffle(G.props['new day lines']);
 }
@@ -976,7 +988,7 @@ G.isMapFullyExplored = function () {
     return true;
 }
 G.traitTick = function (race, permachiev) {
-    //possibility to gain random traits everyday and removal of outdated temporary traits
+    //possibility to gain random traits every day and removal of outdated temporary traits
     for (var i in G.trait) {
         var me = G.trait[i];
         var lt = typeof (me.lifetime) === 'function' ? me.lifetime() : me.lifetime;
@@ -984,13 +996,12 @@ G.traitTick = function (race, permachiev) {
         if (me.category != 'knowledge' && me.switchCategory != false && lt != undefined && lt != Infinity)
             if (lt > 50) me.category = 'long'; else me.category = 'short';
         if (G.year - me.yearOfObtainment > (typeof (me.lifetime) === 'function' ? me.lifetime() : me.lifetime) && G.has(me.name)) { //with this we can make traits have vary lifetime length , not just constant
-            var end = ['has expired', 'has become outdated', 'is no longer active', 'has lost its effect'];
-            if (G.getSetting('trait messages') || G.resets < 3) G.Message({ type: 'important tall', text: (me.category == 'long' || me.category == 'short' ? 'The ' + me.category + '-term trait <b>' : 'The trait <b>') + me.displayName + '</b> ' + end[Math.round(Math.random() * 3)] + '.', icon: me.icon });
-            if (expTraits.indexOf(me.displayName) == -1) { //we don't want names to repeat if we have century system
+            if (G.getSetting('trait messages') || G.resets < 3) G.Message({ type: 'important tall', text: (me.category == 'long' || me.category == 'short' ? 'The ' + me.category + '-term trait <b>' : 'The trait <b>') + me.displayName + '</b> ' + choose(['has expired', 'has come to an end', 'has become outdated', 'is no longer active', 'has lost its effect']) + '.', icon: me.icon });
+            if (expTraits.indexOf(me.displayName) == -1) { // we don't want names to repeat if we have the century system
                 expTraits.push(me.displayName);
             }
             G.deleteTrait(me.name);
-            G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech.mp3');
+            G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech.mp3'); // Let's just...ignore the name of the sound effect, all right?
             return true;
         }
         if (!G.has(me.name)) {
@@ -1020,7 +1031,7 @@ G.traitTick = function (race, permachiev) {
     }
     return false;
 };
-if (G.loadciv == undefined) G.loadciv = Math.round(Math.random());
+
 var expTraits = [];
 function onTechBuy(race, tec) {
     var techCnt = G.techN - G.miscTechN + G.knowN;
@@ -1028,8 +1039,7 @@ function onTechBuy(race, tec) {
     G.gainTech(tec);
     if ((techCnt) % (techCnt > 150 ? 12 : 20) == 0 && techCnt > 30) { G.gain("education", 1, "technological progress"); G.gain("science", 1, "technological progress") };
     if (G.getSetting('research messages') || G.resets < 3) {
-        var quotes = ['discovered the secrets of ', 'found the mysteries of ', 'acknowledged ', 'learnt ', 'discovered ', 'uncovered ', 'learned about '];
-        G.Message({ type: 'good tall', text: 'Your ' + race + ' have ' + quotes[Math.round(Math.random() * (quotes.length - 1))] + '<b>' + tec.displayName + '</b>.', icon: tec.icon })
+        G.Message({ type: 'good tall', text: 'Your ' + race + ' have ' + choose(['discovered the secrets of ', 'found the mysteries of ', 'acknowledged ', 'learnt ', 'discovered ', 'uncovered ', 'now discovered ', 'learned about ']) + '<b>' + tec.displayName + '</b>.', icon: tec.icon })
     }
     if (tec.tutorialMesg != undefined)
         if (G.getSetting((tec.tutorialMesg[0].indexOf('tutorial') == -1 ? 'story' : "tutorial") + ' messages') || G.resets < 3)
@@ -1037,17 +1047,16 @@ function onTechBuy(race, tec) {
     G.update['tech']();
 
     l('techBox').children[0].classList.add('popIn');
-    var randomSound = Math.floor(Math.random() * 5)
+    var randomSound = Math.floor(Math.random() * 4)
     switch (randomSound) {
-        default: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech.mp3'); break;
-        case 1: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech2.wav'); break;
-        case 2: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech3.wav'); break;
-        case 3: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech4.wav'); break;
-        case 4: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech5.wav'); break;
+        case 0: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech2.wav'); break;
+        case 1: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech3.wav'); break;
+        case 2: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech4.wav'); break;
+        case 3: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech5.wav'); break;
     }
     if (techCnt == 50) G.Message({ type: 'important', text: 'Your tribe can now survive. Thanks to you (' + G.getName('ruler') + '), dreamers, and lots of insight. You stare at your tribe with a smile.', icon: [8, 12, 8, 4] })
-    if (techCnt == 100) G.Message({ type: 'important', text: 'You managed your civilization to be smart. They thank you with kindness for ruling them. They will not even think about choosing lord, other than you. Keep going this way. Discover, research and prosper.', icon: [24, 18, 'magixmod', 8, 4] })
-    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is advanced, meaning that someday you may see a lot of automation and a lot of researches! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. (Also, what secrets will you uncover next?)', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
+    if (techCnt == 100) G.Message({ type: 'important', text: 'Your civilization is becoming smarter and smarter, and your people are thanking you for ruling them. They believe you are the only person fit for helping them build a great and never-ending civilization! Discover, research, and prosper.', icon: [24, 18, 'magixmod', 8, 4] })
+    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is advanced, and your people hope to see and a lot of researches, ideas, and improvements! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. (But what secrets will you uncover next?)', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
 }
 function timeAchievs() {
     var time = Date.now() - G.fullDate;
@@ -1055,20 +1064,20 @@ function timeAchievs() {
     if (time >= 3600000 * 24) { G.achievByName['the day of rise'].won = 1; if (G.achievByName['the day of rise'].won == 0) G.middleText("- Completed The day of rise achievement -"); }
     if (time >= 3600000 * 24 * 7) { G.achievByName['authority\'s week'].won = 1; if (G.achievByName['authority\'s week'].won == 0) G.middleText("- Completed Authority\'s week achievement -"); }
     if (time >= 3600000 * 24 * 30) { G.achievByName['golden month'].won = 1; if (G.achievByName['golden month'].won == 0) G.middleText("- Completed Golden Month achievement -"); }
-    if (time >= 3600000 * 24 * 365) { G.achievByName['so much to do, so much to see'].won = 1; if (G.achievByName['so much to do, so much to see'].won == 0) G.middleText("- Completed so much to do,<br>so much to see <u>shadow achievement</u> -"); }
+    if (time >= 3600000 * 24 * 365) { G.achievByName['so much to do, so much to see'].won = 1; if (G.achievByName['so much to do, so much to see'].won == 0) G.middleText("- Completed So much to do,<br>so much to see <u>shadow achievement</u> -"); }
 }
 
 var foolsToggle = false
-function newDayLines() {
+function newDayLines(civ2) {
     if (G.getSetting('atmosphere') && Math.random() < 0.01 && (G.getSetting('new day lines') || G.resets < 3)) {
         //show a random atmospheric message occasionally on new days
-        //we pick one of the first 5 lines in the array, then push that line back at the end; this means we get a semi-random stream of lines with no frequent repetitions
+        //we pick one of the first 20 lines in the array, then push that line back at the end; this means we get a semi-random stream of lines with no frequent repetitions
         var foolsState = (yer.getMonth() == 3 && yer.getDate() == 1) || G.getSetting('fools')
         if (foolsToggle !== foolsState && G.resets >= 3) {
             foolsToggle = foolsState
-            updateNewDayLines(foolsState)
+            updateNewDayLines(foolsState, civ2)
         }
-        var i = Math.floor(Math.random() * 5);
+        var i = Math.floor(Math.random() * 20);
         var msg = G.props['new day lines'].splice(i, 1)[0];
         if (G.getSetting('new day lines'))
             G.props['new day lines'].push(msg);
@@ -2185,7 +2194,7 @@ if (getObj("civ") != "1") {
                     'Everything stands still in the morning air.', 'A droning sound fills the sky.',
                     'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
                     'Wild thorns scratch the ankles.', 'Something howls in the distance.',
-                    'Strange ashes snow down slowly from far away.', 'A blood-curdling wail is heard.',
+                    'Strange ashes fall from afar.', 'A blood-curdling wail is heard.',
                     'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
                     'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
                     'Wind blows from the north.', 'Secrets await.',
@@ -2194,7 +2203,7 @@ if (getObj("civ") != "1") {
                     'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
                     'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
                     'What a cloudy day today.', 'The air is strangely dry today.',
-                    'Wild brambles look scary even from far away.', 'Some dangerous creature sleeps calmly.',
+                    'Wild brambles look scary even from far away.', 'Your tribe has had a good sleep.',
                     'From far away a falling tree can be heard.', 'There is no wind today.',
                     'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
                     'Uncover the secrets.', 'Merge with nature.',
@@ -4479,14 +4488,14 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'land of the Plain Island',
                 displayName: 'Land of the ' + islandName(),
-                desc: 'The land you got from activating a portal to Plain Island. A place for new buildings.',
+                desc: 'The land you got from activating a portal to the new island: Plain Island. A place for new buildings.',
                 icon: [7, 0, 'magixmod'],
                 displayUsed: true,
                 partOf: 'tl',
                 category: 'terr',
                 tick: function (me, tick) {
                     G.getDict('land of the Plain Island').displayName = 'Land of the ' + islandName()
-                    G.getDict('land of the Plain Island').desc = 'The land you got from activating a portal to ' + islandName() + '. A place for new buildings.'
+                    G.getDict('land of the Plain Island').desc = 'The land you got from activating a portal to the new island: ' + islandName() + '. A place for new buildings.'
                 },
             });
             new G.Res({
@@ -4512,7 +4521,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'water essence',
-                desc: '[water essence] is undrinkable but can be used to cast rain.',
+                desc: '[water essence] is undrinkable but can be used for obtaining [mana] and small rains!',
                 icon: [0, 1, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4525,7 +4534,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'nature essence',
-                desc: '[nature essence] is used by wizards to revieve their beloved [flowers] or make harvests more plentiful.',
+                desc: '[nature essence] is used by wizards to collect their beloved [honey] or make harvests more plentiful.',
                 icon: [1, 2, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4558,7 +4567,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'lightning essence',
-                desc: '[lightning essence] can make storms safer and provide a way to make some tasks faster.',
+                desc: '[lightning essence] can make storms safer and provide a little automation.',
                 icon: [0, 3, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4571,7 +4580,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wind essence',
-                desc: '[wind essence] should not be used by everyone due to a risk of tornado disasters. It may be used to move things from place to place.',
+                desc: '[wind essence] must be used carefully due to a risk of tornado disasters. It may be used to move [boat]s and large objects around!',
                 icon: [1, 1, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4584,7 +4593,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'holy essence',
-                desc: '[holy essence] should not be used by everyone due to a risk of mass blindness. Anyway, this one will have its faithful uses.',
+                desc: '[holy essence] should not be used by the average person due to a risk of mass blindness. Anyway, this one will have its faithful uses.',
                 icon: [20, 6, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4597,7 +4606,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'cobalt ore',
-                desc: 'A unique and hard mineral. At least you may be able to smelt some cobalt and turn them into cobalt ingots in the mortal world.',
+                desc: 'A unique and rather hard mineral. At least you may be able to smelt some cobalt and turn them into cobalt ingots in the mortal world.',
                 icon: [8, 2, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -21237,47 +21246,10 @@ if (getObj("civ") != "1") {
                 }
             }
 
-            G.props['new day lines'] = [
-                'Creatures are lurking.',
-                'Danger abounds.',
-                'Wild beasts are on the prowl.',
-                'Large monsters roam, unseen.',
-                'This is a cold night.',
-                'No sound but the low hum of a gray sky.',
-                'The darkness is terrifying.',
-                'Clouds twist in complicated shapes.',
-                'It is raining.',
-                'Among tall oakloos creature lurks.',
-                'Dark birds caw ominously in the distance.',
-                'There is a storm on the sea...or is it?',
-                'The night is unforgiving.',
-                'Creatures crawl in the shadows.',
-                'A stream burbles quietly nearby.',
-                'In the distance, a prey falls to a pack of beasts.',
-                'An unexplained sound echoes on the horizon.',
-                'Everything stands still in the morning air.',
-                'A droning sound fills the sky.',
-                'The night sky sparkles, its mysteries unbroken.',
-                'Dry bones crack and burst underfoot.',
-                'Wild thorns scratch the ankles.',
-                'Something howls in the distance.',
-                'Strange ashes snow down slowly from far away.',
-                'A blood-curdling wail is heard.',
-                'Unknown creatures roll and scurry in the dirt.',
-                'The air carries a peculiar smell today.',
-                'Wild scents flow in from elsewhere.',
-                'The dust is oppressive.',
-                'An eerie glow from above illuminates the night.',
-                'Distant lands lay undisturbed.',
-                'Something mysterious seems to approach.',
-                'Sleep is difficult tonight.',
-                'The moon is strangely bright today.'
-            ];
             let story3 = false;
             let story5 = false;
 
 
-            shuffle(G.props['new day lines']);
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
@@ -21333,7 +21305,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
                     setObj("civ", 1);
-                    newDayLines();
+                    newDayLines(true);
 
 
 
