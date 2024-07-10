@@ -497,7 +497,7 @@ G.getCostString = function (costs, verbose, neutral, mult) {
             var thing = G.getDict(i);
             var signed = cost * mult;
             var num = Math.abs(signed);
-            var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : (signed === num ? "<1" : ">-1")) : B(num)) + (verbose ? (' ' + thing.displayName) : '');
+            var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + (num > 0.1 ? (1 / num).toFixed(1).replace(".0", "") : B(1 / num)) : (signed === num ? "<1" : ">-1")) : (num < 10 ? num.toFixed(1).replace(".0", "") : B(num))) + (verbose ? (' ' + thing.displayName) : '');
             if (signed !== num) {
                 text = '-' + text;
             }
@@ -516,7 +516,7 @@ G.getUseString = function (costs, verbose, neutral, mult) {
         var thing = G.getDict(i);
         var signed = costs[i] * mult;
         var num = Math.abs(signed);
-        var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : (signed === num ? "<1" : ">-1")) : B(num)) + (verbose ? (' ' + thing.displayName) : '');
+        var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + (num > 0.1 ? (1 / num).toFixed(1).replace(".0", "") : B(1 / num)) : (signed === num ? "<1" : ">-1")) : (num < 10 ? num.toFixed(1).replace(".0", "") : B(num))) + (verbose ? (' ' + thing.displayName) : '');
         if (signed !== num) {
             text = '-' + text;
         }
@@ -952,7 +952,7 @@ var updateNewDayLines = function (fools, civ2) {
             'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
             'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
             'Wind blows from the north.', 'Secrets await.',
-            'Discover what is unknown.', 'A morning fog welcomes you.',
+            'You hope to discover what has never been found before.', 'A morning fog welcomes you.',
             'An eerie glow from above illuminates the night.',
             'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
             'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
@@ -1143,7 +1143,7 @@ if (getObj("civ") != "1") {
     G.AddData({
         name: 'Default dataset',
         author: 'pelletsstarPL',
-        desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people, and explore the vast oceans! Note that this mod uses part of the base game, so credits to Orteil for the default dataset.',
+        desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people, and explore the vast oceans! Note that this mod uses part of the base game, so credits to Orteil for the default dataset. (many, many new techs, features, and text fixes have been added by @1_e0)',
         engineVersion: 1,
         requires: ['MagixUtils'],
         sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
@@ -3338,7 +3338,7 @@ if (getObj("civ") != "1") {
                         var toExhume = randomFloor((graves.used - graves.amount) * 0.1);
                         graves.used -= toExhume;
                         G.gain('corpse', toExhume, 'not enough burial spots');
-                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by spam-removing burial spots
+                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by rapidly getting and removing burial spots (which are free)
                     }
 
                     // Very slow normal corpse decay
@@ -3348,20 +3348,21 @@ if (getObj("civ") != "1") {
                     }
 
                     var unhappiness = 0.01;
-                    if (G.has('burial')) unhappiness *= 2;
+                    if (G.has('burial')) unhappiness *= 1.5;
                     if (G.has('belief in revenants')) unhappiness *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
                     changeHappiness(-me.amount * unhappiness, 'corpses');
                     G.gain('health', -me.amount * 0.02, 'corpses');
-                    //Corpse decay trait: Normal decay still works and each dark wormhole can increase rate of corpses that will get decayed(?)
+                    // Corpse decay trait: Normal decay still works dark wormholes provide additional decay
                     if (G.has('corpse decay')) {
                         var toSpoil = me.amount * 0.002 * (G.getRes('corpsedecaypoint').amount);
                         var spent = G.lose('corpse', randomFloor(toSpoil), 'corpse decay from wormholes');
                     }
                     if (day + leap <= 40 && day + leap >= 46 && !G.has('peace')) {
                         if (G.has('revenants') && G.getRes('dark essence').amount > 1000) {
-                            G.lose('corpse', G.getRes('corpse').amount * 0.001, 'revenge of corpses');
+                            var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125)
+                            G.lose('corpse', wildCorpses, 'revenge of corpses');
                             G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
-                            G.gain('wild corpse', G.getRes('corpse').amount * 0.001, 'revenge of corpses');
+                            G.gain('wild corpse', wildCorpses, 'revenge of corpses');
                         }
                     }
                 },
@@ -3375,7 +3376,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'tl',
                 displayName: 'Total land',
-                desc: 'This is the total land your people discovered from all worlds people discovered this run.',
+                desc: 'This is the combined amount of land from <b>all</b> worlds that your people have discovered and explored this run.',
                 icon: [23, 18, 'magixmod'],
                 meta: true,
             });
@@ -4708,7 +4709,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'plain island tablet',
                 displayName: 'Plain Island tablet',
-                desc: 'A thing you will get after activating a Plain Island portal. It is needed to unlock further researching as a pass for further things. You can obtain only one Tablet of this type. <b>@Your adventure has been finished...But this portal hides a new secret...so your adventure has not ended yet.<b>',
+                desc: 'A heavy tablet that you will get after activating a Plain Island portal. It is needed to unlock further researching as a pass for further things. You can obtain only one Tablet of this type. <b>@Your adventure has been finished...But this portal hides a new secret...so your adventure has not ended yet.<b>',
                 icon: [14, 9, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
@@ -5052,7 +5053,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'enchanted ice',
-                desc: 'Effect of [mana] + [ice] + [wind essence]. Used into resistant potions.',
+                desc: 'Made from [mana], [ice], and [wind essence].',
                 icon: [17, 11, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5062,7 +5063,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'flowered sugar',
-                desc: '[sugar] + [flowers]. Additive ingredient for other potions.',
+                desc: 'Made using some [sugar] and [flowers]. Not safe to eat!',
                 icon: [18, 10, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5072,7 +5073,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark fire pit',
-                desc: '[fire pit] + [dark essence]. This type of fire does not provide light or much warmth, but that may be for the better.',//Coming very very soon types of potions
+                desc: 'Crafted from [fire pit]s and [dark essence]. This type of fire does not provide light or much warmth, but that may be for the better...',//Coming very very soon types of potions
                 icon: [20, 12, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5082,7 +5083,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'withering salt',
-                desc: '[salt] + [dark essence]. Do not use it for any food, as it is very deadly to the body!',
+                desc: 'A result of combining [salt] and [dark essence]. Do not use it for any food, as it is very deadly to the body!',
                 icon: [20, 10, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5092,7 +5093,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'herb of the undead',
-                desc: '[herb] + [dark essence] + [fruit].. Weakens the deadly power of [dark essence]!',//Coming very very soon types of potions
+                desc: 'Crafted using a mysterious recipe that merges [herb]s, [fruit], and [dark essence] into something new. Quite poisonous.',//Coming very very soon types of potions
                 icon: [20, 11, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5102,7 +5103,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'scobs of life',
-                desc: '[scobs] + [nature essence] + [water] + [mana]. These are used in potions involving nature. Most people, however, have a mild allergy to it.',
+                desc: 'Created using [scobs], [nature essence], [mana], and a little [water]. These are used in potions involving nature. Most people, however, seem to be allergic to it!',
                 icon: [17, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5112,7 +5113,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'grass of growing',
-                desc: '[herb] + [mana] + [nature essence]. Used in various nature-based potions. This grass can be the friend of soldiers and people who are trying to hide!',
+                desc: 'Made by combining [herb]s, [mana], and [nature essence]. Used in various nature-based potions. This grass can be the friend of soldiers and people who are trying to hide!',
                 icon: [16, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5122,7 +5123,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'windy sugar',
-                desc: '[sugar] + [mana] + [wind essence]. Used in combat. Sweet and tasty but pretty unstable (as it moves, swirls, levitates over time).',
+                desc: 'A strange and hard-to-store material created by using [sugar], [mana], and [wind essence] and can sometimes be used to fend off annoying creatures. Sweet and tasty but pretty unstable (because it moves, swirls, and levitates all over the place).',
                 icon: [14, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5133,7 +5134,7 @@ if (getObj("civ") != "1") {
             let madeUnlockMessageP = false
             new G.Res({
                 name: 'paradise tablet',
-                desc: 'A thing you will get after activating a Paradise portal. Needed to unlock further researching. It is a pass for further adventures and discoveries. You can obtain only one Tablet of this type. <b>@God called you to his world...</b>',
+                desc: 'A heavy tablet that you will get after activating a Paradise portal. Needed to unlock further researching. It is a pass for further adventures and discoveries. You can obtain only one Tablet of this type. <b>@God called you to his world...</b>',
                 icon: [20, 9, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
@@ -5457,7 +5458,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'ambrosium leaf',
-                desc: 'A thing which can be used to gather [ambrosium shard]s with the help of some other ingredients.',
+                desc: 'These leaves may be used to gather [ambrosium shard]s with the help of some other magical materials.',
                 icon: [12, 14, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.003;
@@ -5737,7 +5738,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'underworld tablet',
-                desc: 'A thing you get after entering the Underworld. Needed to unlock further researches. (You can obtain only one Tablet of this type.) <b>@You brought plagues in exchange for discoveries. I hope you won\'t regret this choice later!<b>',
+                desc: 'A heavy tablet that you will get after entering the Underworld. Needed to unlock further researches. (You can obtain only one Tablet of this type.) <b>@You brought plagues in exchange for discoveries. I hope you won\'t regret this choice later!<b>',
                 icon: [13, 19, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
@@ -6091,7 +6092,7 @@ if (getObj("civ") != "1") {
             let MirrorMESG = false
             new G.Res({
                 name: 'tablet \'o mirror',
-                desc: 'A thing you will get from opening the <b>Grand mirror</b> that allows you to clone your [land] and [wtr]. You can obtain only <b>one</b> Tablet of this type! //<small><b>You are cloning the world via magic, but the more portals you open, the more unstability you bring to you and your people! It is time to stop...before something bad happens.</b></small>',
+                desc: 'A heavy tablet that you will get from opening the <b>Grand mirror</b> that allows you to double your [land] and [wtr]. (You can obtain only <b>one</b> Tablet of this type!) //<small><b>You are cloning the world via magic, but the more portals you open, the more unstable the world will become, which will cause many huge disasters! It is time to stop...before something bad happens.</b></small>',
                 icon: [11, 30, 'magixmod'],
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !MirrorMESG) {
@@ -6141,7 +6142,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'osmium ore',
-                desc: 'Ore that can be processed into [soft metal ingot]s. It is a hard, brittle, bluish-white metal.',
+                desc: 'Ore that can be processed into [soft metal ingot]s. It is a hard, brittle, and bluish-white metal.',
                 icon: [10, 2, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -6162,7 +6163,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'unknownium ore',
-                desc: 'unknown ore ¯\_(ツ)_/¯ not sure what it is',
+                desc: 'unknown ore \xaf\\_(\u30c4)_/\xaf //<small>we are not sure what it is</small>', // yeah I think the character encoding makes it even more unknownium, eh, pelletsstar?
                 icon: [10, 5, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -6467,7 +6468,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'ancestors tablet',
-                desc: 'A thing you will get after activating the Ancestors portal. Needed to unlock further researching. It is a pass for further adventures and discoveries. You can obtain only one Tablet of this type. <b>@Ancestors called you to his world...</b>',
+                desc: 'A heavy tablet that you will get after activating the Ancestors portal. Needed to unlock further researching. It is a pass for further adventures and discoveries. You can obtain only one Tablet of this type. <b>@Ancestors called you to his world...</b>',
                 icon: [3, 7, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
@@ -10044,7 +10045,7 @@ if (getObj("civ") != "1") {
                 icon: [1, 26, 'magixmod'],
                 wideIcon: [0, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'bone': 200, 'corpse': 20 },
-                costPerStep: { 'basic building materials': 10, 'corpse': 2, 'precious building materials': 1.2, 'bone': 3, 'dark essence': 2 },
+                costPerStep: { 'basic building materials': 25, 'archaic building materials': 15, 'corpse': 2, 'precious building materials': 1.5, 'bone': 3, 'dark essence': 2 },
                 steps: 2000,
                 messageOnStart: 'Your people have started building the <b>temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow manages to spread fear all around!',
                 finalStepCost: { 'population': 50, 'corpse': 40 },
@@ -21868,7 +21869,7 @@ if (getObj("civ") != "1") {
                         var toExhume = randomFloor((graves.used - graves.amount) * 0.1);
                         graves.used -= toExhume;
                         G.gain('corpse', toExhume, 'not enough burial spots');
-                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by spam-removing burial spots
+                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by rapidly getting and removing burial spots (which are free)
                     }
 
                     //Normally
@@ -21878,7 +21879,7 @@ if (getObj("civ") != "1") {
                     }
 
                     var unhappiness = 0.01;
-                    if (G.has('burial')) unhappiness *= 2;
+                    if (G.has('burial')) unhappiness *= 1.5;
                     if (G.has('belief in revenants')) unhappiness *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
                     changeHappiness(-me.amount * unhappiness, 'corpses');
                     G.gain('health', -me.amount * 0.02, 'corpses');
