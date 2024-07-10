@@ -1930,7 +1930,7 @@ G.AddData({
         ==========================*/
         new G.Res({
             name: 'victory point',
-            desc: 'You can gain [victory point]s for completing Seraphin\'s Trial. All of the trials are repeatable, excluding a single one. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain 2 additional points. They can\'t be spent, but their amount can provide extra bonuses. ',
+            desc: 'You can gain [victory point]s for completing some Trials. All of the trials are repeatable, except for the <b>Buried</b> trial. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain 2 additional points. They can\'t be spent, but their amount can provide extra bonuses. ',
             icon: [0, 28, 'magixmod'],
         });
 

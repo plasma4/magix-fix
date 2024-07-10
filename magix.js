@@ -495,8 +495,12 @@ G.getCostString = function (costs, verbose, neutral, mult) {
         var cost = costs[i];
         if (cost > 0) { // Hide negative costs (which are gains such as -1 X temple point)
             var thing = G.getDict(i);
-            var num = cost * mult;
-            var text = ((num >= 0 && num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : "<1") : B(num < 0 ? Math.ceil(num) : num)) + (verbose ? (' ' + thing.displayName) : '');
+            var signed = cost * mult;
+            var num = Math.abs(signed);
+            var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : (signed === num ? "<1" : ">-1")) : B(num)) + (verbose ? (' ' + thing.displayName) : '');
+            if (signed !== num) {
+                text = '-' + text;
+            }
             if (thing.amount < num && !neutral) text = '<span style="color:red">' + text + '</span>';
             costsStr.push(G.getSmallThing(thing, text));
         }
@@ -510,8 +514,12 @@ G.getUseString = function (costs, verbose, neutral, mult) {
     mult = mult || 1;
     for (var i in costs) {
         var thing = G.getDict(i);
-        var num = costs[i] * mult;
-        var text = ((num >= 0 && num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : "<1") : B(num < 0 ? Math.ceil(num) : num)) + (verbose ? (' ' + thing.displayName) : '');
+        var signed = costs[i] * mult;
+        var num = Math.abs(signed);
+        var text = ((num < 1) ? num === 0 ? "No" : (num <= 0.5 ? "1/" + B(1 / num) : (signed === num ? "<1" : ">-1")) : B(num)) + (verbose ? (' ' + thing.displayName) : '');
+        if (signed !== num) {
+            text = '-' + text;
+        }
         if ((thing.amount - thing.used) < num && !neutral) text = '<span style="color:red">' + text + '</span>';
         costsStr.push(G.getSmallThing(thing, text));
     }
@@ -898,7 +906,7 @@ var updateNewDayLines = function (fools, civ2) {
     if (fools) {
         G.props['new day lines'] = [ // Fools mode/April Fools active
             'Mantisk blades have been discovered.', 'You met a friend today.',
-            'Creatures are lurking.', 'Danger abounds.',
+            'Creatures are lurking nearby.', 'Danger abounds.',
             'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
             'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
             'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
@@ -929,7 +937,7 @@ var updateNewDayLines = function (fools, civ2) {
         ];
     } else {
         G.props['new day lines'] = [ // Normal quotes
-            'Creatures are lurking.', 'Danger abounds.',
+            'Creatures are lurking nearby.', 'Danger abounds.',
             'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
             'This is a cold night.', 'No sound but the low hum of a gray sky.',
             'The darkness is terrifying.', 'Clouds twist in complicated shapes.',
@@ -1086,7 +1094,12 @@ function newDayLines(civ2) {
 }
 function AoD() {
     var changed = 0;
-    var n = G.lose('corpse', randomFloor(G.getRes('corpse').amount * 0.01), '<font color="red">art of death</font>'); G.gain('bone', n * 3, 'unused corpse parts (art of death)'); changed += n;
+    var n = G.lose('corpse', randomFloor(G.getRes('corpse').amount * 0.01), '<font color="red">art of death</font>'); G.gain('bone', n * 3, 'unused corpse parts'); changed += n;
+    // var happMult = 1;
+    // if (G.has('fear of death')) happMult *= 1.05;
+    // if (G.has('acceptance of death')) happMult *= 0.95;
+    // if (G.has('death scepticism')) happMult -= G.year % 40 > 19 ? 0.05 : -0.05;
+    // changeHappiness(-changed * 0.1 * happMult, 'art of death');
     if (n > 0) {
         G.pseudoGather(G.getRes('culture'), changed);
         G.gain('health', -changed * 0.1, 'art of death');
@@ -2098,7 +2111,7 @@ if (getObj("civ") != "1") {
                         }
                         var culture = Math.floor(Math.random() * 12);
                         if (G.has('time measuring 2/2')) {
-                            G.Message({ type: 'important', text: 'During this year Tu-ria has brought down to you:<br><b><font color="#aaffcc">' + B(culture) + ' Culture</font></b> and <b><font color="#fbb">' + (culture / 2) + ' Influence</font></b>', icon: [10, 11, 'magixmod'] });
+                            G.Message({ type: 'important', text: 'During this year, Tu-ria has brought down to you:<br><b><font color="#aaffcc">' + B(culture) + ' Culture</font></b> and <b><font color="#fbb">' + (culture / 2) + ' Influence</font></b>', icon: [10, 11, 'magixmod'] });
                         } else if (rese == true) {
                             G.Message({ type: 'important', text: 'Recently Tu-ria has brought down to you:<br><b><font color="#aaffcc">' + B(culture) + ' Culture</font></b> and <b><font color="#fbb">' + (culture / 2) + ' Influence</font></b>', icon: [10, 11, 'magixmod'] });
                         }
@@ -2135,11 +2148,14 @@ if (getObj("civ") != "1") {
                                 '</div></div>'
                         })
                     }
-                    if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if it would occur like just now
-                        var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1; var lostPeople = Math.ceil(G.getRes('population').amount * 0.02) + 1;
-                        G.lose('housing', lostHousing, 'The dark decay'); G.lose('population', lostPeople, 'The dark decay');
-                        G.gain('corpse', lostPeople, 'The dark death'); G.gain('dark essence', (Math.round(lostHousing * 0.75)) + lostPeople, 'The dark death');
-                        G.Message({ type: 'story1', text: 'The plane\'s conditions caused you losing: <li>' + lostHousing + ' <b>Housing</b></li><li>' + lostPeople + ' <b> people</b></li><br>However, it made you ' + (Math.round(lostHousing * 0.75) + lostPeople) + ' Dark essence richer. Use Dark essence to build the Temple of the Dead and finish the trial. There it doesn\'t decay unlike any other plane.', icon: [10, 32, 'magixmod'] })
+                    if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if it would occur for EVERY year
+                        var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1;
+                        var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.pow(G.year, 1.3)) + 1;
+                        var lostLand = Math.floor(G.getRes('land').amount * 0.016 + 0.8);
+                        var darkGain = Math.round(lostHousing * 0.75) + lostPeople + lostLand;
+                        G.lose('housing', lostHousing, 'Dark decay'); G.lose('population', lostPeople, 'Dark decay'); G.lose('land', lostLand, 'Dark decay');
+                        G.gain('corpse', lostPeople, 'Dark deaths'); G.gain('dark essence', darkGain, 'Dark deaths');
+                        G.Message({ type: 'story1', text: 'The conditions within this plane caused you to lose the following: <li>' + lostHousing + ' <b>Housing</b></li><li>' + lostPeople + ' <b>People</b></li>' + (lostLand > 0 ? '<li>' + lostLand + ' <b>Land</b>' : '') + '</li>However, these losses produced ' + darkGain + ' Dark essence for you. Use the Dark essence gained (which, luckily, will not decay here) to build the Temple of the Dead and finish the trial.', icon: [10, 32, 'magixmod'] })
                     };
                     var multiplier = () => { if (G.achievByName['love for eternity'].won >= 1) return 1.2; else return 1 };
                     if (day + leap >= 40 && day + leap <= 46 && G.getRes('love').amount >= 10 && G.achievByName['so adorable'].won == 1) { G.achievByName['so adorable'].won = 1; G.middleText('- Completed <font color="pink">So adorable</font><br>seasonal achievement.', 'slow') };
@@ -2152,66 +2168,7 @@ if (getObj("civ") != "1") {
                     }
                 }
             };
-            if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
-                    'Mantisk blades have been discovered.', 'You met a friend today.',
-                    'Creatures are lurking.', 'Danger abounds.',
-                    'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
-                    'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
-                    'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
-                    'This is harder but more interesting \u2014pelletsstarPL',
-                    'Creepers inbound!', 'It is raining.', 'Your rolling pins are rolling and pinning.',
-                    '.gnivigrofnu is thgin ehT', '.noziroh eth no mrost a si erehT',
-                    'Another stream on Twitch is happening.', 'plasma4 prepares the next update. Wait, is it not @1_e0?',
-                    'Another covid-der in the tribe.', 'Someone hits another person with a broom.',
-                    'friends meet during the night', 'Gatherer said another BRUH today.', '<font color="pink">Purchase the full version of Magix to unlock special content. $0 after you buy it for $999.</font>',
-                    'README.txt', 'README.png', '<font color="pink">Hey, over here!</font>',
-                    'Wild thorns do nothing.', 'Something does nothing in the distance.',
-                    'Strange ashes snow down.', 'A loud YEET is heard.',
-                    'Memish creatures roll and scurry in the dirt', 'i++;',
-                    'Name: Magix', 'Thanks for entering the game today, I suppose.',
-                    'Wind blows or something. Maybe it\'s air.', 'Secrets await.', '<b>Do not forget to look at r/engrish</b>',
-                    'Noisestorm', 'Unnoisestorm',
-                    'Distant lands lie undisturbed.', '<b>What happened?</b>',
-                    'A warm breeze is blowing', 'sheesh',
-                    'jeez', '...gosh', 'You spin me round...',
-                    'QUACK!', 'beep beep boop',
-                    'Blab', 'blep', 'Moist cookies \u2014grandma',
-                    'Is this about cookies?', 'mispeled',
-                    'What is this mod called again?', '[null] [undefined] [NaN]'
-                ];
-                shuffle(G.props['new day lines']);
-            } else {
-                G.props['new day lines'] = [ //2 quotes per line /replacement : AF / normal
-                    'Creatures are lurking.', 'Danger abounds.',
-                    'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
-                    'This is a cold night.', 'No sound but the low hum of a gray sky.',
-                    'The darkness is terrifying.', 'Clouds twist in complicated shapes.',
-                    'It is raining.', 'Dark birds caw ominously in the distance.',
-                    'There is a storm on the horizon.', 'The night is unforgiving.',
-                    'Creatures crawl in the shadows.', 'A stream burbles quietly nearby.',
-                    'In the distance, a prey falls to a pack of beasts.', 'An unexplained sound echoes on the horizon.',
-                    'Everything stands still in the morning air.', 'A droning sound fills the sky.',
-                    'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
-                    'Wild thorns scratch the ankles.', 'Something howls in the distance.',
-                    'Strange ashes fall from afar.', 'A blood-curdling wail is heard.',
-                    'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
-                    'Wild scents flow in from elsewhere.', 'The dust is oppressive.',
-                    'Wind blows from the north.', 'Secrets await.',
-                    'Discover what is unknown.', 'A morning fog welcomes you.',
-                    'An eerie glow from above illuminates the night.',
-                    'Distant lands lay undisturbed.', '<b>Magic awaits.</b>',
-                    'A cool breeze is blowing.', 'Another sea wave crashes against a huge rock.',
-                    'What a cloudy day today.', 'The air is strangely dry today.',
-                    'Wild brambles look scary even from far away.', 'Your tribe has had a good sleep.',
-                    'From far away a falling tree can be heard.', 'There is no wind today.',
-                    'Just another day in your tribe!', 'From somewhere a meowing sound can be heard...',
-                    'Uncover the secrets.', 'Merge with nature.',
-                    'Discover the undiscovered.', 'This is a lush evening.',
-                    'Another sea wave crashes against a tall cliff.', 'What a storm!'
-                ];
-                shuffle(G.props['new day lines']);
-            }
+            updateNewDayLines()
             /*=====================================================================================
             Halloween ToT
             =======================================================================================*/
@@ -2585,11 +2542,11 @@ if (getObj("civ") != "1") {
                             explorepop = true
                         }
                         if (G.has('belief in the afterlife') && !bapopup && !G.has('monument-building')) {
-                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the afterlife</b> trait.<br>From now on you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the afterlife</b>, unlocking more religion-related stuff.', icon: [32, 16, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the afterlife</b> trait.<br>Now, your people may obtain the <b><font color="fuschia">Monument-building</font></b> research that will lead to your first wonder (or many more).<br>This belief may even evolve into <b>Culture of the afterlife</b>, unlocking more religion-related stuff.', icon: [32, 16, 'magixmod'] })
                             bapopup = true
                         }
                         if (G.has('belief in the beforelife') && !bapopup && !G.has('monument-building')) {
-                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>From now on you may obtain the <b><font color="fuschia">Monument-building</font></b> research that will unlock your very first wonder.<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
+                            G.Message({ type: 'tutorial', text: 'You obtained the <b>Belief in the beforelife</b> trait.<br>Now, your people may obtain the <b><font color="fuschia">Monument-building</font></b> research that will lead to your first wonder (or many more).<br>This belief may even evolve into <b>Culture of the beforelife</b>, unlocking more religion-related stuff.', icon: [11, 33, 'magixmod'] })
                             bapopup = true
                         }
                         if (G.getRes('cured meat').amount >= 1 && G.getRes('cured seafood').amount >= 1 && !cure && G.has('curing') && !G.has('hunting II')) {
@@ -2641,7 +2598,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.achievByName['mausoleum'].won >= 1 && G.achievByName['democration'].won >= 1 && G.achievByName['sacrificed for culture'].won >= 1 && G.achievByName['insight-ly'].won >= 1 && G.achievByName['first glory'].won >= 1 && G.achievByName['apprentice'].won >= 1 && G.achievByName['experienced'].won == 0) { //Experienced
                         G.achievByName['experienced'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! -<br><hr><small>From now on you will start each run with an extra 100 fruit.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! -<br><hr><small>Now, your people will start new runs with an extra 100 fruit!</small>', 'slow')
                     }
                     if (G.achievByName['heavenly'].won >= 1 && G.achievByName['deadly, revenantic'].won >= 1 && G.achievByName['in the underworld'].won >= 1 && G.achievByName['level up'].won >= 1 && G.achievByName['lucky 9'].won >= 1 && G.achievByName['traitsman'].won >= 1 && G.achievByName['smart'].won == 0 && G.achievByName['familiar'].won == 1 && G.achievByName['in the shadows'].won == 1) { //Smart
                         G.achievByName['smart'].won = 1
@@ -2830,7 +2787,7 @@ if (getObj("civ") != "1") {
                 name: 'population',
                 desc: 'Your [population] represents everyone living under your rule. These are the people that look to you for protection, survival, and glory.',
                 meta: true,
-                colorGood: 'green', colorBad: '#f44',
+                colorGood: '#3b4', colorBad: '#f44',
                 visible: true,
                 icon: [0, 3],
                 tick: function (me, tick) {
@@ -3292,7 +3249,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children].//They will eat and drink 40% as much as children.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children], although [baby,Babies] will consume 40% as much as them.',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',
@@ -3359,14 +3316,6 @@ if (getObj("civ") != "1") {
                             {
                                 AoD();
                             }
-                        } else {
-                            if (G.has('art of death')) {
-                                var happMult = 1;
-                                if (G.has('fear of death')) happMult *= 1.05;
-                                if (G.has('acceptance of death')) happMult *= 0.95;
-                                if (G.has('death scepticism')) happMult -= G.year % 40 > 19 ? 0.05 : -0.05;
-                                changeHappiness(-changed * 0.1 * happMult, 'art of death');
-                            }
                         }
                         if (me.amount > 0) {
                             //bury slowly
@@ -3389,8 +3338,10 @@ if (getObj("civ") != "1") {
                         var toExhume = randomFloor((graves.used - graves.amount) * 0.1);
                         graves.used -= toExhume;
                         G.gain('corpse', toExhume, 'not enough burial spots');
+                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by spam-removing burial spots
                     }
-                    //Normally
+
+                    // Very slow normal corpse decay
                     if (G.day % 30 == 0) {
                         var toSpoil = me.amount * 0.0075;
                         var spent = G.lose('corpse', randomFloor(toSpoil), 'decay');
@@ -3404,12 +3355,12 @@ if (getObj("civ") != "1") {
                     //Corpse decay trait: Normal decay still works and each dark wormhole can increase rate of corpses that will get decayed(?)
                     if (G.has('corpse decay')) {
                         var toSpoil = me.amount * 0.002 * (G.getRes('corpsedecaypoint').amount);
-                        var spent = G.lose('corpse', randomFloor(toSpoil), 'Dark wormhole\'s corpse decay');
+                        var spent = G.lose('corpse', randomFloor(toSpoil), 'corpse decay from wormholes');
                     }
                     if (day + leap <= 40 && day + leap >= 46 && !G.has('peace')) {
                         if (G.has('revenants') && G.getRes('dark essence').amount > 1000) {
                             G.lose('corpse', G.getRes('corpse').amount * 0.001, 'revenge of corpses');
-                            G.lose('dark essence', 0.15, 'revenge of corpses');
+                            G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
                             G.gain('wild corpse', G.getRes('corpse').amount * 0.001, 'revenge of corpses');
                         }
                     }
@@ -3417,7 +3368,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'burial spot',
-                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried once every day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
+                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//Your people will slowly bury [corpse]s if there are enough [burial spot]s.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
                 icon: [13, 4],
                 displayUsed: true,
             });
@@ -4988,7 +4939,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'urn',
-                desc: 'Cremated [corpse]. People can store 4 [urn]s for each 1 [burial spot]. They decay slowly as well.',
+                desc: 'These can be used to store cremated [corpse] remains. People can store 4 [urn]s for every [burial spot]. [urn]s will also decay, requiring a new one to store the [corpse] remains again.',
                 icon: [31, 6, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -5009,7 +4960,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.has('dark urn decay')) {
                         var toSpoil = me.amount * 0.002 * (G.getRes('corpsedecaypoint').amount);
-                        var spent = G.lose('corpse', randomFloor(toSpoil), 'Dark wormhole\'s dark urn decay');
+                        var spent = G.lose('corpse', randomFloor(toSpoil), 'dark urn decay');
                     }
                     var toSpoil = me.amount * 0.001;
                     var spent = G.lose('urn', randomFloor(toSpoil), 'decay');
@@ -5660,7 +5611,7 @@ if (getObj("civ") != "1") {
                         madeWarnCorpseMesg = true
                     }
 
-                    // More content for wild corpses by @1_e0 because it's a shame all this code only had 2 modes
+                    // More content for wild corpses by @1_e0 because it's a shame all this code only had 2 chance types
                     const corpses = G.getDict('wild corpse').amount
                     const chances = [
                         {
@@ -5689,8 +5640,8 @@ if (getObj("civ") != "1") {
                     }
                     //Execute
                     if (day + leap <= 40 && day + leap >= 46 && !G.has('peace')) {
-                        if (action !== "nothing") {
-                            G.lose("dark essence", randomFloor(G.getRes('dark essence') * 0.0002), "dark essence sapping")
+                        if (action === "nothing") {
+                            G.lose("dark essence", randomFloor(G.getRes('dark essence') * 0.0002), "wild corpse essence sapping")
                         }
                         switch (action) {
                             case "hurt":
@@ -10088,17 +10039,17 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'temple of the Dead',
-                desc: '@Leads to the completion of the <b>Buried</b> trial. //A very dark temple built in dead and hostile terrain. A lot of [grave]s are nearby, which may attract Buri\'o dak.<><font color="#f08">Why is everyone afraid of death? Just face it.</font>',
+                desc: '@Leads to the completion of the <b>Buried</b> trial. //A very dark temple built in dead and hostile terrain. Many [grave]s are nearby, which attracts Buri\'o dak.<><font color="#f08">Why is everyone afraid of death? Just face it.</font>',
                 wonder: 'buried',
                 icon: [1, 26, 'magixmod'],
                 wideIcon: [0, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'bone': 200, 'corpse': 20 },
                 costPerStep: { 'basic building materials': 10, 'corpse': 2, 'precious building materials': 1.2, 'bone': 3, 'dark essence': 2 },
                 steps: 2000,
-                messageOnStart: 'Your people have started building the <b>temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow spreads fear all around!',
+                messageOnStart: 'Your people have started building the <b>temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow manages to spread fear all around!',
                 finalStepCost: { 'population': 50, 'corpse': 40 },
                 finalStepDesc: 'To perform the final step, 50 [population,people] and 40 [corpse]s must be sacrificed to escape this hell once and for all and award 15 [victory point]s.',
-                use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
+                use: { 'burial spot': 50, 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 't8': true },//due to trial conditions you start run with unlocked wonder
                 category: 'wonder',
             });
@@ -14297,7 +14248,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'instruction', category: 'tier1',
-                desc: '@improves people communication between themselves. <>[population,People] will be able to guide each other while doing their work to help out! //<small>in fact, it can reduce confusion</small>',
+                desc: 'This will improve your people\'s communication among themselves. [population,People] will now be able to guide each other while doing their work to help out! //<small>in fact, it can reduce confusion by a lot</small>',
                 icon: [30, 27, 'magixmod'],
                 req: { 'language': true, 'a gift from the mausoleum': true, 'alphabet 1/3': true },
                 cost: { 'insight': 30 },
@@ -14306,7 +14257,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'writing', category: 'tier1',
-                desc: 'Elves can write, at least. Because they do not have any paper yet, they will write on stones, logs, and other nearby objects. Learning [writing] is required to unlock further researches.<br>//<small>writing H letter, then E, after E write L, then another L and O at the end.</small>',
+                desc: 'People can write, at least. Because they do not have any paper yet, they will write on stones, logs, and other nearby objects. Learning [writing] is required to unlock further researches.<br>//<small>writing H letter, then E, after E write L, then another L and O at the end.</small>',
                 icon: [16, 27, 'magixmod'],
                 req: { 'language': true },
                 cost: { 'insight': 25 },
@@ -14443,7 +14394,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('monument-building').desc = '@unlocks a wonder depending on Trial you are currently in'; document.title = 'Trial active: NeverEnding Legacy'
+                            G.getDict('monument-building').desc = '@getting this may unlock a wonder depending on the Trial you are currently in'; document.title = 'Trial active: NeverEnding Legacy'
                         }
                     },
                 ],
@@ -15113,7 +15064,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wonder \'o science', category: 'tier2',
-                desc: 'Unlocks the [university of science]. The [university of science] is a wonder that can be upgraded. To unlock further tiers, you need to complete Trials at higher levels to gain more [victory point]s. The university by itself can provide way more [education] and [wisdom II]. It may lead to some new discoveries!',
+                desc: 'Unlocks the [university of science]. The [university of science] is a wonder that can be upgraded. To unlock further tiers, you need to complete Trials at higher levels to gain more [victory point]s. The university will be able to provide way more [education] and [wisdom II]. It may also lead to some new discoveries!',
                 icon: [11, 29, 'magixmod'],
                 req: { 'outstanders club': true, 'monument-building III': true },
                 cost: { 'insight II': 305, 'culture II': 25, 'culture': 65 },
@@ -15488,7 +15439,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'dynamics', category: 'tier1',
-                desc: 'Provides 25 [wisdom] for free. This tech will help people get to understand more complicated concepts in this expansive world!',
+                desc: 'Provides 25 [wisdom] for free. This tech will help people understand more complicated concepts in this large and expansive world!',
                 icon: [32, 31, 'magixmod'],
                 req: { 'physics': true, 'gt3': true },
                 cost: { 'insight': 1400, 'science': 1 },
@@ -15499,7 +15450,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: '"dark season"', category: 'seasonal',
-                desc: 'People will try make fun out of spooky things. They won\'t need help of anyone outside your tribe. Prepare for festival of fear - that\'s what one of your ' + G.getName('inhab') + ' said to you.',
+                desc: 'People will find fun from spooky things. They won\'t need help of anyone outside your tribe. Prepare for a festival of fear...',
                 icon: [5, 7, 'seasonal'],
                 req: { 'tribalism': false, 'culture of celebration': true, 'sedentism': true, 'intuition': true },//tribalism switches to true when halloween season starts
                 cost: { 'culture': 30, 'faith': 5 },
@@ -15509,7 +15460,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pumpkins', category: 'seasonal',
-                desc: 'From now on you can find pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy Halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins until Halloween starts again. You can only get them during Halloween.</font>',
+                desc: 'Your people will now be able to discover various pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy Halloween!</b><br><font color="red">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins until Halloween starts again. You can only get them during Halloween.</font>',
                 icon: [6, 7, 'seasonal'],
                 req: { '"dark season"': true },
                 cost: { 'insight': 100 },
@@ -16222,7 +16173,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 't8',
                 displayName: 'Buri\'o dak\'s Trial',
-                desc: 'You are currently in the <b>Buried trial. After you successfully finish this trial you will no longer be able to rerun it.',
+                desc: 'You are currently in the <b>Buried</b> trial. After you successfully finish this trial, you will no longer be able to rerun it.',
                 icon: [22, 25, 'magixmod', 1, 22, 'magixmod'],
                 req: { 'tribalism': false, 'trial': true },
                 cost: {},
@@ -16236,7 +16187,6 @@ if (getObj("civ") != "1") {
                             G.getDict('mud shelter').desc = '@provides 8 [housing]<>Basic, frail dwelling in which a small family can live.';
                             G.getDict('branch shelter').desc = '@provides 8 [housing]<>Basic, very frail dwelling in which a small family can live.';
                             G.getDict('shelter on water').desc = '@provides 15 [housing]<>Small dwelling with roof out of branches and walls out of [bamboo].';
-                            G.getDict('monument-building').desc = '@useless because you unlock the wonder in this plane at the very beginning of the Trial.';
                             //G.getDict('dark essence').limit=null;
                         }
                     },
@@ -16258,7 +16208,7 @@ if (getObj("civ") != "1") {
                         }
                     },
                 ],
-                tutorialMesg: ['tutorial', 'Perform three ascensions to unlock the <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via the <b>Magix</b> tab!', [32, 27, 'magixmod']]
+                tutorialMesg: ['tutorial', G.resets >= 3 ? 'Remember that because you\'ve performed three ascensions already, you can always open the <font color="#d4af37"><b>Magix</b></font> tab to edit message settings.' : 'Perform three ascensions to unlock the <font color="#d4af37"><b>Message filter</b></font>. You will be able to use it via the <font color="orange"<b>Magix</b></font> tab!', [32, 27, 'magixmod']]
             });
             new G.Tech({
                 name: 'bII(acceptance)',
@@ -17439,7 +17389,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] but harming [health] and [happiness] (depending on your civilization\'s [fear of death,death attitude]).@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] at the cost of [health].@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>ughhh</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 chance: 500,
@@ -18138,7 +18088,6 @@ if (getObj("civ") != "1") {
                             G.getDict('seafood').desc = "[seafood] is a decent source of food for an ocean-based civilization. They harm [health] much less than normal in such a tribe!";
                             G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': 0.0065, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }
                             G.getDict('wtr').icon = [10, 0, 'magix2'];
-                            G.getDict('monument-building').desc = '@useless because you unlock the wonder in this plane at the very beginning of the Trial.';
                             G.getDict("tomb of oceans").costPerStep = { 'gold block': 1 + G.achievByName['ocean'].won, 'gem block': 10, 'precious metal ingot': 25, 'strong metal ingot': 10, 'basic building materials': 75, 'golden fish': 25 * (G.achievByName['ocean'].won + 1) };
                             G.getDict("tomb of oceans").finalStepCost['golden fish'] = 1000 * (G.achievByName['ocean'].won * 0.5 + 1);
                         }
@@ -19002,7 +18951,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="red">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to retry this trial after its completion, however.<br><Br><BR>' +
+                                    'My plane full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> and <font color="white">Land</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to do this this trial again after its completion, however.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
@@ -20232,7 +20181,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'Ice',
-                desc: 'Only in an iceberg can you can find so much [ice]. It is freeeezing....Brrr...',
+                desc: 'Only in an iceberg can you can find so much [ice]! It is freeeezing there though...Brrr...',
                 icon: [21, 24, 'magixmod'],
                 res: {
                     'dig': { 'ice': 2.25 },
@@ -20400,7 +20349,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'dead fishes',
-                desc: 'Disgusting smell...Ewww. This can give you an insignificant amount of [spoiled food].',
+                desc: 'These stinky fish have a decisively bad smell. This can give you an insignificant amount of [spoiled food].',
                 icon: [33, 13, 'magixmod'],
                 res: {
                     'fish': { 'spoiled food': 0.02 },
@@ -21489,7 +21438,7 @@ if (getObj("civ") != "1") {
                 name: 'population',
                 desc: 'Your [population] represents everyone living under your rule. These are the elves that look to you for protection, survival, and glory.',
                 meta: true,
-                colorGood: 'green', colorBad: '#f44',
+                colorGood: '#3b4', colorBad: '#f44',
                 visible: true,
                 icon: [0, 3, 'c2'],
                 tick: function (me, tick) {
@@ -21831,7 +21780,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children].//They will eat and drink 40% as much as children.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children], although [baby,Babies] will consume 40% as much as them.',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',
@@ -21919,6 +21868,7 @@ if (getObj("civ") != "1") {
                         var toExhume = randomFloor((graves.used - graves.amount) * 0.1);
                         graves.used -= toExhume;
                         G.gain('corpse', toExhume, 'not enough burial spots');
+                        changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by spam-removing burial spots
                     }
 
                     //Normally
@@ -21936,7 +21886,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'burial spot',
-                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//By default, corpses are buried once every day.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
+                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//Your people will slowly bury [corpse]s if there are enough [burial spot]s.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
                 icon: [13, 4, 'c2'],
                 displayUsed: true,
             });
@@ -25625,7 +25575,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'art of death',
-                desc: '@[corpse]s and their parts are now part of an art, creating some [gentility] but harming [health] and [happiness] (depending on civilization\'s [fear of death,death attitude]). @unused [corpse] parts are left as [bone]s. @unused [corpse] parts are left as [bone]s. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>Ewww</small>',
+                desc: '@[corpse]s and their parts are now part of an art, creating some [culture] at the cost of [health].@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>ughhh</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false },
