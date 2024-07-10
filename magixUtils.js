@@ -85,6 +85,28 @@ G.setDict = function (name, what) {
     G.dict[name] = what
 }
 
+// Modified for icon/resource validation (like [food] in descriptions, for example)
+G.parseFunc = function (str) {
+    str = str.substring(1, str.length - 1);
+    var parts = str.split(',');
+    var keyword = parts[0];
+    parts.shift();
+    var val = parts.join(',');
+    var exact = false;
+    if (keyword.charAt(0) == '#') {
+        exact = true;
+        keyword = keyword.substring(1, keyword.length);
+    }
+    //str='['+keyword+' (not defined yet)]';
+    if (exact && G.getRawDict(keyword)) str = G.getSmallThing(G.getRawDict(keyword), val);
+    else if (!exact && G.getDict(keyword)) str = G.getSmallThing(G.getDict(keyword), val);
+    else {
+        str = G.getBrokenSmallThing(keyword, val);
+        console.warn("Invalid small icon: [" + keyword + "] from the following: " + str)
+    }
+    return str;
+}
+
 // Remove the empty tick functions for a little performance boost (how much? not sure...)
 G.Res = function (obj) {
     this.type = 'res';
@@ -2024,7 +2046,7 @@ G.AddData({
             { id: 'addFastTicksOnStart', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks += obj.amount }, context: 'new' },
             { id: 'addFastTicksOnResearch', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
             { id: 'wholenewworld', name: 'A whole new adventure', desc: '<font color="#d4af37">...just progress...you will unlock it.</font>', icon: [0, 0] },
-            { id: 'pressure', name: '+[X] to base <font color="white">Pressure resistance</font> amount.', desc: 'This will help you having bigger elf civilization.', icon: [0, 0], func: function (obj) { G.pressureAdd += obj.amount } },
+            { id: 'pressure', name: '+[X] to base <font color="white">Pressure resistance</font> amount.', desc: 'This will help you create a bigger elf civilization!', icon: [0, 0], func: function (obj) { G.pressureAdd += obj.amount } },
             { id: 'addFastTicksOnStart2', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks2 += obj.amount }, context: 'new' },
             { id: 'addFastTicksOnResearch2', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
         );

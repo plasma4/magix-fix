@@ -1681,8 +1681,8 @@ if (getObj("civ") != "1") {
                         if (droughtYear > 0) {
                             if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) - 0.9) > G.year) {
                                 G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
-                                if (G.has('drought')) G.deleteTrait(G.traitByName['drought'])
-                                if (G.has('famine')) G.deleteTrait(G.traitByName['famine'])
+                                if (G.has('drought')) G.deleteTrait('drought')
+                                if (G.has('famine')) G.deleteTrait('famine')
                                 setObj('drought', 0)
                             }
                         } else if (G.year === 49 || (G.year > 49 && (G.year - 2 >= G.getRes('ignoreItem').amount))) {
@@ -2250,7 +2250,7 @@ if (getObj("civ") != "1") {
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (!droughtmesg && G.has('drought')) {
-                        G.Message({ type: 'bad3', text: 'You are currently in a <b>drought</b>! While in a <b>drought</b>, you will gain a lot less water. In addition, these may to turn into famines (that increase food decay). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
+                        G.Message({ type: 'bad3', text: 'You are currently in a <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store!. In addition, these may to turn into famines (famines will cause food to decay more rapidly). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
                         droughtmesg = true
                     }
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
@@ -6877,7 +6877,7 @@ if (getObj("civ") != "1") {
                     'stick fires': { name: 'Start fires from sticks', icon: [0, 6, 13, 7], desc: 'Craft [fire pit]s from 20 [stick]s each.', req: { 'factories II': false } },
                     'cook': { name: 'Cook', icon: [6, 7, 13, 7], desc: 'Turn [meat] and [seafood] into [cooked meat] and [cooked seafood] in the embers of [fire pit]s.', req: { 'cooking': true } },
                     'cure': { name: 'Cure & smoke', icon: [11, 6, 12, 6], desc: 'Turn 1 [meat] or [seafood] into 2 [cured meat] or [cured seafood] using [salt] in the embers of [fire pit]s.', req: { 'curing': true } },
-                    'honey': { name: 'Collect honey', icon: [6, 0, 'magix2'], desc: 'Attempt to collect [honey] from bee nests. The chance of success can be increased through more techs.', req: { 'beekeeping': true } },
+                    'honey': { name: 'Collect honey', icon: [6, 0, 'magix2'], desc: 'Attempt to collect [honey] from bee nests. The chance of success and [honey] gain can be increased through more techs.', req: { 'beekeeping': true } },
                     'honey2': { name: 'Collect honey (advanced)', icon: [6, 0, 'magix2'], desc: 'Try to collect [honey] from bee nests while using [nature essence].', req: { 'beekeeping III': true } },
                     'honeycombs': { name: 'Collect honeycombs', icon: [3, 0, 'magix2'], desc: 'Slowly get [honeycomb]s from bee nests.', req: { 'beekeeping III': true } },
                     'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 6 [fire pit]s by using 1 [fire essence] and 13 [stick]s.', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
@@ -6890,15 +6890,14 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'seafood': 1, 'fire pit': 0.01 }, into: { 'cooked seafood': 1 }, every: 1, repeat: 5, mode: 'cook' },
                     { type: 'convert', from: { 'meat': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
                     { type: 'convert', from: { 'seafood': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
-                    { type: 'gather', context: 'honey', what: { 'honey': 20 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false, 'plant-loving bees': false } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 25 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': false } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 30 }, max: 100, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': false, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 37.5 }, max: 125, mode: 'honey', chance: 1 / 8, req: { 'beekeeping II': true, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 4 }, max: 8, mode: 'honeycombs', req: { 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 7.5 }, max: 15, mode: 'honeycombs', req: { 'love of honey': 'on' } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 40 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': false } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 96 }, every: 1, chance: 1 / 3.5, mode: 'honey2', req: { 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 20 }, amount: 1, every: 2, max: 50, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 25 }, amount: 1, every: 2, max: 62.5, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': true, 'plant-loving bees': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 37.5 }, amount: 1, every: 2, max: 93.75, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': true, 'plant-loving bees': true } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 4 }, amount: 1, every: 1, max: 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 7.5 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', req: { 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 40 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'plant-loving bees': false } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 96 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'love of honey': 'on' } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -9713,6 +9712,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'temple of deities',
+                displayName: 'Temple of Deities',
                 desc: 'A mystical monument dedicated to angels, archangels, Seraphins, and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is towers above the world\'s clouds, and despite the fact there is cold on top, some brave people may come up to prey its god, or listen to heavenly symphonies and hums.',
                 wonder: 'heavenly',
                 icon: [1, 11, 'magixmod'],
@@ -9803,7 +9803,8 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'New world',
-                desc: 'Step-by-step digging will lead people to a new world. Unfortunately, it won\'t be as safe as you thought it would be. After finishing this step of activation, you need to ascend by it.',
+                displayName: 'A brand-new world',
+                desc: 'Step-by-step digging will lead people to a new and rather strange world. Unfortunately, it won\'t be as safe as you thought it would be. After finishing this step of activation, you need to ascend by it.',
                 wonder: 'in the underworld',
                 icon: [8, 5, 'magixmod'],
                 wideIcon: [6, 19, 'magixmod', 7, 5, 'magixmod'],
@@ -9813,7 +9814,7 @@ if (getObj("civ") != "1") {
                 messageOnStart: 'Your people started digging down right into the core of the mortal world. The deeper they mine, the warmer it is there. What could possibly be inside this weird world?',
                 finalStepCost: { 'population': 2000, 'gem block': 500, 'gold block': 50, 'new world point': -389 },
                 finalStepDesc: '<font color="fuschia">To complete the final step of activating the passage to the Underworld, you need to ascend first.</font>',
-                use: { 'land': 1, 'worker': 35, 'metal tools': 35, 'armor set': 35 },
+                use: { 'land': 1, 'worker': 40, 'metal tools': 40, 'armor set': 40, 'metal weapons': 5 },
                 category: 'dimensions',
                 req: { 'a feeling from the Underworld': false, 'third passage to new world': true }
             });
@@ -9824,7 +9825,7 @@ if (getObj("civ") != "1") {
                 icon: [10, 22, 'magixmod'],
                 wideIcon: [9, 22, 'magixmod'],
                 cost: { 'basic building materials': 1500 },
-                costPerStep: { 'mana': 25000, 'precious building materials': 120, 'basic building materials': 1000, 'concrete': 5, 'strong metal ingot': 75 },
+                costPerStep: { 'mana': 25000, 'precious building materials': 120, 'basic building materials': 1000, 'concrete': 5, 'strong metal ingot': 80 },
                 steps: 200,
                 messageOnStart: 'Your people who worship magic and believe in the power of the essences started building a wonder that will be related to that.<br>Will magic award your and your people\'s hard work?',
                 finalStepCost: { 'population': 5000, 'fire essence': 5e4, 'lightning essence': 5e4, 'dark essence': 5e4, 'wind essence': 5e4, 'nature essence': 5e4, 'water essence': 5e4, 'holy essence': 5e4 },
@@ -9839,7 +9840,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'artisan of new year',
                 displayName: 'artisan of the New Year',
-                desc: 'This guy can craft New Year fireworks as a celebration. He will just consume [paper] and [thread] to finish it up.',
+                desc: 'This guy can craft New Year fireworks as a celebration, and will consume [paper] and [thread] to finish it up.',
                 icon: [19, 0, 'seasonal'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -9848,8 +9849,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'blue firework': 0.75 }, every: 3 },
                     { type: 'gather', what: { 'orange firework': 0.75 }, every: 3 },
                     { type: 'gather', what: { 'firecracker': 1 }, every: 3 },
-                    { type: 'gather', what: { 'dark blue firework': 0.5 }, every: 6, req: { 'Dark essenced fireworks': true } },
-                    { type: 'gather', what: { 'dark orange firework': 0.5 }, every: 6, req: { 'Dark essenced fireworks': true } },
+                    { type: 'gather', what: { 'dark blue firework': 0.5 }, every: 6, req: { 'dark essenced fireworks': true } },
+                    { type: 'gather', what: { 'dark orange firework': 0.5 }, every: 6, req: { 'dark essenced fireworks': true } },
                     { type: 'mult', value: 1.1, req: { 'ground tools': true } },
                 ],
                 req: { 'culture of celebration': true, 'firework crafting': true, 'tribalism': false },
@@ -13181,7 +13182,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'dark essenced fireworks', category: 'seasonal',
-                desc: '@[artisan of new year] can now craft [dark orange firework] and [dark blue firework].',
+                desc: '@[artisan of new year] can now craft [dark orange firework]s and [dark blue firework]s. Luckily for you, these do not consume any [dark essence,Essence]!',
                 icon: [16, 0, 'seasonal'],
                 cost: { 'insight': 400 },
                 req: { 'culture of celebration': true, 'firework crafting': true, 'Wizard complex': true, 'tribalism': false },
@@ -20209,7 +20210,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'squid',
-                desc: 'Squid is a good source of [ink]. You need [ink-fishing] to collect it, however.',
+                desc: 'Squid provide a nice source of [ink]. You need [ink-fishing] to collect it, however.',
                 icon: [32, 6, 'magixmod'],
                 res: {
                     'fish': {},//B4 inkfishing tech
