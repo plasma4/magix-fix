@@ -102,12 +102,11 @@ G.parseFunc = function (str) {
     else if (!exact && G.getDict(keyword)) str = G.getSmallThing(G.getDict(keyword), val);
     else {
         str = G.getBrokenSmallThing(keyword, val);
-        console.warn("Invalid small icon: [" + keyword + "] from the following: " + str)
     }
     return str;
 }
 
-// Remove the empty tick functions for a little performance boost (how much? not sure...)
+// Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
 G.Res = function (obj) {
     this.type = 'res';
     this.amount = 0;
@@ -1660,7 +1659,6 @@ G.AddData({
         Civ debug
         ==========================*/
         G.auratext = 0;
-        if (G.resets == 0) G.loadciv = 0;
 
 
 
