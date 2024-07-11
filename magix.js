@@ -486,14 +486,14 @@ G.update['unit'] = function () {
     //G.cacheUnitBounds();
 }
 
-// We can override this function to hide negative costs
+// We can override this function to hide negative costs and make numbers more specific
 G.getCostString = function (costs, verbose, neutral, mult) {
     //returns a string that displays resource costs with icons and amount; the amounts will be red if our current resources don't match them, unless neutral is set to true; only the amount will be displayed unless verbose is true, in which case the amount and the resource name will be displayed; costs will be multiplied by mult if specified
     var costsStr = [];
     mult = mult || 1;
     for (var i in costs) {
         var cost = costs[i];
-        if (cost > 0) { // Hide negative costs (which are gains such as -1 X temple point)
+        if (cost > 0) {
             var thing = G.getDict(i);
             var signed = cost * mult;
             var num = Math.abs(signed);
@@ -508,8 +508,8 @@ G.getCostString = function (costs, verbose, neutral, mult) {
     return costsStr.join(', ');
 }
 
+// Same as above, but takes into account the unused amount of a usable resource instead of its total amount
 G.getUseString = function (costs, verbose, neutral, mult) {
-    //same as above, but takes into account the unused amount of a usable resource instead of its total amount
     var costsStr = [];
     mult = mult || 1;
     for (var i in costs) {
@@ -907,7 +907,7 @@ var updateNewDayLines = function (fools, civ2) {
         G.props['new day lines'] = [ // Fools mode/April Fools active
             'Mantisk blades have been discovered.', 'You met a friend today.',
             'Creatures are lurking nearby.', 'Danger abounds.',
-            'NeverEnding......Fools! (Yeah its April 1st today)', 'An idiot tried to fall up.',
+            'NeverEnding......Fools! (Yeah, its April 1st today, or...is it?)', 'An idiot tried to fall up.',
             'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',
             'Who is missing the bucket?!', 'Another bucket was found on one of the lonely streets.',
             'This is harder but more interesting \u2014pelletsstarPL',
@@ -972,7 +972,10 @@ var updateNewDayLines = function (fools, civ2) {
             'A weird low hum can be heard.', 'Mysteries abound.',
             'You thought of a neat idea, but forgot it when you woke up!', 'Finally, there is quiet.',
             'Various creatures chirp and howl.', 'It sounds like a strange creature is approaching...',
-            'Rain has not fallen for the past few days.', 'Your tribe is itching to research more.'
+            'Rain has not fallen for the past few days.', 'Your tribe is itching to research more.',
+            'It has been strangely foggy recently.', 'Your people haven\'t seen the sun in a while.',
+            'Today is a good day to go outside.', 'Your tribe finally finds a shady area to avoid the heat.',
+            'Your tribe managed to find a tasty snack for you!', 'A large gust of wind is blowing.'
         ];
     }
     if (civ2) {
@@ -2166,7 +2169,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if dark decay occured IMMEDIATELY
                         var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1;
-                        var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.min(Math.pow(G.year, 1.3), 25 + Math.pow(G.year, 1.1) * 0.18)) + 1; //we need to softcap it since the wonder will take a while to build
+                        var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.min(Math.pow(G.year, 1.3), 20 + Math.pow(G.year, 1.1) * 0.15) * (0.2 + Math.random())) + 1; //the wonder takes a while to build, so we can't have the exponents too large
                         var lostLand = Math.floor(G.getRes('land').amount * 0.016 + 0.8);
                         var darkGain = Math.round(lostHousing * 0.75) + lostPeople + lostLand;
                         G.lose('housing', lostHousing, 'Dark decay'); G.lose('population', lostPeople, 'Dark decay'); G.lose('land', lostLand, 'Dark decay');
@@ -4217,7 +4220,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'statuette',
-                desc: 'A small idol that was rudimentarily carved from [stone] or [bone].//May be used up over time, creating [culture].',
+                desc: 'A small carved statue that was rudimentarily carved from [stone] or [bone].//May be used up over time, creating [culture].',
                 icon: [8, 9],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -4594,7 +4597,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wooden statuette',
-                desc: 'A small idol that was rudimentarily carved from [log] or [lumber].//May be used up over time, creating [culture].',
+                desc: 'A small carved statue that was rudimentarily carved from [log] or [lumber].//May be used up over time, creating [culture].',
                 icon: [13, 1, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -5281,7 +5284,7 @@ if (getObj("civ") != "1") {
             //Currency
             new G.Res({
                 name: 'industry point',
-                desc: 'You can use these points to set up some industries in the Paradise. Depending on the path that your civilization took, you may have 800 or 1000.',
+                desc: 'You can use these points to set up some industries in the Paradise. Depending on the path that your civilization took, you will have either 800 or 1000 of these points!',
                 icon: [0, 14, 'magixmod'],
                 displayUsed: true,
                 category: 'main',
@@ -5289,7 +5292,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'worship point',
-                desc: 'You can use these points to decide which Seraphin will be worshipped.',//Seraphins won't be added quickly it may be January /February 2020 when you will be able to see them for the first time
+                desc: 'You can use these points to decide which Seraphin will be trusted in.',
                 icon: [1, 14, 'magixmod'],
                 category: 'main',
             });
@@ -7234,15 +7237,15 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'soothsayer',
-                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief.',
+                desc: '@generates [faith] and [happiness] with a large chance to fail<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief every now and then.',
                 icon: [15, 2],
                 cost: {},
                 use: { 'worker': 1 },
                 upkeep: { 'food': 0.2 },
                 effects: [
-                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.07 }, chance: 1 / 9.25, req: { 'enlightenment': false, 'eotm': false } },
-                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.07 }, chance: 1 / 7.25, req: { 'enlightenment': true, 'eotm': false } },
-                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.07 }, chance: 1 / 9.25, req: { 'enlightenment': true, 'eotm': true } },
+                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.075 }, chance: 1 / 9.25, req: { 'enlightenment': false, 'eotm': false } },
+                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.075 }, chance: 1 / 7.25, req: { 'enlightenment': true, 'eotm': false } },
+                    { type: 'gather', what: { 'faith': 0.012, 'happiness': 0.075 }, chance: 1 / 9.25, req: { 'enlightenment': true, 'eotm': true } },
                     { type: 'gather', what: { 'faith': 0.05 }, req: { 'symbolism': true, 'symbolism II': false }, chance: 1 / 6.5 },
                     { type: 'gather', what: { 'faith': 0.07 }, req: { 'symbolism II': true }, chance: 1 / 6.5 },
                     { type: 'mult', value: 2 / 3, req: { 'dt16': true } },
@@ -7259,7 +7262,7 @@ if (getObj("civ") != "1") {
                 cost: {},
                 use: { 'worker': 1 },
                 //staff:{'knapped tools':1},
-                upkeep: { 'food': 0.2 },
+                upkeep: { 'food': 0.4 },
                 modes: {
                     'off': G.MODE_OFF,
                     'normal': { name: 'Normal', icon: [16, 1, 'magixmod'], desc: 'This [healer] will heal [population,people] both [sick] and [wounded] but very slowly.', use: { 'knapped tools': 1 }, req: {} },
@@ -8585,6 +8588,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'culture': 0.08 } },
                     { type: 'gather', what: { 'painting': 0.002 } },
                     { type: 'gather', what: { 'culture': 0.032 }, req: { 'symbolism': true } },
+                    { type: 'gather', what: { 'culture II': 0.000007 }, req: { 'people of the arts': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on' } },
                     { type: 'mult', value: 1.05, req: { 'culture rise': true } },
@@ -10031,7 +10035,7 @@ if (getObj("civ") != "1") {
                 finalStepCost: { 'population': 250, 'golden fish': 1000, 'water': 10000 },
                 finalStepDesc: 'To perform the final step, 250 [population,people] (and a few other things) must be sacrificed in order to leave this world of endless [deep ocean,Water] and award you [victory point]s.',
                 use: { 'deep ocean': 15, 'worker': 5, 'metal tools': 5 },
-                req: { 't6': true, 'trial': true },
+                req: { 't6': true, 'trial': true },//due to trial conditions you start run with unlocked wonder
                 category: 'wonder',
             });
             new G.Unit({
@@ -10057,11 +10061,11 @@ if (getObj("civ") != "1") {
                 icon: [1, 26, 'magixmod'],
                 wideIcon: [0, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'bone': 200, 'corpse': 20 },
-                costPerStep: { 'basic building materials': 25, 'archaic building materials': 15, 'corpse': 2, 'precious building materials': 1.5, 'bone': 3, 'dark essence': 2 },
-                steps: 2000,
-                messageOnStart: 'Your people have started building the <b>temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow manages to spread fear all around!',
-                finalStepCost: { 'population': 50, 'corpse': 40 },
-                finalStepDesc: 'To perform the final step, 50 [population,people] and 40 [corpse]s must be sacrificed to escape this hell once and for all and award 15 [victory point]s.',
+                costPerStep: { 'basic building materials': 25, 'corpse': 2, 'precious building materials': 1.5, 'bone': 3, 'dark essence': 2 },
+                steps: 999,
+                messageOnStart: 'Your people have started building the <b>Temple of the Dead</b>. You do not know why, but it goes slightly slower than normal. But its shadow manages to spread fear all around!',
+                finalStepCost: { 'corpse': 50, 'dark essence': 500 },
+                finalStepDesc: 'To perform the final step, some [corpse,Dead bodies] and [dark essence] must be sacrificed to escape this terrible place once and for all and award 10 [victory point]s.',
                 use: { 'burial spot': 50, 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 't8': true },//due to trial conditions you start run with unlocked wonder
                 category: 'wonder',
@@ -10075,7 +10079,7 @@ if (getObj("civ") != "1") {
                 cost: { 'basic building materials': 1000, 'gold block': 10, 'corpse': 20 },
                 costPerStep: { 'basic building materials': 400, 'precious metal ingot': 5, 'gems': 2, 'precious building materials': 150, 'faith': 5 },
                 steps: 50,
-                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, getting inspired by Gods. You say: <b>Worship leads to victory! Religion is a key.</b>',
+                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, as they have become inspired Gods. Your people say: <b>Worship leads to victory! Religion is a key.</b>',
                 finalStepCost: { 'population': 250, 'spirituality': 35, 'faith': 35 },
                 finalStepDesc: 'To perform the final step, 250 [population,people] must be sacrificed to escape this pious plane and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -11833,14 +11837,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'quarrying II', category: 'upgrade',
-                desc: '@[quarry] can now dig for [various cut stones] using a new special mode. @The <b>"Advanced quarry stone"</b> and <b>"Quarry other stones mode (non-advanced)"</b> modes are now able to gather [platinum ore,Platinum].',
+                desc: '@[quarry] can now dig for [various cut stones] using a new special mode. @Quarries are now able to gather [platinum ore,Platinum]',
                 icon: [10, 12, 'magixmod'],
                 cost: { 'insight': 355 },
                 req: { 'prospecting II': true, 'quarrying': true },
             });
             new G.Tech({
                 name: 'platinum-working', category: 'tier1',
-                desc: '@[furnace]s can now make [platinum ingot]s from [platinum ore]@[blacksmith workshop]s can now forge [platinum block]s out of [platinum ingot]s',
+                desc: '@[furnace]s can now make [platinum ingot]s from [platinum ore]@[blacksmith workshop]s can now forge [platinum block]s out of [platinum ingot]s //<small>not that huge in size though</small>',
                 icon: [5, 11, 'magixmod'],
                 cost: { 'insight': 100 },
                 req: { 'smelting': true, 'prospecting II': true },
@@ -12498,8 +12502,8 @@ if (getObj("civ") != "1") {
                 desc: '@unhappiness from death is doubled@may evolve into more complex spiritual thinking. //<small>D-d-dd-death?</small>',
                 icon: [18, 1],
                 cost: { 'culture': 5 },
-                chance: 10,
                 category: 'long',
+                chance: 10,
                 lifetime: function () { return 300 + ((this.yearOfObtainment % 250) - 125) },
                 req: { 'language': true, 'spark\'o religion': true, 'acceptance of death': false, 'death indifference': false, 'death scepticism': false },
                 effects: [
@@ -12524,7 +12528,7 @@ if (getObj("civ") != "1") {
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 24, 1] });
+                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted a great <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 24, 1] });
                                 }
                             }
                             mausoleumEvolve();
@@ -12549,6 +12553,7 @@ if (getObj("civ") != "1") {
                 desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'culture': 25 },
+                category: 'long',
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -12559,6 +12564,7 @@ if (getObj("civ") != "1") {
                 desc: '@people consume 15% less [food], but derive less joy from eating. @may unlock more food habit traits //<small>Diet?</small>',
                 icon: [3, 12, 19, 1],
                 cost: { 'culture': 7.5 },
+                category: 'long',
                 chance: 40,
                 lifetime: function () { return 150 + ((this.yearOfObtainment % 100) - 50) },
                 category: 'long',
@@ -12664,7 +12670,7 @@ if (getObj("civ") != "1") {
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your victories attracted <b>Seraphin</b> and made it available to you way earlier. You look into your pocket and feel something heavy within. You take it out to see a shiny <b>Pantheon key</b> gleaming!', icon: [4, 25, 'magixmod', 24, 1] });
+                                    G.Message({ type: "important tall", text: 'Your victories attracted a great <b>Seraphin</b> and made it available to you way earlier. You look into your pocket and feel something heavy within. You take it out to see a shiny <b>Pantheon key</b> gleaming!', icon: [4, 25, 'magixmod', 24, 1] });
                                 }
                             }
                         }
@@ -13341,7 +13347,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise housing conceptions', category: 'tier1',
-                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like your mortal world.',
+                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his the homeland to be filled with houses and look like your mortal world.',
                 icon: [0, 21, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 390, 'inspiration': 16, 'faith': 259 },
                 req: { 'paradise building': true },
@@ -13963,7 +13969,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
-                desc: 'The third level of [symbolism] will make the bonus apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
+                desc: 'The third level of [symbolism] will symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'symbI': false },
@@ -14009,7 +14015,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'power of the faith', category: 'religion',
-                desc: 'Now the [crafting & farm rituals] bonus applies in various amounts to: @[blacksmith workshop]s (both the normal and paradise version) @[carpenter workshop]s (both the normal and paradise version)@[holy orchard]s@[artisan]s (including some subtypes)//All of these bonuses are only active when the ritual is active. These bonuses won\'t increase the amount of [faith II] required to keep the ritual active! @provides 5 [spirituality II]',
+                desc: 'Now the [crafting & farm rituals] bonus applies in various amounts to: @[blacksmith workshop]s (both the normal and paradise version) @[carpenter workshop]s (both the normal and paradise version) @[holy orchard]s @[artisan]s (including some subtypes)//These bonuses only work, however, when [crafting & farm rituals] is active (note that the [faith II] upkeep cost won\'t increase). @provides 5 [spirituality II]',
                 icon: [24, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'insight II': 135, 'science': 5, 'faith': 26 },
                 req: { 'symbolism III': true },
@@ -14138,7 +14144,8 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'gods and idols',
-                desc: 'May open a door to the Seraphins: the Deity superiors.',
+                displayName: 'Knowledge of the Seraphins',
+                desc: 'May open a door to the Seraphins, who are great beings that may help your people.',
                 icon: [17, 25, 'magixmod'],
                 req: { 'liberating darkness': true, 'power of the faith': true },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14206,7 +14213,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pantheon key', category: 'religion',
-                desc: 'Unlocks the Pantheon. In it, you will meet 12 Seraphins. Each one offers some boost, but each boost has its backfire. <font color="red">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent to choose up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back, so be careful and think twice before you perform a choice! //You\'ll also unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
+                desc: 'Unlocks the Pantheon. In it, you will meet 12 Seraphins. Each one offers some boost, but may come with some backfires! <font color="red">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent on choosing up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back to you, so be careful and think twice before you perform a choice! //You\'ll also unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
                 icon: [4, 25, 'magixmod', 24, 1],
                 req: { 'life in faith': true, 'monument-building III': true },
                 cost: { 'insight II': 100, 'faith II': 10, 'culture II': 30, 'godTemplePoint': 500, 'faith': 80 },
@@ -16449,7 +16456,7 @@ if (getObj("civ") != "1") {
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
+                                    G.Message({ type: "important tall", text: 'Your great victories in the planes of the Seraphins attracted a great <b>Them</b> and made them available to you much earlier. You look into your pocket and feel that something has appeared inside. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
                                 }
                             }
 
@@ -16476,7 +16483,7 @@ if (getObj("civ") != "1") {
 
                             //temple of "Paradise" altering
                             G.getDict("temple of the Paradise").displayName = 'Temple of Ancestors';
-                            G.getDict("temple of the Paradise").desc = '@leads to the <b>Victory next to the God</b>. //A big, precious temple which is homeland of Seraphins and the Ancestors. A temple made out of many ruins, wrecks and other Ancestors leftovers with their beauty restored. It glows faintly of ambrosium.';
+                            G.getDict("temple of the Paradise").desc = '@leads to the <b>Victory next to the God</b>. //A big, precious temple which is the homeland of Seraphins and the Ancestors. A temple made out of many ruins, wrecks and other Ancestors leftovers with their beauty restored. It glows faintly of ambrosium.';
                             G.getDict("temple of the Paradise").icon = [1, 8, 'magixmod'];
                             G.getDict("temple of the Paradise").wideIcon = [0, 8, 'magixmod'];
                             G.getDict("temple of the Paradise").cost = { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 45000, 'ambrosium shard': 10000 },
@@ -16533,7 +16540,7 @@ if (getObj("civ") != "1") {
                                 }
                                 if (!G.has('pantheon key')) {
                                     G.gainTech(G.techByName['pantheon key']);
-                                    G.Message({ type: "important tall", text: 'Your victories attracted <b>Seraphin</b> and made it available to you way earlier. You look into your pocket and feel a small weight. You take it out to see a glowing <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
+                                    G.Message({ type: "important tall", text: 'Your victories attracted a great <b>Seraphin</b> and made it available to you way earlier. You look into your pocket and feel a small weight. You take it out to see a glowing <b>Pantheon key</b>!', icon: [4, 25, 'magixmod', 22, 1] });
                                 }
                             }
                         }
@@ -16857,8 +16864,8 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'strict dress code': false, 'clothing unconcern': false, 'fluid dress code': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 125) - 5) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'strict dress code',
@@ -16867,8 +16874,8 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'nudist culture': false, 'fluid dress code': false, 'clothing unconcern': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 125) - 5) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'clothing unconcern',
@@ -16877,8 +16884,8 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 125) - 5) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'fluid dress code',
@@ -16887,7 +16894,7 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'clothing unconcern': false, 'nudist culture': false, 'strict dress code': false },
                 chance: 10,
-                lifetime: function () { return 150 + (((this.yearOfObtainment + 25) % 100) - 50) },
+                lifetime: function () { return 150 + (((this.yearOfObtainment + 25) % 125) - 5) },
                 category: 'long'
             });
             new G.Trait({
@@ -17405,8 +17412,8 @@ if (getObj("civ") != "1") {
                 desc: '@[corpse]s and their parts are now part of an art, creating some [culture] at the cost of [health].@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>ughhh</small>',
                 icon: [15, 6, 'magixmod'],
                 cost: { 'culture': 25 },
+                category: 'long',
                 chance: 500,
-                lifetime: 400,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
             });
@@ -17415,6 +17422,7 @@ if (getObj("civ") != "1") {
                 desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'culture': 25 },
+                category: 'long',
                 chance: 750,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': true, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -17424,6 +17432,7 @@ if (getObj("civ") != "1") {
                 desc: '@A [corpse,Dead person\'s] belongings are preserved and left for the family instead of being taken for common use (unless the person didn\'t have one). @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'culture': 25 },
+                category: 'long',
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': true, 'royal treatment': false, 'art of death': false, 'ritual necrophagy': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -17545,7 +17554,8 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'function', func: function () { G.getDict('coloral symbolism III').req = { 'doctrine of the dark wormhole 5/5': true, 'symbolism': false, 'symbolic culture colors': true } } }
                 ],
-                lifetime: function () { return 120 + (Math.pow(this.yearOfObtainment, 1.5) % 42 > 32 && Math.pow(this.yearOfObtainment, 1.5) % 42 < 36 ? Infinity : (Math.round(this.yearOfObtainment * 1.4) % 150)) }
+                lifetime: function () { return 120 + (Math.pow(this.yearOfObtainment, 1.5) % 42 > 32 && Math.pow(this.yearOfObtainment, 1.5) % 42 < 36 ? Infinity : (Math.round(this.yearOfObtainment * 1.4) % 150)) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'symbolic knowledge colors',
@@ -17557,7 +17567,8 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'function', func: function () { G.getDict('coloral symbolism III').req = { 'doctrine of the dark wormhole 5/5': true, 'symbolism': false, 'symbolic knowledge colors': true } } }
                 ],
-                lifetime: function () { return 120 + (Math.pow(this.yearOfObtainment, 1.5) % 42 > 32 && Math.pow(this.yearOfObtainment, 1.5) % 42 < 36 ? Infinity : (Math.round(this.yearOfObtainment * 1.4) % 150)) }
+                lifetime: function () { return 120 + (Math.pow(this.yearOfObtainment, 1.5) % 42 > 32 && Math.pow(this.yearOfObtainment, 1.5) % 42 < 36 ? Infinity : (Math.round(this.yearOfObtainment * 1.4) % 150)) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'coloral symbolism III',
@@ -18005,6 +18016,16 @@ if (getObj("civ") != "1") {
                     },
                 ],
             });
+            new G.Tech({
+                name: 'people of the arts', category: 'tier1',
+                desc: '@improve the art and drawing skills of your people @makes [painter]s generate very small amounts of [culture II] @provides 5 [inspiration II]',
+                icon: [11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
+                cost: { 'culture II': 30, 'faith II': 2 },
+                req: { 'symbolism III': true },
+                effects: [
+                    { type: 'provide res', what: { 'inspiration II': 5 } },
+                ],
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -18126,7 +18147,6 @@ if (getObj("civ") != "1") {
                 category: 'trial',
                 skip: true
             });
-
             new G.Trait({
                 name: 'scientific minds',
                 desc: 'Your people have gained a deeper cultural appreciation of [science]. @With so many minds of science, your people will gain [science] <b>extremely slowly</b> (but based on your [culture II] amount). @provides 1 [education] and 1 [inspiration II]',
@@ -18357,7 +18377,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'fertility rituals',
-                desc: 'Increases birth rates by 20%. Consumes 1 [faith] every 20 days; will stop if you run out. //<small>We need babies</small>',
+                desc: 'Increases birth rates by 20%. Consumes 1 [faith] every 20 days; will stop if you run out. //<small>we may need more people</small>',
                 icon: [8, 12, 2, 3],
                 cost: { 'faith': 1 },
                 startMode: 'off',
@@ -20540,10 +20560,9 @@ if (getObj("civ") != "1") {
                                     }
                                     if (G.testCost(me.unit.costPerStep, 1))
                                         me.percent++;
-                                    else if (me.unit.type != 'portal') me.percent++; //as only portals change their costs
-                                    if (me.unit.name == 'temple of the Dead' && me.percent > 100 && me.percent <= 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': (10 + me.percent * 0.0001), 'corpse': 2 + (me.percent * 0.00001), 'precious building materials': 1.2, 'bone': 3 + (me.percent * 0.01), 'dark essence': 2 + (me.percent * 0.01) };
-                                    if (me.unit.name == 'temple of the Dead' && me.percent > 500 && me.percent <= 1400) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': (10 + me.percent * 0.0001), 'corpse': 2 + (me.percent * 0.00001), 'precious building materials': 2, 'bone': 3 + (me.percent * 0.013), 'dark essence': 4 + (me.percent * 0.015) };
-                                    if (me.unit.name == 'temple of the Dead' && me.percent > 1400) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': (30 + me.percent * 0.0001), 'corpse': 2 + (me.percent * 0.00003), 'precious building materials': 3, 'bone': 4 + (me.percent * 0.013), 'dark essence': 7 + (me.percent * 0.02) };
+                                    else if (me.unit.type != 'portal') me.percent++; //only portals change their costs, well, and the wonder from the Buried trial
+                                    if (me.unit.name == 'temple of the Dead' && me.percent > 100 && me.percent <= 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 10, 'corpse': 1 + (me.percent * 0.001), 'precious building materials': 1.2, 'bone': 3 + (me.percent * 0.01), 'dark essence': 2 + (me.percent * 0.01) };
+                                    if (me.unit.name == 'temple of the Dead' && me.percent > 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 5 + me.percent * 0.01, 'corpse': 1.5, 'precious building materials': 2, 'bone': 3 + (me.percent * 0.011), 'dark essence': 4 + (me.percent * 0.012) };
                                     G.doCost(me.unit.costPerStep, 1);
                                     if (G.getSetting('animations') && me.l) triggerAnim(me.l, 'plop');
                                 }
@@ -22608,7 +22627,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'statuette',
-                desc: 'A small idol that was rudimentarily carved from [stone] or [bone].//May be used up over time, creating [gentility].',
+                desc: 'A small carved statue that was rudimentarily carved from [stone] or [bone].//May be used up over time, creating [gentility].',
                 icon: [8, 9, 'c2'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -22939,7 +22958,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'clay statuette',
-                desc: 'A small idol that was rudimentarily carved from [clay] and hardened by using [fire pit,Fire].//May be used up over time, creating [gentility].',
+                desc: 'A small carved statue that was rudimentarily carved from [clay] and hardened by using [fire pit,Fire].//May be used up over time, creating [gentility].',
                 icon: [16, 9, 'c2'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -23546,7 +23565,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'soothsayer',
-                desc: '@generates [faith] and [happiness] every now and then<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief.',
+                desc: '@generates [faith] and [happiness]<>[soothsayer]s tell the tales of the dead, helping the tribe deal with grief.',
                 icon: [15, 2, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -24907,6 +24926,7 @@ if (getObj("civ") != "1") {
                 desc: '@[corpse]s are slowly turned into [meat] and [bone]s, creating some [faith] but harming [health]. @<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>Ewww...it\'s more disgusting than leaving a dead one for animals to devour...but sometimes you have no choice...no...choice.</small>',
                 icon: [15, 7, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
+                category: 'long',
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -25424,18 +25444,18 @@ if (getObj("civ") != "1") {
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'strict dress code': false, 'clothing indifference': false, 'fluid dress code': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 25) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'strict dress code',
-                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5 .//<small>Strict dress code may affect relationships between elves. Sometimes it feels unfair and sound stupid doesn\'t it?</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5 .//<small>Strict dress code may affect relationships between elves. Sometimes it feels pretty unfair...</small>',
                 icon: [29, 16, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'nudist culture': false, 'fluid dress code': false, 'clothing indifference': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 25) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'clothing indifference',
@@ -25444,8 +25464,8 @@ if (getObj("civ") != "1") {
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
-                category: 'short'
+                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 25) },
+                category: 'long'
             });
             new G.Trait({
                 name: 'fluid dress code',
@@ -25454,7 +25474,7 @@ if (getObj("civ") != "1") {
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
                 chance: 10,
-                lifetime: function () { return 80 + (((this.yearOfObtainment + 25) % 100) - 50) },
+                lifetime: function () { return 125 + (((this.yearOfObtainment + 25) % 100) - 25) },
                 category: 'long'
             });
             new G.Trait({
@@ -25585,6 +25605,8 @@ if (getObj("civ") != "1") {
                 name: 'art of death',
                 desc: '@[corpse]s and their parts are now part of an art, creating some [culture] at the cost of [health].@<b><font color="red">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b> //<small>ughhh</small>',
                 icon: [15, 6, 'magixmod'],
+                category: 'long',
+                chance: 500,
                 cost: { 'gentility': 25, 'discernment': 5 },
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
