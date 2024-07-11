@@ -2166,7 +2166,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if dark decay occured IMMEDIATELY
                         var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1;
-                        var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.min(Math.pow(G.year, 1.3), 25 + Math.pow(G.year, 1.1) * 0.3)) + 1; //we need to softcap it since the wonder will take a while to build
+                        var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.min(Math.pow(G.year, 1.3), 25 + Math.pow(G.year, 1.1) * 0.18)) + 1; //we need to softcap it since the wonder will take a while to build
                         var lostLand = Math.floor(G.getRes('land').amount * 0.016 + 0.8);
                         var darkGain = Math.round(lostHousing * 0.75) + lostPeople + lostLand;
                         G.lose('housing', lostHousing, 'Dark decay'); G.lose('population', lostPeople, 'Dark decay'); G.lose('land', lostLand, 'Dark decay');
@@ -2317,7 +2317,6 @@ if (getObj("civ") != "1") {
                         G.middleText('- Completed <font color="pink">Man\'o trait</font> achievement -', 'slow')
                     }
                     if ((G.getRes('worship point').amount) == 0 && G.achievByName['the first choice'].won == 0 && G.has('pantheon key')) {
-                        ;
                         G.achievByName['the first choice'].won = 1
                         G.middleText('- Completed <font color="cyan">The first choice</font> achievement -', 'slow')
                     }
@@ -2334,7 +2333,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.achievByName['mausoleum eternal'].won >= 1 && G.achievByName['extremely smart'].won >= 1 && G.achievByName['man of essences'].won >= 1 && G.achievByName['magical'].won >= 1 && G.achievByName['next to the God'].won >= 1 && G.achievByName['the first choice'].won >= 1 && G.achievByName['trait-or'].won >= 1 && G.achievByName['not so pious people'].won >= 1 && G.achievByName['talented?'].won == 0) { //Experienced
                         G.achievByName['talented?'].won = 1;
-                        G.middleText('- All achievements from tier <font color="orange">3</font> have been completed! -<br><hr><small>All crafting units and a few non-crafting units that use overworld land since the next run will use 15% less land. In addition, you can pick <font color="aqua">1 of 5</font> researches instead of <font color="aqua">1 of 4</font>.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="#f50">3</font> have been completed! -<br><hr><small>All crafting units and a few non-crafting units that use overworld land since the next run will use 15% less land. In addition, you can pick from <font color="aqua">five</font> researches instead of just four.</small>', 'slow')
                     }
                     if (G.has('outstanders club')) {
                         G.getDict('the outstander').limitPer = { 'population': 26500 }
@@ -2542,7 +2541,7 @@ if (getObj("civ") != "1") {
                             writer = true
                         }
                         if (G.traitN - G.knowN == 20 && !trait20) {
-                            G.Message({ type: 'important', text: 'This tribe develops some sort of traits.', icon: [8, 12, 8, 4] })
+                            G.Message({ type: 'important', text: 'This tribe seems to be developing a lot of unique traits!', icon: [8, 12, 8, 4] })
                             trait20 = true
                         }
                         if (G.has('guru') && !guru && !G.has('dark side')) {
@@ -2600,28 +2599,25 @@ if (getObj("civ") != "1") {
                     }
                     if (G.techN >= 250 && G.achievByName['A+ student'].won == 0) { //Apprentice achievement
                         G.achievByName['A+ student'].won = 1;
-                        //G.Message({type:'important',text:'You managed your civilization to be smart. They thank you with kindness for ruling them. They will not even think about choosing other lord than you. Keep going this way. Discover, research and prosper ',icon:[24,18,'magixmod',8,4]})
                         G.middleText('- Completed <font color="lime">A+ student</font> achievement -', 'slow')
                     }
                     if (G.traitN >= 30 && G.achievByName['traitsman'].won == 0) { //Traitsman achievement
                         G.achievByName['traitsman'].won = 1
                         G.middleText('- Completed <font color="lime">Traitsman</font> achievement -', 'slow')
                     }
-                    if ((G.getRes('insight II').amount) == (G.getRes('wisdom II').amount) && G.achievByName['extremely smart'].won == 0 && G.has('eotm')) {
-                        ; //Extremely smart achievement
+                    if ((G.getRes('insight II').amount) == (G.getRes('wisdom II').amount) && G.achievByName['extremely smart'].won == 0 && G.has('eotm')) { //Extremely smart achievement
                         G.achievByName['extremely smart'].won = 1
                         G.middleText('- Completed <font color="purple">Extremely smart</font> achievement -', 'slow')
                     }
                     if (G.achievByName['mausoleum'].won >= 1 && G.achievByName['democration'].won >= 1 && G.achievByName['sacrificed for culture'].won >= 1 && G.achievByName['insight-ly'].won >= 1 && G.achievByName['first glory'].won >= 1 && G.achievByName['apprentice'].won >= 1 && G.achievByName['experienced'].won == 0) { //Experienced
                         G.achievByName['experienced'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">1</font> completed! -<br><hr><small>Now, your people will start new runs with an extra 100 fruit!</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="#fa0">1</font> completed! -<br><hr><small>Now, your people will start new runs with an extra 100 fruit!</small>', 'slow')
                     }
                     if (G.achievByName['heavenly'].won >= 1 && G.achievByName['deadly, revenantic'].won >= 1 && G.achievByName['in the underworld'].won >= 1 && G.achievByName['level up'].won >= 1 && G.achievByName['lucky 9'].won >= 1 && G.achievByName['traitsman'].won >= 1 && G.achievByName['smart'].won == 0 && G.achievByName['familiar'].won == 1 && G.achievByName['in the shadows'].won == 1) { //Smart
                         G.achievByName['smart'].won = 1
-                        G.middleText('- All achievements from tier <font color="orange">2</font> completed! -<br><hr><small>For the next run, basic housing uses less land.</small>', 'slow')
+                        G.middleText('- All achievements from tier <font color="#f70">2</font> completed! -<br><hr><small>For the next run, basic housing uses less land.</small>', 'slow')
                     }
                     if (G.has('dt17') && G.has('sb4') && G.checkPolicy('se03') == 'on' && G.achievByName['not so pious people'].won == 0) {
-                        ;
                         G.achievByName['not so pious people'].won = 1
                         G.middleText('- Completed <font color="cyan">Not so pious people</font> achievement -', 'slow')
                     }
@@ -6603,7 +6599,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'culture': 0.1 } },
                     { type: 'gather', what: { 'culture': 0.05 }, req: { 'symbolism': true, 'symbolism II': false } },
                     { type: 'gather', what: { 'culture': 0.07 }, req: { 'symbolism II': true } },
-                    { type: 'addFree', what: { 'worker': 0.01 }, req: { 'artistic gray cells': true, 'oral tradition': true } },
+                    { type: 'addFree', what: { 'worker': 0.05 }, req: { 'artistic gray cells': true, 'oral tradition': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on', 'ritualism II': false } },
                     { type: 'mult', value: 1.25, req: { 'wisdom rituals': 'on', 'ritualism II': true } },
@@ -13196,7 +13192,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 category: 'misc',
                 name: 'artistic gray cells', displayName: '<font color="#00C000">Artistic gray cells</font>',
-                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. Ancestors of culture give you their power...providing you with various boosts: @+3 [culture] @+3 [inspiration] @Also autohires 1 free [storyteller] upon getting [oral tradition], although this free one works at 1/100th the rate of a normally hired [storyteller].',
+                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. The ancestors of culture give you their power...providing you with various gains: @+3 [culture] @+3 [inspiration] @idle [worker]s will work at 1/100th the rate of a [storyteller] for free',
                 icon: [4, 12, 'magixmod', 6, 12, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false },
@@ -13226,7 +13222,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'a feeling from the Underworld', category: 'misc',
-                desc: 'You feel some unusual and slightly dark warmth. It appears to be a rather strange call from the Underworld... @<b>Allows you to finish unlocking the Underworld!</b>',
+                desc: 'You feel an unusual and slightly dark warmth. It appears to be a rather strange call from the Underworld... @<b>Allows you to finish unlocking the Underworld!</b>',
                 icon: [8, 12, 9, 5, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13236,7 +13232,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'underworld\'s ascendant', displayName: 'The Underworld\'s Ascendant', category: 'misc',
-                desc: 'You managed to do few large feats to attract someone new! You also attracted +1 [adult], who is [adult,The Underworld\'s Ascendant] //<small>console.log("Hello Underworld")</small>',
+                desc: 'You managed to do several large feats to attract someone new! You will now gain +1 [adult] during new runs, who is [adult,The Underworld\'s Ascendant]! //<small>hello underworld</small>',
                 icon: [15, 19, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13291,7 +13287,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cozy building', category: 'upgrade',
-                desc: '@People now want to obtain warmth using various heat sources! This is always a solution for cold nights if people living inside have no clothing. People will now add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>Because of this, some buildings will look different!',
+                desc: '@People now want to obtain warmth using various heat sources! This is always a solution for cold nights if people living inside have no clothing. People will now add chimneys to their huts, hovels, and houses. Some archaic shelters also get an improvement. <>Because of this, a few simple buildings will look different!',
                 icon: [29, 3, 'magixmod'],
                 cost: { 'insight II': 20 },
                 req: { 'sedentism': true, 'tool-making': true, 'focused scouting': true },
@@ -13308,7 +13304,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cozier building', category: 'upgrade',
-                desc: '@people began thinking about having some decor near their houses. <>Getting this makes buildings look even better, changing the look of basic buildings and also unlocking something new.',
+                desc: '@people began thinking about having some additional decorations near their houses. <>Getting this makes buildings look even better, changing the look of basic buildings and also unlocking something new.',
                 icon: [29, 4, 'magixmod'],
                 cost: { 'insight II': 25, 'culture II': 5 },
                 req: { 'cozy building': true, 'focused scouting': true, 'caretaking': true },
@@ -13327,7 +13323,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths IV', category: 'tier2',
-                desc: '@Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and overall just pushing math logic to its limits. @Improves your average citizen\'s math knowledge. @Depending on the path chosen by your people, scholars may be even more math-talented! @provides 5 [education] and 40 [wisdom II] //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
+                desc: '@Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and and generally pushing their math skills to the limit. @Improves your average citizen\'s math knowledge. @provides 5 [education] and 40 [wisdom II] //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
                 icon: [2, 35, 'magixmod', 8, 21, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'science': 8, 'culture II': 12 },
                 effects: [
@@ -13345,7 +13341,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise housing conceptions', category: 'tier1',
-                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like it does at your mortal world.',
+                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like your mortal world.',
                 icon: [0, 21, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 390, 'inspiration': 16, 'faith': 259 },
                 req: { 'paradise building': true },
@@ -24797,7 +24793,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'scavenging',
-                desc: '@idle [worker]s gather resources with a twelfth of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
+                desc: '@idle [worker]s gather resources with 8% of the speed of a [gatherer]. @<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>//<small>Is there anything to scavenge?</small>',
                 icon: [20, 1, 'c2'],
                 chance: 1,
                 req: { 'tribalism': true, 'carcass-looting': false, 'dreaming': false, 'branching wisdom': false },
@@ -25577,7 +25573,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'unstable consumption habits',
-                desc: '@elves general consumption is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but half less joy from consumption @5% more deriving tenth more joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>//<small>variety in its true form</small>',
+                desc: '@elves general consumption is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less and deriving less joy from consumption @5% more and deriving joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>//<small>variety in its true form</small>',
                 icon: [9, 15, 'magixmod', 30, 19, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 250,
@@ -26113,11 +26109,11 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'branching wisdom',
-                desc: '@You gain an additional tech choice for various periods of time.@<b><font color="red">Note: This trait is rather temporary and has a varied lifetime, but has a moderate chance to become permanent. Eventually, if this trait doesn\'t get adopted for good, it will no longer appear or swap with other traits from the primary category.</font></b>',
+                desc: '@You gain an additional tech choice for various periods of time.@<b><font color="red">Note: This trait is rather temporary and will unfortunately expire quite quickly. This trait will no longer appear after you research somewhat.</font></b>',
                 icon: [29, 19, 'c2'],
                 chance: 3,
                 cost: { 'discernment': 3, 'creativity': 3 },
-                req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false },
+                req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false, 'language': false },
                 effects: [
                     {
                         type: 'function', func: function () {
@@ -26130,12 +26126,12 @@ if (getObj("civ") != "1") {
                         }, invert: false
                     },
                 ],
-                lifetime: function () { return 3 + (Math.pow(this.yearOfObtainment, 1.5) % 42 > 4 && Math.pow(this.yearOfObtainment, 1.5) % 42 < 8 ? Infinity : this.yearOfObtainment % 30) }
+                lifetime: function () { return 1 + this.yearOfObtainment % 3 }
             });
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches require a third less [discernment,Essentials] (except your [battery of discoveries,Battery power]) if the number of your technologies ends with 0. @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches will require a third less [discernment,Essentials] (excluding your [battery of discoveries,Battery power]) if the number of your technologies ends with 0. @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
                 icon: [28, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbN': false },
