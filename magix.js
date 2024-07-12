@@ -1672,7 +1672,9 @@ if (getObj("civ") != "1") {
                             if (G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'] != undefined)
                                 delete G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'];
                         }
-                    G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4)); G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
+                    G.herbReq = Math.min(G.achievByName['herbalism'].won, 1);
+                    G.fruitReq = Math.min(G.achievByName['unfishy'].won * 5, 3);
+                    G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
                     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
 
                     if (G.checkPolicy("insects as food") == "on") G.makePartOf('bugs', 'food'); //bugfix 
@@ -1757,27 +1759,58 @@ if (getObj("civ") != "1") {
                         G.Message({ type: 'bad', text: 'Your people have noticed that the land has been slowly <b>turning into ocean</b>! However, remember that the further you progress, the more researches you can obtain to balance this out. Once you start getting <b>deep ocean</b>, you should consider leaving this trial as soon as you can!', icon: [16, 0, 'magix2'] })
                     } else if (G.has('t6') && G.year == 6) {
                         G.Message({ type: 'bad', text: 'In this trial, land will decay into ocean tiles faster and faster, so be warned! Be sure to check your land amount every so often: this is your final warning.', icon: [16, 0, 'magix2'] })
+                    } else if (!G.has('t5') && G.year === 39) {
+                        G.Message({ type: 'good', text: 'Within trials, droughts and famines will not occur!', icon: [9, 10] })
                     }
 
                     if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
                     if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
+
+                    if (G.has("t5") && G.year > 0) {
+                        var population = G.getRes("population").amount
+                        if (G.getRes("fruit").amount >= G.fruitReq) {
+                            G.Message({ type: 'good', text: "Your current stockpile of fruit is enough to please your people, making your " + G.getName("inhabs") + " much happier. Keep this up and do not forget that your people will long for more and more fruit as time goes on!", icon: [33, 12, 'magixmod'] });
+                            changeHappiness(8 * population, "fruit happiness");
+                            G.lose("fruit", G.fruitReq, "population pleasing");
+                        } else {
+                            G.Message({ type: 'bad', text: "Your current stockpile of fruit is not enough to your " + G.getName("inhabs") + ", making them much less happy. Do not forget that your civilization will be extremely unhappy if this continues!", icon: [33, 12, 'magixmod'] });
+                            changeHappiness(-8 * population, "fruit unhappiness");
+                            G.lose("fruit", G.fruitReq, "failed population pleasing");
+                        }
+                        var fishReq = Math.pow(G.fruitReq, 0.95) - 1
+                        if (G.getRes("seafood").amount >= fishReq) {
+                            var waterAmount = Math.min(25 * population + 10, 12 * population + 400)
+                            G.Message({ type: 'good', text: "Your current stockpile of fish is enough to please Fishyar, making your " + G.getName("inhabs") + " a little happier and healthier, as well as providing everyone with " + B(waterAmount) + " water to fend off any droughts. Keep this up and do not forget that Fishyar will demand more and more fish!", icon: [33, 12, 'magixmod'] });
+                            changeHappiness(3 * population, "Fishyar happiness");
+                            G.gain("water", waterAmount, "Fishyar giving supplies");
+                            G.gain("health", 2.3 * population, "Fishyar giving supplies");
+                            G.lose("seafood", G.fruitReq, "pleasing Fishyar");
+                        } else {
+                            G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will not have insufficient water if this continues, as you could have gotten " + (35 * population + 10) + " water!", icon: [33, 12, 'magixmod'] });
+                            G.lose("seafood", G.fruitReq, "failed pleasing of Fishyar");
+                        }
+                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : 0.2 + G.achievByName['unfishy'].won) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
+                        G.update['unit']();
+                    }
+
                     G.isMap = G.isMapFullyExplored();
                     if (G.has("t7") && G.year > 0) {
-                        var h = G.getRes("herb").amount
+                        var h = G.getRes("herb").amount;
                         G.lose("herb", h);
                         G.gain("herb essence", h * 0.08);
+                        var population = G.getRes("population").amount;
                         if (G.getRes('herb essence').amount >= G.herbReq) {
                             G.Message({ type: 'good', text: "Your Herb essence amounts are enough to please your civilization, currently making your " + G.getName("inhabs") + " happy. Keep up the good work and do not forget that your civilization will demand more and more of that essence!", icon: [36, 19, 'magixmod'] });
-                            changeHappiness(2.3 * G.getRes("population").amount, "herb essence happiness");
-                            G.gain("health", 2.3 * G.getRes("population").amount, "herb essence happiness");
+                            changeHappiness(2.3 * population, "herb essence happiness");
+                            G.gain("health", 2.3 * population, "herb essence happiness");
                             G.lose("herb essence", G.herbReq, "population pleasing");
                         } else {
                             G.Message({ type: 'bad', text: "Your Herb essence amounts are not enough to please your civilization, which makes your " + G.getName("inhabs") + " unhappy. Do not forget that your civilization will demand more and more of that essence and that you will need it for your final wonder!", icon: [36, 19, 'magixmod'] });
-                            G.lose("happiness", 2.3 * G.getRes("population").amount, "herb essence unhappiness");
-                            G.lose("health", 2.3 * G.getRes("population").amount, "herb essence unhappiness");
-                            G.lose("herb essence", G.herbReq, "population pleasing");
+                            G.lose("happiness", 2.3 * population, "herb essence unhappiness");
+                            G.lose("health", 2.3 * population, "herb essence unhappiness");
+                            G.lose("herb essence", G.herbReq, "failed population pleasing");
                         }
-                        G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4));
+                        G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4));
                         G.update['unit']();
                     }
                     G.lose('tragedy', 1);//thats a need
@@ -2249,6 +2282,9 @@ if (getObj("civ") != "1") {
                     if (!droughtmesg && G.has('drought')) {
                         G.Message({ type: 'bad3', text: 'You are currently in a <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
                         droughtmesg = true
+                    } else if (G.has('t5') && G.year > 0) {
+                        setObj('drought', G.getDict("platinum fish statue").percent * -0.1)
+                        if (!G.has('drought')) G.gainTrait(G.traitByName['drought'])
                     }
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
                     if (G.techN >= 80) { //since these are earlygame only we won\'t want them anymore at some point unless they get adopted for good.
@@ -3710,7 +3746,7 @@ if (getObj("civ") != "1") {
                         } else {
                             toSpoil = me.amount * 0.02;
                         }
-                        spent = G.lose('water', randomFloor(toSpoil * (G.checkPolicy('se06') == 'on' ? 0.4 : 1) * (G.has('drought') ? Math.pow((G.year * 3 + G.day * 0.01 - getObj('drought') * 3) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1)), 'decay');
+                        spent = G.lose('water', randomFloor(toSpoil * (G.checkPolicy('se06') == 'on' ? 0.4 : 1) * (G.has('drought') ? Math.pow(((G.year - getObj('drought')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1)), 'decay');
                         G.gain('muddy water', randomFloor(spent), 'decay');
                     }
                 },
@@ -4809,7 +4845,7 @@ if (getObj("civ") != "1") {
                 desc: 'Water which cannot spoil in any way (however, it can still slowly decay). It is gathered from Paradise\'s lakes, ponds, rivers and tastes the same as water.',
                 icon: [11, 14, 'magixmod'],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.004 * (G.has('drought') ? Math.pow((G.year * 3 + G.day * 0.01 - getObj('drought') * 3) * (G.has('careful water storage') ? 0.85 : 1) + 1.2, 0.6) : 1);
+                    var toSpoil = me.amount * 0.004 * (G.has('drought') ? Math.pow(((G.year - getObj('drought')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.85 : 1) + 1.2, 0.6) : 1);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 category: 'food',
@@ -5531,7 +5567,7 @@ if (getObj("civ") != "1") {
                         // People cooking meals
                         var recipes1 = ['cooked meat', 'cooked meat', 'cooked meat', 'cooked seafood', 'cooked seafood', 'cooked seafood']
                         var recipes2 = ['herb', 'fruit', 'vegetable', 'herb', 'fruit', 'vegetable']
-                        var cookingAmount = Math.ceil(G.getDict('population').amount / 750)
+                        var cookingAmount = Math.ceil(G.getRes('population').amount / 750)
                         var index = Math.floor(0.1 * (G.day % 60))
                         var spent1 = G.lose(recipes1[index], cookingAmount, 'people cooking')
                         var spent2 = G.lose(recipes2[index], cookingAmount * 0.5, 'people cooking')
@@ -6542,13 +6578,16 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on' } },
                     { type: 'mult', value: 1.075, req: { 'focused gathering': true, 'moderation': true } },
                     { type: 'mult', value: 1.125, req: { 'focused gathering': true, 'caretaking': true } },
-                    { type: 'mult', value: 0.4, req: { 't6': true } },
-                    { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
-                    { type: 'mult', value: 0.85, req: { 'se07': 'on' } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
                     //Random trends
                     { type: 'gather', context: 'gather', what: { 'stick': 0.035 }, req: { 'gtt1': true } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.035 }, req: { 'gtt2': true } },
+                    // Trial/Seraphin stuff
+                    { type: 'gather', context: 'gather', what: { 'seafood': 150 }, req: { 't5': true } },
+                    { type: 'mult', value: 0.05, req: { 't5': true } },
+                    { type: 'mult', value: 0.4, req: { 't6': true } },
+                    { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
+                    { type: 'mult', value: 0.85, req: { 'se07': 'on' } },
                     //Far foraging
                     { type: 'explore', explored: 0.008, unexplored: 0, req: { 'far foraging': 'on' }, chance: 1 / 4 },
                     { type: 'function', func: unitGetsConverted({}, 0.001, 0.03, true, '[X] [people] lost in terrain while foraging very far', 'gatherer got', 'gatherers got'), chance: 1 / 35, req: { 'far foraging': 'on' } },
@@ -10005,18 +10044,18 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'platinum fish statue',
-                desc: '@Leads to the completion of the <b>Unfishy</b> trial. //A statue made with precious platinum fish at the top.<><font color="#44d0aa">The more you finish this statue, the harder it is to complete it...</font>',
+                desc: '@Leads to the completion of the <b>Unfishy</b> trial. //A statue made from [cut stone] and decorated with [seafood,Fish].<><font color="#44d0aa">The more you finish this statue, the harder it is to complete it...can you conquer [seafood]?</font>',
                 wonder: 'unfishy',
                 icon: [22, 26, 'magixmod'],
                 wideIcon: [21, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'cut stone': 100 },
-                costPerStep: { 'platinum block': 1, 'gems': 2, 'cut stone': 3, 'water': 4500 },
-                steps: 175,
-                messageOnStart: 'You started to build a statue for <b>Fishyar</b>.<br>This statue will have precious fish at the top. However, the more steps you build, the more unstable the world becomes!',
+                costPerStep: { 'platinum block': 1, 'seafood': 25, 'gems': 2, 'cut stone': 10, 'water': 10 },
+                steps: 250,
+                messageOnStart: 'You started to build a pyramid for <b>Fishyar</b>.<br>This statue will have some fish and various decorations at the top. However, the more steps you build, the worse the drought will get!',
                 finalStepCost: { 'population': 400, 'gem block': 5, 'water': 10000, 'platinum ore': 25 },
-                finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood fanatics and award you with [victory point]s.',
+                finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood haters and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
-                req: { 'language': true, 'tribalism': false },
+                req: { 'monument-building': true, 't5': true, 'trial': true, 'language': true },
                 category: 'wonder',
             });
             new G.Unit({
@@ -12652,7 +12691,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'culture of the afterlife',
-                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, Who knows if they will build another wonder?</b>. @unhappiness from death is halved.',
+                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, so who knows if they will build another wonder?</b>. @unhappiness from death is halved.',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'insight': 50, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 300,
@@ -13196,7 +13235,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 category: 'misc',
                 name: 'artistic gray cells', displayName: '<font color="#00e063">Artistic gray cells</font>',
-                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. The ancestors of culture give you their power...providing you with various gains: @+3 [culture] @+3 [inspiration] @idle [worker]s will work at 1/100th the rate of a [storyteller] for free',
+                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. The ancestors of culture give you their power...providing you with various gains: @+3 [culture] @+3 [inspiration] @idle [worker]s will work at 1/20th the rate of a [storyteller] for free',
                 icon: [4, 12, 'magixmod', 6, 12, 'magixmod'],
                 cost: {},
                 req: { 'tribalism': false },
@@ -14405,7 +14444,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'trial',
-                desc: 'You are currently under a Trial. As long as you are in a Trial, new rules will apply depending on the one that you have chosen. // During trials, [drought]s will not occur, but other rules will apply!',
+                desc: 'You are currently under a Trial. As long as you are in a Trial, new rules will apply depending on the one that you have chosen.',
                 icon: [8, 27, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -17982,7 +18021,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'spicy foods III', category: 'tier1',
-                desc: 'Go deeper into the world of spicy ingredients and start getting your people to begin cultivating various [spices] themselves. //Getting this will triple your [spices,Spice] gain (stacking with [spicy foods II]). //<small>THAT IS WAY TOO SPICY!!!!</small>',
+                desc: 'Go deeper into the world of spicy ingredients and start getting your people to begin cultivating various [spices] themselves. //Getting this will triple your [spices,Spice] gain. //<small>THAT IS WAY TOO SPICY!!!!</small>',
                 icon: [1, 35, 'magixmod', 21, 0, 'magix2'],
                 cost: { 'insight': 750, 'influence': 150 },
                 req: { 'leaves of wisdom': true, 'branches of wisdom': true, 'spicy foods II': true },
@@ -17991,7 +18030,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art of cooking III', category: 'tier1',
-                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb], [fruit], or [vegetable] to produce 1 [meals,Meal] (a little more wasteful than hired [chef]s).',
+                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb], [fruit], or [vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s).',
                 icon: [1, 35, 'magixmod', 23, 13, 'magixmod'],
                 cost: { 'insight': 750, 'influence': 150 },
                 req: { 'spicy foods III': true },
@@ -18133,13 +18172,18 @@ if (getObj("civ") != "1") {
                 name: 't5',
                 displayName: 'Fishyar\'s Trial',
                 desc: 'You are currently in the <b>Unfishy</b> trial.',
-                icon: [15, 0, 'magix2', 5, 22, 'magixmod'],
+                icon: [25, 25, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
                 effects: [
                     {
                         type: 'function', func: function () {
                             // Whelp, i suppose i've gotta do this all over again...
+                            G.getDict('fishing').req = { 'tribalism': false };
+                            G.getDict('hunting').req = { 'tribalism': false };
+                            G.getDict('famine').chance = 0.2;
+                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': -0.8, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
+                            if (!G.has("well-digging")) G.gainTech(G.techByName['well-digging']);
                         }
                     }
                 ],
@@ -18658,7 +18702,7 @@ if (getObj("civ") != "1") {
             var noteStr = 'Note: Starting this trial will cause similar effects as ascension does, but only some bonuses from achievements will carry to the Trial. These are the +1 tech choice bonus (from Row 3\'s completion) and a possible earlier Seraphin unlock based on your Victory points.'
             new G.Policy({
                 name: 'Patience',
-                desc: 'Starts [se01]. (You will be warned before starting.)',
+                desc: 'Starts [se01] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 29, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se01': 'on' },
@@ -18697,7 +18741,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Unhappy',
-                desc: 'Starts [se02]. (You will be warned before starting.)',
+                desc: 'Starts [se02] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 28, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se02': 'on' },
@@ -18736,7 +18780,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Cultural',
-                desc: 'Starts [se03]. (You will be warned before starting.)',
+                desc: 'Starts [se03] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 27, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se03': 'on' },
@@ -18753,7 +18797,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al tha right! But show me ya are worthy of me. In my plane no one except me can gather <font color="#7bfe90">culture</font>, <font color="#7bfe90">influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial, your people\'s water rations cannot be set to plentiful (food rations can be still be set)! In addition, you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (In addition, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gain more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
+                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al tha right! But show me ya are worthy of me. In my plane no one except me can gather <font color="#7bfe90">Culture</font> or <font color="#7bfe90">Influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial, your people\'s water rations cannot be set to plentiful (food rations can be still be set)! In addition, you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (In addition, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gain more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18775,7 +18819,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Hunted',
-                desc: 'Starts [se04]. (You will be warned before starting.)',
+                desc: 'Starts [se04] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 26, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se04': 'on' },
@@ -18792,7 +18836,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am patron of hunters! But in my trial you will hunt yourself. You\'ll hunt your own weak points. In my plane, your people won\'t like the taste of green and will desperately wish for meat. <font color="pink">Gatherers</font> and <font color="pink">fishers</font> don\'t exist there too. But you have no time for eating and being happy from the taste of hunted deer. Each year 3% of your people will die and your <font color="pink">Health</font> will go lower and lower, increasing your people\'s vulnerability to diseases. Happiness goes from -200% to just 98%. You\'ll be able to bring health back to 0 only once (via policies), but it will consume half of your total food. Build a wonder of my religion. After completing the trial for the first time, I will empower all hunting units and cooked meat, and cured meat will decay slower.<br><Br><BR>' +
+                                    'I am patron of hunters! But in my plane, you will hunt yourself instead by hunting your own weak points! In my plane, your people won\'t like the taste of green and will desperately wish for meat. <font color="pink">Gatherers</font> and <font color="pink">Fishers</font> don\'t exist there too. But you have no time for eating and being happy from the taste of hunted deer. Each year 3% of your people will die and your <font color="pink">Health</font> will go lower and lower, increasing your people\'s vulnerability to diseases. Happiness goes from -200% to just 98%. You\'ll be able to bring health back to 0 only once (via policies), but it will consume half of your total food. Build a wonder of my religion. After completing the trial for the first time, I will empower all hunting units and cooked meat, and cured meat will decay slower.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18847,7 +18891,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Unfishy',
-                desc: 'Starts [se05]. (You will be warned before starting.)',
+                desc: 'Starts [se05] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'tribalism': false },
@@ -18864,7 +18908,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'In this trial, your people hate fish, but they become the ONLY good source of food (gatherers, fishers, and hunters are 95% worse). You\'ll have to deal with an angry tribe, as well as the fact that gatherers will not gather anything except for fish. In addition, each year, you will have to pay a Fish Tax, which will increase your happiness by 10% (if you don\'t, then happiness will decrease by 10% instead). To clarify, happiness could rise or fall by 10% rather than being multiplied by 1.1 or 0.9. Although the wonder is unlocked at the very start of this Trial, for every step of it that you complete, your happiness will drop by 1% and various essentials will start leaking, so be careful!<br><br><br>' +
+                                    'In this trial, your people hate fish, but they become the ONLY decent source of food (because gatherers are 95% worse, but will now catch significant amounts of fish). Hunters and fishers do not exist here, and you\'ll have to deal with a drought that never ends (starting from just the second year, and combining with a famine soon after). You will also unlock wells instantly, although they will be affected by droughts as well. You\'ll have to deal with an angry tribe, as well as the fact that gatherers will not gather anything except for seafood. In addition, each year, you will have to provide <font color="#cc0671">Fruit</font> for your tribe, which will boost how happy your people are. You can also trade <font color="#cc0671">Seafood</font> with some valuable water to fend off the eternal drought (thanks to Fishyar trying rather forgivingly to help your people). For every step of the wonder that you complete, the drought and famine will worsen, so be extra careful!<br><br><br>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18886,7 +18930,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Ocean',
-                desc: 'Starts [se06]. (You will be warned before starting.)',
+                desc: 'Starts [se06] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 15, 0, 'magix2', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
@@ -18925,7 +18969,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Herbalism',
-                desc: 'Starts [se07]. (You will be warned before starting.)',
+                desc: 'Starts [se07] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 14, 0, 'magix2', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se07': 'on' },
@@ -18964,7 +19008,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Buried',
-                desc: 'Starts [se08]. (You will be warned before starting.)',
+                desc: 'Starts [se08] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 22, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'voodoo spirit': false },
@@ -19002,7 +19046,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Underground',
-                desc: 'Starts [se09]. (You will be warned before starting.)',
+                desc: 'Starts [se09] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 21, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on', 'tribalism': false },
@@ -19013,7 +19057,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Pocket',
-                desc: 'Starts [se10]. (You will be warned before starting.)',
+                desc: 'Starts [se10] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 20, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se10': 'on' },
@@ -19051,7 +19095,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Faithful',
-                desc: 'Starts [se11]. (You will be warned before starting.)',
+                desc: 'Starts [se11] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 19, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
                 req: { 'se11': 'on' },
@@ -19068,7 +19112,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, the trial will be instantly failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer only works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
+                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">Spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, the trial will be instantly failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer only works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
@@ -19089,7 +19133,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'Dreamy',
-                desc: 'Starts [se12]. (You will be warned before starting.)',
+                desc: 'Starts [se12] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 18, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off',
                 req: { 'se10': 'on', 'tribalism': false },
@@ -19109,7 +19153,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'eat on gather',
-                desc: 'Your people will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] and less food spoilage at the cost of slow starvation. @Be aware that this policy cannot bring [happiness] level over 100% and will only provide [happiness] once it is lower than a specific percentage. Note that if food/water rations policies are set to <b>plentiful</b>, then this policy disables automatically.',
+                desc: 'Your people will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] and less food spoilage at the cost of slow starvation. @Be aware that this policy cannot bring [happiness] level over 100% and will only provide [happiness] once it is lower than a specific percentage. Note that if your food or water rations are set to <b>Plentiful</b>, then this policy disables automatically.',
                 icon: [5, 12, 16, 33, 'magixmod'],
                 cost: { 'influence': 2 },
                 startMode: 'off',
@@ -20897,7 +20941,7 @@ if (getObj("civ") != "1") {
                     }
                     G.getDict('a power of the fortress').desc = 'Your Fortress power will improve many aspects of life if its power is increased. Current bonuses://<b>LV1</b> - To roll new researches or reroll, you only need 75% of the [battery of discoveries,Battery] instead of 100%, along with [a power of the fortress,This deeply rooted power].<hr>' +
                         (G.achievByName['the fortress'].won > 1 ? '<b>LV2</b> - [wanderer]s from the elf race are 2% more efficient and [scout]s are 4% more efficient.<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks the next level for two human wonders: <b><font color="#a8dcee">Pagoda of Democracy</font></b>, <b><font color="#3092d2">Complex of Dreamers</font></b>. Finishing a 2nd stage of those wonders will increase the starting bonus by 2. (That means that <b>insight-ly</b> will provide 8 insight instead of 6 at the start of new runs.)<hr>' : '') +
+                        (G.achievByName['the fortress'].won > 2 ? '<b>LV3</b> - Unlocks the next level for two human wonders: <b><font color="#a8dcee">Pagoda of Democracy</font></b>, <b><font color="#3092d2">Complex of Dreamers</font></b>. Finishing a 2nd stage of those wonders will increase the starting bonus by 2. (That means that <b>Insight-ly</b> will provide 8 insight instead of 6 at the start of new runs.)<hr>' : '') +
                         (G.achievByName['the fortress'].won > 3 ? '<b>LV4</b> - Unlocks the next level for a human wonder: <b><font color="#29d356">Fortress of Cultural Legacy</font></b><hr>' : '') +
                         (G.achievByName['the fortress'].won > 4 ? '<b>LV5</b> - The [battery of discoveries] will be able to overcap. You can now have 125% battery without any cost increases!<hr>' : '') +
                         (G.achievByName['the fortress'].won > 5 ? '<b>LV6</b> - The [food rations] and [water rations] policies no longer require [discernment].<hr>' : '') +
@@ -26376,7 +26420,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'eat on gather',
-                desc: 'Your elves will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] at the cost of slow starvation, but lowers the rate of [spoiled food]. @this policy cannot bring [happiness] level over 100% and will only provide [happiness] once it is lower than a specific amount. Note that if food/water rations policies are set to plentiful, this policy disables automatically.',
+                desc: 'Your elves will eat a lot of [food] right after gathering, meaning that a very small portion of food will be shared with others. It may lead to increased [happiness] at the cost of slow starvation, but lowers the rate of [spoiled food]. @this policy cannot bring [happiness] level over 100% and will only provide [happiness] once it is lower than a specific amount. Note that if your food or water rations are set to <b>Plentiful</b>, this policy disables automatically.',
                 icon: [5, 12, 26, 0, 'c2'],
                 cost: { 'influence': 2 },
                 startMode: 'off',

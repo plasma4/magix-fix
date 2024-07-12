@@ -203,20 +203,21 @@ G.NewGameConfirm = function () {
 
     G.Message({
         type: 'important', text: 'If this is your first time playing, you may want to consult some quick ' + G.button({
-            text: 'Getting started', tooltip: 'Read a few tips on how to make it past the stone age.', onclick: function () {
+            text: 'Getting started', tooltip: 'Read a few tips on how to make it past the first stages of the game.', onclick: function () {
                 G.dialogue.popup(function (div) {
                     return '<div style="width:480px;min-height:320px;height:75%;">' +
                         '<div class="fancyText title">A few tips on how to not die horribly:</div>' +
                         '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:16px;">' +
-                        '<div style="float:right;margin:8px;width:121px;text-align:center;line-height:80%;"><img style="box-shadow:2px 2px 2px 1px #000;" src="img/helpLocation.jpg"/><br><small>Mouse over these buttons for more explanations!</small></div>' +
                         '<div class="bulleted">early on, focus most of your workers on food gathering</div>' +
+                        '<div class="bulleted">your people will want to eat and drink a lot, so give them as much food as you can once you can change that</div>' +
                         '<div class="bulleted">assign a few spare workers as dreamers, in order to get some Insight which you can use to research technologies</div>' +
+                        '<div class="bulleted">wanderers might not seem that useful, but they can acquire some more useful land for you!</div>' +
                         '<div class="bulleted">check the territory tab and click your starting location; if you\'ve got very few sources of food or water, you might want to restart the game</div>' +
                         '<div class="bulleted">don\'t bother researching fishing or hunting if none of your tiles have animals or fish!</div>' +
                         '<div class="bulleted">enabling elder/child work policies can be useful if you need extra workers, but may prove detrimental to your people\'s health</div>' +
-                        '<div class="bulleted">if things get too hectic, you can pause the game and take your time</div>' +
-                        '<div class="bulleted">this is an early alpha, so you don\'t have to worry about meeting other civilizations just yet</div>' +
-                        '<div class="bulleted">sometimes things just go wrong; don\'t lose hope, you can always start over!</div>' +
+                        '<div class="bulleted">if things get too hectic, you can always pause the game and take your time</div>' +
+                        '<div class="bulleted">you don\'t have to worry about meeting other civilizations</div>' +
+                        '<div class="bulleted">sometimes things just go wrong; don\'t lose hope and start over when needed!</div>' +
                         '</div>' +
                         '</div><div class="buttonBox">' +
                         G.dialogue.getCloseButton('Got it!') +
@@ -380,7 +381,7 @@ G.AddData({
                 'Even today, I am proud of the fruits of my creativity and time I sacrificed to make this entertaining mod. ' +
                 'I made this mod due to my hobby: IT. I like things like coding and networking. Who knows...maybe I will become an expert of javascript! ' +
                 '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)' +
-                '<br><font color="#FF0000"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
+                '<br><font color="#f95e4d"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
                 '<div class="barred fancyText">Settings:</div>' +
                 G.writeSettingButton({ text: 'Toggle sounds', tooltip: 'Toggle all game sounds.', name: 'sound', id: 'sound' }) + "<br>";
             if (G.resets >= 3) {
@@ -706,7 +707,7 @@ G.AddData({
             var str = '';
             str +=
                 '<div class="behindBottomUI">' +
-                G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Technologies are the cornerstone of your civilization\'s long-term development.</div><div class="par">Here, you can invest resources to research new technologies, which can unlock new units and enhance old ones. <div class="par">If you own 30 or more technologies then after many researches purcharsed, you will gain 1 <b>Science</b> and <b>Education</b>.</div></div></div>', 'infoButton') +
+                G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Technologies are the cornerstone of your civilization\'s long-term development.</div><div class="par">Here, you can invest resources to research new technologies, which can unlock new units and enhance old ones. <div class="par">If you own 30 or more technologies then after many researches purchased, you will gain 1 <b>Science</b> and <b>Education</b>.</div></div></div>', 'infoButton') +
                 //'<div class="fullCenteredOuter"><div id="techBox" class="thingBox fullCenteredInner"></div></div></div>'+
                 '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">Known technologies:</div></div><div id="techBox" class="thingBox"></div></div></div></div>' +
                 '<div id="techUI" class="bottomUI bgPanelUp">';
@@ -887,8 +888,8 @@ G.AddData({
                         var inscost = 1 * (G.getRes("new world point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1);
                         if (G.getRes('golden insight').amount < G.getRes('wisdom').amount && G.getRes('faith').amount >= faicost && G.getRes('insight').amount >= inscost) {
                             G.lose('insight', inscost, 'exchange'); G.lose('faith', faicost, 'exchange');
-                            G.gain('golden insight', 1, "purcharse");
-                            G.gain('new world point', 1, "purcharse");
+                            G.gain('golden insight', 1, "purchase");
+                            G.gain('new world point', 1, "purchase");
                             G.update['unit']();
                         } else {
                             G.middleText("<small>- Cannot afford -</small>");
@@ -897,6 +898,7 @@ G.AddData({
                     }
                 }) : "") : "")
                 + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(G.herbReq) + " <font color='lime'>Herb essence</font> to please your people here.</div>" : "") +
+                '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t5') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(G.fruitReq) + " <font color='#cc0671'>Fruit</font> to please your people here and " + B(Math.pow(G.fruitReq, 0.95) - 1) + " <font color='#cc0671'>Seafood</font> to make Fishyar give water.</div>" : "") +
                 '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                 G.button({
                     id: 'display',
@@ -1930,7 +1932,7 @@ G.AddData({
         ==========================*/
         new G.Res({
             name: 'victory point',
-            desc: 'You can gain [victory point]s for completing some Trials. All of the trials are repeatable, except for the <b>Buried</b> trial. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain 2 additional points. They can\'t be spent, but their amount can provide extra bonuses. ',
+            desc: 'You can gain [victory point]s for completing some Trials. All of the trials are repeatable, except for the <b>Buried</b> trial. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain additional [victory point]s (this gain grows more and more powerful the more times you complete a single Trial). These points can\'t be spent, but their amount can provide extra bonuses.',
             icon: [0, 28, 'magixmod'],
         });
 
@@ -2043,7 +2045,7 @@ G.AddData({
         G.legacyBonuses.push(
             { id: 'addFastTicksOnStart', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks += obj.amount }, context: 'new' },
             { id: 'addFastTicksOnResearch', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
-            { id: 'wholenewworld', name: 'A whole new adventure', desc: '<font color="#d4af37">...just progress...you will unlock it.</font>', icon: [0, 0] },
+            { id: 'wholenewworld', name: 'A whole new adventure', desc: '<font color="#f2df77">...just progress...you will unlock it.</font>', icon: [0, 0] },
             { id: 'pressure', name: '+[X] to base <font color="white">Pressure resistance</font> amount.', desc: 'This will help you create a bigger elf civilization!', icon: [0, 0], func: function (obj) { G.pressureAdd += obj.amount } },
             { id: 'addFastTicksOnStart2', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks2 += obj.amount }, context: 'new' },
             { id: 'addFastTicksOnResearch2', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>elf race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },
@@ -2171,7 +2173,7 @@ G.AddData({
             name: 'in the underworld',
             wideIcon: [7, 5, 'magixmod'],
             icon: [9, 5, 'magixmod'],
-            desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you obtain <font color="green">Sacrificed for culture</font>, <font color="aqua">Insight-ly</font>, and <font color="fuschia">Democration</font> at the same time, you will start new runs with [adult,The Underworld\'s Ascendant]. <li>To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.',
+            desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you have <font color="#00e063">Sacrificed for culture</font>, <font color="#5959d2">Insight-ly</font>, and <font color="fuschia">Democration</font>, you will start new runs with someone new: [adult,The Underworld\'s Ascendant]! (To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.)',
             fromWonder: '"In the underworld"',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2477,7 +2479,7 @@ G.AddData({
         new G.Achiev({
             tier: 3,
             name: 'next to the God',
-            displayName: '<font color="#d4af37">Next to the deities</font>',
+            displayName: '<font color="#fddc99">Next to the deities</font>',
             wideIcon: [0, 9, 'magixmod'],
             icon: [1, 9, 'magixmod'],
             desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @The chances for [culture of the afterlife] or [culture of the beforelife] are tripled. Same to <B>God\'s/Ancestors call</b>. @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] @You will unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
@@ -3784,7 +3786,7 @@ G.AddData({
                         G.shouldRunReqs = true;
                         var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
                         audio.play();
-                        G.middleText('<font color="#d4af37">- You are almighty! -<br><small> - (cheater) - </small></font>', 'slow');
+                        G.middleText('<font color="#ebad0e">- You are almighty! -<br><small> - (cheater) - </small></font>', 'slow');
                     }
                 }) +
                 G.writeSettingButton({ id: 'showAllRes', name: 'showAllRes', text: '<font color="aqua">Show resources</font>', tooltip: 'Toggle whether all resources should be visible.' }) +
@@ -4885,6 +4887,7 @@ G.AddData({
         }
         G.ca = 1; G.cb = 2;
         G.herbReq = 0;
+        G.fruitReq = 0;
 
         G.fullApplyUnitEffects = function (me, type, amountParam) {
             //run through every effect in a unit and apply them
@@ -5387,7 +5390,7 @@ G.AddData({
                                     str += '<div class="divider"></div>' +
 
                                         G.button({
-                                            text: '<font color="#D4AF37">Ascend</font>', style: 'box-shadow:0px 0px 10px 1px #39f;', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;"><div class="par">Ascending will end this game and let you create a new one.</div><div class="par">You will unlock permanent legacy bonuses for completion of this wonder.</div><div class="par">You can decide to do this later; you can click on this wonder again to ascend at any time.</div><div class="par">Make sure you\'re certain you\'re done with this world (seriously)!</div></div>'; } }(me), onclick: function (me) {
+                                            text: '<font color="#d4af37">Ascend</font>', style: 'box-shadow:0px 0px 10px 1px #39f;', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;"><div class="par">Ascending will end this game and let you create a new one.</div><div class="par">You will unlock permanent legacy bonuses for completion of this wonder.</div><div class="par">You can decide to do this later; you can click on this wonder again to ascend at any time.</div><div class="par">Make sure you\'re certain you\'re done with this world (seriously)!</div></div>'; } }(me), onclick: function (me) {
                                                 return function () {
                                                     //ascend
                                                     G.dialogue.close();
