@@ -3849,7 +3849,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'seafood',
-                desc: '[seafood,Raw seafood] such as fish, clams, or shrimps, is both bland-tasting and several kinds of nasty.',
+                desc: '[seafood,Raw seafood] such as fish, clams, or shrimps, aren\'t the best for the body but have a little bit of mild flavor.',
                 icon: [5, 6],
                 turnToByContext: { 'eating': { 'health': -0.02, 'happiness': 0.0065, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } },
                 partOf: 'food',
@@ -10053,10 +10053,10 @@ if (getObj("civ") != "1") {
                 icon: [22, 26, 'magixmod'],
                 wideIcon: [21, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'cut stone': 100 },
-                costPerStep: { 'platinum block': 3, 'seafood': 25, 'gems': 6, 'water': 20, 'cut stone': 50, 'marble': 10 },
-                steps: 250,
-                messageOnStart: 'You started to build a pyramid for <b>Fishyar</b>.<br>This statue will have some fish and various decorations at the top. However, the more steps you build, the worse the drought will get!',
-                finalStepCost: { 'population': 400, 'gem block': 5, 'water': 10000, 'platinum block': 50 },
+                costPerStep: { 'platinum block': 3, 'seafood': 250, 'gems': 6, 'water': 20, 'cut stone': 50, 'marble': 10 },
+                steps: 200,
+                messageOnStart: 'You started to build the pyramid for the <b>Fishyar</b> statue.<br>This statue will have fish and various decorations at the top. However, the more steps you build, the worse the drought will get!',
+                finalStepCost: { 'population': 400, 'gem block': 5, 'platinum block': 50, 'cooked seafood': 5000, 'cured seafood': 5000 },
                 finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood haters and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't5': true, 'trial': true, 'language': true },
@@ -18166,8 +18166,8 @@ if (getObj("civ") != "1") {
                             G.getDict('bugs').icon = [13, 0, 'magix2'];
                             G.getDict('bugs').desc = "[bugs] are a good source of bait and may also be eaten sometimes.";
                             G.getDict('seafood').icon = [11, 0, 'magix2'];
-                            G.getDict('seafood').desc = "[seafood] is a decent source of food for an ocean-based civilization. They harm [health] much less than normal in such a tribe!";
-                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': 0.0065, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }
+                            G.getDict('seafood').desc = "[seafood] is a decent source of food for an ocean-based civilization. Luckily for you, [seafood,Fish] will harm [health] less than normal in tribes that know which ones are the least dangerous!";
+                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.006, 'happiness': 0.0065, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }
                             G.getDict('wtr').icon = [10, 0, 'magix2'];
                             G.getDict("tomb of oceans").costPerStep = { 'gold block': 1 + G.achievByName['ocean'].won, 'gem block': 10, 'precious metal ingot': 25, 'strong metal ingot': 10, 'basic building materials': 75, 'golden fish': 25 * (G.achievByName['ocean'].won + 1) };
                             G.getDict("tomb of oceans").finalStepCost['golden fish'] = 1000 * (G.achievByName['ocean'].won * 0.5 + 1);
@@ -18191,13 +18191,14 @@ if (getObj("civ") != "1") {
                             G.getDict('fishing').req = { 'tribalism': false };
                             G.getDict('hunting').req = { 'tribalism': false };
                             G.getDict('famine').chance = 0.2;
-                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': -1, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
+                            G.getDict('seafood').desc = "[seafood,Raw seafood] such as fish, clams, or shrimps, aren\'t the best for the body and are also absolutely <b>hated</b> by your [population,people], causing your [happiness] level to rapidly drop!";
+                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -1, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
                             if (!G.has("well-digging")) G.gainTech(G.techByName['well-digging']);
                             G.getDict('well').cost = { 'stone': 3, 'archaic building materials': 15 };
                             G.getDict('well').limitPer = { 'land': 125 };
                             G.getDict('platinum-working').cost = { 'insight': 90 };
                             G.getDict('platinum-working').req = { 'prospecting': true, 'steel-making': true };
-                            G.getDict("platinum fish statue").costPerStep = { 'platinum block': 3 + 2 * G.achievByName['unfishy'].won, 'seafood': 25 + 15 * G.achievByName['unfishy'].won, 'gems': 6, 'water': 20 + 10 * G.achievByName['unfishy'].won, 'cut stone': 50, 'marble': 10 + 2 * G.achievByName['unfishy'].won };
+                            G.getDict("platinum fish statue").costPerStep = { 'platinum block': 3 + 2 * G.achievByName['unfishy'].won, 'seafood': 250 + 100 * G.achievByName['unfishy'].won, 'gems': 6, 'water': 20 + 10 * G.achievByName['unfishy'].won, 'cut stone': 50, 'marble': 10 + 2 * G.achievByName['unfishy'].won };
                         }
                     }
                 ],
@@ -22320,7 +22321,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'seafood',
-                desc: '[seafood,Raw seafood] such as fish, clams, or shrimps, is both bland-tasting and several kinds of nasty.',
+                desc: '[seafood,Raw seafood] such as fish, clams, or shrimps, aren\'t the best for the body but have a little bit of mild flavor.',
                 icon: [5, 6, 'c2'],
                 turnToByContext: { 'eating': { 'health': -0.02, 'happiness': 0.01, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } },
                 partOf: 'food',
