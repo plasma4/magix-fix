@@ -1639,16 +1639,16 @@ if (getObj("civ") != "1") {
                         '<div class="fancyText"><font size="4">Here are the statistics of your tribe:</font><br>' +
                         '<font size="3" color="white"><br><li>Technologies obtained: ' + G.techN + '</li><Br>' +
                         '<li>Traits adopted: ' + (G.traitN - G.knowN) + '</li><Br>' +
-                        '<li>Most people in your civilization<br>during the run: ' + G.achievByName['mostPeopleDuringRun'].won + '</li><Br>' +
+                        '<li>Most people in your civilization<br>during the run: ' + B(G.achievByName['mostPeopleDuringRun'].won) + '</li><Br>' +
                         '<li>Days survived: ' + B(G.day + (300 * G.year)) + '</li><Br>' +
                         (G.has('time measuring 1/2') ? '<li>Years survived: ' + B(G.year + 1) + '</li><Br>' : '') +
-                        '<li>Pieces of overworld land discovered: ' + Math.round(G.getRes('land').amount) + '</li><Br>' +
-                        '<li>Land overall: ' + Math.round(G.getRes('tl').amount) + '</li><br>' +
+                        '<li>Pieces of overworld land discovered: ' + B(G.getRes('land').amount) + '</li><Br>' +
+                        '<li>Land from all worlds: ' + B(G.getRes('tl').amount) + '</li><br>' +
                         '<li>Wonders completed during legacy: ' + G.achievByName['wondersDuringRun'].won + '</li><Br>' +
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
                         '<li><font color="#a5cff3">Special notes: ' + (specialNotes.length === 0 ? 'none' : specialNotes.join(', ')) + '</font></li><Br>' +
                         '<li>Early-game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
-                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
+                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'none active'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
@@ -1982,7 +1982,7 @@ if (getObj("civ") != "1") {
                     if (G.achievByName['mausoleum'].won > 0) {
                         if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t2')) {
                             G.getDict('battling thieves').req = { 'hunting': true };
-                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t decrease their spawn rate to 0. Adults (and more rarely, old people) may die after encountering a Thief. Expect them at a more advanced game stage.', icon: [23, 1, 'magixmod'] });
+                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t prevent any thieves from appearing, sadly. Adults (and more rarely, old people) may die after encountering a Thief. Expect them at a more advanced game stage.', icon: [23, 1, 'magixmod'] });
                             madeThievesWarn = true
                         } else if (G.has('t1') || G.has('t2')) {
                             if (G.year >= 109 && G.year <= 121 && !madeThievesWarn) {
@@ -5742,10 +5742,10 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 tick: function (me, tick) {
                     if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
-                        if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { //Spawning rate
-                            var n = G.getRes('adult').amount * 0.000000125 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.min(Math.max(0.01 * G.year - 0.2, 0.9), 1.15);
+                        if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { // The spawning rate is increased or decreased by various factors
+                            var n = G.getRes('adult').amount * 0.000000125 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.01 * G.year - 0.2, 0.9), 1.15), 3.5);
                             if (G.checkPolicy('se02') == 'on') {
-                                G.gain('thief', n * 1.01, 'unhappiness');
+                                G.gain('thief', n * 1.02, 'unhappiness');
                             } else {
                                 G.gain('thief', n, 'unhappiness');
                             }
@@ -14254,7 +14254,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pantheon key', category: 'religion',
-                desc: 'Unlocks the Pantheon. In it, you will meet 12 Seraphins. Each one offers some boost, but may come with some backfires! <font color="#f70054">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent on choosing up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back to you, so be careful and think twice before you perform a choice! //You\'ll also unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
+                desc: 'Unlocks the Pantheon. Within it, you will meet 12 Seraphins. Each one will offer some boost, but may come with some backfires! <font color="#f70054">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent on choosing up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back to you, so be careful and think twice before you perform a choice! //You\'ll also unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
                 icon: [4, 25, 'magixmod', 24, 1],
                 req: { 'life in faith': true, 'monument-building III': true },
                 cost: { 'insight II': 100, 'faith II': 10, 'culture II': 30, 'godTemplePoint': 500, 'faith': 80 },
@@ -15003,7 +15003,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus1',
                 displayName: '. . .',
-                desc: 'You seem powerful. [guru] can probably make more science.',
+                desc: 'You seem powerful. [guru]s can probably make more science.',
                 icon: [32, 5, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15012,7 +15012,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus2',
                 displayName: '. . .',
-                desc: 'You have a potential and enough power. It feels like everything goes faster.',
+                desc: 'You seem to have enough potential and enough power! It feels like everything is going faster.',
                 icon: [32, 4, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15021,7 +15021,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus3',
                 displayName: '. . .',
-                desc: 'You are powerful. Your glory can lighten up some secret darkness.',
+                desc: 'You are powerful. Your glory can is clearing away some secret darkness.',
                 icon: [32, 3, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15086,7 +15086,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge', category: 'tier1', //despite of costs it doesn\'t do much
-                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will be reset to 0 even if  some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="#f70054">Note: It does not expand the map and it does not add any new goods. You will have an extra 1.5% of your total land for your people. It may help you, but there is a huge risk involved.',
+                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will be reset to 0 even if some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="#f70054">Note: It does <b>not</b> expand the map and does not add any new goods; you will simply have an extra 1.5% of [land] and [wtr]. It may help you, but there is a huge risk involved!</font>',
                 req: { 'policy revaluation': true, 'focused scouting': true },
                 cost: { 'insight II': 45, 'influence': 255 },
                 icon: [33, 26, 'magixmod']
@@ -15159,7 +15159,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 even if  some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="#f70054">Note: It does not expand the map and it does not add any new goods. You will have extra 5.5% of your total land for your people(7% in total). It may help you, but there is an even larger risk. The further you push beyond the edge, a stronger scourge will fall on you and your civilization.',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 even if some of them are not required for this tech (it does not involve [industry point]s or [worship point]s). Also, it will reset [happiness] and [health] to its primary state.<hr><font color="#f70054">Note: It does not expand the map and it does not add any new goods. Getting this will give you an extra 7% of [land] and [wtr] rather than 1.5%, overriding the previous tech. It may help you, but there is an even larger risk now! The further you push beyond the edge, a stronger scourge will fall on you and your civilization...</font>',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 35, 'magixmod', 0, 30, 'magixmod'],
@@ -15172,7 +15172,7 @@ if (getObj("civ") != "1") {
                 name: 'mirrors', category: 'tier1',
                 desc: 'People now know how mirrors work and even know how to make simple ones themselves! @provides 20 [wisdom II] and 1 [education]',
                 req: { 'burial in new world': true },
-                cost: { 'insight': 615 },
+                cost: { 'insight': 625 },
                 icon: [8, 30, 'magixmod'],
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 20 } },
@@ -15208,7 +15208,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mirror world 1/2', category: 'tier2',
-                desc: 'Unlocks a [grand mirror], which will double your [land] amount. It compounds with bonuses from [beyond the edge] and [beyond the edge II]. The cost and display depends on your people\'s path. In fact, it is a passage to an exact copy of a world you met before your civilization set up their first shelter/dwelling. Make sure you fullfill the upkeep of that, because if you do not, then the [grand mirror] will disable and you will lose your land.',
+                desc: 'Unlocks a [grand mirror], which will double your [land] amount upon its completion. It compounds with bonuses from [beyond the edge] and [beyond the edge II]. The cost and display depends on your people\'s path. In fact, it is a passage to an exact copy of the current world before your civilization set up anything! Make sure you fulfill the upkeep of the mirror, however, because if you do not, then the [grand mirror] will disable and you will lose your land.',
                 req: { 'parallel theory 3/3': true, 'wonder \'o science': true, 'bigger university': true },
                 cost: { 'insight II': 400, 'science': 62, 'culture II': 38 },
                 icon: [27, 3, 'magixmod', 10, 30, 'magixmod'],
@@ -16866,7 +16866,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'cold heart',
-                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gain from warmth will be decreased by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 10%  //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and making your civilization become unforgettable.</small>',
                 icon: [20, 34, 'magixmod', 24, 1],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'hot heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -18566,7 +18566,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se02',
                 displayName: 'Bersaria the Seraphin of Madness',
-                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="#f70054">Backfire: Harms [happiness] and creates thieves 1% more.</font>',
+                desc: '<font color="lime">Increases the speed of thief hunters and other guards by 40%.</font><br><hr color="fuschia"><font color="#f70054">Backfire: Harms [happiness] and makes thieves appear 2% more.</font>',
                 icon: [28, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -21047,14 +21047,14 @@ if (getObj("civ") != "1") {
                         '<div class="fancyText"><font size="4">Here are the statistics of your tribe:</font><br>' +
                         '<font size="3" color="white"><br><li>Technologies obtained: ' + G.techN + '</li><Br>' +
                         '<li>Traits adopted: ' + G.traitN + '</li><Br>' +
-                        '<li>Most elves in your civilization<br>during the run: ' + G.achievByName['mostElvesDuringRun'].won + '</li><Br>' +
+                        '<li>Most elves in your civilization<br>during the run: ' + B(G.achievByName['mostElvesDuringRun'].won) + '</li><Br>' +
                         '<li>Days survived: ' + B(G.day + (300 * G.year)) + '</li><Br>' +
                         (G.has('time measuring 1/2') ? '<li>Years survived: ' + B(G.year + 1) + '</li><Br>' : '') +
-                        '<li>Pieces of overworld land discovered: ' + Math.round(G.getRes('land').amount) + '</li><Br>' +
+                        '<li>Pieces of land discovered: ' + B(G.getRes('land').amount) + '</li><Br>' +
                         '<li>Wonders completed during legacy: ' + G.achievByName['wondersDuringRun'].won + '</li><Br>' +
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
                         '<li>Early-game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
-                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
+                        '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'none active'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
@@ -21297,7 +21297,7 @@ if (getObj("civ") != "1") {
                         if (G.year == 9000) {
                             G.doFunc('>9000');
                         }
-                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="#eec3a5">It appears that you and your elves are doing well. It is been 150 years since you started magic adventure in Elf universe. Thank you for playing with this expansion and congratulations for geting so far ;D </b></small><br></font><b>farewell...</b>', icon: [24, 1, 'magixmod'] });
+                        if (G.year == 149) G.Message({ type: 'important', text: '<font color="#eec3a5">It appears that you and your elves are doing well. It is been 150 years since you started magic adventure in the universe of elves. Thank you for playing with this expansion and congratulations for getting so far ;D </b></small><br></font><b>farewell...</b>', icon: [24, 1, 'magixmod'] });
                     }
                     //influence trickle
                     if (G.getRes('influence').amount <= G.getRes('authority').amount - 1) G.gain('influence', 1);
@@ -25463,7 +25463,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'cold heart',
-                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gets harmed by 1.5% (sometimes it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 15% //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and make your civilization become unforgettable.</small>',
+                desc: '@unhappiness from a lack of [fire pit]s or other heating sources is halved and [health] gain from warmth will be decreased by 1.5% (at other times it will be 2.5%). @happiness from having [fire pit]s or other heating sources is decreased by 15% //<small>Your tribe is getting used to low temperatures, meaning that they\'ll have to partially accept that fact in order to survive and make your civilization become unforgettable.</small>',
                 icon: [27, 15, 'c2', 24, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'hot heart': false, 'neutral heart': false, 'fluid heart': false, 'oral tradition 1/2': true },
