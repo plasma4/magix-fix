@@ -1647,7 +1647,7 @@ if (getObj("civ") != "1") {
                         '<li>Wonders completed during legacy: ' + G.achievByName['wondersDuringRun'].won + '</li><Br>' +
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
                         '<li><font color="#a5cff3">Special notes: ' + (specialNotes.length === 0 ? 'none' : specialNotes.join(', ')) + '</font></li><Br>' +
-                        '<li>Early game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
+                        '<li>Early-game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
                         '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
@@ -1672,8 +1672,6 @@ if (getObj("civ") != "1") {
                             if (G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'] != undefined)
                                 delete G.policyByName['se' + (i < 10 ? "0" + i : i)].cost['faith II'];
                         }
-                    G.herbReq = Math.min(G.achievByName['herbalism'].won, 1);
-                    G.fruitReq = Math.min(G.achievByName['unfishy'].won * 5, 3);
                     G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
                     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
 
@@ -1760,41 +1758,48 @@ if (getObj("civ") != "1") {
                     } else if (G.has('t6') && G.year == 6) {
                         G.Message({ type: 'bad', text: 'In this trial, land will decay into ocean tiles faster and faster, so be warned! Be sure to check your land amount every so often: this is your final warning.', icon: [16, 0, 'magix2'] })
                     } else if (!G.has('t5') && G.year === 39) {
-                        G.Message({ type: 'good', text: 'Within trials, droughts and famines will not occur!', icon: [9, 10] })
+                        G.Message({ type: 'good', text: 'Within trials, droughts and famines will <b>not</b> occur!', icon: [9, 10] })
+                    } else if (G.has('t5') && G.year >= 5) {
+                        if (!G.has('drought')) {
+                            setObj('drought', 5)
+                            G.gainTrait(G.traitByName['drought'])
+                        }
                     }
 
                     if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
                     if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
 
                     if (G.has("t5") && G.year > 0) {
+                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow((G.year - 1) * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
                         var population = G.getRes("population").amount
                         if (G.getRes("fruit").amount >= G.fruitReq) {
-                            G.Message({ type: 'good', text: "Your current stockpile of fruit is enough to please your people, making your " + G.getName("inhabs") + " much happier. Keep this up and do not forget that your people will long for more and more fruit as time goes on!", icon: [33, 12, 'magixmod'] });
+                            G.Message({ type: 'good', text: "Your current stockpile of fruit is enough to please your people, making your " + G.getName("inhabs") + " much happier. Keep this up and do not forget that your people will long for more and more fruit as time goes on!", icon: [4, 7] });
                             changeHappiness(8 * population, "fruit happiness");
                             G.lose("fruit", G.fruitReq, "population pleasing");
                         } else {
-                            G.Message({ type: 'bad', text: "Your current stockpile of fruit is not enough to your " + G.getName("inhabs") + ", making them much less happy. Do not forget that your civilization will be extremely unhappy if this continues!", icon: [33, 12, 'magixmod'] });
+                            G.Message({ type: 'bad', text: "Your current stockpile of fruit is not enough to your " + G.getName("inhabs") + ", making them much less happy. Do not forget that your civilization will be extremely unhappy if this continues!", icon: [4, 7] });
                             changeHappiness(-8 * population, "fruit unhappiness");
                             G.lose("fruit", G.fruitReq, "failed population pleasing");
                         }
                         var fishReq = Math.pow(G.fruitReq, 0.95) - 1
                         if (G.getRes("seafood").amount >= fishReq) {
                             var waterAmount = Math.min(25 * population + 10, 12 * population + 400)
-                            G.Message({ type: 'good', text: "Your current stockpile of fish is enough to please Fishyar, making your " + G.getName("inhabs") + " a little happier and healthier, as well as providing everyone with " + B(waterAmount) + " water to fend off any droughts. Keep this up and do not forget that Fishyar will demand more and more fish!", icon: [33, 12, 'magixmod'] });
+                            G.Message({ type: 'good', text: "Your current stockpile of fish is enough to please Fishyar, making your " + G.getName("inhabs") + " a little happier and healthier, as well as providing everyone with " + B(waterAmount) + " water to fend off the " + (G.has('drought') ? "eternally lasting drought" : "drought that will arrive soon") + ". Keep this up and do not forget that Fishyar will demand more and more fish!", icon: [5, 6] });
                             changeHappiness(3 * population, "Fishyar happiness");
                             G.gain("water", waterAmount, "Fishyar giving supplies");
                             G.gain("health", 2.3 * population, "Fishyar giving supplies");
                             G.lose("seafood", G.fruitReq, "pleasing Fishyar");
                         } else {
-                            G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will not have insufficient water if this continues, as you could have gotten " + (35 * population + 10) + " water!", icon: [33, 12, 'magixmod'] });
+                            G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will be unable to have sufficient water if this continues, as you could have gotten " + (35 * population + 10) + " water for this year!", icon: [5, 6] });
                             G.lose("seafood", G.fruitReq, "failed pleasing of Fishyar");
                         }
-                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : 0.2 + G.achievByName['unfishy'].won) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
+                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
                         G.update['unit']();
                     }
 
                     G.isMap = G.isMapFullyExplored();
                     if (G.has("t7") && G.year > 0) {
+                        G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * ((G.year - 1) / 1.5) * (G.getRes('population').amount / 4));
                         var h = G.getRes("herb").amount;
                         G.lose("herb", h);
                         G.gain("herb essence", h * 0.08);
@@ -2280,11 +2285,8 @@ if (getObj("civ") != "1") {
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (!droughtmesg && G.has('drought')) {
-                        G.Message({ type: 'bad3', text: 'You are currently in a <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
+                        G.Message({ type: 'bad3', text: 'You are currently in ' + (G.has('trial') ? 'an eternal' : 'a') + ' <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
                         droughtmesg = true
-                    } else if (G.has('t5') && G.year > 0) {
-                        setObj('drought', G.getDict("platinum fish statue").percent * -0.1)
-                        if (!G.has('drought')) G.gainTrait(G.traitByName['drought'])
                     }
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
                     if (G.techN >= 80) { //since these are earlygame only we won\'t want them anymore at some point unless they get adopted for good.
@@ -2590,7 +2592,7 @@ if (getObj("civ") != "1") {
                             G.Message({ type: 'tutorial', text: 'You can now control food and water rations. Your people seem a little angry and want to eat and drink more. Check the policies: here you may find a solution to this minor problem that may quickly become a major one if you will ignore this.<br>Make sure you unlocked policies first!', icon: [4, 28, 'magixmod'] })
                             rofpopup = true
                         }
-                        if (G.getRes('land').amount == 100 && !explorepop && !G.has('scout').amount >= 1) {
+                        if (G.getRes('land').amount == 100 && !explorepop && G.getUnitAmount('scout') < 1) {
                             G.Message({ type: 'tutorial', text: '<b>Maybe it is a good time to hire a Scout!</b><br>A wanderer can\'t discover new tiles but may explore and discover secrets hidden in new territory. If you haven\'t hired a <b>Scout</b> yet, think about hiring one sometime and focus on getting the <b>Scouting</b> research if you don\'t already have it. Land becomes a must later on!', icon: [5, 28, 'magixmod'] })
                             explorepop = true
                         }
@@ -5044,7 +5046,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'nickel ore',
-                desc: '[nickel ore,Nickel] can be found with better prospecting. They may be processed into [hard metal ingot].',
+                desc: '[nickel ore,Nickel] can be found with better prospecting. They may be processed into [hard metal ingot]s.',
                 icon: [9, 12, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5054,7 +5056,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'platinum ore',
-                desc: '[platinum ore,Platinum] can be found with better prospecting and with some luck, but only by a [quarry]. May be processed into [precious metal ingot].',
+                desc: '[platinum ore,Platinum] can be found with better prospecting and with some luck, but only by a [quarry]. May be processed into [precious metal ingot]s.',
                 icon: [8, 12, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5064,7 +5066,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'platinum ingot',
-                desc: '[platinum ingot,Platinum ingot] is used to craft precious items, building materials and more.',
+                desc: '[platinum ingot]s are used to craft precious items, building materials, and more.',
                 icon: [3, 11, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -6583,8 +6585,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'stick': 0.035 }, req: { 'gtt1': true } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.035 }, req: { 'gtt2': true } },
                     // Trial/Seraphin stuff
-                    { type: 'gather', context: 'gather', what: { 'seafood': 150 }, req: { 't5': true } },
-                    { type: 'mult', value: 0.05, req: { 't5': true } },
+                    { type: 'gather', context: 'gather', what: { 'seafood': 35 }, req: { 't5': true } },
+                    { type: 'mult', value: 0.2, req: { 't5': true } },
                     { type: 'mult', value: 0.4, req: { 't6': true } },
                     { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
                     { type: 'mult', value: 0.85, req: { 'se07': 'on' } },
@@ -6993,7 +6995,7 @@ if (getObj("civ") != "1") {
                 //require:{'worker':2,'stone tools':2},
                 //upkeep:{'food':0.2},
                 effects: [
-                    { type: 'gather', what: { 'water': 20 }, req: { 'drought': false } },
+                    { type: 'gather', what: { 'water': 20 } },
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
@@ -7072,7 +7074,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'any': { name: 'Any', icon: [8, 8], desc: 'Mine without focusing on specific ores.', use: { 'worker': 3, 'stone tools': 3 } },
-                    'any(deepmine)': { name: 'Any', icon: [24, 18, 'magixmod', 8, 8], desc: 'Mine without focusing on specific ores way deeper.', use: { 'worker': 6, 'metal tools': 6 }, req: { 'mining II': true } },
+                    'any(deepmine)': { name: 'Any', icon: [24, 18, 'magixmod', 8, 8], desc: 'Mine without focusing on specific ores deeper beneath the ground.', use: { 'worker': 6, 'metal tools': 6 }, req: { 'mining II': true } },
                     'coal': { name: 'Coal', icon: [12, 8], desc: 'Mine for [coal] with five times the efficiency.', req: { 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'salt': { name: 'Salt', icon: [11, 7], desc: 'Mine for [salt].', req: { 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'copper': { name: 'Copper', icon: [9, 8], desc: 'Mine for [copper ore] with five times the efficiency.', req: { 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } },
@@ -7082,7 +7084,8 @@ if (getObj("civ") != "1") {
                     'zinc': { name: 'Zinc', icon: [11, 3, 'magixmod'], desc: 'Mine for [zinc ore] with five times the efficiency.', req: { 'prospecting III': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'dinium': { name: 'Dinium', icon: [11, 5, 'magixmod'], desc: 'Mine for [dinium ore] with tripled efficiency.', req: { 'prospecting III': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'nickel': { name: 'Nickel', icon: [9, 12, 'magixmod'], desc: 'Mine for [nickel ore] with five times efficiency.', req: { 'prospecting II': true }, use: { 'worker': 3, 'metal tools': 3 } },
-                    'ostones': { name: 'Other stones', icon: [3, 12, 'magixmod'], desc: 'Mine for [various stones] with tripled efficiency.', req: { 'prospecting II': true }, use: { 'worker': 3, 'metal tools': 3 } }
+                    'ostones': { name: 'Other stones', icon: [3, 12, 'magixmod'], desc: 'Mine for [various stones] with tripled efficiency.', req: { 'prospecting II': true }, use: { 'worker': 3, 'metal tools': 3 } },
+                    'platinum': { name: 'Platinum', icon: [8, 12, 'magixmod'], desc: 'Mine for [platinum ore]. Exclusive to this specific trial.', req: { 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } }
                 },
                 effects: [
                     { type: 'gather', context: 'mine', amount: 10, max: 30, mode: 'any' },
@@ -7097,6 +7100,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'mine', what: { 'gold ore': 50 }, max: 30, mode: 'gold' },
                     { type: 'gather', context: 'mine', what: { 'nickel ore': 40 }, max: 25, mode: 'nickel' },
                     { type: 'gather', context: 'mine', what: { 'various stones': 30 }, max: 25, mode: 'ostones' },
+                    { type: 'gather', context: 'mine', what: { 'platinum ore': 0.6 }, max: 30, mode: 'platinum' },
                     { type: 'gather', context: 'mine', what: { 'sulfur': 35 }, max: 50, req: { 'explosive crafting & mining': true }, notMode: 'off' },
                     { type: 'mult', value: 0.95, req: { 'dt4': true }, mode: 'gold' },
                     { type: 'mult', value: 0.95, req: { 'dt5': true }, mode: 'iron' },
@@ -7139,8 +7143,8 @@ if (getObj("civ") != "1") {
                     'bronze': { name: 'Bronze alloying', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 8 [copper ore] and 2 [tin ore] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'bronze-working': true } },
                     'steel': { name: 'Steel alloying', icon: [12, 9], desc: 'Cast [strong metal ingot]s out of 19 [iron ore] and 1 [coal] each.', use: { 'worker': 2, 'metal tools': 2 }, req: { 'steel-making': true } },
                     'cobalt': { name: 'Cobalt smelting', icon: [14, 0, 'magixmod'], desc: 'Cast 1 [cobalt ingot] out of 8 [cobalt ore].', req: { 'cobalt-working': true }, use: { 'worker': 2, 'metal tools': 2, 'stone tools': 1 } },
-                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6 [nickel ore] each.', req: { 'prospecting II': true, 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
-                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5 [platinum ore] each.', req: { 'prospecting II': true, 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'nickel': { name: 'Nickel smelting', icon: [10, 9], desc: 'Cast 1 [hard metal ingot] out of 6 [nickel ore] each.', req: { 'nickel-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
+                    'platinum': { name: 'Platinum smelting', icon: [3, 11, 'magixmod'], desc: 'Cast 1 [platinum ingot] out of 5 [platinum ore] each.', req: { 'platinum-working': true }, use: { 'worker': 2, 'metal tools': 2 } },
                     //deep quarrymining
                     'osmium': { name: 'Osmium smelting', icon: [9, 9], desc: 'Cast [soft metal ingot]s out of 4 [osmium ore] each.', req: { 'deep mining & quarrying': true, 'osmium-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
                     'lead': { name: 'Lead smelting', icon: [10, 9], desc: 'Cast [hard metal ingot]s out of 6 [lead ore] each.', req: { 'deep mining & quarrying': true, 'lead-working': true, 'furnace modernization': true }, use: { 'metal tools': 2, 'worker': 2 } },
@@ -8408,7 +8412,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fire essence storage',
-                desc: '@This essence storage allows you to store 6,000 [fire essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [fire essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [2, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8423,7 +8427,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'water essence storage',
-                desc: '@This essence storage allows you to store 6,000 [water essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [water essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [0, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8438,7 +8442,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lightning essence storage',
-                desc: '@This essence storage allows you to store 6,000 [lightning essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [lightning essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [5, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8453,7 +8457,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'dark essence storage',
-                desc: '@This essence storage allows you to store 6,000 [dark essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [dark essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [1, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8468,7 +8472,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'nature essence storage',
-                desc: '@This essence storage allows you to store 6,000 [nature essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [nature essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [3, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8483,7 +8487,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wind essence storage',
-                desc: '@This essence storage allows you to store 6,000 [wind essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [wind essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [4, 5, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -8498,7 +8502,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy essence storage',
-                desc: '@This essence storage allows you to store 6,000 [holy essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [holy essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [3, 14, 'magixmod'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land of the Paradise': 0.8 },
@@ -8515,7 +8519,7 @@ if (getObj("civ") != "1") {
                 name: 'holy well',
                 desc: '@produces fresh [cloudy water], up to 35 per day<>The [holy well] is a steady source of drinkable water, but requires some [holy essence] to start operating.',
                 icon: [10, 14, 'magixmod'],
-                cost: { 'holy essence': 100, 'stone': 50, 'basic building materials': 120 },
+                cost: { 'stone': 50, 'basic building materials': 120, 'holy essence': 100 },
                 use: { 'land of the Paradise': 1 },
                 effects: [
                     { type: 'gather', what: { 'cloudy water': 35 } },
@@ -10026,7 +10030,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'hartar\'s servant',
-                desc: '@hunts wild animals for [meat], [bone]s, and [hide]s. @The servant can\'t be wounded and may replace a [gatherer].',
+                desc: '@hunts wild animals for [meat], [bone]s, and [hide]s @cannot be wounded and may replace a [gatherer]',
                 icon: [7, 29, 'magixmod'],
                 cost: {},
                 limitPer: { 'population': 3 },
@@ -10044,15 +10048,15 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'platinum fish statue',
-                desc: '@Leads to the completion of the <b>Unfishy</b> trial. //A statue made from [cut stone] and decorated with [seafood,Fish].<><font color="#44d0aa">The more you finish this statue, the harder it is to complete it...can you conquer [seafood]?</font>',
+                desc: '@Leads to the completion of the <b>Unfishy</b> trial. //A statue made from [cut stone] and decorated with [seafood,Fish].<><font color="#44d0aa">The more you finish this statue, the worse the drought will get...can you conquer the challenge?</font>',
                 wonder: 'unfishy',
                 icon: [22, 26, 'magixmod'],
                 wideIcon: [21, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'cut stone': 100 },
-                costPerStep: { 'platinum block': 1, 'seafood': 25, 'gems': 2, 'cut stone': 10, 'water': 10 },
+                costPerStep: { 'platinum block': 3, 'seafood': 25, 'gems': 6, 'water': 20, 'cut stone': 50, 'marble': 10 },
                 steps: 250,
                 messageOnStart: 'You started to build a pyramid for <b>Fishyar</b>.<br>This statue will have some fish and various decorations at the top. However, the more steps you build, the worse the drought will get!',
-                finalStepCost: { 'population': 400, 'gem block': 5, 'water': 10000, 'platinum ore': 25 },
+                finalStepCost: { 'population': 400, 'gem block': 5, 'water': 10000, 'platinum block': 50 },
                 finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood haters and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't5': true, 'trial': true, 'language': true },
@@ -10481,7 +10485,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'christmas essence storage',
-                desc: '@This essence storage allows you to store 6,000 [christmas essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [christmas essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [4, 11, 'seasonal'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -10609,7 +10613,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'halloween essence storage',
-                desc: '@This essence storage allows you to store 6,000 [halloween essence]<>It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This essence storage allows you to store 6,000 [halloween essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [7, 8, 'seasonal'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -11024,7 +11028,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is [exploration trips], which can also be obtained at the same time upon reaching [wizardry]. Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic... Getting this increases the exploration cap by a little bit.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11201,7 +11205,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'symbolism', category: 'upgrade',
-                desc: '@[dreamer]s and [painter]s produce 40% more [insight] @[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith]<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on shapes. There are two types of [symbolism] that you can unlock!',
+                desc: '@[dreamer]s produce 40% more [insight] @[storyteller]s produce 20% more [culture]@[soothsayer]s produce 20% more [faith] @various other units are also boosted<>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on shapes. There are two types of [symbolism] that you can unlock!',
                 icon: [13, 1],
                 cost: { 'culture': 10, 'insight': 10 },
                 req: { 'oral tradition': true, 'intuition': true, 'symbI': false },
@@ -11460,7 +11464,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'gem-cutting', category: 'tier1',
-                desc: '@[carver]s can now make [gem block]s out of [gems]//<small>That\'s so shiny!</small>',//TODO : desc
+                desc: '@[carver]s can now craft shiny [gem block]s out of [gems]//<small>That\'s so sparkly!</small>',//TODO : desc
                 icon: [27, 6],
                 cost: { 'insight': 20 },
                 req: { 'carving': true, 'tool-making': true },
@@ -11508,14 +11512,14 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated: instead, they consume [mana]. Get [wizard wisdom] so that you can hire some [wizard]s!// With your newfound knowledge, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated: instead, they consume [mana]. Get [wizard wisdom] so that you can hire some [wizard]s!//With your newfound discovery of <b><font color="white">Wizards</font></b>, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad...</small>',
                 icon: [5, 3, 'magixmod'],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
                 effects: [
                     {
                         type: 'function', func: function () {
-                            if (!G.has('t6')) G.getDict('scouting').req = { 'tool-making': true, 'language': true, 'intuition': true };
+                            if (!G.has('t5')) G.getDict('scouting').req = { 'tool-making': true, 'language': true, 'intuition': true };
                             G.getDict('exploration trips').req = { 'tool-making': true, 'language': true, 'intuition': true };
                         }
                     }
@@ -11882,7 +11886,7 @@ if (getObj("civ") != "1") {
                 name: 'platinum-working', category: 'tier1',
                 desc: '@[furnace]s can now make [platinum ingot]s from [platinum ore]@[blacksmith workshop]s can now forge [platinum block]s out of [platinum ingot]s //<small>not that huge in size though</small>',
                 icon: [5, 11, 'magixmod'],
-                cost: { 'insight': 100 },
+                cost: { 'insight': 120 },
                 req: { 'smelting': true, 'prospecting II': true },
                 effects: [
                 ],
@@ -14427,7 +14431,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise shelters', category: 'tier2',
-                desc: 'Unlocks the [paradise shelter]. It is made out of stones and can fit 4 people. Of course as the other is limited.<br>In addition, it adds +1 [housing] for every 4 [paradise shelter]s.',
+                desc: 'Unlocks the [paradise shelter]. It is made out of stones and can fit 4 people, but will also be limited.<br>In addition, it adds +1 bonus [housing] for every 4 [paradise shelter]s.',
                 icon: [14, 27, 'magixmod'],
                 req: { 'paradise housing': true, 'leaves of wisdom': true },
                 cost: { 'insight II': 150, 'culture II': 40, 'influence II': 10, 'science': 10 },
@@ -14451,7 +14455,12 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('monument-building').desc = '@getting this may unlock a wonder depending on the Trial you are currently in'; document.title = 'Trial active: NeverEnding Legacy'
+                            if (G.has('t8') || G.has('t6')) {
+                                G.getDict('monument-building').req = { 'tribalism': false }
+                            } else {
+                                G.getDict('monument-building').desc = '@getting this will unlock a wonder that depends on the Trial you are currently in'
+                            }
+                            document.title = 'Trial active: NeverEnding Legacy'
                         }
                     },
                 ],
@@ -16084,7 +16093,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'voodoo spirit',
-                desc: '@You start run with two bonuses: //<b>Early game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole] and the [cemetary of Plain Island]; the island cemetary gains 2,500 additional [burial spot]s.)',
+                desc: '@You start run with two bonuses: //<b>Early-game bonus</b>: learn more about [dark decay] (hover on this resource with your mouse). //<b>Late-game bonus:</b> All units that provide [burial spot]s provide twice as much (except the [dark wormhole] and the [cemetary of Plain Island]; the island cemetary gains 2,500 additional [burial spot]s.)',
                 icon: [24, 5, 'magixmod'],
                 effects: [
                     {
@@ -17830,7 +17839,7 @@ if (getObj("civ") != "1") {
                 desc: 'Carefully storing the [water] within your tribe is a good first step in preventing its rapid decay. @decreases [water] decay during droughts @[cloudy water] decay will be decreased slightly',
                 icon: [7, 6, 0, 0, 'magix2'],
                 cost: { 'insight': 80 },
-                req: { 'drought': true },
+                req: { 'drought': true, 'well-digging': true, 'paradise building': true },
                 effects: [
                 ],
             });
@@ -18103,7 +18112,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'drought',
-                desc: '<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types. In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). [cloudy water] will also decay faster, although slower than [water].</b> However, during a <u style="color:#c48b10">drought</u>, you may research unique technologies!',
+                desc: '@<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types.</b> @In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). @[cloudy water] will also decay faster, although slower than [water]. @However, during a <b><u style="color:#c48b10">drought</u></b>, you may research unique technologies!',
                 icon: [9, 10, 1, 0, 'magix2'],
                 req: { 'tribalism': false },
                 category: 'main',
@@ -18182,8 +18191,13 @@ if (getObj("civ") != "1") {
                             G.getDict('fishing').req = { 'tribalism': false };
                             G.getDict('hunting').req = { 'tribalism': false };
                             G.getDict('famine').chance = 0.2;
-                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': -0.8, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
+                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.002, 'happiness': -1, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
                             if (!G.has("well-digging")) G.gainTech(G.techByName['well-digging']);
+                            G.getDict('well').cost = { 'stone': 3, 'archaic building materials': 15 };
+                            G.getDict('well').limitPer = { 'land': 125 };
+                            G.getDict('platinum-working').cost = { 'insight': 90 };
+                            G.getDict('platinum-working').req = { 'prospecting': true, 'steel-making': true };
+                            G.getDict("platinum fish statue").costPerStep = { 'platinum block': 3 + 2 * G.achievByName['unfishy'].won, 'seafood': 25 + 15 * G.achievByName['unfishy'].won, 'gems': 6, 'water': 20 + 10 * G.achievByName['unfishy'].won, 'cut stone': 50, 'marble': 10 + 2 * G.achievByName['unfishy'].won };
                         }
                     }
                 ],
@@ -18894,7 +18908,7 @@ if (getObj("civ") != "1") {
                 desc: 'Starts [se05] (you will be warned and given more info before starting).',
                 icon: [24, 18, 'magixmod', 25, 25, 'magixmod', 1, 22, 'magixmod'],
                 startMode: 'off', cost: {},
-                req: { 'se10': 'on', 'tribalism': false },
+                req: { 'se10': 'on' },
                 category: 'trial',
                 effects: [
                     {
@@ -18908,7 +18922,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'In this trial, your people hate fish, but they become the ONLY decent source of food (because gatherers are 95% worse, but will now catch significant amounts of fish). Hunters and fishers do not exist here, and you\'ll have to deal with a drought that never ends (starting from just the second year, and combining with a famine soon after). You will also unlock wells instantly, although they will be affected by droughts as well. You\'ll have to deal with an angry tribe, as well as the fact that gatherers will not gather anything except for seafood. In addition, each year, you will have to provide <font color="#cc0671">Fruit</font> for your tribe, which will boost how happy your people are. You can also trade <font color="#cc0671">Seafood</font> with some valuable water to fend off the eternal drought (thanks to Fishyar trying rather forgivingly to help your people). For every step of the wonder that you complete, the drought and famine will worsen, so be extra careful!<br><br><br>' +
+                                    'In this trial, your people hate fish, but they will become the only decent source of food (because gatherers are 80% worse at everything, but will now catch significant amounts of fish). Also, the ideas of hunting and fishing do not exist here at all, and you\'ll have to deal with a drought that never ends, as well as a famine soon after. Platinum-working is a little cheaper, may be unlocked earlier, will unlock platinum prospecting within mines as soon as you get it (only available in this specific trial), and will no longer require Prospecting II. Wells are unlocked instantly and are cheaper, although they will be affected by the drought as well and will become much more limited. You\'ll have to deal with an angry tribe, as well as the fact that gatherers will not gather anything except for seafood. In addition, each year, you will have to provide <font color="#cc0671">Fruit</font> for your tribe, which will boost how happy your people are. Your people will also try to trade some uncooked <font color="#cc0671">Seafood</font> with Fishyar with some valuable water to fend off the eternal drought (Fishyar is trying rather forgivingly to help your people). For every step of the wonder that you complete, the drought will worsen, so be extra careful!<br><br><br>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -18947,7 +18961,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'In this trial, fish are the only acceptable source of meat. Gatherers become 60% less efficient and hunters no longer exist. In addition, bugs act as bait, which allow you to catch fish (because of this, you need less of them and they work 50% faster). You will also be able to unlock boats and scouts earlier. After a few years, your people\'s valuable Land will gradually decay into Ocean, while those tiles themselves will gradually become Deep Ocean later on. Be warned: when you run out of land, the trial is instantly FAILED! Can you stop the sinking of your civilization and prove your worth by collecting enough golden fish to satisfy the Deep Ocean?<br><br><br>' +
+                                    'In this trial, fish are the only acceptable source of meat. Gatherers become 60% less efficient and hunters no longer exist. In addition, bugs act as bait instead, which will allow you to catch fish (because of this, the upkeep of fishers is less and they work 50% faster). You will also be able to unlock boats and scouts earlier. After a few years, your people\'s valuable Land will gradually decay into Ocean, while those tiles themselves will gradually become Deep Ocean later on. Be warned: when you run out of land, the trial will be instantly failed! Luckily, there are a variety of techs in this specific trial that may be used to counter this decay. Can you stop the sinking of your civilization and prove your worth by collecting enough golden fish to satisfy the Deep Ocean?<br><br><br>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -20319,7 +20333,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though! Here you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mud], more [stone]s and [limestone], and rarely [copper ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, an abundance of [iron ore], and some [coal], but less amounts of ores like [copper ore,Copper] or [tin ore,Tin]. Can\'t forget about [gems] though! Here you can find a little bit more of them.//Quarrying underneath there provides more [limestone] and [marble], but way less [various stones].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [33, 21, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
@@ -20335,7 +20349,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
                 icon: [33, 20, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -20351,7 +20365,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides less [platinum ore,Platinum].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
                 icon: [33, 18, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -20367,7 +20381,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'lush rocky substrate',
-                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less ores like [copper ore,Copper], [tin ore,Tin], [nickel ore,Nickel], [iron ore,Iron]. Also, you will find less [coal] here.//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
+                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less of ores like [copper ore,Copper], [tin ore,Tin], and [iron ore,Iron]. Also, you will find less [coal] here.//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
                 icon: [33, 19, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -20383,7 +20397,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'dead rocky substrate',
-                desc: 'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining there is not worth it at all because you will find almost no [tin ore,Ores]! //Same with quarrying (excluding [marble] and [platinum ore,Platinum], which is more common than anywhere else). //<font color="#aabbbb">There, you will find no [gold ore,Gold] and no [nickel ore,Nickel].</font>',
+                desc: 'A [dead rocky substrate] is unique to the Dead forest biome.//Surface [stone]s may be gathered by hand.//Digging rarely produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining there is not worth it at all because you will find almost no [tin ore,Ores]! //Same with quarrying (excluding [marble] and [platinum ore,Platinum], which is more common than anywhere else). //<font color="#aabbbb">Here, you will find no [gold ore,Gold].</font>',
                 icon: [33, 16, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.004, 'limestone': 0.002 },
@@ -20608,6 +20622,9 @@ if (getObj("civ") != "1") {
                                     else if (me.unit.type != 'portal') me.percent++; //only portals change their costs, well, and the wonder from the Buried trial
                                     if (me.unit.name == 'temple of the Dead' && me.percent > 100 && me.percent <= 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 10, 'corpse': 1 + (me.percent * 0.001), 'precious building materials': 1.2, 'bone': 3 + (me.percent * 0.01), 'dark essence': 2 + (me.percent * 0.01) };
                                     if (me.unit.name == 'temple of the Dead' && me.percent > 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 5 + me.percent * 0.01, 'corpse': 1.5, 'precious building materials': 2, 'bone': 3 + (me.percent * 0.011), 'dark essence': 4 + (me.percent * 0.012) };
+                                    if (me.unit.name == 'platinum fish statue') {
+                                        setObj('drought', 5 - me.percent * 0.1)
+                                    }
                                     G.doCost(me.unit.costPerStep, 1);
                                     if (G.getSetting('animations') && me.l) triggerAnim(me.l, 'plop');
                                 }
@@ -20978,7 +20995,7 @@ if (getObj("civ") != "1") {
                 };
                 G.ta = 1;
                 document.title = 'NeverEnding Legacy';
-                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
+                if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some elves start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                 fortress();
                 G.fastTicks = G.fastTicks2;
@@ -21029,13 +21046,13 @@ if (getObj("civ") != "1") {
                         '<div class="fancyText"><font size="4">Here are the statistics of your tribe:</font><br>' +
                         '<font size="3" color="white"><br><li>Technologies obtained: ' + G.techN + '</li><Br>' +
                         '<li>Traits adopted: ' + G.traitN + '</li><Br>' +
-                        '<li>Most people in your civilization<br>during the run: ' + G.achievByName['mostPeopleDuringRun'].won + '</li><Br>' +
+                        '<li>Most elves in your civilization<br>during the run: ' + G.achievByName['mostElvesDuringRun'].won + '</li><Br>' +
                         '<li>Days survived: ' + B(G.day + (300 * G.year)) + '</li><Br>' +
                         (G.has('time measuring 1/2') ? '<li>Years survived: ' + B(G.year + 1) + '</li><Br>' : '') +
                         '<li>Pieces of overworld land discovered: ' + Math.round(G.getRes('land').amount) + '</li><Br>' +
                         '<li>Wonders completed during legacy: ' + G.achievByName['wondersDuringRun'].won + '</li><Br>' +
                         '<li>Units unlocked: ' + G.unitN + '</li><Br>' +
-                        '<li>Early game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
+                        '<li>Early-game completed: ' + (G.has('monument-building') ? 'yes' : 'no') + '</li><Br>' +
                         '<li>Season:<b> ' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : (((Date.getMonth == 3 && Date.getDate == 1) || (G.getSetting('fools') && G.resets >= 3)) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Halloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></li><Br>' +
                         '<br><br></font>' +
                         '</div><br>' +
@@ -21127,7 +21144,7 @@ if (getObj("civ") != "1") {
                         G.getDict('wolvoes').mult = 4.8 * (1 - (i * 0.02));
                     }
                     if (G.releaseNumber == undefined) G.Load();
-                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some people start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
+                    if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some elves start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 }
             }
             G.funcs['new year'] = function () //new year but civ2
@@ -21958,7 +21975,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'burial spot',
-                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//Your people will slowly bury [corpse]s if there are enough [burial spot]s.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
+                desc: 'Each [burial spot] has enough room for one [corpse], letting you prevent the spread of disease and unhappiness.//Your elves will slowly bury [corpse]s if there are enough [burial spot]s.//The number on the left is how many burial spots are occupied, while the number on the right is how many you have in total.',
                 icon: [13, 4, 'c2'],
                 displayUsed: true,
             });
@@ -23871,7 +23888,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'house building': { name: 'House building', icon: [21, 3, 'c2'], desc: 'Build [house]s as long as your people don\'t have enough housing and the right materials are available.' },
+                    'house building': { name: 'House building', icon: [21, 3, 'c2'], desc: 'Build [house]s as long as your elves don\'t have enough housing and the right materials are available.' },
                     'undertaker': { name: 'Undertaker', icon: [13, 2, 'c2'], desc: 'Dig [grave]s as long as there are unburied corpses.' },
                 },
                 effects: [
@@ -24779,7 +24796,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'gem-cutting', category: 'tier1',
-                desc: '@[carver]s can now make [gem block]s out of [gems]//<small>That\'s so shiny!</small>',
+                desc: '@[carver]s can now craft shiny [gem block]s out of [gems]//<small>That\'s so sparkly!</small>',
                 icon: [27, 6, 'c2'],
                 cost: { 'discernment': 16, 'creativity': 8 },
                 req: { 'carving': true, 'tool-making': true },
@@ -25495,7 +25512,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'strict dress code',
-                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5 .//<small>Strict dress code may affect relationships between elves. Sometimes it feels pretty unfair...</small>',
+                desc: '@unhappiness from a lack of [basic clothes,Clothing] is multiplied by 1.5.//<small>Strict dress code may affect relationships between elves. Sometimes it feels pretty unfair...</small>',
                 icon: [29, 16, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'nudist culture': false, 'fluid dress code': false, 'clothing indifference': false },
@@ -25515,7 +25532,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Dress code will kind of vary for your people, it seems.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Your elves seem to have strange feelings for clothing, it seems.</small>',
                 icon: [9, 15, 'magixmod', 30, 16, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
@@ -25764,7 +25781,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon elves will now arrive in your tribe. They are called <b><font color="white">Wizards</font></b> and behave quite strangely sometimes. From now, wizardry and essences will start to appear. Get [wizard wisdom] so you can hire some [Wizard]s. //<small>Note: it doesn\'t mean anything bad!</small>',
+                desc: '@Some sort of weird, uncommon elves will now arrive in your tribe. They are called <b><font color="white">Wizards</font></b> and behave quite strangely sometimes. From now, wizardry and essences will start to appear. Get [wizard wisdom] so you can hire some of these strange elves. //<small>This is a good thing :></small>',
                 icon: [24, 14, 'c2'],
                 cost: { 'discernment': 106, 'faith': 10, 'gentility': 16 },
                 req: { 'a power of the fortress': true, 'developed creativity': true },
@@ -26259,9 +26276,9 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] people are more likely to age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] elves are more likely to age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
-                //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
+                //however, i've balanced this by making sick and wounded elves turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 'c2', 5, 3, 'c2'],
                 cost: { 'influence': 2 },
                 req: { 'tribalism': true },
@@ -27406,7 +27423,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'tundra rocky substrate',
-                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less amounts of ores like [olivnum ore,olivnum] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath here provides more [limestone].',
+                desc: 'A [tundra rocky substrate] is found underneath biomes with low temperatures or similar to tundra.//Surface [stone]s may be gathered by hand.//This soil contains less [clay] and [mire], more [stone]s and a little bit less [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, more common [iron ore] and [coal], but less amounts of ores like [olivnum ore,Olivnum] or [tin ore,Tin]. Can\'t forget about [gems] though!//Quarrying underneath here provides more [limestone].',
                 icon: [10, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.004, 'limestone': 0.0035 },
@@ -27420,7 +27437,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ice desert rocky substrate',
-                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore], more common [nickel ore] and [coal], but less amounts of ores like [olivnum ore,olivnum]. Can\'t forget about [gems] though, because you\'ll find more here.//Quarrying underneath here provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
+                desc: 'A [ice desert rocky substrate] is found underneath biomes with very low temperatures.//Surface [stone]s may be gathered by hand.//This soil contains no [mire], more [stone]s and [limestone] and rarely [olivnum ore,Ores].//Mining provides the best results, outputting a variety of [stone]s, way more common [iron ore], some more [coal], but less amounts of ores like [olivnum ore,Olivnum]. Can\'t forget about [gems] though, because you\'ll find more here.//Quarrying underneath here provides more [limestone] and [fazble].//<font color="#fcc">This substrate contains no [salt].</font>',
                 icon: [8, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
@@ -27434,7 +27451,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron] and [nickel ore,Nickel].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,Olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
                 icon: [9, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -27448,7 +27465,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,Olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
                 icon: [6, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -27462,7 +27479,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'lush rocky substrate',
-                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [greenold ore,Ores], and precious [gems] but less ores like [olivnum ore,olivnum], [tin ore,Tin],insert new ore here, [iron ore,Iron]. You will find less [coal] here.',
+                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [greenold ore,Ores], and precious [gems] but less ores like [olivnum ore,Olivnum], [tin ore,Tin],insert new ore here, [iron ore,Iron]. You will find less [coal] here.',
                 icon: [5, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
