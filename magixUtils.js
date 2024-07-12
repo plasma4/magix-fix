@@ -32,8 +32,14 @@ try {
             G.storageObject = G.storageObject[G.storageObject.length - 1]
             if (G.storageObject) {
                 G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
+            } else {
+                G.storageObject = {}
             }
+        } else {
+            G.storageObject = {}
         }
+    } else {
+        G.storageObject = {}
     }
 } catch (e) {
     console.warn("Storage data could not be obtained.")
@@ -83,27 +89,6 @@ function unitAmount(res, res2, cap) {
 G.setDict = function (name, what) {
     // No more warnings :p
     G.dict[name] = what
-}
-
-// Modified for icon/resource validation (like [food] in descriptions, for example)
-G.parseFunc = function (str) {
-    str = str.substring(1, str.length - 1);
-    var parts = str.split(',');
-    var keyword = parts[0];
-    parts.shift();
-    var val = parts.join(',');
-    var exact = false;
-    if (keyword.charAt(0) == '#') {
-        exact = true;
-        keyword = keyword.substring(1, keyword.length);
-    }
-    //str='['+keyword+' (not defined yet)]';
-    if (exact && G.getRawDict(keyword)) str = G.getSmallThing(G.getRawDict(keyword), val);
-    else if (!exact && G.getDict(keyword)) str = G.getSmallThing(G.getDict(keyword), val);
-    else {
-        str = G.getBrokenSmallThing(keyword, val);
-    }
-    return str;
 }
 
 // Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
@@ -359,6 +344,9 @@ G.AddData({
         TABS (yeah, this needs some changing and touch-ups, eh?)
         ==========================*/
         function tabs() {
+            if (G.tabs[0].name.slice(0, 5) === "<font") {
+                return
+            }
             var tabIds = [];
             var newText = ['<font color="lime">Production</font>', '<font color="#7f7fff">Territory</font>', '<font color="fuschia">Policies</font>', '<font color="pink">Traits</font>', '<font color="#bbbbff">Research</font>', '<font color="yellow">Settings</font>', '<font color="yellow">Update log (Vanilla)</font>', '<font color="yellow">Legacy</font>', '<font color="orange">Magix</font>'];
             for (i in G.tabs) {
@@ -1380,7 +1368,11 @@ G.AddData({
                                     return false
                                 }
                             }
+                        } else {
+                            G.storageObject = {}
                         }
+                    } else {
+                        G.storageObject = {}
                     }
                 } catch (e) {
                     console.warn("Storage data could not be obtained.")
@@ -1657,6 +1649,7 @@ G.AddData({
             link.media = 'all';
             head.appendChild(link);
         }
+        setTimeout(tabs, 500)
         /*==========================
         Civ debug
         ==========================*/
@@ -2528,7 +2521,7 @@ G.AddData({
             tier: 3,
             name: 'talented?',
             icon: [32, 25, 'magixmod'],
-            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land. In addition, this bonus applies to [well]s, <b>Farms</b>,<b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice when rolling researches</b>.',
+            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land.</b> In addition, this bonus applies to <b>Wells</b>, <b>Farms</b>, <b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice</b> when rolling researches.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -2805,7 +2798,7 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'fortress eternal',
-            displayName: '<font color="#Da4f37">fortress eternal</font>',
+            displayName: '<font color="#Da4f37">Fortress eternal</font>',
             desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Evolve the Fortress to 10/10 to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for the second civilization. @You also gain +1 <b>Insight</b> for the human race at the very start.',
             //fromWonder:'the fortress',
             icon: [1, 24, 'c2'],

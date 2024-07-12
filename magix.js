@@ -4489,7 +4489,6 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'land of the Plain Island',
-                displayName: 'Land of the ' + islandName(),
                 desc: 'The land you got from activating a portal to the new island: Plain Island. A place for new buildings.',
                 icon: [7, 0, 'magixmod'],
                 displayUsed: true,
@@ -4644,7 +4643,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dried leather',
-                desc: 'Hardened version of [leather]. The only way to make it is to put [leather] onto a <b>Drying rack<b>.',
+                desc: 'Hardened version of [leather]. The only way to make it is to put [leather] onto a [drying rack].',
                 icon: [13, 4, 'magixmod'],
                 category: 'build',
                 tick: function (me, tick) {
@@ -5596,12 +5595,10 @@ if (getObj("civ") != "1") {
             //But books has to be stored somewhere right?
             new G.Res({
                 name: 'book storage',
-                desc: '[book storage] will slow down decay for one [books,Book].',
+                desc: 'Each unit of [book storage] will slow down decay for one [books,Book].',
                 icon: [21, 4, 'magixmod'],
                 getDisplayAmount: function () {
                     return B(Math.min(this.displayedAmount, G.getRes('books').displayedAmount)) + '<wbr>/' + B(this.displayedAmount);
-                },
-                tick: function () {
                 },
                 meta: true
             });
@@ -5968,7 +5965,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'blue firework',
-                desc: 'Happy New Year, and launch up this firework into the sky! Every firework launched provides a certain amount of happiness',
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky.',
                 icon: [2, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -5979,7 +5976,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'orange firework',
-                desc: 'Happy New Year, and launch up this firework into the sky! Provides [happiness] for every firework launched into the sky.',
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky.',
                 icon: [1, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -5991,7 +5988,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'dark blue firework',
-                desc: 'Happy New Year, and launch up this firework into the sky! Provides [happiness] for every firework launched into the sky. This is a [dark essence,dark-essenced] firework so it can unleash its spectacular show at daylight./', icon: [5, 0, 'seasonal'],
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so it can unleash its spectacular show during the day.', icon: [5, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -6001,7 +5998,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark orange firework',
-                desc: 'Happy New Year, and launch up this firework into the sky! Provides [happiness] for every firework launched into the sky. This is a firework that uses [Dark essence] so it can unleash its spectacular show at daylight.',
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so it can unleash its spectacular show during the day.',
                 icon: [4, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -6101,7 +6098,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wooden coin',
-                desc: '1st tier of currency used by Pocket trial. To get 1 [silver coin] you will need: 100*((times you have completed Pocket*3)+1) [wooden coin]s. Can be used to buy primary, archaic resources.',
+                desc: 'The lowest tier of currency used by the Pocket trial. To get 1 [silver coin] you will need: 100*((times you have completed Pocket*3)+1) [wooden coin]s. Can be used to buy primary, archaic resources.',
                 category: 'misc',
                 icon: [5, 25, 'magixmod'],
                 tick: function (me, tick) {
@@ -6113,7 +6110,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'silver coin',
-                desc: '2nd tier of currency used by Pocket trial. To get 1 [golden coin] you will need: 100*((times you have completed Pocket*3)+1) [silver coin]s. Can be used to buy basic resources.',
+                desc: 'The second tier of currency used by the Pocket trial. To get 1 [golden coin] you will need: 100*((times you have completed Pocket*3)+1) [silver coin]s. Can be used to buy basic resources.',
                 category: 'misc',
                 icon: [6, 25, 'magixmod'],
                 tick: function (me, tick) {
@@ -6125,7 +6122,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'golden coin',
-                desc: 'The third and highest tier of currency used by the Pocket trial. Can be used to buy the most expensive resources of all.',
+                desc: 'The third and highest tier of currency used by the Pocket trial. Can be used to buy the most expensive resources of all...',
                 category: 'misc',
                 icon: [7, 25, 'magixmod'],
                 tick: function (me, tick) {
@@ -6410,6 +6407,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({ //debug res
                 name: 'love xp',
+                displayName: 'Love XP',
                 icon: [10, 17, 'seasonal']
             });
             new G.Res({
@@ -6468,6 +6466,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'spookiness xp',
+                displayName: 'Spookiness XP',
                 icon: [12, 8, 'seasonal'],
             });
             new G.Res({
@@ -9954,7 +9953,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'pagoda of passing time',
-                desc: '@Leads to the completion of the <b>Patience</b> trial. //A monument of time. A wonder for Chra-nos the Seraphin of Time; the Pagoda has a huge clock that is the Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...<br>But waiting right there<br>Is deadly<br>Each year weakens me<br>Hope this year is the last one...<br>Patience...is a poison...<br>a...deadly poison.',
+                desc: '@Leads to the completion of the <b>Patience</b> trial. //A monument of time. A wonder for Chra-nos the Seraphin of Time; the Pagoda has a huge clock that is the Seraphin\'s symbol. <><font color="#ffaaff">Patience is key...but waiting right there...is deadly...each year weakens me...and I hope this year is the last one.<br>Patience is a poison...<br>a...deadly poison!</font>',
                 wonder: 'patience',
                 icon: [4, 26, 'magixmod'],
                 wideIcon: [3, 26, 'magixmod'],
@@ -10422,7 +10421,7 @@ if (getObj("civ") != "1") {
                 desc: 'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //They produce bigger packets of these items, but at a slower rate. @Materials used in processing: [thread], [stone], [lumber], [fire pit], and [coal].',
                 icon: [18, 31, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
-                upkeep: { 'coal': 3, 'fire pit': 0.15, 'food': 65, 'water': 85 },
+                upkeep: { 'coal': 3, 'fire pit': 0.2, 'food': 65, 'water': 85 },
                 use: { 'worker': 115, 'land': 1, 'worker': 20, 'stone tools': 96 },
                 req: { 'caretaking': true, 'manufacture units II': true, 'tool refinery 2/2': true },
                 category: 'crafting',
@@ -10552,7 +10551,6 @@ if (getObj("civ") != "1") {
                 ],
                 req: { 'the christmas': true, 'tribalism': false },
                 category: 'seasonal',
-                visible: false
             });
             new G.Unit({
                 name: 'fortress of love',
@@ -11028,7 +11026,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. <>Explore new territory with [scout] but make exploration <b>rather temporary</b> traits appear later in the game.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic... Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic... Getting this increases the exploration cap by a little bit.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11642,7 +11640,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'weaving II', category: 'upgrade',
-                desc: 'Upgrades the sewing skills of your civilization. @Unlocks <b>Drying racks<b> to make [dried leather] used to craft better quality clothing. @Now artisans can sew [fishing net] @Clothier can craft [thread] that is required to craft a [fishing net].',
+                desc: 'Upgrades the sewing skills of your civilization. @Unlocks [drying rack]s, which make [dried leather] used to craft better quality clothing. @Now artisans can sew [fishing net] @Clothier can craft [thread] that is required to craft a [fishing net].',
                 icon: [0, 35, 'magixmod', 13, 5, 'magixmod'],
                 cost: { 'insight': 380, 'wisdom': 10 },
                 req: { 'wizardry': true, 'sewing': true },
@@ -13718,7 +13716,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'an armor for Hunter', displayName: 'Hunter armor', category: 'tier2',
-                desc: '@Let the [hunter] have an armor! //In fact, this tech just leads to more advanced improvements for [hunter].',
+                desc: '@Let your [hunter]s get some armor! //In fact, this tech just leads to more advanced improvements for [hunter].',
                 icon: [14, 24, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
@@ -16379,7 +16377,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'vampirism',
-                desc: '@some [population,people] will start ocassionaly drinking blood from living [population,people] and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear (in turn decreasing [happiness]) in exchange for [spookiness]. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>that is even more eww</small>',
+                desc: '@some [population,people] will start to occasionally drink blood from living [population,people] and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear (in turn decreasing [happiness]) in exchange for [spookiness]. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>that is even more eww</small>',
                 icon: [2, 9, 'seasonal'],
                 cost: { 'faith': 50, 'culture': 50 },
                 req: { '"dark season"': true, 'ritual necrophagy': true },
@@ -16736,7 +16734,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'faunal vampirism',
-                desc: '@some [hunter]s and [fisher]s will start ocassionaly drinking blood from living animals and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear, harming [happiness] in exchange for more [spookiness]. //Note: [faunal vampirism] works only during Halloween. That means after Halloween, [faunal vampirism] and its [health] harm will stop. //<small>That is even more eww than biting a human</small>',
+                desc: '@some [hunter]s and [fisher]s will start to occasionally drink blood from living animals and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear, harming [happiness] in exchange for more [spookiness]. //Note: [faunal vampirism] works only during Halloween. That means after Halloween, [faunal vampirism] and its [health] harm will stop. //<small>That is even more eww than biting a human</small>',
                 icon: [12, 9, 'seasonal'],
                 cost: { 'faith': 50, 'culture': 50 },
                 req: { '"dark season"': true, 'belief in the beforelife': true },
@@ -17498,7 +17496,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'physics III', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now also people can understand 3dimensional world more. //<small>It is x axis, y axis and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now on, people will be able to understand the 3-dimensional world more. //<small>It is x axis, y axis and z axis...</small>',
                 icon: [1, 35, 'magixmod', 16, 28, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 100 },
                 effects: [
@@ -18599,9 +18597,6 @@ if (getObj("civ") != "1") {
                 startMode: 'off',
                 req: { 'pantheon key': true },
                 category: 'pantheon',
-                effectsOn: [
-                    { type: 'function', func: function () { G.update['policy']() } }
-                ]
             });
             new G.Policy({
                 name: 'se05',
@@ -18612,9 +18607,6 @@ if (getObj("civ") != "1") {
                 startMode: 'off',
                 req: { 'pantheon key': true },
                 category: 'pantheon',
-                effectsOn: [
-                    { type: 'function', func: function () { G.update['policy']() } }
-                ]
             });
             new G.Policy({
                 name: 'se06',
@@ -25955,7 +25947,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'druid\'s hatred',
-                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2. (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.)@maximum reduction is 45.//<small>dissenters...seems like</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2. (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.)@maximum reduction is 45.//<small>dissenters...it sure seems like</small>',
                 icon: [23, 3, 'magixmod', 7, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26020,7 +26012,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'sabotaged knowledge',
-                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, the new cost is increased by 2. (For example, if a research costs 100 [science], it will cost 120 as long as this trait is active.) @maximum increase is 18.//<small>dissenters...seems like</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs increased. <>For every 20 [science] from the original cost, the new cost is increased by 2. (For example, if a research costs 100 [science], it will cost 120 as long as this trait is active.) @maximum increase is 18.//<small>dissenters...it sure seems like</small>',
                 icon: [23, 3, 'magixmod', 6, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 1500,
