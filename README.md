@@ -34,3 +34,5 @@ This offline version of Magix...
 - Automatically updates to the newest version of fixed Magix when online and uses that when offline
 - Has the ability to locally mess around with Magix
 - Has ALL sprites and files needed for both the base game and Magix pre-downloaded
+
+<sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://file.garden/ZmatEHzFI2_QBuAF/magix-wiki.html).</sup>

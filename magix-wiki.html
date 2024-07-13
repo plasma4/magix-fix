@@ -29,6 +29,35 @@
             font-size: 16px;
         }
 
+        ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 17px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #333;
+            box-shadow:
+                0px 0px 0px 1px #111 inset,
+                0px 0px 0px 3px #444 inset,
+                1px 1px 2px 3px #222 inset;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            box-shadow:
+                0px 0px 0px 1px #333 inset,
+                0px 0px 0px 3px #999 inset,
+                1px 1px 1px 3px #fff inset;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ddd;
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+            background: #bbb;
+        }
+
         h1,
         input,
         select {
@@ -114,6 +143,7 @@
             image-rendering: pixelated;
             image-rendering: optimize-contrast;
             -ms-interpolation-mode: nearest-neighbor;
+            border-radius: 3px;
             width: 24px;
             height: 24px;
             transform: scale(3);
@@ -121,8 +151,9 @@
             margin-bottom: 40px;
         }
 
-        .icon.double {
-            background: url(img/iconSheet.png?v=1), url(img/iconSheet.png?v=1);
+        .large {
+            transform: scale(5);
+            margin-bottom: 90px;
         }
 
         strong {
@@ -131,6 +162,7 @@
 
         .mono {
             font-family: monospace;
+            line-height: 1.2;
         }
     </style>
 
@@ -151,10 +183,11 @@
         <option value="goods">Goods</option>
     </select>
     <select name="Advanced settings">
-        <option value="0">Minimal values</option>
-        <option value="1">Some debug values</option>
-        <option value="2">All debug values</option>
-        <option value="3">Show property JSON</option>
+        <option>Icons and name</option>
+        <option selected>Minimal values</option>
+        <option>Some debug values</option>
+        <option>All debug values</option>
+        <option>Show property JSON</option>
     </select>
     <br>
     <label for="a"><input type="checkbox" id="a"> Use the elf race instead of the human race</label>
@@ -187,39 +220,33 @@
             var obj = checkedBox ? civ2Object : civ1Object
             var itemCategory = obj[category]
             var inputValue = input.value.trim()
-            if (inputValue.length === 0) {
-                var text = []
-                var len = Math.min(itemCategory.length, 5)
-                for (var i = 0; i < len; i++) {
-                    var search = itemCategory[i]
-                    text.push("<u>Display name: " + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc))
-                }
-                result.innerHTML = text.join("-------------------------\r\n") + "..."
-                result.removeAttribute("class")
-            } else if (selectDebug.value > 0) {
-                var val = selectDebug.value
-                var searcher = new MiniSearch({
-                    fields: ["displayName", "desc"],
-                    storeFields: ["name", "displayName", "desc", "icon", "id", "precededBy", "leadsTo"],
-                    searchOptions: {
-                        boost: { name: 0.15, desc: 0.2, displayName: 0.5 },
-                        prefix: true,
-                        fuzzy: 0.1
-                    }
-                })
-
+            var val = selectDebug.selectedIndex - 1
+            if (val > 0) {
                 var itemsToSearch = [["displayName", "desc", "icon", "score", "visible", "subRes"], ["name", "displayName", "type", "visible", "icon", "civ", "special", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "tutorialMesg", "chance", "id"], ["name", "displayName", "type", "tier", "visible", "icon", "civ", "special", "plural", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "tick", "getDisplayAmount", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "effectsOff", "effects", "tutorialMesg", "chance", "id", "mod", "precededBy", "leadsTo"]][Math.min(val, 2)]
-
-                searcher.addAll(itemCategory)
                 var text = []
-                var results = searcher.search(inputValue).slice(0, 10)
-                for (var i = 0; i < results.length; i++) {
-                    var search = results[i]
+                if (inputValue.length !== 0) {
+                    var searcher = new MiniSearch({
+                        fields: ["displayName", "desc"],
+                        storeFields: ["name", "displayName", "desc", "icon", "id", "precededBy", "leadsTo"],
+                        searchOptions: {
+                            boost: { name: 0.15, desc: 0.2, displayName: 0.5 },
+                            prefix: true,
+                            fuzzy: 0.1
+                        }
+                    })
+
+                    searcher.addAll(itemCategory)
+                    inputValue = searcher.search(inputValue).slice(0, 10)
+                } else {
+                    inputValue = itemCategory
+                }
+                for (var i = 0; i < inputValue.length; i++) {
+                    var search = inputValue[i]
                     if (val == 3) {
-                        text.push(search.name + ": " + JSON.stringify(search))
+                        text.push('"' + search.name + '": ' + JSON.stringify(search))
                     } else {
                         var icon = getIcon(search.icon, true, checkedBox)
-                        var str = "<u>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div class="icon double" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                        var str = "<u>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</u>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
                         str += "\r\n<pre>"
                         for (var t = 0; t < itemCategory.length; t++) {
                             thing = itemCategory[t]
@@ -245,29 +272,58 @@
                     }
                 }
                 if (val == 3) {
-                    result.textContent = text.join("\r\n")
+                    var joined = text.join("\r\n  ")
+                    result.textContent = "{\r\n  " + joined.slice(0, joined.length - 2) + "\r\n}"
                     result.className = "mono"
                 } else {
                     result.innerHTML = text.join("-------------------------\r\n")
                     result.removeAttribute("class")
                 }
-            } else {
-                var searcher = new MiniSearch({
-                    fields: ["displayName", "desc"],
-                    storeFields: ["name", "displayName", "desc", "icon", "leadsTo"],
-                    searchOptions: {
-                        boost: { desc: 0.2, displayName: 0.5 },
-                        prefix: true,
-                        fuzzy: 0.1
-                    }
-                })
-                searcher.addAll(itemCategory)
+            } else if (val == -1) {
                 var text = []
-                var results = searcher.search(inputValue).slice(0, 10)
-                for (var i = 0; i < results.length; i++) {
-                    var search = results[i]
+                if (inputValue.length !== 0) {
+                    var searcher = new MiniSearch({
+                        fields: ["displayName", "desc"],
+                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo"],
+                        searchOptions: {
+                            boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
+                            prefix: true,
+                            fuzzy: 0.1
+                        }
+                    })
+                    searcher.addAll(itemCategory)
+                    inputValue = searcher.search(inputValue).slice(0, 10)
+                } else {
+                    inputValue = itemCategory
+                }
+                for (var i = 0; i < inputValue.length; i++) {
+                    var search = inputValue[i]
                     var icon = getIcon(search.icon, true, checkedBox)
-                    text.push("<u>Display name: " + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div class="icon double" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')) + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                    text.push("<u>" + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</u><div class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')
+                }
+                result.innerHTML = text.join("\r\n-------------------------\r\n")
+                result.removeAttribute("class")
+            } else {
+                var text = []
+                if (inputValue.length !== 0) {
+                    var searcher = new MiniSearch({
+                        fields: ["displayName", "desc"],
+                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo"],
+                        searchOptions: {
+                            boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
+                            prefix: true,
+                            fuzzy: 0.1
+                        }
+                    })
+                    searcher.addAll(itemCategory)
+                    inputValue = searcher.search(inputValue).slice(0, 10)
+                } else {
+                    inputValue = itemCategory
+                }
+                for (var i = 0; i < inputValue.length; i++) {
+                    var search = inputValue[i]
+                    var icon = getIcon(search.icon, true, checkedBox)
+                    text.push("<u>Display name: " + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</u>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : ""))
                 }
                 result.innerHTML = text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
