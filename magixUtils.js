@@ -2080,7 +2080,8 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'mausoleum',
-            desc: 'You have been laid to rest in the Mausoleum, an ancient stone monument the purpose of which takes root in archaic religious thought.',
+            displayName: '<font color="#ffb47e">Mausoleum</font>',
+            desc: 'You have been laid to rest in the Mausoleum, an ancient monument made out of stone that takes root in archaic religious thought.',
             fromWonder: 'mausoleum',
             icon: [1, 14],
             wideIcon: [0, 14],
@@ -2093,10 +2094,10 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'heavenly',
+            displayName: '<font color="#decaa0">Heavenly</font>',
             wideIcon: [0, 11, 'magixmod'],
             icon: [1, 11, 'magixmod'],
             desc: 'Finish <b>Temple of Deities</b> and mid-game wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story, languages weren\'t swapped by any God or Gods.</small>',
-            //desc:'Your soul has been sent to Paradise as archangel with power of top Temple tower in an beautiful stone monument the purpose of which takes root in a pure religious thought.',
             fromWonder: 'heavenly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
@@ -2108,6 +2109,7 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'deadly, revenantic',
+            displayName: '<font color="#b9aaac">Deadly, revenantic</font>',
             wideIcon: [0, 16, 'magixmod'],
             icon: [1, 16, 'magixmod'],
             desc: 'You escaped and your soul got escorted right into the dangerous Underworld...you may discover it at some point.',
@@ -2122,6 +2124,7 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'sacrificed for culture',
+            displayName: '<font color="#beffbc">Sacrificed for culture</font>',
             wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
             icon: [6, 12, 'magixmod'],
             desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you, but you will get <b><font color="#4d2">+3 culture and inspiration</font></b> at the start of new runs!',
@@ -2136,6 +2139,7 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'democration',
+            displayName: '<font color="#ffa8d3">Democration</font>',
             wideIcon: [5, 13, 'magixmod'],
             icon: [6, 13, 'magixmod'],
             desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glorious rest made your previous civilization live in the laws of justice forever. They will miss you. <b>But this provides an additional <font color="fuschia">+1 influence & authority</font> at the start of new runs! Also, you will get the [policies] trait immediately.</b>',
@@ -2150,6 +2154,7 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'insight-ly',
+            displayName: '<font color="#cbe2ff">Insight-ly</font>',
             wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
             icon: [choose([1, 4, 7]), 17, 'magixmod'],
             desc: 'You sacrificed your soul for the Dreamer\'s Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. But this made a profit...providing <b><font color="white">+6 insight and +6% dreamer speed</font></b> at the start of new runs!',
@@ -2164,9 +2169,10 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'in the underworld',
+            displayName: '<font color="#e70034">In the underworld</font>',
             wideIcon: [7, 5, 'magixmod'],
             icon: [9, 5, 'magixmod'],
-            desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you have <font color="#00e063">Sacrificed for culture</font>, <font color="#5959d2">Insight-ly</font>, and <font color="fuschia">Democration</font>, you will start new runs with someone new: [adult,The Underworld\'s Ascendant]! (To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.)',
+            desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you have <b><font color="#00e063">Sacrificed for culture</font></b>, <b><font color="#5959d2">Insight-ly</font></b>, and <b><font color="fuschia">Democration</font></b>, you will start new runs with someone new: [adult,The Underworld\'s Ascendant]! (To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.)',
             fromWonder: '"In the underworld"',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2181,7 +2187,7 @@ G.AddData({
             icon: [28, 20, 'magixmod'],
             name: 'mausoleum eternal',
             displayName: '<font color="#d4af37">Mausoleum eternal</font>',
-            desc: 'You have been laid to rest many times in the Mausoleum, an ancient stone monument which involves archaic religious thought. Thanks to you, it has become an unforgettable historical monument. <b>Evolve the <font color="white"><b>Mausoleum</b></font> to stage 10/10, then ascend by it for the 11th time to obtain some massive bonuses!</li></b>',
+            desc: 'You have been laid to rest many times in the Mausoleum, an ancient monument made out of stone which involves archaic religious thought. Thanks to you, it has become an unforgettable historical monument. <b>Evolve the <font color="white"><b>Mausoleum</b></font> to stage 10/10, then ascend by it for the 11th time to obtain some massive bonuses!</li></b>',
             fromWonder: 'mausoleum eternal',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 2000 },
@@ -2193,7 +2199,7 @@ G.AddData({
             tier: 2,
             icon: [25, 19, 'magixmod'],
             name: 'level up',
-            desc: 'Obtain the [eotm] trait during a legacy! This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
+            desc: 'Obtain the <b>Evolution of the minds</b> trait during a legacy! This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
             civ: 0,
             plural: false
         });
@@ -2230,7 +2236,7 @@ G.AddData({
             tier: 'trait',
             icon: [26, 21, 'magixmod'],
             name: 'traitsman',
-            desc: 'Make your tribe attract total 30 traits and knowledges.',
+            desc: 'Make your tribe attract a total of 30 traits and knowledges.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
             ],
@@ -2241,7 +2247,7 @@ G.AddData({
             tier: 3,
             icon: [27, 21, 'magixmod'],
             name: 'extremely smart',
-            desc: 'Get your [insight II] amount equal to your [wisdom II]! It may be a bit harder than you think...',
+            desc: 'Get your <b>Insight II</b> equal to your <b>Wisdom II</b>! It may be a bit harder than you think...',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 1000 },
                 { type: 'addFastTicksOnResearch', amount: 100 }
@@ -2253,6 +2259,7 @@ G.AddData({
             tier: 1,
             icon: [29, 21, 'magixmod'],
             name: 'experienced',
+            displayName: '<font color="#ebdbfb">Experienced</font>',
             desc: 'To get this achievement you need to complete the other achievements in this tier, along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
@@ -2265,7 +2272,7 @@ G.AddData({
             tier: 2,
             icon: [29, 22, 'magixmod'],
             name: 'smart',
-            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: [brick house with a silo], [house], [hovel], [hut], [branch shelter], and [mud shelter] will use less [land] in new runs</b>.',
+            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: Brick houses, [house], [hovel], [hut], [branch shelter], and Mud shelters will use less [land] in new runs</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2277,7 +2284,7 @@ G.AddData({
             tier: 3,
             icon: [12, 22, 'magixmod'],
             name: 'man of essences',
-            desc: 'Obtain the [magic adept] trait. Manage to get 2.1M [magic essences]. //Obtaining it may unlock a new wonder.',
+            desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M of magical essences! //Obtaining it may unlock a new wonder.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 40 },
             ],
@@ -2287,9 +2294,10 @@ G.AddData({
         new G.Achiev({
             tier: 3,
             name: 'magical',
+            displayName: '<font color="#c3c8fa">Magical</font>',
             wideIcon: [9, 22, 'magixmod'],
             icon: [10, 22, 'magixmod'],
-            desc: 'Construct the Fortress of Magicians wonder. //This achievement will: @Unlocks a new theme @Increases the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like [hunting III] or [fishing III].',
+            desc: 'Construct the Fortress of Magicians, a rather magical wonder. //This achievement will: @Unlocks a new theme @Increases the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like more advanced hunting and fishing.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 15 },
@@ -2309,7 +2317,7 @@ G.AddData({
             icon: [23, 24, 'magixmod'],
             tier: 1,
             name: '3rd party',
-            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you install a separate mod at the start of the game (just note that getting this achievement does not provide any benefits).</b> // <font color="fuschia">This achievement will NOT be required to complete this achievement row.</font>',
+            desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you install a separate mod at the start of the game.</b> //<font color="fuschia">This achievement does not provide any boosts.</font>',
             civ: "overall",
             plural: false
         });
@@ -2318,7 +2326,7 @@ G.AddData({
             name: 'patience',
             wideIcon: [3, 26, 'magixmod'],
             icon: [4, 26, 'magixmod'],
-            desc: 'Complete Chra-nos trial for the first time. Your determination led you to victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Chra-nos\' trial for the first time. Your determination led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2331,7 +2339,7 @@ G.AddData({
             name: 'unhappy',
             wideIcon: [6, 26, 'magixmod'],
             icon: [7, 26, 'magixmod'],
-            desc: 'Complete Bersaria\'s trial for the first time. Your determination and calmness led you to victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Bersaria\'s trial for the first time. Your calmness in difficult situations led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2344,7 +2352,7 @@ G.AddData({
             name: 'cultural',
             wideIcon: [18, 26, 'magixmod'],
             icon: [19, 26, 'magixmod'],
-            desc: 'Complete Tu-ria\'s trial for the first time. Your artistic thinking led you to victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Tu-ria\'s trial for the first time. Your artistic and unique thinking led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2370,7 +2378,7 @@ G.AddData({
             name: 'unfishy',
             wideIcon: [21, 26, 'magixmod'],
             icon: [22, 26, 'magixmod'],
-            desc: 'Complete Fishyar\'s trial for the first time. Making people believe that life without fish is not boring led you to victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Fishyar\'s trial for the first time. Making people trust fish a little more led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2383,7 +2391,7 @@ G.AddData({
             name: 'ocean',
             wideIcon: [1, 25, 'magixmod'],
             icon: [2, 25, 'magixmod'],
-            desc: 'Complete Posi\'zul\'s trial for the first time. Living at the endless ocean is not impossible and you are example of that. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Posi\'zul\'s trial for the first time. Living near an endless ocean is not impossible, and you are able to prove it! //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2409,7 +2417,7 @@ G.AddData({
             name: 'buried',
             wideIcon: [0, 26, 'magixmod'],
             icon: [1, 26, 'magixmod'],
-            desc: 'Complete Buri\'o dak \'s trial for the first and the last time. Death lurks everywhere but it is still easy deal for you!',
+            desc: 'Complete Buri\'o dak \'s trial for the first and the last time. Death lurks everywhere but coming to terms with it may be the best way to move forward...',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2422,7 +2430,7 @@ G.AddData({
             name: 'underground',
             wideIcon: [15, 26, 'magixmod'],
             icon: [16, 26, 'magixmod'],
-            desc: 'Complete Moai\'s trial for the first time. Stone leads to victory! //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Moai\'s trial for the first time. Stones lead to victory! //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2461,7 +2469,7 @@ G.AddData({
             name: 'dreamy',
             wideIcon: [27, 26, 'magixmod'],
             icon: [28, 26, 'magixmod'],
-            desc: 'Complete Okar the Seer\'s trial for the first time. Knowledge leads to victory. //Complete this trial again to gain extra Victory Points.',
+            desc: 'Complete Okar the Seer\'s trial for the first time. Knowledge will eventually lead to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2475,7 +2483,7 @@ G.AddData({
             displayName: '<font color="#fddc99">Next to the deities</font>',
             wideIcon: [0, 9, 'magixmod'],
             icon: [1, 9, 'magixmod'],
-            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @The chances for [culture of the afterlife] or [culture of the beforelife] are tripled. Same to <B>God\'s/Ancestors call</b>. @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] @You will unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
+            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be all be tripled @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
             fromWonder: 'next to the God',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 250 },
@@ -2488,7 +2496,7 @@ G.AddData({
             tier: 3,
             name: 'the first choice',
             icon: [11, 25, 'magixmod'],
-            desc: 'Spend all your <font color="#d4af36">Worship points</font> for the first time to pick Seraphins that your people will worship.',
+            desc: 'Spend all your <b><font color="#d4af36">Worship points</font></b> for the first time to pick Seraphins that your people will worship.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
             ],
@@ -2510,7 +2518,7 @@ G.AddData({
             tier: 3,
             name: 'not so pious people',
             icon: [32, 26, 'magixmod'],
-            desc: 'Get: @2 traits that will lower your [faith] income @Also, choose a Seraphin that decreases [faith] income as well. To make this achievement possible, <font color="red">Devil\'s trait #13</font> is not required.',
+            desc: 'Get: @2 traits that will lower your [faith] income @Also, choose a Seraphin that decreases [faith] income as well. To make this achievement possible, <b><font color="#f66">Devil\'s trait #13</font></b> is not required.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 90 },
             ],
@@ -2784,7 +2792,7 @@ G.AddData({
         new G.Achiev({
             tier: 1,
             name: 'the fortress',
-            desc: 'You have been laid to rest in The Fortress, an ancient stone monument that was built in the middle of the forest the purpose of which takes root in archaic elven religious thought.',
+            desc: 'You have been laid to rest in The Fortress, an ancient monument made out of stone that was built in the middle of the forest the purpose of which takes root in archaic elven religious thought.',
             fromWonder: 'the fortress',
             icon: [1, 14, 'c2'],
             wideIcon: [0, 14, 'c2'],
@@ -2868,7 +2876,7 @@ G.AddData({
         new G.Achiev({
             tier: 'population',
             name: 'pressure purgator',
-            desc: 'Push <b>Pressure</b> enough to be capable of having 300k [population,Elves]. //<small>Now go for 1M...a bajillion later</small>',
+            desc: 'Push <b>Pressure</b> enough to be capable of having 300k [population,Elves]. //<small>Now go for 1M...a bajillion years later</small>',
             icon: [32, 13, 'c2'],
             effects: [
                 { type: 'pressure', amount: 1250 }
@@ -2920,15 +2928,16 @@ G.AddData({
             plural: false
         });
         new G.Achiev({
-            tier: '1',
+            tier: 1,
             icon: [36, 28, 'magixmod'],
             name: 'first glory',
+            displayName: '<font color="#fff2e0">First glory</font>',
             desc: 'Ascend for the first time while playing with the human race. //<small>If you rebirth, you will encounter a new adventure!</small>',
             civ: 0,
             plural: false
         });
         new G.Achiev({
-            tier: '1',
+            tier: 1,
             icon: [32, 15, 'c2'],
             name: 'druidish heart',
             desc: 'Ascend for the first time while playing with the <u>elf race</u>. //<small>If you rebirth, you may encounter a new adventure...like, one more time, right?</small>',
@@ -2961,6 +2970,7 @@ G.AddData({
             displayName: "???",
             icon: [0, 0],
             desc: '???',
+            plural: false,
             civ: "overall",
         });
         new G.Achiev({
@@ -3000,7 +3010,7 @@ G.AddData({
             icon: [16, 24, 'magixmod'],
             tier: 'tech',
             name: 'familiar',
-            desc: 'Get 200 or more technologies in a single run for human race. //<small>Keep going like that...</small>',
+            desc: 'Get 200 or more technologies in a single run for the human race. //<small>Keep going like that...</small>',
             civ: 0,
             plural: false
         });
@@ -3009,7 +3019,7 @@ G.AddData({
             tier: 'tech',
             icon: [32, 18, 'c2'],
             name: 'nature\'s rookie',
-            desc: 'Get 20 or more technologies in a single run for elf race.//<small>Baby steps behind us...again</small>',
+            desc: 'Get 20 or more technologies in a single run for the elf race.//<small>Baby steps behind us...again!</small>',
             civ: 1,
             plural: false
         });
@@ -3017,7 +3027,7 @@ G.AddData({
             tier: 'tech',
             icon: [32, 19, 'c2'],
             name: 'nature\'s braincell',
-            desc: 'Get 60 or more technologies in a single run for elf race. //<small>You are doing quite great!</small>',
+            desc: 'Get 60 or more technologies in a single run for the elf race. //<small>You are doing quite great!</small>',
             civ: 1,
             plural: false
         });
@@ -3025,7 +3035,7 @@ G.AddData({
             tier: 'tech',
             icon: [13, 33, 'magixmod'],
             name: 'A+ student',
-            desc: 'Get 250 or more technologies in a single run for human race. //<small>I\'m about to become a genius...</small>',
+            desc: 'Get 250 or more technologies in a single run for the human race. //<small>I\'m about to become a genius...</small>',
             civ: 0,
             plural: false
         });
@@ -3055,6 +3065,7 @@ G.AddData({
             icon: [0, 0],
             desc: '???',
             visible: false,
+            plural: false,
             civ: "overall",
         });
         new G.Achiev({
@@ -3132,8 +3143,8 @@ G.AddData({
                 if (G.achiev[i].special != 'shadow') continue;
                 if (G.achiev[i].won > 0) G.achiev[i].visible = true;
             }
-            if (G.achievByName['here you go'].won > 0) { G.achievByName['here you go'].icon = [32, 27, 'magixmod']; G.achievByName['here you go'].desc = 'Click on this achievement\'s slot'; G.achievByName['here you go'].displayName = 'Here you go'; };
-            if (G.achievByName['here you go...again'].won > 0) { G.achievByName['here you go...again'].icon = [33, 5, 'c2']; G.achievByName['here you go...again'].desc = 'Click on this achievement\'s slot...twice. //<small>Yeah...twice</small>'; G.achievByName['here you go...again'].displayName = 'Here you go...again'; };
+            if (G.achievByName['here you go'].won > 0) { G.achievByName['here you go'].icon = [32, 27, 'magixmod']; G.achievByName['here you go'].desc = 'Click on this achievement\'s slot.'; G.achievByName['here you go'].displayName = 'Here you go'; };
+            if (G.achievByName['here you go...again'].won > 0) { G.achievByName['here you go...again'].icon = [33, 5, 'c2']; G.achievByName['here you go...again'].desc = 'Click on this achievement\'s slot...twice. //<small>yeah...twice...actually wild</small>'; G.achievByName['here you go...again'].displayName = 'Here you go...again'; };
             if (G.achievByName['capital of christmas'].won >= 1 || (day + leap >= 349 && day + leap <= 362)) { G.achievByName['capital of christmas'].visible = true };
             if (G.achievByName['love for eternity'].won >= 1 || (day + leap >= 40 && day + leap <= 46)) { G.achievByName['love for eternity'].visible = true };
             if (G.achievByName['so adorable'].won >= 1 || (day + leap >= 40 && day + leap <= 46)) { G.achievByName['so adorable'].visible = true };
@@ -3156,7 +3167,7 @@ G.AddData({
             }
             str += '<div class="par">Season: <b>' + (((day >= 1 && day <= 2) || (day == 365 || day == 366)) ? "New year\'s eve" : ((day >= 40 && day <= 46) ? 'Valentine\'s day' : ((Date.getMonth == 3 && Date.getDate == 1) ? "Another anniversary since the first rickroll...<Br><small>bruh</small>" : ((day + leap >= 289 && day + leap <= 305) ? 'Haloween' : ((day + leap >= 349 && day + leap <= 362) ? 'Christmas' : 'None'))))) + '</b></div>';
             str += '<div class="fancyText barred" style="text-align:center;"><font style="letter-spacing: 1px;">Human race</font></div>';
-            str += '<font color="ffddaa"><div class="par">Ascensions: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['first glory'].won); }) + '</b></div>';
+            str += '<font color="#ffddaa"><div class="par">Ascensions: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['first glory'].won); }) + '</b></div>';
             if (G.achievByName['lands of despair'].won > 0) str += '<div class="par">Dead forests found: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['lands of despair'].won); }) + '</b></div>';
 
             if (G.getRes('victory point').amount > 0) str += '<div class="par">Victory points: <b>' + G.selfUpdatingText(function () { return B(G.getRes('victory point').amount); }) + '</b></div>';
@@ -3165,7 +3176,7 @@ G.AddData({
             str += G.textWithTooltip('<div class="par"><font color="#ffddaa">Most land on people\'s mortal world: <b></font>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostPeopleLand'].won) }) + '</b></div>';
             if (G.achievByName['???'].won > 0) {
                 str += '</font><div class="fancyText barred" style="text-align:center;"><font style="letter-spacing: 1px;">Elf race</font></div>';
-                str += '<div class="par"><font color="#ccffcc">Most population ruled(elf race): <b>' + G.selfUpdatingText(function () { return B(G.achievByName['mostElves'].won) }) + '</b></div>';
+                str += '<div class="par"><font color="#ccffcc">Most population ruled (elf race): <b>' + G.selfUpdatingText(function () { return B(G.achievByName['mostElves'].won) }) + '</b></div>';
                 str += '<div class="par">Ascensions: <b>' + G.selfUpdatingText(function () { return B(G.achievByName['druidish heart'].won); }) + '</b></div>';
                 str += G.textWithTooltip('<div class="par"><font color="#ccffcc">Most land on the mortal world of elves: </font><b>', 'This stat does not include effects of traits/techs that multiply the amount of mortal land.') + G.selfUpdatingText(function () { return B(G.achievByName['mostElvesLand'].won) }) + '</b></div>';
             }
@@ -3338,14 +3349,14 @@ G.AddData({
                                         if (me.name == 'here you go...again' && me.won == 0 && control > 1) {
                                             me.won = 1;
                                             G.dialogue.forceClose();
-                                            G.middleText('And the secret strikes again...<br><small>it wasn\'t that big of a secret again, was it?</small>', 'slow');
+                                            G.middleText('And a secret strikes again...<br><small>it wasn\'t that big of a secret again, was it?</small>', 'slow');
                                         } else if (me.name == 'here you go...again' && me.won == 0) {
                                             control++;
                                         }
                                         if (me.name == 'here you go' && me.won == 0) {
                                             me.won = 1;
                                             G.dialogue.forceClose();
-                                            G.middleText('And you found another secret...<br><small>it wasn\'t that big of a secret, was it?</small>', 'slow');
+                                            G.middleText('Seems like you found a secret...<br><small>it wasn\'t that big of a secret, was it?</small>', 'slow');
                                         }
 
                                         if (G.getSetting('debug')) {
@@ -3541,8 +3552,8 @@ G.AddData({
                                 else if (amount < 3.5) str += '(abundant)';
                                 else if (amount < 4.7) str += '(crazy amounts)';
                                 else if (amount < 5.5) str += '(insane amounts)';
-                                else if (amount < 6.1) str += '(<font color="pink">hella lot</font>)';
-                                else str += '(unbeliveably lot)';
+                                else if (amount < 6.1) str += '(<font color="pink">actually wildly INSANE amounts</font>)';
+                                else str += '(<font color="#f200aa">actually wildly INSANE amounts BUT EVEN MORE</font>)';
                                 str += '</div>';
                             }
                             str += '</div>';
@@ -3861,7 +3872,7 @@ G.AddData({
             } else {
                 exp = 10 + bonus;
             };
-            tile.explored = (exp) / 100;//create one tile and 9-11% of it will be explored already. Oh, and +1 to 5 percent depending on how evolved your mauso is, for c2 its constant 10%
+            tile.explored = (exp) / 100;//create one tile and 9-11% of it will be explored already. Oh, and +1 to 5 percent depending on how evolved your mauso is
 
             G.updateMapForOwners(G.currentMap);
 
