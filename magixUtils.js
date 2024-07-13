@@ -2289,7 +2289,7 @@ G.AddData({
             name: 'magical',
             wideIcon: [9, 22, 'magixmod'],
             icon: [10, 22, 'magixmod'],
-            desc: 'Construct the Fortress of Magicians wonder. //This achievement will: @Unlocks a new theme @Increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like [hunting III] or [fishing III].',
+            desc: 'Construct the Fortress of Magicians wonder. //This achievement will: @Unlocks a new theme @Increases the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like [hunting III] or [fishing III].',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 15 },
@@ -2606,7 +2606,7 @@ G.AddData({
             tier: 0,
             name: 'cruel goal',
             icon: [34, 8, 'magixmod'],
-            desc: 'Don\'t ya think that was very, very cruel? Murdering the root full of hope for the future? @Get your [mausoleum] to at least level 4/10 and sacrifice your civilization fully just to finish the final step.',
+            desc: 'Don\'t ya think that was very, very cruel? Murdering the root full of hope for the future? @Get your [mausoleum] to at least Level 4 and sacrifice your civilization fully just to finish the final step.',
             effects: [
             ],
             visible: false,

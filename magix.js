@@ -10945,7 +10945,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tribalism', category: 'tier1',
-                desc: '@unlocks [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
+                desc: '@unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
                 icon: [0, 1],
                 startWith: true,
                 effects: [
@@ -10956,7 +10956,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@unlocks [dreamer]@unlocks [wanderer]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1],
                 startWith: true,
                 effects: [
@@ -10979,7 +10979,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'oral tradition', category: 'tier1',
-                desc: '@unlocks [storyteller]@provides 20 [inspiration]@provides 20 [wisdom]<>[oral tradition] emerges when the members of a tribe gather at night to talk about their day. Stories, ideas, and myths are all shared and passed on from generation to generation. //<small>Time for a story now, i suppose, I suppose...</small>',
+                desc: '@unlocks the [storyteller]@provides 20 [inspiration]@provides 20 [wisdom]<>[oral tradition] emerges when the members of a tribe gather at night to talk about their day. Stories, ideas, and myths are all shared and passed on from generation to generation. //<small>Time for a story now, i suppose, I suppose...</small>',
                 icon: [5, 1],
                 cost: { 'insight': 10 },
                 req: { 'language': true },
@@ -12199,14 +12199,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'improved furnace construction', category: 'upgrade',
-                desc: 'People figured a way to make [furnace]s produce more by improving their design without any cost increases. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [furnace]s will work 20% more efficient. <>If they have chosen [caretaking], then [furnace]s will work 10% more efficient.',
+                desc: 'People figured a way to make [furnace]s produce more by improving their design without any cost increases. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [furnace]s will work 20% faster. <>If they have chosen [caretaking], then [furnace]s will work 10% faster.',
                 icon: [1, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
             });
             new G.Tech({
                 name: 'focused gathering', category: 'upgrade',
-                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking], then [gatherer]s will work 12.5% more.',
+                desc: '[gatherer]s were always thinking that they can gather more. This tech is another chance for them. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [gatherer]s will gather 7.5% more. <>If they have chosen [caretaking], then [gatherer]s will gather 12.5% more.',
                 icon: [2, 18, 'magixmod'],
                 cost: { 'insight': 1000 },
                 req: { 'culture of the afterlife': true }
@@ -19079,7 +19079,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above, you will start losing money because of thievery. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35%. (The one that applies a bonus for beating this trial the second time will increase the effect to 55%.)<br><Br><BR>' +
+                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above, you will start losing money because of thievery. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35%. (The bonus that may be applied for beating this trial for a second time will increase the effect to 55%.)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
@@ -24282,7 +24282,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'tribalism', category: 'tier1',
-                desc: '@Unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
+                desc: '@unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
                 icon: [0, 1, 'c2'],
                 startWith: true,
                 effects: [
@@ -24293,7 +24293,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@Unlocks the [dreamer] and [wanderer]@provides 50 [wisdom] @provides 20 [quick-wittinity]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom] @provides 20 [quick-wittinity]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1, 'c2'],
                 startWith: true,
                 effects: [
