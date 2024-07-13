@@ -18,15 +18,15 @@ Upon loading it, you should be able to play the game!
 <sup>This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source.</sup>
 ## What does this fixed mod do?
 Here are a few examples:
-- Multiple game-breaking bugs are fixed (in particular, bookwriting no longer crashes your game after a bit)
-- A variety of spelling and spacing issues are no longer there
+- Multiple game-breaking bugs are fixed (in particular, bookwriting will no longer cause problems)
+- Hundreds of spelling and text issues fixed
 - Some alternative techs can now be obtained simultaneously
 - Various traits have been fixed
-- New techs and mechanics have been added (including a new way to get sand)
+- Dozens of techs and mechanics have been added (including a new way to get sand)
 - Negative costs are hidden now
 - May come with **new features** down the line!
 ---
-### How do you use Magix offline?
+How do you use Magix offline?
 If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html file to begin playing! (It is advised to extract the .zip file so that everything works properly.)
 
 This offline version of Magix...

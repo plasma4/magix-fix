@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magix data explorer</title>
+    <script src="MagixData.js"></script>
+    <style>
+        /* Locally use the Domine font from https://fonts.googleapis.com/css?family=Domine */
+        @font-face {
+            font-family: "Domine";
+            font-style: normal;
+            font-weight: 400;
+            src: url(a.woff2) format("woff2");
+            unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
+        @font-face {
+            font-family: "Domine";
+            font-style: normal;
+            font-weight: 400;
+            src: url(b.woff2) format("woff2");
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        * {
+            font-size: 16px;
+        }
+
+        h1,
+        input,
+        select {
+            font-size: 30px;
+            user-select: none;
+        }
+
+        body {
+            background-image: url(Magix/bgDarkRockDefault.jpg);
+        }
+
+        .civ2 {
+            background-image: url(Magix/bgDarkRockC2.jpg);
+        }
+
+        body,
+        select,
+        input,
+        button {
+            font-family: Domine;
+            background-color: black;
+            color: white;
+        }
+
+        input,
+        select {
+            border-radius: 5px;
+            border: solid 2px #bbb;
+        }
+
+        button {
+            border-radius: 4px;
+            border: solid 1px #888;
+        }
+
+        div {
+            color: #fffb;
+            word-break: normal;
+            white-space: pre;
+        }
+
+        .par {
+            margin-bottom: 6px;
+            text-indent: 6px;
+        }
+
+        small {
+            font-size: 80%;
+        }
+
+        .bulleted {
+            margin: 4px;
+            padding-left: 20px;
+        }
+
+        .bulleted:before {
+            content: "\2022";
+            padding-right: 8px;
+        }
+
+        .divider {
+            width: 90%;
+            margin: 8px auto;
+            height: 1px;
+            background: linear-gradient(to right, #fff0, #ffffff40, #fff0);
+        }
+
+        .divider:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            position: relative;
+            top: 1px;
+            background: linear-gradient(to right, #0000, #00000080, #0000);
+        }
+
+        .icon {
+            image-rendering: optimizeSpeed;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -o-crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: pixelated;
+            image-rendering: optimize-contrast;
+            -ms-interpolation-mode: nearest-neighbor;
+            width: 24px;
+            height: 24px;
+            transform: scale(3);
+            transform-origin: top left;
+            margin-bottom: 40px;
+        }
+
+        .icon.double {
+            background: url(img/iconSheet.png?v=1), url(img/iconSheet.png?v=1);
+        }
+
+        strong {
+            color: white;
+        }
+
+        .mono {
+            font-family: monospace;
+        }
+    </style>
+
+    <script src="minisearch.js"></script>
+</head>
+
+<body>
+    <h1>Explore Magix data</h1>
+    <input placeholder="Item name here...">
+    <select name="Item type">
+        <option value="techs">Techs</option>
+        <option value="units">Units</option>
+        <option value="resources">Resources</option>
+        <option value="traits">Traits</option>
+        <option value="policies">Policies</option>
+        <option value="achievements">Achievements</option>
+        <option value="lands">Lands</option>
+        <option value="goods">Goods</option>
+    </select>
+    <select name="Advanced settings">
+        <option value="0">Minimal values</option>
+        <option value="1">Some debug values</option>
+        <option value="2">All debug values</option>
+        <option value="3">Show property JSON</option>
+    </select>
+    <br>
+    <label for="a"><input type="checkbox" id="a"> Use the elf race instead of the human race</label>
+    <button>Export all data</button>
+    <hr>
+    Results: <div></div>
+
+    <script>
+        document.getElementsByTagName("script")[0].remove()
+        document.getElementsByTagName("button")[0].addEventListener("click", exportJSON)
+        var input = document.getElementsByTagName("input")[0]
+        var select = document.getElementsByTagName("select")[0]
+        var selectDebug = document.getElementsByTagName("select")[1]
+        var checkbox = document.getElementsByTagName("input")[1]
+        var result = document.getElementsByTagName("div")[0]
+        input.addEventListener("input", changeFunc)
+        select.addEventListener("change", changeFunc)
+        selectDebug.addEventListener("change", changeFunc)
+        checkbox.addEventListener("input", function () {
+            changeFunc()
+            if (checkbox.checked) {
+                document.body.className = "civ2"
+            } else {
+                document.body.removeAttribute("class")
+            }
+        })
+        function changeFunc() {
+            var category = select.value
+            var checkedBox = checkbox.checked
+            var obj = checkedBox ? civ2Object : civ1Object
+            var itemCategory = obj[category]
+            var inputValue = input.value.trim()
+            if (inputValue.length === 0) {
+                var text = []
+                var len = Math.min(itemCategory.length, 5)
+                for (var i = 0; i < len; i++) {
+                    var search = itemCategory[i]
+                    text.push("<u>Display name: " + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc))
+                }
+                result.innerHTML = text.join("-------------------------\r\n") + "..."
+                result.removeAttribute("class")
+            } else if (selectDebug.value > 0) {
+                var val = selectDebug.value
+                var searcher = new MiniSearch({
+                    fields: ["displayName", "desc"],
+                    storeFields: ["name", "displayName", "desc", "icon", "id", "precededBy", "leadsTo"],
+                    searchOptions: {
+                        boost: { name: 0.15, desc: 0.2, displayName: 0.5 },
+                        prefix: true,
+                        fuzzy: 0.1
+                    }
+                })
+
+                var itemsToSearch = [["displayName", "desc", "icon", "score", "visible", "subRes"], ["name", "displayName", "type", "visible", "icon", "civ", "special", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "tutorialMesg", "chance", "id"], ["name", "displayName", "type", "tier", "visible", "icon", "civ", "special", "plural", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "tick", "getDisplayAmount", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "effectsOff", "effects", "tutorialMesg", "chance", "id", "mod", "precededBy", "leadsTo"]][Math.min(val, 2)]
+
+                searcher.addAll(itemCategory)
+                var text = []
+                var results = searcher.search(inputValue).slice(0, 10)
+                for (var i = 0; i < results.length; i++) {
+                    var search = results[i]
+                    if (val == 3) {
+                        text.push(search.name + ": " + JSON.stringify(search))
+                    } else {
+                        var icon = getIcon(search.icon, true, checkedBox)
+                        var str = "<u>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div class="icon double" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                        str += "\r\n<pre>"
+                        for (var t = 0; t < itemCategory.length; t++) {
+                            thing = itemCategory[t]
+                            if (thing.id === search.id) {
+                                break
+                            }
+                        }
+                        for (t = 0; t < itemsToSearch.length; t++) {
+                            var prop = itemsToSearch[t]
+                            if (["precededBy", "leadsTo", "icon"].includes(prop)) {
+                                var value = thing[prop]
+                                if (value != null) {
+                                    str += prop + ": [" + value.join(", ") + "] (" + obj.descriptions[prop] + ".)\r\n"
+                                }
+                            } else if (!(["name", "displayName", "desc", "icon"].includes(prop))) {
+                                var value = thing[prop]
+                                if (value != null) {
+                                    str += prop + ": " + (typeof value === "object" ? JSON.stringify(value) : value) + " (" + obj.descriptions[prop] + ".)\r\n"
+                                }
+                            }
+                        }
+                        text.push(str + "</pre>")
+                    }
+                }
+                if (val == 3) {
+                    result.textContent = text.join("\r\n")
+                    result.className = "mono"
+                } else {
+                    result.innerHTML = text.join("-------------------------\r\n")
+                    result.removeAttribute("class")
+                }
+            } else {
+                var searcher = new MiniSearch({
+                    fields: ["displayName", "desc"],
+                    storeFields: ["name", "displayName", "desc", "icon", "leadsTo"],
+                    searchOptions: {
+                        boost: { desc: 0.2, displayName: 0.5 },
+                        prefix: true,
+                        fuzzy: 0.1
+                    }
+                })
+                searcher.addAll(itemCategory)
+                var text = []
+                var results = searcher.search(inputValue).slice(0, 10)
+                for (var i = 0; i < results.length; i++) {
+                    var search = results[i]
+                    var icon = getIcon(search.icon, true, checkedBox)
+                    text.push("<u>Display name: " + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "\r\nDescription:</u> " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div class="icon double" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')) + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                }
+                result.innerHTML = text.join("\r\n-------------------------\r\n")
+                result.removeAttribute("class")
+            }
+        }
+
+        String.prototype.replaceAll = function (search, replacement) {
+            return this.replace(new RegExp(search, "g"), replacement)
+        }
+
+        function parseDesc(value) {
+            return value == null || value.length === 0 ? "none\r\n" : ('<div class="par">' + ((value
+                .replaceAll("]s", "s]"))
+                .replace(/\[(.*?)\]/gi, parseFunc))
+                .replaceAll("http(s?)://", "http$1:#SLASH#SLASH#")
+                .replaceAll("//", '</div><div class="par">')
+                .replaceAll("#SLASH#SLASH#", "//")
+                .replaceAll("@", '</div><div class="par bulleted">')
+                .replaceAll("<>", '</div><div class="divider"></div><div class="par">') + "</div>")
+        }
+
+        function cap(str) {
+            return str == null || str.length === 0 ? 'None' : str[0].toUpperCase() + str.slice(1)
+        }
+
+        function parseFunc(str) {
+            var comma = str.indexOf(",")
+            return "<strong>" + cap(str.slice(comma === -1 ? 1 : comma + 1, str.length - 1)) + "</strong>"
+        }
+
+        var iconScale = 1
+        function getIcon(icon, split, civ2) {
+            //returns a style string
+            /*examples for the icon parameter:
+                [1,2] - returns the icon at 1,2 in the default spritesheet
+                [1,2,3,4] - returns the icon at 1,2, overlaid on top of the icon at 3,4 in the default spritesheet
+                [1,2,"mySheet"] - returns the icon at 1,2 in the custom spritesheet with id "mySheet"
+                [1,2,"mySheet",3,4] - returns the icon at 1,2 in the custom spritesheet with id "mySheet" overlaid on top of the icon at 3,4 in the default spritesheet
+            */
+            var bg = [];
+            var bgP = [];
+
+            var bit = [];
+            for (var i = 0; i < icon.length; i++) {
+                if (bit.length == 2) {
+                    bgP.push((-bit[0] * 24 * iconScale) + 'px ' + (-bit[1] * 24 * iconScale) + 'px');
+                    bit = [];
+                    if (typeof icon[i] == 'string') {
+                        bg.push('url(' + (civ2 ? civ2Object : civ1Object).sheets[icon[i]] + ')');
+                    }
+                    else {
+                        bg.push('url(img/iconSheet.png?v=1)');
+                        bit.push(icon[i]);
+                    }
+                }
+                else {
+                    bit.push(icon[i]);
+                }
+            }
+            if (bit.length == 2) {
+                bgP.push((-bit[0] * 24 * iconScale) + 'px ' + (-bit[1] * 24 * iconScale) + 'px');
+                bg.push('url(img/iconSheet.png?v=1)');
+            }
+
+            if (split) return [bg.join(','), bgP.join(',')];
+            var str = '';
+            str += 'background-position:' + bgP.join(',') + ';';
+            return str;
+        }
+
+        function exportJSON() {
+            var checkedBox = checkbox.checked
+            var link = document.createElement("a")
+            var file = new Blob([checkedBox ? civ2Object : civ1Object], { type: "application/json" });
+            link.href = URL.createObjectURL(file)
+            link.download = "civ" + (checkedBox ? 1 : 0) + ".json"
+            link.click()
+            URL.revokeObjectURL(link.href)
+        }
+
+        changeFunc()
+    </script>
+</body>
+
+</html>

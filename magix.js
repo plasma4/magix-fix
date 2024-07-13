@@ -1084,7 +1084,7 @@ function newDayLines(civ2) {
         //show a random atmospheric message occasionally on new days
         //we pick one of the first 20 lines in the array, then push that line back at the end; this means we get a semi-random stream of lines with no frequent repetitions
         var foolsState = (yer.getMonth() == 3 && yer.getDate() == 1) || G.getSetting('fools')
-        if (foolsToggle !== foolsState && G.resets >= 3) {
+        if (G.props['new day lines'] == null || (foolsToggle !== foolsState && G.resets >= 3)) {
             foolsToggle = foolsState
             updateNewDayLines(foolsState, civ2)
         }
@@ -2224,7 +2224,6 @@ if (getObj("civ") != "1") {
                     }
                 }
             };
-            updateNewDayLines()
             /*=====================================================================================
             Halloween ToT
             =======================================================================================*/
@@ -2281,7 +2280,6 @@ if (getObj("civ") != "1") {
                     }
                 }
             }
-            shuffle(G.props['new day lines']);
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (!droughtmesg && G.has('drought')) {
@@ -3455,14 +3453,14 @@ if (getObj("civ") != "1") {
                         me.amount = Math.ceil(G.currentMap.territoryByOwner[1] * 100) * 1.015;
                     }
                     me.amount -= G.getRes('wtrDecay').amount
-                    if (me.amount < 1) {
+                    if (G.has('t6') && me.amount < 1) {
                         me.amount = 0
                         G.lose('population', G.getRes('population').amount, 'out of land')
                         G.dialogue.popup(function (div) {
                             return '<div style="width:320x;min-height:200px;height:75%;">' +
                                 '<div class="fancyText title"><font color="#f70054">Trial failed</font></div>' +
-                                '<tt><div class="fancyText">You failed the Ocean trial</tt>' +
-                                '<br>Your people ran out of land and perished...quite sad.<br>' +
+                                '<tt><div class="fancyText">You failed the Ocean trial by running out of any land.</tt>' +
+                                '<br>Your people ran out of land and ended up with nowhere to live...<br>' +
                                 '<br><br>' +
                                 'But you can try again by reaching the Pantheon again and choosing Ocean.</div><br>' +
                                 'Technical note: Start a new run by opening the settings.' +
@@ -8576,7 +8574,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'papyrus': { name: 'Papyrus', icon: [15, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <strong>papyrus</strong>, [worker] will use [sugar cane].', use: { 'worker': 1, 'stone tools': 1 } },
+                    'papyrus': { name: 'Papyrus', icon: [15, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <b>papyrus</b>, [worker] will use [sugar cane].', use: { 'worker': 1, 'stone tools': 1 } },
                     'pergamin': { name: 'Pergamin', icon: [16, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <b>pergamin</b>, [worker] will use [hide] or [leather].', use: { 'worker': 1, 'stone tools': 1 } },
                     'commonpaper': { name: 'Common paper', icon: [17, 12, 'magixmod'], desc: 'Craft [paper] out of [bamboo] with the help of a secret non-magic recipe.', use: { 'worker': 1, 'stone tools': 1 } },
                 },
@@ -15843,7 +15841,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'carols', category: 'seasonal',
-                desc: 'Christmas is a special time. Now people will sing/play not only normal songs but also they are no afraid to sing/play carols. //[musician] can now craft [christmas essence]!',
+                desc: 'Christmas is a special time. Now people will sing/play not only normal songs but also they are no afraid to sing/play carols. //[musician]s will now be able to make [christmas essence]!',
                 icon: [9, 11, 'seasonal'],
                 cost: { 'insight II': 20, 'culture II': 30, 'christmas essence': 1020 },
                 req: { 'symbolism II': true, 'ritualism II': true, 'music': true, 'tribalism': false },
@@ -16051,7 +16049,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'compliments',
-                desc: 'Now, [child,Children] generate [love] points. //Not all children rather teenagers that have a need to have a second half and love her. They are going to say nice compliments each other. //Not only teens. Also any children that are good-mannered and talk good things about other people.',
+                desc: 'Now, [child,Children] generate [love] points. //<small>any children that are good-mannered and talk good things about other people count here</small>',
                 icon: [4, 16, 'seasonal'],
                 cost: { 'culture': 125, 'research': 120, 'faith': 100 },
                 req: { 'parental love': true, 'alphabet 3/3': true },
