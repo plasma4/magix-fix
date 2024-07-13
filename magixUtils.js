@@ -1477,7 +1477,7 @@ G.AddData({
                 G.setSafeName('inhab', G.readLoadedString(spl[ss++]), 'inhabitant');
                 G.setSafeName('inhabs', G.readLoadedString(spl[ss++]), 'inhabitants');
                 if (G.releaseNumber > 54)
-                    G.setSafeName('island', G.readLoadedString(spl[ss++]), 'plain island');
+                    G.setSafeName('island', G.readLoadedString(spl[ss++]), 'Plain Island');
 
                 //maps
                 var spl = str[s++].split(';');
