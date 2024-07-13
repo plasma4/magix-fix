@@ -1849,6 +1849,7 @@ G.Launch=function()
 		{name:'filters',type:'toggle',def:1,onChange:function(){if (G.getSetting('filters')) G.wrapl.classList.add('filtersOn'); else G.wrapl.classList.remove('filtersOn');}},//use CSS filters
 		{name:'fpsgraph',type:'toggle',def:1,onChange:function(){if (G.getSetting('fpsgraph')) {G.fpsGraph.style.display='block';l('fpsCounter').style.display='block';} else {G.fpsGraph.style.display='none';l('fpsCounter').style.display='none';}}},//show fps graph
 		{name:'unload',type:'toggle',def:0,onChange:function(){if (G.getSetting('unload')) onbeforeunload=function(){return true}; else onbeforeunload=null}},
+		{name:'exit',type:'toggle',def:0,onChange:function(){if (G.getSetting('exit')) onpagehide=function(){G.Save()}; else onpagehide=null}},
 		{name:'debug',type:'toggle',def:0,onChange:function(){if (G.getSetting('debug')) G.wrapl.classList.add('debugOn'); else G.wrapl.classList.remove('debugOn');}},//cheaty debug mode
 		{name:'showAllRes',type:'toggle',def:0,onChange:function(){}},//see all resources
 		{name:'autosave',type:'toggle',def:1,onChange:function(){}},//game will save every minute
@@ -1973,6 +1974,7 @@ G.Launch=function()
 		G.writeSettingButton({id:'fpsgraph',name:'fpsgraph',text:'Show frame rate',tooltip:'Display the frame rate graph.'})+
 		'<div class="barred fancyText">Page exit</div>'+
 		G.writeSettingButton({id:'unload',name:'unload',text:'Confirm page reload or exit',tooltip:'The game will ask you if you want to leave if this is enabled.'})+
+		G.writeSettingButton({id:'exit',name:'exit',text:'Autosave before leaving',tooltip:'The game will automatically save after you close the tab if this is enabled.'})+
 		'</div>';
 		str+='<div class="buttonBox">'+
 		G.dialogue.getCloseButton()+

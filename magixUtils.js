@@ -2618,7 +2618,7 @@ G.AddData({
             tier: 0,
             name: 'that was so brutal',
             icon: [35, 8, 'magixmod'],
-            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of Democracy] @[fortress of cultural legacy] @[complex of Dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[mausoleum of the Dreamer] //You must obtain the <b>Cruel goal</b> shadow achievement before that.',
+            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of Democracy] @[fortress of cultural legacy] @[complex of Dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[mausoleum of the Dreamer] //You neeed to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
             effects: [
             ],
             visible: false,
@@ -3025,7 +3025,7 @@ G.AddData({
             tier: 'tech',
             icon: [13, 33, 'magixmod'],
             name: 'A+ student',
-            desc: 'Get 250 or more technologies in a single run for human race. //<small>About to become a genius</small>',
+            desc: 'Get 250 or more technologies in a single run for human race. //<small>I\'m about to become a genius...</small>',
             civ: 0,
             plural: false
         });
@@ -3033,7 +3033,7 @@ G.AddData({
             tier: 'trait',
             icon: [32, 20, 'c2'],
             name: 'naturality',
-            desc: 'Make your elvish tribe attract 20 total traits and knowledges. @note: traits from the <b>Anomaly</b> category do not count, as they are anomalies, not actual traits or knowledges. //<small>It\'s better to have your own personality than somebody else\'s.</small>',
+            desc: 'Make your elvish tribe attract 20 total traits and knowledges. @Note: traits from the <b>Anomaly</b> category do not count, as they are anomalies, not actual traits or knowledges. //<small>It\'s better to have your own personality than somebody else\'s.</small>',
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 50 },
             ],

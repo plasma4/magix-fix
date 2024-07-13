@@ -652,7 +652,7 @@ G.NewGame = function (doneLoading, mods) {
     if (G.loadMenu == undefined) {
         G.dialogue.popup(function (div) { //pick civs .
 
-            return '<div style="padding:16px;min-width:390px;min-height:380px;"><font color="fuschia">Magix has successfully been loaded :)</font><br><div class="fancyText title"><font color="#52f79d">Start a new game</font><br>Pick which race do you want to rule this time.</div>' +
+            return '<div style="padding:16px;min-width:390px;min-height:380px;"><font color="fuschia">Magix has successfully been loaded :)</font><br><div class="fancyText title"><font color="#52f79d">Start a new run</font><br>Pick which race do you want to rule this time.</div>' +
                 G.button({ style: 'position:absolute;right:-6px;top:-6px;', tooltip: 'Select mods for this playthrough.', text: 'Use mods', onclick: function (e) { G.SelectMods(); } }) +
                 G.button({ style: 'position:absolute;left:-6px;top:-6px;', tooltip: 'View the game\'s version history.', text: 'Update log', onclick: function (e) { G.dialogue.popup(G.tabPopup['updates'], 'bigDialogue'); } }) +
                 G.button({ style: 'position:absolute;left:-6px;top:20px;', tooltip: 'Change the game\'s settings.', text: 'Settings', onclick: function (e) { G.dialogue.popup(G.tabPopup['settings'], 'bigDialogue'); } }) +
@@ -2200,7 +2200,7 @@ if (getObj("civ") != "1") {
                                 '<br>You have been kicked out of this plane.<br>' +
                                 '<br><br>' +
                                 'But you can try again by reaching the Pantheon again and choosing Enlightened!</div><br>' +
-                                'Technical note: Start a new game by opening the settings.' +
+                                'Technical note: Start a new run by opening the settings.' +
                                 '</div></div>'
                         })
                     }
@@ -16033,7 +16033,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'parental love',
-                desc: 'Now newborn [baby,Babies] provide some [love,Love points] for each one born. This one will lead to more [love] sources.',
+                desc: 'From now on, when [baby,Babies] are born, your people will gain some [love,Love points]. (Getting this will lead to more [love,Love point] sources.)',
                 icon: [19, 17, 'seasonal'],
                 cost: { 'culture': 75, 'research': 90 },
                 req: { 'love grows around us': true },
@@ -21048,7 +21048,7 @@ if (getObj("civ") != "1") {
                         '<br><br></font>' +
                         '</div><br>' +
                         '<div class="fancyText title"><font size="3">' + quotes[quote] + '</font></div>' +
-                        'Technical note: Start a new game by opening the settings.' +
+                        'Technical note: Start a new run by opening the settings.' +
                         '</div></div>'
                 })
             }

@@ -67,7 +67,7 @@ function getGameJSON(objectMode) {
             wonder: "The identifier of the achievment to gain upon completing the wonder",
             wideIcon: "The wide icon for a wonder",
             threexthreeIcon: "The large three-by-three icon of a seasonal wonder",
-            cost: "How much something costs to get",
+            cost: "How much the thing costs to get",
             costPerStep: "How much each step of the wonder will cost",
             steps: "The number of steps for the wonder",
             messageOnStart: "The message to write upon starting to build the wonder",

@@ -30,9 +30,10 @@ How do you use Magix offline?
 If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html file to begin playing! (It is advised to extract the .zip file so that everything works properly.)
 
 This offline version of Magix...
-- Allows you to import Magix saves and use Magix with just one click
+- Allows you to import Magix saves and use Magix with just one click (well, maybe not *one* but close enough)
 - Automatically updates to the newest version of fixed Magix when online and uses that when offline
 - Has the ability to locally mess around with Magix
 - Has ALL sprites and files needed for both the base game and Magix pre-downloaded
+- Some options for when you exit the page, such as autosaving or confirming if you want to leave or not
 
-<sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://file.garden/ZmatEHzFI2_QBuAF/magix-wiki.html).</sup>
+<sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html).</sup>
