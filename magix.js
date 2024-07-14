@@ -1435,6 +1435,9 @@ if (getObj("civ") != "1") {
             let st13 = false
             let st14 = false
             let st15 = false
+            let st16 = false
+            let st17 = false
+            let st18 = false
             let canoestory = false
             let sedestory = false
             let boatstory = false
@@ -2074,12 +2077,24 @@ if (getObj("civ") != "1") {
                             st13 = true
                         }
                         if (G.techN > 139 && G.techN <= 143 && !st14) {
-                            G.Message({ type: 'story2', text: 'People have written a book, and they call it "The Book of Grand Herbalists" which is all about the herbalism profession. People related to druidism are pretty proud of that.', icon: [30, 30, 'magixmod'] });
+                            G.Message({ type: 'story2', text: 'People have written a book, and they call it "The Book of Grand Herbalists" (which is all about the herbalism profession). People related to druidism and gathering are pretty proud of that.', icon: [30, 30, 'magixmod'] });
                             st14 = true
                         }
                         if (G.techN > 143 && G.techN <= 151 && !st15) {
-                            G.Message({ type: 'story1', text: 'Their creativity has no limits. We are sure of that.', icon: [31, 30, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'Their creativity has no limits. Your and your people are sure of that.', icon: [31, 30, 'magixmod'] });
                             st15 = true
+                        }
+                        if (G.techN > 151 && G.techN <= 170 && !se16) {
+                            G.Message({ type: 'story1', text: 'Your people will surpass all limits. You are quite sure of that.', icon: [31, 30, 'magixmod'] });
+                            st16 = true
+                        }
+                        if (G.techN > 171 && G.techN <= 200 && !st17) {
+                            G.Message({ type: 'story1', text: 'You will be remembered forever by your people as a great leader!', icon: [31, 30, 'magixmod'] });
+                            st17 = true
+                        }
+                        if (G.techN > 200 && G.techN <= 240 && !st18) {
+                            G.Message({ type: 'story1', text: 'Your people say that they will remember you until the end of time.', icon: [31, 30, 'magixmod'] });
+                            st18 = true
                         }
                     }
                     if (G.has('t2')) {
@@ -2102,7 +2117,7 @@ if (getObj("civ") != "1") {
                                 G.dialogue.popup(function (div) {
                                     return '<div style="width:320x;min-height:200px;height:75%;">' +
                                         '<div class="fancyText title"><font color="#f70054">Trial failed</font></div>' +
-                                        '<tt><div class="fancyText">You failed the Unhappy trial by reaching -400% unhappiness cap</tt>' +
+                                        '<tt><div class="fancyText">You failed the Unhappy trial by reaching the -400% unhappiness cap</tt>' +
                                         '<br>All people murdered themselves, leaving no one remaining.<br>This was quite cruel...<br>' +
                                         '<br><br>' +
                                         'But you can try again by reaching the Pantheon again and choosing Bersaria.</div><br>' +
@@ -3575,7 +3590,7 @@ if (getObj("civ") != "1") {
                         if (amount < -200) amount = -200;
                     } else if (G.has('t2')) {
                         if (amount > 200) amount = 200;
-                        if (amount < -200) amount = -200 - (G.techN / 2) - G.getRes('unhappy').amount;
+                        if (amount < -200) amount = Math.max(-200 - (G.techN / 2) - G.getRes('unhappy').amount, -400);
                     } else if (G.has('t4')) {
                         if (amount > 98) amount = 98;
                         if (amount < -200) amount = -200;
@@ -24418,7 +24433,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'allow', what: ['shore exploring'] },
                 ],
-                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead at the sides sides, just like increased gravity. It feels like some pressure. You see a bird having a hard time flying while the wind blows vertically...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
+                tutorialMesg: ['story1', 'You feel that wind sometimes blows down in this world instead at the sides, just like increased gravity. It feels like some pressure. You see a bird having a hard time flying while the wind blows vertically...you try to ask one of your elves about it but they cannot produce an answer for you...yet.', [33, 1, 'c2']]
             });
             new G.Tech({
                 name: 'boat building', category: 'tier1',
