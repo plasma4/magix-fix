@@ -4758,7 +4758,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'plain island tablet',
                 displayName: 'Plain Island tablet',
-                desc: 'A heavy tablet that you will get after activating a Plain Island portal. It is needed to unlock further researching as a pass for further things. You can obtain only one Tablet of this type. <b>@Your adventure has been finished...But this portal hides a new secret...so your adventure has not ended yet.<b>',
+                desc: 'A heavy tablet that you will get after activating a Plain Island portal. It is needed to unlock further researching as a pass for further things. You can obtain only one Tablet of this type. <b>@Your adventure may be finished for now...but this portal hides a secret. And that means...your adventure has not ended yet.</b>',
                 icon: [14, 9, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
@@ -5785,12 +5785,12 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'underworld tablet',
-                desc: 'A heavy tablet that you will get after entering the Underworld. Needed to unlock further researches. (You can obtain only one Tablet of this type.) <b>@You brought plagues in exchange for discoveries. I hope you won\'t regret this choice later!<b>',
+                desc: 'A heavy tablet that you will get after entering the Underworld. Needed to unlock further researches. (You can obtain only one Tablet of this type.) <b>@You brought plagues in exchange for discoveries. I hope you won\'t regret this choice later!</b>',
                 icon: [13, 19, 'magixmod'],
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !UnderworldMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere, a Tablet appears behind you. It is hot to the touch and its red glowing will only attract curses.</b><br><font color="fuschia">Prepare to tame 6 Devil\'s traits in order to continue your adventure! Without this tablet, the Underworld won\'t allow you discover its secrets.', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere, a Tablet appears behind you. It is hot to the touch and its red glowing will only attract curses.</b><br><font color="fuschia">Prepare to tame 6 Devil\'s traits in order to continue your adventure! Without this tablet, the Underworld won\'t allow you discover its secrets...</font>', icon: [12, 19, 'magixmod'] });
                         UnderworldMESG = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
@@ -9271,7 +9271,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'herbsyrup': { name: 'Craft syrup out of herbs', icon: [5, 10, 'magixmod'], desc: 'At this stand you may craft [herb syrup], a medicament used to heal people.', use: { 'alchemist': 1 } },
                     'antidotum': { name: 'Craft antidotum', icon: [4, 10, 'magixmod'], desc: 'At this stand you may craft [antidotum], which can be used to get rid of poison effect with a large chance of success.', use: { 'alchemist': 1 } },
-                    'EssHerbsyrup': { name: 'Craft syrup out of herbs + <b>Nature essence', icon: [9, 10, 'magixmod'], desc: 'At this stand you may craft [essenced herb syrup], a medicament used to heal people which are critically sick or poisoned, but only succeeds 85% of the time.', use: { 'alchemist': 1 } },
+                    'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, 'magixmod'], desc: 'At this stand you may craft [essenced herb syrup], a medicament used to heal people which are severely [sick]. It is more effective than normal [sick] healing!', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'herb': 0.05, 'sweet water pot': 0.1 }, into: { 'antidotum': 1 }, every: 4, mode: 'antidotum' },

@@ -191,13 +191,18 @@
     </select>
     <br>
     <label for="a"><input type="checkbox" id="a"> Use the elf race instead of the human race</label>
-    <button>Export all data</button>
+    <button>Export all civ JSON</button><button>Export JSON for this category</button>
     <hr>
     Results: <div></div>
 
     <script>
         document.getElementsByTagName("script")[0].remove()
-        document.getElementsByTagName("button")[0].addEventListener("click", exportJSON)
+        document.getElementsByTagName("button")[0].addEventListener("click", function () {
+            exportJSON(false)
+        })
+        document.getElementsByTagName("button")[1].addEventListener("click", function () {
+            exportJSON(true)
+        })
         var input = document.getElementsByTagName("input")[0]
         var select = document.getElementsByTagName("select")[0]
         var selectDebug = document.getElementsByTagName("select")[1]
@@ -398,12 +403,13 @@
             return str;
         }
 
-        function exportJSON() {
+        function exportJSON(exportCategory) {
             var checkedBox = checkbox.checked
             var link = document.createElement("a")
-            var file = new Blob([checkedBox ? civ2Object : civ1Object], { type: "application/json" });
+            var obj = checkedBox ? civ2Object : civ1Object
+            var file = new Blob([JSON.stringify(exportCategory ? obj[select.value] : obj)], { type: "application/json" });
             link.href = URL.createObjectURL(file)
-            link.download = "civ" + (checkedBox ? 1 : 0) + ".json"
+            link.download = (checkedBox ? "magixElf" : "magixHuman") + (exportCategory ? cap(select.value) + ".json" : ".json")
             link.click()
             URL.revokeObjectURL(link.href)
         }
