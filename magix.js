@@ -3303,7 +3303,7 @@ if (getObj("civ") != "1") {
                     }
                     if (me.amount >= 1000000 && G.achievByName['a huge city made of the smaller cities'].won == 0) {
                         G.achievByName['a huge city made of the smaller cities'].won = 1
-                        G.middleText('- Completed <font color="olive">A huge city made of the smaller cities</font> achievement -')
+                        G.middleText('- Completed <font color="#c4b400">A huge city made of the smaller cities</font> achievement -')
                     }
 
                     if (G.getRes('sick').amount > 0 && G.year < 1 && G.day < 10) {
@@ -6922,6 +6922,7 @@ if (getObj("civ") != "1") {
                     'honey': { name: 'Collect honey', icon: [6, 0, 'magix2'], desc: 'Attempt to collect [honey] from bee nests. The chance of success and [honey] gain can be increased through more techs.', req: { 'beekeeping': true } },
                     'honey2': { name: 'Collect honey (advanced)', icon: [6, 0, 'magix2'], desc: 'Try to collect [honey] from bee nests while using [nature essence].', req: { 'beekeeping III': true } },
                     'honeycombs': { name: 'Collect honeycombs', icon: [3, 0, 'magix2'], desc: 'Slowly get [honeycomb]s from bee nests.', req: { 'beekeeping III': true } },
+                    'frame': { name: 'Collect honey and honeycombs', icon: [37, 0, 'magix2'], desc: 'Gain both [honey] and [honeycomb]s from bee nests quickly using [essenced hive frame]s and some [nature essence].', req: { 'magical hive frames': true } },
                     'firesfromessence': { name: 'Set up fires out of its essence', icon: [0, 2, 'magixmod'], desc: 'Craft 6 [fire pit]s by using 1 [fire essence] and 13 [stick]s.', req: { 'Wizard complex': true, 'factories II': false }, use: { 'wand': 1, 'knapped tools': 1 } },
                     'log fires': { name: 'Start fires from logs', icon: [9, 21, 'magixmod'], desc: 'Craft [fire pit]s from 2 [log]s each.', req: { 'fires from logs': true, 'factories II': false } },
                 },
@@ -6932,14 +6933,17 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'seafood': 1, 'fire pit': 0.01 }, into: { 'cooked seafood': 1 }, every: 1, repeat: 5, mode: 'cook' },
                     { type: 'convert', from: { 'meat': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured meat': 2 }, every: 1, repeat: 10, mode: 'cure' },
                     { type: 'convert', from: { 'seafood': 1, 'salt': 0.5, 'fire pit': 0.01 }, into: { 'cured seafood': 2 }, every: 1, repeat: 10, mode: 'cure' },
-                    { type: 'gather', context: 'honey', what: { 'honey': 20 }, amount: 1, every: 2, max: 50, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': false } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 25 }, amount: 1, every: 2, max: 62.5, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': true, 'plant-loving bees': false } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 37.5 }, amount: 1, every: 2, max: 93.75, mode: 'honey', chance: 1.5 / 8, req: { 'beekeeping II': true, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 4 }, amount: 1, every: 1, max: 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 7.5 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', req: { 'love of honey': 'on' } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 40 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'plant-loving bees': false } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 60 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 96 }, amount: 1, every: 2, chance: 3 / 7, mode: 'honey2', req: { 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 4 }, amount: 1, every: 2, max: 50, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 5 }, amount: 1, every: 2, max: 62.5, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': false } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 7.5 }, amount: 1, every: 2, max: 93.75, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': true } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, amount: 1, every: 1, max: 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 3.75 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', req: { 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 8 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': false } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 12 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 19.2 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 24 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'off' } },
+                    { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 38.4 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 50, 'honeycomb': 5 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'off' } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -7273,10 +7277,14 @@ if (getObj("civ") != "1") {
                     'off': G.MODE_OFF,
                     'lumber': { name: 'Cut logs into lumber', icon: [1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1, 'land': 1 }, req: {} },
                     'lumberW': { name: 'Settle a workshop on water to cut logs', icon: [2, 28, 'magixmod', 1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1, 'wtr': 1 }, req: { 'construction II': true, 'water construction': true } },
+                    'frames': { name: 'Cut lumber into hive frames', icon: [35, 0, 'magix2'], desc: 'Cut a piece of [lumber] into 2 ready-made [hive frame]s.', use: { 'worker': 1, 'stone tools': 1, 'land': 1 }, req: { 'hive frames': true } },
+                    'essence': { name: 'Add essence to hive frames', icon: [37, 0, 'magix2'], desc: 'Add 10 [nature essence] into a single [hive frame] to turn it into an [essenced hive frame]. Has a chance to fail and requires two [worker]s.', use: { 'worker': 2, 'land': 1 }, req: { 'magical hive frames': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumber' },
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumberW' },
+                    { type: 'convert', from: { 'lumber': 1 }, into: { 'hive frame': 2 }, every: 5, mode: 'frames' },
+                    { type: 'convert', from: { 'hive frame': 1, 'nature essence': 10 }, into: { 'essenced hive frame': 1 }, every: 5, chance: 0.8, mode: 'essence' },
                     { type: 'mult', value: 0.8, req: { 'dt17': true } },
                     { type: 'mult', value: 3, req: { 'moderated carpentry': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
@@ -7340,13 +7348,13 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': false } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': true } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': false } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': true } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'elder': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': false } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'nutrition': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'meat diet': true } },
                     { type: 'mult', value: 1.03, req: { 'more experienced healers': true, 'moderation': true } },
@@ -9151,9 +9159,13 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'lumber': { name: 'Cut logs into lumber', icon: [1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1 }, req: {} },
+                    'frames': { name: 'Cut lumber into hive frames', icon: [35, 0, 'magix2'], desc: 'Cut a piece of [lumber] into 2 ready-made [hive frame]s.', use: { 'worker': 1, 'stone tools': 1 }, req: { 'magical hive frames': true } },
+                    'essence': { name: 'Add essence to hive frames', icon: [37, 0, 'magix2'], desc: 'Add 10 [nature essence] into a single [hive frame] to turn it into an [essenced hive frame]. Has a chance to fail and requires two [worker]s.', use: { 'worker': 2 }, req: { 'magical hive frames': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumber' },
+                    { type: 'convert', from: { 'lumber': 1 }, into: { 'hive frame': 2 }, every: 5, mode: 'frames' },
+                    { type: 'convert', from: { 'hive frame': 1, 'nature essence': 10 }, into: { 'essenced hive frame': 1 }, every: 5, chance: 0.8, mode: 'essence' },
                     { type: 'mult', value: 0.8, req: { 'dt17': true } },
                     { type: 'mult', value: 3, req: { 'moderated carpentry': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
@@ -10965,7 +10977,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tribalism', category: 'tier1',
-                desc: '@unlocks [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
+                desc: '@unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
                 icon: [0, 1],
                 startWith: true,
                 effects: [
@@ -10976,7 +10988,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@unlocks [dreamer]@unlocks [wanderer]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@Unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1],
                 startWith: true,
                 effects: [
@@ -10999,6 +11011,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'oral tradition', category: 'tier1',
+                displayName: '<font color="fuschia">Oral tradition</font></b>',
                 desc: '@unlocks [storyteller]@provides 20 [inspiration]@provides 20 [wisdom]<>[oral tradition] emerges when the members of a tribe gather at night to talk about their day. Stories, ideas, and myths are all shared and passed on from generation to generation. //<small>Time for a story now, i suppose, I suppose...</small>',
                 icon: [5, 1],
                 cost: { 'insight': 10 },
@@ -11509,7 +11522,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'carpentry', category: 'tier1',
-                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])',
+                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce materials crafted from wood@unlocks [barn]s (with [stockpiling])',
                 icon: [30, 6],
                 cost: { 'insight': 35 },
                 req: { 'building': true, 'woodcutting': true, 'intuition': true },
@@ -15352,7 +15365,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'People know how to measure time. Now you\'ll be able to see which year is currently. Also allows to see at which year <b>temporary traits</b> will expire. //To expand it and see days obtain the next part of this research.',
+                desc: 'People know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To be able to see see what day it is, obtain the next part of this research.',
                 icon: [27, 3, 'magixmod', 34, 30, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'maths II': true, 'primary time measure': true },
@@ -17736,7 +17749,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beekeeping II', category: 'tier1',
-                desc: 'Teach your people how to preserve the [honeycomb] structure within a bee nest, increasing the chance of future [honey] harvests! @you can also get [honeycomb]s from bee nests slowly, which are great for your people\'s [health] @you can now set a policy that sets the honey-based habits of your people',
+                desc: 'Teach your people about how to ensure that bees survive through the winter, increasing the chance of future [honey] harvests! @you can also get [honeycomb]s from bee nests slowly, which are great for your people\'s [health] @you can now set a policy that sets the honey-based habits of your people',
                 icon: [0, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 450 },
                 req: { 'beekeeping': true, 'wizard wisdom': true },
@@ -17745,7 +17758,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beekeeping III', category: 'tier1',
-                desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is much more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] @with a better knowledge of bees, it also makes the non-essenced method a bit better',
+                desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] //<small>with a better knowledge of bees, your beekeepers also feel a little safer</small>',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
                 req: { 'beekeeping II': true },
@@ -18096,6 +18109,24 @@ if (getObj("civ") != "1") {
                 cost: { 'insight': 1500, 'water': 2e5, 'mana': 50000 },
                 req: { 'alchemy': true },
             });
+            new G.Tech({
+                name: 'hive frames', category: 'tier1',
+                desc: '@unlocks more advanced methods of getting bees to work, allowing you to construct [hive frame]s from [carpenter workshop]s @your [firekeeper]s that attend to bees will now work three times faster whenever [hive frame]s are available (excluding non-essenced [honey] collection)',
+                icon: [34, 0, 'magix2'],
+                cost: { 'insight': 600, 'wisdom': 50 },
+                req: { 'construction': true, 'superior honey': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'magical hive frames', category: 'tier1',
+                desc: '@allows you to create [essenced hive frame]s from [carpenter workshop]s using some [lumber] and [nature essence] @unlocks a new mode for [firekeeper]s that will collect both [honey] and [honeycomb]s @also lets you craft both normal and essenced frames in the Paradise version',
+                icon: [36, 0, 'magix2'],
+                cost: { 'insight': 35 },
+                req: { 'paradise crafting': true, 'hive frames': true },
+                effects: [
+                ],
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -18335,6 +18366,20 @@ if (getObj("civ") != "1") {
                 name: 'spices',
                 desc: '[spices] are, well, spicy to the tongue, and are great when combined with other tasty foods!',
                 icon: [20, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'misc',
+            });
+            new G.Res({
+                name: 'hive frame',
+                desc: 'Each [hive frame] is carefully crafted from part of a [log] and may be used in beekeeping.',
+                icon: [35, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'misc',
+            });
+            new G.Res({
+                name: 'essenced hive frame',
+                desc: 'Each and every [essenced hive frame] is meticulously crafted with the utmost care, and is combined with some [nature essence].',
+                icon: [37, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
             });
@@ -21888,7 +21933,7 @@ if (getObj("civ") != "1") {
                     }
                     if (me.amount >= 175000 && G.achievByName['pressure wiper'].won == 0) {
                         G.achievByName['pressure wiper'].won = 1
-                        G.middleText('- Completed <font color="olive">Pressure wiper</font> achievement -')
+                        G.middleText('- Completed <font color="#c4b400">Pressure wiper</font> achievement -')
                     }
                     if (me.amount >= 300000 && G.achievByName['pressure purgator'].won == 0) {
                         G.achievByName['pressure purgator'].won = 1
@@ -23700,10 +23745,10 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'off' } },
                     { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'off' } },
                     { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 0.6, 'elder': 0.4 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
                     //{type:'mult',value:1.03,req:{'more experienced healers':true,'moderation':true}},
                     //    {type:'mult',value:1.06,req:{'more experienced healers':true,'caretaking':true}},
                     //{type:'mult',value:1.25,req:{'se07':'on'}},
@@ -24844,7 +24889,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'masonry', category: 'tier1',
-                desc: '@unlocks [kiln]s, which produce a variety of goods such as [brick]s@[carver]s can now turn [stone]s into [cut stone] slowly<>//<small>Let\'s build a wall, tall brick wall...wait if there is any monster you can throw one of these to defend yourself</small>',
+                desc: '@unlocks [kiln]s, which produce a variety of goods such as [brick]s@[carver]s can now turn [stone]s into [cut stone] slowly<>//<small>Let\'s build a wall, tall brick wall...wait...if there is any monster can you throw one of these to defend yourself?</small>',
                 icon: [29, 6, 'c2'],
                 cost: { 'discernment': 48, 'creativity': 6 },
                 req: { 'building': true, 'pottery': true },
@@ -24853,7 +24898,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'carpentry', category: 'tier1',
-                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce wooden goods@unlocks [barn]s (with [stockpiling])<br>//<small>Pink planks? Oh, I forgot that is no longer the human\'s universe. Sorry, my bad.</small>',
+                desc: '@unlocks [carpenter workshop]s, which can process [log]s into [lumber] and produce materials crafted from wood@unlocks [barn]s (with [stockpiling])<br>//<small>Pink planks? Oh, I forgot that is no longer the human\'s universe. Sorry, my bad.</small>',
                 icon: [30, 6, 'c2'],
                 cost: { 'discernment': 35, 'gentility': 2, 'creativity': 5 },
                 req: { 'building': true, 'woodcutting': true },
@@ -25182,7 +25227,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'Elves know how to measure time. Now you\'ll be able to see which year is currently. Also, allows you to see at which year <b>temporary traits</b> will expire. //To see days as well, you\'ll need to wait some more.',
+                desc: 'Elves know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To see days as well, you\'ll need to wait some more.',
                 icon: [27, 3, 'magixmod', 25, 12, 'c2'],
                 cost: { 'discernment': 60, 'creativity': 12 },
                 effects: [

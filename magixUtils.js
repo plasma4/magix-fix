@@ -5479,21 +5479,20 @@ G.AddData({
             var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
             if (day >= 289 && day <= 305) {
                 G.middleText('<big><font color="orange">Happy Halloween!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.</small></font>', 'slow');
-                var audi = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/halloweenGreeting.mp3');
-                audi.play()
+                G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/halloweenGreeting.mp3');
             }
             if (day >= 365 && day <= 366) { G.middleText('<big><font color="pink">Happy ' + (truY + 1) + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow') };
             if (day > 0 && day <= 2) {
                 G.middleText('<big><font color="pink">Happy ' + truY + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow');
             };
             if (yer.getMonth() == 6 && yer.getDate() >= 14 && yer.getDate() <= 20) { //Magix anniversary week
-                G.middleText('<big><font color="olive">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br>Thanks for playing this neat mod \u2014pelletsstarPL<br><font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
+                G.middleText('<big><font color="#c4b400">Magix turns ' + (yer.getFullYear() - 2019) + '</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br>Thanks for playing this neat mod \u2014pelletsstarPL<br><font color="aqua">Thanks for motivating me. Keep playing.</font></small></font>', 'slow');
             };
             if (day >= easterDay - 7 && day <= easterDay) { //EASTER
                 G.middleText('<big><font color="green">Happy Easter!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away. Easter bunny does a sniff,sniff</small></font>', 'slow');
             };
-            if (yer.getMonth() == 9 && yer.getDate() == 9) { //MOD CREATOR's birthday
-                G.middleText('<big>Today Magix creator has their birthday.</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
+            if (yer.getMonth() == 9 && yer.getDate() == 9) { //MOD CREATOR's birthday (well, pelletsstarPL, anyway)
+                G.middleText('<big>Today the original Magix creator has their birthday!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
             };
             if (yer.getMonth() == 2 && yer.getDate() == 8) { //Females/Ladies day greeting
                 G.middleText('<big>Today is Female\'s day.</big><br><small>Make sure you will greet some lady nicely today and not just today :)<br>- Welcome back -<br>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.<br></small></font>', 'slow');
