@@ -2084,7 +2084,7 @@ if (getObj("civ") != "1") {
                             G.Message({ type: 'story1', text: 'Their creativity has no limits. Your and your people are sure of that.', icon: [31, 30, 'magixmod'] });
                             st15 = true
                         }
-                        if (G.techN > 151 && G.techN <= 170 && !se16) {
+                        if (G.techN > 151 && G.techN <= 170 && !st16) {
                             G.Message({ type: 'story1', text: 'Your people will surpass all limits. You are quite sure of that.', icon: [31, 30, 'magixmod'] });
                             st16 = true
                         }
@@ -6866,7 +6866,7 @@ if (getObj("civ") != "1") {
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 38, req: { 'hunting III': true, 'an armor for Hunter': true, 'hunters & fishers unification': false } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
-                    { type: 'mult', value: 0.1, req: { 'hunters & fishers unification': true } },
+                    { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
                     //Trait trends
                     { type: 'gather', context: 'hunt', what: { 'hide': 1 }, req: { 'htt1': true } },
                     { type: 'gather', context: 'hunt', what: { 'meat': 1 }, req: { 'htt2': true } },
@@ -6899,7 +6899,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 1.5, req: { 't6': true } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
-                    { type: 'mult', value: 0.1, req: { 'hunters & fishers unification': true } },
+                    { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
                 ],
                 req: { 'fishing': true, 't4': false },
                 upkeep: { 'bugs': 0.5 },
@@ -6936,8 +6936,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'honey', what: { 'honey': 4 }, amount: 1, every: 2, max: 50, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': false } },
                     { type: 'gather', context: 'honey', what: { 'honey': 5 }, amount: 1, every: 2, max: 62.5, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': false } },
                     { type: 'gather', context: 'honey', what: { 'honey': 7.5 }, amount: 1, every: 2, max: 93.75, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, amount: 1, every: 1, max: 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 3.75 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', req: { 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, amount: 1, every: 1, max: 4, chance: 1 / 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 3.75 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', chance: 1 / 4, req: { 'love of honey': 'on' } },
                     { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 8 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': false } },
                     { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 12 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
                     { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 19.2 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'love of honey': 'on' } },
@@ -8114,7 +8114,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'cured meat': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
                     { type: 'convert', from: { 'cooked seafood': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
                     { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5, 'happiness': 0.04 }, every: 4, mode: 'cutlet' },
-                    { type: 'convert', from: { 'vegetables': 3, 'bread': 1 }, into: { 'meals': 2, 'health': 0.03 }, every: 4, mode: 'sandwich' },
+                    { type: 'convert', from: { 'vegetable': 3, 'bread': 1 }, into: { 'meals': 2, 'health': 0.03 }, every: 4, mode: 'sandwich' },
                     { type: 'convert', from: { 'honeycomb': 2, 'fruit': 1 }, into: { 'meals': 3, 'happiness': 0.15, 'health': 0.2 }, every: 4, mode: 'honey' },
                     { type: 'convert', from: { 'herb': 2, 'vegetable': 1.2, 'spices': 0.2 }, into: { 'meals': 1.5 }, every: 4, mode: 'spice' },
                 ],
@@ -9414,7 +9414,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'vegetable farm',
-                desc: '@Specialized farm (producing cabbage and a few carrots) which will harvest tasty [vegetable]s faster than [gatherer]s.',
+                desc: '@Specialized farm  which will harvest tasty [vegetable]s (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
                 icon: [14, 2, 'magixmod'],
                 cost: { 'seeds': 200 },//It will display ingame Seeds
                 req: { 'agriculture': true },
@@ -11057,7 +11057,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic... Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic...//Getting this increases the exploration cap by a little bit.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -11727,14 +11727,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'alchemy', category: 'tier1',
-                desc: '@Now you may start a new adventure with...potions! <small>splash potions when though</small>',
+                desc: '@Now you may start a new adventure with...potions! //<small>splash potions when though</small>',
                 icon: [16, 9, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'maths III': true },
             });
             new G.Tech({
                 name: 'terrain conservacy', category: 'tier1',
-                desc: '@Unlocks a subclass of [architect] whose job is to set up [alchemy zone]s. Some units will use [alchemy zone]s instead of [land].',
+                desc: '@Unlocks a subclass of [architect] whose job is to set up [alchemy zone]s. Some units will use [alchemy zone]s instead of [land]!',
                 icon: [17, 5, 'magixmod', 24, 1],
                 cost: { 'insight': 940, 'wisdom': 60 },
                 req: { 'alchemy': true, 'map details': true },
@@ -12453,7 +12453,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ritualism II', category: 'religion',
-                desc: '@provides 3 [spirituality II] @[wisdom rituals] and [flower rituals] can be activated again, but these rituals will require [faith II] as upkeep and cost that instead of [faith] <>Simple practices, eroded and polished by long time, turn into rites and traditions. Straight from the heart to the gods.',
+                desc: '@provides 3 [spirituality II] @[wisdom rituals] and [flower rituals] can be activated again, but these rituals will require [faith II] as upkeep rather than [faith] @[soothsayer]s and [druid]s will change icons now <>Simple practices, eroded and polished by long time, turn into rites and traditions!',
                 icon: [0, 35, 'magixmod', 27, 5, 'magixmod'],
                 cost: { 'culture II': 5, 'faith II': 2, 'insight II': 10, 'influence II': 2, 'faith': 6 },
                 req: { 'oral tradition': true, 'ritualism': true, 'eotm': true, 'Improved rhetoric': true },
@@ -12463,12 +12463,9 @@ if (getObj("civ") != "1") {
                         type: 'function', func: function () {
                             G.getDict('soothsayer').icon = [28, 3, 'magixmod'];
                             G.getDict('druid').icon = [29, 30, 'magixmod'];
-                            G.getDict('discovery rituals').desc = 'Improves <b>Exploration</b> units by: // @[wanderer]:5% @[scout]:3% @[globetrotter]:4%. <>Consumes 2 [faith II] every 200 days. Will stop if you run out.';
                             G.getDict('wisdom rituals').icon = [8, 12, 23, 19, 'magixmod'];
                             G.getDict('wisdom rituals').visible = true;
                             G.getDict('wisdom rituals').cost = { 'faith II': 2 };
-                            G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by a quarter. After [eotm] has occured this ritual will consume 1 [faith II] every 30 days; will stop if you run out.';
-                            G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Consumes 1 [faith II] every 20 days; will stop if you run out.';
                             G.getDict('flower rituals').cost = { 'faith II': 2 };
                             G.getDict('flower rituals').visible = true;
                         }
@@ -12918,7 +12915,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'caretaking',
                 displayName: '<font color="#2de532">Caretaking</font>',
-                desc: 'People do not seem curious about further discoveries. Instead of that, they wish to live long, calmly, and in peace. This trait will unlock unique techs, traits, and units.',
+                desc: 'People do not seem curious about further discoveries. Instead, they wish to live for a long time, calmly, and in peace. This trait will unlock unique techs, traits, and units.',
                 icon: [24, 17, 'magixmod'],
                 cost: {},
                 req: { 'plain island building': true, 'moderation': false },
@@ -12987,7 +12984,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt4',
                 displayName: 'Devil\'s trait #4 Unlucky metals',
-                desc: 'All gathering of [gold ore,Gold] and [platinum ore,Platinum] is decreased by 5%. <small>if only we had a metal detector...WAIT THAT IS A GREAT IDEA</small>',
+                desc: 'All gathering of [gold ore,Gold] and [platinum ore,Platinum] is decreased by 5%. //<small>if only we had a metal detector...WAIT THAT IS A GREAT IDEA</small>',
                 icon: [26, 4, 'magixmod'],
                 cost: { 'culture': 100 },
                 chance: 150,
@@ -13208,8 +13205,10 @@ if (getObj("civ") != "1") {
                                     G.know[i].cost[newEss[j]] = Math.ceil(prev / 500) * 3;
                                 }
                             }
-                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.'
+                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
                             if (!G.has('ritualism II')) {
+                                G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
+                                G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
                                 G.getDict('wisdom rituals').icon = [8, 12, 23, 19, 'magixmod']
                                 G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
                                 G.getDict('wisdom rituals').visible = false
@@ -13507,7 +13506,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'oil-digging', category: 'tier2',
-                desc: '[quarry,Quarries] can dig for [oil] that can be used as fuel. //<small>At least we have something to fuel a car now!</small>',
+                desc: '[quarry,Quarries] will now be able to try to look for [oil] that can be used as fuel. //<small>At least we have something to fuel a car now!</small>',
                 icon: [29, 2, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true },
@@ -13612,7 +13611,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'policy revaluation',
-                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost and require [faith II]. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]. Rituals will also require 1 more of an [influence II,Essential II].',
+                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost [faith II] to toggle and upkeep. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]! Rituals will also require 1 more of an [influence II,Essential II].',
                 icon: [1, 23, 'magixmod'],
                 cost: { 'insight II': 15, 'culture II': 15, 'influence II': 5 },
                 chance: 45,
@@ -13620,6 +13619,14 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
+                            G.getDict('harvest rituals for flowers').desc = 'Improves the speed of [florist]s by 20%. Consumes 2 [faith II] and 1 [influence II] over the course of 400 days; will stop if you run out.';
+                            G.getDict('fertility rituals').desc = 'Increases birth rates by 20%. Consumes 1 [faith II] over the course of 200 days; will stop if you run out.';
+                            G.getDict('harvest rituals').desc = 'Improves [gatherer], [hunter], and [fisher] efficiency by 20%. Consumes 1 [faith II] over the course of 200 days; will stop if you run out.';
+                            G.getDict('crafting & farm rituals').desc = 'Improves the speed of [Paper-crafting shack]s, [Well of mana,Wells of mana], various crafting units, and <b>Farms</b> by various amounts. Consumes 2 [faith II] and 1 [influence II] over the course of 400 days; will stop if you run out.';
+                            G.getDict('discovery rituals').desc = 'Use these unique rituals to improve exploration slightly, with these boosts: @[wanderer]s: +5% speed @[scout]s: +3% speed @[globetrotter]s: +4% speed //Consumes 1 [faith II] over the course of 100 days; will stop if you run out.';
+                            G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Consumes 1 [faith II] every 20 days; will stop if you run out. //<small>we are much smarter now</small>';
+                            G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Consumes 1 [faith II] every 20 days; will stop if you run out.';
+
                             for (var j in G.policy) {
                                 if (G.policy[j].cost == undefined) continue;
                                 if (G.policy[j].cost['influence'] != undefined) {
@@ -13634,9 +13641,6 @@ if (getObj("civ") != "1") {
                                     G.policy[j].cost['faith II'] = newCost;
                                 }
                             }
-                            G.getDict('fertility rituals').desc = 'Improves birth rate by 20%. Consumes 1 [faith II] every 200 days; will stop if you run out.';
-                            G.getDict('harvest rituals').desc = 'Improves [gatherer], [hunter], and [fisher] efficiency by 20%. Consumes 1 [faith II] every 200 days; will stop if you run out.';
-                            G.getDict('crafting & farm rituals').desc = 'Improves [Paper-crafting shack], [Well of mana] and <b>Farms</b> efficiency by 17%. Consumes 1 [faith II] every 200 days & 1 [influence II] every 400 days; will stop if you run out.';
                             if (G.modsByName['Market mod']) { //Interaction with Market.
                                 G.getDict('bazaar_buy').effects.push({ type: 'mult', value: 1.5, req: { 'backshift': true } });
                                 G.getDict('bazaar_sell').effects.push({ type: 'mult', value: 1.5, req: { 'backshift': true } });
@@ -13761,7 +13765,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunters & fishers unification', category: 'tier2',
-                desc: 'Unlocks unit that merges [hunter]s and [fisher]s into one. @[harvest rituals] now buffs newly [fishers & hunters camp] by 35% instead of [fisher]s and [hunter]s. @primary [hunter]s and [fisher]s will be available, but won\'t be as efficient as they were before.',
+                desc: 'Unlocks a unit that merges [hunter]s and [fisher]s into one. @[harvest rituals] now boosts the speed of the [fishers & hunters camp] by 35% instead of [fisher]s and [hunter]s. @basic [hunter]s and [fisher]s will still be available, but will now become a lot slower',
                 icon: [2, 23, 'magixmod'],
                 cost: { 'insight II': 55, 'science': 5 },
                 req: { 'fishing III': true, 'hunting III': true, 'fisher\'s smartness': true, 'hunter\'s coordination': true, 'an armor for Hunter': true },
@@ -13769,9 +13773,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('harvest rituals').desc = 'Improves [gatherer] efficiency by 20% and [fishers & hunters camp] by 35%. Consumes 1 [faith II] every 200 days; will stop if you run out.'
-                            //G.getDict('hunter').visible = false;
-                            //G.getDict('fisher').visible = false;
+                            G.getDict('harvest rituals').desc = 'Improves [gatherer] efficiency by 20% and the speed of [fishers & hunters camp] by 35%. Consumes 1 [faith II] every 50 days; will stop if you run out.';
                         }
                     }
                 ]
@@ -13801,21 +13803,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'supreme fast filtering', category: 'upgrade',
-                desc: '[water filter]s performs conversion twice as often, doubling efficiency.',
+                desc: '[water filter]s performs conversion twice as often, doubling their efficiency.',
                 icon: [5, 24, 'magixmod'],
                 cost: { 'insight II': 60 },
                 req: { 'hunters & fishers unification': true },
             });
             new G.Tech({
                 name: 'supreme cloudy fast filtering', category: 'upgrade',
-                desc: '[cloudy water filter]s perform conversion twice as often, doubling efficiency.',
+                desc: '[cloudy water filter]s perform conversion twice as often, doubling their efficiency. //<small>but in what way is it supreme</small>',
                 icon: [6, 24, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'hunters & fishers unification': true, 'supreme fast filtering': true },
             });
             new G.Tech({
                 name: 'Improved alchemy techniques', category: 'upgrade',
-                desc: '[basic brewing stand] becomes thrice as efficient. //<small>why thrice? That\'s work beyond limits</small>',
+                desc: '[basic brewing stand]s will become thrice as efficient. //<small>why thrice? That\'s work beyond limits</small>',
                 icon: [16, 23, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 7, 'culture II': 23 },
                 req: { 'camp-cooking': true },
@@ -13829,7 +13831,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'burial wormhole 1/2', category: 'tier2',
-                desc: 'People start thinking about how to use magic, especially the darker forms of it, to get rid of [corpse]s without harming their reputation. //One of them said that if our people had so many portals already, couldn\'t you just make some more for burying these [corpse]s?',
+                desc: 'People start thinking about how to use magic without harming their reputation, especially the darker forms of it in order to get rid of [corpse]s. //One of them said that if our people had so many portals already, couldn\'t you just make some more for burying these [corpse]s?',
                 icon: [27, 3, 'magixmod', 22, 22, 'magixmod'],
                 cost: { 'insight II': 100, 'science': 6, 'faith II': 4, 'influence II': 5 },
                 req: { 'magical presence': true, 'mo \'wine': true },
@@ -15867,7 +15869,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'the christmas', category: 'seasonal',
                 displayName: '<font color="cyan">The Christmas</font>',
-                desc: '@People acknowledged that the symbols of this event will not only expand your symbolics, but also make various decorations like like ornaments and lights.',
+                desc: '@People acknowledged that the important parts of this event will not only expand the holiday cheer of your people, but also make various decorations like like ornaments and lights.',
                 icon: [2, 11, 'seasonal'],
                 cost: { 'insight': 400, 'culture': 100, 'faith': 32 },
                 req: { 'culture of celebration': true, 'Wizard complex': true, 'tribalism': false, 'winter holidays': true },
@@ -15918,7 +15920,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'snowmen', category: 'seasonal',
-                desc: 'Since [digger] can dig for snow and you can describe and be understood you can explain what is and how does snowman look like. @Unlocks a new tech.',
+                desc: 'Since [digger]s are able to dig for snow and you understand what it is, you can explain what is and what snowmen look like! @Unlocks a new tech.',
                 icon: [10, 11, 'seasonal'],
                 cost: { 'insight': 90, 'culture': 50 },
                 req: { 'winter holidays': true },
@@ -17657,7 +17659,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches. Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.//Getting this increases the exploration cap by a little bit.',
                 icon: [36, 13, 'magixmod'],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -18566,7 +18568,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Policy({
                 name: 'harvest rituals for flowers',
-                desc: 'Improves [florist] efficiency by 20%. Consumes 1 [faith] and 1 [influence] every 20 days; will stop if you run out.',
+                desc: 'Improves the speed of [florist]s by 20%. Consumes 1 [faith] and 1 [influence] every 20 days; will stop if you run out.',
                 icon: [8, 12, 11, 8, 'magixmod'],
                 cost: { 'faith': 1, 'influence': 3 },
                 startMode: 'off',
@@ -18575,7 +18577,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'crafting & farm rituals',
-                desc: 'Improves [Paper-crafting shack]s, [Well of mana,Wells of mana], and <b>Farms</b> by various amounts. Consumes 10 [faith] and 10 [influence] every 20 days; will stop if you run out.',
+                desc: 'Improves [Paper-crafting shack]s, [Well of mana,Wells of mana], various crafting units, and <b>Farms</b> by various amounts. Consumes 10 [faith] and 10 [influence] every 20 days; will stop if you run out.',
                 icon: [8, 12, 14, 2, 'magixmod'],
                 cost: { 'faith': 5, 'influence': 5 },
                 startMode: 'off',
@@ -19232,7 +19234,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'discovery rituals',
-                desc: 'Use these unique rituals to improve exploration slightly, with these boosts: @[wanderer]: 5% @[scout]: 3% @[globetrotter]: 4%. <>Consumes 2 [faith] every 20 days. Will stop if you run out.',
+                desc: 'Use these unique rituals to improve exploration slightly, with these boosts: @[wanderer]s: +5% speed @[scout]s: +3% speed @[globetrotter]s: +4% speed //Consumes 2 [faith] every 20 days; will stop if you run out.',
                 icon: [35, 0, 'magixmod'],
                 cost: { 'faith': 4 },
                 startMode: 'off',
@@ -24454,7 +24456,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown. Getting this increases the exploration cap by a little bit. //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.//Getting this increases the exploration cap by a little bit. //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
                 icon: [24, 7, 'c2'],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true },
@@ -25485,7 +25487,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism3',
                 displayName: 'Mental balance',
-                desc: 'Unlocks a new ritual which will affect [happiness] and its bonus and penalty at specific amounts. Look for [mental balance] in <b>Policies</b> in the <b>Rituals</b> category. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: 'Unlocks a new ritual which will affect [happiness] and its bonus and penalty at specific amounts. Look for [mental balance] in the rituals section of your <b>Policies</b>. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 17, 'c2'],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
@@ -26488,7 +26490,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'mental balance',
-                desc: 'The penalty for low [happiness] level is moved from -100 to -120% and the bonus activates at 90 instead of 100%, but this requires way more [faith] than a usual ritual. @in addition, it reduces efficiency of [soothsayer]s and [druid]s themselves by 10% while active. @this ritual is very fragile as it will lose its power whenever your [faith] goes below one third of your [spirituality] amount.',
+                desc: 'Enabling this ritual will move the penalty for low [happiness] level from -100 to -120% and change the bonus to make it activate at 90% instead of 100%. However, this ritual requires way more [faith] compared to normal rituals. //Enabling this ritual reduces the efficiency of [soothsayer]s and [druid]s by 20% while active. //Be aware that this ritual is very fragile, as it will lose its power whenever your [faith] goes below one third of your [spirituality].',
                 icon: [8, 12, 'c2', 24, 0, 'c2'],
                 cost: { 'faith': 4 },
                 startMode: 'off',
