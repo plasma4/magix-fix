@@ -1275,18 +1275,18 @@ if (getObj("civ") != "1") {
                 }
             }
             G.seasonalContent = function () {
-                G.getDict('xmas1').desc = 'The spirits of Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
-                G.getDict('xmas2').desc = 'The spirits of Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
-                G.getDict('xmas3').desc = 'The spirits of Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
-                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
-                G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 80 extra [water]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herb]s. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <B>' + G.getAchiev('xmas buff').won + '</B> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <B>' + G.getAchiev('halloween buff').won + '</B> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('xmas1').desc = 'The spirits of Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas2').desc = 'The spirits of Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas3').desc = 'The spirits of Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 80 extra [water]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herb]s. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
                 var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
                 if (day + leap >= 289 && day + leap <= 305) {
                     G.getDict('"dark season"').req = { 'tribalism': true, 'culture of celebration': true, 'sedentism': true, 'intuition': true };
@@ -3055,7 +3055,7 @@ if (getObj("civ") != "1") {
                             toConsume = randomFloor(toConsume * consumeMult);
                             var consumed = G.lose('food', toConsume, 'eating');
                             changeHappiness(G.lose('salt', randomFloor(consumed * 0.1), 'salting food') * 5, 'salting food');//use salt
-                            changeHappiness(G.lose('spices', randomFloor(consumed * 0.00003), 'spicing food') * 30, 'spicing food');//use spice
+                            changeHappiness(G.lose('spices', randomFloor(consumed * 0.00003), 'spicing food') * (G.has('love of spice') ? 36 : 30), 'spicing food');//use spice
                             changeHappiness(consumed * happinessAdd * (G.has("t7") ? 0.2 : 0.5), 'food culture');
                             var lacking = toConsume - consumed;
                             if (rations == 'none') lacking = me.amount * 1;
@@ -5635,10 +5635,10 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 icon: [17, 0, 'magixmod'],
                 tick: function (me, tick) {
-                    // various things about prisoners added properly by @1_e0
+                    // Various things about prisoners added properly by @1_e0 (pretty complex, right?)
                     var punishmentLevel = G.has('CaP(light)') ? 0.7 : (G.has('CaP(cruel)') ? 1.4 : 1)
-                    var fleeMult = (G.has('sharp edges') ? 0.0075 : (G.has('fragile bars') ? 0.0125 : 0.01))
-                    var freedAmount = randomFloor(G.getRes('prisoner').amount * 0.012 / punishmentLevel)
+                    var fleeMult = (G.has('sharp edges') ? 0.0075 : (G.has('fragile bars') ? 0.0125 : 0.01)) * (G.has('longer prison sentences') ? 1.2 : (G.has('shorter prison sentences') ? 0.6 : 1))
+                    var freedAmount = randomFloor(G.getRes('prisoner').amount * 0.012 / punishmentLevel) * (G.has('longer prison sentences') ? 0.6 : (G.has('shorter prison sentences') ? 1.2 : 1))
                     G.lose('prisoner', freedAmount, 'serving their sentence');
                     G.gain('adult', freedAmount, 'serving their sentence');
                     var freedAmount = randomFloor(G.getRes('prisoner').amount * fleeMult * punishmentLevel / (G.has('imprisonment III') ? 3 : 1))
@@ -9271,7 +9271,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'herbsyrup': { name: 'Craft syrup out of herbs', icon: [5, 10, 'magixmod'], desc: 'At this stand you may craft [herb syrup], a medicament used to heal people.', use: { 'alchemist': 1 } },
                     'antidotum': { name: 'Craft antidotum', icon: [4, 10, 'magixmod'], desc: 'At this stand you may craft [antidotum], which can be used to get rid of poison effect with a large chance of success.', use: { 'alchemist': 1 } },
-                    'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, 'magixmod'], desc: 'At this stand you may craft [essenced herb syrup], a medicament used to heal people which are severely [sick]. It is more effective than normal [sick] healing!', use: { 'alchemist': 1 } },
+                    'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, 'magixmod'], desc: 'At this stand you may craft [essenced herb syrup] (although it has a small chance to fail), a medicament that may be used to heal people who are severely [sick].', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'herb': 0.05, 'sweet water pot': 0.1 }, into: { 'antidotum': 1 }, every: 4, mode: 'antidotum' },
@@ -11671,7 +11671,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'agriculture', category: 'tier1',
-                desc: '@Unlocks [wheat farm,Farms]. Later you can not only grow natural plants that provide food for your civilization but also [magic essences,Essences] out of magical plants. Since you may have trouble fitting all these farms in the mortal world later you will unlock some extra space to set them up.',
+                desc: '@Unlocks [wheat farm,Farms]. Later you can not only grow natural plants that provide food for your civilization, but also some [magic essences,Essences] out of magical plants! @Since you may have trouble fitting all these farms in the mortal world, you will unlock some extra space to set them up later!',
                 icon: [16, 2, 'magixmod'],
                 cost: { 'insight': 575 },
                 req: { 'Wizard complex': true, 'gardening': true },
@@ -11692,7 +11692,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'precious pottery', category: 'tier1',
-                desc: '@Improves pottery in your civilization, you to craft more beautiful [precious pot]s and useful [potion pot]s. //<small>These pots sure are really precious...</small>',
+                desc: '@Improves pottery in your civilization, allowing people to craft more beautiful [precious pot]s and useful [potion pot]s. //<small>These pots sure are really precious...</small>',
                 icon: [16, 8, 'magixmod'],
                 cost: { 'insight': 650, 'wisdom': 60 },
                 req: { 'construction II': true },
@@ -16281,7 +16281,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@funeral cerermonies become more common @provides 30 [inspiration].',
+                desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@funeral cerermonies become more common @provides 30 [inspiration]',
                 icon: [0, 35, 'magixmod', 13, 23, 'magixmod', 24, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(normal)': false },
@@ -17376,7 +17376,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'longer prison sentences',
-                desc: '@[prisoner]s spend more time in prisons and are sentenced for longer prison penalties.@However, these effects cancel out, meaning nothing really happens.',
+                desc: '@[prisoner]s spend more time in prisons and are sentenced for longer prison penalties. @the amount of freed prisoners decreases by 40% @the amount of escaping prisoners increases by 20%',
                 icon: [4, 15, 'magixmod'],
                 cost: { 'culture': 100 },
                 category: 'short',
@@ -17386,7 +17386,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'shorter prison sentences',
-                desc: '@[prisoner]s spend less time in prisons and are sentenced for shorter prison penalties, but penalties become stricter.@However, these effects cancel out, meaning nothing really happens.',
+                desc: '@[prisoner]s spend less time in prisons and are sentenced for shorter prison penalties. @the amount of freed prisoners increases by 20% @the amount of escaping prisoners decreases by 40%',
                 icon: [7, 16, 'magixmod'],
                 cost: { 'culture': 100 },
                 category: 'short',
@@ -17467,7 +17467,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect now, meaning people will be respectful towards them. @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make others less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'culture': 25 },
                 category: 'long',
@@ -17488,7 +17488,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(normal)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration].',
+                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
                 icon: [0, 35, 'magixmod', 13, 23, 'magixmod', 22, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
@@ -18223,6 +18223,17 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 1 } },
                     { type: 'provide res', what: { 'education': 1 } },
+                ],
+                category: 'main'
+            });
+            new G.Trait({
+                name: 'love of spice',
+                desc: 'Your people enjoy eating various [spices] a lot, meaning that they will gain 20% more happiness when eating them! //<small>Spicy!</small>',
+                icon: [20, 0, 'magix2', 24, 1],
+                cost: { 'culture II': 5 },
+                chance: 16,
+                req: { 'spicy foods': true },
+                effects: [
                 ],
                 category: 'main'
             });
@@ -25679,7 +25690,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'royal treatment',
-                desc: '@[corpse]s are treated with full respect, making your [population] less happy about death as long as you have free [burial spot]s available. @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
+                desc: '@[corpse]s are treated with full respect now, meaning people will be respectful towards them. @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>//<small>That is glorious. Just pure glory. Treating dead bodies with royal attitude will surely make everybody less scared of death.</small>',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 750,
@@ -26158,7 +26169,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(normal)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@reduces [fear of death] and [belief in revenants] bad effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
                 icon: [3, 13, 'c2', 24, 16, 'c2', 22, 1, 'c2'],
                 cost: { 'discernment': 195, 'creativity': 85, 'gentility': 50 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
@@ -26170,7 +26181,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@increases [acceptance of death] effects by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Increases the positive effects of [acceptance of death] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
                 icon: [3, 13, 'c2', 24, 16, 'c2', 24, 1, 'c2'],
                 cost: { 'discernment': 195, 'creativity': 85, 'gentility': 50 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
