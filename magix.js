@@ -946,7 +946,7 @@ var updateNewDayLines = function (fools, civ2) {
             'Creatures crawl in the shadows.', 'A stream burbles quietly nearby.',
             'In the distance, a prey falls to a pack of beasts.', 'An unexplained sound echoes on the horizon.',
             'Everything stands still in the morning air.', 'A droning sound fills the sky.',
-            'The night sky sparkles, its mysteries unbroken.', 'Dry bones crack and burst underfoot.',
+            'The night sky sparkles, its mysteries undiscovered.', 'Dry bones crack and burst underfoot.',
             'Wild thorns scratch the ankles.', 'Something howls in the distance.',
             'Strange ashes fall from afar.', 'A blood-curdling wail is heard.',
             'Unknown creatures roll and scurry in the dirt.', 'The air carries a peculiar smell today.',
@@ -1084,12 +1084,11 @@ function newDayLines(civ2) {
         //show a random atmospheric message occasionally on new days
         //we pick one of the first 20 lines in the array, then push that line back at the end; this means we get a semi-random stream of lines with no frequent repetitions
         var foolsState = (yer.getMonth() == 3 && yer.getDate() == 1) || G.getSetting('fools')
-        if (foolsToggle !== foolsState && G.resets >= 3) {
+        if (G.props['new day lines'] == null || (foolsToggle !== foolsState && G.resets >= 3)) {
             foolsToggle = foolsState
             updateNewDayLines(foolsState, civ2)
         }
-        var i = Math.floor(Math.random() * 20);
-        var msg = G.props['new day lines'].splice(i, 1)[0];
+        var msg = G.props['new day lines'].splice(Math.floor(Math.random() * 20), 1)[0];
         if (G.getSetting('new day lines'))
             G.props['new day lines'].push(msg);
         G.Message({ text: msg });
@@ -2296,7 +2295,6 @@ if (getObj("civ") != "1") {
                     }
                 }
             }
-            shuffle(G.props['new day lines']);
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (!droughtmesg && G.has('drought')) {
@@ -2703,10 +2701,10 @@ if (getObj("civ") != "1") {
             };
             G.funcs['civ blurb'] = function () {
                 var str = '';
-                str += 'Somewhere in the world<br>';
+                str += 'Somewhere in the world...<br>';
                 str += '<div class="fancyText shadowed">' +
                     '<font color="#e4eb93"><div class="barred infoTitle">The land of ' + G.getName('civ') + ' </font></div>' +
-                    '<div class="barred">ruler: ' + G.getName('ruler') + '</div>';
+                    '<div class="barred">Ruler: ' + G.getName('ruler') + '</div>';
                 var toParse = '';
                 var pop = G.getRes('population').amount;
                 if (pop > 0) {
@@ -10622,10 +10620,10 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'spirits': { name: 'Summon spirits', icon: [32, 16, 'magixmod'], desc: '[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
-                    'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
-                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon bloodthirsty vampires. A way safer way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
-                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner] will summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 14, 'worker': 1, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
+                    'spirits': { name: 'Summon spirits', icon: [32, 16, 'magixmod'], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
+                    'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
+                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon bloodthirsty vampires, which is an easy way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, meaning your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
+                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 14, 'worker': 1, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
                 },
                 effects: [
                     { type: 'gather', what: { 'spookiness xp': 0.75 }, mode: 'spirits', chance: 4 / 5 },
@@ -10634,7 +10632,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'halloween essence': 7, 'dark essence': 4, 'magic essences': 2 }, into: { 'spookiness xp': 10 }, every: 6, mode: 'vampire', chance: 3 / 7 },
                     { type: 'gather', what: { 'halloween essence': 1 }, mode: 'halloween', chance: 1 / 5 },
                     { type: 'gather', what: { 'spookiness xp': 0.5 }, mode: 'halloween', chance: 4 / 5 },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 4, 'happiness': -G.getRes('happiness').amount * 0.01, 'corpse': Math.round(Math.random()), 'halloween essence': -2 }, 0.1, 0.5, true, '[X] [people].', 'seance failed, harming its participants and their happiness.', 'seances failed, harming their participants and their happiness.'), chance: 1 / 95, mode: 'vampire' }
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 4, 'happiness': -G.getRes('happiness').amount * 0.01, 'corpse': Math.round(Math.random() * 1.6), 'halloween essence': -2 }, 0.1, 0.5, true, '[X] [people].', 'seance failed, harming its participants and their happiness.', 'seances failed, harming their participants and their happiness.'), chance: 1 / 95, mode: 'vampire' }
                 ],
                 req: { 'tribalism': false, 'spirit-summoning': true },
                 category: 'seasonal',
@@ -10988,7 +10986,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@Unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1],
                 startWith: true,
                 effects: [
@@ -18124,7 +18122,7 @@ if (getObj("civ") != "1") {
                 name: 'magical hive frames', category: 'tier1',
                 desc: '@allows you to create [essenced hive frame]s from [carpenter workshop]s using some [lumber] and [nature essence] @unlocks a new mode for [firekeeper]s that will collect both [honey] and [honeycomb]s @also lets you craft both normal and essenced frames in the Paradise version',
                 icon: [36, 0, 'magix2'],
-                cost: { 'insight': 35 },
+                cost: { 'insight': 1250, 'wisdom': 200, 'culture': 50 },
                 req: { 'paradise crafting': true, 'hive frames': true },
                 effects: [
                 ],
@@ -21481,11 +21479,11 @@ if (getObj("civ") != "1") {
 
             G.funcs['civ blurb'] = function () {
                 var str = '';
-                str += 'Deep in the wild<br>';
+                str += 'Deep in the wild...<br>';
                 str += '<div class="fancyText shadowed">';
 
                 str += '<div class="barred infoTitle"><font color="lime">The land of ' + G.getName('civ') + '</font></div>' +
-                    '<div class="barred">ruler: ' + G.getName('ruler') + '</div>';
+                    '<div class="barred">Ruler: ' + G.getName('ruler') + '</div>';
                 var toParse = '';
                 var pop = G.getRes('population').amount;
                 if (pop > 0) {
@@ -22677,7 +22675,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'precious metal ingot',
-                desc: 'Metal with little industrial usefulness but imbued with valuable aesthetics.//Includes greenold and bronyium.',
+                desc: 'Metal with little industrial usefulness but imbued with valuable aesthetics.//Includes [greenold ore,Greenold].',
                 icon: [11, 9, 'c2'],
                 partOf: 'misc materials',
                 category: 'build',
@@ -23219,7 +23217,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'disc&creat': { name: 'Gather discernment and creativity', icon: [8, 4, 'c2'], desc: 'Gather [discernment] and [creativity].' },
-                    'chargebattery': { name: 'Charge battery of discoveries', icon: [4, 0, 'c2'], desc: 'This dreamer will charge your [battery of discoveries]. It is required to roll or reroll technology choices, and to get [Policies].' },
+                    'chargebattery': { name: 'Charge battery of discoveries', icon: [4, 0, 'c2'], desc: 'This dreamer will charge your [battery of discoveries]. It is required to roll or reroll technology choices, and to get [policies].' },
                 },
                 effects: [
                     { type: 'gather', what: { 'discernment': 0.075 }, mode: 'disc&creat' },
@@ -24355,11 +24353,11 @@ if (getObj("civ") != "1") {
                     return str;
                 },
                 buttonTooltip: function () {
-                    var charged = (G.achievByName['the fortress'].won > 0 ? "3/4 charged" : "fully charged");
+                    var charged = (G.achievByName['the fortress'].won > 0 ? "3/4 charged" : "a fully charged");
                     if (G.has('oral tradition 2/2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true).replace(';background-position:-240px 0px;"></div></div>', ';background-position:-240px 0px;"></div></div>&nbsp;').replace(" Battery of discoveries", "% charged battery") + '</div></div>';
                     } else {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true).replace(';background-position:-240px 0px;"></div></div>', ';background-position:-240px 0px;"></div></div>&nbsp;').replace(" Battery of discoveries", "% charged battery") + '</div></div>';
                     }
                 }
             });
@@ -24367,7 +24365,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'tribalism', category: 'tier1',
-                desc: '@Unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
+                desc: '@unlocks the [gatherer]@provides 5 [authority]<>Taking its roots in wild animal packs, [tribalism] is the organization of individuals into simple social structures with little hierarchy.',
                 icon: [0, 1, 'c2'],
                 startWith: true,
                 effects: [
@@ -24378,7 +24376,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@Unlocks the [dreamer] and [wanderer]@provides 50 [wisdom] @provides 20 [quick-wittinity]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom] @provides 20 [quick-wittinity]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1, 'c2'],
                 startWith: true,
                 effects: [
@@ -24397,7 +24395,7 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'inspiration': 30, 'wisdom': 30, 'quick-wittinity': 15 } },
                 ],
                 chance: 3,
-                tutorialMesg: ['tutorial', 'This plane feels more harsh. It is harder to progress than it was with humanity. Also, a weird feeling is striking you every single time.', [8, 4, 'c2']],
+                tutorialMesg: ['tutorial', 'This plane feels more harsh. It is harder to progress than it was with humanity. Also, a weird feeling seems to be striking you often in this world...', [8, 4, 'c2']],
             });
 
             new G.Tech({

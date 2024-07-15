@@ -1733,12 +1733,12 @@ G.AddData({
             if (G.year % 40 >= 20) i = 39 - G.year % 40;
             else { i = G.year % 40 };
             var str = '';
-            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;padding:8px 12px;height:32px;font-weight:bold;font-size:18px;" id="date">-</div>';
+            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;height:32px;font-size:18px;font-variant:small-caps" id="date">-</div>';
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('water')) {
-                    str += '<div class="pixelate framed fancyText bgMid" style="height:32px;width:32px;display:inline-block;padding:0;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-12px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
                 } else {
-                    str += '<div class="pixelate framed fancyText bgMid" style="height:32px;width:32px;display:inline-block;padding:0;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-12px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
@@ -2097,7 +2097,7 @@ G.AddData({
             displayName: '<font color="#decaa0">Heavenly</font>',
             wideIcon: [0, 11, 'magixmod'],
             icon: [1, 11, 'magixmod'],
-            desc: 'Finish <b>Temple of Deities</b> and mid-game wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story, languages weren\'t swapped by any God or Gods.</small>',
+            desc: 'Finish the <b>Temple of Deities</b> wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story, languages weren\'t swapped by any God or Gods.</small>',
             fromWonder: 'heavenly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
@@ -2626,7 +2626,7 @@ G.AddData({
             tier: 0,
             name: 'that was so brutal',
             icon: [35, 8, 'magixmod'],
-            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of Democracy] @[fortress of cultural legacy] @[complex of Dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[mausoleum of the Dreamer] //You neeed to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
+            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //You need to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
             effects: [
             ],
             visible: false,
@@ -2700,7 +2700,7 @@ G.AddData({
             tier: 0,
             name: 'capital of christmas',
             icon: [1, 12, 'seasonal'],
-            desc: 'Finish [wonderful fortress of christmas]. //You\'ll unlock a special buff that lasts only during Christmas and the 7 next runs once [the christmas,<font color="Aqua">Christmas</font>] ends. Merry Christmas!',
+            desc: 'Finish the rather nice [wonderful fortress of christmas], which lets you unlock a special buff that lasts only during Christmas and the 7 next/legacies after [the christmas,<font color="#92ff7a">Christmas</font>] ends. Merry Christmas!',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
