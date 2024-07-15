@@ -2497,6 +2497,11 @@ if (getObj("civ") != "1") {
                             G.gain("wounded", thieves.amount * 0.06, "thieves killing people")
                             break
                     }
+
+                    if (G.checkPolicy('se07') == 'on') //HERBALIA BOOST
+                    {
+                        var n = randomFloor(G.getRes('population').amount * 0.05); G.gain('health', n, 'Herbalia');
+                    }
                     ///////////HERBALIA BACKFIRE
                     if (G.checkPolicy('se07') == 'on') {
                         var toSpoil = -G.getRes('happiness').amount * 0.00155;
@@ -2521,6 +2526,14 @@ if (getObj("civ") != "1") {
                         if (G.getRes('health').amount < 0) { G.gain('health', -G.getRes('health').amount * 0.0004, 'handwashing') } else { G.gain('health', G.getRes('health').amount * 0.0004, 'handwashing') };
                     } else if (G.has('handwashM')) {
                         if (G.getRes('health').amount < 0) { G.gain('health', -G.getRes('health').amount * 0.0001, 'handwashing') } else { G.gain('health', G.getRes('health').amount * 0.0001, 'handwashing') };
+                    }
+                    if (G.has('healthy life')) //Healthy life trait power
+                    {
+                        var n = randomFloor(G.getRes('population').amount * 0.13); G.gain('health', n, 'healthy life');
+                    }
+                    if (G.has('supreme healthy life')) //Supreme healthy life trait power
+                    {
+                        var n = randomFloor(G.getRes('population').amount * 0.18); G.gain('health', n, 'supreme healthy life');
                     }
 
                     if (G.year >= 29)//Gear decaying at year 30 and later
@@ -5536,14 +5549,6 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.003;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
-                    if (G.has('healthy life')) //Healthy life trait power
-                    {
-                        var n = randomFloor(G.getRes('population').amount * 0.13); G.gain('health', n, 'healthy life');
-                    }
-                    if (G.checkPolicy('se07') == 'on') //HERBALIA BOOST
-                    {
-                        var n = randomFloor(G.getRes('population').amount * 0.05); G.gain('health', n, 'Herbalia');
-                    }
                 },
                 category: 'misc',
             });
@@ -5944,7 +5949,7 @@ if (getObj("civ") != "1") {
             let RollGathererIcon = 0
             new G.Res({
                 name: 'hardened clothes',
-                desc: 'Sewn together from [dried leather] and embroidered with [thread]s with very slow decay.//[population,People] that wear [hardened clothes,Hardened clothing] become more happy and healthy, and also feel quite safe. This also decays slower and will update what your [gatherer]s look like every so often.' + clothesInfo,
+                desc: 'Sewn together from [dried leather] and embroidered with [thread]s, allowing it to decay much, much slower.//[population,People] that wear [hardened clothes,Hardened clothing] become more happy and healthy, and also feel quite safe. Having [hardened clothes,Hardened clothing] will change the icon of your [gatherer]s every so often.' + clothesInfo,
                 icon: [choose([27, 28]), choose([0, 1]), 'magixmod'],
                 category: 'gear',
                 tick: function (me, tick) {
@@ -5958,7 +5963,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'essenced seeds',
-                desc: 'A magic-infused creation that uses [magic essences], [mana], and [seeds,Normal seeds]. These can be used to start farming magic flowers that will allow you to gather even more essences.',
+                desc: '[essenced seeds] are a magic-infused creation that uses [magic essences], [mana], and [seeds,Normal seeds]. These can be used to start farming magic flowers that will allow you to gather even more essences.',
                 icon: [27, 10, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -5968,11 +5973,12 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'oil',
-                desc: '[oil] is a flammable liquid hydrocarbon mixture. Mixtures labelled naphtha have been produced from natural gas condensates, petroleum distillates, and the distillation of coal tar and peat.',
+                displayName: 'Petroleum',
+                desc: '[oil] is a flammable liquid hydrocarbon mixture. //<small>Mixtures labelled naphtha have been produced from natural gas condensates, petroleum distillates, and the distillation of coal tar and peat. (Or, in other words, it does something.)</small>',
                 icon: [9, 6],
                 category: 'misc',
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.008;
+                    var toSpoil = me.amount * 0.001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
             });
@@ -6001,7 +6007,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'dark blue firework',
-                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so it can unleash its spectacular show during the day.', icon: [5, 0, 'seasonal'],
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day.', icon: [5, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -6011,7 +6017,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark orange firework',
-                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so it can unleash its spectacular show during the day.',
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day.',
                 icon: [4, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -6863,7 +6869,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'hunt', amount: 1.8, max: 2.2, mode: 'crossbow hunting', req: { 'aiming': false } },
                     { type: 'gather', context: 'hunt', amount: 4.5, max: 5.5, mode: 'crossbow hunting', req: { 'aiming': true } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30, req: { 'hunting III': false } },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 38, req: { 'hunting III': true, 'an armor for Hunter': true, 'hunters & fishers unification': false } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 40, req: { 'hunter\'s coordination': true, 'an armor for Hunter': false } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 65, req: { 'an armor for Hunter': true } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
                     { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
@@ -7929,7 +7936,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'leather factory',
-                desc: 'Does the same thing as [clothier]s that were crafting [leather] and [drying rack] did.',
+                desc: 'Does the same thing as [clothier]s making [leather] and [drying rack]s at the same time.',
                 icon: [15, 18, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
@@ -8182,7 +8189,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'explosive mine',
-                desc: '@extracts ores, [coal] and [stone] out of the ground using <font color="#f70054"> Dynamite</font>. It has a much larger chance to collapse, due to the materials used in its work.<br>The workers in [mine]s blasts deep into the earth to provide all kinds of minerals. @cannot be [prospecting,prospected] like [mine]s',
+                desc: 'These mines will extract various ores and materials out of the ground using some explosives. It has a much larger chance to collapse, due to the materials used in its work.<br>The workers in [mine]s blast deep into the earth to provide all kinds of minerals. @cannot be [prospecting,prospected] like [mine]s',
                 icon: [16, 15, 'magixmod'],
                 cost: { 'archaic building materials': 400 },
                 use: { 'land': 3 },
@@ -9464,7 +9471,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'essential conversion tank',
-                desc: '@A tank that converts 500 [insight], [culture], [faith] and [influence] into their respective second tiers. <>You can specify which essential this tank will convert by switching the mode of this unit. It will only be able to convert when you obtain enough of that [insight,Essential]!',
+                desc: '@A tank that converts 500 [insight], [culture], [faith] and [influence] into their respective second tiers. <>You can specify which essential this tank will convert by switching the mode of this unit. It will only be able to convert when you obtain enough of that particular [insight,Essential]!',
                 icon: [26, 19, 'magixmod'],
                 cost: { 'glass': 500, 'basic building materials': 150 },
                 req: { 'eotm': true },
@@ -10001,6 +10008,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'the outstander',
+                displayName: 'The Outstander',
                 desc: 'Strangely, [the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite? Likely not. People call Outstanders like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained) and 1 [education] each.',
                 icon: [12, 28, 'magixmod'],
                 use: { 'worker': 1 },
@@ -10369,7 +10377,7 @@ if (getObj("civ") != "1") {
                 limitPer: { 'population': 10 },
                 effects: [
                     { type: 'gather', what: { 'faith': 0.05, 'happiness': 0.2 } },
-                    { type: 'gather', what: { 'health': 0.23 }, req: { 'mentors of nature': true } },
+                    { type: 'gather', what: { 'health': 0.15 }, req: { 'mentors of nature': true } },
                     { type: 'gather', what: { 'faith': 0.005 }, req: { 'druidsymbolism2': true } },
                     { type: 'gather', what: { 'happiness': 0.05 }, req: { 'druidsymbolism1': true } },
                     { type: 'gather', what: { 'faith': 0.02 }, req: { 'symbolism II': true } },
@@ -10437,7 +10445,7 @@ if (getObj("civ") != "1") {
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 5, 'food': 25, 'water': 35 },
                 use: { 'worker': 15, 'land': 1, 'worker': 1, 'stone tools': 32 },
-                req: { 'moderation': true, 'factories II': true },
+                req: { 'factories II': true },
                 category: 'crafting',
                 effects: [
                     { type: 'convert', from: { 'stone': 40, 'lumber': 22, 'fire pit': 8.2, 'coal': 5 }, into: { 'stone tools': 25 }, every: 10 },
@@ -10824,7 +10832,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'prison',
-                desc: '@can be used to hold [prisoner]s who committed various crimes. @Some [prisoner]s can die in prison (such as due to old age or sickness). In addition, there is a chance that some will flee. @Further researching will unlock new [prison] options! @Use <b>Policies</b> tab to decide what [prison]s can do with their [prisoner]s. @One [prison] may store up to 500 [prisoner]s. @Having [prison]s reduces the amount of [thief,Thieves] or other criminals in your civilization.',
+                desc: '@can be used to hold [prisoner]s who committed various crimes. @Some [prisoner]s can die in prison (such as due to old age or sickness). In addition, there is a chance that some will flee. @Further researching will unlock new [prison] options! @Use <b>Policies</b> tab to decide what [prison]s can do with their [prisoner]s. @One [prison] may store up to 500 [prisoner]s. @Having [prison]s will reduce the amount of [thief,Thieves] or other criminals in your civilization.',
                 icon: [19, 12, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'armor set': 10, 'metal weapons': 10 },
                 use: { 'worker': 80, 'land': 9, 'armor set': 60, 'metal weapons': 60 },
@@ -10851,6 +10859,7 @@ if (getObj("civ") != "1") {
                     'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
                     'essence': { name: 'Process essences', icon: [0, 2, 'magixmod'], desc: 'Process 25 [fire essence] and 5 [lightning essence], turning them into 20 [fire pit]s each.' },
                     'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] and 1 [lightning essence], turning them into 8 [fire pit]s each.' },
+                    'oil': { name: 'Process coal and oil', icon: [9, 6], desc: 'Process 16 [coal], 10 [oil], and 5 [lightning essence], turning them into 20 [fire pit]s each.', req: { 'oil-digging II': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log', req: { 'hotter factories': false } },
@@ -10861,6 +10870,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'stick': 400, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'stick', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'essence', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'coal': 20, 'lightning essence': 1 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'coal': 16, 'oil': 10, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil', req: { 'hotter factories': true } },
                 ],
             });
 
@@ -12336,7 +12346,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'third passage to new world', category: 'tier1',
-                desc: 'May unlocking the mysterious [New world] begin!',
+                desc: 'May unlocking the mysterious [New world,Third new world] begin!',
                 icon: [12, 19, 'magixmod'],
                 cost: { 'insight': 785, 'wisdom': 5, 'influence': 175, 'authority': 10, 'spirituality': 25 },
                 req: { 'dark side': true }
@@ -12443,14 +12453,14 @@ if (getObj("civ") != "1") {
                 name: 'magical soil', category: 'tier2',
                 desc: 'People can craft a new type of soil using the one from the first island. On this new soil, people will be able to plant magic plants that can gather [magic essences] for you! These use the same amount of [land of the Plain Island] as other farms there, but provide [mana] and [magic essences,Various magic essences] instead!',
                 icon: [27, 18, 'magixmod'],
-                cost: { 'insight II': 14, 'science': 1 },
+                cost: { 'insight II': 15, 'science': 1 },
                 req: { 'wizardry': true, 'eotm': true },
             });
             new G.Tech({
                 name: 'seed-enchanting', category: 'tier2',
                 desc: '@unlocks a new mode for [artisan] that will allow them to enchant [seeds], turning them into [essenced seeds]! Planting and taking care of these special items will enable you to plant magical plants that help you gather essences.',
                 icon: [27, 17, 'magixmod'],
-                cost: { 'insight II': 14, 'science': 1 },
+                cost: { 'insight II': 20, 'science': 2 },
                 req: { 'eotm': true, 'magical soil': true },
             });
             new G.Tech({
@@ -12691,7 +12701,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'nutrition',
-                desc: '@makes [healer]s provide health @[fruit]s and [vegetable]s generate 10% more [health]. <>Some rules on nutrition will increase your [population,people]\'s health, slightly improving their condition.',
+                desc: '@makes [healer]s provide health @[fruit]s and [vegetable]s will generate 10% more [health] <>Some rules on nutrition will increase your [population,people]\'s health, slightly improving their condition.',
                 icon: [16, 7, 'magixmod'],
                 cost: { 'culture': 150, 'wisdom': 25, 'insight': 100, 'influence': 10 },
                 chance: 120,
@@ -12805,7 +12815,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'supreme healthy life',
                 displayName: 'Healthy life',
-                desc: 'Intelligent people came with doctrines of a healthier life. Then they shared their thoughts. Surprisingly, they were right. People got even healthier and even better! @This trait makes [health] generated for every person. Each person will add some [health].',
+                desc: 'Intelligent people came with doctrines of a healthier life. Then they shared their thoughts. Surprisingly, they were right. People are getting even healthier and even better! @This trait allows each person to generate a little bit of [health]. People won\'t eat even more food, so do not worry.',
                 icon: [22, 0, 'magixmod'],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
                 chance: 120,
@@ -12813,11 +12823,11 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'healthy life',
-                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of moderation. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait makes people generate [health]. Each person will add some [health]. People won\'t eat even more food, so do not worry.',
+                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of moderation. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait allows each person to generate a little bit of [health]. People won\'t eat more food, so do not worry.',
                 icon: [22, 1, 'magixmod'],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
                 chance: 200,
-                req: { 'culture of moderation': true },
+                req: { 'culture of moderation': true, 'supreme healthy life': false },
             });
             new G.Trait({
                 name: 'political roots',
@@ -13508,7 +13518,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'oil-digging', category: 'tier2',
-                desc: '[quarry,Quarries] will now be able to try to look for [oil] that can be used as fuel. //<small>At least we have something to fuel a car now!</small>',
+                desc: '[quarry,Quarries] will now try to look for [oil]. Although they don\'t understand exactly, what it is, they think it could be useful... //<small>kind of weird-looking</small>',
                 icon: [29, 2, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true },
@@ -13743,7 +13753,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunter\'s coordination', category: 'tier2',
-                desc: '@Decreases value of [hunter]s accidents even more. Requires a small amount of [food] as upkeep. @Increases [wisdom II] by 10.',
+                desc: '@Decreases the amount of hunting accidents slightly. Requires a small amount of [food] as upkeep. @Increases [wisdom II] by 10.',
                 icon: [6, 23, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
@@ -13753,7 +13763,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'an armor for Hunter', displayName: 'Hunter armor', category: 'tier2',
-                desc: '@Let your [hunter]s get some armor! //In fact, this tech just leads to more advanced improvements for [hunter].',
+                desc: '@Let your [hunter]s get some armor! //Getting this will decrease the amount of hunting accidents even more.',
                 icon: [14, 24, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
@@ -13805,7 +13815,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'supreme fast filtering', category: 'upgrade',
-                desc: '[water filter]s performs conversion twice as often, doubling their efficiency.',
+                desc: '[water filter]s will now perform conversion twice as often, doubling their efficiency.',
                 icon: [5, 24, 'magixmod'],
                 cost: { 'insight II': 60 },
                 req: { 'hunters & fishers unification': true },
@@ -13891,7 +13901,7 @@ if (getObj("civ") != "1") {
                 name: 'doctrine of the dark wormhole 5/5', category: 'tier2',
                 desc: 'This part of the doctrine is about miscellaneous information related to the wormhole. //Your [wizard]s feel secure. They may start thinking about running the first [dark wormhole]! @provides 7 [inspiration II]',
                 icon: [17, 22, 'magixmod', 14, 22, 'magixmod'],
-                cost: { 'insight II': 140, 'science': 7, 'faith II': 3, 'influence II': 5, 'culture II': 30, 'wisdom': 50 },
+                cost: { 'insight II': 150, 'science': 7, 'faith II': 3, 'influence II': 5, 'culture II': 30, 'wisdom': 50 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 4/5': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 7 } },
@@ -13901,7 +13911,7 @@ if (getObj("civ") != "1") {
                 name: 'burial wormhole 2/2', category: 'tier2',
                 desc: 'Unlocks the [dark wormhole] (finally). It is a massive burial spot bonus but requires upkeep (in both [mana] and [dark essence]). Dark powers like death and fear exist within, and the corpses look scary and spooky. That keeps the wormhole stable.',
                 icon: [27, 2, 'magixmod', 22, 22, 'magixmod'],
-                cost: { 'insight II': 140, 'science': 10, 'culture II': 40 },
+                cost: { 'insight II': 150, 'science': 10, 'culture II': 40 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'master mana-making': true },
             });
             new G.Trait({
@@ -13918,7 +13928,7 @@ if (getObj("civ") != "1") {
                 name: 'liberating darkness', category: 'tier2',
                 desc: '[the cemetarium] can now generate [dark essence] for you...<br>but [wild corpse]s will become more deadly!',
                 icon: [8, 24, 'magixmod'],
-                cost: { 'insight II': 140, 'science': 5, 'faith II': 5, 'mana': 600 },
+                cost: { 'insight II': 130, 'science': 5, 'faith II': 5, 'mana': 20000 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'master mana-making': true, 'hope of revenant abandoning': true },
             });
             new G.Tech({
@@ -14548,7 +14558,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'outstanding wisdom', category: 'tier2',
-                desc: 'Make the [wisdom II,Wisdom tree] have even more leaves. <>@Unlocks the [the outstander], who will provide more [wisdom II] and [education]. @provides 15 extra [wisdom II].',
+                desc: 'Make the [wisdom II,Wisdom tree] have even more leaves. <>@Unlocks [the outstander], who will provide more [wisdom II] and [education]. @provides 15 extra [wisdom II].',
                 icon: [11, 28, 'magixmod'],
                 req: { 'leaves of wisdom': true },
                 cost: { 'insight II': 175, 'science': 10, 'influence II': 5, 'culture II': 15 },
@@ -15485,7 +15495,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'manufacture units II', category: 'tier2',
-                desc: 'Now, more units will be merged into one. [artisan]s\' crafting of [stone weapons], [stone tools], [bow]s and [crossbow]s modes will no longer be available for [artisan]//[artisan] will no longer work while in these modes.',
+                desc: 'Now, more units will be merged into one. [artisan]s\' crafting of [stone weapons], [stone tools], [bow]s and [crossbow]s will no longer be available and will no longer work in those modes!',
                 icon: [16, 31, 'magixmod'],
                 req: { 'moderation': false, 'caretaking': true, 'manufacture units I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 350 },
@@ -15495,7 +15505,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mentors of nature', category: 'tier1',
-                desc: '[druid]s now generate [health]. //Some people call them Nature\'s Descendants, which might be part of the reason.',
+                desc: '[druid]s will now generate [health]. //Some people call them Nature\'s Descendants, which might be part of the reason.',
                 icon: [31, 31, 'magixmod'],
                 req: { 'Wizard complex': true, 'smaller but efficient': true },
                 cost: { 'insight': 750 },
@@ -15515,7 +15525,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'factories II', category: 'tier2',
-                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work.//@unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes!',
+                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work.//@Getting this tech unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes!',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 330, 'lightning essence': 8000 },
@@ -17043,7 +17053,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'meat diet',
-                desc: '@makes [healer] generate [health]. @cooked and cured [meat] generate 10% more [health].',
+                desc: '@makes [healer] generate [health]. @cooked and cured [meat] will generate 10% more [health]',
                 icon: [26, 34, 'magixmod'],
                 cost: { 'culture': 150, 'wisdom': 25, 'insight': 100, 'influence': 10 },
                 chance: 120,
@@ -18100,7 +18110,7 @@ if (getObj("civ") != "1") {
                 name: 'people of the arts', category: 'tier1',
                 desc: '@improve the art and drawing skills of your people @makes [painter]s generate very small amounts of [culture II] @provides 5 [inspiration II]',
                 icon: [11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
-                cost: { 'culture II': 30, 'faith II': 2 },
+                cost: { 'culture II': 25, 'faith II': 2 },
                 req: { 'symbolism III': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 5 } },
@@ -18135,10 +18145,19 @@ if (getObj("civ") != "1") {
                 name: 'people of the arts II', category: 'tier1',
                 desc: '@getting this doubles the [culture II] gain from [painter]s @the amount of [culture II] from [essential conversion tank]s is increased by 5% with no extra [culture] needed',
                 icon: [0, 35, 'magixmod', 11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
-                cost: { 'culture II': 30, 'faith II': 2 },
-                req: { 'smartness of essentials': true, 'people of the arts': true },
+                cost: { 'insight II': 50, 'culture II': 35 },
+                req: { 'caretaking': true, 'smartness of essentials': true, 'people of the arts': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 5 } },
+                ],
+            });
+            new G.Tech({
+                name: 'oil-digging II', category: 'tier1',
+                desc: '[oil] can now be used along with [lightning essence] to unlock a new mode for your [heat factory,Heat factories].',
+                icon: [0, 35, 'magixmod', 29, 2, 'magixmod'],
+                cost: { 'insight II': 400, 'oil': 10000 },
+                req: { 'oil-digging': true, 'moderation': true, 'eotm': true },
+                effects: [
                 ],
             });
 
@@ -18608,7 +18627,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se01', //This value is a raw ID and is kept to prevent crashes; the display names still work properly
                 displayName: 'Chra-nos The Seraphin of Time',
-                desc: 'The effect depends on time.<br><font color="lime">Each year, [food] decays slower by 0.1% (range: 1 to 10%). This bonus applies to [water] as well, but is only half as powerful.</font><br><hr color="fuschia"><font color="#f70054"> Backfire: All miscellaneous materials decay faster.</font>',
+                desc: 'The effect depends on time.<br><font color="lime">Each year, [food] decays slower by 0.1% (range: 1 to 10%). This bonus applies to [water] as well, but is only half as powerful.</font><br><hr color="fuschia"><font color="#f70054">Backfire: All miscellaneous materials decay faster.</font>',
                 icon: [29, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',

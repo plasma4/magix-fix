@@ -1734,12 +1734,12 @@ G.AddData({
             if (G.year % 40 >= 20) i = 39 - G.year % 40;
             else { i = G.year % 40 };
             var str = '';
-            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;height:32px;font-size:18px;font-variant:small-caps" id="date">-</div>';
+            str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;height:32px;font-size:18px;padding:5px;font-variant:small-caps" id="date">-</div>';
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('water')) {
-                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-12px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
                 } else {
-                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-12px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
@@ -2273,7 +2273,7 @@ G.AddData({
             tier: 2,
             icon: [29, 22, 'magixmod'],
             name: 'smart',
-            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: Brick houses, [house], [hovel], [hut], [branch shelter], and Mud shelters will use less [land] in new runs</b>.',
+            desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: [house,Houses/Brick houses], [hovel]s, [hut]s, and [branch shelter,Branch/mud shelders] will use less [land] in new runs</b>.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 10 }
@@ -2285,7 +2285,7 @@ G.AddData({
             tier: 3,
             icon: [12, 22, 'magixmod'],
             name: 'man of essences',
-            desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M of magical essences! //Obtaining it may unlock a new wonder.',
+            desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M magical essences! //Obtaining it may unlock a new wonder.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 40 },
             ],
@@ -2298,7 +2298,7 @@ G.AddData({
             displayName: '<font color="#c3c8fa">Magical</font>',
             wideIcon: [9, 22, 'magixmod'],
             icon: [10, 22, 'magixmod'],
-            desc: 'Construct the Fortress of Magicians, a rather magical wonder. //This achievement will: @Unlocks a new theme @Increases the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost. //This achievement will unlock you way further technologies such like more advanced hunting and fishing.',
+            desc: 'Construct the Fortress of Magicians, a rather...magical wonder. //This achievement will: @unlock a new theme @increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost //This achievement will unlock you some technologies further down the line such as more advanced hunting and fishing.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 15 },
@@ -2543,7 +2543,7 @@ G.AddData({
             name: 'lands of despair',
             wideIcon: [0, 29, 'magixmod'],
             icon: [1, 29, 'magixmod'],
-            desc: 'Find the <b>Dead forest</b> biome on your world map. This is the rarest biome in the whole mod. This biome is the most hostile biome that can exist on this world.',
+            desc: 'Find the <b>Dead forest</b> biome on your world map. This is the rarest biome in the whole mod and is generally the most hostile biome that can exist on this world.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
                 { type: 'addFastTicksOnResearch', amount: 10 },
@@ -2680,7 +2680,7 @@ G.AddData({
             desc: 'Manage your fantastic tribe and get a total of 70 traits and knowledges.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 70 },
-                { type: 'addFastTicksOnResearch', amount: 1 },
+                { type: 'addFastTicksOnResearch', amount: 2 },
             ],
             civ: 0,
             plural: false
@@ -2692,7 +2692,7 @@ G.AddData({
             desc: 'Obtain 1 shadow achievement for the human race.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 70 },
-                { type: 'addFastTicksOnResearch', amount: 1 },
+                { type: 'addFastTicksOnResearch', amount: 5 },
             ],
             civ: 0,
             plural: false
@@ -2953,8 +2953,8 @@ G.AddData({
             desc: 'Obtain 1 shadow achievement for the elf race.',
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 70 },
-                { type: 'addFastTicksOnResearch2', amount: 1 },
-                { type: 'addFastTicksOnStart', amount: 140 },
+                { type: 'addFastTicksOnResearch2', amount: 2 },
+                { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 5 },
             ],
             civ: 1,
@@ -3442,7 +3442,7 @@ G.AddData({
                     if (me.getCards().length == 0) {
                         success = false;
                         if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves for now, but the elf race can still provide bonuses!</font></small>');
-                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race! So, just know that it will take a while get many of them...<br>well, unless there are more updates.</font></small>');
+                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race (although you won\'t be able to get all of them at the same time)! Just know that it will take a while to get many of them...<br>well, unless there are more updates.</font></small>');
                     }
                 } else if (randomTxt <= 4) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#aaa">More techs coming soon :)</font></small>'); }

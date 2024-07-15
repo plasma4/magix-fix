@@ -196,6 +196,7 @@
     Results: <div></div>
 
     <script>
+        "use strict"
         document.getElementsByTagName("script")[0].remove()
         document.getElementsByTagName("button")[0].addEventListener("click", function () {
             exportJSON(false)
@@ -251,6 +252,7 @@
                     if (val == 3) {
                         text.push('"' + search.name + '": ' + JSON.stringify(search))
                     } else {
+                        var thing
                         var icon = getIcon(search.icon, true, checkedBox)
                         var str = "<u>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</u>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
                         str += "\r\n<pre>"
@@ -282,7 +284,7 @@
                 }
                 if (val == 3) {
                     var joined = text.join(",\r\n  ")
-                    result.textContent = "{\r\n  " + joined.slice(0, joined.length - 2) + "},\r\n}"
+                    result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
                     result.className = "mono"
                 } else {
                     result.innerHTML = text.join("-------------------------\r\n")
