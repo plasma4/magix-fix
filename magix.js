@@ -2099,7 +2099,7 @@ if (getObj("civ") != "1") {
                     if (G.has('t2')) {
                         if (G.getRes('population').amount >= Math.round(125 - (G.achievByName['unhappy'].won * 2.5) - (G.techN / 100))) {
                             var popinfo = Math.round(125 - (G.achievByName['unhappy'].won * 2.5) - (G.techN / 100))
-                            G.gain('unhappy', 1)
+                            G.gain('trial point', 1)
                             //Murdered by Madness
                             //G.getRes('population')/150+(G.year+G.achievByName['unhappy'].won*4/5)
                             /////////////////////
@@ -5234,7 +5234,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'black fog',
-                desc: 'This potion makes fog around a victim after the pot is opened. Even more painful for their eyes though!',
+                desc: 'This potion makes fog around a victim after the pot is opened. It is particularly dangerous when released near the eyes.',
                 icon: [11, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5245,7 +5245,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'point of venom',
-                desc: 'This dark and nature essenced potion is a strong poison.',
+                desc: 'This item is carefully crafed from some [magic essences,Essences] and acts as a pretty strong poison.',
                 icon: [10, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5256,7 +5256,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'windy spikes',
-                desc: 'Releases spikes made out of [wind essence] around and shatters.',
+                desc: 'Releases spikes made out of [wind essence] around and shatters in many directions, causing a risk of injury to those too close.',
                 icon: [9, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5267,7 +5267,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'back to grave',
-                desc: 'Send a [wild corpse] to its permanent death.',
+                desc: 'Send a [wild corpse] to its permanent death. This item can be used to counter them later on...',
                 icon: [8, 16, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -5706,7 +5706,7 @@ if (getObj("civ") != "1") {
                         }
                         switch (action) {
                             case "hurt":
-                                var cAmount = corpses * 0.0011
+                                var cAmount = corpses * 0.004
                                 if (G.getRes('back to grave').amount >= cAmount * 0.16) {
                                     G.lose('back to grave', cAmount * 0.16, 'back to grave items')
                                     G.lose("adult", randomFloor(cAmount * 0.2 * Math.random()), "wild corpse encounter")
@@ -5717,7 +5717,7 @@ if (getObj("civ") != "1") {
                                 }
                                 break
                             case "hurt2":
-                                var cAmount = corpses * 0.0025
+                                var cAmount = corpses * 0.0125
                                 if (G.getRes('back to grave').amount >= cAmount * 0.4) {
                                     G.lose('back to grave', cAmount * 0.4, 'back to grave items')
                                     G.lose("adult", randomFloor(cAmount * 0.18 * Math.random()), "wild corpse battle")
@@ -6050,11 +6050,13 @@ if (getObj("civ") != "1") {
                 hidden: true,
             });
             new G.Res({
-                name: 'unhappy',
+                name: 'trial point',
+                icon: [8, 27, 'magixmod'],
+                hidden: true,
             });
             new G.Res({
                 name: 'blood',
-                desc: 'You gain [blood] each year from Madness victims (equal to murdered people). You need to glory Bersaria and research more with [fear of death] active. You start with 200 [blood] in that case. <>But be aware: the [blood] is used in Hunted trial as well to keep Hartar\'s servants hunting meat for you.',
+                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). You need to glory Bersaria and research more with [fear of death] active. You start with 200 [blood] in that case. <>Be aware that the [blood] will be needed to keep Hartar\'s servants hunting meat for you!',
                 icon: [33, 6, 'magixmod'],
                 startWith: 200,
                 category: 'main',
@@ -6063,7 +6065,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'cultural balance',
-                desc: '[cultural balance] is the main rule of the Cultural trial. Defines the rate of cultural stability in this plane.',
+                desc: '[cultural balance] is the main rule of the Cultural trial. It defines the rate of cultural stability in this plane.',
                 startWith: 25,
                 icon: [33, 7, 'magixmod'],
                 fractional: true,
@@ -6279,7 +6281,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'golden insight',
-                desc: '[golden insight] is an essential required to research in the Faithful plane. You can obtain it from "buying" it. //To "buy" [golden insight], click on button that will let your purchase this strange resource. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself! //Just like [insight], [golden insight] will be limited by [wisdom].',
+                desc: '[golden insight] is an essential required to research in the Faithful plane. You\'ll be able to purchase this strange resource! //To buy [golden insight], purchase this strange resource in the <b>Production</b> tab. But be careful...it costs [faith] and [insight]. Also, it can increase its cost by itself! //Just like [insight], [golden insight] will be limited by [wisdom].',
                 icon: [35, 16, 'magixmod'],
                 category: 'main',
                 limit: 'wisdom',
@@ -8649,6 +8651,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'painting': 0.002 } },
                     { type: 'gather', what: { 'culture': 0.032 }, req: { 'symbolism': true } },
                     { type: 'gather', what: { 'culture II': 0.000007 }, req: { 'people of the arts': true } },
+                    { type: 'gather', what: { 'culture II': 0.000007 }, req: { 'people of the arts II': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on' } },
                     { type: 'mult', value: 1.05, req: { 'culture rise': true } },
@@ -9487,8 +9490,9 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 9, mode: 'influence', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
                     { type: 'convert', from: { 'insight': 550 }, into: { 'insight II': 1.5 }, every: 9, mode: 'insight', req: { 'smartness of essentials': true } },
                     { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true } },
-                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true } },
+                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true, 'people of the arts II': false } },
                     { type: 'convert', from: { 'influence': 550 }, into: { 'influence II': 1.2 }, every: 9, mode: 'influence', req: { 'smartness of essentials': true } },
+                    { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.26 }, every: 9, mode: 'culture', req: { 'people of the arts II': true } },
                     { type: 'mult', value: 1.2, req: { 'leaves of wisdom': true } },
                     { type: 'mult', value: 1.2, req: { 'branches of wisdom': true } },
                 ]
@@ -9959,7 +9963,7 @@ if (getObj("civ") != "1") {
                 cost: { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 40000, 'ambrosium shard': 10000 },
                 costPerStep: { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'cloud': 4444, 'faith II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
                 steps: 400,
-                messageOnStart: 'The construction of The <b>Temple of The Paradise</b> has been started. Now you are full of hope that it will someday make the God appear next to you and show his true good-natured face.',
+                messageOnStart: 'The construction of the <b>Temple of The Paradise</b> has begun. You are full of hope that it will someday make God appear next to you and show his true good-natured face.',
                 finalStepCost: { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 15, 'faith': 725, 'spirituality': 25, 'godTemplePoint': -100 },
                 finalStepDesc: 'To complete the wonder and be even closer to the God, you must perform this final step, needing 25k [population,people] to be sacrificed...and many other ingredients.',
                 use: { 'land of the Paradise': 30 },
@@ -10146,7 +10150,7 @@ if (getObj("civ") != "1") {
                 cost: { 'basic building materials': 1000, 'gold block': 10, 'corpse': 20 },
                 costPerStep: { 'basic building materials': 400, 'precious metal ingot': 5, 'gems': 2, 'precious building materials': 150, 'faith': 5 },
                 steps: 50,
-                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, as they have become inspired Gods. Your people say: <b>Worship leads to victory! Religion is a key.</b>',
+                messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, as they have become inspired by their one God. Your people say: <b>Worship leads to victory! Religion is a key.</b>',
                 finalStepCost: { 'population': 250, 'spirituality': 35, 'faith': 35 },
                 finalStepDesc: 'To perform the final step, 250 [population,people] must be sacrificed to escape this pious plane and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -14207,7 +14211,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Storage at the bottom of the world', category: 'tier2',
-                desc: 'Unlocks the [heavy warehouse]. Built in Underworld and covered with heavy metal.',
+                desc: 'Unlocks the [heavy warehouse]. It is built in the dark depths that surround the Underworld and covered with heavy metal.',
                 icon: [30, 13, 'magixmod'],
                 cost: { 'insight II': 185, 'culture II': 15, 'influence II': 1, 'science': 4 },
                 req: { 'leaves of wisdom': true },
@@ -14232,21 +14236,21 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb1',
                 displayName: 'Soothsayer blessing',
-                desc: 'Increases amount of [faith] gained by [soothsayer]s by 10% due to getting closer to the religion.',
+                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 10% due to getting closer to the religion. //<small>you got lucky this time...this increases it by the most out of all four of these traits</small>',
                 icon: [13, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
-                chance: 70,
+                chance: 60,
                 category: 'religion'
             });
             new G.Trait({
                 name: 'sb2',
                 displayName: 'Soothsayer blessing',
-                desc: 'Increases amount of [faith] gained by [soothsayer]s by 5% due to getting closer to the religion.',
+                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 5% due to getting closer to the religion.',
                 icon: [14, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb1': false, 'sb3': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
-                chance: 70,
+                chance: 60,
                 category: 'religion'
             });
             new G.Trait({
@@ -14256,7 +14260,7 @@ if (getObj("civ") != "1") {
                 icon: [15, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb1': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
-                chance: 70,
+                chance: 60,
                 category: 'religion'
             });
             new G.Trait({
@@ -14266,7 +14270,7 @@ if (getObj("civ") != "1") {
                 icon: [16, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb1': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
-                chance: 70,
+                chance: 60,
                 category: 'religion'
             });
             new G.Tech({
@@ -14295,7 +14299,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'skinning', category: 'tier1',
-                desc: '[hunter]s can gather [hide] out of killed animals.',
+                desc: '[hunter]s will be able to gather [hide] out of killed animals.',
                 icon: [31, 26, 'magixmod'],
                 req: { 'hunting': true, 'sewing': true },
                 cost: { 'insight': 10 },
@@ -15823,7 +15827,7 @@ if (getObj("civ") != "1") {
                 displayName: 'Enlightened\' Trial',
                 desc: 'You are currently in the <b>Faithful</b> trial.',
                 icon: [19, 25, 'magixmod', 1, 22, 'magixmod'],
-                req: { 'tribalism': false, 'trial': true },
+                req: { 'tribalism': false },
                 cost: {},
                 effects: [
                     { type: 'provide res', what: { 'spirituality': 100, 'faith': 100 } },
@@ -16271,7 +16275,7 @@ if (getObj("civ") != "1") {
                 displayName: 'Buri\'o dak\'s Trial',
                 desc: 'You are currently in the <b>Buried</b> trial. After you successfully finish this trial, you will no longer be able to rerun it.',
                 icon: [22, 25, 'magixmod', 1, 22, 'magixmod'],
-                req: { 'tribalism': false, 'trial': true },
+                req: { 'tribalism': false },
                 cost: {},
                 effects: [
                     { type: 'provide res', what: { 'spirituality': 3, 'faith': 3 } },
@@ -16292,7 +16296,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'message memory',
-                desc: 'Message history increased from 25 to 50.',
+                desc: '@your message history will be increased from 25 to 50',
                 icon: [35, 13, 'magixmod'],
                 cost: { 'culture': 15, 'insight': 5 },
                 req: { 'oral tradition': true, 'caligraphy': true },
@@ -18127,6 +18131,16 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'people of the arts II', category: 'tier1',
+                desc: '@getting this doubles the [culture II] gain from [painter]s @the amount of [culture II] from [essential conversion tank]s is increased by 5% with no extra [culture] needed',
+                icon: [0, 35, 'magixmod', 11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
+                cost: { 'culture II': 30, 'faith II': 2 },
+                req: { 'smartness of essentials': true, 'people of the arts': true },
+                effects: [
+                    { type: 'provide res', what: { 'inspiration II': 5 } },
+                ],
+            });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
@@ -19200,7 +19214,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">Spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, the trial will be instantly failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer only works at 10% of its normal efficiency. Build up a replacement of Mausoleum...the Faithoselum, and ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s patron.' +
+                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">Spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you lose around ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, the trial will be instantly failed and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer will only work at 10% of its normal efficiency. Build up a replacement of the Mausoleum...the Faithoselum...and try to ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s helpers.' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
@@ -25328,7 +25342,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'message memory', category: 'tier1',
-                desc: 'Your message history is increased from 25 to 50.',
+                desc: '@your message history will be increased from 25 to 50',
                 icon: [30, 12, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 12 },
                 req: { 'oral tradition 1/2': true, 'caligraphy': true },

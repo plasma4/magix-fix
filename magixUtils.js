@@ -868,24 +868,25 @@ G.AddData({
                 (G.modsByName['Default dataset'] ? (G.traitsOwnedNames.indexOf('t11') > 0 ? '<br>' + G.button({
                     id: "t11", //<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">
                     text:
-                        '</span>Buy<img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/>',
+                        '</span>Buy<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/>',
                     tooltip:
-                        'Buy <b>Golden insight</b><img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b> .<br>Cost of next <b>Golden insight</b><img src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful.',
+                        'Buy <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + ((G.getRes("trial point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Faith</b> and ' + ((G.getRes("trial point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!',
                     onclick: function (me) {
-                        var faicost = 1 * (G.getRes("new world point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
-                        var inscost = 1 * (G.getRes("new world point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1);
+                        var faicost = (G.getRes("trial point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
+                        var inscost = (G.getRes("trial point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1);
+                        G.addTooltip(me, function () { return 'Buy <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!'; }, { offY: -8 })
                         if (G.getRes('golden insight').amount < G.getRes('wisdom').amount && G.getRes('faith').amount >= faicost && G.getRes('insight').amount >= inscost) {
                             G.lose('insight', inscost, 'exchange'); G.lose('faith', faicost, 'exchange');
                             G.gain('golden insight', 1, "purchase");
-                            G.gain('new world point', 1, "purchase");
+                            G.gain('trial point', 1, "purchase");
                             G.update['unit']();
                         } else {
                             G.middleText("<small>- Cannot afford -</small>");
                         }
                         G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
                     }
-                }) : "") : "")
-                + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4))) + " <font color='lime'>Herb essence</font> to please your people here.</div>" : "") +
+                }) : "") : "") +
+                (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4))) + " <font color='lime'>Herb essence</font> to please your people here.</div>" : "") +
                 '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' + (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t5') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1)) + " <font color='#cc0671'>Fruit</font> to please your people here and " + B(Math.pow(parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1), 0.95) - 1) + " <font color='#cc0671'>Seafood</font> to make Fishyar give water.</div>" : "") +
                 '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                 G.button({
