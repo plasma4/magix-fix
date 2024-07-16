@@ -2701,7 +2701,7 @@ G.AddData({
             tier: 0,
             name: 'capital of christmas',
             icon: [1, 12, 'seasonal'],
-            desc: 'Finish the rather nice [wonderful fortress of christmas], which lets you unlock a special buff that lasts only during Christmas and the 7 next/legacies after [the christmas,<font color="#92ff7a">Christmas</font>] ends. Merry Christmas!',
+            desc: 'Finish the rather nice [wonderful fortress of christmas], which lets you unlock a special buff that lasts only during Christmas and the 7 runs/legacies after [the christmas,<font color="#92ff7a">Christmas</font>] ends. Merry Christmas!',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -2719,7 +2719,7 @@ G.AddData({
             tier: 0,
             name: 'love for eternity',
             icon: [1, 15, 'seasonal'],
-            desc: 'Finish [fortress of love]. //You don\'t have to ascend by this wonder. Also, this fortress is a place where no lie and no cheat exists...just love and respect. //Symbolically constructed in Paradise. @<b>Bonus: from some sources, you gain 20% more [love] points.</b>',
+            desc: 'Finish the [fortress of love]. //You don\'t have to ascend by this wonder. Also, this fortress is a place where no lie or cheating ever happens...just simple love and respect. //Symbolically constructed in Paradise. @<b>Bonus: from some sources, you gain 20% more [love] points.</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },

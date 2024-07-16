@@ -10462,7 +10462,7 @@ if (getObj("civ") != "1") {
                 icon: [18, 31, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 0.2, 'food': 65, 'water': 85 },
-                use: { 'worker': 115, 'land': 1, 'worker': 20, 'stone tools': 96 },
+                use: { 'worker': 120, 'land': 1, 'worker': 20, 'stone tools': 96 },
                 req: { 'caretaking': true, 'manufacture units II': true, 'tool refinery 2/2': true },
                 category: 'crafting',
                 effects: [
@@ -10471,6 +10471,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'lumber': 90, 'stone': 880 }, into: { 'arrow': 200 }, every: 35 },
                     { type: 'convert', from: { 'lumber': 10, 'stone': 20, 'thread': 10 }, into: { 'crossbow': 30 }, every: 11 },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
+                    { type: 'mult', value: 1.5, req: { 'larger factories': true } },
                 ],
             });
             new G.Unit({
@@ -10870,7 +10871,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'stick': 400, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'stick', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'essence', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'coal': 20, 'lightning essence': 1 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'coal': 16, 'oil': 10, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'coal': 16, 'oil': 10, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil' },
                 ],
             });
 
@@ -12413,7 +12414,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Improved rhetoric', category: 'tier2',
-                desc: 'People will use more words while talking. They will do their best to make the language and vocabulary survive through many future generations. @provides 10 [wisdom II] @provides 5 [inspiration II]',
+                desc: 'People will use more words while communicating. They will do their best to make the language and vocabulary survive through many future generations. @provides 10 [wisdom II] @provides 5 [inspiration II]',
                 icon: [27, 8, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'eotm': true, 'richer language': true, 'speech': true },
@@ -16323,7 +16324,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@funeral cerermonies become more common @provides 30 [inspiration]',
+                desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
                 icon: [0, 35, 'magixmod', 13, 23, 'magixmod', 24, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(normal)': false },
@@ -18159,6 +18160,21 @@ if (getObj("civ") != "1") {
                 req: { 'oil-digging': true, 'moderation': true, 'eotm': true },
                 effects: [
                 ],
+            });
+            new G.Tech({
+                name: 'larger toolhuts', category: 'tier1',
+                desc: 'Your [Toolhut]s will now work 50% faster, but will require 40 more [worker]s and 32 more [stone tools].',
+                icon: [11, 15, 'magixmod', 17, 18, 'magixmod'],
+                req: { 'manufacture units II': true },
+                cost: { 'insight II': 350 },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('Toolhut').use = { 'worker': 160, 'land': 1, 'worker': 20, 'stone tools': 128 }
+                        }
+                    },
+                ],
+                chance: 2
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -21002,10 +21018,20 @@ if (getObj("civ") != "1") {
         }
     });
 } else {
+    // Hide warnings...why? Well, because some achievements will throw a LOT of errors, and that can clog up the console (and that's just because they are for the human race, nothing actually notable). Attempts have already been made to wipe out every last issue, so hopefully this won't cause any problems.
+    G.getDict = function (name) {
+        if (G.dict[name]) {
+            if (G.dict[name].type == 'res') return G.resolveRes(G.dict[name]);
+            else return G.dict[name];
+        }
+    }
+    G.getBrokenSmallThing = function (what, text) {
+        return '<b style="color: #f99">' + cap(text == '*PLURAL*' ? (what + 's') : (text || what)) + '</b>'
+    }
     G.AddData({
         name: 'Elves',
         author: 'pelletsstarPL',
-        desc: 'The default dataset for Legacy.',
+        desc: 'The dataset for the elves of the Magix mod: unlocked after progressing for a while.',
         engineVersion: 1,
         manifest: 0,
         sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheetB4Ta.png' },
@@ -24386,11 +24412,12 @@ if (getObj("civ") != "1") {
                     return str;
                 },
                 buttonTooltip: function () {
-                    var charged = (G.achievByName['the fortress'].won > 0 ? "3/4 charged" : "a fully charged");
+                    var charged = (G.achievByName['the fortress'].won > 0 ? "a 3/4 charged" : "a fully charged");
+                    var costStr = G.getCostString(this.getCosts(), true).replace(" Battery of discoveries", "% charged battery")
                     if (G.has('oral tradition 2/2')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true).replace(';background-position:-240px 0px;"></div></div>', ';background-position:-240px 0px;"></div></div>&nbsp;').replace(" Battery of discoveries", "% charged battery") + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + costStr + '</div></div>';
                     } else {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true).replace(';background-position:-240px 0px;"></div></div>', ';background-position:-240px 0px;"></div></div>&nbsp;').replace(" Battery of discoveries", "% charged battery") + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.<br>To each reroll or rolling new technologies you need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + costStr + '</div></div>';
                     }
                 }
             });
