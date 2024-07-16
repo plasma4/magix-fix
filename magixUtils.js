@@ -374,12 +374,12 @@ G.AddData({
                 G.writeSettingButton({ text: 'Toggle sounds', tooltip: 'Toggle all game sounds.', name: 'sound', id: 'sound' }) + "<br>";
             if (G.resets >= 3) {
                 str += '<div class="barred fancyText">Settings:</div>';
-                str += G.writeSettingButton({ text: 'Toggle birth messages', tooltip: 'Toggle messages informing that some <b>babies</b> has been born in your civilization.', name: 'birth messages', id: 'birth messages' }) +
+                str += G.writeSettingButton({ text: 'Toggle birth messages', tooltip: 'Toggle messages about how many babies have been born in your civilization.', name: 'birth messages', id: 'birth messages' }) +
                     G.writeSettingButton({ text: 'Toggle death messages', tooltip: 'Toggle messages informing that someone from your civilization died.<br>Note: It will disable ALL death messages, regardless of the reason.', name: 'death messages', id: 'death messages' }) +
                     G.writeSettingButton({ text: 'Toggle new day lines', tooltip: 'Toggle new day lines. These are atmospheric messages written with darker text.', name: 'new day lines', id: 'new day lines' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle research messages', tooltip: 'Toggle messages that tell you what you have just researched.', name: 'research messages', id: 'research messages' }) +
                     G.writeSettingButton({ text: 'Toggle trait messages', tooltip: 'Toggle messages that inform you about traits that your civilization have just adopted.', name: 'trait messages', id: 'trait messages' }) +
-                    G.writeSettingButton({ text: 'Toggle seasonal messages', tooltip: 'Toggle seasonal messages', name: 'seasonal messages', id: 'seasonal messages' });
+                    G.writeSettingButton({ text: 'Toggle seasonal messages', tooltip: 'Toggle seasonal messages.', name: 'seasonal messages', id: 'seasonal messages' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle disease messages', tooltip: 'Toggle messages that inform you about diseases.', name: 'disease messages', id: 'disease messages' }) +
                     G.writeSettingButton({ text: 'Toggle tutorial messages', tooltip: 'Toggle tutorial messages.', name: 'tutorial messages', id: 'tutorial messages' }) +
                     G.writeSettingButton({ text: 'Toggle story messages', tooltip: 'Toggle story messages.', name: 'story messages', id: 'story messages' });
@@ -1313,9 +1313,6 @@ G.AddData({
             //console.log(Math.ceil(byteCount(str)/1000)+'kb');
             if (!toStr) {
                 localStorage.setItem(G.saveTo, str);
-                // Clear old save data
-                localStorage.removeItem("civ");
-                localStorage.removeItem("island");
                 G.middleText('- Game saved -');
                 //console.log('Game saved successfully.');
             }
@@ -1349,7 +1346,7 @@ G.AddData({
                             for (var i = 0; i < conflictingStorageObjects.length; i++) {
                                 var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
                                 var newItem = G.storageObject[key];
-                                if (oldStorage[key] !== newItem) {
+                                if (oldStorage[key] != null && oldStorage[key] !== newItem) {
                                     G.dialogue.popup(function (div) {
                                         return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
                                             text: 'Yes', onclick: function () {

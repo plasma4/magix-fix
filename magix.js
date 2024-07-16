@@ -1067,7 +1067,7 @@ function onTechBuy(race, tec) {
     }
     if (techCnt == 50) G.Message({ type: 'important', text: 'Your tribe can now survive. Thanks to you (' + G.getName('ruler') + '), dreamers, and lots of insight. You stare at your tribe with a smile.', icon: [8, 12, 8, 4] })
     if (techCnt == 100) G.Message({ type: 'important', text: 'Your civilization is becoming smarter and smarter, and your people are thanking you for ruling them. They believe you are the only person fit for helping them build a great and never-ending civilization! Discover, research, and prosper.', icon: [24, 18, 'magixmod', 8, 4] })
-    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is advanced, and your people hope to see and a lot of researches, ideas, and improvements! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. (But what secrets will you uncover next?)', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
+    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is advanced, and your people hope to see and a lot of researches, ideas, and improvements! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. You wonder secrets will you uncover next...', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
 }
 function timeAchievs() {
     var time = Date.now() - G.fullDate;
@@ -1792,7 +1792,7 @@ if (getObj("civ") != "1") {
                             G.gain("health", 2.3 * population, "Fishyar giving supplies");
                             G.lose("seafood", G.fruitReq, "pleasing Fishyar");
                         } else {
-                            G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will be unable to have sufficient water if this continues, as you could have gotten " + (35 * population + 10) + " water for this year!", icon: [5, 6] });
+                            G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will be unable to have sufficient water if this continues, as you could have gotten " + B(35 * population + 10) + " water for this year!", icon: [5, 6] });
                             G.lose("seafood", G.fruitReq, "failed pleasing of Fishyar");
                         }
                         G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
@@ -2290,7 +2290,7 @@ if (getObj("civ") != "1") {
                         } else if (pumpkinroulette > 41 && pumpkinroulette <= 43 && G.has('pumpkins II')) {
                             var amount = G.getRes('fire pit').amount * 0.4;
                             G.gain('fire pit', amount, '<font color="#f80">Treat</font>');
-                            G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. This pumpkin is so warm. Even fire roars outta the fruit. Ignoring that someone smashes it and that\'s how you gain ' + B(amount) + ' <b>Fire pits</b> for your tribe.<br>Amazing!', icon: [15, 7, 'seasonal'] });
+                            G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. This pumpkin is so warm and fire seems to blast out of it every so often. Ignoring that, someone smashes it and that\'s how you gain ' + B(amount) + ' <b>Fire pits</b> for your tribe.<br>Amazing!', icon: [15, 7, 'seasonal'] });
                         }
                     }
                 }
@@ -6750,8 +6750,8 @@ if (getObj("civ") != "1") {
                     'smash cut stone': { name: 'Smash stone blocks', icon: [2, 6], desc: 'Your carver will smash [cut stone]s into 9 [stone]s each.', req: { 'quarrying': true }, use: { 'stone tools': 1 } },
                     'gem blocks': { name: 'Carve gem blocks', icon: [7, 9], desc: 'Slowly turn 10 [gems] into 1 [gem block].', req: { 'gem-cutting': true }, use: { 'stone tools': 1 } },
                     'wood statuettes': { name: 'Carve wooden statuettes', icon: [13, 1, 'magixmod'], desc: 'Your carver will now use carve statuettes out of a [log].', use: { 'knapped tools': 1 } },
-                    'gdablockscraft': { name: 'Cut other stones', icon: [2, 12, 'magixmod'], desc: 'Your carver will craft [various cut stone]s out of 10 [various stones] each.', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
-                    'gdablockssmash': { name: 'Smash other stone blocks', icon: [3, 12, 'magixmod'], desc: 'Your carver will smash a [various cut stones,Various cut stone] into 9 [various stones].', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
+                    'gdablockscraft': { name: 'Cut other stones', icon: [2, 12, 'magixmod'], desc: 'Your carver will craft [various cut stones] out of 10 [various stones] each.', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
+                    'gdablockssmash': { name: 'Smash other stone blocks', icon: [3, 12, 'magixmod'], desc: 'Your carver will smash a single [various cut stones,Various cut stone] into 9 [various stones].', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'statuette': 1 }, every: 5, mode: 'stone statuettes' },
@@ -6871,6 +6871,7 @@ if (getObj("civ") != "1") {
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30, req: { 'hunting III': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 40, req: { 'hunter\'s coordination': true, 'an armor for Hunter': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 65, req: { 'an armor for Hunter': true } },
+                    { type: 'mult', value: 1.35, req: { 'se04': true } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
                     { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
@@ -7064,8 +7065,8 @@ if (getObj("civ") != "1") {
                     'off': G.MODE_OFF,
                     'quarry': { name: 'Quarry stone', icon: [0, 8], desc: 'Produce [cut stone] and other minerals.', use: { 'worker': 3, 'stone tools': 3 } },
                     'advanced quarry': { name: 'Advanced quarry stone', icon: [8, 12, 0, 8], desc: 'Produce [cut stone] and other minerals at a superior rate with metal tools.', use: { 'worker': 3, 'metal tools': 3 } },
-                    'quarryotherstones': { name: 'Quarry other stones', icon: [3, 12, 'magixmod'], desc: 'Strike the Earth for other than common [cut stone] stones.', req: { 'quarrying II': true }, use: { 'worker': 3, 'metal tools': 3 } },
-                    'quarrydeepores': { name: 'Quarry deep for minerals', icon: [8, 12, 33, 30, 'magixmod'], desc: 'Quarry for resources that are in Deep Quarrying territory context. In this mode you will gather three times more ores but six times less of non-ore materials.', req: { 'prospecting III': true }, use: { 'worker': 8, 'metal tools': 8 } },
+                    'quarryotherstones': { name: 'Quarry other stones', icon: [3, 12, 'magixmod'], desc: 'Strike the Earth for [various cut stones] rather than normal [cut stone].', req: { 'quarrying II': true }, use: { 'worker': 3, 'metal tools': 3 } },
+                    'quarrydeepores': { name: 'Quarry deep for minerals', icon: [8, 12, 33, 30, 'magixmod'], desc: 'Quarry for resources that require quarrying deep underground. In this mode you will gather three times more ores but six times less of non-ore materials.', req: { 'prospecting III': true }, use: { 'worker': 8, 'metal tools': 8 } },
                 },
                 effects: [
                     { type: 'gather', context: 'quarry', amount: 5, max: 10, every: 3, mode: 'quarry' },
@@ -7073,7 +7074,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'mine', amount: 0.005, max: 0.05, notMode: 'off' },
                     { type: 'gather', context: 'quarry', amount: 10, max: 30, every: 3, mode: 'advanced quarry' },
                     { type: 'gather', context: 'quarry', what: { 'various cut stones': 5 }, mode: 'quarryotherstones' },
-                    { type: 'gather', context: 'quarry', what: { 'oil': 13 }, req: { 'oil-digging': true } },
+                    { type: 'gather', context: 'quarry', what: { 'oil': 8 }, req: { 'oil-digging': true }, every: 2 },
                     //deepquarry
                     { type: 'gather', context: 'quarry', what: { 'cut stone': 0.17 }, max: 0.88, mode: 'quarrydeepores' },
                     { type: 'gather', context: 'quarry', what: { 'various cut stones': 0.17 }, max: 0.88, mode: 'quarrydeepores' },
@@ -7428,7 +7429,6 @@ if (getObj("civ") != "1") {
                     { type: 'provide', what: { 'burial spot': 3 }, req: { 'spiritual piety': true } },
                     { type: 'provide', what: { 'burial spot': 2 }, req: { 'spiritual piety': false, 'voodoo spirit': true } },
                     { type: 'provide', what: { 'burial spot': 6 }, req: { 'spiritual piety': true, 'voodoo spirit': true } },
-                    //{type:'waste',chance:1/500,desired:true},
                 ],
                 req: { 'burial': true },
                 category: 'civil',
@@ -8606,7 +8606,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'papyrus': { name: 'Papyrus', icon: [15, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <strong>papyrus</strong>, [worker] will use [sugar cane].', use: { 'worker': 1, 'stone tools': 1 } },
+                    'papyrus': { name: 'Papyrus', icon: [15, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <b>papyrus</b>, [worker] will use [sugar cane].', use: { 'worker': 1, 'stone tools': 1 } },
                     'pergamin': { name: 'Pergamin', icon: [16, 12, 'magixmod'], desc: 'Gain mainly [paper] out of this shack. To craft <b>pergamin</b>, [worker] will use [hide] or [leather].', use: { 'worker': 1, 'stone tools': 1 } },
                     'commonpaper': { name: 'Common paper', icon: [17, 12, 'magixmod'], desc: 'Craft [paper] out of [bamboo] with the help of a secret non-magic recipe.', use: { 'worker': 1, 'stone tools': 1 } },
                 },
@@ -8656,9 +8656,11 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'culture': 0.08 } },
                     { type: 'gather', what: { 'painting': 0.002 } },
+                    { type: 'gather', what: { 'painting': 0.0005 }, req: { 'cultural people': true } },
                     { type: 'gather', what: { 'culture': 0.032 }, req: { 'symbolism': true } },
                     { type: 'gather', what: { 'culture II': 0.000007 }, req: { 'people of the arts': true } },
                     { type: 'gather', what: { 'culture II': 0.000007 }, req: { 'people of the arts II': true } },
+                    { type: 'gather', what: { 'culture II': 0.000003 }, req: { 'cultural people': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on' } },
                     { type: 'mult', value: 1.05, req: { 'culture rise': true } },
@@ -9441,7 +9443,7 @@ if (getObj("civ") != "1") {
                 icon: [14, 7, 'magixmod'],
                 cost: { 'sugar cane': 500 },
                 req: { 'agriculture': true, 'farm of the sugar cane': true },
-                use: { 'worker': 8, 'land': 35, 'worker': 1, 'stone tools': 10 },
+                use: { 'worker': 8, 'land': 35, 'stone tools': 10 },
                 upkeep: { 'water': 36 },
                 category: 'production',
                 effects: [
@@ -9457,10 +9459,10 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({//I was removed because I didn't change that much in game. I was a beet farm but I am going to be something different more useful
                 name: 'crematorium',
-                desc: 'Emballs and burns [corpse]s in roaring fire. Then, all dust from the body is put into an [urn]. Uses [fire pit]s as an upkeep.',
+                desc: 'Emballs and burns [corpse]s in a roaring fire. Then, all dust from the body is put into an [urn]. Uses [fire pit]s as an upkeep.',
                 icon: [31, 21, 'magixmod'],
                 req: { 'cremation': true },
-                use: { 'worker': 3, 'worker': 1, 'land': 1 },
+                use: { 'worker': 3, 'land': 1 },
                 cost: { 'basic building materials': 300 },
                 upkeep: { 'fire pit': 3 },
                 effects: [
@@ -9679,10 +9681,11 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'happiness': 0.28 } },
                     { type: 'gather', what: { 'culture': 0.125 } },
+                    { type: 'gather', what: { 'culture II': 0.000004 }, req: { 'cultural people': true } },
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
                 ],
-                req: { 'oral tradition': true, 'music instruments': true },
+                req: { 'music instruments': true },
                 category: 'cultural',
             });
             new G.Unit({
@@ -9705,10 +9708,11 @@ if (getObj("civ") != "1") {
                     },
                     { type: 'gather', context: 'fish', what: { 'seafood': 1200 } },
                     { type: 'gather', context: 'hunt', amount: 1400, max: 2000 },
-                    { type: 'gather', context: 'hunt', amount: 400, max: 600, req: { 'se04': 'on' } },
+                    { type: 'gather', context: 'hunt', amount: 490, max: 700, req: { 'se04': 'on' } },
                     { type: 'gather', context: 'fish', what: { 'seafood': 400 }, req: { 'se05': 'on' } },
                     { type: 'gather', context: 'fish', what: { 'ink': 2 }, req: { 'ink-fishing': true } },
                     { type: 'convert', from: { 'adult': 2 }, into: { 'wounded': 2 }, every: 7, chance: 1 / 115 },
+                    { type: 'mult', value: 1.35, req: { 'se05': true } },
                     { type: 'mult', value: 1.35, req: { 'harvest rituals': 'on' } },
                     { type: 'convert', from: { 'meat': 4, 'seafood': 3 }, into: { 'cooked meat': 4, 'seafood': 3 }, every: 2, req: { 'camp-cooking': true } },
                 ],
@@ -9851,7 +9855,7 @@ if (getObj("civ") != "1") {
                 messageOnStart: 'You began the construction of Complex of Dreamers. The complex looks like it\'s not from this world when night arrives.',
                 finalStepCost: { 'wisdom': 200, 'population': 2500, 'precious building materials': 4500, 'gem block': 50, 'insight': 2500 },
                 finalStepDesc: 'To complete the wonder and make your whole civilization much smarter, you will need to perform a final step.',
-                use: { 'Wizard Complex': 1, 'worker': 10, 'metal tools': 10 },
+                use: { 'wizard': 25, 'worker': 10, 'metal tools': 10 },
                 upkeep: { 'mana': 15 },
                 req: { 'monument-building': true, 'roots of insight': true },
                 category: 'discovery',
@@ -10015,6 +10019,7 @@ if (getObj("civ") != "1") {
                 limitPer: { 'population': 38000 },
                 effects: [
                     { type: 'provide', what: { 'wisdom II': 5.25, 'education': 1 } },
+                    { type: 'provide', what: { 'inspiration II': 2 }, req: { 'eota': true } },
                 ],
                 req: { 'outstanding wisdom': true },
                 category: 'discovery',
@@ -10444,7 +10449,7 @@ if (getObj("civ") != "1") {
                 icon: [24, 31, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 5, 'food': 25, 'water': 35 },
-                use: { 'worker': 15, 'land': 1, 'worker': 1, 'stone tools': 32 },
+                use: { 'worker': 15, 'land': 1, 'stone tools': 32 },
                 req: { 'factories II': true },
                 category: 'crafting',
                 effects: [
@@ -10636,7 +10641,7 @@ if (getObj("civ") != "1") {
                     'spirits': { name: 'Summon spirits', icon: [32, 16, 'magixmod'], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
                     'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
                     'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon bloodthirsty vampires, which is an easy way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, meaning your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
-                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 14, 'worker': 1, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
+                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 15, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
                 },
                 effects: [
                     { type: 'gather', what: { 'spookiness xp': 0.75 }, mode: 'spirits', chance: 4 / 5 },
@@ -10851,7 +10856,7 @@ if (getObj("civ") != "1") {
                 icon: [34, 16, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 1, 'food': 25, 'water': 35 },
-                use: { 'worker': 19, 'land': 1, 'worker': 1, 'stone tools': 32 },
+                use: { 'worker': 20, 'land': 1, 'stone tools': 32 },
                 req: { 'moderation': true, 'factories II': true },
                 gizmos: true,
                 category: 'crafting',
@@ -10872,6 +10877,21 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'essence', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'coal': 20, 'lightning essence': 1 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'coal': 16, 'oil': 10, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil' },
+                ],
+            });
+            new G.Unit({ // New unit!!!!!
+                name: 'art school',
+                desc: 'Here, some [child,Children] will learn about art. Some of these students will become [artist]s when they grow up! Very rarely, a [virtuoso of art] learns enough about their subject to be a true master of painting.',
+                icon: [42, 0, 'magix2'],
+                cost: { 'advanced building materials': 1000, 'gem block': 25, 'gold block': 5 },
+                upkeep: { 'food': 100 },
+                use: { 'worker': 40, 'land': 25, 'stone tools': 32 },
+                req: { 'passionate artistry': true },
+                category: 'cultural',
+                effects: [
+                    { type: 'convert', from: { 'child': 1 }, into: { 'artist': 1 }, every: 300 },
+                    { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 600, req: { 'better art schools': true } },
+                    { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 300, req: { 'better art schools': true } },
                 ],
             });
 
@@ -10909,6 +10929,7 @@ if (getObj("civ") != "1") {
                     if (G.has("t7")) costs['herb essence'] = G.techN * Math.max(G.achievByName['herbalism'].won * 2, 1.8) * 2;
                     if (G.has('t3')) { costs['culture'] = calcCost('inspiration', 0.1); costs['influence'] = calcCost('authority', 0.1) };
                     if (G.has('eotm')) costs['science'] = calcCost('education', G.has("do we need that much science?") ? 0.1 : 0.2);
+                    if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.04);
                     return costs;
                 },
                 getCardCosts: function (what) {
@@ -10983,8 +11004,11 @@ if (getObj("civ") != "1") {
                     else if (!G.has('eotm')) {
                         return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
                     }
-                    else if (G.has('eotm')) {
+                    else if (!G.has('eota')) {
                         return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b> resources.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
+                    }
+                    else {
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b>/<b>Inspiration II</b> resources.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
                     }
                 }
             });
@@ -13463,12 +13487,12 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'music', category: 'tier2',
-                desc: 'People can now use music as one of the pillars of cultural heritage. @unlocks a new tech that lets you unlock [musician]s @makes [storyteller]s a more limited until you unlock that tech',
+                desc: 'People can now use music as one of the pillars of cultural heritage. @unlocks a new tech that lets you unlock [musician]s @makes [storyteller]s more limited until you unlock that tech',
                 icon: [29, 17, 'magixmod'],
                 cost: { 'insight II': 15, 'culture II': 25 },
                 req: { 'symbolism II': true, 'ritualism II': true },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('storyteller').limitPer = { 'population': 40 } } }
+                    { type: 'function', func: function () { G.getDict('storyteller').limitPer = { 'population': 175 } } }
                 ],
             });
             new G.Tech({
@@ -14589,7 +14613,7 @@ if (getObj("civ") != "1") {
                             G.getDict('well of mana').use = { 'land': 0.85 }
                             G.getDict('concrete making shack').use = { 'land': 0.85, 'worker': 1 }
                             G.getDict('well').use = { 'land': 0.85 }
-                            G.getDict('crematorium').use = { 'land': 0.85, 'worker': 1, 'worker': 3 }
+                            G.getDict('crematorium').use = { 'land': 0.85, 'worker': 3 }
                         }
                     }
                 ],
@@ -16580,7 +16604,7 @@ if (getObj("civ") != "1") {
                             G.getDict("temple of the Paradise").cost = { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 45000, 'ambrosium shard': 10000 },
                                 G.getDict("temple of the Paradise").costPerStep = { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'influence II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
                                 G.getDict("temple of the Paradise").steps = 400,
-                                G.getDict("temple of the Paradise").messageOnStart = 'The construction of The <b>Temple of Ancestors</b> has been started. Now you are full of hope that it will someday make the Ancestors Leader appear next to you and show his true good-natured face.',
+                                G.getDict("temple of the Paradise").messageOnStart = 'The construction of the <b>Temple of Ancestors</b> has been started. Now you are full of hope that it will someday make the Ancestors Leader appear next to you and show his true good-natured face.',
                                 G.getDict("temple of the Paradise").finalStepCost = { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 5, 'faith': 125, 'influence': 400, 'influence II': 10, 'spirituality': 25, 'godTemplePoint': -100 },
                                 G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader, you must perform this final step: 25k [population,people] must be sacrificed...and many other ingredients.',
                                 G.getDict("temple of the Paradise").use = { 'land of the Past': 30 };
@@ -18149,7 +18173,6 @@ if (getObj("civ") != "1") {
                 cost: { 'insight II': 50, 'culture II': 35 },
                 req: { 'caretaking': true, 'smartness of essentials': true, 'people of the arts': true },
                 effects: [
-                    { type: 'provide res', what: { 'inspiration II': 5 } },
                 ],
             });
             new G.Tech({
@@ -18157,24 +18180,9 @@ if (getObj("civ") != "1") {
                 desc: '[oil] can now be used along with [lightning essence] to unlock a new mode for your [heat factory,Heat factories].',
                 icon: [0, 35, 'magixmod', 29, 2, 'magixmod'],
                 cost: { 'insight II': 400, 'oil': 10000 },
-                req: { 'oil-digging': true, 'moderation': true, 'eotm': true },
+                req: { 'oil-digging': true },
                 effects: [
                 ],
-            });
-            new G.Tech({
-                name: 'larger toolhuts', category: 'tier1',
-                desc: 'Your [Toolhut]s will now work 50% faster, but will require 40 more [worker]s and 32 more [stone tools].',
-                icon: [11, 15, 'magixmod', 17, 18, 'magixmod'],
-                req: { 'manufacture units II': true },
-                cost: { 'insight II': 350 },
-                effects: [
-                    {
-                        type: 'function', func: function () {
-                            G.getDict('Toolhut').use = { 'worker': 160, 'land': 1, 'worker': 20, 'stone tools': 128 }
-                        }
-                    },
-                ],
-                chance: 2
             });
 
             new G.Trait({ // New trait by @1_e0 to counter happiness slightly
@@ -18332,6 +18340,96 @@ if (getObj("civ") != "1") {
                 ],
                 category: 'main'
             });
+            new G.Trait({
+                name: 'cultural people',
+                desc: 'Your tribe is growing more and more [culture II,Cultural], meaning that they have begun to think of ways to use their creativity to create more and more... @[painter]s create [painting]s and [culture II] faster @[musician]s provide a little bit of [culture II] now, just like [painter]s',
+                icon: [38, 0, 'magix2'],
+                cost: { 'culture II': 20 },
+                chance: 20,
+                req: { 'people of the arts': true, 'music': true },
+                effects: [
+                ],
+                category: 'main'
+            });
+            new G.Trait({
+                name: 'eota',
+                displayName: 'Evolution of the arts',
+                desc: 'Don\'t worry; this research won\'t make anything too much harder! @from now on, you will need to use [culture II] to roll or reroll new technologies @more techs will be avaliable @although these new techs will cost a lot of [culture II], [the outstander]s will be able to provide some [inspiration II] now',
+                icon: [39, 0, 'magix2'],
+                cost: { 'culture II': 30 },
+                chance: 40,
+                req: { 'cultural people': true, 'music instruments': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            for (var i = 0; i < G.unitsOwned.length; i++) {
+                                if (G.unitsOwned[i].unit.name == "the outstander") {
+                                    var unit = G.unitsOwned[i]
+                                    unit.idle = unit.amount
+                                    unit.amount = 0
+                                }
+                            }
+                            G.getDict('the outstander').desc = 'Strangely, [the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite? Likely not. People call Outstanders like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained), 2 [inspiration II], and 1 [education] each.'
+                        }
+                    }
+                ],
+                category: 'main'
+            });
+
+            // so uh this is bad news...but some saves may have been screwed up because traits and techs are considered to be similar in the code, meaning that they will have the same ID structure...which means various issues could happen with techs/traits swapping! (this is quite fun, whelp)
+            new G.Tech({
+                name: 'larger toolhuts', category: 'tier1',
+                desc: 'Your [Toolhut]s will now work 50% faster, but will require 40 more [worker]s and 32 more [stone tools].',
+                icon: [11, 15, 'magixmod', 17, 18, 'magixmod'],
+                req: { 'manufacture units II': true },
+                cost: { 'insight II': 350 },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('Toolhut').use = { 'worker': 160, 'land': 1, 'worker': 20, 'stone tools': 128 }
+                        }
+                    },
+                ],
+                chance: 2
+            });
+            new G.Tech({
+                name: 'superior culture', category: 'tier1',
+                desc: '@may lead to [eota,Something new]... @provides 2 [inspiration II]',
+                icon: [40, 0, 'magix2'],
+                cost: { 'culture II': 30 },
+                req: { 'cultural people': true },
+                effects: [
+                    { type: 'provide res', what: { 'inspiration II': 2 } },
+                ],
+            });
+            new G.Tech({
+                name: 'passionate artistry', category: 'tier1',
+                desc: 'Unlocks the [art school], which may turn [child,Children] into an [artist]. //<small>quite arty art indeed</small>',
+                icon: [41, 0, 'magix2'],
+                cost: { 'culture II': 60 },
+                req: { 'eota': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'better art schools', category: 'tier1',
+                desc: '@[art school]s will now be twice as likely to turn a [child] into a [virtuoso of art] @provides 10 [inspiration II]',
+                icon: [42, 0, 'magix2', 24, 1],
+                cost: { 'culture II': 100 },
+                req: { 'passionate artistry': true },
+                effects: [
+                    { type: 'provide res', what: { 'inspiration II': 10 } },
+                ],
+            });
+            new G.Tech({
+                name: 'art shows', category: 'tier1',
+                desc: '@[art school]s will now host art shows sometimes, meaning that each [work of art] will provide a little bit of culture @[work of art,Works of art] will decay a little slower with proper art storage',
+                icon: [45, 0, 'magix2', 24, 1],
+                cost: { 'culture II': 140 },
+                req: { 'passionate artistry': true },
+                effects: [
+                ],
+            });
 
             new G.Res({
                 name: 'ignoreItem', // A resource that tells you the next predicted drought
@@ -18431,6 +18529,49 @@ if (getObj("civ") != "1") {
                 icon: [37, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
+            });
+            new G.Res({
+                name: 'artist',
+                desc: '[artist]s are those who have studied art from a young age and have turned into [adult]s. Although they are talented and skilled, they may still fail to produce a [work of art] and make a plain [painting].',
+                category: 'demog',
+                partOf: 'population',
+                icon: [43, 0, 'magix2'],
+                tick: function (me, tick) {
+                    var n = randomFloor(G.getRes('artist').amount * 0.0002);
+                    G.gain('painting', randomFloor(G.getRes('artist').amount * 0.3), 'artists painting');
+                    G.gain('work of art', randomFloor(G.getRes('artist').amount * 0.0001), 'artists painting');
+                    G.gain('elder', n, 'aging up');
+                    G.lose('artist', n, 'aging up');
+                },
+            });
+            new G.Res({
+                name: 'virtuoso of art',
+                desc: '[virtuoso of art,Virtuosos of art] are the best of the best. These students have grown into true artists, and will produce a variety of [painting]s and [work of art,Works of art] with their gifted talent and skill. //<small>what about pixel art?<small>',
+                category: 'demog',
+                partOf: 'population',
+                icon: [44, 0, 'magix2'],
+                tick: function (me, tick) {
+                    var n = randomFloor(G.getRes('virtuoso of art').amount * 0.0002);
+                    G.gain('painting', randomFloor(G.getRes('virtuoso of art').amount * 1), 'virtuosos of art painting');
+                    G.gain('work of art', randomFloor(G.getRes('virtuoso of art').amount * 0.03), 'virtuosos of art painting');
+                    G.gain('elder', n, 'aging up');
+                    G.lose('virtuoso of art', n, 'aging up');
+                },
+            });
+            new G.Res({
+                name: 'work of art',
+                desc: '[work of art,Works of art] are truly thought-provoking and amazing artworks that capture the culture of your people well. These will decay into [culture II].',
+                icon: [45, 0, 'magix2'],
+                category: 'misc',
+                tick: function (me, tick) {
+                    var toSpoil = me.amount * 0.0001;
+                    if (G.has('art shows')) {
+                        toSpoil *= 0.7; // art shows decrease the decay of works of art
+                        G.gain('culture II', randomFloor(toSpoil * 0.3), 'art shows');
+                    }
+                    var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.pseudoGather(G.getRes('culture II'), randomFloor(spent));
+                },
             });
 
 
@@ -18721,7 +18862,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se04',
                 displayName: 'Hartar the Seraphin of Hunting',
-                desc: '<font color="lime">Increases the efficiency of hunting units by 35%. After [hunters & fishers unification] increases income of [meat] by this %.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se04] blocks you from [se05] unless you unselect this Seraphin.',
+                desc: '<font color="lime">Increases the efficiency of [hunter]s by 35%. For [fishers & hunters camp], your [meat] gain will increase by that amount as well.</font><br><hr color="fuschia">This Seraphin doesn\'t have a backfire, but choosing [se04] blocks you from [se05] unless you unselect this Seraphin.',
                 icon: [26, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18761,7 +18902,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se08',
                 displayName: 'Buri\'o dak the Seraphin of Burial',
-                desc: '<font color="lime">Each [burial spot] will now be able to store 1.1 [corpse]s or 5 [urn]s.</font><br><hr color="fuschia"><font color="#f70054">Backfire: Harms your [health] by a very very small amount and decreases [healer] efficiency by 5%.</font>',
+                desc: '<font color="lime">Each [burial spot] will 10% more [corpse]s or 5 [urn]s instead.</font><br><hr color="fuschia"><font color="#f70054">Backfire: Harms your [health] by a very very small amount and decreases [healer] efficiency by 5%.</font>',
                 icon: [22, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18771,7 +18912,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se09',
                 displayName: 'Moai the Seraphin of the Stone',
-                desc: '<font color="lime">All [mine]s are 25% more efficient. (Doesn\'t apply to [gems] and only applies to modes from [prospecting,prospecting I] not to <b>any</b>.) Also, [digger] is 2% more efficient. [carver] works 3% faster at modes related to [stone].</font><br><hr color="fuschia"><font color="#f70054">Backfire: [well]s are 15% less efficient (not including [Well of mana,Wells of mana]) and [artisan]s are 7.5% less efficient.</font>',
+                desc: '<font color="lime">All [mine]s are 25% more efficient. (Doesn\'t apply to [gems] and only applies to [prospecting] modes.) Also, [digger]s are 2% more efficient and [carver]s work 3% faster at modes related to [stone].</font><br><hr color="fuschia"><font color="#f70054">Backfire: [well]s are 15% less efficient (not including [Well of mana,Wells of mana]) and [artisan]s are 7.5% less efficient.</font>',
                 icon: [21, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -18801,7 +18942,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se12',
                 displayName: 'Okar the Seer the Seraphin of Knowledge',
-                desc: '<font color="lime">[guru] and [dreamer]s are 50% more efficient.</font><br><hr color="fuschia"><font color="#f70054">Backfire: [dreamer]s and [guru] require [food] and [water] as an upkeep. Weakens [gatherer]s and [florist]s by 20%. [culture] gain from units will be lowered by 10%.</font>',
+                desc: '<font color="lime">[guru] and [dreamer]s are 50% more efficient.</font><br><hr color="fuschia"><font color="#f70054">Backfire: [dreamer]s and [guru]s will require [food] and [water] as upkeep. Weakens [gatherer]s and [florist]s by 20%. [culture] gain from units will be lowered by 10%.</font>',
                 icon: [18, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -20360,7 +20501,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'mangrove',
-                desc: 'Similar to [willow], the [mangrove,Mangrove tree] tends to grow in lush, wet climates and can be chopped for [log]s and harvested for [stick]s.',
+                desc: 'Similar to [willow]s, the [mangrove,Mangrove tree] tends to grow in lush, wet climates and can be chopped for [log]s and harvested for [stick]s.',
                 icon: [18, 24, 'magixmod'],
                 res: {
                     'chop': { 'log': 2, 'stick': 5 },
@@ -23860,7 +24001,6 @@ if (getObj("civ") != "1") {
                 //require:{'worker':1,'knapped tools':1},
                 effects: [
                     { type: 'provide', what: { 'burial spot': 1 } },
-                    //{type:'waste',chance:1/100,desired:true},
                 ],
                 req: { 'burial': true },
                 category: 'civil',
