@@ -125,7 +125,7 @@ function extractObject(toExtract, properties, funcProperties) {
                     var l = thing.length
                     var effects = JSON.parse(JSON.stringify(thing)) // Not the best way, but it gets the job done
                     for (var e = 0; e < l; e++) {
-                        var effect = thing[e]
+                        var effect = effects[e]
                         if (effect.func) {
                             effect.func = String(effect.func)
                         }

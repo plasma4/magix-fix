@@ -6610,6 +6610,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 0.4, req: { 't6': true } },
                     { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
                     { type: 'mult', value: 0.85, req: { 'se07': 'on' } },
+                    { type: 'gather', what: { 'health': 2 }, req: { 'mentors of nature III': true }, chance: 1 / 1000000 },
                     //Far foraging
                     { type: 'explore', explored: 0.008, unexplored: 0, req: { 'far foraging': 'on' }, chance: 1 / 4 },
                     { type: 'function', func: unitGetsConverted({}, 0.001, 0.03, true, '[X] [people] lost in terrain while foraging very far', 'gatherer got', 'gatherers got'), chance: 1 / 35, req: { 'far foraging': 'on' } },
@@ -6955,12 +6956,13 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 80, 'honeycomb': 8 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'on' } },
                     { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 60, 'honeycomb': 6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'off' } },
                     { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 96, 'honeycomb': 9.6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'on' } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 0.1 }, amount: 1, every: 4, max: 0.2, mode: 'honey', chance: 1 / 100, req: { 'beekeeping V': true, 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 0.16 }, amount: 1, every: 4, max: 0.32, mode: 'honey', chance: 1 / 100, req: { 'beekeeping V': true, 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 1 }, amount: 1, every: 4, max: 0.2, mode: 'honey', chance: 1 / 250, req: { 'beekeeping V': true, 'love of honey': 'off' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 1.6 }, amount: 1, every: 4, max: 0.32, mode: 'honey', chance: 1 / 250, req: { 'beekeeping V': true, 'love of honey': 'on' } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
                     { type: 'mult', value: 1.08, req: { 'bigger fires': true, 'caretaking': true } },
+                    { type: 'gather', what: { 'health': 0.0225 }, req: { 'mentors of nature III': true } },
                 ],
                 req: { 'fire-making': true },
                 category: 'crafting',
@@ -7376,6 +7378,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.06, req: { 'more experienced healers': true, 'caretaking': true } },
                     { type: 'mult', value: 1.25, req: { 'se07': 'on' } },
                     { type: 'mult', value: 0.95, req: { 'se08': 'on' } },
+                    { type: 'gather', what: { 'health': 0.0225 }, req: { 'mentors of nature III': true } },
                 ],
                 gizmos: true,
                 req: { 'healing': true },
@@ -9367,6 +9370,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.05, req: { 'harvest rituals for flowers': 'on' } },
                     { type: 'convert', from: { 'paper': 12, 'ink': 3 }, into: { 'florist\'s notes': 1 }, every: 11, req: { 'noting': true }, chance: 1 / 95 },
                     { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
+                    { type: 'gather', what: { 'health': 0.01125 }, req: { 'mentors of nature III': true } },
                 ],
             });
             new G.Unit({
@@ -10389,8 +10393,8 @@ if (getObj("civ") != "1") {
                 limitPer: { 'population': 10 },
                 effects: [
                     { type: 'gather', what: { 'faith': 0.05, 'happiness': 0.2 } },
-                    { type: 'gather', what: { 'health': 0.15 }, req: { 'mentors of nature': true } },
-                    { type: 'gather', what: { 'health': 0.075 }, req: { 'mentors of nature II': true } },
+                    { type: 'gather', what: { 'health': 0.075 }, req: { 'mentors of nature': true, 'mentors of nature II': false } },
+                    { type: 'gather', what: { 'health': 0.1125 }, req: { 'mentors of nature II': true } },
                     { type: 'gather', what: { 'faith': 0.005 }, req: { 'druidsymbolism2': true } },
                     { type: 'gather', what: { 'happiness': 0.05 }, req: { 'druidsymbolism1': true } },
                     { type: 'gather', what: { 'faith': 0.02 }, req: { 'symbolism II': true } },
@@ -18442,7 +18446,7 @@ if (getObj("civ") != "1") {
                 name: 'mentors of nature II', category: 'tier1',
                 desc: '[druid]s generate 50% more [health] now!',
                 icon: [0, 35, 'magixmod', 31, 31, 'magixmod'],
-                req: { 'eotm': true, 'trees of faith': true },
+                req: { 'eotm': true, 'trees of faith': true, 'caretaking': true },
                 cost: { 'insight II': 40, 'culture II': 10 },
                 effects: [
                 ],
@@ -18467,10 +18471,19 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beekeeping V', category: 'tier1',
-                desc: 'The final beekeeping tech... @increases your [honeycomb] gain from the <b>Collect honey and honeycombs</b> by 30% @gives you a small chance to collect some additional [honey] from <b>all</b> firekeeping modes',
+                desc: 'The final beekeeping tech... @gives you a small chance to collect some additional [honey] from <b>all</b> firekeeping modes',
                 icon: [3, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight II': 150, 'nature essence': 125000 },
                 req: { 'physics III': true, 'beekeeping IV': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'mentors of nature III', category: 'tier1',
+                desc: 'From now on, more units will be able to generate [health] in small amounts: @[healer]s (twice as much as [druid]s, adding with any traits that also provide [health]) @[firekeeper]s (one fifth as much as [druid]s) @[florist]s (one tenth as much as [druid]s) @very, very rarely, your [gatherer]s will provide some [health]',
+                icon: [1, 35, 'magixmod', 31, 31, 'magixmod'],
+                req: { 'mentors of nature II': true, 'eota': true },
+                cost: { 'insight II': 40, 'culture II': 10 },
                 effects: [
                 ],
             });
@@ -18800,6 +18813,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Policy({
                 name: 'harvest rituals for flowers',
+                displayName: 'flower harvesting rituals',
                 desc: 'Improves the speed of [florist]s by 20%. Consumes 1 [faith] and 1 [influence] every 20 days; will stop if you run out.',
                 icon: [8, 12, 11, 8, 'magixmod'],
                 cost: { 'faith': 1, 'influence': 3 },
