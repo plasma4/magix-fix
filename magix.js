@@ -14960,7 +14960,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'cart1',
                 displayName: 'Carver\'s trend: Stone statuettes',
-                desc: '[carver]s feel that a [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> becomes 5% faster.',
+                desc: '[carver]s feel that a [statuette] made out of stone is accepted better by this tribe more than a statuette from wood or bone. <><b>Craft stone statuettes</b> becomes 5% faster.',
                 icon: [25, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'construction': true, 'cart2': false },
                 cost: { 'insight': 25, 'culture': 25 },
@@ -14972,7 +14972,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'cart2',
                 displayName: 'Carver\'s trend: Wooden statuettes',
-                desc: '[carver]s feel that a [wooden statuette,Statuette] made out of wood is accepted better by this tribe than statuette from stone or other non-wood resource. <><b>Craft wooden statuettes</b> becomes 5% faster.',
+                desc: '[carver]s feel that a [wooden statuette,Statuette] made out of wood is accepted better by this tribe more than a statuette from stone or other non-wood resource. <><b>Craft wooden statuettes</b> becomes 5% faster.',
                 icon: [26, 28, 'magixmod', 2, 22, 'magixmod'],
                 req: { 'construction': true, 'cart1': false },
                 cost: { 'insight': 25, 'culture': 25 },
@@ -18546,7 +18546,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'virtuoso of art',
-                desc: '[virtuoso of art,Virtuosos of art] are the best of the best. These students have grown into true artists, and will produce a variety of [painting]s and [work of art,Works of art] with their gifted talent and skill. //<small>what about pixel art?<small>',
+                desc: '[virtuoso of art,Virtuosos of art] are the best of the best. These students have grown into true artists, and will produce a variety of [painting]s and [work of art,Works of art] with their gifted talent and skill. //<small>what about pixel art?</small>',
                 category: 'demog',
                 partOf: 'population',
                 icon: [44, 0, 'magix2'],
@@ -25969,7 +25969,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'cart1',
                 displayName: 'Carver\'s trend: Stone statuettes',
-                desc: '[carver]s feel that [statuette] made out of stone is accepted better by this tribe than statuette from wood or other non-stone resource. <><b>Craft stone statuettes</b> becomes 5% faster.',
+                desc: '[carver]s feel that [statuette] made out of stone is accepted better by this tribe more than a statuette from wood or bone. <><b>Craft stone statuettes</b> becomes 5% faster.',
                 icon: [25, 28, 'magixmod', 5, 22, 'magixmod'],
                 req: { 'construction': true, 'cart2': false },
                 cost: { 'discernment': 50, 'gentility': 45 },
@@ -25981,7 +25981,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'cart2',
                 displayName: 'Carver\'s trend: Wooden statuettes',
-                desc: '[carver]s feel that [clay statuette,Statuette] made out of clay or mud is accepted better by this tribe than statuette from clay and other non-stone resources. <><b>Craft clay statuettes</b> becomes 5% faster.',
+                desc: '[carver]s feel that [clay statuette,Statuette] made out of clay or mud is accepted better by this tribe more than a statuette from clay and other non-stone resources. <><b>Craft clay statuettes</b> becomes 5% faster.',
                 icon: [25, 16, 'c2', 5, 22, 'magixmod'],
                 req: { 'construction': true, 'cart1': false },
                 cost: { 'discernment': 50, 'gentility': 45 },
