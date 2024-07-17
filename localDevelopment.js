@@ -30,9 +30,9 @@ function getGameJSON(objectMode) {
         goods: extractObject(G.goods, ['name', 'displayName', 'desc', 'res', 'icon', 'mult']),
         resources: extractObject(G.res, ['name', 'displayName', 'hidden', 'desc', 'category', 'startWith', 'colorGood', 'colorBad', 'icon', 'fractional', 'turnToByContext', 'meta'], ['tick', 'getDisplayAmount', 'getIcon', 'partOf']),
         units: extractObject(G.unit, ['name', 'displayName', 'desc', 'wonder', 'icon', 'wideIcon', 'threexthreeIcon', 'cost', 'costPerStep', 'steps', 'type', 'messageOnStart', 'finalStepCost', 'finalStepDesc', 'use', 'req', 'category', 'modes', 'gizmos', 'limitPer', 'upkeep']),
-        policies: extractObject(G.policy, ['name', 'displayName', 'desc', 'icon', 'startMode', 'req', 'modes', 'category'], ['effectsOff']),
-        techs: extractObject(G.tech, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'effects', 'startWith', 'tier', 'chance', 'req', 'tutorialMesg']),
-        traits: extractObject(G.trait, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'effects', 'startWith', 'tier', 'chance', 'req']),
+        policies: extractObject(G.policy, ['name', 'displayName', 'desc', 'icon', 'startMode', 'req', 'modes', 'category']),
+        techs: extractObject(G.tech, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'startWith', 'tier', 'chance', 'req', 'tutorialMesg']),
+        traits: extractObject(G.trait, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'startWith', 'tier', 'chance', 'req']),
         descriptions: {
             name: "The identifier name of the thing",
             displayName: "The displayed name of the thing, which will be used instead of the identifier name",
@@ -72,7 +72,7 @@ function getGameJSON(objectMode) {
             steps: "The number of steps for the wonder",
             messageOnStart: "The message to write upon starting to build the wonder",
             finalStepCost: "The cost of the final step of the wonder",
-            finalStepDesc: "The message to write upon needing to complete the final step of a wonder",
+            finalStepDesc: "The message to write upon needing to complete the final step of the wonder",
             use: "How much this thing uses",
             req: "The requirements to unlock this thing",
             modes: "The modes that can be used for this thing",
@@ -104,7 +104,7 @@ function extractObject(toExtract, properties, funcProperties) {
     if (nameProps == null) {
         nameProps = []
     }
-    var props = properties.concat(funcProperties, nameProps)
+    var props = properties.concat(funcProperties, nameProps, ['effects', 'effectsOff'])
     var len = toExtract.length
     var data = Array(len)
     for (var i = 0; i < len; i++) {
@@ -123,7 +123,7 @@ function extractObject(toExtract, properties, funcProperties) {
                     obj[key] = iResult
                 } else if (key === 'effects' || key === 'effectsOff') {
                     var l = thing.length
-                    var effects = JSON.parse(JSON.stringify(Array(l))) // Not the best way, but it gets the job done
+                    var effects = JSON.parse(JSON.stringify(thing)) // Not the best way, but it gets the job done
                     for (var e = 0; e < l; e++) {
                         var effect = thing[e]
                         if (effect.func) {

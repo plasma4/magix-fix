@@ -1338,15 +1338,15 @@ G.AddData({
             if (str != 'null' && str != '') {
                 var oldStorage = G.storageObject;
                 try {
-                    G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/)
+                    G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/);
                     if (G.storageObject) {
-                        G.storageObject = G.storageObject[G.storageObject.length - 1]
+                        G.storageObject = G.storageObject[G.storageObject.length - 1];
                         if (G.storageObject) {
-                            G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
+                            G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'));
                             for (var i = 0; i < conflictingStorageObjects.length; i++) {
                                 var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
                                 var newItem = G.storageObject[key];
-                                if (oldStorage[key] != null && oldStorage[key] !== newItem) {
+                                if (oldStorage[key] == null || oldStorage[key] !== newItem) {
                                     G.dialogue.popup(function (div) {
                                         return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
                                             text: 'Yes', onclick: function () {
@@ -1362,19 +1362,19 @@ G.AddData({
                                                 G.dialogue.close();
                                             }
                                         }) + '</div>';
-                                    })
-                                    return false
+                                    });
+                                    return false;
                                 }
                             }
                         } else {
-                            G.storageObject = {}
+                            G.storageObject = {};
                         }
                     } else {
-                        G.storageObject = {}
+                        G.storageObject = {};
                     }
                 } catch (e) {
-                    console.warn("Storage data could not be obtained.")
-                    G.storageObject = oldStorage
+                    console.warn("Storage data could not be obtained.");
+                    G.storageObject = oldStorage;
                 }
                 G.Reset();
                 G.resetSettings();

@@ -29,6 +29,10 @@
             font-size: 16px;
         }
 
+        *::selection {
+            background: #ec80dd88;
+        }
+
         ::-webkit-scrollbar {
             -webkit-appearance: none;
             width: 17px;
@@ -62,11 +66,24 @@
         input,
         select {
             font-size: 30px;
+        }
+
+        h1,
+        button,
+        .main {
             user-select: none;
+        }
+
+        h3 {
+            font-size: 25px;
         }
 
         body {
             background-image: url(Magix/bgDarkRockDefault.jpg);
+        }
+
+        header {
+            text-decoration: underline;
         }
 
         .civ2 {
@@ -89,6 +106,7 @@
         }
 
         button {
+            cursor: pointer;
             border-radius: 4px;
             border: solid 1px #888;
         }
@@ -97,6 +115,10 @@
             color: #fffb;
             word-break: normal;
             white-space: pre;
+        }
+
+        .nopre {
+            white-space: normal;
         }
 
         .par {
@@ -136,6 +158,7 @@
         }
 
         .icon {
+            cursor: pointer;
             image-rendering: optimizeSpeed;
             image-rendering: -moz-crisp-edges;
             image-rendering: -o-crisp-edges;
@@ -156,6 +179,11 @@
             margin-bottom: 90px;
         }
 
+        .noclick {
+            border-radius: 1px;
+            cursor: default;
+        }
+
         strong {
             color: white;
         }
@@ -171,29 +199,31 @@
 
 <body>
     <h1>Explore Magix data</h1>
-    <input placeholder="Item name here...">
-    <select name="Item type">
-        <option value="techs">Techs</option>
-        <option value="units">Units</option>
-        <option value="resources">Resources</option>
-        <option value="traits">Traits</option>
-        <option value="policies">Policies</option>
-        <option value="achievements">Achievements</option>
-        <option value="lands">Lands</option>
-        <option value="goods">Goods</option>
-    </select>
-    <select name="Advanced settings">
-        <option>Icons and name</option>
-        <option selected>Minimal values</option>
-        <option>Some debug values</option>
-        <option>All debug values</option>
-        <option>Show property JSON</option>
-    </select>
+    <span class="main">
+        <input placeholder="Item name here...">
+        <select name="Item type">
+            <option value="techs">Techs</option>
+            <option value="units">Units</option>
+            <option value="resources">Resources</option>
+            <option value="traits">Traits</option>
+            <option value="policies">Policies</option>
+            <option value="achievements">Achievements</option>
+            <option value="lands">Lands</option>
+            <option value="goods">Goods</option>
+        </select>
+        <select name="Advanced settings">
+            <option>Icons and name</option>
+            <option selected>Minimal values</option>
+            <option>Some debug values</option>
+            <option>All debug values</option>
+            <option>Show property JSON</option>
+        </select>
+    </span>
     <br>
     <label for="a"><input type="checkbox" id="a"> Use the elf race instead of the human race</label>
     <button>Export all civ JSON</button><button>Export JSON for this category</button>
     <hr>
-    Results: <div></div>
+    <div></div>
 
     <script>
         "use strict"
@@ -221,6 +251,7 @@
             }
         })
         function changeFunc() {
+            result.removeAttribute("class")
             var category = select.value
             var checkedBox = checkbox.checked
             var obj = checkedBox ? civ2Object : civ1Object
@@ -228,7 +259,7 @@
             var inputValue = input.value.trim()
             var val = selectDebug.selectedIndex - 1
             if (val > 0) {
-                var itemsToSearch = [["displayName", "desc", "icon", "score", "visible", "subRes"], ["name", "displayName", "visible", "icon", "civ", "special", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "tutorialMesg", "chance", "id"], ["name", "displayName", "type", "tier", "visible", "icon", "civ", "special", "plural", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "tick", "getDisplayAmount", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "effectsOff", "effects", "tutorialMesg", "chance", "id", "mod", "precededBy", "leadsTo"]][Math.min(val, 2)]
+                var itemsToSearch = val === 1 ? ["name", "displayName", "visible", "icon", "civ", "special", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "tutorialMesg", "chance", "id"] : ["name", "displayName", "type", "tier", "visible", "icon", "civ", "special", "plural", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "tick", "getDisplayAmount", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "effectsOff", "effects", "tutorialMesg", "chance", "id", "mod", "precededBy", "leadsTo"]
                 var text = []
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
@@ -254,7 +285,7 @@
                     } else {
                         var thing
                         var icon = getIcon(search.icon, true, checkedBox)
-                        var str = "<u>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</u>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                        var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
                         str += "\r\n<pre>"
                         for (var t = 0; t < itemCategory.length; t++) {
                             thing = itemCategory[t]
@@ -283,11 +314,11 @@
                     }
                 }
                 if (val == 3) {
-                    var joined = text.join(",\r\n  ")
+                    var joined = "<i><strong>Results:</strong></i> \r\n" + text.join(",\r\n  ")
                     result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
                     result.className = "mono"
                 } else {
-                    result.innerHTML = text.join("-------------------------\r\n")
+                    result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("-------------------------\r\n")
                     result.removeAttribute("class")
                 }
             } else if (val == -1) {
@@ -295,7 +326,7 @@
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
                         fields: ["displayName", "desc"],
-                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "hidden", "visible"],
+                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "hidden", "visible", "id"],
                         searchOptions: {
                             boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
                             prefix: true,
@@ -310,16 +341,16 @@
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
                     var icon = getIcon(search.icon, true, checkedBox)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<u>Display name: " : "<u>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</u><div class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</header><div tabindex="0" onclick="c(' + search.id + ')" class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')
                 }
-                result.innerHTML = text.join("\r\n-------------------------\r\n")
+                result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
             } else {
                 var text = []
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
                         fields: ["displayName", "desc"],
-                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "visible"],
+                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "visible", "id"],
                         searchOptions: {
                             boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
                             prefix: true,
@@ -334,9 +365,9 @@
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
                     var icon = getIcon(search.icon, true, checkedBox)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<u>Display name: " : "<u>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</u>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : ""))
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : ""))
                 }
-                result.innerHTML = text.join("\r\n-------------------------\r\n")
+                result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
             }
         }
@@ -354,6 +385,70 @@
                 .replaceAll("#SLASH#SLASH#", "//")
                 .replaceAll("@", '</div><div class="par bulleted">')
                 .replaceAll("<>", '</div><div class="divider"></div><div class="par">') + "</div>")
+        }
+
+        function c(id) {
+            console.log(id)
+            var category = select.value
+            var civ2 = checkbox.checked
+            var objc = civ2 ? civ2Object : civ1Object
+            var obj = objc[category]
+            for (var i = 0; i < obj.length; i++) {
+                var t = obj[i]
+                if (t.id === id) {
+                    console.log(t)
+                    var tIcon = t.icon
+                    var icon = getIcon(tIcon, true, civ2)
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '' : 'Icon layout: <div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>')
+                    if (t.icon.length > 3) {
+                        var i0 = null, i1 = null
+                        for (var l = 0; l < tIcon.length; l++) {
+                            var value = tIcon[l]
+                            if (typeof value === "string") {
+                                icon = getIcon([i0, i1, value], true)
+                                text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                                i0 = null
+                                i1 = null
+                            } else if (i1 != null) {
+                                icon = getIcon([i0, value], true)
+                                text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                                i0 = null
+                                i1 = null
+                            } else if (i0 != null) {
+                                i1 = value
+                            } else {
+                                i0 = value
+                            }
+                        }
+                        if (i1) {
+                            icon = getIcon([i0, i1], true)
+                            text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                        }
+                    }
+                    text += (t.precededBy ? "<br>Preceded by: " + t.precededBy.join(", ") : "") + (t.leadsTo ? "<br>Leads to: " + t.leadsTo.join(", ") : "") + "<br>Internal ID: " + id
+                    var cost = t.cost
+                    if (cost != null) {
+                        var keys = Object.getOwnPropertyNames(cost)
+                        if (keys.length !== 0) {
+                            text += "<br>Cost: "
+                            var res = objc.resources
+                            var resLen = res.length
+                            for (var l = 0; l < keys.length; l++) {
+                                var key = keys[l]
+                                for (var o = 0; o < resLen; o++) {
+                                    if (res[o].name === key) {
+                                        text += (l === 0 ? "" : ", ") + cost[key] + " " + res[o].displayName
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    text += "<br>Effect count: " + (t.effects ? t.effects.length : "none")
+                    result.className = "nopre"
+                    result.innerHTML = text
+                }
+            }
         }
 
         function cap(str) {

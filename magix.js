@@ -6952,6 +6952,11 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 24 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'off' } },
                     { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 38.4 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'on' } },
                     { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 50, 'honeycomb': 5 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'off' } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 80, 'honeycomb': 8 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 60, 'honeycomb': 6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'off' } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 96, 'honeycomb': 9.6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 0.1 }, amount: 1, every: 4, max: 0.2, mode: 'honey', chance: 1 / 100, req: { 'beekeeping V': true, 'love of honey': 'off' } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 0.16 }, amount: 1, every: 4, max: 0.32, mode: 'honey', chance: 1 / 100, req: { 'beekeeping V': true, 'love of honey': 'on' } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
@@ -7084,7 +7089,9 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'quarry', what: { 'unknownium ore': 10 }, max: 30, mode: 'quarrydeepores' },
                     { type: 'gather', context: 'quarry', what: { 'salt': 1 }, max: 3, mode: 'quarrydeepores', chance: 1 / 6 },
                     /////
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / 50 }
+                    { type: 'mult', value: 1.1, req: { 'quarrying III': true } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / 50, req: { 'quarrying IV': false } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.00075, 0.0075, true, '[X] [people].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / 250, req: { 'quarrying IV': true } }
                 ],
                 gizmos: true,
                 req: { 'quarrying': true, 't10': false },
@@ -10383,6 +10390,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'faith': 0.05, 'happiness': 0.2 } },
                     { type: 'gather', what: { 'health': 0.15 }, req: { 'mentors of nature': true } },
+                    { type: 'gather', what: { 'health': 0.075 }, req: { 'mentors of nature II': true } },
                     { type: 'gather', what: { 'faith': 0.005 }, req: { 'druidsymbolism2': true } },
                     { type: 'gather', what: { 'happiness': 0.05 }, req: { 'druidsymbolism1': true } },
                     { type: 'gather', what: { 'faith': 0.02 }, req: { 'symbolism II': true } },
@@ -11750,7 +11758,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'farm of the sugar cane', category: 'tier1',
-                desc: '@Makes [sugar cane] farms possible. This farm will have increased upkeep cost and will need more people to run.',
+                desc: 'Getting this will make [sugar cane] farms possible.',
                 icon: [15, 4, 'magixmod', 24, 1],
                 cost: { 'insight': 495, 'wisdom': 50 },
                 req: { 'agriculture': true, 'gardening': true },
@@ -13435,7 +13443,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths IV', category: 'tier2',
-                desc: '@Expands the mathematical knowledge of scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and and generally pushing their math skills to the limit. @Improves your average citizen\'s math knowledge. @provides 5 [education] and 40 [wisdom II] //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
+                desc: '@Expands the mathematical knowledge of your scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and generally pushing their math skills to the limit. @Improves your average citizen\'s math knowledge. @provides 5 [education] and 40 [wisdom II] @Unlocks the fourth tier of a few specific techs //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
                 icon: [2, 35, 'magixmod', 8, 21, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'science': 8, 'culture II': 12 },
                 effects: [
@@ -14124,7 +14132,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'power of the faith', category: 'religion',
-                desc: 'Now the [crafting & farm rituals] bonus applies in various amounts to: @[blacksmith workshop]s (both the normal and paradise version) @[carpenter workshop]s (both the normal and paradise version) @[holy orchard]s @[artisan]s (including some subtypes)//These bonuses only work, however, when [crafting & farm rituals] is active (note that the [faith II] upkeep cost won\'t increase). @provides 5 [spirituality II]',
+                desc: 'Now the [crafting & farm rituals] bonus applies in various amounts to: @[blacksmith workshop]s (both the normal and paradise version) @[carpenter workshop]s (both the normal and paradise version) @[holy orchard]s @[artisan]s (including some subtypes)//These bonuses only work, however, when [crafting & farm rituals] is active (note that the upkeep needed won\'t increase). @provides 5 [spirituality II]',
                 icon: [24, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'insight II': 135, 'science': 5, 'faith': 26 },
                 req: { 'symbolism III': true },
@@ -15368,7 +15376,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'quarrying III', category: 'upgrade',
-                desc: 'Quarries can reach even deeper, letting them discover new resources. However, some minerals can only be gathered via quarrying. @If [prospecting III] obtained it will unlock new mode that will mainly focus on gathering these minerals.',
+                desc: 'Quarries can reach even deeper, allowing you to gain 10% more from <b>all</b> modes. @If you have [prospecting III], this will unlock a new mode that will mainly focus on gathering these minerals.',
                 icon: [12, 0, 'magixmod'],
                 cost: { 'insight II': 170, 'science': 12, 'faith II': 4, 'culture II': 2, 'influence II': 2 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
@@ -15815,7 +15823,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'even bigger university', category: 'upgrade',
-                desc: '@Unlocks the 3rd level of [university of science]. Requires 10 [victory point]s to level up. @makes [season for inventing] further reduce science costs and also causes [sabotaged knowledge] to increase the amount of required [science] slower.',
+                desc: '@Unlocks the 3rd level of the [university of science]! Requires 10 [victory point]s to level up. @Makes [season for inventing] reduce science costs more and also causes [sabotaged knowledge] to increase the amount of required [science] slower.',
                 icon: [21, 30, 'magixmod'],
                 cost: { 'insight II': 600, 'university point': 300, 'science': 80, 'culture II': 115, 'faith II': 80 },
                 req: { 'wonder \'o science': true, 'Wizard complex': true, 'bigger university': true, 'deep-rooted faith': true, 'dynamics II': true },
@@ -16270,7 +16278,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron7',
                 displayName: 'Chirus the time watcher',
-                desc: '[patron7] is all about time and passing. @This patron also symbolizes that things pass way aall the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron7] is all about time and how it passes. @This patron also symbolizes that things pass way aall the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [8, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron8': false, 'unknown patron': false, 'nonpatronage': false },
@@ -17797,7 +17805,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beekeeping III', category: 'tier1',
-                desc: 'Use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] //<small>with a better knowledge of bees, your beekeepers also feel a little safer</small>',
+                desc: 'Discover a way to use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] //<small>with a better knowledge of bees, your beekeepers also feel a little safer</small>',
                 icon: [1, 35, 'magixmod', 4, 0, 'magix2'],
                 cost: { 'insight': 1200, 'wisdom': 25 },
                 req: { 'beekeeping II': true },
@@ -18427,6 +18435,42 @@ if (getObj("civ") != "1") {
                 icon: [45, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 140 },
                 req: { 'passionate artistry': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'mentors of nature II', category: 'tier1',
+                desc: '[druid]s generate 50% more [health] now!',
+                icon: [0, 35, 'magixmod', 31, 31, 'magixmod'],
+                req: { 'eotm': true, 'trees of faith': true },
+                cost: { 'insight II': 40, 'culture II': 10 },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'beekeeping IV', category: 'tier1',
+                desc: 'Let your [firekeeper]s find the optimal strategies for keeping bees, improving how much [honey] and [honeycomb]s that you gain from [essenced hive frame]s by 20%.',
+                icon: [2, 35, 'magixmod', 4, 0, 'magix2'],
+                cost: { 'insight II': 150, 'nature essence': 125000 },
+                req: { 'maths IV': true, 'magical hive frames': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'quarrying IV', category: 'tier1',
+                desc: 'Quarries will become less dangerous, making injuries much, much less likely!',
+                icon: [2, 35, 'magixmod', 12, 0, 'magixmod'],
+                cost: { 'insight II': 200, 'science': 15, 'influence II': 20 },
+                req: { 'quarrying III': true, 'maths IV': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'beekeeping V', category: 'tier1',
+                desc: 'The final beekeeping tech... @increases your [honeycomb] gain from the <b>Collect honey and honeycombs</b> by 30% @gives you a small chance to collect some additional [honey] from <b>all</b> firekeeping modes',
+                icon: [3, 35, 'magixmod', 4, 0, 'magix2'],
+                cost: { 'insight II': 150, 'nature essence': 125000 },
+                req: { 'physics III': true, 'beekeeping IV': true },
                 effects: [
                 ],
             });
@@ -21284,7 +21328,7 @@ if (getObj("civ") != "1") {
 
                 if (G.achievByName['the fortress'].won > 5) { G.getDict("food rations").cost = { 'influence': 2 }; G.getDict("water rations").cost = { 'influence': 2 } };
                 if (G.achievByName['the fortress'].won > 6) G.gain("creativity", 2, "starting bonus");
-                var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy with elves has begun.<br>' + (G.achievByName['druidish heart'].won == 0 ? "There is something weird. It presses down on everyone and and makes breathing a little heavier...but at some point you will get used to that. (Hopefully, anyway...)" : "") + '';
+                var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy with elves has begun.<br>' + (G.achievByName['druidish heart'].won == 0 ? "There is something weird. It presses down on everyone and makes breathing a little heavier...but at some point you will get used to that. (Hopefully, anyway...)" : "") + '';
                 G.Message({ type: 'important tall', text: str, icon: [0, 3, 'c2'] });
                 G.Save();
             }
@@ -24411,7 +24455,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'conceptionist',
-                desc: '@generates [creativity] and also charges [battery of discoveries] faster than [dreamer]s, which you can use to research more advanced technologies<>A [conceptionist] spends their time observing, thinking out of the box and sharing their thoughts around. @not everyone develops such great skill, so this unit is limited: 1 [conceptionist] per 50 [population,elves]. @[wisdom rituals] and [symbolism] do not apply to this unit.',
+                desc: '@generates [creativity] and also charges the [battery of discoveries] faster than [dreamer]s, which you can use to research more advanced technologies<>A [conceptionist] spends their time observing, thinking out of the box, and sharing their thoughts with nearby elves. @Not everyone develops such great skill, so this unit is limited: 1 [conceptionist] per 50 [population,elves]. @[wisdom rituals] and [symbolism] do not apply to this unit!',
                 icon: [choose([29, 30]), 4, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
