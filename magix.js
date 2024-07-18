@@ -8390,7 +8390,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lodge of writers',
-                desc: 'There writers will write books. Sources of information contained in them are notes of people from many jobs (manuals for instance).',
+                desc: 'In these lodges, writers will write things in [empty book]s. Sources of information contained in them are notes of people from many jobs (manuals for instance).',
                 icon: [11, 13, 'magixmod'],
                 cost: { 'basic building materials': 700 },
                 use: { 'land': 1, 'worker': 7 },
@@ -12072,14 +12072,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bookcrafting', category: 'tier1',
-                desc: '[artisan] can craft books. //<small>By the way, there\'s really no hard limit to how long these descriptions can be (well, until you hit the string limit or something weird like that). Let\'s go: Konrad Wallenrod is an 1828 narrative poem, in Polish, by Adam Mickiewicz, set in the 14th-century Grand Duchy of Lithuania. Mickiewicz wrote it, while living in St. Petersburg, Russia, in protest against the late-18th-century partitioning of the Polish-Lithuanian Commonwealth by the Russian Empire, the Kingdom of Prussia, and the Habsburg Monarchy. Mickiewicz had been exiled to St. Petersburg for his participation in the Philomaths organization at Vilnius University. The poem helped inspire the Polish November 1830 Uprising against Russian rule. Though its subversive theme was apparent to most readers, the poem escaped censorship due to conflicts among the censors and, in the second edition, a prefatory homage to Tsar Nicholas I. Though Mickiewicz later disparaged the work, its cultural influence in Poland persists.<br>Anyway, how\'s your day been?</small>',
+                desc: '[artisan]s will now be able to craft [empty book,Books]. //<small>By the way, there\'s really no hard limit to how long these descriptions can be (well, until you hit the string limit or something weird like that). Let\'s go: Konrad Wallenrod is an 1828 narrative poem, in Polish, by Adam Mickiewicz, set in the 14th-century Grand Duchy of Lithuania. Mickiewicz wrote it, while living in St. Petersburg, Russia, in protest against the late-18th-century partitioning of the Polish-Lithuanian Commonwealth by the Russian Empire, the Kingdom of Prussia, and the Habsburg Monarchy. Mickiewicz had been exiled to St. Petersburg for his participation in the Philomaths organization at Vilnius University. The poem helped inspire the Polish November 1830 Uprising against Russian rule. Though its subversive theme was apparent to most readers, the poem escaped censorship due to conflicts among the censors and, in the second edition, a prefatory homage to Tsar Nicholas I. Though Mickiewicz later disparaged the work, its cultural influence in Poland persists.<br>Anyway, how\'s your day been?</small>',
                 icon: [12, 12, 'magixmod'],
                 cost: { 'insight': 325 },
                 req: { 'papercrafting': true },
             });
             new G.Tech({
                 name: 'noting', category: 'tier1',
-                desc: '[population,People] can now write notes to preseve and remember things and tasks!',
+                desc: '[population,People] can now write notes to preseve and remember things and tasks! //<small>note 48255</small>',
                 icon: [21, 6, 'magixmod'],
                 cost: { 'insight': 300 },
                 req: { 'bookcrafting': true, 'ink crafting': true },
@@ -12445,7 +12445,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'richer language', category: 'tier2',
-                desc: 'Language everyone uses for everyday life will become even richer. Your people will develop a more advanced grammar, a larger vocabulary, and more terms for describing objects and others! @provides 10 [wisdom II] //<small>This is some sign of someone really smart, isn\'t it? They have a world that has over 20 synonyms. Can you believe it?</small>',
+                desc: 'The language that everyone uses for everyday life will become even richer. Your people will develop a more advanced grammar, a larger vocabulary, and more terms for describing objects and others! @provides 10 [wisdom II] //<small>This is some sign of someone really smart, isn\'t it? They have a world that has over 20 synonyms. Can you believe it?</small>',
                 icon: [27, 7, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'eotm': true, 'language': true },
@@ -13708,7 +13708,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mining strategy', category: 'tier2',
-                desc: 'Decreases accident rate at [mine]. @Increases the efficiency of [mine] by 5%. @Applies a visual change to [mine]s.',
+                desc: 'Decreases the accident rate in [mine]s. @Increases the efficiency of [mine] by 5%. @Applies a visual change to [mine]s.',
                 icon: [17, 23, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 2 },
                 effects: [
@@ -13728,7 +13728,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'nutritious magical soil', category: 'upgrade',
-                desc: 'Increases the efficiency of [farm of withering tulips,Essence farms] by 10%. @This 10% bonus compounds with bonus from [gt6].',
+                desc: 'Increases the efficiency of [farm of withering tulips,Essence farms] by 10%. This compounds with the boost from [gt6].',
                 icon: [21, 23, 'magixmod'],
                 cost: { 'insight II': 45, 'culture II': 15, 'faith II': 3, 'influence II': 2, 'mana': 1500, 'science': 2 },
                 req: { 'policy revaluation': true, 'magical soil': true }
@@ -14215,7 +14215,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'juicy nutritious magical soil', category: 'upgrade',
-                desc: 'Increases the efficiency of [farm of withering tulips,Essence farms] by 10%. @This 10% bonus compounds with bonus from [gt6] and previous soil upgrades.',
+                desc: 'Increases the efficiency of [farm of withering tulips,Essence farms] by 10%. This compounds with the boost from [gt6] and previous soil upgrades.',
                 icon: [31, 11, 'magixmod'],
                 cost: { 'insight II': 190, 'culture II': 20, 'juices': 1050, 'culture': 188 },
                 req: { 'policy revaluation': true, 'nutritious magical soil': true, 'magical presence': true }
@@ -16097,9 +16097,9 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'valentine3',
-                displayName: 'Meat of lovefalling',
+                displayName: 'Meat of falling love',
                 icon: [5, 18, 'seasonal'],
-                effects: [{ type: 'provide res', what: { 'cooked meat': 70 } }],
+                effects: [{ type: 'provide res', what: { 'cooked meat': 60 } }],
                 req: { 'tribalism': false },
                 category: 'misc'
             });
@@ -16113,7 +16113,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'love grows around us', category: 'seasonal', displayName: '<font color="pink">Love grows around us</font>',
-                desc: '@One person that loves a lot of other people is enough...Wait ' + G.getName('ruler') + '! You are ruler of the tribe and love people a lot. And they also love you. //Let\'s plant the seeds of <b>The festival of love</b> (called Valentine\'s day). Will unlock you [love] - a special thing that is key of that event AND can bring you some rewards if level of [love] is decent enough.',
+                desc: '@One person that loves a lot of other people is enough...Wait ' + G.getName('ruler') + '! You are ruler of the tribe and love people a lot. And they also love you. //Let\'s plant the seeds of <b>The festival of love</b> (called Valentine\'s day). Getting this will unlock [love], which is important to this event and may even provide some rewards if your [love] level is high enough.',
                 icon: [18, 17, 'seasonal'],
                 cost: { 'insight': 240, 'culture': 45, 'faith': 5, 'research': 80 },
                 req: { 'culture of celebration': true, 'philosophy': true, 'tribalism': false },
@@ -18125,7 +18125,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art of cooking III', category: 'tier1',
-                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb], [fruit], or [vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s).',
+                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb], [fruit], or [vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s). //They will switch what [food] that they use every ten days.',
                 icon: [1, 35, 'magixmod', 23, 13, 'magixmod'],
                 cost: { 'insight': 750, 'influence': 150 },
                 req: { 'spicy foods III': true },
@@ -18496,7 +18496,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'prospecting IV', category: 'tier1',
-                desc: '@[mine]s will now be able to get rare [valuable gems] from your [mine]s @unlocks new techs related to [carver]s',
+                desc: '@[mine]s will now be able to get rare [valuable gems] @unlocks new techs related to [carver]s',
                 icon: [2, 35, 'magixmod', 11, 1, 'magixmod'],
                 cost: { 'insight II': 300, 'culture II': 100, 'science': 20 },
                 req: { 'prospecting III': true, 'eota': true },
@@ -18627,7 +18627,7 @@ if (getObj("civ") != "1") {
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'drinking exotic juices');
                         G.gain('health', spent * 0.2, 'drinking exotic juices');
                         changeHappiness(spent * 0.9, 'drinking exotic juices');
-                        G.gain('spoiled juices', randomFloor(spent * 0.36), 'decay');
+                        G.gain('spoiled juices', randomFloor(spent * 0.32), 'decay');
                     }
                 },
             });
@@ -26047,7 +26047,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'drinking stability',
-                desc: '@elves drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need several cups of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
+                desc: '@the amount that elves drink isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need several cups of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
                 icon: [10, 15, 'magixmod', 30, 17, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 60,
@@ -26057,7 +26057,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'unstable drinking habits',
-                desc: '@elves drinkage is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits //<small>Maybe your elves just like switching things up every so often...</small>',
+                desc: '@the amount that elves drink is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less but deriving less joy from drinking @5% more deriving more joy from drinking <> @may unlock more drinking habit traits //<small>Maybe your elves just like switching things up every so often...</small>',
                 icon: [9, 15, 'magixmod', 30, 18, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 70,
@@ -26067,7 +26067,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'unstable consumption habits',
-                desc: '@elves general consumption is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less and deriving less joy from consumption @5% more and deriving joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>//<small>variety in its true form</small>',
+                desc: '@the amount that elves eat is fluid, meaning that it may change over time. The consumption modifier will switch every so often between: @5% less and deriving less joy from consumption @5% more and deriving joy from consumption @2.5% more and not affecting [happiness] @2.5% less and not affecting [happiness]<>//<small>variety in its true form</small>',
                 icon: [9, 15, 'magixmod', 30, 19, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 250,

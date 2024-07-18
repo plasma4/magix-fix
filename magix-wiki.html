@@ -438,7 +438,7 @@
                         text += "<br>Effect count: " + e.length + " (" + funcs + (funcs === 1 ? " function, " : " functions, ") + convert + (convert === 1 ? " conversion of items, " : " conversions of items, ") + gather + (gather === 1 ? " thing to gather, " : " things to gather, ") + mult + (mult === 1 ? " multiplier, " : " multipliers, ") + provided + (provided === 1 ? " resource provider)" : " resource providers)")
                         if (provided > 0) {
                             text += "<br>Provides: "
-                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, "what", ...noticeEffects(e, "provide", 1, "what"))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
+                            var provides = Object.assign(noticeEffects(e, "provide res", 1, "what".concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
                             text += parseRes(objc, provides)
                         }
                     }
