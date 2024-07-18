@@ -408,44 +408,136 @@
                                 i0 = null
                                 i1 = null
                             } else if (i1 != null) {
-                                icon = getIcon([i0, value], true, civ2)
+                                icon = getIcon([i0, i1], true, civ2)
                                 text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
-                                i0 = null
+                                i0 = value
                                 i1 = null
-                            } else if (i0 != null) {
+                            } else if (i0 !== null) {
                                 i1 = value
                             } else {
                                 i0 = value
                             }
                         }
-                        if (i1) {
+                        if (i1 !== null) {
                             icon = getIcon([i0, i1], true, civ2)
                             text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
                         }
                     }
                     text += (t.precededBy ? "<br>Preceded by: " + t.precededBy.join(", ") : "") + (t.leadsTo ? "<br>Leads to: " + t.leadsTo.join(", ") : "") + "<br>Internal ID: " + id
                     var cost = t.cost
-                    if (cost != null) {
-                        var keys = Object.getOwnPropertyNames(cost)
-                        if (keys.length !== 0) {
-                            text += "<br>Cost: "
-                            var res = objc.resources
-                            var resLen = res.length
-                            for (var l = 0; l < keys.length; l++) {
-                                var key = keys[l]
-                                for (var o = 0; o < resLen; o++) {
-                                    if (res[o].name === key) {
-                                        text += (l === 0 ? "" : ", ") + cost[key] + " " + res[o].displayName
-                                        break
+                    if (cost != null && Object.getOwnPropertyNames(cost).length !== 0) {
+                        text += "<br>Cost: " + parseRes(objc, cost)
+                    }
+                    var e = t.effects
+                    if (e) {
+                        var funcs = noticeEffects(e, "function", 0) + noticeEffects(e, "tick", 0)
+                        var convert = noticeEffects(e, "convert", 0)
+                        var gather = noticeEffects(e, "gather", 0)
+                        var mult = noticeEffects(e, "mult", 0)
+                        var provided = noticeEffects(e, "provide", 0) + noticeEffects(e, "provide res", 0)
+                        text += "<br>Effect count: " + e.length + " (" + funcs + (funcs === 1 ? " function, " : " functions, ") + convert + (convert === 1 ? " conversion of items, " : " conversions of items, ") + gather + (gather === 1 ? " thing to gather, " : " things to gather, ") + mult + (mult === 1 ? " multiplier, " : " multipliers, ") + provided + (provided === 1 ? " resource provider)" : " resource providers)")
+                        if (provided > 0) {
+                            text += "<br>Provides: "
+                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, 'what', ...noticeEffects(e, "provide", 1, 'what'))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
+                            text += parseRes(objc, provides)
+                        }
+                        if (category === "techs" || category === "traits") {
+                            var indirect = noticeEffects(e, t.name, 2, objc)
+                            if (indirect.length > 0) {
+                                text += "<br>Unlocks: " + indirect.join(", ")
+                            }
+                            indirect = noticeEffects(e, t.name, 3, objc)
+                            if (indirect.length > 0) {
+                                text += "<br>Causes effects for: " + indirect.join(", ")
+                            }
+                        }
+                    }
+                    result.className = "nopre"
+                    result.innerHTML = text
+                }
+            }
+        }
+
+        function parseRes(obj, resToSearch) {
+            var keys = Object.getOwnPropertyNames(resToSearch)
+            if (keys.length !== 0) {
+                var text = ""
+                var res = obj.resources
+                var resLen = res.length
+                for (var l = 0; l < keys.length; l++) {
+                    var key = keys[l]
+                    for (var o = 0; o < resLen; o++) {
+                        if (res[o].name === key) {
+                            text += (l === 0 ? "" : ", ") + resToSearch[key] + " " + res[o].displayName
+                            break
+                        }
+                    }
+                }
+                return text
+            }
+            return ""
+        }
+
+        function noticeEffects(effects, type, mode, specificProperty) {
+            if (mode === 0) { // Determine the amount of effects of this type
+                var num = 0
+                for (var i = 0; i < effects.length; i++) {
+                    var e = effects[i]
+                    if (e.type === type) {
+                        num++
+                    }
+                }
+                return num
+            } else if (mode === 1) { // Return all effects of this type, returning a specific property in it if specified
+                var result = []
+                for (var i = 0; i < effects.length; i++) {
+                    var e = effects[i]
+                    if (e.type === type) {
+                        result.push(specificProperty ? e[specificProperty] : e)
+                    }
+                }
+                return result
+            } else if (mode === 2) { // Search for something specific being a requirement of something else, using specificProperty as the data object
+                var result = []
+                var toIterateOver = ["techs", "units", "traits", "policies"]
+                for (var n = 0; n < 4; n++) {
+                    var things = specificProperty[toIterateOver[n]]
+                    for (var i = 0; i < things.length; i++) {
+                        var thing = things[i]
+                        var req = thing.req
+                        if (req && req[type]) {
+                            result.push(thing.displayName)
+                            break
+                        }
+                    }
+                }
+                return result
+            } else if (mode === 3) { // Search for something specific being a requirement of something else, using specificProperty as the data object, but specifically for effects
+                var result = []
+                var toIterateOver = ["techs", "units", "traits", "policies"]
+                for (var n = 0; n < 4; n++) {
+                    var things = specificProperty[toIterateOver[n]]
+                    for (var i = 0; i < things.length; i++) {
+                        var thing = things[i]
+                        var effects = thing.effects
+                        if (thing.effects) {
+                            var firstTime = false
+                            for (var e = 0; e < effects.length; e++) {
+                                var effect = effects[e]
+                                var req = effect.req
+                                if (req && req[type]) {
+                                    if (effect.mode) {
+                                        result.push(thing.displayName + ' (for mode ID <span class="mono">' + effect.mode + "</span>)")
+                                    } else if (firstTime) {
+                                        firstTime = false
+                                        result.push(thing.displayName)
                                     }
                                 }
                             }
                         }
                     }
-                    text += "<br>Effect count: " + (t.effects ? t.effects.length : "none")
-                    result.className = "nopre"
-                    result.innerHTML = text
                 }
+                return result
             }
         }
 

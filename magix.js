@@ -9017,7 +9017,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'mine of the plain island',
                 displayName: 'Mine of the Island',
-                desc: '@can mine new resource such as [cobalt ore]. They will be able to mine few other resources.',
+                desc: 'Can mine new resources such as [cobalt ore]. They will be able to mine few other resources.',
                 icon: [9, 2, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 use: { 'land of the Plain Island': 5 },
@@ -14613,7 +14613,7 @@ if (getObj("civ") != "1") {
                 cost: {},
                 effects: [
                     {
-                        type: 'func', func: function () {
+                        type: 'function', func: function () {
                             G.getDict('blacksmith workshop').use = { 'land': 0.85 }
                             G.getDict('furnace').use = { 'land': 0.85 }
                             G.getDict('kiln').use = { 'land': 0.85 }
