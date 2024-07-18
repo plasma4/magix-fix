@@ -438,18 +438,22 @@
                         text += "<br>Effect count: " + e.length + " (" + funcs + (funcs === 1 ? " function, " : " functions, ") + convert + (convert === 1 ? " conversion of items, " : " conversions of items, ") + gather + (gather === 1 ? " thing to gather, " : " things to gather, ") + mult + (mult === 1 ? " multiplier, " : " multipliers, ") + provided + (provided === 1 ? " resource provider)" : " resource providers)")
                         if (provided > 0) {
                             text += "<br>Provides: "
-                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, 'what', ...noticeEffects(e, "provide", 1, 'what'))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
+                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, "what", ...noticeEffects(e, "provide", 1, "what"))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
                             text += parseRes(objc, provides)
                         }
-                        if (category === "techs" || category === "traits") {
-                            var indirect = noticeEffects(e, t.name, 2, objc)
-                            if (indirect.length > 0) {
-                                text += "<br>Unlocks: " + indirect.join(", ")
-                            }
-                            indirect = noticeEffects(e, t.name, 3, objc)
-                            if (indirect.length > 0) {
-                                text += "<br>Causes effects for: " + indirect.join(", ")
-                            }
+                    }
+                    if (category === "techs" || category === "traits") {
+                        var indirect = noticeEffects(e, t.name, 2, objc, "req")
+                        if (indirect.length > 0) {
+                            text += "<br>Unlocks: " + indirect.join(", ")
+                        }
+                        indirect = noticeEffects(e, t.name, 2, objc, "modes")
+                        if (indirect.length > 0) {
+                            text += "<br>Unlocks modes for: " + indirect.join(", ")
+                        }
+                        indirect = noticeEffects(e, t.name, 3, objc)
+                        if (indirect.length > 0) {
+                            text += "<br>Causes effects for: " + indirect.join(", ")
                         }
                     }
                     result.className = "nopre"
@@ -478,7 +482,7 @@
             return ""
         }
 
-        function noticeEffects(effects, type, mode, specificProperty) {
+        function noticeEffects(effects, type, mode, specificData, propertyKey) {
             if (mode === 0) { // Determine the amount of effects of this type
                 var num = 0
                 for (var i = 0; i < effects.length; i++) {
@@ -493,35 +497,53 @@
                 for (var i = 0; i < effects.length; i++) {
                     var e = effects[i]
                     if (e.type === type) {
-                        result.push(specificProperty ? e[specificProperty] : e)
+                        result.push(specificData ? e[specificData] : e)
                     }
                 }
                 return result
-            } else if (mode === 2) { // Search for something specific being a requirement of something else, using specificProperty as the data object
+            } else if (mode === 2) { // Search for something specific being a requirement of something else, using specificData as the data object and propertyKey for the key
                 var result = []
-                var toIterateOver = ["techs", "units", "traits", "policies"]
-                for (var n = 0; n < 4; n++) {
-                    var things = specificProperty[toIterateOver[n]]
+                var toIterateOver = ["units", "policies"]
+                for (var n = 0; n < 2; n++) {
+                    var things = specificData[toIterateOver[n]]
                     for (var i = 0; i < things.length; i++) {
                         var thing = things[i]
-                        var req = thing.req
-                        if (req && req[type]) {
-                            result.push(thing.displayName)
-                            break
+                        var req = thing[propertyKey]
+                        if (req) {
+                            if (propertyKey === "req") {
+                                if (req[type]) {
+                                    result.push(thing.displayName)
+                                    break
+                                }
+                            } else {
+                                var props = Object.getOwnPropertyNames(req)
+                                var success = false
+                                for (var m = 0; m < props.length; m++) {
+                                    var r = req[props[m]].req
+                                    if (r && r[type]) {
+                                        result.push(thing.displayName + ' (with ID <span class="mono">' + props[m] + "</span>)")
+                                        success = true
+                                        break
+                                    }
+                                }
+                                if (success) {
+                                    break
+                                }
+                            }
                         }
                     }
                 }
                 return result
-            } else if (mode === 3) { // Search for something specific being a requirement of something else, using specificProperty as the data object, but specifically for effects
+            } else if (mode === 3) { // Search for something specific being a requirement of something else, using specificData as the data object, but specifically for effects
                 var result = []
                 var toIterateOver = ["techs", "units", "traits", "policies"]
                 for (var n = 0; n < 4; n++) {
-                    var things = specificProperty[toIterateOver[n]]
+                    var things = specificData[toIterateOver[n]]
                     for (var i = 0; i < things.length; i++) {
                         var thing = things[i]
                         var effects = thing.effects
-                        if (thing.effects) {
-                            var firstTime = false
+                        if (effects) {
+                            var firstTime = true
                             for (var e = 0; e < effects.length; e++) {
                                 var effect = effects[e]
                                 var req = effect.req

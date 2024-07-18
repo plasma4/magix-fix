@@ -1274,7 +1274,7 @@ if (getObj("civ") != "1") {
                 }
             }
             G.seasonalContent = function () {
-                G.getDict('xmas1').desc = 'The spirits of Christmas thank your [artisan]s for crafting lights, ornaments, and decors that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
+                G.getDict('xmas1').desc = 'The spirits of Christmas thank your [artisan]s for crafting lights, ornaments, and neat decorations that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [artisan]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
                 G.getDict('xmas2').desc = 'The spirits of Christmas thank your [clothier]s for weaving and sewing festive clothing, bringing Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [clothier]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
                 G.getDict('xmas3').desc = 'The spirits of Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
                 G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
@@ -6753,7 +6753,7 @@ if (getObj("civ") != "1") {
                     'wood statuettes': { name: 'Carve wooden statuettes', icon: [13, 1, 'magixmod'], desc: 'Your carver will now use carve statuettes out of a [log].', use: { 'knapped tools': 1 } },
                     'gdablockscraft': { name: 'Cut other stones', icon: [2, 12, 'magixmod'], desc: 'Your carver will craft [various cut stones] out of 10 [various stones] each.', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
                     'gdablockssmash': { name: 'Smash other stone blocks', icon: [3, 12, 'magixmod'], desc: 'Your carver will smash a single [various cut stones,Various cut stone] into 9 [various stones].', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
-                    'vgems': { name: 'Carve valuable gem blocks', icon: [46, 0, 'magix2'], desc: 'Slowly turn 10 [valuable gems] into 1 [valuable gem block]. Has a chance to fail!', use: { 'stone tools': 1 }, req: { 'culture of gems': true } },
+                    'vgems': { name: 'Carve valuable gem blocks', icon: [46, 0, 'magix2'], desc: 'Slowly turn 10 [valuable gems] into 1 [valuable gem block], which also provides some [happiness]. Has a chance to fail!', use: { 'stone tools': 1 }, req: { 'culture of gems': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'statuette': 1 }, every: 5, mode: 'stone statuettes' },
@@ -6764,8 +6764,8 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'log': 1 }, into: { 'wooden statuette': 1, 'scobs': 3 }, every: 7, mode: 'wood statuettes' },
                     { type: 'convert', from: { 'various stones': 10 }, into: { 'various cut stones': 1 }, every: 5, mode: 'gdablockscraft' },
                     { type: 'convert', from: { 'various cut stones': 1 }, into: { 'various stones': 9 }, every: 5, mode: 'gdablockssmash' },
-                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'culture II': 0.001 }, every: 15, chance: 8 / 10, mode: 'vgems', req: { 'culture of gems II': false } },
-                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'culture II': 0.002 }, every: 15, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems II': true } },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.001 }, every: 15, chance: 8 / 10, mode: 'vgems', req: { 'culture of gems II': false } },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.002 }, every: 15, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems II': true } },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
                     { type: 'mult', value: 0.95, req: { 'dt3': true } },
                     { type: 'mult', value: 1.03, req: { 'inspirated carvers': true, 'moderation': true } },
@@ -9258,6 +9258,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'potion pot': 1, 'water': 0.75, 'muddy water': 0.05, 'herb': 0.1 }, into: { 'mundane water pot': 1 }, every: 4, mode: 'mundanewater' },
                     { type: 'convert', from: { 'potion pot': 1, 'water': 0.8, 'salt': 0.2, 'herb': 0.1 }, into: { 'salted water pot': 1 }, every: 4, mode: 'saltwater' },
                     { type: 'convert', from: { 'potion pot': 1, 'water': 0.8, 'salt': 0.02, 'fire pit': 0.12 }, into: { 'bubbling water pot': 1 }, every: 4, mode: 'bubblingwater' },
+                    { type: 'mult', value: 1.5, req: { 'Improved alchemy techniques': true } },
                     { type: 'mult', value: 3, req: { 'science blessing': true } },
                 ],
                 category: 'alchemy',
@@ -9353,7 +9354,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'waste', chance: 0.001 / 1000 },
                     { type: 'convert', from: { 'leather': 5 }, into: { 'dried leather': 5 }, every: 20 },
-                    { type: 'mult', value: 2, req: { 'more capacious racks': true } },
+                    { type: 'mult', value: 3, req: { 'more capacious racks': true } },
                 ],
                 req: { 'weaving II': true, 't10': false },
                 category: 'crafting',
@@ -9694,6 +9695,7 @@ if (getObj("civ") != "1") {
                 limitPer: { 'population': 400 },
                 effects: [
                     { type: 'gather', what: { 'happiness': 0.28 } },
+                    { type: 'gather', what: { 'happiness': 0.28 }, req: { 'music instruments II': true } },
                     { type: 'gather', what: { 'culture': 0.125 } },
                     { type: 'gather', what: { 'culture II': 0.000004 }, req: { 'cultural people': true } },
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
@@ -13482,7 +13484,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'science blessing', category: 'tier2',
-                desc: '@[guru]s generate 50% more [science] and [insight]. @provides 2 bonus [science] //<small>I\'ve gotten blessed with more knowledge!</small>',
+                desc: '@[guru]s and [transcendentalist]s generate 50% more. @Various alchemy stands will operate thrice as fast. @provides 2 bonus [science] //<small>I\'ve gotten blessed with more knowledge!</small>',
                 icon: [0, 35, 'magixmod', 29, 5, 'magixmod'],
                 cost: { 'insight II': 5, 'mana': 500 },
                 req: { 'science master': true },
@@ -13523,7 +13525,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'more experienced healers', category: 'upgrade',
-                desc: 'All [healer]s are more efficient. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [healer]s will work 3% more efficient. <>If they have chosen [caretaking], then [healer]s will work 9% more efficient.',
+                desc: 'All [healer]s are more efficient. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [healer]s will work 3% more efficient. <>If they have chosen [caretaking], then [healer]s will work 6% more efficient.',
                 icon: [14, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
                 req: { 'bigger kilns': true }
@@ -13537,6 +13539,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'inspirated carvers', category: 'upgrade',
+                displayName: 'More inspired carvers',
                 desc: '[carver]s are more efficient. <>This technology will give you a bonus depending on the path your people have chosen. <>If they have chosen [moderation], then [carver]s will work 3% more efficient. <>If they have chosen [caretaking], then [carver]s will work 6% more efficient.',
                 icon: [16, 21, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 5 },
@@ -13551,7 +13554,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'more capacious racks', category: 'upgrade',
-                desc: '[drying rack] is thrice as efficient. //<small>...</small>',
+                desc: '[drying rack]s become thrice as efficient. //<small>...</small>',
                 icon: [18, 21, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'caretaking': true, 'magical soil': true }
@@ -13869,7 +13872,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Improved alchemy techniques', category: 'upgrade',
-                desc: '[basic brewing stand]s will become thrice as efficient. //<small>why thrice? That\'s work beyond limits</small>',
+                desc: '[basic brewing stand]s will become 50% more efficient. //<small>but how do these work</small>',
                 icon: [16, 23, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 7, 'culture II': 23 },
                 req: { 'camp-cooking': true },
@@ -17423,7 +17426,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'imprisonment III', category: 'tier2',
-                desc: 'The chance for [prisoner]s escaping [prison] is thrice as low, but each [prison] will use 20 more [worker]s for tighter security. Also changes what your [prison]s look like.',
+                desc: 'The chance for [prisoner]s escaping a [prison] is lowered by quite a bit, but each [prison] will use 20 more [worker]s for tighter security. Also changes what your [prison]s look like.',
                 icon: [1, 35, 'magixmod', 4, 16, 'magixmod'],
                 cost: { 'insight II': 35, 'science': 5 },
                 req: { 'leaves of wisdom': true, 'imprisonment II': true },
@@ -17438,7 +17441,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'sharp edges',
-                desc: '@rate of [prison] escapes is reduced by a quarter. //<small>Ouchie!</small>',
+                desc: '@the rate of [prison] escapes is reduced by a quarter //<small>Ouchie!</small>',
                 icon: [6, 16, 'magixmod'],
                 cost: { 'culture': 100 },
                 category: 'short',
@@ -17448,7 +17451,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fragile bars',
-                desc: '@rate of [prison] escapes is increased by a quarter. //<small>If these bars are made of sticks it is no wonder why they can flee just like that...</small>',
+                desc: '@the rate of [prison] escapes is increased by a quarter //<small>If these bars are made of sticks it is no wonder why they can flee just like that...</small>',
                 icon: [5, 16, 'magixmod'],
                 cost: { 'culture': 100 },
                 category: 'short',
@@ -17498,7 +17501,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'drinking stability',
-                desc: '@people\'s drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need 2 liters of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
+                desc: '@people\'s drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need several cups of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
                 icon: [10, 15, 'magixmod', 34, 34, 'magixmod'],
                 cost: { 'culture': 7.5 },
                 chance: 60,
@@ -18540,6 +18543,14 @@ if (getObj("civ") != "1") {
                         }
                     }
                 ],
+            });
+            new G.Tech({
+                name: 'music instruments II', category: 'tier2',
+                displayName: 'Musical instruments II',
+                desc: '[musician]s generate twice as much [happiness] with improved instruments and ideas! //<small>time to compose a song</small>',
+                icon: [0, 35, 'magixmod', 29, 18, 'magixmod'],
+                cost: { 'insight II': 200, 'culture II': 75 },
+                req: { 'passionate artistry': true },
             });
 
             new G.Res({
@@ -20047,7 +20058,7 @@ if (getObj("civ") != "1") {
             });
             new G.Land({
                 name: 'badlands',
-                names: ['Badlands,Mesa'],
+                names: ['Badlands', 'Mesa'],
                 goods: [
                     { type: 'dead tree', chance: 0.9, min: 1 / 3, max: 2.5 },
                     { type: ['dead grass', 'grass'], chance: 0.4 },
@@ -20144,7 +20155,7 @@ if (getObj("civ") != "1") {
             });
             new G.Land({
                 name: 'beach',
-                names: ['Beach'],
+                names: ['Beach', 'Sandy beach', 'Volcanic beach'],
                 modifier: true,
                 goods: [
                     { type: 'saltwater fish', min: 0.3, max: 1 },
@@ -26016,7 +26027,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dry throats',
-                desc: '@elves drink 15% less [water], but derive less joy from drinking. @may unlock more drinking habit traits //<small>Don\'t drink less than 2 liters of water daily.</small>',
+                desc: '@elves drink 15% less [water], but derive less joy from drinking. @may unlock more drinking habit traits //<small>Make sure to drink several of water daily. (You don\'t truly need several cups, actually; you\'ll get quite a bit of water from the other things you consume.)</small>',
                 icon: [3, 12, 30, 17, 'c2'],
                 cost: { 'gentility': 15, 'discernment': 2 },
                 chance: 40,
@@ -26036,7 +26047,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'drinking stability',
-                desc: '@elves drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need 2 liters of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
+                desc: '@elves drinkage isn\'t affected by this trait in any way. @may unlock more drinking habit traits //<small>They simply need several cups of water per day to be happy. Just watch them, they don\'t need more or less.</small>',
                 icon: [10, 15, 'magixmod', 30, 17, 'c2'],
                 cost: { 'gentility': 15 },
                 chance: 60,
@@ -27336,7 +27347,7 @@ if (getObj("civ") != "1") {
             });
             new G.Land({
                 name: 'beach',
-                names: ['Beach'],
+                names: ['Beach', 'Sandy beach', 'Volcanic beach'],
                 modifier: true,
                 goods: [
                     { type: 'saltwater fish', min: 0.3, max: 1 },
