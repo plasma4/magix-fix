@@ -6753,6 +6753,7 @@ if (getObj("civ") != "1") {
                     'wood statuettes': { name: 'Carve wooden statuettes', icon: [13, 1, 'magixmod'], desc: 'Your carver will now use carve statuettes out of a [log].', use: { 'knapped tools': 1 } },
                     'gdablockscraft': { name: 'Cut other stones', icon: [2, 12, 'magixmod'], desc: 'Your carver will craft [various cut stones] out of 10 [various stones] each.', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
                     'gdablockssmash': { name: 'Smash other stone blocks', icon: [3, 12, 'magixmod'], desc: 'Your carver will smash a single [various cut stones,Various cut stone] into 9 [various stones].', use: { 'knapped tools': 1 }, req: { 'masonry': true } },
+                    'vgems': { name: 'Carve valuable gem blocks', icon: [46, 0, 'magix2'], desc: 'Slowly turn 10 [valuable gems] into 1 [valuable gem block]. Has a chance to fail!', use: { 'stone tools': 1 }, req: { 'culture of gems': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'stone': 1 }, into: { 'statuette': 1 }, every: 5, mode: 'stone statuettes' },
@@ -6763,6 +6764,8 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'log': 1 }, into: { 'wooden statuette': 1, 'scobs': 3 }, every: 7, mode: 'wood statuettes' },
                     { type: 'convert', from: { 'various stones': 10 }, into: { 'various cut stones': 1 }, every: 5, mode: 'gdablockscraft' },
                     { type: 'convert', from: { 'various cut stones': 1 }, into: { 'various stones': 9 }, every: 5, mode: 'gdablockssmash' },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'culture II': 0.001 }, every: 15, chance: 8 / 10, mode: 'vgems', req: { 'culture of gems II': false } },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'culture II': 0.002 }, every: 15, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems II': true } },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
                     { type: 'mult', value: 0.95, req: { 'dt3': true } },
                     { type: 'mult', value: 1.03, req: { 'inspirated carvers': true, 'moderation': true } },
@@ -7120,7 +7123,7 @@ if (getObj("civ") != "1") {
                     'dinium': { name: 'Dinium', icon: [11, 5, 'magixmod'], desc: 'Mine for [dinium ore] with tripled efficiency.', req: { 'prospecting III': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'nickel': { name: 'Nickel', icon: [9, 12, 'magixmod'], desc: 'Mine for [nickel ore] with five times efficiency.', req: { 'prospecting II': true }, use: { 'worker': 3, 'metal tools': 3 } },
                     'ostones': { name: 'Other stones', icon: [3, 12, 'magixmod'], desc: 'Mine for [various stones] with tripled efficiency.', req: { 'prospecting II': true }, use: { 'worker': 3, 'metal tools': 3 } },
-                    'platinum': { name: 'Platinum', icon: [8, 12, 'magixmod'], desc: 'Mine for [platinum ore]. Exclusive to this specific trial.', req: { 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } }
+                    'platinum': { name: 'Platinum', icon: [8, 12, 'magixmod'], desc: 'Mine for [platinum ore]. Exclusive to this specific trial.', req: { 't5': true, 'prospecting': true }, use: { 'worker': 3, 'metal tools': 3 } }
                 },
                 effects: [
                     { type: 'gather', context: 'mine', amount: 10, max: 30, mode: 'any' },
@@ -9753,7 +9756,7 @@ if (getObj("civ") != "1") {
                 wideIcon2: [7, 3, 'magixmod'],
                 icon: [29, 29, 'magixmod'],
                 tick: function (me, tick) {
-                    G.getDict('plain island portal').desc = '@opens a portal to a huge <b>' + islandName() + '</b>. It is a creation made of ideas from various dreams and wizards.//Your dream comes real! You will recieve some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.'
+                    G.getDict('plain island portal').desc = '@opens a portal to a huge <b>new island</b> with new units and techs! It is a creation built upon the ideas taken from various dreams and wizards.//Your dream comes real! You will recieve some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.'
                 },
                 wonder: '.',
                 cost: { 'marble': 100, 'gems': 10 },
@@ -9784,7 +9787,7 @@ if (getObj("civ") != "1") {
                 type: 'portal',
             });
             new G.Unit({
-                name: 'underworld', displayName: '<font color="#f70054">Underworld</font>',
+                name: 'underworld', displayName: '<font color="#d37220">Underworld</font>',
                 desc: 'Now you may enter the Underworld! A new creepy, unstable, and dangerous world will become open for you!//<small>fun</small>',
                 wideIcon: [7, 5, 'magixmod'],
                 cost: { 'precious building materials': 35000, 'insight': 1500, 'faith': 250, 'fire essence': 95000, 'water essence': 47500, 'dark essence': 157500, 'wind essence': 27500, 'lightning essence': 37750, 'nature essence': 10750 },
@@ -18366,7 +18369,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'eota',
                 displayName: 'Evolution of the arts',
-                desc: 'Don\'t worry; this research won\'t make anything too much harder! @from now on, you will need to use [culture II] to roll or reroll new technologies @more techs will be avaliable @although these new techs will cost a lot of [culture II], [the outstander]s will be able to provide some [inspiration II] now',
+                desc: 'Don\'t worry; this research won\'t involve as many changes as [eotm]! @from now on, you will need to use [culture II] to roll or reroll new technologies @more techs will be avaliable @although these new techs will cost a lot of [culture II], [the outstander]s will be able to provide some [inspiration II] now',
                 icon: [39, 0, 'magix2'],
                 cost: { 'culture II': 30 },
                 chance: 40,
@@ -18374,6 +18377,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
+                            // Update outstanders so that this trait works properly
                             for (var i = 0; i < G.unitsOwned.length; i++) {
                                 if (G.unitsOwned[i].unit.name == "the outstander") {
                                     var unit = G.unitsOwned[i]
@@ -18485,6 +18489,56 @@ if (getObj("civ") != "1") {
                 req: { 'mentors of nature II': true, 'eota': true },
                 cost: { 'insight II': 40, 'culture II': 10 },
                 effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'prospecting IV', category: 'tier1',
+                desc: '@[mine]s will now be able to get rare [valuable gems] from your [mine]s @unlocks new techs related to [carver]s',
+                icon: [2, 35, 'magixmod', 11, 1, 'magixmod'],
+                cost: { 'insight II': 300, 'culture II': 100, 'science': 20 },
+                req: { 'prospecting III': true, 'eota': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('warm rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('tundra rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('ice desert rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('wet rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('lush rocky substrate').res['mine']['valuable gems'] = 0.0002;
+                            G.getDict('badlands substrate').res['mine']['valuable gems'] = 0.0004;
+                        }
+                    }
+                ],
+            });
+            new G.Tech({
+                name: 'culture of gems', category: 'tier1',
+                desc: '@[carver]s will now be able to create [valuable gem block]s from [valuable gems], which may be used as decorations @while creating these blocks, [carver]s will get some [culture II] @provides 10 [inspiration II]',
+                icon: [47, 0, 'magix2'],
+                cost: { 'insight II': 100, 'culture II': 125, 'faith II': 20, 'science': 10 },
+                req: { 'prospecting IV': true, 'passionate artistry': true },
+                effects: [
+                    { type: 'provide res', what: { 'inspiration II': 10 } },
+                ],
+            });
+            new G.Tech({
+                name: 'culture of gems II', category: 'tier1',
+                desc: '@[carver]s generate twice as much [culture II] from making [valuable gem block]s now and are much less likely to fail when crafting one @[valuable gems] are mined 10% more often',
+                icon: [48, 0, 'magix2'],
+                cost: { 'insight II': 550, 'culture II': 150 },
+                req: { 'culture of gems': true, 'art shows': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('warm rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('tundra rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('ice desert rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('wet rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('lush rocky substrate').res['mine']['valuable gems'] = 0.0002 * 1.1;
+                            G.getDict('badlands substrate').res['mine']['valuable gems'] = 0.0004 * 1.1;
+                        }
+                    }
                 ],
             });
 
@@ -18629,6 +18683,20 @@ if (getObj("civ") != "1") {
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     G.pseudoGather(G.getRes('culture II'), randomFloor(spent));
                 },
+            });
+            new G.Res({
+                name: 'valuable gems',
+                desc: 'These are extremely expensive and hard-to-find [valuable gems,Gems] with a unique color, clarity, and look. Can be processed into [valuable gem block,Blocks]!',
+                icon: [46, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'build',
+            });
+            new G.Res({
+                name: 'valuable gem block',
+                desc: 'These have unique colors and refract light in all directions. These might be used in some advanced constructions!',
+                icon: [49, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'build',
             });
 
 

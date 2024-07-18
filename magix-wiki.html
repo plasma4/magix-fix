@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magix data explorer</title>
+    <title>Magix wiki</title>
     <script src="MagixData.js"></script>
     <style>
         /* Locally use the Domine font from https://fonts.googleapis.com/css?family=Domine */
@@ -388,7 +388,6 @@
         }
 
         function c(id) {
-            console.log(id)
             var category = select.value
             var civ2 = checkbox.checked
             var objc = civ2 ? civ2Object : civ1Object
@@ -396,7 +395,6 @@
             for (var i = 0; i < obj.length; i++) {
                 var t = obj[i]
                 if (t.id === id) {
-                    console.log(t)
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
                     var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '' : 'Icon layout: <div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>')
@@ -405,12 +403,12 @@
                         for (var l = 0; l < tIcon.length; l++) {
                             var value = tIcon[l]
                             if (typeof value === "string") {
-                                icon = getIcon([i0, i1, value], true)
+                                icon = getIcon([i0, i1, value], true, civ2)
                                 text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
                                 i0 = null
                                 i1 = null
                             } else if (i1 != null) {
-                                icon = getIcon([i0, value], true)
+                                icon = getIcon([i0, value], true, civ2)
                                 text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
                                 i0 = null
                                 i1 = null
@@ -421,7 +419,7 @@
                             }
                         }
                         if (i1) {
-                            icon = getIcon([i0, i1], true)
+                            icon = getIcon([i0, i1], true, civ2)
                             text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
                         }
                     }

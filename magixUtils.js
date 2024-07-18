@@ -1346,7 +1346,7 @@ G.AddData({
                             for (var i = 0; i < conflictingStorageObjects.length; i++) {
                                 var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
                                 var newItem = G.storageObject[key];
-                                if (oldStorage[key] == null || oldStorage[key] !== newItem) {
+                                if (oldStorage[key] !== newItem) {
                                     G.dialogue.popup(function (div) {
                                         return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
                                             text: 'Yes', onclick: function () {
@@ -2481,7 +2481,7 @@ G.AddData({
             displayName: '<font color="#fddc99">Next to the deities</font>',
             wideIcon: [0, 9, 'magixmod'],
             icon: [1, 9, 'magixmod'],
-            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be all be tripled @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon! Just build this wonder again (nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock). @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
+            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be all be tripled @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon upon building this wonder again! (Nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock...) @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
             fromWonder: 'next to the God',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 250 },
