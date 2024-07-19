@@ -10204,7 +10204,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Mausoleum of richness',
-                desc: '@Leads to the completion of the <b>Pocket</b> trial. //It is a gleaming monument of richness. That prestige spreads all around.<><font color="#D4af37">Richness can do a lot...good and bad.</font>',
+                desc: '@Leads to the completion of the <b>Pocket</b> trial. //It is a gleaming monument of richness. The prestige of it spreads all around.<><font color="#D4af37">Richness can do a lot...good and bad.</font>',
                 wonder: 'Pocket',
                 icon: [10, 26, 'magixmod'],
                 wideIcon: [9, 26, 'magixmod'],
@@ -10579,7 +10579,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'artisan of christmas',
-                desc: '@has the ability to turn [archaic building materials,Various things] into festive ornaments, lights and anything related to [the christmas]. Once they decay, they turn into [christmas essence]. They can be used to build a very special wonder and bring some joy to your people.',
+                desc: '@has the ability to turn [archaic building materials,Various things] into festive ornaments, lights, and things related to [the christmas]. Once they decay, they turn into [christmas essence]. They can be used to build a very special wonder and bring some joy to your people.',
                 icon: [5, 11, 'seasonal'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -15923,7 +15923,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'the christmas', category: 'seasonal',
-                displayName: '<font color="cyan">The Christmas</font>',
+                displayName: '<font color="#30b783">Christmas</font>',
                 desc: '@People acknowledged that the important parts of this event will not only expand the holiday cheer of your people, but also make various decorations like like ornaments and lights.',
                 icon: [2, 11, 'seasonal'],
                 cost: { 'insight': 400, 'culture': 100, 'faith': 32 },
@@ -16113,7 +16113,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'love grows around us', category: 'seasonal', displayName: '<font color="pink">Love grows around us</font>',
-                desc: '@One person that loves a lot of other people is enough...Wait ' + G.getName('ruler') + '! You are ruler of the tribe and love people a lot. And they also love you. //Let\'s plant the seeds of <b>The festival of love</b> (called Valentine\'s day). Getting this will unlock [love], which is important to this event and may even provide some rewards if your [love] level is high enough.',
+                desc: '@One person that loves a lot of other people is enough...Wait ' + G.getName('ruler') + '! You are ruler of the tribe and love people a lot. And they also love you. Let\'s plant the seeds of this festival... //Getting this will unlock [love], which is important to this event and may even provide some rewards if your [love] level is high enough.',
                 icon: [18, 17, 'seasonal'],
                 cost: { 'insight': 240, 'culture': 45, 'faith': 5, 'research': 80 },
                 req: { 'culture of celebration': true, 'philosophy': true, 'tribalism': false },

@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magix wiki</title>
+    <title>Magix Wiki</title>
     <script src="MagixData.js"></script>
     <style>
         /* Locally use the Domine font from https://fonts.googleapis.com/css?family=Domine */
@@ -27,6 +27,11 @@
 
         * {
             font-size: 16px;
+        }
+
+        li,
+        li * {
+            font-size: 14px;
         }
 
         *::selection {
@@ -105,6 +110,11 @@
             border: solid 2px #bbb;
         }
 
+        u {
+            cursor: pointer;
+            color: #1caaf7;
+        }
+
         button {
             cursor: pointer;
             border-radius: 4px;
@@ -157,7 +167,9 @@
             background: linear-gradient(to right, #0000, #00000080, #0000);
         }
 
-        .icon {
+        .icon,
+        .wide,
+        .triple {
             cursor: pointer;
             image-rendering: optimizeSpeed;
             image-rendering: -moz-crisp-edges;
@@ -169,9 +181,18 @@
             border-radius: 3px;
             width: 24px;
             height: 24px;
-            transform: scale(3);
-            transform-origin: top left;
             margin-bottom: 40px;
+            transform-origin: top left;
+            transform: scale(3);
+        }
+
+        .wide {
+            width: 72px;
+        }
+
+        .triple {
+            width: 72px;
+            height: 72px;
         }
 
         .large {
@@ -285,7 +306,7 @@
                     } else {
                         var thing
                         var icon = getIcon(search.icon, true, checkedBox)
-                        var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div class="thing standalone wide1"><div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.precededBy ? "\r\nPreceded by: " + search.precededBy.join(", ") : "") + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : "")
+                        var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.precededBy ? "\r\nPreceded by: " + parseReq(obj, search.precededBy) : "") + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : "")
                         str += "\r\n<pre>"
                         for (var t = 0; t < itemCategory.length; t++) {
                             thing = itemCategory[t]
@@ -341,7 +362,7 @@
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
                     var icon = getIcon(search.icon, true, checkedBox)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</header><div tabindex="0" onclick="c(' + search.id + ')" class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>')
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</header><div tabindex="0" onclick="c(' + search.id + ')" class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>')
                 }
                 result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
@@ -365,7 +386,7 @@
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
                     var icon = getIcon(search.icon, true, checkedBox)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div class="thing standalone wide1"><div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div>') + (search.leadsTo ? "\r\nLeads to: " + search.leadsTo.join(", ") : ""))
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
                 }
                 result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
@@ -387,8 +408,10 @@
                 .replaceAll("<>", '</div><div class="divider"></div><div class="par">') + "</div>")
         }
 
-        function c(id) {
-            var category = select.value
+        function c(id, category) {
+            if (category == null) {
+                category = select.value
+            }
             var civ2 = checkbox.checked
             var objc = civ2 ? civ2Object : civ1Object
             var obj = objc[category]
@@ -397,19 +420,28 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '' : 'Icon layout: <div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    if (t.wideIcon) {
+                        var icon = getIcon(t.wideIcon, true, civ2)
+                        text += '<div class="wide noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                    }
+                    if (t.threexthreeIcon) {
+                        var icon = getIcon(t.threexthreeIcon, true, civ2)
+                        text += '<div class="triple noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                    }
+
                     if (t.icon.length > 3) {
                         var i0 = null, i1 = null
                         for (var l = 0; l < tIcon.length; l++) {
                             var value = tIcon[l]
                             if (typeof value === "string") {
                                 icon = getIcon([i0, i1, value], true, civ2)
-                                text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                                text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                                 i0 = null
                                 i1 = null
                             } else if (i1 != null) {
                                 icon = getIcon([i0, i1], true, civ2)
-                                text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                                text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                                 i0 = value
                                 i1 = null
                             } else if (i0 !== null) {
@@ -420,10 +452,10 @@
                         }
                         if (i1 !== null) {
                             icon = getIcon([i0, i1], true, civ2)
-                            text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
+                            text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
                     }
-                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + t.precededBy.join(", ") : "") + (t.leadsTo ? "<br>Leads to: " + t.leadsTo.join(", ") : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
+                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
                     var c = t.cost
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
                         text += "<br>Cost: " + parseRes(objc, c)
@@ -441,12 +473,12 @@
                         text += "<br>Final step cost: " + parseRes(objc, c)
                     }
                     c = t.messageOnStart
-                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
-                        text += "<br>Starting message: " + parseRes(objc, c)
+                    if (c != null) {
+                        text += "<br>Starting message: " + parseDesc(c)
                     }
                     c = t.finalStepDesc
-                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
-                        text += "<br>Final step popup message: " + parseRes(objc, c)
+                    if (c != null) {
+                        text += "<br>Final step popup message: " + parseDesc(c)
                     }
                     c = t.use
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
@@ -456,20 +488,16 @@
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
                         text += "<br>Limited to every: " + parseRes(objc, c) + " (rounded up)"
                     }
-                    c = t.upkeep
-                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
-                        text += "<br>Upkeep cost: " + parseRes(objc, c)
-                    }
                     c = t.names
-                    if (c != null && c.length !== 0) {
+                    if (c && c.length !== 0) {
                         text += "<br>Names: " + objc.join(", ")
                     }
                     c = t.partOf
-                    if (c != null) {
+                    if (c) {
                         text += "<br>Is interally part of: " + c
                     }
                     c = t.category
-                    if (c != null) {
+                    if (c) {
                         text += "<br>Part of displayed category: " + c
                     }
                     var e = t.effects
@@ -482,8 +510,21 @@
                         text += "<br>Effect count: " + e.length + " (" + funcs + (funcs === 1 ? " function, " : " functions, ") + convert + (convert === 1 ? " conversion of items, " : " conversions of items, ") + gather + (gather === 1 ? " thing to gather, " : " things to gather, ") + mult + (mult === 1 ? " multiplier, " : " multipliers, ") + provided + (provided === 1 ? " resource provider)" : " resource providers)")
                         if (provided > 0) {
                             text += "<br>Provides: "
-                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, "what".concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
-                            text += parseRes(objc, provides)
+                            text += parseRes(objc, Object.assign(...noticeEffects(e, "provide res", 1, "what").concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this wiki (also yeah, this is some pretty weird spread operation, eh?)
+                        }
+                        if (category === "units") {
+                            var breakdown = breakDownEffects(objc, e)
+                            if (breakdown.length !== 0) {
+                                text += "<br>Effect breakdown: <ul>"
+                                c = t.upkeep
+                                if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                                    text += "<li>has an upkeep of " + parseRes(objc, c) + "</li>"
+                                }
+                                for (var b = 0; b < breakdown.length; b++) {
+                                    text += "<li>" + breakdown[b] + "</li>"
+                                }
+                                text += "</ul>"
+                            }
                         }
                     }
                     if (category === "techs" || category === "traits") {
@@ -506,17 +547,116 @@
             }
         }
 
+        function breakDownEffects(obj, effects) {
+            var result = []
+            for (var i = 0; i < effects.length; i++) {
+                var effect = effects[i]
+                var type = effect.type
+                var req = effect.req
+                var info = ""
+                if (type === "waste") {
+                    info = "will waste"
+                } else if (type === "gather") {
+                    if (effect.what) {
+                        info = "gathers " + parseRes(obj, effect.what)
+                    }
+                } else if (type === "convert") {
+                    info = "converts " + parseRes(obj, effect.from) + " into " + parseRes(obj, effect.into)
+                } else if (type === "mult") {
+                    info = "has its production rate multiplied by " + parseRes(obj, effect.value)
+                } else if (type === "addFree" && effect.what.worker) {
+                    info = "each idle " + parseRes(obj, ["worker"]) + " will work at " + (effect.what.worker * 100) + "% the speed of this unit"
+                }
+                if (req && Object.getOwnPropertyNames(req).length !== 0) {
+                    info += " if you have " + parseReq(obj, req)
+                }
+                var chance = effect.chance
+                if (chance) {
+                    info += " with a chance of " + chance
+                }
+                var context = effect.context
+                if (context) {
+                    info += ' within the internal context of <span class="mono"' + context + "></span>"
+                }
+                result.push(info)
+            }
+            return result
+        }
+
+        function parseReq(obj, reqToSearch) {
+            if (reqToSearch.length) {
+                var arr = reqToSearch
+                reqToSearch = {}
+                for (var i = 0; i < arr.length; i++) {
+                    reqToSearch[arr[i]] = true
+                }
+            }
+            var keys = Object.getOwnPropertyNames(reqToSearch)
+            var keyLen = keys.length
+            var end = keyLen - 1
+            var result = []
+            var techs = obj.techs
+            var techLen = techs.length
+            var success = false
+            for (var l = 0; l < keyLen; l++) {
+                var key = keys[l]
+                for (var o = 0; o < techLen; o++) {
+                    var tech = techs[o]
+                    if (tech.name === key) {
+                        result.push((reqToSearch[key] ? "" : "do not ") + ' <u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
+                        break
+                    }
+                }
+            }
+            techs = obj.traits // traits now but whatever
+            techLen = techs.length
+            for (var l = 0; l < keyLen; l++) {
+                var key = keys[l]
+                for (var o = 0; o < techLen; o++) {
+                    var tech = techs[o]
+                    if (tech.name === key) {
+                        result.push((reqToSearch[key] ? "" : "do not ") + ' <u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
+                        break
+                    }
+                }
+            }
+            techs = obj.policies // now policies
+            techLen = techs.length
+            for (var l = 0; l < keyLen; l++) {
+                var key = keys[l]
+                for (var o = 0; o < techLen; o++) {
+                    var tech = techs[o]
+                    if (tech.name === key) {
+                        var state = reqToSearch[key]
+                        result.push('<u onclick="c(' + tech.id + ",'policies')\">" + tech.displayName + "</u>" + (state === "on" ? " enabled" : (state === "off" ? " disabled" : (" is set to " + reqToSearch[key]))))
+                        break
+                    }
+                }
+            }
+            var resultLen = result.length
+            if (resultLen === 1) {
+                return result[0]
+            } else if (resultLen === 2) {
+                return result[0] + " and " + result[1]
+            }
+            return result.slice(0, resultLen - 1).join(", ") + ", and " + result[resultLen - 1]
+        }
+
         function parseRes(obj, resToSearch) {
             var keys = Object.getOwnPropertyNames(resToSearch)
-            if (keys.length !== 0) {
+            var keyLen = keys.length
+            if (keyLen !== 0) {
+                var separator = keyLen === 2 ? " and " : ", "
+                var end = keyLen - 1
                 var text = ""
-                var res = obj.resources
-                var resLen = res.length
-                for (var l = 0; l < keys.length; l++) {
+                var resources = obj.resources
+                var resLen = resources.length
+                for (var l = 0; l < keyLen; l++) {
                     var key = keys[l]
                     for (var o = 0; o < resLen; o++) {
-                        if (res[o].name === key) {
-                            text += (l === 0 ? "" : ", ") + resToSearch[key] + " " + res[o].displayName
+                        var res = resources[o]
+                        if (res.name === key) {
+                            text += (l === 0 ? "" : (l === end ? separator : ", ")) + resToSearch[key] + ' <u onclick="c(' + res.id + ",'resources')\">" + res.displayName + "</u>"
                             break
                         }
                     }
@@ -549,14 +689,15 @@
                 var result = []
                 var toIterateOver = ["units", "policies"]
                 for (var n = 0; n < 2; n++) {
-                    var things = specificData[toIterateOver[n]]
+                    var typeKey = toIterateOver[n]
+                    var things = specificData[typeKey]
                     for (var i = 0; i < things.length; i++) {
                         var thing = things[i]
                         var req = thing[propertyKey]
                         if (req) {
                             if (propertyKey === "req") {
                                 if (req[type]) {
-                                    result.push(thing.displayName)
+                                    result.push('<u onclick="c(' + thing.id + ",'" + typeKey + "')\">" + thing.displayName + "</u>")
                                     break
                                 }
                             } else {
@@ -565,7 +706,7 @@
                                 for (var m = 0; m < props.length; m++) {
                                     var r = req[props[m]].req
                                     if (r && r[type]) {
-                                        result.push(thing.displayName + ' (with ID <span class="mono">' + props[m] + "</span>)")
+                                        result.push('<u onclick="c(' + thing.id + ",'" + typeKey + "')\">" + thing.displayName + "</u>" + ' (with ID <span class="mono">' + props[m] + "</span>)")
                                         success = true
                                         break
                                     }
@@ -582,7 +723,8 @@
                 var result = []
                 var toIterateOver = ["techs", "units", "traits", "policies"]
                 for (var n = 0; n < 4; n++) {
-                    var things = specificData[toIterateOver[n]]
+                    var typeKey = toIterateOver[n]
+                    var things = specificData[typeKey]
                     for (var i = 0; i < things.length; i++) {
                         var thing = things[i]
                         var effects = thing.effects
@@ -593,10 +735,10 @@
                                 var req = effect.req
                                 if (req && req[type]) {
                                     if (effect.mode) {
-                                        result.push(thing.displayName + ' (for mode ID <span class="mono">' + effect.mode + "</span>)")
+                                        result.push('<u onclick="c(' + thing.id + ",'" + typeKey + "')\">" + thing.displayName + "</u>" + ' (for mode ID <span class="mono">' + effect.mode + "</span>)")
                                     } else if (firstTime) {
                                         firstTime = false
-                                        result.push(thing.displayName)
+                                        result.push('<u onclick="c(' + thing.id + ",'" + typeKey + "')\">" + thing.displayName + "</u>")
                                     }
                                 }
                             }
@@ -608,7 +750,7 @@
         }
 
         function cap(str) {
-            return str == null || str.length === 0 ? 'None' : str[0].toUpperCase() + str.slice(1)
+            return str == null || str.length === 0 ? "None" : str[0].toUpperCase() + str.slice(1)
         }
 
         function parseFunc(str) {

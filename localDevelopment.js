@@ -25,14 +25,14 @@ testFunction()
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 function getGameJSON(objectMode) {
     var result = {
-        achievements: extractObject(G.achiev, ['name', 'displayName', 'desc', 'tier', 'visible', 'icon', 'civ', 'special', 'plural']),
-        lands: extractObject(G.land, ['name', 'displayName', 'desc', 'names', 'goods', 'icon', 'image', 'ocean', 'score']),
-        goods: extractObject(G.goods, ['name', 'displayName', 'desc', 'res', 'icon', 'mult']),
-        resources: extractObject(G.res, ['name', 'displayName', 'hidden', 'desc', 'category', 'startWith', 'colorGood', 'colorBad', 'icon', 'fractional', 'turnToByContext', 'meta'], ['tick', 'getDisplayAmount', 'getIcon', 'partOf']),
-        units: extractObject(G.unit, ['name', 'displayName', 'desc', 'wonder', 'icon', 'wideIcon', 'threexthreeIcon', 'cost', 'costPerStep', 'steps', 'type', 'messageOnStart', 'finalStepCost', 'finalStepDesc', 'use', 'req', 'category', 'modes', 'gizmos', 'limitPer', 'upkeep']),
-        policies: extractObject(G.policy, ['name', 'displayName', 'desc', 'icon', 'startMode', 'req', 'modes', 'category']),
-        techs: extractObject(G.tech, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'startWith', 'tier', 'chance', 'req', 'tutorialMesg']),
-        traits: extractObject(G.trait, ['name', 'displayName', 'desc', 'icon', 'type', 'cost', 'category', 'startWith', 'tier', 'chance', 'req']),
+        achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "civ", "special", "plural"]),
+        lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
+        goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
+        resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf"]),
+        units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"]),
+        policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
+        techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
+        traits: extractObject(G.trait, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req"]),
         descriptions: {
             name: "The identifier name of the thing",
             displayName: "The displayed name of the thing, which will be used instead of the identifier name",
@@ -97,14 +97,14 @@ function getGameJSON(objectMode) {
 // Extracts the object data of a specific item (like G.res, G.unit, and so on)
 // NOTE: This will preserve some object references, so modifying values here may cause issues!
 function extractObject(toExtract, properties, funcProperties) {
-    var nameProps = ['subRes', 'precededBy', 'leadsTo']
+    var nameProps = ["subRes", "precededBy", "leadsTo"]
     if (funcProperties == null) {
         funcProperties = []
     }
     if (nameProps == null) {
         nameProps = []
     }
-    var props = properties.concat(funcProperties, nameProps, ['effects', 'effectsOff'])
+    var props = properties.concat(funcProperties, nameProps, ["effects", "effectsOff"])
     var len = toExtract.length
     var data = Array(len)
     for (var i = 0; i < len; i++) {
@@ -118,16 +118,16 @@ function extractObject(toExtract, properties, funcProperties) {
                     var l = thing.length
                     var iResult = Array(l)
                     for (var e = 0; e < l; e++) {
-                        iResult[e] = thing[e].displayName
+                        iResult[e] = thing[e].name
                     }
                     obj[key] = iResult
-                } else if (key === 'effects' || key === 'effectsOff') {
+                } else if (key === "effects" || key === "effectsOff") {
                     var l = thing.length
                     var effects = JSON.parse(JSON.stringify(thing)) // Not the best way, but it gets the job done
                     for (var e = 0; e < l; e++) {
                         var effect = effects[e]
-                        if (effect.func) {
-                            effect.func = String(effect.func)
+                        if (effect.function) {
+                            effect.function = String(effect.function)
                         }
                         effects[e] = effect
                     }
