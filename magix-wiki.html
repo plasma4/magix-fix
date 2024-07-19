@@ -423,10 +423,54 @@
                             text += '<div class="thing standalone wide1"><div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></div><br>'
                         }
                     }
-                    text += (t.precededBy ? "<br>Preceded by: " + t.precededBy.join(", ") : "") + (t.leadsTo ? "<br>Leads to: " + t.leadsTo.join(", ") : "") + "<br>Internal ID: " + id
-                    var cost = t.cost
-                    if (cost != null && Object.getOwnPropertyNames(cost).length !== 0) {
-                        text += "<br>Cost: " + parseRes(objc, cost)
+                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + t.precededBy.join(", ") : "") + (t.leadsTo ? "<br>Leads to: " + t.leadsTo.join(", ") : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
+                    var c = t.cost
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Cost: " + parseRes(objc, c)
+                    }
+                    c = t.costPerStep
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Cost per step: " + parseRes(objc, c)
+                    }
+                    c = t.costPerStep2
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Cost per step after 25 steps: " + parseRes(objc, c)
+                    }
+                    c = t.finalStepCost
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Final step cost: " + parseRes(objc, c)
+                    }
+                    c = t.messageOnStart
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Starting message: " + parseRes(objc, c)
+                    }
+                    c = t.finalStepDesc
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Final step popup message: " + parseRes(objc, c)
+                    }
+                    c = t.use
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Uses: " + parseRes(objc, c)
+                    }
+                    c = t.limitPer
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Limited to every: " + parseRes(objc, c) + " (rounded up)"
+                    }
+                    c = t.upkeep
+                    if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
+                        text += "<br>Upkeep cost: " + parseRes(objc, c)
+                    }
+                    c = t.names
+                    if (c != null && c.length !== 0) {
+                        text += "<br>Names: " + objc.join(", ")
+                    }
+                    c = t.partOf
+                    if (c != null) {
+                        text += "<br>Is interally part of: " + c
+                    }
+                    c = t.category
+                    if (c != null) {
+                        text += "<br>Part of displayed category: " + c
                     }
                     var e = t.effects
                     if (e) {
@@ -438,7 +482,7 @@
                         text += "<br>Effect count: " + e.length + " (" + funcs + (funcs === 1 ? " function, " : " functions, ") + convert + (convert === 1 ? " conversion of items, " : " conversions of items, ") + gather + (gather === 1 ? " thing to gather, " : " things to gather, ") + mult + (mult === 1 ? " multiplier, " : " multipliers, ") + provided + (provided === 1 ? " resource provider)" : " resource providers)")
                         if (provided > 0) {
                             text += "<br>Provides: "
-                            var provides = Object.assign(noticeEffects(e, "provide res", 1, "what".concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
+                            var provides = Object.assign(...noticeEffects(e, "provide res", 1, "what".concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this site (also yeah, this is some pretty weird spread operation, eh?)
                             text += parseRes(objc, provides)
                         }
                     }
