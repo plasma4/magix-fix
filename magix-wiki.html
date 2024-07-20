@@ -578,6 +578,10 @@
                 if (context) {
                     info += ' within the internal context of <span class="mono"' + context + "></span>"
                 }
+                var mode = effect.mode
+                if (mode) {
+                    info += 'for the mode ID <span class="mono"' + mode + "></span>"
+                }
                 result.push(info)
             }
             return result
