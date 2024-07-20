@@ -420,7 +420,7 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '<br>' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
                     if (t.wideIcon) {
                         var icon = getIcon(t.wideIcon, true, civ2)
                         text += '<div class="wide noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
@@ -639,14 +639,14 @@
             } else if (resultLen === 2) {
                 return result[0] + " and " + result[1]
             }
-            return result.slice(0, resultLen - 1).join(", ") + ", and " + result[resultLen - 1]
+            return (result.slice(0, resultLen - 1).join(", ") + ", and " + result[resultLen - 1]).replaceAll("  ", " ") // whelp
         }
 
         function parseRes(obj, resToSearch) {
             var keys = Object.getOwnPropertyNames(resToSearch)
             var keyLen = keys.length
             if (keyLen !== 0) {
-                var separator = keyLen === 2 ? " and " : ", "
+                var separator = keyLen === 2 ? " and " : ", and "
                 var end = keyLen - 1
                 var text = ""
                 var resources = obj.resources
