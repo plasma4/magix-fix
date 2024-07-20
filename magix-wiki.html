@@ -563,7 +563,7 @@
                 } else if (type === "convert") {
                     info = "converts " + parseRes(obj, effect.from) + " into " + parseRes(obj, effect.into)
                 } else if (type === "mult") {
-                    info = "has its production rate multiplied by " + effect.value)
+                    info = "has its production rate multiplied by " + effect.value
                 } else if (type === "addFree" && effect.what.worker) {
                     info = "each idle " + parseRes(obj, ["worker"]) + " will work at " + (effect.what.worker * 100) + "% the speed of this unit"
                 }
