@@ -420,7 +420,7 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc) + (category === "lands" ? '<br>' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? '<br>' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
                     if (t.wideIcon) {
                         var icon = getIcon(t.wideIcon, true, civ2)
                         text += '<div class="wide noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
@@ -493,7 +493,7 @@
                         text += "<br>Names: " + objc.join(", ")
                     }
                     c = t.partOf
-                    if (c) {
+                    if (c && c != "false") {
                         text += "<br>Is interally part of: " + c
                     }
                     c = t.category
@@ -563,7 +563,7 @@
                 } else if (type === "convert") {
                     info = "converts " + parseRes(obj, effect.from) + " into " + parseRes(obj, effect.into)
                 } else if (type === "mult") {
-                    info = "has its production rate multiplied by " + parseRes(obj, effect.value)
+                    info = "has its production rate multiplied by " + effect.value)
                 } else if (type === "addFree" && effect.what.worker) {
                     info = "each idle " + parseRes(obj, ["worker"]) + " will work at " + (effect.what.worker * 100) + "% the speed of this unit"
                 }
