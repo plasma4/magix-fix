@@ -1740,9 +1740,9 @@ if (getObj("civ") != "1") {
                                 if (G.has('famine')) G.deleteTrait('famine')
                                 setObj('drought', 0)
                             }
-                        } else if (G.year === 49 || (G.year > 49 && (G.year - 2 >= G.getRes('ignoreItem').amount))) {
+                        } else if (G.year > 220 - G.techN * 0.35 && G.has("primary time measure") && G.year - 2 >= G.getRes('ignoreItem').amount) {
                             if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
-                            // Drought data starts being calculated at year 50
+                            // Drought data starts being calculated now
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
                             G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to happen.', icon: [9, 10] })
@@ -18558,7 +18558,10 @@ if (getObj("civ") != "1") {
                 displayName: 'Next predicted drought year',
                 desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
                 icon: [9, 10],
-                category: 'demog'
+                category: 'demog',
+                getDisplayAmount: function () {
+                    return B(G.has('time measuring 1/2') ? G.getRes('ignoreItem').amount : (Math.round(G.getRes('ignoreItem').amount / 10)) * 10)
+                },
             });
             new G.Res({
                 name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
