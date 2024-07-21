@@ -335,7 +335,7 @@
                     }
                 }
                 if (val == 3) {
-                    var joined = "Results:\r\n" + text.join(",\r\n  ")
+                    var joined = text.join(",\r\n  ")
                     result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
                     result.className = "mono"
                 } else {
@@ -385,8 +385,8 @@
                 }
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
-                    var icon = getIcon(search.icon, true, checkedBox)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? '' : 'Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
+                    var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
                 }
                 result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
                 result.removeAttribute("class")
