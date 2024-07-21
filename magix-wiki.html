@@ -305,8 +305,8 @@
                         text.push('"' + search.name + '": ' + JSON.stringify(search))
                     } else {
                         var thing
-                        var icon = getIcon(search.icon, true, checkedBox)
-                        var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + (category === "lands" ? "" : 'Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.precededBy ? "\r\nPreceded by: " + parseReq(obj, search.precededBy) : "") + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : "")
+                        var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
+                        var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.precededBy ? "\r\nPreceded by: " + parseReq(obj, search.precededBy) : "") + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : "")
                         str += "\r\n<pre>"
                         for (var t = 0; t < itemCategory.length; t++) {
                             thing = itemCategory[t]
@@ -335,7 +335,7 @@
                     }
                 }
                 if (val == 3) {
-                    var joined = "<i><strong>Results:</strong></i> \r\n" + text.join(",\r\n  ")
+                    var joined = "Results:\r\n" + text.join(",\r\n  ")
                     result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
                     result.className = "mono"
                 } else {
@@ -361,7 +361,7 @@
                 }
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
-                    var icon = getIcon(search.icon, true, checkedBox)
+                    var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
                     text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</header><div tabindex="0" onclick="c(' + search.id + ')" class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>')
                 }
                 result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
@@ -490,7 +490,11 @@
                     }
                     c = t.names
                     if (c && c.length !== 0) {
-                        text += "<br>Names: " + objc.join(", ")
+                        text += "<br>Names: " + c.join(", ")
+                    }
+                    c = t.ocean
+                    if (c != null) {
+                        text += "<br>Is ocean: " + (c ? "yes" : "no")
                     }
                     c = t.partOf
                     if (c && c != "false") {
