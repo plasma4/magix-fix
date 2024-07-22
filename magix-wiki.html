@@ -504,6 +504,10 @@
                     if (c) {
                         text += "<br>Part of displayed category: " + c
                     }
+                    c = t.chance
+                    if (c) {
+                        text += "<br>Chance (lower means more likely to get): " + c
+                    }
                     var e = t.effects
                     if (e) {
                         var funcs = noticeEffects(e, "function", 0) + noticeEffects(e, "tick", 0)
@@ -611,7 +615,7 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
-                        result.push((reqToSearch[key] ? "" : "do not ") + ' <u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
+                        result.push((reqToSearch[key] ? "" : "a lack of ") + ' <u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
                         break
                     }
                 }
@@ -623,7 +627,7 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
-                        result.push((reqToSearch[key] ? "" : "do not ") + ' <u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
+                        result.push((reqToSearch[key] ? "" : "a lack of ") + ' <u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
                         break
                     }
                 }
