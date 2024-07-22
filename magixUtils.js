@@ -1716,7 +1716,7 @@ G.AddData({
                 }
             }
             if (G.getSetting('debug') && G.tab.id == 'trait' && isFinite(me.chance)) {
-                str += !G.req || G.req.tribalism !== false ? 'Chance: ' + me.chance.toFixed(2) + "This trait cannot be obtained normally.";
+                str += !G.req || G.req.tribalism !== false ? 'Chance: ' + (300 / me.chance).toFixed(3) : "This trait cannot be obtained normally.";
             }
 
             str += G.debugInfo(me);
