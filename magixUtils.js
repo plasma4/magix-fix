@@ -303,7 +303,7 @@ var numberFormatters =
     ];
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?r=' + Math.random()
+var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=1'
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
@@ -1716,7 +1716,7 @@ G.AddData({
                 }
             }
             if (G.getSetting('debug') && G.tab.id == 'trait' && isFinite(me.chance)) {
-                str += !G.req || G.req.tribalism !== false ? 'Chance: ' + (300 / me.chance).toFixed(3) : "This trait cannot be obtained normally.";
+                str += !G.req || G.req.tribalism !== false ? 'Chance: ' + me.chance.toFixed(2) + "This trait cannot be obtained normally.";
             }
 
             str += G.debugInfo(me);
