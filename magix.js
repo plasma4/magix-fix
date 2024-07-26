@@ -10021,7 +10021,7 @@ if (getObj("civ") != "1") {
                 steps: 90,
                 messageOnStart: 'You started to build wonder for <b>Chra-nos</b>.<br>This pagoda will have a huge clock which is the symbol of the Seraphin. Stars on night sky as you noticed mostly often make a shape of clock.<br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
                 finalStepCost: { 'population': 200, 'gem block': 10 },
-                finalStepDesc: 'To perform the final step, 200 [population,people] and 10 [gem block]s must be sacrificed in order to escape that plane of deadly time and award you with [victory point]s.',
+                finalStepDesc: 'To perform the final step, 200 [population,people] and 10 [gem block]s must be sacrificed in order to escape this plane of deadly time and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't1': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10051,7 +10051,7 @@ if (getObj("civ") != "1") {
                 steps: 100,
                 messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have an angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
                 finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'blood': 75 },
-                finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,People], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape that plane of Wrath and Madness and award you with [victory point]s.',
+                finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,People], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape this plane of Wrath and Madness and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't2': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10083,7 +10083,7 @@ if (getObj("civ") != "1") {
                 steps: 100,
                 messageOnStart: 'You started to build a statue for <b>Hartar</b>.<br>This statue will have Hartar\'s big statuette at its top. You eat some meat and stare with a hopeful smile, hoping you can complete it.',
                 finalStepCost: { 'population': 100, 'gem block': 5, 'blood': 25 },
-                finalStepDesc: 'To perform the final step, 25 [blood], 100 [population,people] must be sacrificed in order to escape that plane of meat fanatics and award you with [victory point]s.',
+                finalStepDesc: 'To perform the final step, 25 [blood], 100 [population,people] must be sacrificed in order to escape this plane of meat fanatics and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't4': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10271,7 +10271,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'bank',
-                desc: 'This can store money, preventing decay over time. The more times you complete Pocket, the less a [bank] can store [silver coin,Money] for you.',
+                desc: 'This can store [golden coin,Money], preventing its decay as time goes on. The more times you complete Pocket, the less a [bank] can store [silver coin,Money] for you.',
                 icon: [22, 29, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 effects: [
@@ -15524,7 +15524,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'primary intuition', category: 'tier1',
-                desc: '[primary intuition] is like a key to researching. However, if [population,people] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].',
+                desc: '[primary intuition] is an important key for some researches. However, if [population,people] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].', // fun how it actually doesn't do anything except for like one thing in second civ
                 startWith: true,
                 icon: [34, 31, 'magixmod'],
             });
@@ -25265,7 +25265,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'primary intuition', category: 'tier1',
-                desc: '[primary intuition] is like a key to researching. However, if [population,elves] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition 2/2,Oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].',
+                desc: '[primary intuition] is an important key for some researches. However, if [population,elves] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition 2/2,Oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].',
                 icon: [27, 10, 'c2'],
                 startWith: true,
             });

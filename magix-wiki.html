@@ -213,6 +213,16 @@
             font-family: monospace;
             line-height: 1.2;
         }
+
+        .ocean {
+            color: #459bf2;
+            text-decoration: underline;
+        }
+
+        .land {
+            color: #509e4e;
+            text-decoration: underline;
+        }
     </style>
 
     <script src="minisearch.js"></script>
@@ -285,7 +295,7 @@
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
                         fields: ["displayName", "desc"],
-                        storeFields: ["name", "displayName", "desc", "icon", "id", "precededBy", "leadsTo"],
+                        storeFields: (category === "lands" ? ["name", "displayName", "desc", "icon", "id", "ocean"] : ["name", "displayName", "desc", "icon", "id", "precededBy", "leadsTo"]),
                         searchOptions: {
                             boost: { name: 0.15, desc: 0.2, displayName: 0.5 },
                             prefix: true,
@@ -305,7 +315,7 @@
                         text.push('"' + search.name + '": ' + JSON.stringify(search))
                     } else {
                         var thing
-                        var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
+                        var icon = getIcon(category === "lands" ? (search.ocean ? [25, 18, "magixmod"] : [14, 4]) : search.icon, true, checkedBox)
                         var str = "<header>Display name: " + (!search.displayName ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.precededBy ? "\r\nPreceded by: " + parseReq(obj, search.precededBy) : "") + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : "")
                         str += "\r\n<pre>"
                         for (var t = 0; t < itemCategory.length; t++) {
@@ -334,20 +344,24 @@
                         text.push(str + "</pre>")
                     }
                 }
-                if (val == 3) {
-                    var joined = text.join(",\r\n  ")
-                    result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
-                    result.className = "mono"
+                if (text.length !== 0) {
+                    if (val == 3) {
+                        var joined = text.join(",\r\n  ")
+                        result.textContent = "{\r\n  " + joined.slice(0, joined.length - 1) + "},\r\n}"
+                        result.className = "mono"
+                    } else {
+                        result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("-------------------------\r\n")
+                        result.removeAttribute("class")
+                    }
                 } else {
-                    result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("-------------------------\r\n")
-                    result.removeAttribute("class")
+                    result.innerHTML = "<strong>No results found</strong>"
                 }
             } else if (val == -1) {
                 var text = []
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
                         fields: ["displayName", "desc"],
-                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "hidden", "visible", "id"],
+                        storeFields: (category === "lands" ? ["name", "displayName", "desc", "icon", "ocean", "id"] : ["name", "displayName", "desc", "icon", "leadsTo", "hidden", "visible", "id"]),
                         searchOptions: {
                             boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
                             prefix: true,
@@ -361,17 +375,17 @@
                 }
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
-                    var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
+                    var icon = getIcon(category === "lands" ? (search.ocean ? [25, 18, "magixmod"] : [14, 4]) : search.icon, true, checkedBox)
                     text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + '</header><div tabindex="0" onclick="c(' + search.id + ')" class="icon large" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>')
                 }
-                result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
+                result.innerHTML = (text.length !== 0 ? "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n") : "<strong>No results found</strong>")
                 result.removeAttribute("class")
             } else {
                 var text = []
                 if (inputValue.length !== 0) {
                     var searcher = new MiniSearch({
                         fields: ["displayName", "desc"],
-                        storeFields: ["name", "displayName", "desc", "icon", "leadsTo", "visible", "id"],
+                        storeFields: (category === "lands" ? ["name", "displayName", "desc", "icon", "ocean", "id"] : ["name", "displayName", "desc", "icon", "leadsTo", "hidden", "visible", "id"]),
                         searchOptions: {
                             boost: { name: 0.05, desc: 0.2, displayName: 0.5 },
                             prefix: true,
@@ -385,10 +399,10 @@
                 }
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
-                    var icon = getIcon(category === "lands" ? [14, 4] : search.icon, true, checkedBox)
+                    var icon = getIcon(category === "lands" ? (search.ocean ? [25, 18, "magixmod"] : [14, 4]) : search.icon, true, checkedBox)
                     text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
                 }
-                result.innerHTML = "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n")
+                result.innerHTML = (text.length !== 0 ? "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n") : "<strong>No results found</strong>")
                 result.removeAttribute("class")
             }
         }
@@ -420,7 +434,7 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? '<br>' : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? "" : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
                     if (t.wideIcon) {
                         var icon = getIcon(t.wideIcon, true, civ2)
                         text += '<div class="wide noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
@@ -493,8 +507,16 @@
                         text += "<br>Names: " + c.join(", ")
                     }
                     c = t.ocean
-                    if (c != null) {
-                        text += "<br>Is ocean: " + (c ? "yes" : "no")
+                    if (category === "lands") {
+                        text += "<br>Type of land: " + (c ? '<span class="ocean">ocean</span>' : '<span class="land">normal land</span>')
+                    }
+                    c = t.startWith
+                    if (c) {
+                        text += "<br>Tech is avaliable at the start: yes"
+                    }
+                    c = t.skip || (t.req && (t.req.tribalism === false))
+                    if (c) {
+                        text += "<br>Is only obtainable under specific conditions: yes"
                     }
                     c = t.partOf
                     if (c && c != "false") {
@@ -537,15 +559,15 @@
                     }
                     if (category === "techs" || category === "traits") {
                         var indirect = noticeEffects(e, t.name, 2, objc, "req")
-                        if (indirect.length > 0) {
+                        if (indirect.length !== 0) {
                             text += "<br>Unlocks: " + indirect.join(", ")
                         }
                         indirect = noticeEffects(e, t.name, 2, objc, "modes")
-                        if (indirect.length > 0) {
+                        if (indirect.length !== 0) {
                             text += "<br>Unlocks modes for: " + indirect.join(", ")
                         }
                         indirect = noticeEffects(e, t.name, 3, objc)
-                        if (indirect.length > 0) {
+                        if (indirect.length !== 0) {
                             text += "<br>Causes effects for: " + indirect.join(", ")
                         }
                     }
