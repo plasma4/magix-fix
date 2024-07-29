@@ -11275,7 +11275,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'ritualism', category: 'religion',
-                desc: '@provides 10 [spirituality]@unlocks [soothsayer]s@unlocks some ritual policies<>Simple practices, eroded and polished by time, turn into rites and traditions.',
+                desc: '@provides 10 [spirituality]@unlocks [soothsayer]s@unlocks some ritual policies<>Simple practices, eroded and polished by time, may turn into rites and traditions.',
                 icon: [12, 1],
                 cost: { 'culture': 5 },
                 req: { 'oral tradition': true, 'intuition': true, 'spark\'o religion': true },
@@ -12507,7 +12507,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ritualism II', category: 'religion',
-                desc: '@provides 3 [spirituality II] @[wisdom rituals] and [flower rituals] can be activated again, but these rituals will require [faith II] as upkeep rather than [faith] @[soothsayer]s and [druid]s will change icons now <>Simple practices, eroded and polished by long time, turn into rites and traditions!',
+                desc: '@provides 3 [spirituality II] @[wisdom rituals] and [flower rituals] can be activated again, but these rituals will require [faith II] as upkeep rather than [faith] @[soothsayer]s and [druid]s will change icons now <>Simple practices, eroded and polished by long time, may turn into rites and traditions!',
                 icon: [0, 35, 'magixmod', 27, 5, 'magixmod'],
                 cost: { 'culture II': 5, 'faith II': 2, 'insight II': 10, 'influence II': 2, 'faith': 6 },
                 req: { 'oral tradition': true, 'ritualism': true, 'eotm': true, 'Improved rhetoric': true },
@@ -21709,7 +21709,7 @@ if (getObj("civ") != "1") {
                     if (G.year == 2 && G.achievByName['the fortress'].won >= 10) { G.fastTicks += 850 };            //ingame its y3
                     if (G.getSetting('story messages')) {
                         if (G.year == 19) {
-                            G.Message({ type: 'important', text: '<font color="#d9d9d9"><b>Your elves noticed that their tools have started decaying.</font> <li>This doesn\'t seem good especially when you all are in the middle of that wilderness.</li></b>', icon: [24, 6, 'magixmod'] });
+                            G.Message({ type: 'important', text: '<font color="#d9d9d9"><b>Your elves noticed that their tools have started decaying.</font> <li>This doesn\'t seem good, considering you are within a rather expansive wilderness.</li></b>', icon: [24, 6, 'magixmod'] });
                             madeWarnToolDecayMesg = true
                         }
                         if (G.year == 9000) {
@@ -24938,7 +24938,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'plant lore', category: 'upgrade',
-                desc: '@[gatherer]s find more [herb]s and [fruit]s<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.<br>//<small>There are way more plants, so that tech won\'t let you learn about them all, friend.</small>',
+                desc: '@[gatherer]s find more [herb]s and [fruit]s<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.<br>//<small>There are a whole lot of unique plant types and categories, so this tech won\'t let you learn about them all at once, friend.</small>',
                 icon: [23, 7, 'c2'],
                 cost: { 'discernment': 10, 'creativity': 1, 'gentility': 1 },
                 req: { 'oral tradition 1/2': true },
@@ -24947,7 +24947,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'healing', category: 'tier1',
-                desc: '@unlocks [healer]s<br>//<small>A hospital in the middle of that wilderness would be way better idea.</small>',
+                desc: '@unlocks [healer]s<br>//<small>A hospital somewhere around here would be way better idea, but that seems way too hard.</small>',
                 icon: [25, 7, 'c2'],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'plant lore': true, 'stone-knapping': true, 'intuition': true },
@@ -24958,7 +24958,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'ritualism', category: 'religion',
-                desc: '@provides 10 [spirituality]@unlocks [soothsayer]s@unlocks some ritual policies<>Simple practices, eroded and polished by time, turn into rites and traditions.',
+                desc: '@provides 10 [spirituality]@unlocks [soothsayer]s@unlocks some ritual policies<>Simple practices, eroded and polished by time, may turn into rites and traditions.',
                 icon: [12, 1],
                 cost: { 'gentility': 10, 'creativity': 2 },
                 req: { 'oral tradition 2/2': true, 'spark\'o religion': true },
@@ -25011,7 +25011,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'bone-working', category: 'tier1',
-                desc: '@[artisan]s can now make [knapped tools] out of [bone]@[bone]s can now be used as [archaic building materials]<>//<small>For some reason it requires some power from battery. Probably that pressure thing has to do with that.</small>',
+                desc: '@[artisan]s can now make [knapped tools] out of [bone]@[bone]s can now be used as [archaic building materials]<>//<small>For some reason, it requires some power from your battery. Pressure likely has to do with that though...</small>',
                 icon: [22, 5, 'c2'],
                 cost: { 'discernment': 6, 'battery of discoveries': 18 },
                 req: { 'stone-knapping': true },
