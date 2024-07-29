@@ -17658,6 +17658,11 @@ if (getObj("civ") != "1") {
                 req: { 'oral tradition': true, 'intuition': true, 'symbolism': false },
                 effects: [
                     { type: 'provide res', what: { 'cultural balance': 3 } },
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('code of law').req = { 'code of law': true, 'sedentism': true, 'writing': true, 'chieftains': true };
+                        }
+                    }
                 ],
             });
             new G.Tech({
