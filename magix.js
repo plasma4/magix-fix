@@ -1771,8 +1771,8 @@ if (getObj("civ") != "1") {
                         }
                     }
 
-                    if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
-                    if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
+                    if (G.has('belief in the afterlife') && G.traitByName['belief in the afterlife'].yearOfObtainment > 100 && !G.has('culture of the afterlife') && G.testCost('culture of the afterlife', 1)) G.gainTrait(G.traitByName['culture of the afterlife']);
+                    if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && !G.has('culture of the beforelife') && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
 
                     if (G.has("t5") && G.year > 0) {
                         G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow((G.year - 1) * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
