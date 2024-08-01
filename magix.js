@@ -1112,6 +1112,9 @@ function islandName() {
     return rawName == 'undefined' ? 'Plain Island' : rawName
 }
 function changeHappiness(amount, description) {
+    if (!isFinite(amount)) {
+        console.trace()
+    }
     G.gain('happiness', amount, description)
 }
 G.gain = function (what, amount, context) {
@@ -10493,7 +10496,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'lumber': 90, 'stone': 880 }, into: { 'arrow': 200 }, every: 35 },
                     { type: 'convert', from: { 'lumber': 10, 'stone': 20, 'thread': 10 }, into: { 'crossbow': 30 }, every: 11 },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
-                    { type: 'mult', value: 1.5, req: { 'larger factories': true } },
+                    { type: 'mult', value: 1.5, req: { 'larger toolhuts': true } },
                 ],
             });
             new G.Unit({
@@ -12775,7 +12778,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'culture of the afterlife',
-                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, so who knows if they will build another wonder?</b>. @unhappiness from death is halved.',
+                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, so who knows if they will build another wonder?</b> @unhappiness from death is halved.',
                 icon: [19, 1, 'magixmod'],
                 cost: { 'insight': 50, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 300,
@@ -17660,7 +17663,7 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'cultural balance': 3 } },
                     {
                         type: 'function', func: function () {
-                            G.getDict('code of law').req = { 'code of law': true, 'sedentism': true, 'writing': true, 'chieftains': true };
+                            G.getDict('code of law').req = { 'sedentism': true, 'writing': true, 'chieftains': true };
                         }
                     }
                 ],
@@ -19310,6 +19313,7 @@ if (getObj("civ") != "1") {
                     'alreadyused': { name: 'Already used', req: { 'tribalism': false } },
                 },
                 req: { 't4': true, 'trial': true },
+                skip: true,
                 category: 'population',
             });
             new G.Policy({
@@ -21764,7 +21768,7 @@ if (getObj("civ") != "1") {
                             G.middleText('- Completed <font color="#dbe">Naturality</font> achievement -', 'slow')
                         }
                     }
-                    if (G.techN + G.knowN + G.knowN >= 20 && G.achievByName['nature\'s rookie'].won == 0) { //nature rookie
+                    if (G.techN + G.knowN >= 20 && G.achievByName['nature\'s rookie'].won == 0) { //nature rookie
                         G.achievByName['nature\'s rookie'].won = 1;
                         G.middleText('- Completed <font color="lime">Nature\'s rookie</font> achievement -', 'slow')
                     }
