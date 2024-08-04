@@ -557,6 +557,18 @@
                             }
                         }
                     }
+                    if (t.modes) {
+                        var modeKeys = Object.keys(t.modes)
+                        var modeLen = modeKeys.length
+                        text += "<br>Modes (" + modeLen + "):<ul>"
+                        for (var m = 0; m < modeLen; m++) {
+                            var key = modeKeys[m]
+                            var mode = t.modes[key]
+                            var icon = getIcon(mode.icon, true, civ2)
+                            text += "<li><strong>" + mode.name + '</strong><ul><li>Internal ID: <span class="mono">' + key + "</span></li><li>Uses: " + parseRes(objc, mode.use) + "</li><li>Requires: " + parseReq(objc, mode.req) + "</li><li>Description: " + parseDesc(mode.desc) + '</li><li>Icon: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div></li></ul></li>'
+                        }
+                        text += "</ul>"
+                    }
                     if (category === "techs" || category === "traits") {
                         var indirect = noticeEffects(e, t.name, 2, objc, "req")
                         if (indirect.length !== 0) {
@@ -606,7 +618,11 @@
                 }
                 var context = effect.context
                 if (context) {
-                    info += ' within the internal context of <span class="mono"' + context + "></span>"
+                    info += ' within the internal context of <span class="mono">' + context + "</span>"
+                }
+                var notMode = effect.notMode
+                if (notMode) {
+                    info += ' if the mode is not <span class="mono">' + notMode + "</span>"
                 }
                 var mode = effect.mode
                 if (mode) {
@@ -618,6 +634,9 @@
         }
 
         function parseReq(obj, reqToSearch) {
+            if (reqToSearch == null) {
+                return "nothing"
+            }
             if (reqToSearch.length) {
                 var arr = reqToSearch
                 reqToSearch = {}
@@ -677,6 +696,9 @@
         }
 
         function parseRes(obj, resToSearch) {
+            if (resToSearch == null) {
+                return "nothing"
+            }
             var keys = Object.getOwnPropertyNames(resToSearch)
             var keyLen = keys.length
             if (keyLen !== 0) {
