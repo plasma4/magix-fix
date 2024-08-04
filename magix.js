@@ -1150,6 +1150,7 @@ if (getObj("civ") != "1") {
         author: 'pelletsstarPL',
         desc: 'Fit more people, discover magic, and build strange wonders along the way. Unlock portals and more housing so you can fit more people, and explore the vast oceans! Note that this mod uses part of the base game, so credits to Orteil for the default dataset. (many, many new techs, features, and text fixes have been added by @1_e0)',
         engineVersion: 1,
+        manifest: 0,
         requires: ['MagixUtils'],
         sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {

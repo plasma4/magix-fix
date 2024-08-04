@@ -22,28 +22,47 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 // Custom storage tools that 1) don't break the save data and 2) are saved when exporting
-var conflictingStorageObjects = ["civ"]
-G.storageObject = {}
-try {
-    G.storageObject = localStorage.getItem("legacySave-alpha")
-    if (G.storageObject) {
-        G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\$\{.+?\}/)
+if (!window.magixLoaded) {
+    window.magixLoaded = true
+    var conflictingStorageObjects = ["civ"]
+    G.storageObject = {}
+    try {
+        G.storageObject = localStorage.getItem("legacySave-alpha")
         if (G.storageObject) {
-            G.storageObject = G.storageObject[G.storageObject.length - 1]
+            G.storageObject = unescape(b64DecodeUnicode(G.storageObject)).match(/\$\{.+?\}/)
             if (G.storageObject) {
-                G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
+                G.storageObject = G.storageObject[G.storageObject.length - 1]
+                if (G.storageObject) {
+                    G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'))
+                } else {
+                    G.storageObject = {}
+                }
             } else {
                 G.storageObject = {}
             }
         } else {
             G.storageObject = {}
         }
-    } else {
+    } catch (e) {
+        console.warn("Storage data could not be obtained.")
         G.storageObject = {}
     }
-} catch (e) {
-    console.warn("Storage data could not be obtained.")
-    G.storageObject = {}
+
+    if (!window.skipModCheck) {
+        setTimeout(() => {
+            if (G.mods.length > 2) {
+                G.dialogue.popup(function (div) {
+                    return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
+                        '<div class="bitBiggerText scrollBox underTitle"><div class="par">It appears that you have already installed mods with Magix before it loaded.</div><div class="divider"></div>' +
+                        '<div class="par" style="color:#f30;">Wipe the save and remove the mods that you have installed (possibly the data.js one). (If you are a developer and for some reason you want to ignore this, set window.skipModCheck to true.)</div>' +
+                        '</div>' +
+                        '<div class="buttonBox">' +
+                        G.button({ tooltip: 'Try to select different mods this time!', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
+                        '</div></div>';
+                }, 'noClose')
+            }
+        }, 4000)
+    }
 }
 
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
