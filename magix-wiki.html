@@ -518,6 +518,22 @@
                     if (c) {
                         text += "<br>Is only obtainable under specific conditions: yes"
                     }
+                    c = t.getDisplayAmount
+                    if (c) {
+                        text += "<br>Has a customized display amount: yes"
+                    }
+                    c = t.getIcon
+                    if (c) {
+                        text += "<br>Has a custom icon function: yes"
+                    }
+                    c = t.subRes
+                    if (c) {
+                        text += "<br>Subresources: " + parseRes2(objc, c)
+                    }
+                    c = t.meta
+                    if (c) {
+                        text += "<br>Contains other resources within: yes"
+                    }
                     c = t.partOf
                     if (c && c != "false") {
                         text += "<br>Is interally part of: " + c
@@ -628,7 +644,7 @@
                 if (mode) {
                     info += ' for the mode ID <span class="mono">' + mode + "</span>"
                 }
-                result.push(info)
+                if (info) result.push(info)
             }
             return result
         }
@@ -713,6 +729,29 @@
                         var res = resources[o]
                         if (res.name === key) {
                             text += (l === 0 ? "" : (l === end ? separator : ", ")) + resToSearch[key] + ' <u onclick="c(' + res.id + ",'resources')\">" + res.displayName + "</u>"
+                            break
+                        }
+                    }
+                }
+                return text
+            }
+            return ""
+        }
+
+        function parseRes2(obj, keys) {
+            var keyLen = keys.length
+            if (keyLen !== 0) {
+                var separator = keyLen === 2 ? " and " : ", and "
+                var end = keyLen - 1
+                var text = ""
+                var resources = obj.resources
+                var resLen = resources.length
+                for (var l = 0; l < keyLen; l++) {
+                    var key = keys[l]
+                    for (var o = 0; o < resLen; o++) {
+                        var res = resources[o]
+                        if (res.name === key) {
+                            text += (l === 0 ? "" : (l === end ? separator : ", ")) + ' <u onclick="c(' + res.id + ",'resources')\">" + res.displayName + "</u>"
                             break
                         }
                     }
