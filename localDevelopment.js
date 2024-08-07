@@ -139,6 +139,7 @@ function extractObject(toExtract, properties, funcProperties) {
         }
         obj.type = item.type
         if (item.mod) obj.mod = item.mod.url
+        if (item.skip) obj.skip = true
         obj.id = item.id
         data[i] = obj
     }

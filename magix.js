@@ -965,7 +965,7 @@ var updateNewDayLines = function (fools, civ2) {
             'Another sea wave crashes against a tall cliff.', 'What a storm!',
             'The air has had a welcoming feel to it recently.', 'Your people went hiking today.',
             'The temperature feels just right today!', 'From somewhere an annoying bug stings you.',
-            'Today is a day of rest.', '<b>What will you discover?</b>',
+            'Today is a good day for resting in the shade.', '<b>What will you discover?</b>',
             'A slow trickle of water can be heard nearby.', 'Lands from far away remain calm.',
             'Birds have been migrating recently.', 'The sun has finally shown itself.',
             'Night has fallen.', 'Your tribe watched the sunset tonight in awe.',
@@ -974,8 +974,9 @@ var updateNewDayLines = function (fools, civ2) {
             'Various creatures chirp and howl.', 'It sounds like a strange creature is approaching...',
             'Rain has not fallen for the past few days.', 'Your tribe is itching to research more.',
             'It has been strangely foggy recently.', 'Your people haven\'t seen the sun in a while.',
-            'Today is a good day to go outside.', 'Your tribe finally finds a shady area to avoid the heat.',
-            'Your tribe managed to find a tasty snack for you!', 'A large gust of wind is blowing.'
+            'The sun welcomes you to a brand new day.', 'Your tribe finally finds a shady area to avoid the heat.',
+            'Your tribe managed to find a tasty snack for you!', 'A large gust of wind is blowing.',
+            'You feel refreshed after a good night of sleep.', 'Birds chirp far, far away.'
         ];
     }
     if (civ2) {
@@ -8691,9 +8692,9 @@ if (getObj("civ") != "1") {
                 name: 'Wizard',
                 desc: 'Worshipper of magic. You\'ll need them to maintain [fire wizard tower,Wizard towers] and to cultivate magic in your civilization. Provides 1 [wisdom] for every two [wizard]s.',
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
-                cost: { 'insight': 1, 'stick': 2, 'food': 1, 'water': 1 },
+                cost: { 'insight': 1, 'stick': 2, 'food': 1 },
                 use: { 'elder': 1, 'wand': 1 },
-                upkeep: { 'food': 1 / 3 },
+                upkeep: { 'food': 1 / 3, 'water': 0.04 },
                 req: { 'wizard wisdom': true },
                 effects: [
                     { type: 'convert', from: { 'herb': 6, 'mana': 2 }, into: { 'herb essence': 3 }, every: 4, req: { 't7': true } },
@@ -24607,14 +24608,15 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Wizard',
-                desc: 'Worshipper of magic. You\'ll need them to maintain various magic-based towers and to cultivate magic in your civilization. Provides 2 [wisdom] for every 5 [Wizard]s.',
+                desc: 'A smart elf that is also a worshipper of magic. You\'ll need them to maintain various magic-based towers and to cultivate magic in your civilization. Provides 2 [wisdom] for every 5 [Wizard]s.',
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
-                cost: { 'creativity': 3, 'discernment': 1, 'stick': 2, 'food': 1, 'water': 1 },
+                cost: { 'creativity': 3, 'discernment': 1, 'stick': 2, 'food': 1 },
                 use: { 'elder': 1, 'wand': 1 },
-                upkeep: { 'food': 1.5 },
+                upkeep: { 'food': 1.5, 'water': 0.06 },
                 req: { 'wizard wisdom': true },
                 effects: [
                     { type: 'provide', what: { 'wisdom': 0.4 } },
+                    { type: 'gather', what: { 'insight': 0.005 }, req: { 'wizard wisdom II': true } },
                 ],
                 category: 'discovery',
                 limitPer: { 'population': 6 },
@@ -26618,9 +26620,9 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'branching wisdom',
-                desc: '@You gain an additional tech choice for various periods of time.@<b><font color="#f70054">Note: This trait is rather temporary and will unfortunately expire quite quickly. This trait will no longer appear after you research somewhat.</font></b>',
+                desc: '@You gain an additional tech choice for various periods of time.@<b><font color="#f70054">Note: This trait is rather temporary and will unfortunately expire quite quickly. This trait is rare and will no longer appear after you research a little bit.</font></b>',
                 icon: [29, 19, 'c2'],
-                chance: 3,
+                chance: 4,
                 cost: { 'discernment': 3, 'creativity': 3 },
                 req: { 'tribalism': true, 'scavenging': false, 'carcass-looting': false, 'dreaming': false, 'language': false },
                 effects: [
@@ -26658,6 +26660,13 @@ if (getObj("civ") != "1") {
                 chance: 10,
                 effects: [
                 ],
+            });
+            new G.Tech({
+                name: 'wizard wisdom II', category: 'tier1',
+                desc: 'Wizards will also produce a 5% as much [insight] as a basic [dreamer] now. //<small>i suppose insight is important for wizards as well</small>',
+                icon: [3, 13, 'c2', 23, 10, 'c2'],
+                cost: { 'discernment': 200, 'faith': 10, 'gentility': 24 },
+                req: { 'wizard wisdom': true },
             });
 
 
