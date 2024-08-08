@@ -672,7 +672,7 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
-                        result.push((reqToSearch[key] ? "" : "a lack of ") + ' <u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
+                        result.push((reqToSearch[key] ? "" : "a lack of ") + '<u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
                         break
                     }
                 }
@@ -684,7 +684,7 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
-                        result.push((reqToSearch[key] ? "" : "a lack of ") + ' <u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
+                        result.push((reqToSearch[key] ? "" : "a lack of ") + '<u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
                         break
                     }
                 }
@@ -708,7 +708,7 @@
             } else if (resultLen === 2) {
                 return result[0] + " and " + result[1]
             }
-            return (result.slice(0, resultLen - 1).join(", ") + ", and " + result[resultLen - 1]).replaceAll("  ", " ") // whelp
+            return (result.slice(0, resultLen - 1).join(", ") + ", and " + result[resultLen - 1])
         }
 
         function parseRes(obj, resToSearch) {
