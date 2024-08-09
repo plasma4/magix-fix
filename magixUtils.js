@@ -2071,7 +2071,7 @@ G.AddData({
             G.applyKnowEffects(G.traitsOwned[index].trait, true, true);
             G.traitsOwned.splice(index, 1);//remove trait
             G.traitsOwnedNames.splice(index, 1);
-            G.update[G.tab.id]();
+            if (G.tab.id) G.update[G.tab.id]();
         }
         G.deleteTech = function (me) {
             var index = G.techsOwnedNames.indexOf(me);
@@ -2079,7 +2079,7 @@ G.AddData({
             G.applyKnowEffects(G.techsOwned[index].tech, true, true);
             G.techsOwned.splice(index, 1);//remove trait
             G.techsOwnedNames.splice(index, 1);
-            G.update[G.tab.id]();
+            if (G.tab.id) G.update[G.tab.id]();
             if (me.category != 'misc') G.miscTechN--; else G.techN--;
         }
 

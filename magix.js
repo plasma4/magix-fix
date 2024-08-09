@@ -9519,8 +9519,8 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 9, mode: 'influence', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
                     { type: 'convert', from: { 'insight': 550 }, into: { 'insight II': 1.5 }, every: 9, mode: 'insight', req: { 'smartness of essentials': true } },
                     { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true } },
-                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true, 'people of the arts II': false } },
-                    { type: 'convert', from: { 'influence': 550 }, into: { 'influence II': 1.2 }, every: 9, mode: 'influence', req: { 'smartness of essentials': true } },
+                    { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true, 'people of the arts II': false } },
+                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true } },
                     { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.26 }, every: 9, mode: 'culture', req: { 'people of the arts II': true } },
                     { type: 'mult', value: 1.2, req: { 'leaves of wisdom': true } },
                     { type: 'mult', value: 1.2, req: { 'branches of wisdom': true } },
@@ -25870,7 +25870,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'archaeology',
-                desc: '<font color="#fdff71">Throughout your past ascensions, there are some [relic]s left from previous civilizations. @unlocks the [archaeologist], who will forage and dig underground to investigate what previous civilizations left</font><br><font color="#f70054">At some point, they may find all of the relics remaining, causing you to gain significantly less [relic]s.</font>',
+                desc: '<font color="#fdff71">Throughout your past ascensions, there are some [relic]s left from previous civilizations. @unlocks the [archaeologist], who will forage and dig underground to investigate what previous civilizations left</font><br><font color="#f70054">At some point, they may find all of the relics remaining, causing you to gain a vastly smaller amount of [relic]s.</font>',
                 icon: [26, 14, 'c2'],
                 cost: { 'creativity': 120 },
                 req: { 'gardening': true, 'developed creativity': true, 'tribalism': false },
