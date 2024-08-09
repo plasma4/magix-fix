@@ -8694,7 +8694,7 @@ if (getObj("civ") != "1") {
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
                 cost: { 'insight': 1, 'stick': 2, 'food': 1 },
                 use: { 'elder': 1, 'wand': 1 },
-                upkeep: { 'food': 1 / 3, 'water': 0.04 },
+                upkeep: { 'food': 1.2, 'water': 0.04 },
                 req: { 'wizard wisdom': true },
                 effects: [
                     { type: 'convert', from: { 'herb': 6, 'mana': 2 }, into: { 'herb essence': 3 }, every: 4, req: { 't7': true } },
@@ -10063,7 +10063,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'pagoda of culture',
-                desc: '@Leads to the completion of the <b>Cultural</b> trial. //A wonder full of cultural sparks for Tu-ria the Seraphin of Inspiration. Place that is beloved by culturists. <><font color="#0adbbd">Without culture, your tribe would not even exist...would it?</font>',
+                desc: '@Leads to the completion of the <b>Cultural</b> trial. //A wonder full of cultural sparks for Tu-ria the Seraphin of Inspiration. Place that is beloved by various people of culture. <><font color="#0adbbd">Without culture, your tribe would not even exist...would it?</font>',
                 wonder: 'cultural',
                 icon: [19, 26, 'magixmod'],
                 wideIcon: [18, 26, 'magixmod'],
@@ -10145,14 +10145,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'the Herboleum',
-                desc: '@Leads to the completion of the <b>Herbalism</b> trial. //A sizable monument surrounded by various herbs and berries. Herboleum can attract Herbalia and let you finish this trial.<><font color="#91eb33">Herbs might taste bad, but are edible, at least. This wonder is, well...for the most acknowledged Herbalist in the Universe:<br>Herbalia</font>',
+                desc: '@Leads to the completion of the <b>Herbalism</b> trial. //A sizable monument surrounded by various herbs and berries. The Herboleum can attract Herbalia and let you finish this trial.<><font color="#91eb33">Herbs might taste bad, but are edible, at least. This wonder is, well...for the most acknowledged Herbalist in the Universe:<br>Herbalia</font>',
                 wonder: 'herbalism',
                 icon: [13, 26, 'magixmod'],
                 wideIcon: [12, 26, 'magixmod'],
                 cost: { 'basic building materials': 250, 'herb': 600, 'fruit': 500, 'vegetable': 400 },
                 costPerStep: { 'precious metal ingot': 20, 'precious building materials': 50, 'herb essence': 10 },
                 steps: 100,
-                messageOnStart: 'You and your people started to build <b>The Herboleum</b>.<br>Around the dense forest of herbs, bushes, and occasionally small ponds, the mostly natural wonder turns out to be be slightly taller than the other human-made buildings nearby.',
+                messageOnStart: 'You and your people started to build <b>The Herboleum</b>.<br>Around the dense forest of herbs, bushes, and occasionally small ponds, the mostly natural wonder turns out to be slightly taller than the other human-made buildings nearby.',
                 finalStepCost: { 'population': 999, 'gem block': 5, 'herb': 10000, 'fruit': 200, 'vegetable': 200 },
                 finalStepDesc: 'To perform the final step, 999 [population,people] and some goods must be sacrificed to finish this "healthy" trial and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
@@ -10225,7 +10225,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Mausoleum of the Dreamer',
-                desc: '@Leads to the completion of the <b>Dreamy</b> trial. //A monument where the acknowledged dead lie. Tall monument<><font color="#D4a000">Wisdom is key...and it can open a lot of doors.</font>',
+                desc: '@Leads to the completion of the <b>Dreamy</b> trial. //A monument where the acknowledged dead lie. It is a towering monument built from ideas and discoveries.<><font color="#D4a000">Wisdom is key...and it can open a lot of doors.</font>',
                 wonder: 'Dreamy',
                 icon: [28, 26, 'magixmod'],
                 wideIcon: [27, 26, 'magixmod'],
@@ -11937,7 +11937,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'spell of capacity', category: 'upgrade',
-                desc: 'Smart wizards figured out a spell which will increase the the maximum food/material storage of [warehouse]s, [barn]s, [granary,Granaries], [storage pit]s, and [stockpile]s by 20%.',
+                desc: 'Smart wizards figured out a spell which will increase the maximum food/material storage of [warehouse]s, [barn]s, [granary,Granaries], [storage pit]s, and [stockpile]s by 20%.',
                 icon: [4, 1, 'magixmod', 23, 1],
                 cost: { 'insight': 750, 'wisdom': 15, 'mana': 1e5, 'wind essence': 3000 },
                 req: { 'physics': true },

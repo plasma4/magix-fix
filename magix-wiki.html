@@ -540,7 +540,7 @@
                     }
                     c = t.category
                     if (c) {
-                        text += "<br>Part of displayed category: " + c
+                        text += "<br>Part of displayed category: " + (c === "debug" ? "<strong>debug</strong>" : c)
                     }
                     c = t.chance
                     if (c) {
@@ -627,6 +627,10 @@
                 }
                 if (req && Object.getOwnPropertyNames(req).length !== 0) {
                     info += " if you have " + parseReq(obj, req)
+                }
+                var max = effect.max
+                if (max) {
+                    info += " but capped at " + max
                 }
                 var chance = effect.chance
                 if (chance) {
