@@ -14444,7 +14444,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'alphabet 3/3', category: 'tier1',
-                desc: 'significantly expands the amount of characters in your people\'s language.',
+                desc: 'Significantly expands the amount of characters in your people\'s language.',
                 icon: [26, 27, 'magixmod', 25, 27, 'magixmod'],
                 req: { 'alphabet 2/3': true, 'artistic thinking': true, 'alchemy': true },
                 cost: { 'insight': 1400, 'culture': 500, 'inspiration': 20, 'wisdom': 40, 'faith': 180 },
