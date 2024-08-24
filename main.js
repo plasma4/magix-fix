@@ -136,8 +136,7 @@ function formatEveryThirdPower(notations)
 
 var magixNote = false
 
-function rawFormatter(value) {return +(Math.round(value * 1000) / 1000).toFixed(3);}
-
+function rawFormatter(value) {return value % 1 ? Math.floor(value * 1000) / 1000 : value;}
 var numberFormatters =
 [
 	rawFormatter,
