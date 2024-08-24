@@ -494,7 +494,10 @@ G.getCostString = function (costs, verbose, neutral, mult) {
     for (var i in costs) {
         var cost = costs[i];
         if (cost > 0) {
-            var thing = G.getDict(i);
+            var thing = G.dict[i];
+            if (!thing) {
+                return;
+            }
             var signed = cost * mult;
             var num = Math.abs(signed);
             var text = (num < 1 ? num === 0 ? "No" : ("1/" + (num > 0.1 ? (1 / num).toFixed(1).replace(".0", "") : B(1 / num))) : (num < 10 ? num.toFixed(1).replace(".0", "") : B(num))) + (verbose ? (' ' + thing.displayName) : '');
@@ -513,7 +516,10 @@ G.getUseString = function (costs, verbose, neutral, mult) {
     var costsStr = [];
     mult = mult || 1;
     for (var i in costs) {
-        var thing = G.getDict(i);
+        var thing = G.dict[i];
+        if (!thing) {
+            return;
+        }
         var signed = costs[i] * mult;
         var num = Math.abs(signed);
         var text = (num < 1 ? num === 0 ? "No" : ("1/" + (num > 0.1 ? (1 / num).toFixed(1).replace(".0", "") : B(1 / num))) : (num < 10 ? num.toFixed(1).replace(".0", "") : B(num))) + (verbose ? (' ' + thing.displayName) : '');
@@ -1275,7 +1281,7 @@ if (getObj("civ") != "1") {
                         (G.achievByName['mausoleum'].won > 6 ? '<b>LV7</b> - Your [population,people] have a chance to adopt [archaeology] knowledge over time.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 7 ? '<b>LV8</b> - The [belief in the beforelife,Belief in the before/afterlife] traits have a doubled chance to be adopted.<hr>' : '') +
                         (G.achievByName['mausoleum'].won > 8 ? '<b>LV9</b> - The [ungrateful tribe] trait decreases positive [happiness] gain by just 2% now!<hr>' : '') +
-                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - Unlocks <b>Mausoleum eternal</b> achievement, providing massive benefits!' : '');
+                        (G.achievByName['mausoleum'].won > 9 ? '<b>LV10</b> - Unlocks <b>Mausoleum eternal</b>, providing massive benefits!' : '');
                 }
             }
             G.seasonalContent = function () {
@@ -1535,7 +1541,6 @@ if (getObj("civ") != "1") {
                     };
                 };
 
-                G.policyByName['theme changer'].visible = true;
                 if (G.achievByName['next to the God'].won > 0) {
                     G.getDict('culture of the afterlife').chance /= 3;
                     G.getDict('culture of the beforelife').chance /= 3;
@@ -6765,12 +6770,15 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'bone': 2 }, into: { 'statuette': 1 }, every: 5, mode: 'bone statuettes' },
                     { type: 'convert', from: { 'stone': 10 }, into: { 'cut stone': 1 }, every: 15, mode: 'cut stone' },
                     { type: 'convert', from: { 'cut stone': 1 }, into: { 'stone': 9 }, every: 5, mode: 'smash cut stone' },
+                    { type: 'convert', from: { 'gems': 10 }, into: { 'gem block': 1 }, every: 15, mode: 'gem blocks', req: { 'culture of gems III': false } },
+                    { type: 'convert', from: { 'gems': 10 }, into: { 'gem block': 1 }, every: 5, mode: 'gem blocks', req: { 'culture of gems III': true } },
                     { type: 'convert', from: { 'gems': 10 }, into: { 'gem block': 1 }, every: 15, mode: 'gem blocks' },
                     { type: 'convert', from: { 'log': 1 }, into: { 'wooden statuette': 1, 'scobs': 3 }, every: 7, mode: 'wood statuettes' },
                     { type: 'convert', from: { 'various stones': 10 }, into: { 'various cut stones': 1 }, every: 5, mode: 'gdablockscraft' },
                     { type: 'convert', from: { 'various cut stones': 1 }, into: { 'various stones': 9 }, every: 5, mode: 'gdablockssmash' },
                     { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.001 }, every: 15, chance: 8 / 10, mode: 'vgems', req: { 'culture of gems II': false } },
-                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.002 }, every: 15, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems II': true } },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.002 }, every: 15, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems II': true, 'culture of gems III': false } },
+                    { type: 'convert', from: { 'valuable gems': 10 }, into: { 'valuable gem block': 1, 'happiness': 0.5, 'culture II': 0.002 }, every: 5, chance: 9.6 / 10, mode: 'vgems', req: { 'culture of gems III': true } },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
                     { type: 'mult', value: 0.95, req: { 'dt3': true } },
                     { type: 'mult', value: 1.03, req: { 'inspirated carvers': true, 'moderation': true } },
@@ -10912,7 +10920,7 @@ if (getObj("civ") != "1") {
                 category: 'cultural',
                 effects: [
                     { type: 'convert', from: { 'child': 1 }, into: { 'artist': 1 }, every: 300 },
-                    { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 600, req: { 'better art schools': true } },
+                    { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 600, req: { 'better art schools': false } },
                     { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 300, req: { 'better art schools': true } },
                 ],
             });
@@ -18561,6 +18569,17 @@ if (getObj("civ") != "1") {
                 icon: [0, 35, 'magixmod', 29, 18, 'magixmod'],
                 cost: { 'insight II': 200, 'culture II': 75 },
                 req: { 'passionate artistry': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'culture of gems III', category: 'tier1',
+                desc: '@[carver]s creating [gem block]s and [valuable gem block]s will be better trained at using their tools, making their creation three times faster',
+                icon: [1, 35, 'magixmod', 48, 0, 'magix2'],
+                cost: { 'insight II': 550, 'culture II': 160 },
+                req: { 'culture of gems II': true, 'music instruments II': true },
+                effects: [
+                ],
             });
 
             new G.Res({
@@ -18964,7 +18983,8 @@ if (getObj("civ") != "1") {
                 desc: 'Let your population enjoy various themes! Does not apply to popups, however, and only switches every ten days. //<small>Life has its theme too...</small>',
                 icon: [28, 21, 'magixmod'],
                 cost: {},
-                req: { 'life has its theme': false },
+                req: { 'life has its theme': true },
+                startMode: 'Default',
                 modes: {
                     'Default': { name: 'Default', desc: 'Switches to the default theme.', icon: [4, 22, 'magixmod'] },
                     'Green': { name: 'Green', desc: 'Switches to the green theme.', icon: [3, 22, 'magixmod'] },
@@ -21390,7 +21410,7 @@ if (getObj("civ") != "1") {
                         (G.achievByName['the fortress'].won > 6 ? '<b>LV7</b> - Start a game with +2 [creativity].<hr>' : '') +
                         (G.achievByName['the fortress'].won > 7 ? '<b>LV8</b> - Elves have a chance to adopt [archaeology] knowledge over time.' : '') +
                         (G.achievByName['the fortress'].won > 8 ? '<b>LV9</b> - If year 3 starts, you will get an extra 1 year and 150 days of fast ticks.<hr>' : '') +
-                        (G.achievByName['the fortress'].won > 9 ? '<b>LV10</b> - Start a game with 1 extra [discernment] and with 20% of the [battery of discoveries] charged. Unlocks <b>Fortress eternal</b> achievement, providing 400 additional fast ticks!' : '');
+                        (G.achievByName['the fortress'].won > 9 ? '<b>LV10</b> - Start a game with 1 extra [discernment] and with 20% of the [battery of discoveries] charged. Unlocks <b>Fortress eternal</b>, providing 400 additional fast ticks!' : '');
                 }
             }
 
