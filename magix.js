@@ -9467,7 +9467,8 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'vegetable': 0.14 } },
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
-                    { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } }
+                    { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
+                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } }
                 ],
             });
             new G.Unit({
@@ -18626,7 +18627,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'alchemical fuels', category: 'tier1',
                 desc: 'Using their knowledge of alchemy, your civilization will be able to improve the speed of [furnace]s by 10%.',
-                icon: [3, 0, 'fuels', 23, 1],
+                icon: [3, 0, 'fuels', 24, 1],
                 cost: { 'insight': 800, 'wisdom': 25, 'culture': 200 },
                 req: { 'alchemy': true },
                 effects: [
