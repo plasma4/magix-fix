@@ -328,7 +328,7 @@ G.AddData({
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
+    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'fuels': 'https://file.garden/ZmatEHzFI2_QBuAF/fuels.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();
@@ -387,7 +387,7 @@ G.AddData({
                 'I was checking bunch of mods and noticed...<b>there was no mod about magic...but I changed it</b>! ' +
                 'Even today, I am proud of the fruits of my creativity and time I sacrificed to make this entertaining mod. ' +
                 'I made this mod due to my hobby: IT. I like things like coding and networking. Who knows...maybe I will become an expert of javascript! ' +
-                '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)' +
+                '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)<br><b>Sprite designs were created by Orteil, @pelletsstarPL, @1_e0, and @theskullyko and merged together.</b>' +
                 '<br><font color="#f95e4d"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
                 '<div class="barred fancyText">Settings:</div>' +
                 G.writeSettingButton({ text: 'Toggle sounds', tooltip: 'Toggle all game sounds.', name: 'sound', id: 'sound' }) + "<br>";

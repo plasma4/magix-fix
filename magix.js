@@ -1159,7 +1159,7 @@ if (getObj("civ") != "1") {
         engineVersion: 1,
         manifest: 0,
         requires: ['MagixUtils'],
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'fuels': 'https://file.garden/ZmatEHzFI2_QBuAF/fuels.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer');
@@ -7022,10 +7022,13 @@ if (getObj("civ") != "1") {
                     'off': G.MODE_OFF,
                     'bricks': { name: 'Fire bricks', icon: [3, 8], desc: 'Produce 10 [brick]s out of 3 pieces of [clay].', use: { 'worker': 1, 'stone tools': 1 } },
                     'glass': { name: 'Craft glass', icon: [4, 8], desc: 'Your kiln will now use 10 pieces of [sand] to make 1 [glass] pane.', req: { 'glass-crafting': true }, use: { 'stone tools': 1 } },
+                    'charcoal': { name: 'Craft charcoal', icon: [0, 0, 'fuels'], desc: 'Your kiln will now convert 1 [log] into 5 [charcoal] pieces.', req: { 'charcoal production I': true }, use: { 'metal tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'clay': 3 }, into: { 'brick': 10 }, every: 5, mode: 'bricks' },
                     { type: 'convert', from: { 'sand': 10 }, into: { 'glass': 1 }, every: 5, mode: 'glass' },
+                    { type: 'convert', from: { 'log': 1 }, into: { 'charcoal': 5 }, every: 5, mode: 'charcoal', req: { 'charcoal production II': false } },
+                    { type: 'convert', from: { 'log': 1 }, into: { 'charcoal': 6.25 }, every: 5, mode: 'charcoal', req: { 'charcoal production II': true } },
                     { type: 'mult', value: 1.5, req: { 'bigger kilns': true } },
                     { type: 'mult', value: 1.1, req: { 'better kiln construction': true, 'moderation': true } },
                     { type: 'mult', value: 1.05, req: { 'better kiln construction': true, 'caretaking': true } },
@@ -7231,6 +7234,8 @@ if (getObj("civ") != "1") {
                     { type: 'waste', chance: 0.001 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.0002 / 1000, req: { 'construction III': true, 'improved construction': false } },
                     { type: 'waste', chance: 0.00014 / 1000, req: { 'improved construction': true } },
+                    { type: 'mult', value: 1.1, req: { 'alchemical fuels': true } },
+                    { type: 'mult', value: 1.25, req: { 'bellows': true } },
                     { type: 'mult', value: 1.2, req: { 'improved furnace construction': true, 'moderation': true } },
                     { type: 'mult', value: 1.1, req: { 'improved furnace construction': true, 'caretaking': true } },
                 ],
@@ -8085,7 +8090,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1 / 25, req: { 'baking': true, 'baking II': false } },
                     { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking': true, 'baking II': true } },
-                    { type: 'mult', value: 1.5, req: { 'grain fertlizer': true } }
+                    { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } }
                 ],
                 req: { 'baking': true },
                 category: 'crafting',
@@ -8101,7 +8106,7 @@ if (getObj("civ") != "1") {
                 category: 'crafting',
                 effects: [
                     { type: 'convert', from: { 'wheat': 6, 'water': 1 }, into: { 'flour': 5 }, every: 3, repeat: 2 },
-                    { type: 'mult', value: 1.5, req: { 'grain fertlizer': true } },
+                    { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } },
                     { type: 'mult', value: 1.35, req: { 'improved windmill motors': true } }
                 ],
             });
@@ -8119,8 +8124,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.2, req: { 'gt2': true } },
-                    { type: 'mult', value: 1.5, req: { 'grain fertlizer': true, 'wizard\'s grain fertlizer': false } },
-                    { type: 'mult', value: 2.5, req: { 'wizard\'s grain fertlizer': true, 'grain fertlizer': true } },
+                    { type: 'mult', value: 1.5, req: { 'grain fertilizer': true, 'wizard\'s grain fertilizer': false } },
+                    { type: 'mult', value: 2.5, req: { 'wizard\'s grain fertilizer': true, 'grain fertilizer': true } },
                     { type: 'mult', value: 2, req: { 'backshift at farms': true } },
                 ],
             });
@@ -9750,7 +9755,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'dark wormhole',
-                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. [dark wormholes,Wormholes] provide 24M [burial spot]s but will require some upkeep. This may get new abilities later on...',
+                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. [dark wormhole,Wormholes] provide 24M [burial spot]s but will require some upkeep. This may get new abilities later on...',
                 icon: [13, 22, 'magixmod'],
                 cost: { 'gem block': 4, 'precious building materials': 5e3 },
                 effects: [
@@ -9892,7 +9897,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'pagoda of democracy',
                 displayName: 'Pagoda of Democracy',
-                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertlizer for the roots of justice. This wonder is tied to [influence] and [authority] so they will be required during construction.',
+                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertilizer for the roots of justice. This wonder is tied to [influence] and [authority] so they will be required during construction.',
                 wonder: 'democration',
                 icon: [6, 13, 'magixmod'],
                 wideIcon: [5, 13, 'magixmod'],
@@ -10389,7 +10394,7 @@ if (getObj("civ") != "1") {
                 name: 'grand mirror',
                 desc: 'A door to a world that is an exact copy of the mortal world. //<b><font color="fuschia">Isn\'t it weird that you have a MIRRORED world and only the terrain duplicated? Well...maybe it is better for you.</font></b>',
                 icon: [32, 0, 'magix2'],
-                wideIcon: [32, 0, 'magix2'],
+                wideIcon: [31, 0, 'magix2'],
                 wonder: '.',
                 steps: 50,
                 finalStepDesc: 'Perform the final step to gain a [tablet \'o mirror]. You will need it.',
@@ -10780,7 +10785,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wheat farmland',
-                desc: '@Specifically harvests [wheat]. This strangely charming farm not only produces [wheat] but also provides: 50 [housing] and 1,000 [food storage]. //[grain fertlizer] increases the efficiency.',
+                desc: '@Specifically harvests [wheat]. This strangely charming farm not only produces [wheat] but also provides: 50 [housing] and 1,000 [food storage]. //[grain fertilizer] increases the efficiency.',
                 icon: [4, 9, 'magixmod'],
                 cost: { 'seeds': 2000, 'basic building materials': 800 },
                 req: { 'glorious agriculture': true },
@@ -10793,8 +10798,8 @@ if (getObj("civ") != "1") {
                     { type: 'provide', what: { 'housing': 50, 'food storage': 1000 } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.1, req: { 'gt2': true } },
-                    { type: 'mult', value: 1.25, req: { 'grain fertlizer': true, 'wizard\'s grain fertlizer': false } },
-                    { type: 'mult', value: 1.55, req: { 'wizard\'s grain fertlizer': true, 'grain fertlizer': true } },
+                    { type: 'mult', value: 1.25, req: { 'grain fertilizer': true, 'wizard\'s grain fertilizer': false } },
+                    { type: 'mult', value: 1.55, req: { 'wizard\'s grain fertilizer': true, 'grain fertilizer': true } },
                 ],
             });
             new G.Unit({
@@ -10894,8 +10899,8 @@ if (getObj("civ") != "1") {
                     'log': { name: 'Process logs', icon: [1, 6], desc: 'Process 30 [log]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
                     'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
                     'essence': { name: 'Process essences', icon: [0, 2, 'magixmod'], desc: 'Process 25 [fire essence] and 5 [lightning essence], turning them into 20 [fire pit]s each.' },
-                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] and 1 [lightning essence], turning them into 8 [fire pit]s each.' },
-                    'oil': { name: 'Process coal and oil', icon: [9, 6], desc: 'Process 16 [coal], 10 [oil], and 5 [lightning essence], turning them into 20 [fire pit]s each.', req: { 'oil-digging II': true } },
+                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] and 2 [lightning essence], turning them into 20 [fire pit]s each.' },
+                    'oil': { name: 'Process various fuels', icon: [0, 0, 'fuels'], desc: 'Process 20 [coal], 10 [charcoal], and 10 [oil], turning them into 30 [fire pit]s each. Has a chance to convert [charcoal] into [lightning essence]!', req: { 'oil-digging II': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log', req: { 'hotter factories': false } },
@@ -10905,8 +10910,9 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'log', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'stick': 400, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'stick', req: { 'hotter factories': true } },
                     { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'essence', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'coal': 20, 'lightning essence': 1 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'coal': 16, 'oil': 10, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil' },
+                    { type: 'convert', from: { 'coal': 20, 'lightning essence': 2 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'coal': 20, 'charcoal': 10, 'oil': 10 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil' },
+                    { type: 'convert', from: { 'charcoal': 10 }, into: { 'lightning essence': 5 }, every: 6, chance: 0.15, mode: 'oil' },
                 ],
             });
             new G.Unit({ // New unit!!!!!
@@ -11766,7 +11772,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'agriculture', category: 'tier1',
-                desc: '@Unlocks [wheat farm,Farms]. Later you can not only grow natural plants that provide food for your civilization, but also some [magic essences,Essences] out of magical plants! @Since you may have trouble fitting all these farms in the mortal world, you will unlock some extra space to set them up later!',
+                desc: '@Unlocks [wheat farm,Farms]. Later on, you will not only be able to produce [food] for your civilization, but also a variety of [magic essences,Essences] out of magical plants! @Since you may have trouble fitting all these farms in the mortal world, you will unlock some extra space to set them up later!',
                 icon: [16, 2, 'magixmod'],
                 cost: { 'insight': 575 },
                 req: { 'Wizard complex': true, 'gardening': true },
@@ -11796,7 +11802,7 @@ if (getObj("civ") != "1") {
                 name: 'alchemy', category: 'tier1',
                 desc: '@Now you may start a new adventure with...potions! //<small>splash potions when though</small>',
                 icon: [16, 9, 'magixmod'],
-                cost: { 'insight': 650, 'wisdom': 60 },
+                cost: { 'insight': 720, 'wisdom': 60 },
                 req: { 'maths III': true },
             });
             new G.Tech({
@@ -12541,7 +12547,7 @@ if (getObj("civ") != "1") {
                 ],
             });
             new G.Tech({
-                name: 'grain fertlizer', category: 'upgrade',
+                name: 'grain fertilizer', category: 'upgrade',
                 desc: 'Multiplies the efficiency of all [bakery,Bakeries], [wheat farm]s, and [windmill]s by 1.5.',
                 icon: [27, 4, 'magixmod'],
                 cost: { 'insight II': 30 },
@@ -14122,8 +14128,8 @@ if (getObj("civ") != "1") {
                 ]
             });
             new G.Tech({
-                name: 'wizard\'s grain fertlizer', category: 'upgrade',
-                desc: 'You make can now make a fertlizer that make [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
+                name: 'wizard\'s grain fertilizer', category: 'upgrade',
+                desc: 'You make can now make a fertilizer that make [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -18213,7 +18219,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'oil-digging II', category: 'tier1',
-                desc: '[oil] can now be used along with [lightning essence] to unlock a new mode for your [heat factory,Heat factories].',
+                desc: '[oil] can now be used along with [lightning essence] and [charcoal] to unlock a new mode for your [heat factory,Heat factories].',
                 icon: [0, 35, 'magixmod', 29, 2, 'magixmod'],
                 cost: { 'insight II': 400, 'oil': 10000 },
                 req: { 'oil-digging': true },
@@ -18581,6 +18587,51 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'charcoal production I', category: 'tier1',
+                desc: '@[charcoal] can now be produced from your [kiln]s',
+                icon: [0, 0, 'fuels', 23, 1],
+                cost: { 'insight II': 250 },
+                req: { 'oil-digging': true, 'bigger kilns': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'charcoal production II', category: 'tier1',
+                desc: '@[charcoal] production produces 25% more [charcoal], without increasing the amount of [log]s needed',
+                icon: [0, 35, 'magixmod', 0, 0, 'fuels', 23, 1],
+                cost: { 'insight II': 550, 'culture II': 160 },
+                req: { 'oil-digging II': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'veggie fertilizer', category: 'tier1',
+                desc: '@[vegetable farm]s will now use powerful fertilizer technology, improving their harvests by +80%',
+                icon: [1, 0, 'fuels', 24, 1],
+                cost: { 'insight': 800, 'culture': 100 },
+                req: { 'agriculture': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'bellows', category: 'tier1',
+                desc: '@bellows may be used to improve [furnace]s, allowing them to work 25% faster',
+                icon: [2, 0, 'fuels', 23, 1],
+                cost: { 'insight II': 20, 'culture II': 2 },
+                req: { 'eotm': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'alchemical fuels', category: 'tier1',
+                desc: 'Using their knowledge of alchemy, your civilization will be able to improve the speed of [furnace]s by 10%.',
+                icon: [3, 0, 'fuels', 23, 1],
+                cost: { 'insight': 800, 'wisdom': 25, 'culture': 200 },
+                req: { 'alchemy': true },
+                effects: [
+                ],
+            });
 
             new G.Res({
                 name: 'ignoreItem', // A resource that tells you the next predicted drought
@@ -18738,6 +18789,13 @@ if (getObj("civ") != "1") {
                 name: 'valuable gem block',
                 desc: 'These have unique colors and refract light in all directions. These might be used in some advanced constructions!',
                 icon: [49, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'build',
+            });
+            new G.Res({
+                name: 'charcoal',
+                desc: 'A useful fuel for creating heat. //<small>no, you cannot eat it!</small>',
+                icon: [0, 0, 'fuels'],
                 partOf: 'misc materials',
                 category: 'build',
             });
