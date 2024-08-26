@@ -37,7 +37,7 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
                 '</div>' +
                 '<div class="buttonBox">' +
                 G.button({ tooltip: 'Try to select different mods this time!', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
-                G.button({ tooltip: 'Ignore this message. (This may cause problems!)', text: 'Ignore', classes: 'frameless', onclick: function () { G.popup.close() } }) +
+                G.button({ tooltip: 'Ignore this message. (This may cause problems!)', text: 'Ignore', classes: 'frameless', onclick: function () { G.dialogue.forceClose() } }) +
                 '</div></div>';
         }, 'noClose')
     }
