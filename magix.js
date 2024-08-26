@@ -72,6 +72,37 @@ if (!window.getObj && window.getCookie) {
     throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
 }
 
+// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
+window.getObj = function (key) {
+    var storageItem = G.storageObject[key]
+    if (storageItem != null) {
+        return storageItem
+    }
+    try {
+        var localItem = localStorage.getItem(key)
+        if (localItem !== null) {
+            return localItem
+        }
+    } catch (e) {
+
+    }
+    if (navigator.cookieEnabled) {
+        let name = key + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+    }
+    return null;
+}
+
 G.setDict = function (name, what) {
     // No more warnings :p
     G.dict[name] = what
@@ -287,221 +318,6 @@ G.selectModeForUnit = function (me, div) {
             linked: me
         });
     }
-}
-
-G.update['unit'] = function () {
-    l('unitDiv').innerHTML =
-        G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Units are the core of your resource production and gathering.</div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be assigned over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of. There are also shortcuts you can use:<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a working unit in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
-        '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
-        G.button({
-            id: 'removeBulk',
-            text: '<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">-</span>',
-            tooltip: 'Divide by 10',
-            onclick: function () {
-                var n = G.getSetting('buyAmount');
-                if (G.keys[17]) n = -n;
-                else {
-                    if (n == 1) n = -1;
-                    else if (n < 1) n = n * 10;
-                    else if (n > 1) n = n / 10;
-                }
-                n = Math.round(n);
-                n = Math.max(Math.min(n, 1e+35), -1e+35);
-                G.setSetting('buyAmount', n);
-                G.updateBuyAmount();
-            },
-        }) +
-        '<div id="buyAmount" class="bgMid framed" style="width:128px;display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">...</div>' +
-        G.button({
-            id: 'addBulk',
-            text: '<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">+</span>',
-            tooltip: 'Multiply by 10',
-            onclick: function () {
-                var n = G.getSetting('buyAmount');
-                if (G.keys[17]) n = -n;
-                else {
-                    if (n == -1) n = 1;
-                    else if (n > -1) n = n * 10;
-                    else if (n < -1) n = n / 10;
-                }
-                n = Math.round(n);
-                n = Math.max(Math.min(n, 1e+35), -1e+35);
-                G.setSetting('buyAmount', n);
-                G.updateBuyAmount();
-            }
-        }) +
-        '<div class="flourishR"></div></div>' +
-        '<div class="fullCenteredOuter" style="padding-top:16px;"><div id="unitBox" class="thingBox fullCenteredInner"></div></div>';
-
-    /*
-        -create an empty string for every unit category
-        -go through every unit owned and add it to the string of its category
-        -display each string under category headers, then attach events
-    */
-    var strByCat = [];
-    var len = G.unitCategories.length;
-    for (var iC = 0; iC < len; iC++) {
-        strByCat[G.unitCategories[iC].id] = '';
-    }
-    var len = G.unitsOwned.length;
-    for (var i = 0; i < len; i++) {
-        var str = '';
-        var me = G.unitsOwned[i];
-        str += '<div class="thingWrapper">';
-        str += '<div class="unit thing' + G.getIconClasses(me.unit, true) + '" id="unit-' + me.id + '">' +
-            G.getIconStr(me.unit, 'unit-icon-' + me.id, 0, true) +
-            G.getArbitrarySmallIcon([0, 0], false, 'unit-modeIcon-' + me.id) +
-            '<div class="overlay" id="unit-over-' + me.id + '"></div>' +
-            '<div class="amount" id="unit-amount-' + me.id + '"></div>' +
-            '</div>';
-        if (me.unit.gizmos) {
-            str += '<div class="gizmos">' +
-                '<div class="gizmo gizmo1" id="unit-mode-' + me.id + '"></div>' +
-                '<div class="gizmo gizmo2' + (me.splitOf ? ' off' : '') + '" id="unit-split-' + me.id + '"></div>' +
-                '<div class="gizmo gizmo3" id="unit-percent-' + me.id + '"><div class="percentGizmo" id="unit-percentDisplay-' + me.id + '"></div></div>' +
-                '</div>';
-        }
-        str += '</div>';
-        strByCat[me.unit.category] += str;
-    }
-
-    var str = '';
-    var len = G.unitCategories.length;
-    for (var iC = 0; iC < len; iC++) {
-        if (strByCat[G.unitCategories[iC].id] != '') {
-            if (G.unitCategories[iC].id == 'wonder') str += '<br>';
-            str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="unit-catName-' + iC + '">' + G.unitCategories[iC].name + '</div>' + strByCat[G.unitCategories[iC].id] + '</div>';
-        }
-    }
-    l('unitBox').innerHTML = str;
-
-    G.addCallbacks();
-
-
-    G.addTooltip(l('buyAmount'), function () { return '<div style="width:320px;"><div class="barred">Buy amount</div><div class="par">This is how many units you\'ll queue or unqueue at once in a single click.</div><div class="par">Click the + and - buttons to increase or decrease the amount. You can ctrl-click either button to instantly make the amount negative or positive.</div><div class="par">You can also ctrl-click a unit to unqueue an amount instead of queueing it, or shift-click to queue 50 times more.</div></div>'; }, { offY: -8 });
-
-    G.updateBuyAmount();
-    var len = G.unitsOwned.length;
-    for (var i = 0; i < len; i++) {
-        var me = G.unitsOwned[i];
-        var div = l('unit-' + me.id); if (div) me.l = div; else me.l = 0;
-        var div = l('unit-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
-        var div = l('unit-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
-        var div = l('unit-amount-' + me.id); if (div) me.lAmount = div; else me.lAmount = 0;
-        var div = l('unit-modeIcon-' + me.id); if (div) me.lMode = div; else me.lMode = 0;
-        if (me.lMode && me.mode.icon) { G.setIcon(me.lMode, me.mode.icon); me.lMode.style.display = 'block'; }
-        else if (me.lMode) me.lMode.style.display = 'none';
-        if (me.unit.gizmos) {
-            var div = l('unit-mode-' + me.id); div.onmousedown = function (unit, div) { return function () { G.selectModeForUnit(unit, div); }; }(me, div);
-            div.onclick = function (unit, div) { return function () { clickModeUnit = 2; G.selectModeForUnit(unit, div); }; }(me, div);
-            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to change unit mode.<br>Current mode: <div class="info"><div class="fancyText barred infoTitle">' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</div>' + G.parse(instance.mode.desc) + '</div>'; }; }(me.unit, me), { offY: -8 });
-            var div = l('unit-split-' + me.id); div.onclick = function (unit, div) { return function () { if (G.speed > 0) G.splitUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
-            G.addTooltip(div, function (me, instance) { return function () { if (instance.splitOf) return 'Click to remove this stack of units.'; else return 'Click to split into another unit stack.<br>Different unit stacks can use different modes.' }; }(me.unit, me), { offY: -8 - 16 });
-            var div = l('unit-percent-' + me.id); div.onmousedown = function (unit, div) { return function () { if (G.speed > 0) G.selectPercentForUnit(unit, div); else G.cantWhenPaused(); }; }(me, div);
-            G.addTooltip(div, function (me, instance) { return function () { return 'Click and drag to set unit work capacity.<br>This feature is not yet implemented.' }; }(me.unit, me), { offY: 8, anchor: 'bottom' });
-        }
-        G.addTooltip(me.l, function (me, instance) {
-            return function () {
-                var amount = G.getBuyAmount(instance);
-                if (me.wonder) amount = (amount > 0 ? 1 : -1);
-                if (me.wonder) {
-                    var str = '<div class="info">';
-                    str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div></div>';
-                    str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
-                    str += '<div class="fancyText barred" style="color:#c3f;">Wonder</div>';
-                    if (amount < 0) str += '<div class="fancyText barred">You cannot destroy wonders, step-by-step buildings, and portals.</div>';
-                    else {
-                        if (instance.mode == 0) str += '<div class="fancyText barred">Unbuilt<br>Click to start construction (' + B(me.steps) + ' steps)</div>';
-                        else if (instance.mode == 1) str += '<div class="fancyText barred">Being constructed (at step ' + B(instance.percent) + '/' + B(me.steps) + ')<br>Click to pause construction</div>';
-                        else if (instance.mode == 2) str += '<div class="fancyText barred">' + (instance.percent == 0 ? ('Construction paused<br>Click to begin construction') : ('Construction paused - Step: ' + B(instance.percent) + '/' + B(me.steps) + '<br>Click to resume')) + '</div>';
-                        else if (instance.mode == 3) str += '<div class="fancyText barred">Requires final step<br>Click to perform!</div>';
-                        else if (instance.mode == 4) str += '<div class="fancyText barred">Completed<br>Click to ascend...</div>';
-                        //else if (amount<=0) str+='<div class="fancyText barred">Click to destroy</div>';
-                    }
-                    if (amount < 0) amount = 0;
-
-                    if (instance.mode != 4) {
-                        str += '<div class="fancyText barred">';
-                        if (instance.mode == 0 && amount > 0) {
-                            if (!isEmpty(me.cost)) str += '<div>Initial cost: ' + G.getCostString(me.cost, true, false, amount) + '</div>';
-                            if (!isEmpty(me.use)) str += '<div>Uses: ' + G.getUseString(me.use, true, false, amount) + '</div>';
-                            if (!isEmpty(me.require)) str += '<div>Prerequisites: ' + G.getUseString(me.require, true, false, amount) + '</div>';
-                        }
-                        else if ((instance.mode == 1 || instance.mode == 2) && !isEmpty(me.costPerStep)) str += '<div>Cost per step: ' + G.getCostString(me.costPerStep, true, false, amount) + '</div>';
-                        else if (instance.mode == 3 && !isEmpty(me.finalStepCost)) str += '<div>Final step cost: ' + G.getCostString(me.finalStepCost, true, false, amount) + '</div>';
-                        str += '</div>';
-                    }
-
-                    if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
-                    str += '</div>';
-                    str += G.debugInfo(me);
-                    return str;
-                }
-                else {
-                    if (amount < 0) amount = Math.max(-instance.targetAmount, amount);
-                    /*if (G.getSetting('buyAny'))
-                    {
-                        var n=0;
-                        n=G.testAnyCost(me.cost);
-                        if (n!=-1) amount=Math.min(n,amount);
-                        n=G.testAnyUse(me.use,amount);
-                        if (n!=-1) amount=Math.min(n,amount);
-                        n=G.testAnyUse(me.require,amount);
-                        if (n!=-1) amount=Math.min(n,amount);
-                        n=G.testAnyUse(instance.mode.use,amount);
-                        if (n!=-1) amount=Math.min(n,amount);
-                        n=G.testAnyLimit(me.limitPer,G.getUnitAmount(me.name)+amount);
-                        if (n!=-1) amount=Math.min(n,amount);
-                    }*/
-                    var str = '<div class="info">';
-                    //infoIconCompensated ?
-                    str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div>' +
-                        '<div class="fancyText infoAmount onLeft">' + B(instance.displayedAmount) + '</div>' +
-                        '<div class="fancyText infoAmount onRight" style="font-size:12px;">' + (instance.targetAmount != instance.amount ? ('queued:<br>' + B(instance.targetAmount - instance.displayedAmount)) : '') + (instance.amount > 0 ? ('<br>active:<br>' + B(instance.amount - instance.idle) + '/' + B(instance.amount)) : '') + '</div>' +
-                        '</div>';
-                    str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
-                    str += '<div class="fancyText barred">Click to ' + (amount >= 0 ? 'queue' : 'unqueue') + ' ' + B(Math.abs(amount)) + '</div>';
-                    if (me.modesById[0]) { str += '<div class="fancyText barred">Current mode:<br><b>' + (instance.mode.icon ? G.getSmallThing(instance.mode) : '') + '' + instance.mode.name + '</b></div>'; }
-                    str += '<div class="fancyText barred">';
-                    if (!isEmpty(me.cost)) str += '<div>Cost: ' + G.getCostString(me.cost, true, false, amount) + '</div>';
-                    if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses: ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
-                    if (!isEmpty(me.require)) str += '<div>Prerequisites: ' + G.getUseString(me.require, true, false, amount) + '</div>';//should amount count?
-                    if (!isEmpty(me.upkeep)) str += '<div>Upkeep: ' + G.getCostString(me.upkeep, true, false, amount) + '</div>';
-                    if (!isEmpty(me.limitPer)) str += '<div>Limit: ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
-                    if (isEmpty(me.cost) && isEmpty(me.use) && isEmpty(me.staff) && isEmpty(me.upkeep) && isEmpty(me.require)) str += '<div>Free</div>';
-                    if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses: ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
-                    str += '</div>';
-                    if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
-                    str += '</div>';
-                    str += G.debugInfo(me);
-                    return str;
-                }
-            };
-        }(me.unit, me), { offY: -8 });
-        if (me.l) me.l.onclick = function (unit) {
-            return function (e) {
-                if (G.speed > 0) {
-                    var amount = G.getBuyAmount(unit);
-                    if (unit.unit.wonder) amount = (amount > 0 ? 1 : -1);
-                    if (amount < 0) G.taskKillUnit(unit, -amount);
-                    else if (amount > 0) G.taskBuyUnit(unit, amount, (G.getSetting('buyAny')));
-                } else G.cantWhenPaused();
-            };
-        }(me);
-        if (me.l) me.l.oncontextmenu = function (unit) {
-            return function (e) {
-                e.preventDefault();
-                if (G.speed > 0) {
-                    var amount = -G.getBuyAmount(unit);
-                    if (unit.unit.wonder) amount = (amount > 0 ? 1 : -1);
-                    if (amount < 0) G.taskKillUnit(unit, -amount);
-                    //else if (amount>0) G.buyUnit(unit,amount);
-                } else G.cantWhenPaused();
-            };
-        }(me);
-    }
-    G.draw['unit']();
-    //G.cacheUnitBounds();
 }
 
 // We can override this function to hide negative costs and make numbers more specific
@@ -8130,7 +7946,7 @@ if (getObj("civ") != "1") {
                 desc: '@Specifically harvests [wheat]. Without [wheat], it is impossible to craft [bread].',
                 icon: [24, 12, 'magixmod'],
                 cost: { 'seeds': 2000 },
-                req: { 'farm of wheat': true },
+                req: { 'Farm of wheat': true },
                 use: { 'worker': 8, 'land': 15, 'stone tools': 8 },
                 upkeep: { 'water': 14 },
                 category: 'production',
@@ -11043,7 +10859,7 @@ if (getObj("civ") != "1") {
                         var costs = this.getCosts();
                         var costsStr = G.getCostString(costs);
                         if (costsStr) str += ' <b><i><font color="#409cff">(' + costsStr + ')</font></i></b>';
-                        return str;
+                        return '<span style="pointer-events:none">' + str + '</span>';
                     }
                 },
                 buttonTooltip: function () {
@@ -12211,7 +12027,7 @@ if (getObj("civ") != "1") {
                 req: { 'cooking II': true },
             });
             new G.Tech({
-                name: 'farm of wheat', category: 'tier1',
+                name: 'Farm of wheat', category: 'tier1',
                 desc: 'Unlocks the [wheat farm], which gives you lots of [wheat].',
                 icon: [23, 12, 'magixmod'],
                 cost: { 'insight': 420 },
@@ -12222,14 +12038,14 @@ if (getObj("civ") != "1") {
                 desc: '<li>Unlocks a mode for [artisan] that allows you to process [wheat] into [flour].</li>',
                 icon: [9, 7, 'magixmod'],
                 cost: { 'insight': 685 },
-                req: { 'farm of wheat': true },
+                req: { 'Farm of wheat': true },
             });
             new G.Tech({
                 name: 'flour-crafting II', category: 'tier2',
                 desc: '<li>Unlocks the [windmill]. Uses [land] but can process way more [wheat] at a time!</li>',
                 icon: [0, 35, 'magixmod', 22, 11, 'magixmod'],
                 cost: { 'insight II': 10 },
-                req: { 'farm of wheat': true, 'flour-crafting I': true, 'eotm': true },
+                req: { 'Farm of wheat': true, 'flour-crafting I': true, 'eotm': true },
             });
             new G.Tech({
                 name: 'baking', category: 'tier1',
@@ -17131,7 +16947,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'meat diet',
-                desc: '@makes [healer] generate [health]. @cooked and cured [meat] will generate 10% more [health]',
+                desc: '@allows [healer]s to generate  some [health] @cooked and cured [meat] will generate 10% more [health]',
                 icon: [26, 34, 'magixmod'],
                 cost: { 'culture': 150, 'wisdom': 25, 'insight': 100, 'influence': 10 },
                 chance: 120,
@@ -17287,7 +17103,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at10',
                 displayName: 'Ancestors trait #10 Decaying devil',
-                desc: 'Removes two of your Devil\'s traits. (Applies to traits that are from 1 to 18, excluding [dt9].) @removed traits won\'t return for the rest of the run. //<small>dark forces are fading away</small>',
+                desc: 'Removes two of your Devil\'s traits. (Applies to these traits that are from 1 to 18, excluding [dt9].) These removed traits won\'t return for the rest of the run! //<small>dark forces are fading away</small>',
                 icon: [8, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'dt29': false, 'belief in the beforelife': true },
@@ -19166,7 +18982,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se10',
                 displayName: 'Mamuun the Seraphin of Richness',
-                desc: '<font color="lime">Gold and [precious building materials] decay 10% slower.</font><br><hr color="fuschia"><font color="#f70054">Backfire: [archaic building materials] decay 40% faster, [basic building materials] decay 12% faster, and [advanced building materials] decay 3% faster. [food] will also spoil faster.</font>',
+                desc: '<font color="lime">Gold and [precious building materials] decay 10% slower. You\'ll also unlock a variety of Trials.</font><br><hr color="fuschia"><font color="#f70054">Backfire: [archaic building materials] decay 40% faster, [basic building materials] decay 12% faster, and [advanced building materials] decay 3% faster. [food] will also spoil faster.</font>',
                 icon: [20, 25, 'magixmod'],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -21871,13 +21687,6 @@ if (getObj("civ") != "1") {
                     if (G.techN + G.knowN >= 60 && G.achievByName['nature\'s braincell'].won == 0) { //nature braincell
                         G.achievByName['nature\'s braincell'].won = 1;
                         G.middleText('- Completed <font color="lime">Nature\'s braincell</font> achievement -', 'slow')
-                    }
-                    //3rd party achievement's code
-                    if (G.modsByName['Market mod'] || G.modsByName['Coal mod'] || G.modsByName['Laws Of Food'] || G.modsByName['Laws Of Food Free Version'] || G.modsByName['Thot Mod']) {
-                        if (G.achievByName['3rd party'].won == 0) {
-                            G.achievByName['3rd party'].won = 2 //Fix for displaying over time middleText
-                            G.middleText('- Completed <font color="pink">3rd party</font> achievement -', 'slow')
-                        }
                     }
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
                     setObj("civ", 1);
@@ -24795,7 +24604,7 @@ if (getObj("civ") != "1") {
                     var costbat = B((100 - batterycost) * upscaleBat);
                     costsStr = costsStr.replace(costbat, '&nbsp;' + (100 - batterycost + '%'));
                     if (costsStr) str += ' <b><i><font color="#aff">(' + costsStr + ')</font></i></b>';
-                    return str;
+                    return '<span style="pointer-events:none">' + str + '</span>';
                 },
                 buttonTooltip: function () {
                     var charged = (G.achievByName['the fortress'].won > 0 ? "a 3/4 charged" : "a fully charged");
