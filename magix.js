@@ -29,7 +29,6 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 if (window.magixLoaded === 1 && !window.skipModCheck) {
     window.magixLoaded = 2
     var modLen = G.mods.length
-    console.warn(G.mods[modLen - 2].name)
     if (modLen > 2 && (G.mods[modLen - 2].name === "MagixUtils" || G.mods[0].url === "data.js")) {
         G.dialogue.popup(function (div) {
             return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
