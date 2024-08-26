@@ -1741,7 +1741,7 @@ if (getObj("civ") != "1") {
 
                         var droughtYear = getObj('drought')
                         if (droughtYear > 0) {
-                            if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) - 0.9) > G.year) {
+                            if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) - 0.9) > G.year || droughtYear - 4 > G.year) {
                                 G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
                                 if (G.has('drought')) G.deleteTrait('drought')
                                 if (G.has('famine')) G.deleteTrait('famine')
