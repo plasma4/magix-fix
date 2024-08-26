@@ -8669,7 +8669,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.02, req: { 'gt7': true } },
                     { type: 'mult', value: 0.88, req: { 'dt19': true } },
                 ],
-                req: { 'construction': true, 'wizard towers': true, 'wizard wisdom': true, 'well of mana': true },
+                req: { 'wizard towers': true },
                 category: 'housing',
                 limitPer: { 'land': 2 },
             });
@@ -11649,10 +11649,10 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard towers', category: 'tier1',
-                desc: 'Now you can build wizard towers which can produce a variety of [magic essences,Essences]. The type made depends on what type of tower you build. Wizard towers also provide additional housing, but making [magic essences,Essences] will require [mana] as upkeep. @unlocks six towers: [fire wizard tower]s, [water wizard tower]s, [nature wizard tower]s, [dark wizard tower]s, [lightning wizard tower]s, and [wind wizard tower]s',
+                desc: 'Now you can build wizard towers that can produce a variety of [magic essences,Essences]. The type made depends on what type of tower you build. Wizard towers also provide additional housing, but making [magic essences,Essences] will require [mana] as upkeep. @unlocks six towers: [fire wizard tower]s, [water wizard tower]s, [nature wizard tower]s, [dark wizard tower]s, [lightning wizard tower]s, and [wind wizard tower]s',
                 icon: [6, 0, 'magixmod'],
                 cost: { 'insight': 125, 'culture': 30, 'mana': 250, 'influence': 10 },
-                req: { 'mana brewery': true, 'more useful housing': true },
+                req: { 'well of mana': true, 'more useful housing': true },
                 effects: [
                 ],
                 tutorialMesg: ['tutorial', 'You have unlocked <b>Wizard towers</b>!<br>These towers will provide housing and produce Essences by consuming Mana. Make sure that you have enough <b>Mana</b> production and some <b>Wizards</b> to keep the towers working properly. Be sure to also obtain the <b>Essence storages</b> needed for your essence types!', [20, 13, 'magixmod']]
@@ -13311,7 +13311,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'firework launching', category: 'seasonal',
-                desc: '@unlocks the [firework launcher]. By the way allows [artisan of new year] to craft [firecracker]. //<small>Boom</small>',
+                desc: '@unlocks the [firework launcher]. This allows the [artisan of new year] to craft [firecracker]s. //<small>Boom</small>',
                 icon: [17, 0, 'seasonal'],
                 cost: { 'insight': 70 },
                 req: { 'culture of celebration': true, 'firework crafting': true, 'tribalism': false },

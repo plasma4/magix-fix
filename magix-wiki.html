@@ -559,6 +559,10 @@
                             text += parseRes(objc, Object.assign(...noticeEffects(e, "provide res", 1, "what").concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this wiki (also yeah, this is some pretty weird spread operation, eh?)
                         }
                         if (category === "units") {
+                            var reqs = parseReq(objc, t.req)
+                            if (reqs !== "nothing") {
+                                text += "<br>Unlocks after you get " + reqs
+                            }
                             var breakdown = breakDownEffects(objc, e)
                             if (breakdown.length !== 0) {
                                 text += "<br>Effect breakdown: <ul>"
