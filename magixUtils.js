@@ -322,13 +322,13 @@ var numberFormatters =
     ];
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=1'
+var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2' // Version 2: 55 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'fuels': 'https://file.garden/ZmatEHzFI2_QBuAF/fuels.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
+    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();

@@ -1119,9 +1119,6 @@ function islandName() {
     return rawName == 'undefined' ? 'Plain Island' : rawName
 }
 function changeHappiness(amount, description) {
-    if (!isFinite(amount)) {
-        console.trace()
-    }
     G.gain('happiness', amount, description)
 }
 G.gain = function (what, amount, context) {
@@ -1159,7 +1156,7 @@ if (getObj("civ") != "1") {
         engineVersion: 1,
         manifest: 0,
         requires: ['MagixUtils'],
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'fuels': 'https://file.garden/ZmatEHzFI2_QBuAF/fuels.png', 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer');
@@ -3018,11 +3015,11 @@ if (getObj("civ") != "1") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
-                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'water rations'); G.gain('health', -me.amount * 2, 'water rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
-                                    changeHappiness(((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
+                                    changeHappiness(((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'water rations'); break;
                                 case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1.1 : Math.pow(happinessLevel * 0.02, 0.4)), 'water rations'); break;
                             }
                             toConsume = randomFloor(toConsume * consumeMult);
@@ -3079,12 +3076,12 @@ if (getObj("civ") != "1") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
-                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'food rations'); G.gain('health', -me.amount * 2, 'food rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 100)
-                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
+                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'food rations'); break;
                                 case 'plentiful': toConsume *= 1.5;
                                     changeHappiness((me.amount * (G.has("t7") ? 0.2 : 1)) / (happinessLevel < 0 ? 1 : Math.pow(happinessLevel * 0.02, 0.4)), 'food rations'); break;
                             }
@@ -5055,7 +5052,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'seeds',
                 desc: 'Some mixed seeds that may allow you to set up farms of [vegetable,Lettuce] or [sugar cane].',
-                icon: [6, 11, 'magixmod'],
+                icon: [50, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
             });
@@ -7022,7 +7019,7 @@ if (getObj("civ") != "1") {
                     'off': G.MODE_OFF,
                     'bricks': { name: 'Fire bricks', icon: [3, 8], desc: 'Produce 10 [brick]s out of 3 pieces of [clay].', use: { 'worker': 1, 'stone tools': 1 } },
                     'glass': { name: 'Craft glass', icon: [4, 8], desc: 'Your kiln will now use 10 pieces of [sand] to make 1 [glass] pane.', req: { 'glass-crafting': true }, use: { 'stone tools': 1 } },
-                    'charcoal': { name: 'Craft charcoal', icon: [0, 0, 'fuels'], desc: 'Your kiln will now convert 1 [log] into 5 [charcoal] pieces.', req: { 'charcoal production I': true }, use: { 'metal tools': 1 } },
+                    'charcoal': { name: 'Craft charcoal', icon: [51, 0, 'magix2'], desc: 'Your kiln will now convert 1 [log] into 5 [charcoal] pieces.', req: { 'charcoal production I': true }, use: { 'metal tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'clay': 3 }, into: { 'brick': 10 }, every: 5, mode: 'bricks' },
@@ -10901,7 +10898,7 @@ if (getObj("civ") != "1") {
                     'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
                     'essence': { name: 'Process essences', icon: [0, 2, 'magixmod'], desc: 'Process 25 [fire essence] and 5 [lightning essence], turning them into 20 [fire pit]s each.' },
                     'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] and 2 [lightning essence], turning them into 20 [fire pit]s each.' },
-                    'oil': { name: 'Process various fuels', icon: [0, 0, 'fuels'], desc: 'Process 20 [coal], 10 [charcoal], and 10 [oil], turning them into 30 [fire pit]s each. Has a chance to convert [charcoal] into [lightning essence]!', req: { 'oil-digging II': true } },
+                    'oil': { name: 'Process various fuels', icon: [51, 0, 'magix2'], desc: 'Process 20 [coal], 10 [charcoal], and 10 [oil], turning them into 30 [fire pit]s each. Has a chance to convert [charcoal] into [lightning essence]!', req: { 'oil-digging II': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log', req: { 'hotter factories': false } },
@@ -18467,7 +18464,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art shows', category: 'tier1',
-                desc: '@[art school]s will now host art shows sometimes, meaning that each [work of art] will provide a little bit of culture @[work of art,Works of art] will decay a little slower with proper art storage',
+                desc: '@[art school]s will now host art shows to show off the drawing skills of their [artist]s, meaning that each [work of art] will provide a little bit of culture @[work of art,Works of art] will decay a little slower with proper art storage',
                 icon: [45, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 140 },
                 req: { 'passionate artistry': true },
@@ -18581,7 +18578,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'culture of gems III', category: 'tier1',
-                desc: '@[carver]s creating [gem block]s and [valuable gem block]s will be better trained at using their tools, making their creation three times faster',
+                desc: '@[carver]s creating [gem block]s and [valuable gem block]s will be better trained at using their tools, allowing them to make these blocks three times quicker',
                 icon: [1, 35, 'magixmod', 48, 0, 'magix2'],
                 cost: { 'insight II': 550, 'culture II': 160 },
                 req: { 'culture of gems II': true, 'music instruments II': true },
@@ -18591,7 +18588,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'charcoal production I', category: 'tier1',
                 desc: '@[charcoal] can now be produced from your [kiln]s',
-                icon: [0, 0, 'fuels', 23, 1],
+                icon: [51, 0, 'magix2', 23, 1],
                 cost: { 'insight II': 250 },
                 req: { 'oil-digging': true, 'bigger kilns': true },
                 effects: [
@@ -18600,7 +18597,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'charcoal production II', category: 'tier1',
                 desc: '@[charcoal] production produces 25% more [charcoal], without increasing the amount of [log]s needed',
-                icon: [0, 35, 'magixmod', 0, 0, 'fuels', 23, 1],
+                icon: [0, 35, 'magixmod', 51, 0, 'magix2', 23, 1],
                 cost: { 'insight II': 550, 'culture II': 160 },
                 req: { 'oil-digging II': true },
                 effects: [
@@ -18608,8 +18605,8 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'veggie fertilizer', category: 'tier1',
-                desc: '@[vegetable farm]s will now use powerful fertilizer technology, improving their harvests by +80%',
-                icon: [1, 0, 'fuels', 24, 1],
+                desc: '@[vegetable farm]s will now use much better fertilizer, improving their harvests by +80%',
+                icon: [52, 0, 'magix2', 2, 22, 'magixmod'],
                 cost: { 'insight': 800, 'culture': 100 },
                 req: { 'agriculture': true },
                 effects: [
@@ -18618,7 +18615,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bellows', category: 'tier1',
                 desc: '@bellows may be used to improve [furnace]s, allowing them to work 25% faster',
-                icon: [2, 0, 'fuels', 23, 1],
+                icon: [53, 0, 'magix2', 23, 1],
                 cost: { 'insight II': 20, 'culture II': 2 },
                 req: { 'eotm': true },
                 effects: [
@@ -18627,7 +18624,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'alchemical fuels', category: 'tier1',
                 desc: 'Using their knowledge of alchemy, your civilization will be able to improve the speed of [furnace]s by 10%.',
-                icon: [3, 0, 'fuels', 24, 1],
+                icon: [54, 0, 'magix2', 24, 1],
                 cost: { 'insight': 800, 'wisdom': 25, 'culture': 200 },
                 req: { 'alchemy': true },
                 effects: [
@@ -18796,7 +18793,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'charcoal',
                 desc: 'A useful fuel for creating heat. //<small>no, you cannot eat it!</small>',
-                icon: [0, 0, 'fuels'],
+                icon: [51, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'build',
             });
@@ -22088,12 +22085,12 @@ if (getObj("civ") != "1") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'water rations')); G.gain('health', -me.amount * 2, 'water rations'); break;
-                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 3) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'water rations'); G.gain('health', -me.amount * 2, 'water rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness((-me.amount) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'water rations'); G.gain('health', -me.amount * 0.5, 'water rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 80)
-                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'water rations'); break;
+                                        changeHappiness(happinessLevel < 0 ? me.amount * 0.2 : -me.amount * 0.2, 'water rations'); break;
                                 case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel < 0 ? 1.1 : Math.pow(happinessLevel * 0.02, 0.4))), 'water rations'); break;
                             }
 
@@ -22145,12 +22142,12 @@ if (getObj("civ") != "1") {
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
-                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : happinessLevel / 4, 'food rations')); G.gain('health', -me.amount * 2, 'food rations'); break;
-                                case 'meager': toConsume *= 0.5; changeHappiness(-me.amount * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
+                                case 'none': toConsume = 0; changeHappiness((-me.amount * 2) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'food rations'); G.gain('health', -me.amount * 2, 'food rations'); break;
+                                case 'meager': toConsume *= 0.5; changeHappiness(-me.amount * (G.has("t7") ? 0.2 : 1) / (happinessLevel < 0 ? 1 : (2 + happinessLevel / 4)), 'food rations'); G.gain('health', -me.amount * 0.5, 'food rations'); break;
                                 case 'sufficient':
                                     toConsume *= 1;
                                     if (Math.abs(happinessLevel) > 80)
-                                        changeHappiness((happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5) / (happinessLevel < 0 ? 1 : happinessLevel / 4), 'food rations'); break;
+                                        changeHappiness(happinessLevel < 0 ? me.amount * 0.5 : -me.amount * 0.5, 'food rations'); break;
                                 case 'plentiful': toConsume *= 1.5; changeHappiness((me.amount) / (happinessLevel < 0 ? 1 : (happinessLevel < 0 ? 1 : Math.pow(happinessLevel * 0.02, 0.4))), 'food rations'); break;
                             }
                             toConsume = randomFloor(toConsume * consumeMult);
