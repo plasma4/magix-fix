@@ -18519,7 +18519,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'prospecting IV', category: 'tier1',
                 desc: '@[mine]s will now be able to get rare [valuable gems] @unlocks new techs related to [carver]s',
-                icon: [2, 35, 'magixmod', 11, 1, 'magixmod'],
+                icon: [55, 0, 'magix2'],
                 cost: { 'insight II': 300, 'culture II': 100, 'science': 20 },
                 req: { 'prospecting III': true, 'eota': true },
                 effects: [
