@@ -23,7 +23,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 // Custom storage tools that 1) don't break the save data and 2) are saved when exporting
 if (!window.magixLoaded) {
-    window.magixLoaded = true
+    window.magixLoaded = 1
     var conflictingStorageObjects = ["civ"]
     G.storageObject = {}
     try {
@@ -46,22 +46,6 @@ if (!window.magixLoaded) {
     } catch (e) {
         console.warn("Storage data could not be obtained.")
         G.storageObject = {}
-    }
-
-    if (!window.skipModCheck) {
-        setTimeout(() => {
-            if (G.mods.length > 2) {
-                G.dialogue.popup(function (div) {
-                    return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
-                        '<div class="bitBiggerText scrollBox underTitle"><div class="par">It appears that you have already installed mods with Magix before it loaded.</div><div class="divider"></div>' +
-                        '<div class="par" style="color:#f30;">Wipe the save and remove the mods that you have installed (possibly the data.js one). (If you are a developer and for some reason you want to ignore this, set window.skipModCheck to true.)</div>' +
-                        '</div>' +
-                        '<div class="buttonBox">' +
-                        G.button({ tooltip: 'Try to select different mods this time!', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
-                        '</div></div>';
-                }, 'noClose')
-            }
-        }, 4000)
     }
 }
 

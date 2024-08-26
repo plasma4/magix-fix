@@ -26,6 +26,22 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 //===========================
 
 // Disable double click's default behavior for mobile users and scale properly
+if (window.magixLoaded === 1 && !window.skipModCheck) {
+    window.magixLoaded = 2
+    if (G.mods.length > 0) {
+        G.dialogue.popup(function (div) {
+            return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
+                '<div class="bitBiggerText scrollBox underTitle"><div class="par">It appears that you have already installed mods with Magix before it loaded.</div><div class="divider"></div>' +
+                '<div class="par" style="color:#f40;">If you have data.js, remove that. Otherwise, wipe the save and set the mods to install after Magix.<br><small>(If you are a developer and for some reason, you want to hide this, set window.skipModCheck to true.)<small></div>' +
+                '</div>' +
+                '<div class="buttonBox">' +
+                G.button({ tooltip: 'Try to select different mods this time!', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
+                G.button({ tooltip: 'Ignore this message. (This may cause problems!)', text: 'Ignore', classes: 'frameless', onclick: function () { G.Clear(); } }) +
+                '</div></div>';
+        }, 'noClose')
+    }
+}
+
 var meta = document.createElement('meta');
 meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
