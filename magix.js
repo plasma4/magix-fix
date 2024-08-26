@@ -25,23 +25,26 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 ///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiarism will be punished. Copyright: 2020
 //===========================
 
-// Disable double click's default behavior for mobile users and scale properly
+// Detect invalid mods
 if (window.magixLoaded === 1 && !window.skipModCheck) {
     window.magixLoaded = 2
-    if (G.mods.length > 0) {
+    var modLen = G.mods.length
+    console.warn(G.mods[modLen - 2].name)
+    if (modLen > 2 && (G.mods[modLen - 2].name === "MagixUtils" || G.mods[0].url === "data.js")) {
         G.dialogue.popup(function (div) {
             return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
                 '<div class="bitBiggerText scrollBox underTitle"><div class="par">It appears that you have already installed mods with Magix before it loaded.</div><div class="divider"></div>' +
-                '<div class="par" style="color:#f40;">If you have data.js, remove that. Otherwise, wipe the save and set the mods to install after Magix.<br><small>(If you are a developer and for some reason, you want to hide this, set window.skipModCheck to true.)<small></div>' +
+                ((G.mods[0].url === "data.js" || G.mods[modLen - 1].url === "data.js") ? 'Remove the data.js file to continue.' : '<div class="par" style="color:#f40;">You may need to wipe the save and set the mods to install after Magix. Otherwise, ignore this message!<br><small>(If you are a developer and for some reason, you want to hide this, set window.skipModCheck to true.)<small></div>') +
                 '</div>' +
                 '<div class="buttonBox">' +
                 G.button({ tooltip: 'Try to select different mods this time!', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
-                G.button({ tooltip: 'Ignore this message. (This may cause problems!)', text: 'Ignore', classes: 'frameless', onclick: function () { G.Clear(); } }) +
+                G.button({ tooltip: 'Ignore this message. (This may cause problems!)', text: 'Ignore', classes: 'frameless', onclick: function () { G.popup.close() } }) +
                 '</div></div>';
         }, 'noClose')
     }
 }
 
+// Disable double click's default behavior for mobile users and scale properly
 var meta = document.createElement('meta');
 meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
