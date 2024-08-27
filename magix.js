@@ -2291,10 +2291,9 @@ if (getObj("civ") != "1") {
                     }
 
                     ///On purpose crash. Occurs while playing market without magix utils
-                    if (G.modsByName['Market mod'] && !G.modsByName['Magix utils for market']) {
-                        console.log('Install Magix utilities for the market mod! Caused on-purpose game crash.');
+                    if (G.modsByName['Market mod'] && !(G.modsByName['Magix utils for market'] || G.modsByName['Magix market mod utils'])) {
+                        console.log('Install Magix utilities for the market mod in order to use it!');
                         console.log('Url to paste: https://cdn.jsdelivr.net/gh/MagixModLegacy/Magix@master/MagixUtilsForMarketA0.js');
-                        console.log('Refresh the page.');
                         G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', 'slow')
                     }
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
