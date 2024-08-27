@@ -18,10 +18,11 @@ Upon loading it, you should be able to play the game!
 <sup>This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source.</sup>
 ## What does this fixed mod do?
 Here are a few examples:
-- Multiple game-breaking bugs are fixed (in particular, bookwriting will no longer cause problems)
-- Hundreds of spelling and text issues fixed
+- Multiple game-breaking bugs are **fixed** now (in particular, bookwriting will no longer cause problems)
+- Thousands of spelling and text issues corrected or improved
 - Some alternative techs can now be obtained simultaneously
 - Various traits have been fixed
+- A few new unique trials implemented
 - Dozens of techs and mechanics have been added (including a new way to get sand)
 - Negative costs are hidden now
 - May come with **new features** down the line!
@@ -40,3 +41,22 @@ This offline version of Magix...
 - Some options for when you exit the page, such as autosaving or confirming if you want to leave or not
 
 <sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html).</sup>
+
+### Alternate links for Magix
+Want a few other links for loading Magix? Try some of these:
+```
+https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magix.js
+https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magixUtils.js
+```
+```
+https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
+https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magixUtils.js
+```
+```
+https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js
+https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js
+```
+(This last one is actually used in the file version of Magix due to it updating quickly and working with XML requests. **However, it will not work for loading Magix normally; try one of the other links instead.**)
+
+---
+<sup>:></sup>
