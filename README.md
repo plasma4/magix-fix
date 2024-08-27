@@ -26,8 +26,8 @@ Here are a few examples:
 - Negative costs are hidden now
 - May come with **new features** down the line!
 ## How would you go about adding other mods along with Magix?
+It's simple! You can learn how to add other mods that work with Magix and find a list of a few of them [over here](https://github.com/plasma4/magix-extras/blob/master/README.md).
 
-It's simple! You can learn how to add other mods that work with Magix and find a list of a few of them [over here](https://github.com/plasma4/magix-extras/blob/master/README.md)!
 ---
 How do you use Magix offline?
 If you wish, you can locally download a version of Magix that automatically updates. You can download the .zip file [here](https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip). Open the index.html file to begin playing! (It is advised to extract the .zip file so that everything works properly.)
