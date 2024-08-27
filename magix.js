@@ -2232,9 +2232,9 @@ if (getObj("civ") != "1") {
                     if (G.has('outstanders club')) {
                         G.getDict('the outstander').limitPer = { 'population': 26500 }
                     }
-                    if (G.has('smaller shacks') && G.has('backshift at farms')) {
-                        G.getDict('wheat farm').use = { 'worker': 12, 'land': 13.75 }
-                    }
+                    // if (G.has('smaller shacks') && G.has('backshift at farms')) {
+                    //     G.getDict('wheat farm').use = { 'worker': 12, 'land': 13.75 }
+                    // }
                     if (!G.has('t10')) { G.getDict('precious metal ingot').partOf = 'misc materials' }//this resource will not decay during Pocket but normally without active trial will
                     if (G.checkPolicy('reset health level') == 'activate') {  //hunted special policy
                         G.getDict('reset health level').cost = { 'land': 1e5 }; G.getRes('health').amount = 0; G.setPolicyModeByName('reset health level', 'alreadyused');
@@ -9270,7 +9270,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'sugar': { name: 'Extract sugar out of cane', icon: [15, 2, 'magixmod'], desc: 'This artisan will only extract [sugar] out of [sugar cane]. At least he will craft needed ingredient of tasty [juices].', use: { 'worker': 1 } },
                     'juicesF': { name: 'Craft juices out of fruits', icon: [14, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [fruit]s, [sugar] and [water]. They have a good taste. <b>:></b>', use: { 'worker': 1 } },
-                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable]s, [sugar] and [water]. They have a good taste. //You cannot craft [juices] out of all [vegetable] types, so this mode is 10% less effective at conversion. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
+                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable]s, [sugar] and [water]. They also have a good taste, but you cannot craft [juices] out of all [vegetable] types, so this mode is 10% less effective at conversion. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
                     'juicesE': { name: 'Craft juices out of exotic fruits', icon: [24, 0, 'magix2'], desc: 'This artisan will craft [exotic juices] out of [exotic fruit]s, [sugar] and [water]. These taste much better compared to normal [juices]! <b>:O</b>', use: { 'worker': 1 }, req: { "exotic blending": true } },
                 },
                 effects: [
@@ -9278,7 +9278,9 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'sugar': 1, 'fruit': 0.4, 'water': 1.25 }, into: { 'juices': 2 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': false } },
                     { type: 'convert', from: { 'sugar': 1, 'vegetable': 0.4, 'water': 1.25 }, into: { 'juices': 1.8 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': false } },
                     { type: 'convert', from: { 'sugar': 2, 'fruit': 0.8, 'water': 3.75 }, into: { 'juices': 4 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': true } },
-                    { type: 'convert', from: { 'sugar': 2, 'exotic fruit': 0.8, 'water': 3.75 }, into: { 'exotic juices': 1.8 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': true } },
+                    { type: 'convert', from: { 'sugar': 2, 'vegetable': 0.8, 'water': 3.75 }, into: { 'juices': 3.6 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': true } },
+                    { type: 'convert', from: { 'sugar': 1, 'exotic fruit': 0.4, 'water': 1.25 }, into: { 'exotic juices': 1.75 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': false } },
+                    { type: 'convert', from: { 'sugar': 2, 'exotic fruit': 0.4, 'water': 3.75 }, into: { 'exotic juices': 3.5 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': true } },
                     { type: 'mult', value: 1.25, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'mult', value: 0.915, req: { 'se09': 'on' } },
                 ],
@@ -9289,13 +9291,13 @@ if (getObj("civ") != "1") {
                 name: 'vegetable farm',
                 desc: '@Specialized farm  which will harvest tasty [vegetable]s (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
                 icon: [14, 2, 'magixmod'],
-                cost: { 'seeds': 200 },//It will display ingame Seeds
+                cost: { 'seeds': 200 },
                 req: { 'agriculture': true },
                 use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 12 },
                 category: 'production',
                 effects: [
-                    { type: 'gather', context: 'gather', what: { 'vegetable': 0.14 } },
+                    { type: 'gather', context: 'gather', what: { 'vegetable': 0.16 } },
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } }
@@ -9303,11 +9305,11 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'sugar cane farm',
-                desc: '@Specialized farm which will harvest [sugar cane] faster than [gatherer]s.',
+                desc: '@Specialized farm which will harvest [sugar cane]s faster than [gatherer]s.',
                 icon: [14, 7, 'magixmod'],
                 cost: { 'sugar cane': 500 },
                 req: { 'agriculture': true, 'farm of the sugar cane': true },
-                use: { 'worker': 8, 'land': 35, 'stone tools': 10 },
+                use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 36 },
                 category: 'production',
                 effects: [
@@ -9318,7 +9320,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 3, req: { 'soil for moisture-loving plants': true } },
                     { type: 'mult', value: 4, req: { 'empowered canes': true } },
                     { type: 'mult', value: 4, req: { 'essenced soil for moisture-loving plants': true } },
-                    { type: 'mult', value: 2.5, req: { 'backshift at farms': true } }
+                    { type: 'mult', value: 2.5, req: { 'backshift at farms': true } },
+                    { type: 'mult', value: 2.25, req: { 'gardening II': true } }
                 ],
             });
             new G.Unit({//I was removed because I didn't change that much in game. I was a beet farm but I am going to be something different more useful
@@ -14011,7 +14014,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'backshift at farms', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s due to way people increase the income of the farms. //Requires [moderation] to unlock this tech. Also, each [hovel with garden] is 10% more effective.',
+                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s and 40% more land due to way people increase the harvests of the farms. //Requires [moderation] to unlock this tech. Also, each [hovel with garden] is 10% more effective.',
                 icon: [31, 14, 'magixmod'],
                 cost: { 'insight II': 180, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'improved windmill motors': true, 'moderation': true },
@@ -14020,9 +14023,9 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.getDict('wheat farm').icon = [31, 19, 'magixmod']
-                            G.getDict('wheat farm').use = { 'worker': 12, 'land': 15 }
+                            G.getDict('wheat farm').use = { 'worker': 12, 'land': 21, 'stone tools': 12 }
                             G.getDict('sugar cane farm').icon = [31, 18, 'magixmod']
-                            G.getDict('sugar cane farm').use = { 'worker': 12, 'land of the Plain Island': 35 }
+                            G.getDict('sugar cane farm').use = { 'worker': 12, 'land': 49, 'stone tools': 12 }
                         }
                     }
                 ],
@@ -15198,7 +15201,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'gardening',
-                desc: '<font color="#57ff96">A key for unlocking farms! People learn how to make an irrigation system, allowing your people to start thinking about making some small gardens.</font>',
+                desc: '<font color="#57ff96">A key for unlocking farms! People learn how to use water for crops, allowing your people to start thinking about making some small gardens.</font>',
                 icon: [10, 0, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'druidism': true, 'city planning': true },
@@ -18456,13 +18459,23 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'alchemical fuels', category: 'tier1',
-                desc: 'Using their knowledge of alchemy, your civilization will be able to improve the speed of [furnace]s by 10%.',
+                desc: 'Using their knowledge of alchemy, your civilization will be able to improve the speed of [furnace]s by 10%. //<small>pretty interesting materials...</small>',
                 icon: [54, 0, 'magix2', 24, 1],
                 cost: { 'insight': 800, 'wisdom': 25, 'culture': 200 },
                 req: { 'alchemy': true },
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'gardening II', category: 'tier1',
+                desc: '<font color="#1f7def">Learn about how to use irrigation to create more advanced farms, boosting crop gains of your large farms by +125%.</font>',
+                icon: [0, 35, 'magixmod', 10, 0, 'magixmod'],
+                cost: { 'insight II': 40 },
+                req: { 'agriculture': true, 'eotm': true },
+                effects: [
+                ],
+            });
+
 
             new G.Res({
                 name: 'ignoreItem', // A resource that tells you the next predicted drought
@@ -25751,7 +25764,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'gardening',
-                desc: '<font color="#e6ffee">A key for farms. Elves can learn how to make an irrigation system. Thanks to it they may start thinking about making some small gardens overcoming big plant density or putting a good use of it if these are fruit bushes.</font>',
+                desc: '<font color="#e6ffee">A key for farms! Thanks to this knowledge, elves may start thinking about making some small decorative gardens.</font>',
                 icon: [26, 10, 'c2'],
                 cost: { 'creativity': 40 },
                 effects: [
