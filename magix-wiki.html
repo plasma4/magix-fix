@@ -469,7 +469,7 @@
                             text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
                     }
-                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
+                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.leadsTo && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
                     var c = t.cost
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
                         text += "<br>Cost: " + parseRes(objc, c)
@@ -657,7 +657,7 @@
             return result
         }
 
-        function parseReq(obj, reqToSearch) {
+        function parseReq(obj, reqToSearch, opposite) {
             if (reqToSearch == null) {
                 return "nothing"
             }
@@ -680,6 +680,7 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
+                        if (opposite && reqToSearch[key]) continue
                         result.push((reqToSearch[key] ? "" : "a lack of ") + '<u onclick="c(' + tech.id + ",'techs')\">" + tech.displayName + "</u>")
                         break
                     }
@@ -692,26 +693,31 @@
                 for (var o = 0; o < techLen; o++) {
                     var tech = techs[o]
                     if (tech.name === key) {
+                        if (opposite && reqToSearch[key]) continue
                         result.push((reqToSearch[key] ? "" : "a lack of ") + '<u onclick="c(' + tech.id + ",'traits')\">" + tech.displayName + "</u>")
                         break
                     }
                 }
             }
-            techs = obj.policies // now policies
-            techLen = techs.length
-            for (var l = 0; l < keyLen; l++) {
-                var key = keys[l]
-                for (var o = 0; o < techLen; o++) {
-                    var tech = techs[o]
-                    if (tech.name === key) {
-                        var state = reqToSearch[key]
-                        result.push('<u onclick="c(' + tech.id + ",'policies')\">" + tech.displayName + "</u>" + (state === "on" ? " enabled" : (state === "off" ? " disabled" : (" is set to " + reqToSearch[key]))))
-                        break
+            if (!opposite) {
+                techs = obj.policies // now policies
+                techLen = techs.length
+                for (var l = 0; l < keyLen; l++) {
+                    var key = keys[l]
+                    for (var o = 0; o < techLen; o++) {
+                        var tech = techs[o]
+                        if (tech.name === key) {
+                            var state = reqToSearch[key]
+                            result.push('<u onclick="c(' + tech.id + ",'policies')\">" + tech.displayName + "</u>" + (state === "on" ? " enabled" : (state === "off" ? " disabled" : (" is set to " + state))))
+                            break
+                        }
                     }
                 }
             }
             var resultLen = result.length
-            if (resultLen === 1) {
+            if (resultLen === 0) {
+                return "nothing"
+            } else if (resultLen === 1) {
                 return result[0]
             } else if (resultLen === 2) {
                 return result[0] + " and " + result[1]
