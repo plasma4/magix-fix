@@ -469,7 +469,7 @@
                             text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
                     }
-                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.leadsTo && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
+                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.precededBy && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
                     var c = t.cost
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
                         text += "<br>Cost: " + parseRes(objc, c)

@@ -6332,7 +6332,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'candy',
-                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. Spoils quite quickly but count as [food], providing some [happiness] (and will harm [health] a little as well).',
+                desc: 'Sweet, tasty [candy,Candies] made just for Halloween. Spoils quite quickly but counts as [food], providing [happiness] at the cost of a little [health].',
                 icon: [choose([3, 4]), 8, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
