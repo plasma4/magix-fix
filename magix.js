@@ -6181,9 +6181,9 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'child of Christmas',
-                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them even say they are elves, although this isn\'t confirmed!//After a while, they will grow up into [adult]s.//These children also eat and drink half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite assigning them to work, as long as their work is related to christmas, of course.',
+                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them even say they are elves, although this isn\'t confirmed!//After a while, they will grow up into [adult]s.//These children also eat and drink half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite being assigned to work (as long as their work is related to their favorite season, of course).',
                 partOf: 'population',
-                icon: [13, 11, 'seasonal'],
+                icon: [56, 0, 'magix2'],
                 hidden: true,
                 displayUsed: true,
                 category: 'demog'
@@ -6204,7 +6204,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'festive light',
-                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay may provide some [christmas essence].',
+                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay, this may provide some [christmas essence].',
                 icon: [choose([6, 7]), 12, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -6218,7 +6218,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'snowman',
-                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay may provide some [christmas essence].',
+                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay, this may provide some [christmas essence].',
                 icon: [12, 11, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -10437,8 +10437,8 @@ if (getObj("civ") != "1") {
                 use: { 'worker': 1 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'ornaments': { name: 'Craft ornaments', icon: [6, 10, 'seasonal'], desc: 'Craft 1 [christmas ornament] from [thread]s, [dyes] and [log]', use: { 'worker': 1, 'stone tools': 1 } },
-                    'lights': { name: 'Craft lights', icon: [6, 11, 'seasonal'], desc: 'Craft 1 [festive light] from [thread]s, [tin ore], [dyes], some [glass] and [magic essences]', use: { 'worker': 1, 'stone tools': 1 }, req: { 'festive lights': true } },
+                    'ornaments': { name: 'Craft ornaments', icon: [57, 0, 'magix2'], desc: 'Craft 1 [christmas ornament] from [thread]s, [dyes] and a part of a [log].', use: { 'worker': 1, 'stone tools': 1 } },
+                    'lights': { name: 'Craft lights', icon: [6, 11, 'seasonal'], desc: 'Craft 1 [festive light] from [thread]s, [tin ore], a small amount of [glass], and [magic essences].', use: { 'worker': 1, 'stone tools': 1 }, req: { 'festive lights': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'thread': 4, 'dyes': 2, 'log': 0.2 }, into: { 'christmas ornament': 1 }, every: 6, mode: 'ornaments' },
@@ -16141,7 +16141,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron7',
                 displayName: 'Chirus the time watcher',
-                desc: '[patron7] is all about time and how it passes. @This patron also symbolizes that things pass way aall the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron7] is all about time and how it passes. @This patron also symbolizes that things pass way all the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [8, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron8': false, 'unknown patron': false, 'nonpatronage': false },
@@ -26578,7 +26578,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard wisdom II', category: 'tier1',
-                desc: 'Wizards will also produce a 5% as much [insight] as a basic [dreamer] now. //<small>i suppose insight is important for wizards as well</small>',
+                desc: 'Wizards will also produce 5% as much [insight] as a basic [dreamer] now. //<small>i suppose insight is important for wizards as well</small>',
                 icon: [3, 13, 'c2', 23, 10, 'c2'],
                 cost: { 'discernment': 200, 'faith': 10, 'gentility': 24 },
                 req: { 'wizard wisdom': true },
@@ -26794,7 +26794,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'creative foraging',
-                desc: '@[gatherer]s will explore terrain just like [wanderer] but have a much larger chance to become lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //To keep this policy active, you will need 1 [creativity] every year. Once you get 80 [land], [creative foraging] will stop taking [creativity].',
+                desc: '@[gatherer]s will explore terrain just like [wanderer]s but have a much larger chance to become lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //To keep this policy active, you will need 1 [creativity] every year. Once you get 80 [land], [creative foraging] will stop taking [creativity].',
                 icon: [25, 0, 'c2'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
