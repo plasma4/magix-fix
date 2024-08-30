@@ -73,6 +73,15 @@
             font-size: 30px;
         }
 
+        #inputs {
+            text-align: center;
+        }
+
+        #inputs>input {
+            font-size: 15px;
+            width: 90%;
+        }
+
         h1,
         button,
         .main {
@@ -274,6 +283,7 @@
         Click on the button below to make a new item of the type you selected at the top.
         <br>
         <button>Create a new tech</button>
+        <button>Delete this tech</button>
         <button>Update data</button>
         <br>
         <span id="inputs"></span>
@@ -290,7 +300,15 @@
 
     <script>
         "use strict"
+        var isModding = true
+        var modButton = document.getElementsByTagName("button")[2]
+        var input = document.getElementsByTagName("input")[0]
+        var select = document.getElementsByTagName("select")[0]
+        var selectDebug = document.getElementsByTagName("select")[1]
+        var checkbox = document.getElementsByTagName("input")[1]
+        var result = document.getElementsByTagName("div")[0]
         var modCreator = 0
+
         document.getElementsByTagName("script")[0].remove()
         document.getElementsByTagName("button")[0].addEventListener("click", function () {
             exportJSON(false)
@@ -298,28 +316,23 @@
         document.getElementsByTagName("button")[1].addEventListener("click", function () {
             exportJSON(true)
         })
-        document.getElementsByTagName("button")[2].addEventListener("click", function () {
+        modButton.addEventListener("click", function () {
             if (modCreator === 0) {
                 document.getElementsByTagName("textarea")[0].value = ""
             }
             modCreator = !modCreator
             if (modCreator) {
                 document.getElementById("modCreator").removeAttribute("style")
-                document.getElementsByTagName("button")[2].textContent = "Hide mod creator"
+                modButton.textContent = "Hide mod creator"
             } else {
                 document.getElementById("modCreator").style.display = "none"
-                document.getElementsByTagName("button")[2].textContent = "Show mod creator"
+                modButton.textContent = "Show mod creator"
             }
         })
         document.getElementsByTagName("button")[3].addEventListener("click", createNewThing)
-        document.getElementsByTagName("button")[4].addEventListener("click", updateThing)
-        document.getElementsByTagName("button")[5].addEventListener("click", importScript)
-        var isModding = true
-        var input = document.getElementsByTagName("input")[0]
-        var select = document.getElementsByTagName("select")[0]
-        var selectDebug = document.getElementsByTagName("select")[1]
-        var checkbox = document.getElementsByTagName("input")[1]
-        var result = document.getElementsByTagName("div")[0]
+        document.getElementsByTagName("button")[4].addEventListener("click", deleteThing)
+        document.getElementsByTagName("button")[5].addEventListener("click", updateThing)
+        document.getElementsByTagName("button")[6].addEventListener("click", importScript)
         input.addEventListener("input", changeFunc)
         select.addEventListener("change", changeFunc)
         selectDebug.addEventListener("change", changeFunc)
@@ -335,6 +348,9 @@
             result.removeAttribute("class")
             var category = select.value
             var checkedBox = checkbox.checked
+            if (checkedBox) {
+                document.body.className = "civ2"
+            }
             var obj = checkedBox ? civ2Object : civ1Object
             var itemCategory = obj[category]
             var inputValue = input.value.trim()
@@ -992,26 +1008,55 @@
             if (category != null) {
                 var categorySingular = c.slice(0, c.length - 1)
                 var len = category.length
-                category.push({ name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0], cost: {}, req: {} })
+                var obj = c === "resources" ? { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0] } : { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0], cost: { "insight": 1 }, req: { "tribalism": true } }
+                category.push(obj)
                 selectedID = len
                 selectedType = c
                 var inputs = inputsToUse[c]
                 var result = ""
+                var fragment = document.createDocumentFragment()
                 for (var i = 0; i < inputs.length; i++) {
-                    result += '<input placeholder="' + inputs[i] + '">'
+                    var input = inputs[i]
+                    var val = obj[input]
+                    var elem = document.createElement("input")
+                    elem.placeholder = civ1Object.descriptions[input]
+                    var parsed = parseIfObj(val)
+                    if (parsed != null) {
+                        elem.value = parseIfObj(val)
+                    }
+                    fragment.appendChild(elem)
                 }
-                document.getElementsByTagName("span")[2].innerHTML = result
+                var span = document.getElementsByTagName("span")[2]
+                span.textContent = ""
+                span.appendChild(fragment)
+                generateScript()
+            }
+        }
+
+        function deleteThing() {
+            if (selectedID !== -1) {
+                newData[selectedType].pop()
                 generateScript()
             }
         }
 
         function updateThing() {
+            if (selectedID === -1) {
+                return
+            }
             var tech = newData[selectedType][selectedID]
+            if (!tech) {
+                tech = newData[selectedType].push(selectedType === "resources" ? { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0] } : { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0], cost: { "insight": 1 }, req: { "tribalism": true } })
+            }
+            var keys = inputsToUse[selectedType]
             var inputs = document.getElementsByTagName("span")[2].children
             for (var i = 0; i < inputs.length; i++) {
                 var val = inputs[i].value.trim()
+                var key = keys[i]
                 if (val.length !== 0) {
-                    tech[inputsToUse[i]] = val
+                    tech[key] = convertIfObj(val)
+                } else if (tech[key]) {
+                    delete tech[key]
                 }
             }
             generateScript()
@@ -1051,6 +1096,17 @@
             console.warn("Tried to import:", value)
         }
 
+        function parseIfObj(val) {
+            return val && typeof val === "object" ? JSON.stringify(val) : val
+        }
+
+        function convertIfObj(val) {
+            try {
+                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? JSON.parse(val) : val
+            } catch (e) {
+                return val
+            }
+        }
 
         changeFunc()
     </script>
