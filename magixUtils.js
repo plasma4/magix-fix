@@ -3800,7 +3800,7 @@ G.AddData({
                 '<br>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
                 G.button({ text: '<font color="#e28">Party</font>', tooltip: 'Add some color to your gameplay!', onclick: function () { G.PARTY = G.PARTY == 0 ? 1 : 0 } }) +
-                '<br><font color="lime">Debug mode is enabled for Magix (release ' + G.releaseNumber + ')</font>' +
+                '<br><font color="lime">Debug mode has been enabled!</font>' +
                 G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(the gain is ten times the amount that the add amount is)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units<br><b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
                 '</center></div>';
             l('debug').innerHTML = str;
