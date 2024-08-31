@@ -13096,7 +13096,7 @@ if (getObj("civ") != "1") {
                 displayName: '<font color="#ffd2de">Evolution of the minds</font>',
                 desc: 'Replaces [insight], [culture], [faith], and [influence] with [insight II], [culture II], [faith II], and [influence II]. @To obtain them, you will unlock a special unit that will convert every 500 of a [insight,Tier I Essential] into 1 [insight II,Tier II Essential]. In addition, [storyteller]s, [dreamer]s, [chieftain]s, and [clan leader]s become <b>90% less efficient</b> because this evolution is a disaster for them all. @Researches in the <b>Research tab</b> will require [insight II] and [science] rather than just [insight]. @You will still require units you used to gather lower essentials! (Lower essentials have been hidden, but remember that you still need [wizard]s for [wisdom]...) @[flower rituals] and [wisdom rituals] will be no longer available until [ritualism II] is researched. @[sleepy insight] now gives [insight II] instead of [insight] with identical chances.' + (G.modsByName["Thot Mod"] != undefined ? " @your [thot] limit is increased but becomes an extra quarter more efficient." : "") + '',
                 icon: [25, 19, 'magixmod'],
-                cost: { 'culture': 1000, 'insight': 1000, 'influence': 300, 'faith': 300 },
+                cost: {'insight': 1000, 'culture': 500, 'influence': 300, 'faith': 250 },
                 chance: 150,
                 req: { 'underworld building 2/2': true },
                 effects: [
