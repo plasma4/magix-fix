@@ -287,6 +287,16 @@
         <button>Update data</button>
         <br>
         <span id="inputs"></span>
+        <br>
+        Confused on why some of these have braces like <span class="mono">{ tribalism:true }</span>?
+        This is called an <b>object</b>. You may also add more items to this list; for example,
+        <span class="mono">{ tribalism:true, stone-knapping:true }</span>.
+        However, you need the <b>raw name</b> of the item you are trying to add;
+        you may find this by clicking on the image of the item you want to add to an object!
+        <div>
+            Tip: if you know how JSON works or like its format better, you may instead format objects like
+            <span class="mono">{ "tribalism": true, "stone-knapping": true }</span> and it will still work.
+        </div>
         <hr>
         <textarea rows="20" cols="100" disabled
             placeholder="The automatically generated script will output here. Note that the comment at the start provides important metadata so that you can import it back in to here (make sure to keep it somewhere safe)! Copy that comment when you're importing a script in."></textarea>
@@ -306,7 +316,7 @@
         var select = document.getElementsByTagName("select")[0]
         var selectDebug = document.getElementsByTagName("select")[1]
         var checkbox = document.getElementsByTagName("input")[1]
-        var result = document.getElementsByTagName("div")[0]
+        var result = document.getElementsByTagName("div")[1]
         var modCreator = 0
 
         document.getElementsByTagName("script")[0].remove()
@@ -536,7 +546,7 @@
                             text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
                     }
-                    text += "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.precededBy && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
+                    text += "<br>Raw name: " + t.name + "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.precededBy && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
                     var c = t.cost
                     if (c != null && Object.getOwnPropertyNames(c).length !== 0) {
                         text += "<br>Cost: " + parseRes(objc, c)
@@ -1097,12 +1107,13 @@
         }
 
         function parseIfObj(val) {
-            return val && typeof val === "object" ? JSON.stringify(val) : val
+            // JSON destringer
+            return val && typeof val === "object" ? JSON.stringify(val).replace(/"([^"]+)":/g, "$1:").replace("{", "{ ").replace("}", " }") : val
         }
 
         function convertIfObj(val) {
             try {
-                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? JSON.parse(val) : val
+                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? JSON.parse(val.replace(/(\w+):/g, '"$1":')) : val
             } catch (e) {
                 return val
             }
