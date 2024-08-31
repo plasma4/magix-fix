@@ -646,7 +646,7 @@ var archaeologyRare = function () //mesg can toggle message
     return function (me) {
         var rarities = ['Rare', 'Unique', 'Legendary', 'Magnificient', 'Fabled', 'Ethereal', 'Omnipotent', 'Transcendent', 'Godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
         var mesgType = ['tutorial', 'unique', 'emblemobtain', 'magnificient', 'fabled', 'ethereal', 'omnipotent', 'transcendent', 'godlike']; //magnificient and even more...maybe we should add sth like that in r55 or 56.. #rebalancing
-        var vals = [3, 6, 10];
+        var vals = [3, 6, 10, 18, 25, 40, 80, 125, 200];
         //clothing names - will provide culture or influence 
         var namesClothesState = ['Worn', 'Wet', 'Leaky', 'Furry', 'Faded', 'Leather'];
         var namesClothesLegend = ['Royal', 'Majesty\'s', 'High society\'s', 'Emperor\'s', 'Ancestor\'s'];
@@ -660,17 +660,17 @@ var archaeologyRare = function () //mesg can toggle message
         //religious symbols - will provide culture or faith with double chance of extra insight
         var symbolsState = ['Well-preserved', 'Cracked', 'Hard', 'Unique', 'Limestone'];
         var symbolsLegend = ['Gilded', 'Precious', 'Stable', 'Sacred'];
-        var symbolsNames = ['idol', 'totem', 'cross', 'hexagon', 'pentagon', 'triangle', 'tablet', 'horn', 'bracelet'];
+        var symbolsNames = ['idol', 'totem', 'cross', 'six-sided shape', 'ring', 'triangle', 'tablet', 'horn', 'bracelet'];
         //additions for tools and symbols names
         var additions = ['despair', 'authority', 'greed', 'faith', 'sincerity'];
         var additionsSymbols = ['guidance', 'authority', 'greed', 'faith', 'sincerity', 'past', 'future'];
 
         var type = Math.round(Math.random() * 2);  //if it is clothing  [0], tool [1] or symbol [2]
         let itemName = '';
-        let rarity = (Math.random() > 0.45 ? rarities[0] : Math.random() > 0.1 ? rarities[1] : rarities[2]);
+        let rarity = (Math.random() > 0.45 ? rarities[0] : Math.random() > 0.1 ? rarities[1] : rarities[Math.random() < 0.05 ? 3 : 2]);
         var gain = 'insight';
         var extraInsight = Math.random();
-        var ess2 = (G.modsByName['Default dataset'] && G.has('doctoral analysis') ? " II" : "");
+        var ess2 = G.has('doctoral analysis') ? " II" : "";
 
 
         switch (type) { //let's proceed to generate names
@@ -680,7 +680,7 @@ var archaeologyRare = function () //mesg can toggle message
                     itemName = namesClothesState[Math.round(Math.random() * (namesClothesState.length - 1))] + " ";
                 else
                     itemName = namesClothesLegend[Math.round(Math.random() * (namesClothesLegend.length - 1))] + " ";
-                itemName += namesColors[Math.round(Math.random() * (namesColors.length - 1))] + " " + typeCloth + (rarity == 'Legendary' ? ' of ' + additions[Math.round(Math.random() * (additions.length - 1))] : "");
+                itemName += namesColors[Math.round(Math.random() * (namesColors.length - 1))] + " " + typeCloth + (rarity == 'Legendary' || rarity == 'Magnificient' ? ' of ' + additions[Math.round(Math.random() * (additions.length - 1))] : "");
                 //if it is king related tool like scepter or hammer then give influence else give insight . TODO: give essentials II when specific tech obtained
                 G.gain('relic', 1, rarities + ' relic found');
                 if (typeCloth == 'crown' || typeCloth == 'robe' || typeCloth == 'cape') {
@@ -729,8 +729,7 @@ var archaeologyRare = function () //mesg can toggle message
                 }
                 if (extraInsight < 1 / 3) G.gain('insight', 2, rarity + ' relic found');
                 //even smaller to gain science
-                if (G.modsByName['Default dataset'])
-                    if (rarity == 'Legendary' && G.has('doctoral analysis')) G.gain('science', 3, rarity + ' relic found'); //later we plan to make it at least legendary
+                if (rarity == 'Legendary' || rarity == 'Magnificient' && G.has('doctoral analysis')) G.gain('science', 3, rarity + ' relic found'); //later we plan to make it at least legendary
         }
         if (G.getSetting('relic messages')) {
             G.Message({
@@ -1575,7 +1574,7 @@ if (getObj("civ") != "1") {
 
                         var droughtYear = getObj('drought')
                         if (droughtYear > 0) {
-                            if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) - 0.9) > G.year || droughtYear - 4 > G.year) {
+                            if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) + 5) + 2 > G.year || droughtYear + 7 < G.year) {
                                 G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
                                 if (G.has('drought')) G.deleteTrait('drought')
                                 if (G.has('famine')) G.deleteTrait('famine')
@@ -1586,7 +1585,7 @@ if (getObj("civ") != "1") {
                             // Drought data starts being calculated now
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
-                            G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to happen.', icon: [9, 10] })
+                            G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to strike.', icon: [9, 10] })
                             droughtmesg = false
                             setObj('drought', -1)
                         } else if (G.year === G.getRes('ignoreItem').amount - 2) {
@@ -3233,7 +3232,7 @@ if (getObj("civ") != "1") {
                                 AoD();
                             }
                         }
-                        if (me.amount > 0) {
+                        if (me.amount >= 1) {
                             //bury slowly
 
                             if (graves.amount > graves.used && G.getRes('dark decay').hidden == true) {
@@ -3247,6 +3246,19 @@ if (getObj("civ") != "1") {
                                     changeHappiness(amount * 2, 'burial');
                                 }
                             }
+
+                            if (G.has('revenants') && !G.has('peace')) {
+                                if (G.day % 40 === 0) {
+                                    var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125)
+                                    G.lose('corpse', wildCorpses, 'revenge of corpses');
+                                    G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
+                                    G.gain('wild corpse', wildCorpses, 'revenge of corpses');
+                                } else if (G.day % 30 == 0) {
+                                    G.lose('corpse', 1, 'revenge of corpses');
+                                    G.gain('wild corpse', 1, 'revenge of corpses');
+                                }
+                            }
+
                         }
                     }
                     if (graves.amount < graves.used) {
@@ -3272,14 +3284,6 @@ if (getObj("civ") != "1") {
                     if (G.has('corpse decay')) {
                         var toSpoil = me.amount * 0.002 * (G.getRes('corpsedecaypoint').amount);
                         var spent = G.lose('corpse', randomFloor(toSpoil), 'corpse decay from wormholes');
-                    }
-                    if (day + leap <= 40 && day + leap >= 46 && !G.has('peace')) {
-                        if (G.has('revenants') && G.getRes('dark essence').amount > 1000) {
-                            var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125)
-                            G.lose('corpse', wildCorpses, 'revenge of corpses');
-                            G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
-                            G.gain('wild corpse', wildCorpses, 'revenge of corpses');
-                        }
                     }
                 },
             });
@@ -6771,8 +6775,8 @@ if (getObj("civ") != "1") {
                 upkeep: { 'food': 0.1 },
                 gizmos: true,
                 modes: {
-                    'stick fires': { name: 'Start fires from sticks', icon: [0, 6, 13, 7], desc: 'Craft [fire pit]s from 20 [stick]s each.', req: { 'factories II': false } },
                     'cook': { name: 'Cook', icon: [6, 7, 13, 7], desc: 'Turn [meat] and [seafood] into [cooked meat] and [cooked seafood] in the embers of [fire pit]s.', req: { 'cooking': true } },
+                    'stick fires': { name: 'Start fires from sticks', icon: [0, 6, 13, 7], desc: 'Craft [fire pit]s from 20 [stick]s each.', req: { 'factories II': false } },
                     'cure': { name: 'Cure & smoke', icon: [11, 6, 12, 6], desc: 'Turn 1 [meat] or [seafood] into 2 [cured meat] or [cured seafood] using [salt] in the embers of [fire pit]s.', req: { 'curing': true } },
                     'honey': { name: 'Collect honey', icon: [6, 0, 'magix2'], desc: 'Attempt to collect [honey] from bee nests. The chance of success and [honey] gain can be increased through more techs.', req: { 'beekeeping': true } },
                     'honey2': { name: 'Collect honey (advanced)', icon: [6, 0, 'magix2'], desc: 'Try to collect [honey] from bee nests while using [nature essence].', req: { 'beekeeping III': true } },
@@ -6791,24 +6795,21 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'honey', what: { 'honey': 4 }, amount: 1, every: 2, max: 50, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': false } },
                     { type: 'gather', context: 'honey', what: { 'honey': 5 }, amount: 1, every: 2, max: 62.5, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': false } },
                     { type: 'gather', context: 'honey', what: { 'honey': 7.5 }, amount: 1, every: 2, max: 93.75, mode: 'honey', chance: 3 / 32, req: { 'beekeeping II': true, 'plant-loving bees': true } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, amount: 1, every: 1, max: 4, chance: 1 / 4, mode: 'honeycombs', req: { 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honeycomb': 3.75 }, amount: 1, every: 1, max: 7.5, mode: 'honeycombs', chance: 1 / 4, req: { 'love of honey': 'on' } },
+                    { type: 'gather', context: 'honey', what: { 'honeycomb': 2 }, amount: 1, every: 1, max: 4, chance: 1 / 4, mode: 'honeycombs' },
                     { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 8 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': false } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 12 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 19.2 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'love of honey': 'on' } },
-                    { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 24 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 38.4 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true, 'love of honey': 'on' } },
-                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 50, 'honeycomb': 5 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 80, 'honeycomb': 8 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true, 'love of honey': 'on' } },
-                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 60, 'honeycomb': 6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'off' } },
-                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 96, 'honeycomb': 9.6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true, 'love of honey': 'on' } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 1 }, amount: 1, every: 4, max: 0.2, mode: 'honey', chance: 1 / 250, req: { 'beekeeping V': true, 'love of honey': 'off' } },
-                    { type: 'gather', context: 'honey', what: { 'honey': 1.6 }, amount: 1, every: 4, max: 0.32, mode: 'honey', chance: 1 / 250, req: { 'beekeeping V': true, 'love of honey': 'on' } },
+                    { type: 'convert', from: { 'nature essence': 3 }, into: { 'honey': 12 }, amount: 1, every: 2, chance: 5 / 32, mode: 'honey2', req: { 'plant-loving bees': true } },
+                    { type: 'convert', from: { 'hive frame': 0.02, 'nature essence': 3 }, into: { 'honey': 24 }, amount: 1, every: 2, chance: 6 / 32, mode: 'honey2', req: { 'hive frames': true } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 50, 'honeycomb': 5 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'magical hive frames': true } },
+                    { type: 'convert', from: { 'essenced hive frame': 0.05, 'nature essence': 3 }, into: { 'honey': 60, 'honeycomb': 6 }, amount: 1, every: 2, chance: 2 / 7, mode: 'frame', req: { 'beekeeping IV': true } },
+                    { type: 'gather', context: 'honey', what: { 'honey': 1 }, amount: 1, every: 4, max: 0.2, mode: 'honey', chance: 1 / 250, req: { 'beekeeping V': true } },
                     { type: 'convert', from: { 'fire essence': 1, 'stick': 13 }, into: { 'fire pit': 6 }, mode: 'firesfromessence', req: { 'factories II': false } },
                     { type: 'mult', value: 0.97, req: { 'dt2': true } },
                     { type: 'mult', value: 1.05, req: { 'bigger fires': true, 'moderation': true } },
                     { type: 'mult', value: 1.08, req: { 'bigger fires': true, 'caretaking': true } },
                     { type: 'gather', what: { 'health': 0.0225 }, req: { 'mentors of nature III': true } },
+                    { type: 'mult', value: 1.25, req: { 'love of honey': 'on' }, mode: 'honeycomb' },
+                    { type: 'mult', value: 1.6, req: { 'love of honey': 'on' }, mode: 'honey2' },
+                    { type: 'mult', value: 1.6, req: { 'love of honey': 'on' }, mode: 'frame' },
                 ],
                 req: { 'fire-making': true },
                 category: 'crafting',
@@ -10274,7 +10275,7 @@ if (getObj("civ") != "1") {
                 category: 'guard',
                 priority: 5,
                 effects: [
-                    { type: 'convert', from: { 'wild corpse': 1 }, into: { 'slain corpse': 1 }, every: 4, chance: 1 / 4 },
+                    { type: 'convert', from: { 'wild corpse': 1 }, into: { 'slain corpse': 1 }, every: 4, chance: 1 / 5 },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 50, req: { 'coordination': true } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 25, req: { 'coordination': false } },
                 ],
@@ -12625,6 +12626,13 @@ if (getObj("civ") != "1") {
                 cost: { 'insight': 50, 'corpse': 500 },
                 chance: 200,
                 req: { 'belief in revenants': true, 'ritual necrophagy': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.gain('wild corpse', 1)
+                        }
+                    }
+                ]
             });
             new G.Trait({
                 name: 'culture of the afterlife',
@@ -17514,6 +17522,7 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.getDict('code of law').req = { 'sedentism': true, 'writing': true, 'chieftains': true };
+                            G.getDict('druidism').req = { 'ritualism': true, 'language': true };
                         }
                     }
                 ],
@@ -19660,7 +19669,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'love of honey',
-                desc: 'Improves [honeycomb] gain by 25% and essenced [honey] gain by 60%. This ritual requires 250 [nature essence] every day as upkeep instead, and because of this, this ritual\'s cost will not be changed by any trait or tech.',
+                desc: 'Improves [honeycomb] gain by 25% and advanced forms of [honey] or [honeycomb] gain by 60%. This ritual requires 250 [nature essence] every day as upkeep instead, and because of this, this ritual\'s cost will not be changed by any trait or tech.',
                 icon: [8, 12, 7, 0, 'magix2'],
                 cost: { 'nature essence': 10000 },
                 startMode: 'off',
@@ -20553,7 +20562,7 @@ if (getObj("civ") != "1") {
             //Swamplands
             new G.Goods({
                 name: 'crocodiles',
-                desc: 'Crocodiles are large semiaquatic reptiles that live throughout the tropics especially swamplands. A source of [meat] and [leather].//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Crocodiles are large semiaquatic reptiles that live throughout the tropics especially swamplands. A source of [meat] and [leather].//Carcasses can also be gathered for [spoiled food].',
                 icon: [17, 24, 'magixmod'],
                 res: {
                     'hunt': { 'meat': 2 },
@@ -20676,7 +20685,7 @@ if (getObj("civ") != "1") {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
                     'dig': { 'clay': 0.2, 'stone': 0.6, 'copper ore': 0.001, 'tin ore': 0.001, 'limestone': 0.105 },
                     'mine': { 'stone': 0.944, 'copper ore': 0.09, 'tin ore': 0.07, 'iron ore': 0.06, 'gold ore': 0.0035, 'coal': 0.21, 'gems': 0.0052, 'various stones': 0.006/*osmium 0.04*/ },
-                    'quarry': { 'cut stone': 0.999, 'limestone': 0.62, 'marble': 0.01, 'various cut stones': 0.001 },
+                    'quarry': { 'cut stone': 1, 'limestone': 0.62, 'marble': 0.01, 'various cut stones': 0.001 },
                     'deep mine': { 'zinc ore': 0.07, 'dinium ore': 0.06, 'gems': 0.003 },
                     'deep quarry': { 'lead ore': 0.08, 'mythril ore': 0.019, 'blackium ore': 0.01, 'unknownium ore': 0.05 },
                 },
@@ -26557,7 +26566,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches will require a third less [discernment,Essentials] (excluding your [battery of discoveries,Battery power]) if the number of your technologies ends with 0. @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches will require a third less of [discernment,Essentials] (excluding your [battery of discoveries,Battery power]) if the number of your technologies ends with 0. @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
                 icon: [28, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbN': false },
@@ -27393,7 +27402,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'palmacia tree',
-                desc: 'All [palmacia tree]s prefer warm and dry climates and provide [log]s when chopped. Harvesting them can yield [stick]s and rarely [jungle fruits,Tropical fruits].',
+                desc: 'All [palmacia tree]s prefer warm and dry climates and provide [log]s when chopped. Harvesting them can yield [stick]s and rather strange [jungle fruits].',
                 icon: [13, 14, 'c2'],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
@@ -27610,7 +27619,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'polar bears',
-                desc: 'Large omnivorous mammals that live in snowy regions; fierce hunters. These animals will give plenty of [meat], [bone]s and large [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Large omnivorous mammals that live in snowy regions; fierce hunters. These animals will give plenty of [meat], [bone]s and large [hide]s.//Carcasses can also be gathered for [spoiled food].',
                 icon: [13, 19, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 1 },
@@ -27621,7 +27630,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'boars',
-                desc: 'Omnivorous mammals armed with tusks; provide [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Omnivorous mammals armed with tusks; provide [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
                 icon: [14, 19, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 1 },
@@ -27653,7 +27662,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wolvoes',
-                desc: 'Ferocious carnivores that hunt in packs; a dangerous source of [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Ferocious carnivores that tend to hunt in packs; a dangerous source of [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
                 icon: [11, 19, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 0.5 },
@@ -27664,7 +27673,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ocealoes',
-                desc: 'Carnivorous semi-aquatic mammal with long tail. Can be rather found in sea than on land; provides [meat], [bone]s and [hide]s.//Carcasses can sometimes be gathered for [spoiled food].',
+                desc: 'Carnivorous semi-aquatic mammal with long tail. Can be rather found in sea than on land; provides [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
                 icon: [7, 18, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 1 },
@@ -27708,7 +27717,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'stortle',
-                desc: 'A turtle with a hard shell on its top. They live only in the stonelands.',
+                desc: 'A turtle with a hard shell on its top. These animals may only be found in the <b>Stonelands</b>.',
                 icon: [16, 19, 'c2'],
                 res: {
                     'gather': { 'meat': 0.5 },
@@ -27731,7 +27740,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'stone monolith',
-                desc: '[stone monolith]s most likely can be found in: <b>Stoney deserts</b> and <b>Stonelands</b>.//Can be mined for extra [limestone] and [stone]. //Very, very rarely provides [olivnum ore].',
+                desc: '[stone monolith]s are exclusively in <b>Stoney deserts</b> and <b>Stonelands</b>.//These may be mined for extra [limestone] and [stone]. //May provide [olivnum ore] in very rare circumstances.',
                 icon: [12, 14, 'c2'],
                 res: {
                     'mine': { 'stone': 0.3, 'limestone': 0.02, 'olivnum ore': 0.002 },
@@ -27791,7 +27800,7 @@ if (getObj("civ") != "1") {
                     'gather': { 'stone': 0.2, 'clay': 0.002, 'limestone': 0.0035 },
                     'dig': { 'clay': 0.2, 'stone': 0.6, 'olivnum ore': 0.001, 'tin ore': 0.001, 'limestone': 0.105 },
                     'mine': { 'stone': 0.944, 'olivnum ore': 0.09, 'tin ore': 0.07, 'iron ore': 0.06, 'greenold ore': 0.0035, 'coal': 0.21, 'gems': 0.0052/*,'Various stones':0.006osmium 0.04*/ },
-                    'quarry': { 'cut stone': 0.999, 'limestone': 0.62, 'fazble': 0.01/*,'Various cut stones':0.2*/ },
+                    'quarry': { 'cut stone': 1, 'limestone': 0.62, 'fazble': 0.01/*,'Various cut stones':0.2*/ },
                 },
                 affectedBy: ['mineral depletion'],
                 noAmount: true,
@@ -27949,10 +27958,10 @@ if (getObj("civ") != "1") {
             new G.Goods({
                 name: 'vfb1',
                 displayName: 'Dangerous bushes',
-                desc: 'A bush filled with some [flowers] and poisonous plants.',
+                desc: 'A bush filled with some [flowers] and some poisonous plants unfortunately cannot be eaten.',
                 icon: [13, 17, 'c2'],
                 res: {
-                    'flowers': { 'flowers': 3.5 },
+                    'flowers': { 'flowers': 3 },
                 },
                 mult: 3,
             });
@@ -27972,24 +27981,24 @@ if (getObj("civ") != "1") {
                 desc: 'A bush filled with various [flowers].',
                 icon: [15, 17, 'c2'],
                 res: {
-                    'flowers': { 'flowers': 3.8 },
+                    'flowers': { 'flowers': 4 },
                 },
                 mult: 2,
             });
             new G.Goods({
                 name: 'vfb4',
                 displayName: 'Large flowery bush',
-                desc: 'A bush filled with a few [flowers,Large flowers].',
+                desc: 'A bush filled with several [flowers,Large flowers].',
                 icon: [19, 17, 'c2'],
                 res: {
-                    'flowers': { 'flowers': 4 },
+                    'flowers': { 'flowers': 4.25 },
                 },
                 mult: 3,
             });
             new G.Goods({
                 name: 'vfb5',
                 displayName: 'Bush of tulips',
-                desc: 'A bush filled with some [flowers,Tulips].',
+                desc: 'A bush filled with a few [flowers,Tulips].',
                 icon: [20, 17, 'c2'],
                 res: {
                     'flowers': { 'flowers': 2 },
