@@ -283,8 +283,20 @@
         Click on the button below to make a new item of the type you selected at the top.
         <br>
         <button>Create a new tech</button>
-        <button>Delete this tech</button>
+        <button>There is nothing to delete.</button>
         <button>Update data</button>
+        <br>
+        You can write various settings for your mod here.
+        The fourth input is an object for the sprite data (read below for more info) with various links to your sprites.
+        (If you're not using it, just replace all of it with <span class="mono">{}</span> instead.)
+        <div>
+            Tip: don't know how to use icons or how to set other values?
+            See a few examples by clicking on images of a few items. You should get the hang of it after a bit!
+        </div>
+        <input placeholder="Mod name..." value="Mod Name">
+        <input placeholder="Author..." value="Author">
+        <input placeholder="Description..." value="Description of the mod.">
+        <input placeholder="Sprite data..." value='{ myCustomIcon:"about:blank" }'>
         <br>
         <span id="inputs"></span>
         <br>
@@ -299,11 +311,15 @@
         </div>
         <hr>
         <textarea rows="20" cols="100" disabled
-            placeholder="The automatically generated script will output here. Note that the comment at the start provides important metadata so that you can import it back in to here (make sure to keep it somewhere safe)! Copy that comment when you're importing a script in."></textarea>
+            placeholder="The automatically generated script will output here. Note that the comment at the start provides important metadata so that you can import it back in to here (make sure to keep it somewhere safe even if you end up removing it upon release)! Copy that comment when you're importing a script in."></textarea>
         <br>
         <textarea placeholder="Import script data here..."></textarea>
         <br>
         <button>Import script</button>
+        <div>
+            Tip: want to release your mod somewhere? You can try a service like file.garden or use GitHub Pages.
+            We hope you enjoy your modding adventure!
+        </div>
         <hr>
     </span>
     <div></div>
@@ -316,7 +332,7 @@
         var select = document.getElementsByTagName("select")[0]
         var selectDebug = document.getElementsByTagName("select")[1]
         var checkbox = document.getElementsByTagName("input")[1]
-        var result = document.getElementsByTagName("div")[1]
+        var result = document.getElementsByTagName("div")[3]
         var modCreator = 0
 
         document.getElementsByTagName("script")[0].remove()
@@ -341,7 +357,10 @@
         })
         document.getElementsByTagName("button")[3].addEventListener("click", createNewThing)
         document.getElementsByTagName("button")[4].addEventListener("click", deleteThing)
-        document.getElementsByTagName("button")[5].addEventListener("click", updateThing)
+        document.getElementsByTagName("button")[5].addEventListener("click", function () {
+            updateScript()
+            generateScript()
+        })
         document.getElementsByTagName("button")[6].addEventListener("click", importScript)
         input.addEventListener("input", changeFunc)
         select.addEventListener("change", changeFunc)
@@ -366,7 +385,7 @@
             var inputValue = input.value.trim()
             var val = selectDebug.selectedIndex - 1
             var categorySingular = category === "policies" ? "policy" : category.slice(0, category.length - 1)
-            document.getElementsByTagName("button")[3].textContent = newData[category] ? "Create a new " + categorySingular : (categorySingular === "achievement" ? "You are unable to create an " : "You are unable to create a ") + categorySingular + " with the mod creator."
+            document.getElementsByTagName("button")[3].textContent = ["techs", "units", "resources", "traits"].includes(category) ? "Create a new " + categorySingular : (categorySingular === "achievement" ? "You are unable to create an " : "You are unable to create a ") + categorySingular + " with the mod creator."
             if (val > 0) {
                 var itemsToSearch = val === 1 ? ["name", "displayName", "visible", "icon", "civ", "special", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "tutorialMesg", "chance", "id"] : ["name", "displayName", "type", "tier", "visible", "icon", "civ", "special", "plural", "names", "goods", "res", "mult", "image", "ocean", "score", "desc", "hidden", "category", "startWith", "colorGood", "colorBad", "fractional", "turnToByContext", "meta", "tick", "getDisplayAmount", "getIcon", "partOf", "subRes", "wonder", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "modes", "gizmos", "limitPer", "upkeep", "startMode", "effectsOff", "effects", "tutorialMesg", "chance", "id", "mod", "precededBy", "leadsTo"]
                 var text = []
@@ -1004,21 +1023,31 @@
             lands: ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"],
             goods: ["name", "displayName", "desc", "res", "icon", "mult"],
             resources: ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"],
-            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"],
+            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"],
             policies: ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"],
-            techs: ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"],
-            traits: ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req"]
+            techs: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"],
+            traits: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req"]
         }
-        var newData = { techs: [], units: [], resources: [], traits: [] }
+        var newData = { modData: ["Mod Name", "Author", "Description of the mod.", '{ myCustomIcon:"about:blank" }'], knows: [], units: [], resources: [] }
         var selectedID = -1
         var selectedType = null
         function createNewThing() {
+            updateScript()
             var c = select.value
-            var category = newData[select.value]
+            document.getElementsByTagName("button")[4].textContent = "Delete this " + c.slice(0, c.length - 1)
+            var category = null
+            if (c === "techs" || c === "traits") {
+                category = newData["knows"]
+            } else {
+                category = newData[select.value]
+            }
             if (category != null) {
                 var categorySingular = c.slice(0, c.length - 1)
                 var len = category.length
                 var obj = c === "resources" ? { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0] } : { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0], cost: { "insight": 1 }, req: { "tribalism": true } }
+                if (c === "traits") {
+                    obj.trait = 1
+                }
                 category.push(obj)
                 selectedID = len
                 selectedType = c
@@ -1029,14 +1058,14 @@
                     var input = inputs[i]
                     var val = obj[input]
                     var elem = document.createElement("input")
-                    elem.placeholder = civ1Object.descriptions[input]
+                    elem.placeholder = civ1Object.descriptions[input] + "."
                     var parsed = parseIfObj(val)
                     if (parsed != null) {
                         elem.value = parseIfObj(val)
                     }
                     fragment.appendChild(elem)
                 }
-                var span = document.getElementsByTagName("span")[2]
+                var span = document.getElementsByTagName("span")[3]
                 span.textContent = ""
                 span.appendChild(fragment)
                 generateScript()
@@ -1045,52 +1074,83 @@
 
         function deleteThing() {
             if (selectedID !== -1) {
-                newData[selectedType].pop()
+                if (selectedType === "techs" || selectedType === "traits") {
+                    newData.knows.pop()
+                } else {
+                    newData[selectedType].pop()
+                }
+                selectedID--
+                if (selectedID === -1) {
+                    if (newData.knows.length !== 0) {
+                        selectedType = "techs"
+                        selectedID = newData.knows.length - 1
+                    } else if (newData.units.length !== 0) {
+                        selectedType = "units"
+                        selectedID = newData.units.length - 1
+                    } else if (newData.resources.length !== 0) {
+                        selectedType = "resources"
+                        selectedID = newData.resources.length - 1
+                    } else {
+                        document.getElementsByTagName("button")[4].textContent = "There is nothing to delete."
+                        updateScript()
+                        generateScript()
+                        return
+                    }
+                }
+                if (selectedType === "techs" || selectedType === "traits") {
+                    var nextIsTrait = newData.knows[newData.knows.length - 1].trait
+                    document.getElementsByTagName("button")[4].textContent = nextIsTrait ? "Delete this trait" : "Delete this tech"
+                    selectedType = nextIsTrait ? "traits" : "techs"
+                } else {
+                    document.getElementsByTagName("button")[4].textContent = "Delete this " + selectedType.slice(0, selectedType.length - 1)
+                }
+                updateScript()
                 generateScript()
             }
         }
 
-        function updateThing() {
-            if (selectedID === -1) {
-                return
-            }
-            var tech = newData[selectedType][selectedID]
-            if (!tech) {
-                tech = newData[selectedType].push(selectedType === "resources" ? { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0] } : { name: "new " + categorySingular, displayName: "New " + categorySingular, icon: [0, 0], cost: { "insight": 1 }, req: { "tribalism": true } })
-            }
-            var keys = inputsToUse[selectedType]
-            var inputs = document.getElementsByTagName("span")[2].children
-            for (var i = 0; i < inputs.length; i++) {
-                var val = inputs[i].value.trim()
-                var key = keys[i]
-                if (val.length !== 0) {
-                    tech[key] = convertIfObj(val)
-                } else if (tech[key]) {
-                    delete tech[key]
+        function updateScript() {
+            var inputs = document.getElementsByTagName("input")
+            newData.modData = [inputs[2].value, inputs[3].value, inputs[4].value, inputs[5].value]
+            if (selectedID !== -1) {
+                var tech = (selectedType === "techs" || selectedType === "traits" ? newData.knows : newData[selectedType])[selectedID]
+                var keys = inputsToUse[selectedType]
+                var inputs = document.getElementsByTagName("span")[3].children
+                for (var i = 0; i < inputs.length; i++) {
+                    var val = inputs[i].value.trim()
+                    var key = keys[i]
+                    if (val.length !== 0) {
+                        tech[key] = convertIfObj(val)
+                    } else if (tech[key]) {
+                        delete tech[key]
+                    }
                 }
             }
-            generateScript()
         }
 
         function generateScript() {
             var script = ""
-            var things = newData.techs
+            var things = newData.knows
             for (var i = 0; i < things.length; i++) {
-                script += "\r\nnew G.Tech(" + JSON.stringify(things[i]) + ")"
+                var thing = things[i]
+                if (thing.trait) {
+                    delete thing.trait
+                    script += "\r\n    new G.Trait(" + JSON.stringify(things[i]) + ")"
+                    thing.trait = 1
+                } else {
+                    script += "\r\n    new G.Tech(" + JSON.stringify(things[i]) + ")"
+                }
             }
             var things = newData.units
             for (var i = 0; i < things.length; i++) {
-                script += "\r\nnew G.Unit(" + JSON.stringify(things[i]) + ")"
+                script += "\r\n    new G.Unit(" + JSON.stringify(things[i]) + ")"
             }
             var things = newData.resources
             for (var i = 0; i < things.length; i++) {
-                script += "\r\nnew G.Res(" + JSON.stringify(things[i]) + ")"
+                script += "\r\n    new G.Res(" + JSON.stringify(things[i]) + ")"
             }
-            var things = newData.traits
-            for (var i = 0; i < things.length; i++) {
-                script += "\r\nnew G.Trait(" + JSON.stringify(things[i]) + ")"
-            }
-            document.getElementsByTagName("textarea")[0].value = "// " + JSON.stringify(newData) + "\r\n" + script
+            var modData = newData.modData
+            document.getElementsByTagName("textarea")[0].value = "// " + JSON.stringify(newData) + "\r\n" + 'G.AddData({\r\n  name: "' + modData[0] + '",\r\n  author: "' + modData[1] + '",\r\n  desc: "' + modData[2] + '",\r\n  engineVersion: 1,\r\n  sheets: ' + modData[3] + ',\r\n  func: function () {' + (script.length === 0 ? "\r\n    // No function yet" : script) + "\r\n  }\r\n})"
         }
 
         function importScript() {
@@ -1102,21 +1162,30 @@
             } else {
                 value = value.trim()
             }
-            value = JSON.parse(value.slice(0, 2) === "//" ? value.slice(2) : value)
-            console.warn("Tried to import:", value)
+            newData = JSON.parse(value.slice(0, 2) === "//" ? value.slice(2) : value)
+            updateScript()
+            generateScript()
         }
 
         function parseIfObj(val) {
             // JSON destringer
-            return val && typeof val === "object" ? JSON.stringify(val).replace(/"([^"]+)":/g, "$1:").replace("{", "{ ").replace("}", " }") : val
+            return val && typeof val === "object" ? stringifyObj(val) : val
         }
 
         function convertIfObj(val) {
             try {
-                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? JSON.parse(val.replace(/(\w+):/g, '"$1":')) : val
+                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? parseObj(val) : val
             } catch (e) {
                 return val
             }
+        }
+
+        function stringifyObj(val) {
+            return JSON.stringify(val).replace(/"([^"]+)":/g, "$1:").replace("{", "{ ").replace("}", " }")
+        }
+
+        function parseObj(val) {
+            return JSON.parse(val.replace(/(\w+):/g, '"$1":'))
         }
 
         changeFunc()

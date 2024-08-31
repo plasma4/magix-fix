@@ -64,7 +64,7 @@ function getGameJSON(objectMode) {
             getIcon: "Gets how the thing is displayed; is a function",
             partOf: "What this resource is considered a part of, not the category displayed",
             subRes: "The subresources of a specific resource, if it exists",
-            wonder: "The identifier of the achievment to gain upon completing the wonder",
+            wonder: "The identifier of the achievment to gain upon completing the wonder if the unit is a wonder",
             wideIcon: "The wide icon for a wonder",
             threexthreeIcon: "The large three-by-three icon of a seasonal wonder",
             cost: "How much the thing costs to get",
