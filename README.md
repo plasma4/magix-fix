@@ -40,7 +40,7 @@ This offline version of Magix...
 - Has ALL sprites and files needed for both the base game and Magix pre-downloaded
 - Some options for when you exit the page, such as autosaving or confirming if you want to leave or not
 
-<sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html).</sup>
+<sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html). You are even able to **create** your own mods from there, so check it out!</sup>
 
 ### Alternate links for Magix
 Want a few other links for loading Magix? Try some of these:
