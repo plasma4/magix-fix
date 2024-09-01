@@ -727,7 +727,7 @@
                 } else if (type === "mult") {
                     info = "has its production rate multiplied by " + effect.value
                 } else if (type === "addFree" && effect.what.worker) {
-                    info = "each idle " + parseRes(obj, ["worker"]) + " will work at " + (effect.what.worker * 100) + "% the speed of this unit"
+                    info = "each idle worker will work at " + (effect.what.worker * 100) + "% the speed of this unit for free"
                 }
                 if (req && Object.getOwnPropertyNames(req).length !== 0) {
                     info += " if you have " + parseReq(obj, req)
