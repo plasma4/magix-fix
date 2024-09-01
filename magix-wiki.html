@@ -222,6 +222,10 @@
             margin-bottom: 90px;
         }
 
+        .shadow {
+            filter: drop-shadow(0 3px 3px black);
+        }
+
         .noclick {
             border-radius: 1px;
             cursor: default;
@@ -530,14 +534,14 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? "" : 'Icon layout: <div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? "" : 'Icon layout: <div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
                     if (t.wideIcon) {
                         var icon = getIcon(t.wideIcon, true, civ2)
-                        text += '<div class="wide noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                        text += '<div class="wide noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                     }
                     if (t.threexthreeIcon) {
                         var icon = getIcon(t.threexthreeIcon, true, civ2)
-                        text += '<div class="triple noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br><br><br><br><br><br>'
+                        text += '<div class="triple noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br><br><br><br><br><br>'
                     }
 
                     if (t.icon.length > 3) {
@@ -546,12 +550,12 @@
                             var value = tIcon[l]
                             if (typeof value === "string") {
                                 icon = getIcon([i0, i1, value], true, civ2)
-                                text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                                text += '<div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                                 i0 = null
                                 i1 = null
                             } else if (i1 != null) {
                                 icon = getIcon([i0, i1], true, civ2)
-                                text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                                text += '<div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                                 i0 = value
                                 i1 = null
                             } else if (i0 !== null) {
@@ -562,7 +566,7 @@
                         }
                         if (i1 !== null) {
                             icon = getIcon([i0, i1], true, civ2)
-                            text += '<div class="icon noclick" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
+                            text += '<div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
                     }
                     text += "<br>Raw name: " + t.name + "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.precededBy && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id

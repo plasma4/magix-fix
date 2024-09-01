@@ -24,7 +24,6 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /////////
 ///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiarism will be punished. Copyright: 2020
 //===========================
-
 // Detect invalid mods
 if (window.magixLoaded === 1 && !window.skipModCheck) {
     window.magixLoaded = 2
@@ -6429,7 +6428,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', amount: 2, max: 4 },
                     { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } },
                     { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 'herbalism': false } },//To keep early game possible
-                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 't7': true } },//Herbalism
+                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 't7': true } },//For the trial
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
                     { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3, req: { 'drought': false } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'drought': true } },
@@ -9361,17 +9360,17 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'culture': 500 }, into: { 'culture II': 1 }, every: 10, mode: 'culture', req: { 'essential conversion tank overclock I': false } },
                     { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 10, mode: 'faith', req: { 'essential conversion tank overclock I': false } },
                     { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 10, mode: 'influence', req: { 'essential conversion tank overclock I': false } },
-                    { type: 'convert', from: { 'insight': 500 }, into: { 'insight II': 1 }, every: 9, mode: 'insight', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
-                    { type: 'convert', from: { 'culture': 500 }, into: { 'culture II': 1 }, every: 9, mode: 'culture', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
-                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 9, mode: 'faith', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
-                    { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 9, mode: 'influence', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
+                    { type: 'convert', from: { 'insight': 500 }, into: { 'insight II': 1 }, every: 9, mode: 'insight', req: { 'essential conversion tank overclock I': true } },
+                    { type: 'convert', from: { 'culture': 500 }, into: { 'culture II': 1 }, every: 9, mode: 'culture', req: { 'essential conversion tank overclock I': true } },
+                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 9, mode: 'faith', req: { 'essential conversion tank overclock I': true } },
+                    { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 9, mode: 'influence', req: { 'essential conversion tank overclock I': true } },
                     { type: 'convert', from: { 'insight': 550 }, into: { 'insight II': 1.5 }, every: 9, mode: 'insight', req: { 'smartness of essentials': true } },
                     { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true } },
-                    { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true, 'people of the arts II': false } },
                     { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true } },
-                    { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.26 }, every: 9, mode: 'culture', req: { 'people of the arts II': true } },
-                    { type: 'mult', value: 1.2, req: { 'leaves of wisdom': true } },
-                    { type: 'mult', value: 1.2, req: { 'branches of wisdom': true } },
+                    { type: 'convert', from: { 'influence': 550 }, into: { 'influence II': 1.2 }, every: 9, mode: 'influence', req: { 'smartness of essentials': true } },
+                    { type: 'mult', value: 1.5, req: { 'people of the arts II': true }, mode: 'culture' },
+                    { type: 'mult', value: 1.25, req: { 'leaves of wisdom': true } },
+                    { type: 'mult', value: 1.25, req: { 'branches of wisdom': true } },
                 ]
             });
             new G.Unit({
@@ -12627,11 +12626,6 @@ if (getObj("civ") != "1") {
                 chance: 200,
                 req: { 'belief in revenants': true, 'ritual necrophagy': true },
                 effects: [
-                    {
-                        type: 'function', func: function () {
-                            G.gain('wild corpse', 1)
-                        }
-                    }
                 ]
             });
             new G.Trait({
@@ -13520,7 +13514,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'essential conversion tank overclock I',
                 displayName: 'Essential conversion overclocking', category: 'upgrade',
-                desc: '@[essential conversion tank]s will be able to convert essentials 10% more often. People can overclock these tanks to cause conversion to occur even more often!',
+                desc: '@[essential conversion tank]s will be able to convert essentials a little more often. People can overclock these tanks to cause conversion to occur even more often!',
                 icon: [6, 22, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'maths IV': true, 'gt6': true, 'monument-building': true, 'construction': true }
@@ -16590,7 +16584,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'the ancestors call',
                 displayName: 'The call of the Ancestors',
-                desc: '<b>The ancestors...they called your people...to their old world...full of hopes...full of new adventures...in...their...Realm...</b>',
+                desc: 'The <b>ancestors</b>...they called your people...to their old world...full of hopes...full of new adventures...in their very own realm!',
                 icon: [4, 0, 'magixmod'],
                 cost: { 'insight': 650, 'influence': 60, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 175,
@@ -17718,7 +17712,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smartness of essentials', category: 'tech1',
-                desc: '@Your people become smarter, making [essential conversion tank]s 50% faster at creating [insight II] and 20% faster at converting other essentials. @However, [essential conversion tank]s will now require twice as much [mana] for upkeep and now require 550 of the lower tier essential.',
+                desc: '@Your people become smarter, making [essential conversion tank]s produce 50% more [insight II] and 20% more of other essentials. @However, [essential conversion tank]s will now require twice as much [mana] for upkeep and now require 550 of the lower tier essential. //<small>time to use our big brains</small>',
                 icon: [6, 22, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'essential conversion tank overclock I': true },
@@ -18053,7 +18047,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'people of the arts II', category: 'tier1',
-                desc: '@getting this doubles the [culture II] gain from [painter]s @the amount of [culture II] from [essential conversion tank]s is increased by 5% with no extra [culture] needed',
+                desc: '@getting this doubles the [culture II] gain from [painter]s @[essential conversion tank]s produce [culture II] 50% faster',
                 icon: [0, 35, 'magixmod', 11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'culture II': 35 },
                 req: { 'caretaking': true, 'smartness of essentials': true, 'people of the arts': true },
