@@ -8122,7 +8122,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy orchard',
-                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. Gathers falling [ambrosium leaf,Ambrosium leaves].',
+                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. People working at the orchard will gather [ambrosium leaf,Ambrosium leaves] that fall to the ground.',
                 icon: [4, 14, 'magixmod'],
                 cost: { 'basic building materials': 900 },
                 use: { 'land of the Paradise': 50, 'industry point': 5 },
@@ -12690,7 +12690,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'treeplanting',
-                desc: '<font color="#adb">May the existence of orchards begin!</font>',
+                desc: '<font color="#3d5">May the existence of orchards begin!</font>',
                 icon: [8, 12, 6, 1],
                 cost: { 'insight': 250, 'wisdom': 15 },
                 chance: 30,

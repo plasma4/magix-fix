@@ -267,43 +267,197 @@ G.stabilizeResize = function () {
     //if (G.tab.id=='unit') G.cacheUnitBounds();
 }
 
-// Add more numbers
-var numberFormatters =
-    [
-        function rawFormatter(value) { return value % 1 ? Math.floor(value * 1000) / 1000 : value },
-        formatEveryThirdPower([
-            ' thousand',
-            ' million',
-            ' billion',
-            ' trillion',
-            ' quadrillion',
-            ' quintillion',
-            ' sextillion',
-            ' septillion',
-            ' octillion',
-            ' nonillion',
-            ' decillion',
-            ' undecillion',
-            ' duodecillion',
-            ' tredecillion'
-        ]),
-        formatEveryThirdPower([
-            'k',
-            'M',
-            'B',
-            'T',
-            'Qa',
-            'Qi',
-            'Sx',
-            'Sp',
-            'Oc',
-            'No',
-            'Dc',
-            'Ud',
-            'Dd',
-            'Td'
-        ])
-    ];
+G.CreateData = function () {
+    //cleanse all data first
+    G.dict = [];
+    G.res = [];
+    G.resByName = [];
+    G.resCategories = [];
+    G.unit = [];
+    G.unitByName = [];
+    G.unitCategories = [];
+    G.policy = [];
+    G.policyByName = [];
+    G.policyCategories = [];
+    G.know = [];
+    G.knowByName = [];
+    G.knowCategories = [];
+    G.tech = [];
+    G.techByName = [];
+    G.techByTier = {};
+    G.trait = [];
+    G.traitByName = [];
+    G.traitByTier = {};
+    G.goods = [];
+    G.goodsByName = [];
+    G.land = [];
+    G.landByName = [];
+    G.achiev = [];
+    G.achievByName = [];
+    G.achievByTier = [];
+    G.legacyBonuses = [];
+    G.chooseBox = [];
+    G.contextNames = [];
+    G.contextVisibility = [];
+
+    G.funcs = [];//keyed array; store functions tied to hard-coded events in here
+    G.props = [];//keyed array; store anything you want in here
+
+    G.context = 0;
+    G.sheets = {};//icon sheets added by mods
+    //create new data
+    for (var i in G.mods) {
+        G.context = G.mods[i];
+        if (G.mods[i].sheets) {
+            for (var ii in G.mods[i].sheets) {
+                G.sheets[ii] = G.mods[i].sheets[ii];
+            }
+        }
+        G.mods[i].func();
+    }
+    G.context = 0;
+
+    //cache some stuff
+    G.cacheMetaResources();
+
+    var newBonuses = {};
+    for (var i in G.legacyBonuses) {
+        var me = G.legacyBonuses[i];
+        newBonuses[me.id] = me;
+    }
+    G.legacyBonuses = newBonuses;
+
+    for (var i in G.unit) {
+        G.unit[i].modesById = [];
+        var index = 0;
+        for (var ii in G.unit[i].modes) {
+            var mode = G.unit[i].modes[ii];
+            G.unit[i].modesById[index] = mode;
+            mode.id = ii;
+            mode.num = index;
+            mode.use = mode.use || {};
+            index++;
+        }
+    }
+
+    for (var i in G.policy) {
+        G.policy[i].modesById = [];
+        var index = 0;
+        for (var ii in G.policy[i].modes) {
+            var mode = G.policy[i].modes[ii];
+            G.policy[i].modesById[index] = mode;
+            mode.id = ii;
+            mode.num = index;
+            index++;
+        }
+    }
+
+    for (var i in G.know) {
+        var me = G.know[i];
+        me.leadsTo = [];
+        me.precededBy = [];
+    }
+    for (var i in G.know) {
+        var me = G.know[i];
+        for (var ii in me.req) {
+            var req = G.getDict(ii);
+            if (me.req[ii] && req && (req.type == 'tech' || req.type == 'trait')) {
+                G.getKnow(ii).leadsTo.push(me);
+                me.precededBy.push(G.getKnow(ii));
+            }
+            if (!req) console.log('ERROR: ' + me.name + ' has "' + ii + '" as a requirement, but no such thing was found.');
+        }
+    }
+
+    //create tiers
+    var getTier = function (me) {
+        var tier = 0;
+        for (var i in me.req) {
+            var req = G.getDict(i);
+            if (me.req[i] && req && req.type == me.type) {
+                tier = Math.max(tier, req.tier || Math.max(getTier(req)));
+            }
+        }
+        me.tier = tier + 1;
+        return me.tier;
+    }
+    for (var i in G.know) {
+        var me = G.know[i];
+        getTier(me);
+        if (me.type == 'tech') {
+            if (!G.techByTier[me.tier]) G.techByTier[me.tier] = [];
+            G.techByTier[me.tier].push(me);
+        }
+        else if (me.type == 'trait') {
+            if (!G.traitByTier[me.tier]) G.traitByTier[me.tier] = [];
+            G.traitByTier[me.tier].push(me);
+        }
+    }
+
+    //compute combined research costs
+    if (true) {
+        G.techByTier = {};
+        G.traitByTier = {};
+        for (var i in G.know) {
+            var me = G.know[i]; me.tier = 0;
+        }
+        var getAncestors = function (me) {
+            var out = [me];
+            for (var i in me.req) {
+                var req = G.getDict(i);
+                if (me.req[i] && req && req.type == me.type) {
+                    out = out.concat(getAncestors(req));
+                }
+            }
+            return out;
+        }
+        for (var i in G.know) {
+            var me = G.know[i];
+            me.ancestors = getAncestors(me);
+            me.ancestors = me.ancestors.filter(function (elem, index, self) { return index == self.indexOf(elem); })//remove duplicates
+            for (var ii in me.ancestors) {
+                for (var iii in me.ancestors[ii].cost) {
+                    me.tier += me.ancestors[ii].cost[iii];
+                }
+            }
+        }
+        for (var i in G.know) {
+            var me = G.know[i];
+            if (me.type == 'tech') {
+                if (!G.techByTier[me.tier]) G.techByTier[me.tier] = [];
+                G.techByTier[me.tier].push(me);
+            }
+            else if (me.type == 'trait') {
+                if (!G.traitByTier[me.tier]) G.traitByTier[me.tier] = [];
+                G.traitByTier[me.tier].push(me);
+            }
+        }
+    }
+
+
+    for (var i in G.achiev) {
+        var me = G.achiev[i];
+        if (me.fromUnit) {
+            var unit = G.getUnit(me.fromUnit);
+            if (!me.desc) me.desc = unit.desc;
+            if (me.icon[0] == 0 && me.icon[1] == 0) me.icon = unit.icon;
+            if (!me.wideIcon && unit.wideIcon) me.wideIcon = unit.wideIcon;
+        }
+    }
+}
+
+G.getDataAmounts = function () {
+    return 'Data created.\n' +
+        '   - ' + G.res.length + ' resources\n' +
+        '   - ' + G.unit.length + ' units\n' +
+        '   - ' + G.tech.length + ' technologies\n' +
+        '   - ' + G.trait.length + ' cultural traits\n' +
+        '   - ' + G.policy.length + ' policies\n' +
+        '   - ' + G.land.length + ' terrains\n' +
+        '   - ' + G.goods.length + ' terrain goods\n' +
+        '   - ' + G.achiev.length + ' achievements\n' +
+        ''
+}
 
 if (getObj("civ") === null) setObj("civ", 0);
 var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.1' // Version 2.1: 58 sprites
@@ -321,6 +475,44 @@ G.AddData({
         var easterDay = function (Y) { var C = Math.floor(Y / 100); var N = Y - 19 * Math.floor(Y / 19); var K = Math.floor((C - 17) / 25); var I = C - Math.floor(C / 4) - Math.floor((C - K) / 3) + 19 * N + 15; I = I - 30 * Math.floor((I / 30)); I = I - Math.floor(I / 28) * (1 - Math.floor(I / 28) * Math.floor(29 / (I + 1)) * Math.floor((21 - N) / 11)); var J = Y + Math.floor(Y / 4) + I + 2 - C + Math.floor(C / 4); J = J - 7 * Math.floor(J / 7); var L = I - J; var M = 3 + Math.floor((L + 40) / 44); var D = L + 28 - 31 * Math.floor(M / 4); return new Date(Y, M - 1, D); }(yer);
         easterDay = Math.floor((easterDay - new Date(easterDay.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
         ///
+
+        // Add more numbers
+        var numberFormatters =
+            [
+                function rawFormatter(value) { return value % 1 ? Math.floor(value * 1000) / 1000 : value },
+                formatEveryThirdPower([
+                    ' thousand',
+                    ' million',
+                    ' billion',
+                    ' trillion',
+                    ' quadrillion',
+                    ' quintillion',
+                    ' sextillion',
+                    ' septillion',
+                    ' octillion',
+                    ' nonillion',
+                    ' decillion',
+                    ' undecillion',
+                    ' duodecillion',
+                    ' tredecillion'
+                ]),
+                formatEveryThirdPower([
+                    'k',
+                    'M',
+                    'B',
+                    'T',
+                    'Qa',
+                    'Qi',
+                    'Sx',
+                    'Sp',
+                    'Oc',
+                    'No',
+                    'Dc',
+                    'Ud',
+                    'Dd',
+                    'Td'
+                ])
+            ];
 
 
         G.PARTY = 0;
@@ -711,115 +903,110 @@ G.AddData({
             G.addCallbacks();
 
             var str = '';
-            /* if (G.getSetting('tieredDisplay'))
-             {
-                 //tiered display
-                 for (var i in G.techByTier)
-                 {
-                     str+='<div><div style="width:32px;height:52px;display:inline-block;"><div class="fullCenteredOuter"><div class="fullCenteredInner fancyText bitBiggerText">'+i+'</div></div></div>';
-                     for (var ii in G.techByTier[i])
-                     {
-                         var me=G.techByTier[i][ii];
-                         str+='<div class="tech thing'+G.getIconClasses(me)+''+(G.has(me.name)?'':' off')+'" id="tech-'+me.id+'">'+
-                             G.getIconStr(me,'tech-icon-'+me.id)+
-                             '<div class="overlay" id="tech-over-'+me.id+'"></div>'+
-                         '</div>';
-                     }
-                     str+='</div>';
-                 }
-                 l('techBox').innerHTML=str;
-                 for (var i in G.techByTier)
-                 {
-                     for (var ii in G.techByTier[i])
-                     {
-                         var me=G.techByTier[i][ii];
-                         var div=l('tech-'+me.id);if (div) me.l=div; else me.l=0;
-                         var div=l('tech-icon-'+me.id);if (div) me.lIcon=div; else me.lIcon=0;
-                         var div=l('tech-over-'+me.id);if (div) me.lOver=div; else me.lOver=0;
-                         G.addTooltip(me.l,function(what){return function(){return G.getKnowTooltip(what)};}(me),{offY:-8});
-                         if (me.l) me.l.onclick=function(what){return function(){
-                             //G.clickTech(what);
-                             for (var i in G.tech)
-                             {
-                                 //highlight ancestors and descendants of the tech
-                                 if (what.ancestors.includes(G.tech[i])) l('tech-'+G.tech[i].id).classList.add('highlit');
-                                 else l('tech-'+G.tech[i].id).classList.remove('highlit');
-                                 if (G.tech[i].ancestors.includes(what) && G.tech[i]!=what) l('tech-'+G.tech[i].id).classList.add('highlitAlt');
-                                 else l('tech-'+G.tech[i].id).classList.remove('highlitAlt');
-                                 G.tooltip.close();
-                             }
-                         };}(me);
-                     }
-                 }
-             }
-             else
-             {*/
-            var len = G.techsOwned.length;
-            var miscTechs = [];
+            if (G.getSetting('tieredDisplay')) { // idk why this was commented out
+                //tiered display
+                for (var i in G.techByTier) {
+                    str += '<div><div style="width:32px;height:52px;display:inline-block;"><div class="fullCenteredOuter"><div class="fullCenteredInner fancyText bitBiggerText">' + i + '</div></div></div>&nbsp;&nbsp;&nbsp;&nbsp;';
+                    for (var ii in G.techByTier[i]) {
+                        var me = G.techByTier[i][ii];
+                        str += '<div class="tech thing' + G.getIconClasses(me) + '' + (G.has(me.name) ? '' : ' off') + '" id="tech-' + me.id + '">' +
+                            G.getIconStr(me, 'tech-icon-' + me.id) +
+                            '<div class="overlay" id="tech-over-' + me.id + '"></div>' +
+                            '</div>';
+                    }
+                    str += '</div>';
+                }
+                l('techBox').innerHTML = str;
+                for (var i in G.techByTier) {
+                    for (var ii in G.techByTier[i]) {
+                        var me = G.techByTier[i][ii];
+                        var div = l('tech-' + me.id); if (div) me.l = div; else me.l = 0;
+                        var div = l('tech-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
+                        var div = l('tech-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
+                        G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me), { offY: -8 });
+                        if (me.l) me.l.onclick = function (what) {
+                            return function () {
+                                //G.clickTech(what);
+                                for (var i in G.tech) {
+                                    //highlight ancestors and descendants of the tech
+                                    if (what.ancestors.includes(G.tech[i])) l('tech-' + G.tech[i].id).classList.add('highlit');
+                                    else l('tech-' + G.tech[i].id).classList.remove('highlit');
+                                    if (G.tech[i].ancestors.includes(what) && G.tech[i] != what) l('tech-' + G.tech[i].id).classList.add('highlitAlt');
+                                    else l('tech-' + G.tech[i].id).classList.remove('highlitAlt');
+                                    G.tooltip.close();
+                                }
+                            };
+                        }(me);
+                    }
+                }
+            } else {
+                var len = G.techsOwned.length;
+                var miscTechs = [];
 
-            for (var i = 0; i < len; i++) {
-                var me = G.techsOwned[i];
-                if (me.tech.category == 'misc') miscTechs.push(me);
-                if (me.tech.category != 'misc') {
+                for (var i = 0; i < len; i++) {
+                    var me = G.techsOwned[i];
+                    if (me.tech.category == 'misc') miscTechs.push(me);
+                    if (me.tech.category != 'misc') {
+                        str += '<div class="tech thing' + G.getIconClasses(me.tech) + '" id="tech-' + me.id + '">' +
+                            G.getIconStr(me.tech, 'tech-icon-' + me.id) +
+                            '<div class="overlay" id="tech-over-' + me.id + '"></div>' +
+                            '</div>';
+                    }
+                }
+                var len = G.traitsOwned.length;
+                var knows = [];
+
+                for (var i = 0; i < len; i++) {
+                    var me = G.traitsOwned[i];
+                    if (me.trait.category == 'knowledge') {
+                        knows.push(me);
+                    }
+                }
+                G.miscTechN = miscTechs.length;
+                G.knowN = knows.length;
+                for (var i in knows) {
+                    if (i == 0) {
+                        str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
+                            'Knowledges' +
+                            '</div></div>(in other words, technologies that act like <u>traits</u>)<div id="traitBox" class="thingBox"></div></div></div></div>';
+                    }
+                    var me = knows[i];
+                    str += '<div class="trait thing' + G.getIconClasses(me.trait) + '" id="trait-' + me.id + '">' +
+                        G.getIconStr(me.trait, 'trait-icon-' + me.id) +
+                        '<div class="overlay" id="trait-over-' + me.id + '"></div>' +
+                        '</div>';
+                }
+                for (var i in miscTechs) {
+                    if (i == 0) {
+                        str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
+                            'Starter upgrades/Miscellaneous' +
+                            '</div></div>(do not count towards your total researches)<div id="techBox" class="thingBox"></div></div></div></div>';
+                    }
+                    var me = miscTechs[i];
                     str += '<div class="tech thing' + G.getIconClasses(me.tech) + '" id="tech-' + me.id + '">' +
                         G.getIconStr(me.tech, 'tech-icon-' + me.id) +
                         '<div class="overlay" id="tech-over-' + me.id + '"></div>' +
                         '</div>';
                 }
-            }
-            var len = G.traitsOwned.length;
-            var knows = [];
-
-            for (var i = 0; i < len; i++) {
-                var me = G.traitsOwned[i];
-                if (me.trait.category == 'knowledge') {
-                    knows.push(me);
+                l('techBox').innerHTML = str;
+                var len = G.techsOwned.length;
+                for (var i = 0; i < len; i++) {
+                    var me = G.techsOwned[i];
+                    var div = l('tech-' + me.id); if (div) me.l = div; else me.l = 0;
+                    var div = l('tech-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
+                    var div = l('tech-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
+                    G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.tech), { offY: -8 });
+                    if (me.l) me.l.onclick = function (what) { return function () { G.clickTech(what); }; }(me);
                 }
-            }
-            G.miscTechN = miscTechs.length;
-            G.knowN = knows.length;
-            for (var i in knows) {
-                if (i == 0) {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
-                        'Knowledges' +
-                        '</div></div>(in other words, technologies that act like <u>traits</u>)<div id="traitBox" class="thingBox"></div></div></div></div>';
+                var len = G.traitsOwned.length;
+                for (var i = 0; i < len; i++) {
+                    var me = G.traitsOwned[i];
+                    var div = l('trait-' + me.id); if (div) me.l = div; else me.l = 0;
+                    var div = l('trait-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
+                    var div = l('trait-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
+                    G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.trait), { offY: -8 });
+                    if (me.l) me.l.onclick = function (what) { return function () { G.clickTrait(what); }; }(me);
                 }
-                var me = knows[i];
-                str += '<div class="trait thing' + G.getIconClasses(me.trait) + '" id="trait-' + me.id + '">' +
-                    G.getIconStr(me.trait, 'trait-icon-' + me.id) +
-                    '<div class="overlay" id="trait-over-' + me.id + '"></div>' +
-                    '</div>';
-            }
-            for (var i in miscTechs) {
-                if (i == 0) {
-                    str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">' +
-                        'Starter upgrades/Miscellaneous' +
-                        '</div></div>(do not count towards your total researches)<div id="techBox" class="thingBox"></div></div></div></div>';
-                }
-                var me = miscTechs[i];
-                str += '<div class="tech thing' + G.getIconClasses(me.tech) + '" id="tech-' + me.id + '">' +
-                    G.getIconStr(me.tech, 'tech-icon-' + me.id) +
-                    '<div class="overlay" id="tech-over-' + me.id + '"></div>' +
-                    '</div>';
-            }
-            l('techBox').innerHTML = str;
-            var len = G.techsOwned.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.techsOwned[i];
-                var div = l('tech-' + me.id); if (div) me.l = div; else me.l = 0;
-                var div = l('tech-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
-                var div = l('tech-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
-                G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.tech), { offY: -8 });
-                if (me.l) me.l.onclick = function (what) { return function () { G.clickTech(what); }; }(me);
-            }
-            var len = G.traitsOwned.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.traitsOwned[i];
-                var div = l('trait-' + me.id); if (div) me.l = div; else me.l = 0;
-                var div = l('trait-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
-                var div = l('trait-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
-                G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.trait), { offY: -8 });
-                if (me.l) me.l.onclick = function (what) { return function () { G.clickTrait(what); }; }(me);
             }
         }
         G.draw['tech']();
@@ -3796,7 +3983,7 @@ G.AddData({
                     }
                 }) +
                 G.writeSettingButton({ id: 'showAllRes', name: 'showAllRes', text: '<font color="aqua">Show resources</font>', tooltip: 'Toggle whether all resources should be visible.' }) +
-                //G.writeSettingButton({id:'tieredDisplay',name:'tieredDisplay',text:'<font color="yellow">Show tiers</font>',tooltip:'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>When in that mode, click a tech to highlight its ancestors and descendants.'})+
+                // G.writeSettingButton({ id: 'tieredDisplay', name: 'tieredDisplay', text: '<font color="yellow">Show tiers</font>', tooltip: 'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>While active, you can click a tech to highlight its ancestors and descendants.' }) +
                 '<br>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
                 G.button({ text: '<font color="#e28">Party</font>', tooltip: 'Add some color to your gameplay!', onclick: function () { G.PARTY = G.PARTY == 0 ? 1 : 0 } }) +
