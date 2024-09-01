@@ -2057,7 +2057,7 @@ if (getObj("civ") != "1") {
                                 '</div></div>'
                         })
                     }
-                    if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if dark decay occured IMMEDIATELY
+                    if (G.has('t8') && G.year > 2) { //it'd be nearly impossible if dark decay occurred IMMEDIATELY
                         var lostHousing = Math.ceil(G.getRes('housing').amount * 0.03) + 1;
                         var lostPeople = Math.ceil(G.getRes('population').amount * 0.02 + 0.2 * Math.min(Math.pow(G.year, 1.3), 20 + Math.pow(G.year, 1.1) * 0.15) * (0.2 + Math.random())) + 1; //the wonder takes a while to build, so we can't have the exponents too large
                         var lostLand = Math.floor(G.getRes('land').amount * 0.016 + 0.8);
@@ -6877,7 +6877,8 @@ if (getObj("civ") != "1") {
                 //require:{'worker':2,'stone tools':2},
                 //upkeep:{'food':0.2},
                 effects: [
-                    { type: 'gather', what: { 'water': 20 } },
+                    { type: 'gather', what: { 'water': 15 } },
+                    { type: 'gather', what: { 'water': 5 }, chance: 0.4 },
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
@@ -23782,7 +23783,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'well',
-                desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable water.',
+                desc: '@produces 20 fresh [water] each day<>The [well] is a steady source of drinkable water.',
                 icon: [25, 3, 'c2'],
                 cost: { 'stone': 50, 'archaic building materials': 20 },
                 use: { 'land': 1 },
