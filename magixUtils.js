@@ -5571,7 +5571,7 @@ G.AddData({
                             }
                             else if (me.type == 'portal') {
                                 str += '<div class="fancyText par">Portal activated</div>';
-                                str += '<div class="fancyText par">Now you can unlock new things, discover new stuff and many more.</div>';
+                                str += '<div class="fancyText par">Now you can unlock new things, discover new content, and much more!</div>';
                                 '</div>';
                             }
                             else {

@@ -612,7 +612,7 @@
                     }
                     c = t.startWith
                     if (c) {
-                        text += "<br>Is avaliable at the start: yes"
+                        text += t.startWith === true ? "<br>Is avaliable at the start: yes" : "<br>Amount given at the start: " + c
                     }
                     c = t.skip || (t.req && (t.req.tribalism === false))
                     if (c) {
@@ -1027,7 +1027,7 @@
             lands: ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"],
             goods: ["name", "displayName", "desc", "res", "icon", "mult"],
             resources: ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"],
-            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"],
+            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"],
             policies: ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"],
             techs: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"],
             traits: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req"]

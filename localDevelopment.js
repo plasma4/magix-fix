@@ -29,7 +29,7 @@ function getGameJSON(objectMode) {
         lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
         resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf"]),
-        units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"]),
+        units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"]),
         policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
         techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
         traits: extractObject(G.trait, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req"]),

@@ -3182,7 +3182,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wounded',
-                desc: '[adult,People] may get [wounded,wounded] due to work injuries, or from war. They do not [worker,work], but may slowly get better over time.',
+                desc: '[adult,People] may get [wounded,wounded] due to work injuries. They do not [worker,work], but may slowly get better over time.',
                 partOf: 'population',
                 icon: [7, 3],
                 colorBad: 'lime', colorGood: '#f44'
@@ -8712,7 +8712,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'church',
-                desc: 'Generates [faith], but slower than [soothsayer]. Further religion improvements may change it.',
+                desc: 'Generates [faith] slowly. Further religion improvements may change it!',
                 icon: [6, 3, 'magixmod'],
                 cost: { 'basic building materials': 2000, 'precious building materials': 20 },
                 upkeep: { 'faith': 0.001 },
@@ -8863,7 +8863,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'mine of the plain island',
                 displayName: 'Mine of the Island',
-                desc: 'Can mine new resources such as [cobalt ore]. They will be able to mine few other resources.',
+                desc: 'These mines are able to gather various ores, in particular, [cobalt ore]. They will be able to mine few other resources.',
                 icon: [9, 2, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 use: { 'land of the Plain Island': 5 },
@@ -8972,7 +8972,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'hardened house',
-                desc: '@provides 18 [housing]. Bigger, made with hardened materials. Has lower chances to waste.',
+                desc: '@provides 18 [housing]. These houses are larger and will have a significantly decreased chance to waste.',
                 icon: [6, 6, 'magixmod', 4, 6, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'glass': 5 },
                 use: { 'land of the Plain Island': 1 },
@@ -9004,7 +9004,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'terrain conservator',
-                desc: '@A hired [terrain conservator] will convert 25 [land of the Plain Island] into 25 [alchemy zone]s.',
+                desc: 'Each [terrain conservator] will convert 25 [land of the Plain Island] into 25 [alchemy zone]s for your alchemists to use.',
                 icon: [17, 6, 'magixmod'],
                 gizmos: true,
                 modes: {
@@ -9048,7 +9048,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'paradise blacksmith workshop',
-                desc: '@forges metal goods out of ingots<>The [paradise blacksmith workshop,Blacksmith] takes the same pride in shaping the tool that tills as they do the sword that slays.',
+                desc: '@forges metal goods out of ingots<>This [paradise blacksmith workshop,Blacksmith] takes the same pride in shaping the tool that tills as they do the sword that slays.',
                 icon: [19, 14, 'magixmod', 20, 14, 'magixmod'],
                 cost: { 'basic building materials': 150 },
                 use: { 'land of the Paradise': 1, 'industry point': 1 },
@@ -9111,7 +9111,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'alcohol brewing stand',
-                desc: '[alchemist]s can brew [alcohol brews,Alcohol] here. These drinks are harmful for [health] but may be needed to make potions!',
+                desc: '[alchemist]s can brew [alcohol brews,Alcohol] here. These drinks will harm your people\'s [health] but may be needed to make potions!',
                 icon: [19, 9, 'magixmod'],
                 cost: { 'basic building materials': 4 },
                 req: { 'alchemy': true, 'alcohol brewing': true },
@@ -9124,7 +9124,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mana crafting stand',
-                desc: 'Here, [alchemist]s can craft [mana] with the same recipe that your [mana maker] learned.',
+                desc: 'Here, [alchemist]s can craft [mana] with the same recipe that your [mana maker]s discovered.',
                 icon: [19, 10, 'magixmod'],
                 cost: { 'basic building materials': 4 },
                 upkeep: { 'water': 0.25 },
@@ -9139,7 +9139,7 @@ if (getObj("civ") != "1") {
                 category: 'alchemy',
             });
             new G.Unit({
-                name: 'alcohol drinks brewing stand',
+                name: 'alcohol drink brewing stand',
                 desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,Alcohol], which are tasty but will harm [health]. This stand will be able to craft either [wine] or [pot of vodka].',
                 icon: [19, 8, 'magixmod'],
                 cost: { 'basic building materials': 4.3 },
@@ -9148,7 +9148,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'wine': { name: 'Craft wine at this stand', icon: [8, 10, 'magixmod'], desc: 'At this stand you may craft [wine], an [alcohol brews,Alcohol].', use: { 'alchemist': 1 } },
-                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, 'magixmod'], desc: 'At this stand you may craft [pot of vodka,Vodka], an [alcohol brews,Alcohol]. This drink is very harmful for [health], so take care of the [health] of your people.', use: { 'alchemist': 1 } },
+                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, 'magixmod'], desc: 'At this stand you may craft [pot of vodka,Vodka], an [alcohol brews,Alcohol]. This drink harms [health] a lot, so take care of the [health] of your people.', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'fruit': 0.6, 'sweet water pot': 0.25 }, into: { 'wine': 1 }, every: 4, mode: 'wine' },
@@ -9159,7 +9159,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'medicament brewing stand',
-                desc: 'There [alchemist]s can brew healthy syrups that may heal [sick,sick people] and cure other diseases. Not so tasty, but good for everyone\'s [health]. You can craft [herb syrup], [essenced herb syrup], and [antidotum] here.',
+                desc: 'There [alchemist]s can brew healthy syrups that may heal [sick,sick people] and cure other diseases. Not very tasty, but good for everyone\'s [health]. You can craft [herb syrup], [essenced herb syrup], and [antidotum] here.',
                 icon: [19, 5, 'magixmod'],
                 cost: { 'basic building materials': 4.3 },
                 req: { 'alchemy': true, 'medicaments brewing': true },
@@ -9207,7 +9207,6 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'florist',
-                startWith: 0,
                 desc: '@a subclass of [gatherer]s that collect [flowers] @has its use in both healing and painting',
                 icon: [7, 11, 'magixmod'],
                 cost: {},
@@ -9266,7 +9265,7 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 //upkeep:{'food':0.2},
                 modes: {
-                    'sugar': { name: 'Extract sugar out of cane', icon: [15, 2, 'magixmod'], desc: 'This artisan will only extract [sugar] out of [sugar cane]. At least he will craft needed ingredient of tasty [juices].', use: { 'worker': 1 } },
+                    'sugar': { name: 'Extract sugar from sugar cane', icon: [15, 2, 'magixmod'], desc: 'This artisan will only extract [sugar] out of [sugar cane]. At least he will craft needed ingredient of tasty [juices].', use: { 'worker': 1 } },
                     'juicesF': { name: 'Craft juices out of fruits', icon: [14, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [fruit]s, [sugar] and [water]. They have a good taste. <b>:></b>', use: { 'worker': 1 } },
                     'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable]s, [sugar] and [water]. They also have a good taste, but you cannot craft [juices] out of all [vegetable] types, so this mode is 10% less effective at conversion. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
                     'juicesE': { name: 'Craft juices out of exotic fruits', icon: [24, 0, 'magix2'], desc: 'This artisan will craft [exotic juices] out of [exotic fruit]s, [sugar] and [water]. These taste much better compared to normal [juices]! <b>:O</b>', use: { 'worker': 1 }, req: { "exotic blending": true } },
@@ -9453,7 +9452,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'farm of naturdaisies',
-                desc: 'Naturdaisies grow on big "trees" that can release these essenced beauties. Then people gather them and disenchant them, gaining useful [nature essence] from them.',
+                desc: 'Naturdaisies like to grow on big "trees" that can release these essenced beauties. Then people gather them and disenchant them, gaining useful [nature essence] from them.',
                 icon: [28, 6, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'nature essence': 1000, 'herb': 100 },
                 req: { 'lightlily & Naturdaisy': true },
@@ -9469,7 +9468,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'farm of lightlilies',
-                desc: 'A lightlily can have petals with a mysterious lightning shape. People are cautious because the flowers get electrified sometimes. Cutting the stalk and disenchanting it allows people to gather some useful [lightning essence].',
+                desc: 'A lightlily can have petals with a mysterious lightning shape. People are a little cautious around them due to their risk of being electrified. Cutting the stalk and disenchanting it allows people to gather some useful [lightning essence].',
                 icon: [28, 5, 'magixmod'],
                 cost: { 'essenced seeds': 300, 'lightning essence': 1000, 'herb': 100 },
                 req: { 'lightlily & Naturdaisy': true },
@@ -9730,7 +9729,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'pagoda of democracy',
                 displayName: 'Pagoda of Democracy',
-                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms. In the name of justice and democration. It is more political thing so that\'s why you see it in political category. This wonder is like fertilizer for the roots of justice. This wonder is tied to [influence] and [authority] so they will be required during construction.',
+                desc: '@leads to the <b>Democration victory</b><>The rather charming and nice-looking pagoda looms over a forest of cherry blossoms that represents justice and beliefs in freedom. It is more political thing so that\'s why you see it in political category. This wonder is like fertilizer for the roots of justice. This wonder is tied to [influence] and [authority] so they will be required during construction.',
                 wonder: 'democration',
                 icon: [6, 13, 'magixmod'],
                 wideIcon: [5, 13, 'magixmod'],
@@ -13752,7 +13751,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mo \'wine', category: 'upgrade',
-                desc: '[alcohol brewing stand] and [alcohol drinks brewing stand] become thrice as efficient.',
+                desc: '[alcohol brewing stand] and [alcohol drink brewing stand] become thrice as efficient.',
                 icon: [15, 23, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'Improved alchemy techniques': true },
@@ -22305,7 +22304,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wounded',
-                desc: '[adult,Elves] may get [wounded,wounded] due to work injuries, or from war. They do not [worker,work], but may slowly improve.',
+                desc: '[adult,Elves] may get [wounded,wounded] due to work injuries. They do not [worker,work], but may slowly improve.',
                 partOf: 'population',
                 icon: [7, 3, 'c2'],
                 category: 'demog',
@@ -24431,7 +24430,6 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'florist',
-                startWith: 0,
                 desc: '@a subclass of [gatherer]s that collect [flowers] @has its use in both healing and painting',
                 icon: [27, 4, 'c2'],
                 cost: {},
