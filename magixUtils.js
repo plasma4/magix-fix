@@ -460,7 +460,7 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.1' // Version 2.1: 58 sprites
+var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.2' // Version 2.2: 61 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
