@@ -10600,7 +10600,7 @@ if (getObj("civ") != "1") {
                 category: 'storage',
             });
             new G.Unit({
-                name: 'ancestors portal', displayName: '<font color="#fbb">ancestors world portal</font>',
+                name: 'ancestors portal', displayName: '<font color="#fbb">Ancestors world portal</font>',
                 desc: 'Opens a portal to a huge <b>ancestors world</b>. It was an arduous project shaped by your people\'s belief in ancestors.//A dream of Ancestors, discovery, and much more will come real! You will also get +21.5k [land of the Past] that you can use upon finishing this portal.',
                 wideIcon: [26, 33, 'magixmod'],
                 wideIcon2: [29, 33, 'magixmod'],
