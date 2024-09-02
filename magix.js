@@ -5780,7 +5780,7 @@ if (getObj("civ") != "1") {
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay')
                         var iconTick = +getObj('iconTick')
                         var chosenIcon = getObj('gatherIcon')
-                        if (G.getDict('gatherer').icon[0] !== chosenIcon) {
+                        if (isFinite(chosenIcon) && G.getDict('gatherer').icon[0] !== chosenIcon) {
                             G.getDict('gatherer').icon = [chosenIcon, 24, 'magixmod']
                         }
                         if (!isFinite(iconTick)) {
