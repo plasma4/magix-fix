@@ -64,11 +64,17 @@ document.addEventListener("click", function (e) {
 })
 
 // Detect non-fixed MagixUtils
-if (!window.getObj && window.getCookie) {
+if (!window.getObj) {
+    if (window.getCookie) {
+        G.dialogue.popup(function () {
+            return "It appears that you have not imported the fixed version of MagixUtils. Try reimporting with the correct link (https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js)."
+        }, 'noClose')
+        throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
+    }
     G.dialogue.popup(function () {
-        return "It appears that you have not imported the fixed version of MagixUtils. Try reimporting with the correct link (https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js)."
+        return "It appears that the script may have been loaded too quickly. Try reloading."
     }, 'noClose')
-    throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
+    throw TypeError("It appears that the script may have been loaded too quickly. Try reloading.")
 }
 
 G.setDict = function (name, what) {
@@ -4606,7 +4612,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessage) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to the Plain Island. Out of the portal a Tablet falls and hits on rock. Big rectangular portal shines and you can see what is beyond it. You come through and notice there are flat plains. Now it is time for more discoveries and build there some stuff. You can rename this island in the Traits tab.</b>', icon: [8, 3, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to the Plain Island. Out of the portal a Tablet falls and hits a rock next to you. Within the square portal, you can finally see what is beyond it! It appears to be a bunch of flat plains, but you are sure there are a variety of new discoveries that you can find. (You can also rename this island in the Traits tab.)</b>', icon: [8, 3, 'magixmod'] });
                         madeUnlockMessage = true
                         G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
                     }
@@ -11570,7 +11576,6 @@ if (getObj("civ") != "1") {
                 icon: [9, 0, 'magixmod'],
                 cost: { 'insight': 120, 'plain island tablet': 1 },
                 effects: [
-                    { type: 'hide res', what: ['plain island tablet'] },
                 ],
                 req: { 'first portal to new world': true },
             });
@@ -11924,7 +11929,6 @@ if (getObj("civ") != "1") {
                 icon: [20, 8, 'magixmod'],
                 cost: { 'insight': 695 },
                 effects: [
-                    { type: 'hide res', what: ['paradise tablet'] },
                 ],
                 req: { '7th essence': true, 'Wizard complex': true },
             });

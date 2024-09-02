@@ -812,7 +812,7 @@ G.AddData({
                                 '<div class="fancyText par">One ' + G.field({ text: G.getName('inhab'), tooltip: 'This is the word used for someone who belongs to your civilization.', oninput: function (val) { G.setName('inhab', val); } }) + ' among other ' + G.field({ text: G.getName('inhabs'), tooltip: 'This is the plural of the previous word.', oninput: function (val) { G.setName('inhabs', val); } }) + ', you vow to lead your people to greatness and forge a legacy that will stand the test of time.</div>';
                             if (G.modsByName["Default dataset"]) {
                                 if (G.has("plain island building"))
-                                    str += '<div class="fancyText par">Your wizards also opened the portal to the island that is called: ' + G.field({ text: G.getName('island'), tooltip: "This is your name for the Plain Island", oninput: function (val) { G.setName('island', val); } }) + ".<br><br><br>";
+                                    str += '<div class="fancyText par">Your wizards also opened a portal to a new island that is called ' + G.field({ text: G.getName('island'), tooltip: "This is your name for the Plain Island", oninput: function (val) { G.setName('island', val); } }) + ".<br><br><br>";
                             }
                             str += '</div><div class="buttonBox">' +
                                 G.dialogue.getCloseButton() +

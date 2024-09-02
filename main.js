@@ -7513,14 +7513,14 @@ G.Launch=function()
 							}
 							magixNote=true;
 							script.setAttribute('src','magixUtils.js');
-							document.head.appendChild(script);	
+							setTimeout(function() {document.head.appendChild(script)}, 100*i);
 							script.onload=function() {
 								mod.loaded=true;
 							}
 						}
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
 							script.setAttribute('src','magix.js');
-							document.head.appendChild(script);	
+							setTimeout(function() {document.head.appendChild(script)}, 100*i);
 							script.onload=function() {
 								mod.loaded=true;
 							}
@@ -7528,7 +7528,7 @@ G.Launch=function()
 							console.warn("An offline version of a mod could not be loaded in with XML requests, so it will be imported directly. You can try to download it first with internet and use that file as the mod (be warned: this file will NOT work offline). Note that assets may be broken in this case and some file hosting services may cache files, so you should consider downloading the resources and scripts to a local copy for proper usage.");
 							console.log("DEVELOPER NOTE: Files will not work offline in this case, so try downloading them locally instead; if you do not want to bother with downloading files locally, go to localDevelopment.js and set directAccessMode to true.");
 							script.setAttribute('src',mod.url);
-							document.head.appendChild(script);	
+							setTimeout(function() {document.head.appendChild(script)}, 100*i);
 							script.onload=function() {
 								mod.loaded=true;
 							}
@@ -7538,7 +7538,6 @@ G.Launch=function()
 								}
 							}, 2500);
 						}
-						return;
 					}
 					var enter=offlineScript.indexOf("\n");
 					if (offlineScript.slice(0,enter)!=mod.url) {
@@ -7547,9 +7546,9 @@ G.Launch=function()
 						return;
 					}
 					script.innerHTML=offlineScript.slice(enter+1);
-					document.head.appendChild(script);
+					setTimeout(function() {document.head.appendChild(script)}, 100*i);
 				}
-				setTimeout(tryOffline, 1000);
+				setTimeout(tryOffline, 200);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
@@ -7558,7 +7557,7 @@ G.Launch=function()
 					}
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
 					script.innerHTML=v;
-					document.head.appendChild(script);
+					setTimeout(function() {document.head.appendChild(script)}, 100*i);
 				};
 				x.addEventListener("error", tryOffline);
 				x.open("GET", mod.url+"?r="+Math.random());
