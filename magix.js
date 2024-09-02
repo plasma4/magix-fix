@@ -471,7 +471,7 @@ G.NewGame = function (doneLoading, mods) {
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
                 G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has many other biomes.<br>Gameplay difficulty is higher than with the human race,<br>but helping elves out will boost both races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. it will take a while though...')) +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has many other biomes.<br>Gameplay difficulty is higher than with the human race,<br>but helping elves out will boost both races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -1553,7 +1553,9 @@ if (getObj("civ") != "1") {
                             // Drought data starts being calculated now
                             G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
-                            G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to strike.', icon: [9, 10] })
+                            if (G.year < 200) {
+                                G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to strike.', icon: [9, 10] })
+                            }
                             droughtmesg = false
                             setObj('drought', -1)
                         } else if (G.year === G.getRes('ignoreItem').amount - 2) {
@@ -2121,10 +2123,12 @@ if (getObj("civ") != "1") {
                     if (G.checkPolicy('se04') == 'on') {
                         G.policyByName['se05'].visible = false;
                         G.setPolicyModeByName('se05', 'off');
+                        G.update['policy']();
                     }
                     if (G.checkPolicy('se05') == 'on') {
                         G.policyByName['se04'].visible = false;
                         G.setPolicyModeByName('se04', 'off');
+                        G.update['policy']();
                     }
                     if (G.getRes("land").amount > 59) {
                         G.policyByName['far foraging'].visible = false;
@@ -2137,6 +2141,7 @@ if (getObj("civ") != "1") {
                     if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
                         G.setPolicyModeByName('eat on gather', 'off');
                         G.getPolicy('eat on gather').visible = false;
+                        G.update['policy']();
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
                     else G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': false };//it would be stupid losing all relics while no archaeologists
@@ -6411,7 +6416,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', context: 'gather', amount: 2, max: 4 },
                     { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } },
-                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 'herbalism': false } },//To keep early game possible
+                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 'herbalism': false } },//To keep early game possible (there is a function within herbalism that provides more methods of herb gathering)
                     { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 't7': true } },//For the trial
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
                     { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3, req: { 'drought': false } },
@@ -6423,6 +6428,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'spices': 0.002 }, amount: 1, max: 1, req: { 'spicy foods': true, 'spicy foods II': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.003 }, amount: 1, max: 1, req: { 'spicy foods II': true, 'spicy foods III': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.009 }, amount: 1, max: 1, req: { 'spicy foods III': true } },
+                    { type: 'gather', context: 'kelp', amount: 0.03, req: { 'aquatic food': true } },
                     { type: 'addFree', what: { 'worker': 0.1 }, req: { 'scavenging': true } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on' } },
                     { type: 'mult', value: 1.075, req: { 'focused gathering': true, 'moderation': true } },
@@ -10978,6 +10984,7 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.policyByName['far foraging'].visible = false;
+                            G.update['policy']();
                         }
                     }
                 ],
@@ -13131,6 +13138,7 @@ if (getObj("civ") != "1") {
                                 G.getDict('flower rituals').visible = false //THE DISABLER
                                 G.getPolicy('wisdom rituals').mode.id = "off";
                                 G.getPolicy('flower rituals').mode.id = "off";
+                                G.update['policy']();
                             }
                             if (G.getRes('victory point').amount > 0 && !G.has('pantheon key')) {
                                 G.gainTech(G.techByName['pantheon key']);
@@ -17636,7 +17644,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'sandy shores', category: 'tier1',
                 desc: '@Your [digger]s will be able to to collect small amounts of [sand] from the ocean, based on your [wtr] @The effect of [wtr] is capped at 1,000 and is based on your <b>explored water</b>. //<small>A window...to dig...</small>',
-                icon: [4, 9, 0, 0, 'magix2'],
+                icon: [4, 9, 24, 1],
                 cost: { 'insight': 50 },
                 req: { 'boat building': true },
                 effects: [
@@ -17645,7 +17653,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'sandy shores II', category: 'tier1',
                 desc: 'Your [digger]s collect twice as much [sand] from [sandy shores].',
-                icon: [0, 35, 'magixmod', 4, 9, 0, 0, 'magix2'],
+                icon: [0, 35, 'magixmod', 4, 9, 24, 1],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
                 effects: [
@@ -18216,7 +18224,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'love of spice',
-                desc: 'Your people enjoy eating various [spices] a lot, meaning that they will gain 20% more happiness when eating them! //<small>Spicy!</small>',
+                desc: 'Your people love eating [spices] along with other [food], meaning that they will gain 20% more happiness when eating them! //<small>Spicy!</small>',
                 icon: [20, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 5 },
                 chance: 16,
@@ -18493,6 +18501,15 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'aquatic food', category: 'tier1',
+                desc: 'You will now be able to use gather [kelp], which can be eaten along with other [food] for some easy [health] benefits.',
+                icon: [62, 0, 'magix2', 24, 1],
+                cost: { 'insight': 200 },
+                req: { 'caretaking': true },
+                effects: [
+                ],
+            });
 
 
             new G.Res({
@@ -18507,7 +18524,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
-                desc: 'Eating [honey] is both extraordinarily satisfying and quite healthy for the body, and is even better when eaten in combination with other [food]. Although it is quite difficult to find, it never spoils and will provide the most [happiness] out of all [food]!',
+                desc: 'Eating [honey] is both extraordinarily satisfying and quite healthy for the body, and is even better when eaten in combination with other [food]. Although it is quite difficult to find, it never spoils and will provide the most [happiness] out of all [food]! //<small>yummers</small>',
                 icon: [6, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.1 }, 'decay': { 'honey': 1 } },
                 partOf: 'food',
@@ -18662,11 +18679,13 @@ if (getObj("civ") != "1") {
                 category: 'build',
             });
             new G.Res({
-                name: 'discovery point',
-                desc: 'A point of discovery. You can get an unlimited amount of these points, but it may get more difficult over time.',
-                icon: [51, 0, 'magix2'],
-                partOf: 'misc materials',
-                category: 'build',
+                name: 'kelp2',
+                displayName: 'Kelp',
+                desc: 'May be eaten along with other [food], providing some easy [health] benefits.',
+                icon: [62, 0, 'magix2'],
+                turnToByContext: { 'eating': { 'health': 0.035, 'happiness': 0.02 } },
+                partOf: 'food',
+                category: 'food',
             });
 
 
@@ -20869,13 +20888,16 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This good does not provide anything, however.',
-                icon: [36, 0, 'magixmod'],
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This does not provide anything useful, however.',
+                icon: [61, 0, 'magix2'],
             });
             new G.Goods({
                 name: 'kelp',
-                desc: 'Kelp or seagrass. They can be found in a variety of aquatic places. In some regions of the marine world, kelp are very common. while in others, they become very scarce.//This good does not provide anything, however.',
-                icon: [36, 1, 'magixmod'],
+                desc: 'Kelp or seagrass. They can be found in a variety of aquatic places. In some regions of the marine world, kelp are very common, while in others, they become very scarce.',
+                res: {
+                    'kelp': { 'kelp2': 1 },
+                },
+                icon: [62, 0, 'magix2'],
             });
 
 
@@ -21530,6 +21552,7 @@ if (getObj("civ") != "1") {
                     if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
                         G.setPolicyModeByName('eat on gather', 'off');
                         G.getPolicy('eat on gather').visible = false;
+                        G.update['policy']();
                     }
                     G.getRes('pressure resistance').desc = 'This world is under <b>Pressure</b>. However, you can resist pressure. Pressure mechanic works similarily to [housing] but can only be increased by completing trials in both human and elf civilization.//You won\'t be able to have any more [population,elves] even if you will have more [housing] than [pressure resistance]. //Your current [pressure resistance,Resistance] level is <font color="lime">' + G.getRes('pressure resistance').amount + '</font>, allowing you to have ' + G.getRes('pressure resistance').amount + ' [population,elves] in your tribe. Complete some trials and achievements to increase this limit. You may also use special technologies to raise it as well!';
                     if (G.getSetting('tieredDisplay') == 0) { G.ta = 1 } else { G.ta = 0 };
@@ -21694,14 +21717,14 @@ if (getObj("civ") != "1") {
                     if (G.getRes("land").amount > 79) {
                         G.policyByName['creative foraging'].visible = false;
                         if (G.checkPolicy("creative foraging") == 'on') {
-                            G.update['policy']();
                             G.setPolicyModeByName('creative foraging', 'off'); //auto hide and disable foraging
                         }
+                        G.update['policy']();
                     }
                     if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
-                        G.update['policy']();
                         G.setPolicyModeByName('eat on gather', 'off');
                         G.getPolicy('eat on gather').visible = false;
+                        G.update['policy']();
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
                     else G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': false };//it would be stupid losing all relics while no archaeologists
@@ -24754,6 +24777,7 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             G.policyByName['creative foraging'].visible = false;
+                            G.update['policy']();
                         }
                     }
                 ],
@@ -27968,7 +27992,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'kelp',
-                desc: 'Kelp or seagrass. They can be found commonly in most of oceans also in arctic ones. In some regions of that marine world those are very common while in others they are very scarce.//This good does not provide anything, however.',
+                desc: 'Kelp or seagrass. They can be found in a variety of aquatic places. In some regions of the marine world, kelp are very common, while in others, they become very scarce.//This does not provide anything useful, however.',
                 icon: [10, 17, 'c2'],
             });
             new G.Goods({

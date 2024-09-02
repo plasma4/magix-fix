@@ -460,7 +460,7 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.2' // Version 2.2: 61 sprites
+var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.2' // Version 2.2: 63 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
@@ -694,7 +694,7 @@ G.AddData({
                         var div = l('policy-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
                         var div = l('policy-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                         G.addTooltip(me.l, function (what) { return function () { return G.getPolicyTooltip(what) }; }(me), { offY: -8 });
-                        if (me.l) { me.l.onclick = function (what) { return function () { G.clickPolicy(what); }; }(me); }
+                        if (me.l) { me.l.onclick = function (what) { return function (e) { if (e.which === 1) G.clickPolicy(what); }; }(me); }
                         if (me.l && !me.binary) { var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div); }
                     }
                 }
@@ -737,7 +737,7 @@ G.AddData({
                         var div = l('policy-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
                         var div = l('policy-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                         G.addTooltip(me.l, function (what) { return function () { return G.getPolicyTooltip(what) }; }(me), { offY: -8 });
-                        if (me.l) { me.l.onclick = function (what) { return function () { G.clickPolicy(what); }; }(me); }
+                        if (me.l) { me.l.onclick = function (what) { return function (e) { if (e.which === 1) G.clickPolicy(what); }; }(me); }
                         if (me.l && !me.binary) { var div = me.l; div.onmousedown = function (policy, div) { return function () { G.selectModeForPolicy(policy, div); }; }(me, div); }
                     }
                 }
@@ -879,7 +879,7 @@ G.AddData({
                 var div = l('trait-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
                 var div = l('trait-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                 G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.trait), { offY: -8 });
-                if (me.l) me.l.onclick = function (what) { return function () { G.clickTrait(what); }; }(me);
+                if (me.l) me.l.onclick = function (what) { return function (e) { if (e.which === 1) G.clickTrait(what); }; }(me);
             }
 
             G.draw['trait']();
@@ -925,16 +925,18 @@ G.AddData({
                         var div = l('tech-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                         G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me), { offY: -8 });
                         if (me.l) me.l.onclick = function (what) {
-                            return function () {
-                                //G.clickTech(what);
-                                for (var i in G.tech) {
-                                    //highlight ancestors and descendants of the tech
-                                    if (what.ancestors.includes(G.tech[i])) l('tech-' + G.tech[i].id).classList.add('highlit');
-                                    else l('tech-' + G.tech[i].id).classList.remove('highlit');
-                                    if (G.tech[i].ancestors.includes(what) && G.tech[i] != what) l('tech-' + G.tech[i].id).classList.add('highlitAlt');
-                                    else l('tech-' + G.tech[i].id).classList.remove('highlitAlt');
-                                    G.tooltip.close();
-                                }
+                            return function (e) {
+                                if (e.which === 1) {
+                                    //G.clickTech(what);
+                                    for (var i in G.tech) {
+                                        //highlight ancestors and descendants of the tech
+                                        if (what.ancestors.includes(G.tech[i])) l('tech-' + G.tech[i].id).classList.add('highlit');
+                                        else l('tech-' + G.tech[i].id).classList.remove('highlit');
+                                        if (G.tech[i].ancestors.includes(what) && G.tech[i] != what) l('tech-' + G.tech[i].id).classList.add('highlitAlt');
+                                        else l('tech-' + G.tech[i].id).classList.remove('highlitAlt');
+                                        G.tooltip.close();
+                                    };
+                                };
                             };
                         }(me);
                     }
@@ -996,7 +998,7 @@ G.AddData({
                     var div = l('tech-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
                     var div = l('tech-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                     G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.tech), { offY: -8 });
-                    if (me.l) me.l.onclick = function (what) { return function () { G.clickTech(what); }; }(me);
+                    if (me.l) me.l.onclick = function (what) { return function (e) { if (e.which === 1) G.clickTech(what); }; }(me);
                 }
                 var len = G.traitsOwned.length;
                 for (var i = 0; i < len; i++) {
@@ -1005,7 +1007,7 @@ G.AddData({
                     var div = l('trait-icon-' + me.id); if (div) me.lIcon = div; else me.lIcon = 0;
                     var div = l('trait-over-' + me.id); if (div) me.lOver = div; else me.lOver = 0;
                     G.addTooltip(me.l, function (what) { return function () { return G.getKnowTooltip(what) }; }(me.trait), { offY: -8 });
-                    if (me.l) me.l.onclick = function (what) { return function () { G.clickTrait(what); }; }(me);
+                    if (me.l) me.l.onclick = function (what) { return function (e) { if (e.which === 1) G.clickTrait(what); }; }(me);
                 }
             }
         }
@@ -2346,7 +2348,7 @@ G.AddData({
             displayName: '<font color="#cbe2ff">Insight-ly</font>',
             wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
             icon: [choose([1, 4, 7]), 17, 'magixmod'],
-            desc: 'You sacrificed your soul for the Dreamer\'s Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. But this made a profit...providing <b><font color="white">+6 insight and +6% dreamer speed</font></b> at the start of new runs!',
+            desc: 'You sacrificed your soul for the Dreamer\'s Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. But this made a profit...providing <b><font color="#b5bbfd">+6 insight and +6% dreamer speed</font></b> at the start of new runs!',
             fromWonder: 'Insight-ly',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
