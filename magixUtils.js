@@ -260,7 +260,9 @@ G.logic['res'] = function () {
 //change page layout to fit width (for Magix, the defaults are TOO LOW, sadly)
 G.stabilizeResize = function () {
     G.resizing = false;
-    l("sections").style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + "px"
+    l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
+    if (G.w * G.h < 500000) { document.body.classList.add('halfSize'); } else { document.body.classList.remove('halfSize'); }
+    if (G.h < 800) { l('game').style.bottom = 0; } else { l('game').style.bottom = null; }
     if (G.w < 950) { G.wrapl.classList.remove('narrow'); G.wrapl.classList.add('narrower'); }
     else if (G.w < 384 * 3) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
     else { G.wrapl.classList.remove('narrower'); G.wrapl.classList.remove('narrow'); }

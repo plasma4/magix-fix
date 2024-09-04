@@ -17,6 +17,14 @@ body {
   filter: drop-shadow(0 0 10px white);
 }
 
+.halfSize {
+	transform: scale(0.5);
+    transform-origin: 0 0;
+    width: 200%;
+    height: 200%;
+    overflow: hidden;
+}
+
 .tutorialMessage>.messageContent {
 	background:rgba(0,0,255,0.2);
 	box-shadow:1px 1px 0px rgba(128,255,255,0.2) inset;
