@@ -261,10 +261,11 @@ G.logic['res'] = function () {
 G.stabilizeResize = function () {
     G.resizing = false;
     l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
-    if (G.w * G.h < 500000) { document.body.classList.add('halfSize'); } else { document.body.classList.remove('halfSize'); }
-    if (G.h < 800) { l('game').style.bottom = 0; } else { l('game').style.bottom = null; }
+    l('game').style.bottom = G.h < 600 ? 0 : null;
+    l('fpsGraph').style.display = G.h < 600 ? 'none' : 'block';
+    if (G.w * G.h < 200000 || G.w < 625) { document.body.classList.add('halfSize'); } else { document.body.classList.remove('halfSize'); }
     if (G.w < 950) { G.wrapl.classList.remove('narrow'); G.wrapl.classList.add('narrower'); }
-    else if (G.w < 384 * 3) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
+    else if (G.w < 1152) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
     else { G.wrapl.classList.remove('narrower'); G.wrapl.classList.remove('narrow'); }
     //if (G.tab.id=='unit') G.cacheUnitBounds();
 }
