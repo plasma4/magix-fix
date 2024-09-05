@@ -3963,7 +3963,7 @@ G.AddData({
         G.createDebugMenu = function () {
             var str = '' +
                 '<div style="float:left;"><center>' +
-                G.button({ text: '<font color="orange">New game</font>', tooltip: 'Instantly start a new game.', onclick: function () { G.T = 0; G.NewGameWithSameMods(); } }) +
+                G.button({ text: '<font color="orange">New game</font>', tooltip: 'Instantly start a new game.', onclick: function () { G.T = 0; G.NewGameWithSameMods2(); } }) +
                 G.button({ text: '<font color="lime">Load</font>', tooltip: 'Load the save again.', onclick: function () { G.T = 0; G.Load(); } }) +
                 G.button({ text: '<font color="pink">Clear</font>', tooltip: 'Wipe save data.', onclick: function () { G.Clear(); } }) +
                 '<br>' +
@@ -5439,6 +5439,9 @@ G.AddData({
                 return
             }
             delete G.storageObject.drought;
+            delete G.storageObject.iconTick;
+            delete G.storageObject.gatherIcon;
+            G.setSetting('buyAmount', 1);
             G.Save();
             G.setTab = function (tab) {
                 if (tab.popup) {
