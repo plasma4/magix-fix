@@ -21507,7 +21507,53 @@ if (getObj("civ") != "1") {
                         };
                     };
                     if (G.year % 40 >= 20) i = 39 - G.year % 40;
-                    if (G.checkPolicy("insects as food") == "on") G.makePartOf('bugs', 'food'); //bugfix 
+
+                    //bugfixes for eating policies
+                    if (G.checkPolicy("insects as food") == "on") {
+                        G.makePartOf('bugs', 'food');
+                    }
+                    if (G.checkPolicy("eat raw meat and fish") == "off") {
+                        G.makePartOf('meat', '');
+                        G.makePartOf('seafood', '');
+                    }
+                    if (G.modsByName['Laws Of Food'] || G.modsByName['Laws Of Food Free Version']) {
+                        // oh boy, here we go
+                        if (G.checkPolicy("eat herbs") == "off") {
+                            G.makePartOf('herb', '');
+                        }
+                        if (G.checkPolicy("eat raw meat") == "off") {
+                            G.makePartOf('meat', '');
+                        }
+                        if (G.checkPolicy("eat cooked meat") == "off") {
+                            G.makePartOf('cooked meat', '');
+                        }
+                        if (G.checkPolicy("eat cured meat") == "off") {
+                            G.makePartOf('cured meat', '');
+                        }
+                        if (G.checkPolicy("eat raw seafood") == "off") {
+                            G.makePartOf('seafood', '');
+                        }
+                        if (G.checkPolicy("eat cooked seafood") == "off") {
+                            G.makePartOf('cooked seafood', '');
+                        }
+                        if (G.checkPolicy("eat cured seafood") == "off") {
+                            G.makePartOf('cured seafood', '');
+                        }
+                        if (G.checkPolicy("eat cooked meat and cooked seafood") == "off") {
+                            G.makePartOf('cooked meat', '');
+                            G.makePartOf('cooked seafood', '');
+                        }
+                        if (G.checkPolicy("eat cured meat and cured seafood") == "off") {
+                            G.makePartOf('cured meat', '');
+                            G.makePartOf('cured seafood', '');
+                        }
+                        if (G.checkPolicy("eat fruit") == "off") {
+                            G.makePartOf('fruit', '');
+                        }
+                        if (G.checkPolicy("eat bread") == "off") {
+                            G.makePartOf('bread', '');
+                        }
+                    }
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.', icon: [0, 3, 'c2'] });
                     fortress();

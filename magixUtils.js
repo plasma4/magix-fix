@@ -1875,7 +1875,7 @@ G.AddData({
         G.getKnowTooltip = function (me, showCost) {
             var str = '<div class="info">';
 
-            var expiration = (typeof (me.lifetime) === 'function' ? me.yearOfObtainment + me.lifetime() + 1 : me.yearOfObtainment + me.lifetime + 1);
+            var expiration = Math.floor(typeof (me.lifetime) === 'function' ? me.yearOfObtainment + me.lifetime() + 1 : me.yearOfObtainment + me.lifetime + 1);
             var lt = typeof (me.lifetime) === 'function' ? me.lifetime() : me.lifetime;
             if (G.getSetting('traitRemovalMode') && G.tab.id == 'trait') //display only when this mode is active
                 if (G.tab.id = 'trait' && lt == undefined) str += '<small><font color="#fcc"><center>This trait <u>cannot</u> be managed</center></font></small>';
@@ -1898,7 +1898,7 @@ G.AddData({
 
                 str += G.has('time measuring 1/2') ? 'Year of obtainment: ' + (me.yearOfObtainment + 1) + '. ' : 'This trait is temporary. ';
                 if (expiration != Infinity)
-                    str += G.has('time measuring 1/2') ? 'This trait will expire at year ' + expiration + '.' : 'This trait will expire ';
+                    str += G.has('time measuring 1/2') ? 'This trait will expire during year ' + expiration + '.' : 'This trait will expire ';
                 else str += "This trait has become permanent.";
                 if (!G.has('time measuring 1/2') && expiration != Infinity)
                     str += (me.lifetime > 10 ? me.lifetime > 100 ? 'in a very long time.' : 'after a while.' : 'soon.');
