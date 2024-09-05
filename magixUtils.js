@@ -3887,6 +3887,9 @@ G.AddData({
                             if (!mode.req || G.checkReq(mode.req)) { str += '<div class="button' + (mode.num == me.mode.num ? ' on' : '') + '" id="mode-button-' + mode.num + '">' + mode.name + '</div>'; }
                         }
                         widget.l.innerHTML = str;
+                        modeFunction = function () {
+                            widget.close();
+                        }
                         for (var i in proto.modes) {
                             var mode = proto.modes[i];
                             if (!mode.req || G.checkReq(mode.req)) {

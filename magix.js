@@ -51,13 +51,9 @@ document.getElementsByTagName('head')[0].appendChild(meta);
 // Touchscreen fix
 var modeFunction = null
 var isChangedMagix = true
-var clickModePolicy = 0
-var clickModeUnit = 0
 document.addEventListener("click", function (e) {
     var target = e.target
     if (modeFunction !== null && (target.id === "resources" || target.id === "generalInfo" || target.className.slice(0, 4) === "tab " || (target.parentElement.className && target.parentElement.className.slice(0, 4) === "tab "))) {
-        clickModePolicy = 0
-        clickModeUnit = 0
         modeFunction()
         modeFunction = null
     }
@@ -197,13 +193,6 @@ G.widget.update = function () {
         me.lAnchor.style.left = x + 'px';
         me.lAnchor.style.top = y + 'px';
         me.lAnchor.style.display = 'block';
-        if (me.closeOnMouseUp && G.mouseUp && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
-            me.close()
-        }
-    }
-    if (me.closeInFrames && !(clickModePolicy >= 0 && me.linked.type === "policy")) {
-        clickModePolicy = 0
-        me.close()
     }
 }
 
@@ -222,14 +211,14 @@ G.selectModeForUnit = function (me, div) {
                     { str += '<div class="button' + (mode.num == me.mode.num ? ' on' : '') + '" id="mode-button-' + mode.num + '">' + (mode.icon ? G.getSmallThing(mode) : '') + '' + mode.name + '</div>'; }
                 }
                 widget.l.innerHTML = str;
+                modeFunction = function () {
+                    widget.close();
+                }
                 for (var i in me.unit.modes) {
                     var mode = me.unit.modes[i];
                     if (!mode.req || G.checkReq(mode.req)) {
                         l('mode-button-' + mode.num).onmouseup = function (unit, mode) {
                             return function () {
-                                if (clickModeUnit > 0) {
-                                    return
-                                }
                                 //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                 if (G.speed > 0) {
                                     if (true)//G.testUse(G.subtractCost(unit.mode.use,mode.use),unit.amount))
@@ -245,15 +234,8 @@ G.selectModeForUnit = function (me, div) {
                             };
                         }(me, mode, div);
 
-                        // New section for the onclick event
-                        modeFunction = function () {
-                            widget.close();
-                        }
                         l('mode-button-' + mode.num).onclick = function (unit, mode) {
                             return function () {
-                                if (--clickModeUnit > 0) {
-                                    return
-                                }
                                 modeFunction = null
                                 //released the mouse on this mode button; test if we can switch to this mode, then close the widget
                                 if (G.speed > 0) {
@@ -1491,7 +1473,56 @@ if (getObj("civ") != "1") {
                     G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
                     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
 
-                    if (G.checkPolicy("insects as food") == "on") G.makePartOf('bugs', 'food'); //bugfix 
+                    //bugfixes for eating policies
+                    if (G.checkPolicy("insects as food") == "on") {
+                        G.makePartOf('bugs', 'food');
+                    }
+                    if (G.checkPolicy("eat raw meat and fish") == "off") {
+                        G.makePartOf('meat', '');
+                        G.makePartOf('seafood', '');
+                    }
+                    if (G.checkPolicy("eat honey and honeycombs") == "off") {
+                        G.makePartOf('honey', '');
+                        G.makePartOf('honeycomb', '');
+                    }
+                    if (G.modsByName['Laws Of Food'] || G.modsByName['Laws Of Food Free Version']) {
+                        // oh boy, here we go
+                        if (G.checkPolicy("eat herbs") == "off") {
+                            G.makePartOf('herb', '');
+                        }
+                        if (G.checkPolicy("eat raw meat") == "off") {
+                            G.makePartOf('meat', '');
+                        }
+                        if (G.checkPolicy("eat cooked meat") == "off") {
+                            G.makePartOf('cooked meat', '');
+                        }
+                        if (G.checkPolicy("eat cured meat") == "off") {
+                            G.makePartOf('cured meat', '');
+                        }
+                        if (G.checkPolicy("eat raw seafood") == "off") {
+                            G.makePartOf('seafood', '');
+                        }
+                        if (G.checkPolicy("eat cooked seafood") == "off") {
+                            G.makePartOf('cooked seafood', '');
+                        }
+                        if (G.checkPolicy("eat cured seafood") == "off") {
+                            G.makePartOf('cured seafood', '');
+                        }
+                        if (G.checkPolicy("eat cooked meat and cooked seafood") == "off") {
+                            G.makePartOf('cooked meat', '');
+                            G.makePartOf('cooked seafood', '');
+                        }
+                        if (G.checkPolicy("eat cured meat and cured seafood") == "off") {
+                            G.makePartOf('cured meat', '');
+                            G.makePartOf('cured seafood', '');
+                        }
+                        if (G.checkPolicy("eat fruit") == "off") {
+                            G.makePartOf('fruit', '');
+                        }
+                        if (G.checkPolicy("eat bread") == "off") {
+                            G.makePartOf('bread', '');
+                        }
+                    }
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.<br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> to join the community!', icon: [0, 3] });
                     //Had to paste it there because if you obtain and you will unlock 5th choice after page refresh you can still pick 1 of 4 instead of 1 of 5
@@ -2144,9 +2175,15 @@ if (getObj("civ") != "1") {
                             G.update['policy']();
                         }
                     }
+                    var eatOnGatherVisible = G.getPolicy('eat on gather').visible
                     if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
-                        G.setPolicyModeByName('eat on gather', 'off');
-                        G.getPolicy('eat on gather').visible = false;
+                        if (eatOnGatherVisible) {
+                            G.setPolicyModeByName('eat on gather', 'off');
+                            G.getPolicy('eat on gather').visible = false;
+                            G.update['policy']();
+                        }
+                    } else if (!eatOnGatherVisible) {
+                        G.getPolicy('eat on gather').visible = true;
                         G.update['policy']();
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
@@ -7194,7 +7231,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'normal': { name: 'Normal', icon: [16, 1, 'magixmod'], desc: 'This [healer] will heal [population,people] both [sick] and [wounded] but very slowly.', use: { 'knapped tools': 1 }, req: {} },
-                    'wounded': { name: 'Heal the wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with doubled efficiency (faster with [first aid]).', use: { 'knapped tools': 1, 'flowers': 1 }, req: {} },
+                    'wounded': { name: 'Heal the wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] people but with doubled efficiency (faster with [first aid]).', use: { 'knapped tools': 1, 'flowers': 1 }, req: { 'plant lore II': true } },
                     'sick': { name: 'Heal the sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people but with doubled efficiency, requiring [flowers] as well.', use: { 'knapped tools': 1 }, req: { 'plant lore II': true } },
                     'brews': { name: 'Heal the sick with brews', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] people using [medicament brew]s, which is 20% faster than with [flowers].', use: { 'stone tools': 1 }, req: { 'plant lore II': true, 'medicament brews': true } },
                 },
@@ -16414,7 +16451,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'plant lore II', category: 'knowledge',
-                desc: '<font color="#28d82d">@unlocks the [florist]. The [florist] is a gatherer tasked with collecting various [flowers] instead of other resources. //Also unlocks the <b>Heal sick people</b> mode for [healer]s, which allows you to heal [sick] people faster.</font>',
+                desc: '<font color="#28d82d">@unlocks the [florist]. The [florist] is a gatherer tasked with collecting various [flowers] instead of other resources. //Also unlocks new modes for [healer]s, allowing you to heal the [sick] and [wounded] faster.</font>',
                 icon: [8, 7, 'magixmod'],
                 cost: { 'insight': 25 },
                 req: { 'herbalism': true, 'a gift from the mausoleum': true, 'plant lore': true },
