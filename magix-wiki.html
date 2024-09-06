@@ -149,6 +149,10 @@
             border-radius: 10px;
         }
 
+        .darker {
+            color: #fffb;
+        }
+
         .nopre {
             white-space: normal;
         }
@@ -252,6 +256,7 @@
     </style>
 
     <script src="minisearch.js"></script>
+    <script src="relaxedJSON.js"></script>
 </head>
 
 <body>
@@ -300,30 +305,41 @@
         <input placeholder="Mod name..." value="Mod Name">
         <input placeholder="Author..." value="Author">
         <input placeholder="Description..." value="Description of the mod.">
-        <input placeholder="Sprite data..." value='{ myCustomIcon:"about:blank" }'>
+        <input placeholder="Sprite data..." value='{customSheet: about:blank}'>
         <br>
         <span id="inputs"></span>
         <br>
-        Confused on why some of these have braces like <span class="mono">{ tribalism:true }</span>?
+        Confused on why some of these have braces like <span class="mono">{tribalism:true}</span>?
         This is called an <b>object</b>. You may also add more items to this list; for example,
-        <span class="mono">{ tribalism:true, stone-knapping:true }</span>.
+        <span class="mono">{tribalism:true, stone-knapping:true}</span>.
         However, you need the <b>raw name</b> of the item you are trying to add;
         you may find this by clicking on the image of the item you want to add to an object!
         <div>
             Tip: if you know how JSON works or like its format better, you may instead format objects like
-            <span class="mono">{ "tribalism": true, "stone-knapping": true }</span> and it will still work.
+            <span class="mono">{"tribalism": true, "stone-knapping": true}</span> and it will still work.
+            Also, if you're ever confused on why arrays or objects don't have commas, they are sometimes optional!
         </div>
         <hr>
         <textarea rows="20" cols="100" disabled
             placeholder="The automatically generated script will output here. Note that the comment at the start provides important metadata so that you can import it back in to here (make sure to keep it somewhere safe even if you end up removing it upon release)! Copy that comment when you're importing a script in."></textarea>
         <br>
-        <textarea placeholder="Import script data here..."></textarea>
         <br>
         <button>Import script</button>
         <div>
             Tip: want to release your mod somewhere? You can try a service like file.garden or use GitHub Pages.
             We hope you enjoy your modding adventure!
         </div>
+        <textarea placeholder="Import script data here..."></textarea>
+        <div>
+            Tip: effects and modes are <b>very</b> complex to learn! It's a good idea to look at a few examples!
+            Here are a few key parts to know:
+        </div>
+        <ul class="darker">
+            <li>each effect or mode is able to have a requirement (the <span class="mono">req</span> property)</li>
+            <li>modes are unique in that they can have an icon and description</li>
+            <li>effects are able to work for a specific mode, this works for multiplier effects as well</li>
+            <li>enable all debug values and look at a few examples; you may understand them much better after</li>
+        </ul>
         <hr>
     </span>
     <div></div>
@@ -336,7 +352,7 @@
         var select = document.getElementsByTagName("select")[0]
         var selectDebug = document.getElementsByTagName("select")[1]
         var checkbox = document.getElementsByTagName("input")[1]
-        var result = document.getElementsByTagName("div")[3]
+        var result = document.getElementsByTagName("div")[4]
         var modCreator = 0
 
         document.getElementsByTagName("script")[0].remove()
@@ -1023,11 +1039,11 @@
         }
 
         var inputsToUse = {
-            achievements: ["name", "displayName", "desc", "tier", "visible", "icon", "civ", "special", "plural"],
+            achievements: ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"],
             lands: ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"],
             goods: ["name", "displayName", "desc", "res", "icon", "mult"],
             resources: ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"],
-            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"],
+            units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "limitPer", "upkeep"],
             policies: ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"],
             techs: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"],
             traits: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req"]
@@ -1065,7 +1081,7 @@
                     elem.placeholder = civ1Object.descriptions[input] + "."
                     var parsed = parseIfObj(val)
                     if (parsed != null) {
-                        elem.value = parseIfObj(val)
+                        elem.value = parsed
                     }
                     fragment.appendChild(elem)
                 }
@@ -1101,13 +1117,36 @@
                         return
                     }
                 }
+                var isKnows = false
                 if (selectedType === "techs" || selectedType === "traits") {
+                    isKnows = true
                     var nextIsTrait = newData.knows[newData.knows.length - 1].trait
                     document.getElementsByTagName("button")[4].textContent = nextIsTrait ? "Delete this trait" : "Delete this tech"
                     selectedType = nextIsTrait ? "traits" : "techs"
                 } else {
                     document.getElementsByTagName("button")[4].textContent = "Delete this " + selectedType.slice(0, selectedType.length - 1)
                 }
+
+                if (selectedID !== -1) {
+                    var obj = newData[isKnows ? "knows" : selectedType][selectedID]
+                    var inputs = inputsToUse[selectedType]
+                    var fragment = document.createDocumentFragment()
+                    for (var i = 0; i < inputs.length; i++) {
+                        var input = inputs[i]
+                        var val = obj[input]
+                        var elem = document.createElement("input")
+                        elem.placeholder = civ1Object.descriptions[input] + "."
+                        var parsed = parseIfObj(val)
+                        if (parsed != null) {
+                            elem.value = parsed
+                        }
+                        fragment.appendChild(elem)
+                    }
+                    var span = document.getElementsByTagName("span")[3]
+                    span.textContent = ""
+                    span.appendChild(fragment)
+                }
+
                 updateScript()
                 generateScript()
             }
@@ -1125,7 +1164,7 @@
                     var key = keys[i]
                     if (val.length !== 0) {
                         tech[key] = convertIfObj(val)
-                    } else if (tech[key]) {
+                    } else if (typeof tech[key] !== "undefined") {
                         delete tech[key]
                     }
                 }
@@ -1154,7 +1193,7 @@
                 script += "\r\n    new G.Res(" + JSON.stringify(things[i]) + ")"
             }
             var modData = newData.modData
-            document.getElementsByTagName("textarea")[0].value = "// " + JSON.stringify(newData) + "\r\n" + 'G.AddData({\r\n  name: "' + modData[0] + '",\r\n  author: "' + modData[1] + '",\r\n  desc: "' + modData[2] + '",\r\n  engineVersion: 1,\r\n  sheets: ' + modData[3] + ',\r\n  func: function () {' + (script.length === 0 ? "\r\n    // No function yet" : script) + "\r\n  }\r\n})"
+            document.getElementsByTagName("textarea")[0].value = "// " + JSON.stringify(newData) + "\r\n" + 'G.AddData({\r\n  name: "' + modData[0] + '",\r\n  author: "' + modData[1] + '",\r\n  desc: "' + modData[2] + '",\r\n  engineVersion: 1,\r\n  sheets: ' + convertIfObj(modData[3]) + ',\r\n  func: function () {' + (script.length === 0 ? "\r\n    // No data yet..." : script) + "\r\n  }\r\n})"
         }
 
         function importScript() {
@@ -1173,24 +1212,132 @@
 
         function parseIfObj(val) {
             // JSON destringer
-            return val && typeof val === "object" ? stringifyObj(val) : val
+            if (val instanceof Array) {
+                var success = true
+                for (var i = 0; i < val.length; i++) {
+                    if (typeof val[i] !== "string" && typeof val[i] !== "number") {
+                        success = false
+                        break
+                    }
+                }
+                if (success) {
+                    return JSON.stringify(val)
+                }
+            }
+            try {
+                return val && typeof val === "object" ? stringifyObj(val) : val
+            } catch (e) {
+                return "ERROR WITH PARSING OBJECT"
+            }
         }
 
         function convertIfObj(val) {
+            if (val === "false" || val === "true") {
+                return val === "true"
+            }
             try {
-                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? parseObj(val) : val
+                return (val[0] === "{" && val[val.length - 1] === "}") || (val[0] === "[" && val[val.length - 1] === "]") ? JSON.parse(RJSON.toJson(val)) : val
             } catch (e) {
-                return val
+                return "ERROR WITH CONVERTING OBJECT"
             }
         }
 
         function stringifyObj(val) {
-            return JSON.stringify(val).replace(/"([^"]+)":/g, "$1:").replace("{", "{ ").replace("}", " }")
+            return RJSON.toRJson(JSON.stringify(val))
         }
 
         function parseObj(val) {
-            return JSON.parse(val.replace(/(\w+):/g, '"$1":'))
+            return RJSON.toJson(val)
         }
+
+        var rjson = really_relaxed_json.tv.twelvetone.rjson
+        const Options = rjson.PrettyPrinter.Options;
+        Options.JsonCompact = Options.Companion.JsonCompact;
+        Options.JsonPretty = Options.Companion.JsonPretty;
+        Options.RJsonCompact = Options.Companion.RJsonCompact;
+        Options.RJsonPretty = Options.Companion.RJsonPretty;
+        Options.JsCompact = Options.Companion.JsCompact;
+        Options.JsPretty = Options.Companion.JsPretty;
+
+        var RJSON = {
+            createParser: () => rjson.RJsonParserFactory.Companion.getDefault().createParser(),
+            createParserFactory: () => rjson.RJsonParserFactory.Companion.getDefault(),
+
+            PrettyPrinter: rjson.PrettyPrinter,
+
+            /**
+             *
+             * @param rjsonString {String}
+             * @param compact {Boolean}
+             * @returns {String}
+             */
+            toJson: function (rjsonString, compact = true) {
+                const parser = rjson.RJsonParserFactory.Companion.getDefault().createParser();
+                const value = parser.stringToValue(rjsonString);
+                let opts;
+                if (compact) {
+                    opts = rjson.PrettyPrinter.Options.Companion.JsonCompact;
+                } else {
+                    opts = rjson.PrettyPrinter.Options.Companion.JsonPretty;
+                }
+                const printer = new rjson.PrettyPrinter(opts);
+                return printer.valueToString(value);
+            },
+            /**
+             *
+             * @param rjsonString {String}
+             * @param compact {Boolean}
+             * @returns {String}
+             */
+            toRJson: function (jsonString, compact = true) {
+                const parser = rjson.RJsonParserFactory.Companion.getDefault().createParser();
+                const value = parser.stringToValue(jsonString);
+                let opts;
+                if (compact) {
+                    opts = rjson.PrettyPrinter.Options.Companion.RJsonCompact;
+                } else {
+                    opts = rjson.PrettyPrinter.Options.Companion.RJsonPretty;
+                }
+                const printer = new rjson.PrettyPrinter(opts);
+                return printer.valueToString(value);
+            },
+            /**
+             *
+             * @param rjsonString {String}
+             * @param compact {Boolean}
+             * @returns {String}
+             */
+            toJs: function (rjsonString, compact = true) {
+                const parser = rjson.RJsonParserFactory.Companion.getDefault().createParser();
+                const value = parser.stringToValue(rjsonString);
+                let opts;
+                if (compact) {
+                    opts = rjson.PrettyPrinter.Options.Companion.JsCompact;
+                } else {
+                    opts = rjson.PrettyPrinter.Options.Companion.JsPretty;
+                }
+                const printer = new rjson.PrettyPrinter(opts);
+                return printer.valueToString(value);
+            },
+
+            /**
+             *
+             * @param options {Options} PrettyPrinter options
+             * @param stringOrValue {string|object} a JsonLike string or JsonValue
+             * @returns {string}
+             */
+            prettyPrint: function (options, stringOrValue) {
+                const prettyPrinter = new rjson.PrettyPrinter(options);
+                if (typeof stringOrValue === 'string') {
+                    return prettyPrinter.stringToString(stringOrValue);
+                } else {
+                    return prettyPrinter.valueToString(stringOrValue);
+                }
+            },
+
+            PrettyPrinter: rjson.PrettyPrinter,
+            options: Options,
+        };
 
         changeFunc()
     </script>

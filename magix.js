@@ -1522,6 +1522,15 @@ if (getObj("civ") != "1") {
                         if (G.checkPolicy("eat bread") == "off") {
                             G.makePartOf('bread', '');
                         }
+                        if (G.checkPolicy("eat meals") == "off") {
+                            G.makePartOf('meals', '');
+                        }
+                        if (G.checkPolicy("eat vegetables") == "off") {
+                            G.makePartOf('vegetable', '');
+                        }
+                        if (G.checkPolicy("drink juices") == "off") {
+                            G.makePartOf('juices', '');
+                        }
                     }
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.<br>Join Orteil\'s official discord server via <a href="https://discord.gg/cookie" target="_blank">this link</a> to join the community!', icon: [0, 3] });
@@ -3703,6 +3712,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'vegetable',
+                displayName: 'Vegetables',
                 desc: '[vegetable,Vegetables], whether gathered from bushes or any gardens, are both healthy and good for you.',
                 icon: [11, 11, 'magixmod'],
                 turnToByContext: { 'eating': { 'health': 0.02, 'happiness': 0.01 }, 'decay': { 'spoiled food': 1 } },
@@ -21553,6 +21563,9 @@ if (getObj("civ") != "1") {
                         if (G.checkPolicy("eat bread") == "off") {
                             G.makePartOf('bread', '');
                         }
+                        if (G.checkPolicy("eat vegetables") == "off") {
+                            G.makePartOf('vegetable', '');
+                        }
                     }
                     G.ta = 1;
                     G.Message({ type: 'important tall', text: 'Welcome back, ' + G.getName('ruler') + ', ruler of ' + G.getName('civ') + '.', icon: [0, 3, 'c2'] });
@@ -22762,6 +22775,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'vegetable',
+                displayName: 'Vegetables',
                 desc: '[vegetable,Vegetables], whether gathered from bushes or any gardens, are both healthy and quite good for you.',
                 icon: [13, 6, 'c2'],
                 turnToByContext: { 'eating': { 'health': 0.02, 'happiness': 0.01 }, 'decay': { 'spoiled food': 1 } },
@@ -26935,6 +26949,40 @@ if (getObj("civ") != "1") {
                 req: {},
                 category: 'work',
             });
+            if (G.modsByName['Laws Of Food']) {
+                new G.Policy({
+                    name: 'eat vegetables',
+                    desc: 'Decide if your people can eat [vegetable]s or not.',
+                    icon: [6, 12, 11, 11, 'magixmod'],
+                    cost: { 'influence': 0 },
+                    startMode: 'on',
+                    req: { 'rules of food': true },
+                    category: 'food',
+                    effects: [
+                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                    ],
+                    effectsOff: [
+                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                    ],
+                });
+            }
+            if (G.modsByName['Laws Of Food Free Version']) {
+                new G.Policy({
+                    name: 'eat vegetables',
+                    desc: 'Decide if your people can eat [vegetable]s or not.',
+                    icon: [6, 12, 11, 11, 'magixmod'],
+                    cost: { 'influence': 0 },
+                    startMode: 'on',
+                    req: { 'rules of food': true },
+                    category: 'food',
+                    effects: [
+                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                    ],
+                    effectsOff: [
+                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                    ],
+                });
+            }
 
             /*=====================================================================================
             LANDS

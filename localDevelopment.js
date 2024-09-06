@@ -25,7 +25,7 @@ testFunction()
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 function getGameJSON(objectMode) {
     var result = {
-        achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "civ", "special", "plural"]),
+        achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"]),
         lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
         resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf"]),
