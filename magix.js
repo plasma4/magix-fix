@@ -45,7 +45,7 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
 var magixURL = window.offlineMode != null ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
 var magixURL2 = window.offlineMode != null ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
 var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
-var themeText = window.offlineMode != null ? '' : 'Theme/'
+var isUsingFile = window.offlineMode == null
 
 // Disable double click's default behavior for mobile users and scale properly
 var meta = document.createElement('meta');
@@ -959,16 +959,16 @@ if (getObj("civ") != "1") {
                 }
                 //tech
                 if (G.tab.id == 'tech') {
-                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + Theme + themeText + 'bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
+                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
                 }
 
                 //res and messages tab
-                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + Theme + themeText + 'bgDownRock' + Theme + '.jpg")';
-                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + magixURL + Theme + themeText + 'bgDarkRock' + Theme + '.jpg")';
-                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + magixURL + Theme + themeText + 'bgMidRock' + Theme + '.jpg")';
-                document.getElementById("messagesList").style['background-image'] = 'url("' + magixURL + Theme + themeText + 'bgMidRock' + Theme + '.jpg")';
+                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDownRock' + Theme + '.jpg")';
+                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDarkRock' + Theme + '.jpg")';
+                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
+                document.getElementById("messagesList").style['background-image'] = 'url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("sideCategory").length; i++) document.getElementsByClassName("sideCategory")[i].style.width = "100px";
-                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + magixURL + Theme + themeText + 'bgDarkRock' + Theme + '.jpg")';
+                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDarkRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-repeat'] = 'no-repeat, repeat';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-size'] = 'cover';
             }
@@ -1719,7 +1719,7 @@ if (getObj("civ") != "1") {
                                             '<div class="fancyText"><font color="#4d4">The green meteor has fallen down from space!<br>It didn\'t take long to cause damage...<br>but you suddenly became the survivor.</font></div>' +
                                             '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                             '<br><br><Br>' +
-                                            '<center><table width="240" height="120"><tr background="'+magixURL+'cassete.png"><td>' +
+                                            '<center><table width="240" height="120"><tr background="' + magixURL + 'cassete.png"><td>' +
                                             '<br><br></td></tr></table></center>' +
                                             '<div class="bulleted">You unlocked Civilization 2!</div>' +
                                             '<div class="bulleted">The adventure with the new race will be harder than with your current human race. Think about collecting more <b>Victory points</b> first!<br>(You currently own ' + G.getRes('victory point').amount + ' Victory points.)</div>' +
