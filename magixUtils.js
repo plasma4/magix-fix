@@ -49,6 +49,10 @@ if (!window.magixLoaded) {
     }
 }
 
+var magixURL = window.offlineMode != null ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
+var magixURL2 = window.offlineMode != null ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
+var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
+
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
 function getObj(key) {
     var storageItem = G.storageObject[key]
@@ -463,13 +467,13 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = 'https://file.garden/ZmatEHzFI2_QBuAF/magix2.png?v=2.2' // Version 2.2: 63 sprites
+var magix2Link = magixURL2 + 'magix2.png?v=2.2' // Version 2.2: 63 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheet.png' },//just for achievs
+    sheets: { 'magixmod': magixURL + 'magixmod.png', 'magix2': magix2Link, 'seasonal': magixURL + 'seasonalMagix.png', 'c2': magixURL + 'CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();
@@ -611,7 +615,7 @@ G.AddData({
             l('sectionTabs').innerHTML = str;
             for (var i in G.tabs) {
                 G.tabs[i].l = l('tab-' + G.tabs[i].id);
-                G.tabs[i].l.onclick = function (tab) { return function () { G.playSound('https://orteil.dashnet.org/cookieclicker/snd/buy3.mp3'); G.setTab(tab); }; }(G.tabs[i]);
+                G.tabs[i].l.onclick = function (tab) { return function () { G.playSound(orteilURL + 'buy3.mp3'); G.setTab(tab); }; }(G.tabs[i]);
                 if (G.tabs[i].desc) G.addTooltip(G.tabs[i].l, function (tab) { return function () { return tab.desc; }; }(G.tabs[i]), { offY: -8 });
             }
             G.setTab(G.tabs[0]);
@@ -673,7 +677,7 @@ G.AddData({
                 var len = G.policyCategories.length;
                 for (var iC = 0; iC < len; iC++) {
                     if (G.policyCategories[iC].id == 'pantheon' && strByCat[G.policyCategories[iC].id] != '') {
-                        str += '<div class="category" style="display:inline-block;width:75%;height:95%"><center><Div class="framed bgMid" style=\'width:75%;height:65%;background-image:url("img/cloudsBottom.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/GoldenTheme/bgDarkRockGolden.jpg");animation:wonderCloudsDriftRight 180s infinite linear\'><div class="categoryName barred fancyText" id="policy-catName-' + iC + '"><font size="2" style="letter-spacing:3px">' + G.policyCategories[iC].name + '</font></div>' + strByCat[G.policyCategories[iC].id] + '</div></div><br>';
+                        str += '<div class="category" style="display:inline-block;width:75%;height:95%"><center><Div class="framed bgMid" style=\'width:75%;height:65%;background-image:url(img/cloudsBottom.png),url(' + magixURL + 'GoldenTheme/bgDarkRockGolden.jpg);animation:wonderCloudsDriftRight 180s infinite linear\'><div class="categoryName barred fancyText" id="policy-catName-' + iC + '"><font size="2" style="letter-spacing:3px">' + G.policyCategories[iC].name + '</font></div>' + strByCat[G.policyCategories[iC].id] + '</div></div><br>';
                     } else {
                         if (G.getSetting('linearDp') == true) {
                             if (strByCat[G.policyCategories[iC].id] != '') str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div><br>';
@@ -1038,7 +1042,7 @@ G.AddData({
                         n = Math.max(Math.min(n, 1e+35), -1e+35);
                         G.setSetting('buyAmount', n);
                         G.updateBuyAmount();
-                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound(orteilURL + 'press.mp3');
                     },
                 }) +
                 '<div id="buyAmount" class="bgMid framed" style="width:128px;display:inline-block;padding-left:8px;padding-right:8px;font-weight:bold;">...</div>' +
@@ -1058,19 +1062,19 @@ G.AddData({
                         n = Math.max(Math.min(n, 1e+35), -1e+35);
                         G.setSetting('buyAmount', n);
                         G.updateBuyAmount();
-                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound(orteilURL + 'press.mp3');
                     }
                 }) + '<div class="flourishR"></div>' +
                 (G.modsByName['Default dataset'] ? (G.traitsOwnedNames.indexOf('t11') > 0 ? '<br>' + G.button({
                     id: "t11", //<span style="position:relative;width:9px;margin-left:-4px;margin-right:-4px;z-index:10;font-weight:bold;">
                     text:
-                        '</span>Buy<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/>',
+                        '</span>Buy<img class="pixelate" src="' + magixURL + 'ico1.png" style="vertical-align:top;" width="16" height="16"/>',
                     tooltip:
-                        'Buy <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + ((G.getRes("trial point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Faith</b> and ' + ((G.getRes("trial point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!',
+                        'Buy <b>Golden insight</b><img class="pixelate" src="' + magixURL + 'ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + ((G.getRes("trial point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Faith</b> and ' + ((G.getRes("trial point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1)).toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="' + magixURL + 'ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!',
                     onclick: function (me) {
                         var faicost = (G.getRes("trial point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
                         var inscost = (G.getRes("trial point").amount / 3) * ((G.achievByName['faithful'].won / 2) + 1);
-                        G.addTooltip(me, function () { return 'Buy <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!'; }, { offY: -8 })
+                        G.addTooltip(me, function () { return 'Buy <b>Golden insight</b><img class="pixelate" src="' + magixURL + 'ico1.png" style="vertical-align:top;" width="16" height="16"/> for ' + faicost.toFixed(2) + ' <b>Faith</b> and ' + inscost.toFixed(2) + ' <b>Insight</b>.<br>The cost of the next <b>Golden insight</b><img class="pixelate" src="' + magixURL + 'ico1.png" style="vertical-align:top;" width="16" height="16"/> will increase. Be careful!'; }, { offY: -8 })
                         if (G.getRes('golden insight').amount < G.getRes('wisdom').amount && G.getRes('faith').amount >= faicost && G.getRes('insight').amount >= inscost) {
                             G.lose('insight', inscost, 'exchange'); G.lose('faith', faicost, 'exchange');
                             G.gain('golden insight', 1, "purchase");
@@ -1079,7 +1083,7 @@ G.AddData({
                         } else {
                             G.middleText("<small>- Cannot afford -</small>");
                         }
-                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                        G.playSound(orteilURL + 'press.mp3');
                     }
                 }) : "") : "") +
                 (G.modsByName['Default dataset'] && G.traitsOwnedNames.indexOf('t7') >= 0 && G.year > 0 ? "<div class='fancyText'><br>You\'ll need " + B(parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * (G.year / 1.5) * (G.getRes('population').amount / 4))) + " <font color='lime'>Herb essence</font> to please your people here.</div>" : "") +
@@ -1830,8 +1834,8 @@ G.AddData({
         /*==========================
         CSS stuff
         ==========================*/
-        document.getElementById("logo").style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/Magixlogo2.png")';
-        document.getElementById("logoOverB").style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/Elves.png")';
+        document.getElementById("logo").style['background-image'] = 'url(' + magixURL + 'Magixlogo2.png)';
+        document.getElementById("logoOverB").style['background-image'] = 'url(' + magixURL + 'Elves.png)';
         var cssId = 'utils';
         if (!document.getElementById(cssId)) {
             var head = document.getElementsByTagName('head')[0];
@@ -1839,7 +1843,7 @@ G.AddData({
             link.id = cssId;
             link.rel = 'stylesheet';
             link.type = 'text/css';
-            link.href = 'https://file.garden/ZmatEHzFI2_QBuAF/newMagix.css';
+            link.href = magixURL2 + 'newMagix.css';
             link.media = 'all';
             head.appendChild(link);
         }
@@ -1930,9 +1934,9 @@ G.AddData({
             str += '<div class="flourishL"></div><div class="framed fancyText bgMid" style="display:inline-block;height:32px;font-size:18px;padding:5px;font-variant:small-caps" id="date">-</div>';
             if (G.modsByName['Elves']) {
                 if (G.has('Ice') || G.has('warmth') || G.has('earth') || G.has('mystic') || G.has('water')) {
-                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(' + magixURL + 'Empowerments.png);background-position-x:' + (32 * (G.year % 40)) + 'px; background-position-y:' + -(32 * (G.auratext + 1)) + 'px" id="empower"></div><br>';
                 } else {
-                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png)" id="empower"></div><br>';
+                    str += '<div class="pixelate framed" style="height:36px;width:36px;padding:0;margin-bottom:-13px;display:inline-block;background:url(' + magixURL + 'Empowerments.png)" id="empower"></div><br>';
                 }
             } else str += '<br>';
             str += '<div class="flourish2L"></div>' +
@@ -1943,7 +1947,7 @@ G.AddData({
                     tooltip: 'Time will be stopped.<br>Generates fast ticks.',
                     onclick: function () {
                         if (G.getSetting('paused') == false) { //prevent playsound if nothing changes
-                            G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                            G.playSound(orteilURL + 'press.mp3');
                         }
                         G.setSetting('paused', 1);
                     }
@@ -1954,7 +1958,7 @@ G.AddData({
                     tooltip: 'Time will pass by normally, with 1 day passing every second.',
                     onclick: function () {
                         if ((G.getSetting('paused') == true || G.getSetting('fast') == true)) { //prevent playsound if nothing changes
-                            G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                            G.playSound(orteilURL + 'press.mp3');
                         }
                         G.setSetting('paused', 0); G.setSetting('fast', 0);
                     }
@@ -1965,7 +1969,7 @@ G.AddData({
                     tooltip: 'Time will go by about 30 times faster: 1 month every second.<br>Uses up fast ticks.<br>May lower browser performance while active.',
                     onclick: function () {
                         if (G.getSetting('fast') == false) { //prevent the sound from playing if nothing changes
-                            G.playSound('https://orteil.dashnet.org/cookieclicker/snd/press.mp3');
+                            G.playSound(orteilURL + 'press.mp3');
                         }
                         if (G.fastTicks > 0) {
                             G.setSetting('paused', 0);
@@ -3721,7 +3725,7 @@ G.AddData({
                         else if (amount < 6.45) bar = 18;
                         else if (amount < 6.7) bar = 19;
                         else bar = 20;
-                        str += '<div class="icon" style="background:url(https://file.garden/Xbm-ilapeDSxWf1b/magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
+                        str += '<div class="icon" style="background:url(' + magixURL + 'magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
                     }
                     str += '</div>';
                     I++;
@@ -3856,15 +3860,15 @@ G.AddData({
             if (me.binary) {
                 if (me.category != "pantheon") {
                     if (mode.id == 'off') {
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOff.wav');
+                        G.playSound(magixURL + 'PolicySwitchOff.wav');
                         me.l.classList.add('off');
-                    } else { G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOn.wav'); me.l.classList.remove('off') }
+                    } else { G.playSound(magixURL + 'PolicySwitchOn.wav'); me.l.classList.remove('off') }
                 } else {
                     if (mode.id == 'off') {
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
+                        G.playSound(magixURL + 'spiritReject.wav');
                         me.l.classList.add('off');
                     } else {
-                        G.playSound('https://orteil.dashnet.org/cookieclicker/snd/spirit.mp3');
+                        G.playSound(orteilURL + 'spirit.mp3');
                         me.l.classList.remove('off')
                     }
                 }
@@ -3907,7 +3911,7 @@ G.AddData({
                                                     for (var i in proto.modes) { if (l('mode-button-' + proto.modes[i].num)) { l('mode-button-' + proto.modes[i].num).classList.remove('on'); } }
                                                     l('mode-button-' + mode.num).classList.add('on');
                                                     G.setPolicyMode(me, mode);
-                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/PolicySwitchOn.wav');
+                                                    G.playSound(magixURL + 'PolicySwitchOn.wav');
                                                     if (me.l) G.popupSquares.spawn(l('mode-button-' + mode.num), me.l);
                                                 }
                                             }
@@ -3985,7 +3989,7 @@ G.AddData({
                             if (!G.policy[i].skip) G.gainPolicy(G.policy[i]);
                         }
                         G.shouldRunReqs = true;
-                        var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/spiritReject.wav');
+                        var audio = new Audio(magixURL + 'spiritReject.wav');
                         audio.play();
                         G.middleText('<font color="#ebad0e">- You are almighty! -<br><small> - (cheater) - </small></font>', 'slow');
                     }
@@ -4077,7 +4081,7 @@ G.AddData({
             G.centerMap(G.currentMap);
         }
         G.getLandIconBG = function (land) {
-            return 'url(https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png),url(https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png)';
+            return 'url(' + magixURL + '/terrainMagix.png),url(' + magixURL + '/terrainMagix.png)';
         }
         G.renderMap = function (map, obj) {
             var time = Date.now();
@@ -4108,7 +4112,7 @@ G.AddData({
             var totalh = map.h;//y2-y1;
 
             var img = new Image();   // Create new img element
-            img.src = 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png';
+            img.src = magixURL + 'terrainMagix.png';
             var fog = Pic('img/blot.png');
 
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;
@@ -5023,7 +5027,7 @@ G.AddData({
                             G.addTooltip(l('fastTicks'), function () { return '<div class="barred">Fast ticks</div><div class="par">This is how many in-game days you can run at fast speed.</div><div class="par">You gain a fast tick for every second you\'re paused or offline.</div><div class="par">You also gain fast ticks every time you research a technology.</div><div class="divider"></div><div class="par">You currently have <b>' + BT(G.fastTicks) + '</b> of game time saved up,<br>which will execute in <b>' + BT(G.fastTicks / 30) + '</b> at fast speed,<br>advancing your civilization by <b>' + G.BT(G.fastTicks) + '</b>.</div>'; }, { offY: -8 });
                             G.addTooltip(l('date'), function () { return '<div class="barred">Date</div><div class="par">This is the current date in your civilization.<br>One day elapses every second.</div>'; }, { offY: -8 });
 
-                        }//l('empower').innerHTML='<div class="image" style="width:32px;height:32px;background:url(https://file.garden/Xbm-ilapeDSxWf1b/Empowerments.png); '+(32*(G.year%40))+'px; 0px;"></div>';
+                        }
                     }
                     if (!forceTick) G.nextTick--;
                 }
@@ -5558,7 +5562,7 @@ G.AddData({
                                                             if (G.getRes('population').amount - me.unit.finalStepCost.population == 0 && G.achievByName['that was so brutal'].won == 0) { G.achievByName['that was so brutal'].won = 1; G.middleText('- Hey...that was brutal. Why? Just why would you do that? -<br><small>Completed <font color="pink">That was so brutal</font> shadow achievement.</small>', 'slow') };
                                                         }
                                                     }
-                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/WonderComplete.mp3');
+                                                    G.playSound(magixURL + 'WonderComplete.mp3');
                                                     me.mode = 4;
                                                     me.amount += 1;
                                                     if (G.getSetting('animations')) triggerAnim(me.l, 'plop');
@@ -5604,7 +5608,7 @@ G.AddData({
                                                     G.dialogue.close();
                                                     var middleText = '';
                                                     var achiev = G.getAchiev(me.unit.wonder);
-                                                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/Ascending.wav');
+                                                    G.playSound(magixURL + 'Ascending.wav');
                                                     if (achiev) {
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
@@ -5683,7 +5687,7 @@ G.AddData({
             var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
             if (day >= 289 && day <= 305) {
                 G.middleText('<big><font color="orange">Happy Halloween!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.</small></font>', 'slow');
-                G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/halloweenGreeting.mp3');
+                G.playSound(magixURL + 'halloweenGreeting.mp3');
             }
             if (day >= 365 && day <= 366) { G.middleText('<big><font color="pink">Happy ' + (truY + 1) + '!</big><br>- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away!</small></font>', 'slow') };
             if (day > 0 && day <= 2) {
@@ -5716,7 +5720,7 @@ G.AddData({
             G.Message({ type: 'tutorial', text: '<font size="10">IT\'S OVER 9000!!!!</font>' });
             if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, it is insane! No way that can be right...</small>', 'slow');
             G.achievByName['it\'s over 9000'].won++;
-            var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/EasterEgg.mp3');
+            var audio = new Audio(magixURL + 'EasterEgg.mp3');
             audio.play();
         }
         //addition of policy temporary trait management

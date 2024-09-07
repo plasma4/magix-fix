@@ -7499,26 +7499,26 @@ G.Launch=function()
 				}
 			} else {
 				// A rather strange function with the purpose of trying to get files that don't work with XMLHttpRequests or when you don't have internet
-				var triedOffline = false
+				let triedOffline = false
 				function tryOffline() {
 					if (triedOffline) {
 						return
 					}
+					offlineMode = true
 					triedOffline = true
 					var offlineScript=localStorage.getItem("nelOffline"+i);
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
 							if (!magixNote) {
 								console.warn("Magix was loaded locally because you don't have internet. It may not be the newest version.");
+								magixNote=true;
 							}
-							magixNote=true;
 							script.setAttribute('src','magixUtils.js');
 							setTimeout(function() {document.head.appendChild(script)}, 100*i);
 							script.onload=function() {
 								mod.loaded=true;
 							}
-						}
-						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
+						} else if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js") {
 							script.setAttribute('src','magix.js');
 							setTimeout(function() {document.head.appendChild(script)}, 100*i);
 							script.onload=function() {
@@ -7538,23 +7538,21 @@ G.Launch=function()
 								}
 							}, 2500);
 						}
+					} else {
+						var enter=offlineScript.indexOf("\n");
+						if (offlineScript.slice(0,enter)!=mod.url) {
+							localStorage.removeItem("nelOffline"+i);
+							alert("The mod links do not match, so an offline version of a mod could not be loaded in. We\'re not sure why this has happened: try reloading.");
+							return;
+						}
+						script.innerHTML=offlineScript.slice(enter+1);
+						setTimeout(function() {document.head.appendChild(script)}, 100*i);
 					}
-					var enter=offlineScript.indexOf("\n");
-					if (offlineScript.slice(0,enter)!=mod.url) {
-						localStorage.removeItem("nelOffline"+i);
-						alert("The mod links do not match, so an offline version of a mod could not be loaded in. We\'re not sure why this has happened: try reloading.");
-						return;
-					}
-					script.innerHTML=offlineScript.slice(enter+1);
-					setTimeout(function() {document.head.appendChild(script)}, 100*i);
 				}
-				setTimeout(tryOffline, 200);
+				setTimeout(tryOffline, 2000);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
-					if (['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url)) {
-						v=v.replace(/https:\/\/[0-9A-Za-z._\-+/%]+(?=\/+[0-9A-Za-z._\-+%]+\.(jpg|png|mp3|wav|css))/g, "Magix").replace(/https:\/\/file\.garden\/Xbm-ilapeDSxWf1b\/' \+ Theme \+ 'Theme/g, "Magix");
-					}
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
 					script.innerHTML=v;
 					setTimeout(function() {document.head.appendChild(script)}, 100*i);

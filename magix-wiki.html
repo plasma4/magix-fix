@@ -305,7 +305,7 @@
         <input placeholder="Mod name..." value="Mod Name">
         <input placeholder="Author..." value="Author">
         <input placeholder="Description..." value="Description of the mod.">
-        <input placeholder="Sprite data..." value='{customSheet: about:blank}'>
+        <input placeholder="Sprite data..." value='{customSheet: "about:blank"}'>
         <br>
         <span id="inputs"></span>
         <br>
@@ -315,30 +315,31 @@
         However, you need the <b>raw name</b> of the item you are trying to add;
         you may find this by clicking on the image of the item you want to add to an object!
         <div>
-            Tip: if you know how JSON works or like its format better, you may instead format objects like
-            <span class="mono">{"tribalism": true, "stone-knapping": true}</span> and it will still work.
-            Also, if you're ever confused on why arrays or objects don't have commas, they are sometimes optional!
+            Tip: confused why there's an error with the object? If the raw name of something has a space,
+            you will have to do something like this:
+            <span class="mono">{"rules of food": true}</span> and it will work. (Otherwise, the quotes are optional.)
+            Sometimes, arrays will use spaces instead of commas; don't freak out.
         </div>
         <hr>
         <textarea rows="20" cols="100" disabled
             placeholder="The automatically generated script will output here. Note that the comment at the start provides important metadata so that you can import it back in to here (make sure to keep it somewhere safe even if you end up removing it upon release)! Copy that comment when you're importing a script in."></textarea>
-        <br>
-        <br>
-        <button>Import script</button>
         <div>
             Tip: want to release your mod somewhere? You can try a service like file.garden or use GitHub Pages.
             We hope you enjoy your modding adventure!
         </div>
-        <textarea placeholder="Import script data here..."></textarea>
+        <textarea rows="5" cols="50" placeholder="Import script data here..."></textarea>
+        <br>
+        <button>Import script</button>
+        <hr>
         <div>
-            Tip: effects and modes are <b>very</b> complex to learn! It's a good idea to look at a few examples!
+            Tip: effects and modes are <b>very</b> complex to learn! It's a good idea to look at a few examples.
             Here are a few key parts to know:
         </div>
         <ul class="darker">
             <li>each effect or mode is able to have a requirement (the <span class="mono">req</span> property)</li>
             <li>modes are unique in that they can have an icon and description</li>
             <li>effects are able to work for a specific mode, this works for multiplier effects as well</li>
-            <li>enable all debug values and look at a few examples; you may understand them much better after</li>
+            <li>enable all debug values and look at a few examples; you might understand them much better after</li>
         </ul>
         <hr>
     </span>
@@ -1178,22 +1179,22 @@
                 var thing = things[i]
                 if (thing.trait) {
                     delete thing.trait
-                    script += "\r\n    new G.Trait(" + JSON.stringify(things[i]) + ")"
+                    script += "\r\n    new G.Trait(" + RJSON.toJs(JSON.stringify(things[i])) + ")"
                     thing.trait = 1
                 } else {
-                    script += "\r\n    new G.Tech(" + JSON.stringify(things[i]) + ")"
+                    script += "\r\n    new G.Tech(" + RJSON.toJs(JSON.stringify(things[i])) + ")"
                 }
             }
             var things = newData.units
             for (var i = 0; i < things.length; i++) {
-                script += "\r\n    new G.Unit(" + JSON.stringify(things[i]) + ")"
+                script += "\r\n    new G.Unit(" + RJSON.toJs(JSON.stringify(things[i])) + ")"
             }
             var things = newData.resources
             for (var i = 0; i < things.length; i++) {
-                script += "\r\n    new G.Res(" + JSON.stringify(things[i]) + ")"
+                script += "\r\n    new G.Res(" + RJSON.toJs(JSON.stringify(things[i])) + ")"
             }
             var modData = newData.modData
-            document.getElementsByTagName("textarea")[0].value = "// " + JSON.stringify(newData) + "\r\n" + 'G.AddData({\r\n  name: "' + modData[0] + '",\r\n  author: "' + modData[1] + '",\r\n  desc: "' + modData[2] + '",\r\n  engineVersion: 1,\r\n  sheets: ' + convertIfObj(modData[3]) + ',\r\n  func: function () {' + (script.length === 0 ? "\r\n    // No data yet..." : script) + "\r\n  }\r\n})"
+            document.getElementsByTagName("textarea")[0].value = "// " + RJSON.toRJson(JSON.stringify(newData)) + "\r\n" + 'G.AddData({\r\n  name: "' + modData[0].replaceAll('\\\\', '\\\\').replaceAll('"', '\\"') + '",\r\n  author: "' + modData[1].replaceAll('\\\\', '\\\\').replaceAll('"', '\\"') + '",\r\n  desc: "' + modData[2].replaceAll('\\\\', '\\\\').replaceAll('"', '\\"') + '",\r\n  engineVersion: 1,\r\n  sheets: ' + RJSON.toJson(modData[3]) + ',\r\n  func: function () {' + (script.length === 0 ? "\r\n    // No data yet..." : script) + "\r\n  }\r\n})"
         }
 
         function importScript() {
@@ -1205,7 +1206,15 @@
             } else {
                 value = value.trim()
             }
-            newData = JSON.parse(value.slice(0, 2) === "//" ? value.slice(2) : value)
+            newData = JSON.parse(RJSON.toJson(value.slice(0, 2) === "//" ? value.slice(2) : value))
+            selectedID = -1
+            document.getElementsByTagName("span")[3].textContent = ""
+            var inputs = document.getElementsByTagName("input")
+            var modData = newData.modData
+            inputs[2].value = modData[0]
+            inputs[3].value = modData[1]
+            inputs[4].value = modData[2]
+            inputs[5].value = modData[3]
             updateScript()
             generateScript()
         }

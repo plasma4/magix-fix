@@ -42,6 +42,11 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
     }
 }
 
+var magixURL = window.offlineMode != null ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
+var magixURL2 = window.offlineMode != null ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
+var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
+var themeText = window.offlineMode != null ? '' : 'Theme/'
+
 // Disable double click's default behavior for mobile users and scale properly
 var meta = document.createElement('meta');
 meta.name = "viewport";
@@ -458,8 +463,8 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has many other biomes.<br>Gameplay difficulty is higher than with the human race,<br>but helping elves out will boost both races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="https://file.garden/Xbm-ilapeDSxWf1b/Civ2popup/civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="' + magixURL + 'civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="' + magixURL + 'civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>It is mostly one big forest, but it still has many other biomes.<br>Gameplay difficulty is higher than with the human race,<br>but helping elves out will boost both races!<br>Make housing for elves and grow your tribe, but most importantly, survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="' + magixURL + 'civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -808,7 +813,7 @@ G.traitTick = function (race, permachiev) {
                 expTraits.push(me.displayName);
             }
             G.deleteTrait(me.name);
-            G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech.mp3'); // Let's just...ignore the name of the sound effect, all right?
+            G.playSound(magixURL + 'GainedTech.mp3'); // Let's just...ignore the name of the sound effect, all right?
             return true;
         }
         if (!G.has(me.name)) {
@@ -830,7 +835,7 @@ G.traitTick = function (race, permachiev) {
                     if (G.has('symbI'));
                     me.yearOfObtainment = G.year;
                     if (typeof (me.lifetime) === 'function') if (me.lifetime() == Infinity) G.achievByName[permachiev].won++;
-                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTrait.mp3');
+                    G.playSound(magixURL + 'GainedTrait.mp3');
                     return true;
                 }
             }
@@ -856,10 +861,10 @@ function onTechBuy(race, tec) {
     l('techBox').children[0].classList.add('popIn');
     var randomSound = Math.floor(Math.random() * 4)
     switch (randomSound) {
-        case 0: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech2.wav'); break;
-        case 1: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech3.wav'); break;
-        case 2: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech4.wav'); break;
-        case 3: G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedTech5.wav'); break;
+        case 0: G.playSound(magixURL + 'GainedTech2.wav'); break;
+        case 1: G.playSound(magixURL + 'GainedTech3.wav'); break;
+        case 2: G.playSound(magixURL + 'GainedTech4.wav'); break;
+        case 3: G.playSound(magixURL + 'GainedTech5.wav'); break;
     }
     if (techCnt == 50) G.Message({ type: 'important', text: 'Your tribe can now survive. Thanks to you (' + G.getName('ruler') + '), dreamers, and lots of insight. You stare at your tribe with a smile.', icon: [8, 12, 8, 4] })
     if (techCnt == 100) G.Message({ type: 'important', text: 'Your civilization is becoming smarter and smarter, and your people are thanking you for ruling them. They believe you are the only person fit for helping them build a great and never-ending civilization! Discover, research, and prosper.', icon: [24, 18, 'magixmod', 8, 4] })
@@ -945,7 +950,7 @@ if (getObj("civ") != "1") {
         engineVersion: 1,
         manifest: 0,
         requires: ['MagixUtils'],
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': 'https://file.garden/Xbm-ilapeDSxWf1b/seasonalMagix.png', 'terrain': 'https://file.garden/Xbm-ilapeDSxWf1b/terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
+        sheets: { 'magixmod': magixURL + 'MaGiXmOdB4Ta.png', 'magix2': magix2Link, 'seasonal': magixURL + 'seasonalMagix.png', 'terrain': magixURL + 'terrainMagix.png' },//custom stylesheet (note : broken in IE and Edge for the time being)
         func: function () {
             function theme() {
                 var Theme = G.checkPolicy('theme changer');
@@ -954,16 +959,16 @@ if (getObj("civ") != "1") {
                 }
                 //tech
                 if (G.tab.id == 'tech') {
-                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
+                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + Theme + themeText + 'bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
                 }
 
                 //res and messages tab
-                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgDownRock' + Theme + '.jpg")';
-                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgDarkRock' + Theme + '.jpg")';
-                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgMidRock' + Theme + '.jpg")';
-                document.getElementById("messagesList").style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgMidRock' + Theme + '.jpg")';
+                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + Theme + themeText + 'bgDownRock' + Theme + '.jpg")';
+                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + magixURL + Theme + themeText + 'bgDarkRock' + Theme + '.jpg")';
+                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + magixURL + Theme + themeText + 'bgMidRock' + Theme + '.jpg")';
+                document.getElementById("messagesList").style['background-image'] = 'url("' + magixURL + Theme + themeText + 'bgMidRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("sideCategory").length; i++) document.getElementsByClassName("sideCategory")[i].style.width = "100px";
-                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("https://file.garden/Xbm-ilapeDSxWf1b/' + Theme + 'Theme/bgDarkRock' + Theme + '.jpg")';
+                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + magixURL + Theme + themeText + 'bgDarkRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-repeat'] = 'no-repeat, repeat';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-size'] = 'cover';
             }
@@ -1417,7 +1422,7 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
-                G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/0population.mp3');
+                G.playSound(magixURL + '0population.mp3');
                 G.dialogue.popup(function (div) {
                     var specialNotes = []
                     if (G.has('factories II')) {
@@ -1693,7 +1698,7 @@ if (getObj("civ") != "1") {
                                 G.settingsByName['paused'].value = 1;
                                 document.getElementById('blackBackground').style.opacity = 1;
                                 G.settingsByName['autosave'].value = 0;
-                                var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/meteor.mp3');
+                                var audio = new Audio(magixURL + 'meteor.mp3');
                                 audio.play();
                                 setTimeout(function () { G.middleText('<p id="loading">So...it happened.</p>', 'slow'); }, 1000);
                                 setTimeout(function () { G.middleText('<p id="loading">It really did.</p>', 'slow'); }, 3000);
@@ -1707,14 +1712,14 @@ if (getObj("civ") != "1") {
                                 setTimeout(function () { G.middleText('<p id="loading">are you ready for the <i>NEW</i> adventure?</p>', 'slow'); }, 28000);
                                 setTimeout(function () {
                                     G.dialogue.popup(function (div) {
-                                        // var message = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/SpecialMessage.wav');
+                                        // var message = new Audio(magixURL + 'SpecialMessage.wav');
                                         // message.play()
                                         return '<div style="width:580px;min-height:600px;height:75%;">' +
                                             '<div class="fancyText title"><font color="pink">A whole new world</font></div>' +
                                             '<div class="fancyText"><font color="#4d4">The green meteor has fallen down from space!<br>It didn\'t take long to cause damage...<br>but you suddenly became the survivor.</font></div>' +
                                             '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                             '<br><br><Br>' +
-                                            '<center><table width="240" height="120"><tr background="https://file.garden/Xbm-ilapeDSxWf1b/cassete.png"><td>' +
+                                            '<center><table width="240" height="120"><tr background="'+magixURL+'cassete.png"><td>' +
                                             '<br><br></td></tr></table></center>' +
                                             '<div class="bulleted">You unlocked Civilization 2!</div>' +
                                             '<div class="bulleted">The adventure with the new race will be harder than with your current human race. Think about collecting more <b>Victory points</b> first!<br>(You currently own ' + G.getRes('victory point').amount + ' Victory points.)</div>' +
@@ -1726,7 +1731,7 @@ if (getObj("civ") != "1") {
                                             '<div class="bulleted"><small><font color="lime">(Fortunately, you were in a shelter far far away from the place where the meteor fell. After your befriended wizards helped you to travel to this new place, you noticed some, well, rather off-putting things about it, to say the least.)</font></small></div>' +
                                             '</div>' +
                                             '</div><div class="buttonBox">' +
-                                            '</div></div>' // <a href="https://file.garden/Xbm-ilapeDSxWf1b/aroundMeteor.png" target="_blank">Things found around meteor (link)</a>
+                                            '</div></div>' // aroundMeteor.png removed
                                     }, 'noClose');
                                 }, 25000);
                                 break;
@@ -2185,13 +2190,13 @@ if (getObj("civ") != "1") {
                         }
                     }
                     var eatOnGatherVisible = G.getPolicy('eat on gather').visible
-                    if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
+                    if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful' || !G.has('rules of food')) {
                         if (eatOnGatherVisible) {
                             G.setPolicyModeByName('eat on gather', 'off');
                             G.getPolicy('eat on gather').visible = false;
                             G.update['policy']();
                         }
-                    } else if (!eatOnGatherVisible) {
+                    } else if (!eatOnGatherVisible && G.has('rules of food')) {
                         G.getPolicy('eat on gather').visible = true;
                         G.update['policy']();
                     }
@@ -2317,8 +2322,8 @@ if (getObj("civ") != "1") {
                     ///On purpose crash. Occurs while playing market without magix utils
                     if (G.modsByName['Market mod'] && !(G.modsByName['Magix utils for market'] || G.modsByName['Magix market mod utils'])) {
                         console.log('Install Magix utilities for the market mod in order to use it!');
-                        console.log('Url to paste: https://cdn.jsdelivr.net/gh/MagixModLegacy/Magix@master/MagixUtilsForMarketA0.js');
-                        G.middleText('Install Magix utilities for the market mod!<hr><br><small>Caused on-purpose game crash</small>', 'slow')
+                        console.log('Link to paste: https://plasma4.github.io/magix-extras/MagixMarketUtils.js');
+                        G.middleText('Install Magix utilities for the market mod (view the console for the link).<hr><br><small>(caused intentional game crash)</small>', 'slow')
                     }
                     const thieves = G.getDict("thief")//I slide in thieves stealing ability ;)
                     const chances = [
@@ -2566,7 +2571,7 @@ if (getObj("civ") != "1") {
                     var luckynumber = Math.round(Math.random() * 1777777) + 1;
                     if (luckynumber == 777777) {
                         G.achievByName['just plain lucky'].won++;
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/JustPlainLucky.mp3');
+                        G.playSound(magixURL + 'JustPlainLucky.mp3');
                         G.middleText('<font color="#71cd62">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number -' + G.achievByName['just plain lucky'].won + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'time' : 'times') + '<br>Impressive!<br>Anyway, enjoy the game!</small>', 'slow');
                     }
                     if (G.achievByName['speedresearcher'].won >= 1 || G.achievByName['speedresearcher II'].won >= 1 || G.achievByName['cruel goal'].won >= 1 || G.achievByName['that was so brutal'].won >= 1) G.achievByName['in the shadows'].won = 1;
@@ -4661,7 +4666,7 @@ if (getObj("civ") != "1") {
                     if (me.amount >= 1 && !madeUnlockMessage) {
                         G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to the Plain Island. Out of the portal a Tablet falls and hits a rock next to you. Within the square portal, you can finally see what is beyond it! It appears to be a bunch of flat plains, but you are sure there are a variety of new discoveries that you can find. (You can also rename this island in the Traits tab.)</b>', icon: [8, 3, 'magixmod'] });
                         madeUnlockMessage = true
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
+                        G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
                     if (G.has('plain island building')) {
                         me.hidden = true
@@ -5086,7 +5091,7 @@ if (getObj("civ") != "1") {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
                         G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to Paradise. Out of the portal a Tablet falls and falls next to your feet. A large golden portal shines and you can see what is beyond it. You come through and notice it is perfect to live. Now it is time for more discoveries.</b>', icon: [8, 4, 'magixmod'] });
                         madeUnlockMessageP = true
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
+                        G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
                     if (G.has('paradise building')) {
                         me.hidden = true
@@ -5680,7 +5685,7 @@ if (getObj("civ") != "1") {
                     if (me.amount >= 1 && !UnderworldMESG) {
                         G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere, a Tablet appears behind you. It is hot to the touch and its red glowing will only attract curses.</b><br><font color="fuschia">Prepare to tame 6 Devil\'s traits in order to continue your adventure! Without this tablet, the Underworld won\'t allow you discover its secrets...</font>', icon: [12, 19, 'magixmod'] });
                         UnderworldMESG = true
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
+                        G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
                     if (G.has('underworld building 2/2')) {
                         me.hidden = true
@@ -6051,7 +6056,7 @@ if (getObj("civ") != "1") {
                     if (me.amount >= 1 && !MirrorMESG) {
                         G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold to the touch and perfectly symmetrical. A Tablet has a warning carved onto it, and you\'ve unlocked a new resource!</b>', icon: [12, 19, 'magixmod'] });
                         MirrorMESG = true
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
+                        G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
                     if (G.has('mirror world 2/2')) {
                         me.hidden = true
@@ -6430,7 +6435,7 @@ if (getObj("civ") != "1") {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
                         G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a passage to the ancestors world. Out of the portal, a strange Tablet falls and falls next to your feet. A big ruby portal shines and you can now see what is beyond it! You come through and notice there is perfect moderate heat and autumn is everywhere. Now it is time for more discoveries.</b>', icon: [30, 33, 'magixmod'] });
                         madeUnlockMessageP = true
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/GainedEmblem.mp3');
+                        G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
                     if (G.has('ancestors world building')) {
                         me.hidden = true
@@ -10906,7 +10911,7 @@ if (getObj("civ") != "1") {
                         this.roll += 1;
                         this.rollN += 1;
                         G.popupSquares.spawn(l('chooseIgniter-' + this.id), l('chooseBox-' + this.id));
-                        G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/TechReroll.wav');
+                        G.playSound(magixURL + 'TechReroll.wav');
                     }
                 },
                 onTick: function () {
@@ -19158,7 +19163,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Patience - -</font></div>' +
                                     '<div class="fancyText">The Chra-nos trial</font></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/1.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '1.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19197,7 +19202,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Unhappy - -</font></div>' +
                                     '<div class="fancyText">The Bersaria trial</font></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/2.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '2.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19236,7 +19241,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Cultural - -</font></div>' +
                                     '<div class="fancyText">The Turia<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/3.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '3.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19275,7 +19280,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Hunted - -</font></div>' +
                                     '<div class="fancyText">The Hartar<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/4.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '4.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19348,7 +19353,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Unfishy - -</font></div>' +
                                     '<div class="fancyText">The Fishyar<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/ZmatEHzFI2_QBuAF/Trial5.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL2 + 'Trial5.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19387,7 +19392,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Oceanic - -</font></div>' +
                                     '<div class="fancyText">The Deep Ocean<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/ZmatEHzFI2_QBuAF/Trial6.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL2 + 'Trial6.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19426,7 +19431,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Herbalism - -</font></div>' +
                                     '<div class="fancyText">The Herbalia<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/ZmatEHzFI2_QBuAF/Trial7.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL2 + 'Trial7.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19465,7 +19470,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Buried - -</font></div>' +
                                     '<div class="fancyText">The Buri\'o dak<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/8.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '8.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19514,7 +19519,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Pocket - -</font></div>' +
                                     '<div class="fancyText">The Mamuun<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/10.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '10.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -19552,7 +19557,7 @@ if (getObj("civ") != "1") {
                                 return '<div style="width:580px;min-height:550px;height:75%;">' +
                                     '<div class="fancyText title"><font color="#d4af37" size="5">- - Faithful - -</font></div>' +
                                     '<div class="fancyText">The Enlightened<br></div><br>' +
-                                    '<img class="pixelate" src="https://file.garden/Xbm-ilapeDSxWf1b/Trial%20icons/11.png" width="72" height="72"/>' +
+                                    '<img class="pixelate" src="' + magixURL + '11.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
@@ -21345,7 +21350,7 @@ if (getObj("civ") != "1") {
         desc: 'The dataset for the elves of the Magix mod: unlocked after progressing for a while.',
         engineVersion: 1,
         manifest: 0,
-        sheets: { 'magixmod': 'https://file.garden/Xbm-ilapeDSxWf1b/MaGiXmOdB4Ta.png', 'c2': 'https://file.garden/Xbm-ilapeDSxWf1b/CiV2IconSheetB4Ta.png' },
+        sheets: { 'magixmod': magixURL + 'MaGiXmOdB4Ta.png', 'c2': magixURL + 'CiV2IconSheetB4Ta.png' },
         func: function () {
             var buriedWon = 0;
             var i = 0; var j = G.year % 40;
@@ -21362,14 +21367,14 @@ if (getObj("civ") != "1") {
                 for (var i = 0; i < document.getElementsByClassName("sideCategory").length; i++) document.getElementsByClassName("sideCategory")[i].style.width = "130px";
                 //res and messages tab
                 if (G.tab.id == 'tech') {
-                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgUpRockC2.jpg")'; //needs refreshing every time we enter Tech tab
+                    document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + 'bgUpRockC2.jpg")'; //needs refreshing every time we enter Tech tab
                 }
-                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgDownRockC2.jpg")';
-                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgDarkRockC2.jpg")';
-                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgMidRockC2.jpg")';
-                document.getElementById("messagesList").style['background-image'] = 'url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgMidRockC2.jpg")';
+                document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + 'bgDownRockC2.jpg")';
+                document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + magixURL + 'bgDarkRockC2.jpg")';
+                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + magixURL + 'bgMidRockC2.jpg")';
+                document.getElementById("messagesList").style['background-image'] = 'url("' + magixURL + 'bgMidRockC2.jpg")';
 
-                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("https://file.garden/Xbm-ilapeDSxWf1b/c2/bgDarkRockC2.jpg")';
+                for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + magixURL + 'bgDarkRockC2.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-repeat'] = 'no-repeat, repeat';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-size'] = 'cover, auto';
             }
@@ -21483,7 +21488,7 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
-                G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/0population.mp3');
+                G.playSound(magixURL + '0population.mp3');
                 G.dialogue.popup(function (div) {
                     return '<div style="width:540px;min-height:540px;height:75%;">' +
                         '<div class="fancyText title"><font color="#fe0031">Everyone in your tribe<br>has died terribly</font></div>' +
@@ -21647,11 +21652,6 @@ if (getObj("civ") != "1") {
                     if (G.checkPolicy("creative foraging") == "on") {
                         if (G.getRes('creativity').amount < 1) G.setPolicyModeByName('creative foraging', 'off');
                         else G.lose('creativity', 1, 'creative foraging');
-                    }
-                    if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
-                        G.setPolicyModeByName('eat on gather', 'off');
-                        G.getPolicy('eat on gather').visible = false;
-                        G.update['policy']();
                     }
                     G.getRes('pressure resistance').desc = 'This world is under <b>Pressure</b>. However, you can resist pressure. Pressure mechanic works similarily to [housing] but can only be increased by completing trials in both human and elf civilization.//You won\'t be able to have any more [population,elves] even if you will have more [housing] than [pressure resistance]. //Your current [pressure resistance,Resistance] level is <font color="lime">' + G.getRes('pressure resistance').amount + '</font>, allowing you to have ' + G.getRes('pressure resistance').amount + ' [population,elves] in your tribe. Complete some trials and achievements to increase this limit. You may also use special technologies to raise it as well!';
                     if (G.getSetting('tieredDisplay') == 0) { G.ta = 1 } else { G.ta = 0 };
@@ -21820,9 +21820,15 @@ if (getObj("civ") != "1") {
                         }
                         G.update['policy']();
                     }
-                    if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful') {
-                        G.setPolicyModeByName('eat on gather', 'off');
-                        G.getPolicy('eat on gather').visible = false;
+                    var eatOnGatherVisible = G.getPolicy('eat on gather').visible
+                    if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful' || !G.has('rules of food')) {
+                        if (eatOnGatherVisible) {
+                            G.setPolicyModeByName('eat on gather', 'off');
+                            G.getPolicy('eat on gather').visible = false;
+                            G.update['policy']();
+                        }
+                    } else if (!eatOnGatherVisible && G.has('rules of food')) {
+                        G.getPolicy('eat on gather').visible = true;
                         G.update['policy']();
                     }
                     if (G.getUnitAmount('archaeologist') > 0) G.getDict('out of relics').req = { 'archaeology': true, 'tribalism': true };
@@ -21859,7 +21865,7 @@ if (getObj("civ") != "1") {
                     if (luckynumber == 777777) {
                         G.achievByName['just plain lucky'].won++;
                         if (G.getSetting('sound')) {
-                            var audio = new Audio('https://file.garden/Xbm-ilapeDSxWf1b/JustPlainLucky.mp3');
+                            var audio = new Audio(magixURL + 'JustPlainLucky.mp3');
                             audio.play();
                         }
                         G.middleText('<font color="#71cd62">- Congratulations: you struck the lucky number (777777). -<br><small>Completed "Just plain lucky" shadow achievement -<hr width="300">You struck the lucky number ' + ' ' + (G.achievByName['just plain lucky'].won == 1 ? 'for the first time' : (G.achievByName['just plain lucky'].won + 'times already')) + '<br>Impressive.<br>Anyway, enjoy the game!</small>', 'slow');
@@ -24747,7 +24753,7 @@ if (getObj("civ") != "1") {
                     this.rollN += 1;
                     G.update['tech']();
                     G.popupSquares.spawn(l('chooseIgniter-' + this.id), l('chooseBox-' + this.id));
-                    G.playSound('https://file.garden/Xbm-ilapeDSxWf1b/TechReroll.wav');
+                    G.playSound(magixURL + 'TechReroll.wav');
                 },
                 onTick: function () {
                     this.roll -= 0.01;
