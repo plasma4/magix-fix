@@ -42,10 +42,10 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
     }
 }
 
-var magixURL = window.offlineMode != null ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
-var magixURL2 = window.offlineMode != null ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
-var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 var isUsingFile = window.offlineMode != null
+var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
+var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
+var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 
 // Disable double click's default behavior for mobile users and scale properly
 var meta = document.createElement('meta');

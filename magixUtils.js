@@ -49,8 +49,9 @@ if (!window.magixLoaded) {
     }
 }
 
-var magixURL = window.offlineMode != null ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
-var magixURL2 = window.offlineMode != null ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
+var isUsingFile = window.offlineMode != null
+var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
+var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
 var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 
 // Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
