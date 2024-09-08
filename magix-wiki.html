@@ -340,6 +340,7 @@
             <li>modes are unique in that they can have an icon and description</li>
             <li>effects are able to work for a specific mode, this works for multiplier effects as well</li>
             <li>enable all debug values and look at a few examples; you might understand them much better after</li>
+            <li>also, be aware that some things might not work as you expect; sometimes, examples teach well</li>
         </ul>
         <hr>
     </span>
@@ -1040,14 +1041,14 @@
         }
 
         var inputsToUse = {
-            achievements: ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"],
+            achievements: ["name", "displayName", "desc", "visible", "icon", "wideIcon", "civ", "special", "plural"],
             lands: ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"],
             goods: ["name", "displayName", "desc", "res", "icon", "mult"],
-            resources: ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"],
+            resources: ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext"],
             units: ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "limitPer", "upkeep"],
             policies: ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"],
-            techs: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"],
-            traits: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "tier", "chance", "req"]
+            techs: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "chance", "req", "tutorialMesg"],
+            traits: ["name", "displayName", "desc", "icon", "cost", "category", "startWith", "chance", "req"]
         }
         var newData = { modData: ["Mod Name", "Author", "Description of the mod.", '{ myCustomIcon:"about:blank" }'], knows: [], units: [], resources: [] }
         var selectedID = -1
