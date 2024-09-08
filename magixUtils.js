@@ -1595,7 +1595,7 @@ G.AddData({
                 var fromVersion = parseFloat(spl[i++]);
                 G.releaseNumber = parseFloat(spl[i++]);
                 if (G.releaseNumber > 1000) {
-                    G.releaseNumber = 55; // assume it's the newest version
+                    G.releaseNumber = 54; // assume it's NOT the newest version
                     i--;
                 }
                 G.startDate = parseFloat(spl[i++]);
