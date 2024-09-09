@@ -99,6 +99,505 @@ G.setDict = function (name, what) {
     G.dict[name] = what
 }
 
+/*==========================
+TABS (yeah, this needs some changing and touch-ups, eh?)
+==========================*/
+function tabs() {
+    if (G.tabs[0].name.slice(0, 5) === "<font") {
+        return
+    }
+    var tabIds = [];
+    var newText = ['<font color="lime">Production</font>', '<font color="#7f7fff">Territory</font>', '<font color="fuschia">Policies</font>', '<font color="pink">Traits</font>', '<font color="#bbbbff">Research</font>', '<font color="yellow">Settings</font>', '<font color="yellow">Update log (Vanilla)</font>', '<font color="yellow">Legacy</font>', '<font color="orange">Magix</font>'];
+    for (i in G.tabs) {
+        tabIds[i] = G.tabs[i].id;
+        G.tabs[i].name = newText[i];
+    }
+    var tabL = G.tabs.length;
+    if (tabIds.indexOf('Magix') == -1)
+        G.tabs[tabL] = { name: '<font color="orange">Magix</font>', showMap: false, id: 'Magix', popup: true, addClass: 'right', desc: 'Options and info about the Magix mod.' };
+    G.buildTabs();
+}
+
+/*==========================
+Saveload
+==========================*/
+G.Save = function (toStr) {
+    //if toStr is true, don't actually save; return a string containing the save
+    if (!toStr && G.local && G.isIE) return false;
+    var str = '';
+
+    //general
+    G.lastDate = parseInt(Date.now());
+    str +=
+        parseFloat(G.engineVersion).toString() + ';' +
+        parseFloat(G.releaseNumber).toString() + ';' +
+        parseFloat(G.startDate).toString() + ';' +
+        parseFloat(G.fullDate).toString() + ';' +
+        parseFloat(G.lastDate).toString() + ';' +
+        parseFloat(G.year).toString() + ';' +
+        parseFloat(G.day).toString() + ';' +
+        parseFloat(G.fastTicks).toString() + ';' +
+        parseFloat(G.furthestDay).toString() + ';' +
+        parseFloat(G.totalDays).toString() + ';' +
+        parseFloat(G.resets).toString() + ';' +
+        parseInt(G.influenceTraitRemovalCooldown).toString() + ';' +
+        '';
+    str += '|';
+
+    //settings
+    for (var i in G.settings) {
+        var me = G.settings[i];
+        if (me.type == 'toggle') str += (me.value ? '1' : '0');
+        else if (me.type == 'int') str += parseInt(me.value).toString();
+        str += ';';
+    }
+    str += '|';
+
+    //mods
+    for (var i in G.mods) {
+        var me = G.mods[i];
+        str += '"' + me.url.replaceAll('"', '&quot;') + '":';
+        if (me.achievs) {
+            //we save achievements separately for each mod
+            for (var ii in me.achievs) {
+                str += parseInt(me.achievs[ii].won).toString() + ',';
+            }
+        }
+        str += ':';
+        //tracked stats (not fully implemented yet)
+        str += parseFloat(G.trackedStat).toString();
+        str += ';';
+    }
+    str += '|';
+
+    //culture and names
+    str += (G.cultureSeed) + ';';
+    str += G.getSafeName('ruler') + ';';
+    str += G.getSafeName('civ') + ';';
+    str += G.getSafeName('civadj') + ';';
+    str += G.getSafeName('inhab') + ';';
+    str += G.getSafeName('inhabs') + ';';
+    str += G.getSafeName('island') + ';';
+    str += '|';
+
+    //maps
+    str += (G.currentMap.seed) + ';';
+
+    var map = G.currentMap;
+    for (var x = 0; x < map.w; x++) {
+        for (var y = 0; y < map.h; y++) {
+            var tile = map.tiles[x][y];
+            str +=
+                parseInt(tile.owner).toString() + ':' +
+                parseInt(Math.floor(tile.explored * 100)).toString() + ':' +
+                ',';
+        }
+    }
+
+    str += '|';
+
+    //techs & traits
+    var len = G.techsOwned.length;
+    for (var i = 0; i < len; i++) {
+        str += parseInt(G.techsOwned[i].tech.id).toString() + ';';
+    }
+    str += '|';
+    var len = G.traitsOwned.length;
+    for (var i = 0; i < len; i++) {
+        str += parseInt(G.traitsOwned[i].trait.id).toString() + ',';
+        str += parseInt(G.traitsOwned[i].trait.yearOfObtainment).toString() + ';'; //we need to make temporality of the traits work as it should
+    }
+    str += '|';
+
+    //policies
+    var len = G.policy.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.policy[i];
+        if (me.visible) {
+            str += parseInt(me.id).toString() + ',' + parseInt(me.mode ? me.mode.num : 0).toString() + ';';
+        }
+    }
+    str += '|';
+
+    //res
+    var len = G.res.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.res[i];
+        str +=
+            (!me.meta ? (parseFloat(Math.round(me.amount)).toString() + ',') : '') +
+            (me.displayUsed ? (parseFloat(Math.round(me.used)).toString() + ',') : '') +
+            (me.visible ? '1' : '0') + ';';
+    }
+    str += '|';
+
+    //units
+    var len = G.unitsOwned.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.unitsOwned[i];
+        if (true)//me.amount>0)
+        {
+            str += parseInt(me.unit.id).toString() + ',' +
+                parseFloat(Math.round(me.amount)).toString() +
+                ((me.unit.gizmos || me.unit.wonder) ?
+                    (',' + parseInt(me.unit.wonder ? me.mode : (me.mode ? me.mode.num : 0)).toString() + ',' +//mode
+                        parseInt(me.percent).toString())//percent
+                    : '') +
+                ',' + parseFloat(Math.round(me.targetAmount)).toString() +
+                ',' + parseFloat(Math.round(me.idle)).toString() +
+                ';';
+        }
+    }
+    str += '|';
+
+    //chooseboxes
+    var len = G.chooseBox.length;
+    for (var i = 0; i < len; i++) {
+        var me = G.chooseBox[i];
+
+        var choices = [parseFloat(me.roll)];
+
+        for (var ii in me.choices) {
+            choices.push(parseInt(me.choices[ii].id));
+        }
+        str += choices.join(',') + ';';
+    }
+    str += '|';
+    for (var i = 0; i < len; i++) {
+        var me = G.chooseBox[i];
+        str += me.cooldown + ';';
+    }
+    // storage object
+    str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT') + (G.PARTY ? '$' : '')
+    str += '|';
+    //console.log('SAVE');
+    //console.log(str);
+    str = escape(str);
+    str = b64EncodeUnicode(str);
+    //console.log(Math.ceil(byteCount(str)/1000)+'kb');
+    if (!toStr) {
+        localStorage.setItem(G.saveTo, str);
+        G.middleText('- Game saved -');
+        //console.log('Game saved successfully.');
+    }
+    else return str;
+}
+
+G.Load = function (doneLoading) {
+    document.title = "NeverEnding Legacy"
+    G.middleText('<p id="loading">Loading save...</p>', "slow");
+    if (G.importStr) { var local = G.importStr; }
+    else {
+        if (G.local && G.isIE) return false;
+        if (!window.localStorage) return false;
+        var local = window.localStorage.getItem(G.saveTo);
+    }
+    if (!local) return false;
+    var str = '';
+    str = b64DecodeUnicode(local);
+    //console.log('LOAD');
+    //console.log(Math.ceil(byteCount(str)/1000)+'kb');
+    str = unescape(str);
+    //console.log(str);
+    if (str != 'null' && str != '') {
+        var oldStorage = G.storageObject;
+        try {
+            G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/);
+            if (G.storageObject) {
+                G.storageObject = G.storageObject[G.storageObject.length - 1];
+                if (G.storageObject) {
+                    G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'));
+                    for (var i = 0; i < conflictingStorageObjects.length; i++) {
+                        var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
+                        var newItem = G.storageObject[key];
+                        if (oldStorage[key] !== newItem) {
+                            G.dialogue.popup(function (div) {
+                                return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
+                                    text: 'Yes', onclick: function () {
+                                        try {
+                                            localStorage.setItem(G.saveTo, local);
+                                            location.reload();
+                                        } catch (e) {
+                                            throw TypeError("The game failed to store the data locally.");
+                                        }
+                                    }
+                                }) + G.button({
+                                    text: 'No', onclick: function () {
+                                        G.dialogue.close();
+                                    }
+                                }) + '</div>';
+                            });
+                            return false;
+                        }
+                    }
+                } else {
+                    G.storageObject = {};
+                }
+            } else {
+                G.storageObject = {};
+            }
+        } catch (e) {
+            console.warn("Storage data could not be obtained.");
+            G.storageObject = oldStorage;
+        }
+        G.Reset();
+        G.resetSettings();
+
+        //take care of strings first
+        G.stringsLoadedN = 0;
+        G.stringsLoaded = [];
+        str = str.replace(/"(.*?)"/gi, G.parseLoadStrings);
+
+        str = str.split('|');
+
+        var s = 0;
+        //general
+        var spl = str[s++].split(';');
+        //console.log('General : '+spl);
+        var i = 0;
+        var fromVersion = parseFloat(spl[i++]);
+        G.releaseNumber = parseFloat(spl[i++]);
+        if (G.releaseNumber > 1000) {
+            G.releaseNumber = 54; // assume it's NOT the newest version
+            i--;
+        }
+        G.startDate = parseFloat(spl[i++]);
+        G.fullDate = parseFloat(spl[i++]);
+        G.lastDate = parseFloat(spl[i++]);
+        G.year = parseFloat(spl[i++]);
+        G.day = parseFloat(spl[i++]);
+        G.fastTicks = parseFloat(spl[i++]);
+        G.furthestDay = parseFloat(spl[i++]);
+        G.totalDays = parseFloat(spl[i++]);
+        G.resets = parseFloat(spl[i++]);
+        G.influenceTraitRemovalCooldown = parseFloat(spl[i++]);
+        //accumulate fast ticks when offline
+        var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
+        G.fastTicks += Math.floor(timeOffline);
+        G.nextFastTick = Math.ceil((1 - (timeOffline - Math.floor(timeOffline))) * G.tickDuration);
+
+        //settings
+        var spl = str[s++].split(';');
+        //console.log('Settings : '+spl);
+        var len = spl.length;
+        for (var i = 0; i < len; i++) {
+            if (spl[i] != '' && G.settings[i]) {
+                var me = G.settings[i];
+                if (me.type == 'toggle') me.value = (spl[i] == '1' ? true : false);
+                else if (me.type == 'int') me.value = parseInt(spl[i]);
+            }
+        }
+        for (var i in G.settings) {
+            var me = G.settings[i];
+            if (me.onChange) me.onChange();
+        }
+
+
+        if (!doneLoading) {
+            //mods
+            var spl = str[s++].split(';');
+            var mods = [];
+            for (var i in spl) {
+                var spl2 = spl[i].split(':');
+                var val = G.readLoadedString(spl2[0]);
+                if (val) {
+                    mods.push(val.replaceAll('&quot;', '"'));
+                }
+            }
+            G.LoadMods(mods, G.Load, false);
+            return 1;
+        }
+
+        G.importStr = 0;
+
+        //mod achievs & tracked stats
+        var spl = str[s++].split(';');
+        for (var i in spl) {
+            var spl2 = spl[i].split(':');
+            var mod = G.mods[i];
+            if (spl2[1] && mod.achievs) {
+                bit = spl2[1].split(',');
+                for (var ii in bit) {
+                    if (bit[ii]) {
+                        if (mod.achievs[ii]) mod.achievs[ii].won = parseInt(bit[ii]);
+                    }
+                }
+            }
+            if (spl2[2]) {
+                bit = spl2[2].split(',');
+                for (var ii in bit) {
+                    if (bit[ii]) {
+                        G.trackedStat = parseFloat(bit[ii]);
+                    }
+                }
+            }
+        }
+
+        //culture and names
+        var spl = str[s++].split(';');
+        var ss = 0;
+        G.cultureSeed = spl[ss++];
+        G.setSafeName('ruler', G.readLoadedString(spl[ss++]), 'Anonymous');
+        G.setSafeName('civ', G.readLoadedString(spl[ss++]), 'nameless tribe');
+        G.setSafeName('civadj', G.readLoadedString(spl[ss++]), 'tribal');
+        G.setSafeName('inhab', G.readLoadedString(spl[ss++]), 'inhabitant');
+        G.setSafeName('inhabs', G.readLoadedString(spl[ss++]), 'inhabitants');
+        if (G.releaseNumber > 54)
+            G.setSafeName('island', G.readLoadedString(spl[ss++]), 'Plain Island');
+
+        //maps
+        var spl = str[s++].split(';');
+        //console.log('Map tiles : '+spl);
+        G.currentMap = new G.Map(0, 24, 24, spl[0]);
+
+        var map = G.currentMap;
+        var spl2 = spl[1].split(',');
+        var I = 0;
+        for (var x = 0; x < map.w; x++) {
+            for (var y = 0; y < map.h; y++) {
+                if (spl2[I]) {
+                    var tile = map.tiles[x][y];
+                    spl3 = spl2[I].split(':');
+                    tile.owner = parseInt(spl3[0]);
+                    tile.explored = parseInt(spl3[1]) / 100;
+                }
+                I++;
+            }
+        }
+
+        G.updateMapForOwners(map);
+        G.centerMap(map);
+
+        //techs & traits
+        var spl = str[s++].split(';');
+        //console.log('Techs : '+spl);
+        var len = spl.length;
+        for (var i = len - 1; i >= 0; i--) { if (spl[i] != '') { G.gainTech(G.know[parseInt(spl[i])]); } }
+
+        var spl = str[s++].split(';');
+        //console.log('Traits : '+spl);
+        var len = spl.length;
+        for (var i = len - 1; i >= 0; i--) {
+            if (spl[i] != '') {
+                var spl2 = spl[i].split(',');
+                G.gainTrait(G.know[parseInt(spl2[0])]);
+                if (G.releaseNumber > 54) G.know[parseInt(spl2[0])].yearOfObtainment = parseFloat(spl2[1]);
+            }
+        }
+
+        //policies
+        var spl = str[s++].split(';');
+        //console.log('Policies : '+spl);
+        var len = spl.length;
+        for (var i = len - 1; i >= 0; i--) {
+            if (spl[i] != '') {
+                var spl2 = spl[i].split(',');
+                var me = G.policy[parseInt(spl2[0])];
+                G.gainPolicy(me);
+                me.mode = me.modesById[parseInt(spl2[1])];
+            }
+        }
+
+        //res
+        var spl = str[s++].split(';');
+        //console.log('Resources : '+spl);
+        var len = G.res.length;
+        for (var i = 0; i < len; i++) {
+            if (spl[i]) {
+                var me = G.res[i];
+                var spl2 = spl[i].split(',');
+                if (parseInt(spl2[spl2.length - 1]) == 1) me.visible = true; else me.visible = false;
+                if (!me.meta) me.amount = parseFloat(spl2[0]);
+                if (me.displayUsed) me.used = parseFloat(spl2[1]);
+            }
+        }
+
+        //units
+        var spl = str[s++].split(';');
+        //console.log('Units : '+spl);
+        var len = spl.length;
+        for (var i = len - 1; i >= 0; i--) {
+            if (spl[i] != '') {
+                var spl2 = spl[i].split(',');
+                //unit id, amount, and if unit has gizmos : mode, percent
+                var obj = {
+                    id: G.unitN,
+                    unit: G.unit[parseInt(spl2[0])],
+                    amount: parseFloat(spl2[1]),
+                    targetAmount: ((typeof spl2[4] !== 'undefined') ? parseFloat(spl2[4]) : parseFloat(spl2[1])),
+                    idle: ((typeof spl2[5] !== 'undefined') ? parseFloat(spl2[5]) : 0),
+                    displayedAmount: 0,
+                    mode: parseInt(spl2[2]) || 0,
+                    percent: parseInt(spl2[3]),
+                    popups: []
+                };
+                G.unitsOwned.unshift(obj);
+                var unit = G.unitsOwned[0];
+                if (unit.unit.modesById[0]) unit.mode = unit.unit.modesById[unit.mode];
+                G.unitsOwnedNames.unshift(G.unit[parseInt(spl2[0])].name);
+                G.unitN++;
+            }
+        }
+
+        //assign unit .splitOf
+        var prev = 0;
+        var len = G.unitsOwned.length;
+        for (var i = 0; i < len; i++) {
+            var me = G.unitsOwned[i];
+            if (prev && me.unit.id == prev.unit.id) me.splitOf = prev;
+            else prev = me;
+        }
+        prev = 0;
+
+        //chooseboxes
+        var spl = str[s++].split(';');
+        var len = spl.length;
+        for (var i = len - 1; i >= 0; i--) {
+            if (spl[i] != '') {
+                G.chooseBox[i].choices = [];
+                var spl2 = spl[i].split(',');
+                for (var ii in spl2) {
+                    if (ii == 0) G.chooseBox[i].roll = parseFloat(spl2[ii]);
+                    else G.chooseBox[i].choices[ii - 1] = G.know[parseInt(spl2[ii])];
+                }
+            }
+        }
+
+        var tSpl = str[s++].split('$')
+        var spl = tSpl[0].split(';');
+        var num = parseInt(spl[0]);
+        G.getDict('research box').cooldown = isFinite(num) ? num : 0;
+        if (tSpl.length >= 3) G.PARTY = 1; // new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
+
+        G.runUnitReqs();
+        G.runPolicyReqs();
+
+        G.applyAchievEffects('load');
+
+        G.updateEverything();
+        G.createTopInterface();
+        G.createDebugMenu();
+        if (G.tabs[G.settingsByName['tab'].value]) G.setTab(G.tabs[G.settingsByName['tab'].value]);
+        G.setSetting('forcePaused', 0);
+
+        l('blackBackground').style.opacity = 0;
+        if (timeOffline >= 1) G.middleText('- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.</small>', true);
+
+        G.rememberAchievs = true;
+
+        G.animIntro = true;
+        G.introDur = G.fps * 1;
+
+        G.doFunc('game loaded');
+
+        G.Logic(true);//force a tick (solves some issues with display updates; this however means loading a paused game, saving and reloading will make a single day go by every time, which isn't ideal)
+        G.releaseNumber = 55; //this must be assigned here or else we will have issues
+        tabs();
+        console.log('Game loaded successfully (release ' + G.releaseNumber + ').');
+        return true;
+    }
+    return false;
+}
+
 // Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
 G.Res = function (obj) {
     this.type = 'res';
@@ -543,24 +1042,6 @@ G.AddData({
             };
         }
 
-        /*==========================
-        TABS (yeah, this needs some changing and touch-ups, eh?)
-        ==========================*/
-        function tabs() {
-            if (G.tabs[0].name.slice(0, 5) === "<font") {
-                return
-            }
-            var tabIds = [];
-            var newText = ['<font color="lime">Production</font>', '<font color="#7f7fff">Territory</font>', '<font color="fuschia">Policies</font>', '<font color="pink">Traits</font>', '<font color="#bbbbff">Research</font>', '<font color="yellow">Settings</font>', '<font color="yellow">Update log (Vanilla)</font>', '<font color="yellow">Legacy</font>', '<font color="orange">Magix</font>'];
-            for (i in G.tabs) {
-                tabIds[i] = G.tabs[i].id;
-                G.tabs[i].name = newText[i];
-            }
-            var tabL = G.tabs.length;
-            if (tabIds.indexOf('Magix') == -1)
-                G.tabs[tabL] = { name: '<font color="orange">Magix</font>', showMap: false, id: 'Magix', popup: true, addClass: 'right', desc: 'Options and info about the Magix mod.' };
-            G.buildTabs();
-        }
         //Magix tab
         G.tabPopup['Magix'] = function () {
             var str = '';
@@ -1356,485 +1837,6 @@ G.AddData({
 
 
         for (var i in G.settings) { G.settingsByName[G.settings[i].name] = G.settings[i]; }
-        /*==========================
-        Saveload
-        ==========================*/
-        G.Save = function (toStr) {
-            //if toStr is true, don't actually save; return a string containing the save
-            if (!toStr && G.local && G.isIE) return false;
-            var str = '';
-
-            //general
-            G.lastDate = parseInt(Date.now());
-            str +=
-                parseFloat(G.engineVersion).toString() + ';' +
-                parseFloat(G.releaseNumber).toString() + ';' +
-                parseFloat(G.startDate).toString() + ';' +
-                parseFloat(G.fullDate).toString() + ';' +
-                parseFloat(G.lastDate).toString() + ';' +
-                parseFloat(G.year).toString() + ';' +
-                parseFloat(G.day).toString() + ';' +
-                parseFloat(G.fastTicks).toString() + ';' +
-                parseFloat(G.furthestDay).toString() + ';' +
-                parseFloat(G.totalDays).toString() + ';' +
-                parseFloat(G.resets).toString() + ';' +
-                parseInt(G.influenceTraitRemovalCooldown).toString() + ';' +
-                '';
-            str += '|';
-
-            //settings
-            for (var i in G.settings) {
-                var me = G.settings[i];
-                if (me.type == 'toggle') str += (me.value ? '1' : '0');
-                else if (me.type == 'int') str += parseInt(me.value).toString();
-                str += ';';
-            }
-            str += '|';
-
-            //mods
-            for (var i in G.mods) {
-                var me = G.mods[i];
-                str += '"' + me.url.replaceAll('"', '&quot;') + '":';
-                if (me.achievs) {
-                    //we save achievements separately for each mod
-                    for (var ii in me.achievs) {
-                        str += parseInt(me.achievs[ii].won).toString() + ',';
-                    }
-                }
-                str += ':';
-                //tracked stats (not fully implemented yet)
-                str += parseFloat(G.trackedStat).toString();
-                str += ';';
-            }
-            str += '|';
-
-            //culture and names
-            str += (G.cultureSeed) + ';';
-            str += G.getSafeName('ruler') + ';';
-            str += G.getSafeName('civ') + ';';
-            str += G.getSafeName('civadj') + ';';
-            str += G.getSafeName('inhab') + ';';
-            str += G.getSafeName('inhabs') + ';';
-            str += G.getSafeName('island') + ';';
-            str += '|';
-
-            //maps
-            str += (G.currentMap.seed) + ';';
-
-            var map = G.currentMap;
-            for (var x = 0; x < map.w; x++) {
-                for (var y = 0; y < map.h; y++) {
-                    var tile = map.tiles[x][y];
-                    str +=
-                        parseInt(tile.owner).toString() + ':' +
-                        parseInt(Math.floor(tile.explored * 100)).toString() + ':' +
-                        ',';
-                }
-            }
-
-            str += '|';
-
-            //techs & traits
-            var len = G.techsOwned.length;
-            for (var i = 0; i < len; i++) {
-                str += parseInt(G.techsOwned[i].tech.id).toString() + ';';
-            }
-            str += '|';
-            var len = G.traitsOwned.length;
-            for (var i = 0; i < len; i++) {
-                str += parseInt(G.traitsOwned[i].trait.id).toString() + ',';
-                str += parseInt(G.traitsOwned[i].trait.yearOfObtainment).toString() + ';'; //we need to make temporality of the traits work as it should
-            }
-            str += '|';
-
-            //policies
-            var len = G.policy.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.policy[i];
-                if (me.visible) {
-                    str += parseInt(me.id).toString() + ',' + parseInt(me.mode ? me.mode.num : 0).toString() + ';';
-                }
-            }
-            str += '|';
-
-            //res
-            var len = G.res.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.res[i];
-                str +=
-                    (!me.meta ? (parseFloat(Math.round(me.amount)).toString() + ',') : '') +
-                    (me.displayUsed ? (parseFloat(Math.round(me.used)).toString() + ',') : '') +
-                    (me.visible ? '1' : '0') + ';';
-            }
-            str += '|';
-
-            //units
-            var len = G.unitsOwned.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.unitsOwned[i];
-                if (true)//me.amount>0)
-                {
-                    str += parseInt(me.unit.id).toString() + ',' +
-                        parseFloat(Math.round(me.amount)).toString() +
-                        ((me.unit.gizmos || me.unit.wonder) ?
-                            (',' + parseInt(me.unit.wonder ? me.mode : (me.mode ? me.mode.num : 0)).toString() + ',' +//mode
-                                parseInt(me.percent).toString())//percent
-                            : '') +
-                        ',' + parseFloat(Math.round(me.targetAmount)).toString() +
-                        ',' + parseFloat(Math.round(me.idle)).toString() +
-                        ';';
-                }
-            }
-            str += '|';
-
-            //chooseboxes
-            var len = G.chooseBox.length;
-            for (var i = 0; i < len; i++) {
-                var me = G.chooseBox[i];
-
-                var choices = [parseFloat(me.roll)];
-
-                for (var ii in me.choices) {
-                    choices.push(parseInt(me.choices[ii].id));
-                }
-                str += choices.join(',') + ';';
-            }
-            str += '|';
-            for (var i = 0; i < len; i++) {
-                var me = G.chooseBox[i];
-                str += me.cooldown + ';';
-            }
-            // storage object
-            str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT') + (G.PARTY ? '$' : '')
-            str += '|';
-            //console.log('SAVE');
-            //console.log(str);
-            str = escape(str);
-            str = b64EncodeUnicode(str);
-            //console.log(Math.ceil(byteCount(str)/1000)+'kb');
-            if (!toStr) {
-                localStorage.setItem(G.saveTo, str);
-                G.middleText('- Game saved -');
-                //console.log('Game saved successfully.');
-            }
-            else return str;
-        }
-
-        G.Load = function (doneLoading) {
-            document.title = "NeverEnding Legacy"
-            G.middleText('<p id="loading">Loading save...</p>', "slow");
-            if (G.importStr) { var local = G.importStr; }
-            else {
-                if (G.local && G.isIE) return false;
-                if (!window.localStorage) return false;
-                var local = window.localStorage.getItem(G.saveTo);
-            }
-            if (!local) return false;
-            var str = '';
-            str = b64DecodeUnicode(local);
-            //console.log('LOAD');
-            //console.log(Math.ceil(byteCount(str)/1000)+'kb');
-            str = unescape(str);
-            //console.log(str);
-            if (str != 'null' && str != '') {
-                var oldStorage = G.storageObject;
-                try {
-                    G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/);
-                    if (G.storageObject) {
-                        G.storageObject = G.storageObject[G.storageObject.length - 1];
-                        if (G.storageObject) {
-                            G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'));
-                            for (var i = 0; i < conflictingStorageObjects.length; i++) {
-                                var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
-                                var newItem = G.storageObject[key];
-                                if (oldStorage[key] !== newItem) {
-                                    G.dialogue.popup(function (div) {
-                                        return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
-                                            text: 'Yes', onclick: function () {
-                                                try {
-                                                    localStorage.setItem(G.saveTo, local);
-                                                    location.reload();
-                                                } catch (e) {
-                                                    throw TypeError("The game failed to store the data locally.");
-                                                }
-                                            }
-                                        }) + G.button({
-                                            text: 'No', onclick: function () {
-                                                G.dialogue.close();
-                                            }
-                                        }) + '</div>';
-                                    });
-                                    return false;
-                                }
-                            }
-                        } else {
-                            G.storageObject = {};
-                        }
-                    } else {
-                        G.storageObject = {};
-                    }
-                } catch (e) {
-                    console.warn("Storage data could not be obtained.");
-                    G.storageObject = oldStorage;
-                }
-                G.Reset();
-                G.resetSettings();
-
-                //take care of strings first
-                G.stringsLoadedN = 0;
-                G.stringsLoaded = [];
-                str = str.replace(/"(.*?)"/gi, G.parseLoadStrings);
-
-                str = str.split('|');
-
-                var s = 0;
-                //general
-                var spl = str[s++].split(';');
-                //console.log('General : '+spl);
-                var i = 0;
-                var fromVersion = parseFloat(spl[i++]);
-                G.releaseNumber = parseFloat(spl[i++]);
-                if (G.releaseNumber > 1000) {
-                    G.releaseNumber = 54; // assume it's NOT the newest version
-                    i--;
-                }
-                G.startDate = parseFloat(spl[i++]);
-                G.fullDate = parseFloat(spl[i++]);
-                G.lastDate = parseFloat(spl[i++]);
-                G.year = parseFloat(spl[i++]);
-                G.day = parseFloat(spl[i++]);
-                G.fastTicks = parseFloat(spl[i++]);
-                G.furthestDay = parseFloat(spl[i++]);
-                G.totalDays = parseFloat(spl[i++]);
-                G.resets = parseFloat(spl[i++]);
-                G.influenceTraitRemovalCooldown = parseFloat(spl[i++]);
-                //accumulate fast ticks when offline
-                var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
-                G.fastTicks += Math.floor(timeOffline);
-                G.nextFastTick = Math.ceil((1 - (timeOffline - Math.floor(timeOffline))) * G.tickDuration);
-
-                //settings
-                var spl = str[s++].split(';');
-                //console.log('Settings : '+spl);
-                var len = spl.length;
-                for (var i = 0; i < len; i++) {
-                    if (spl[i] != '' && G.settings[i]) {
-                        var me = G.settings[i];
-                        if (me.type == 'toggle') me.value = (spl[i] == '1' ? true : false);
-                        else if (me.type == 'int') me.value = parseInt(spl[i]);
-                    }
-                }
-                for (var i in G.settings) {
-                    var me = G.settings[i];
-                    if (me.onChange) me.onChange();
-                }
-
-
-                if (!doneLoading) {
-                    //mods
-                    var spl = str[s++].split(';');
-                    var mods = [];
-                    for (var i in spl) {
-                        var spl2 = spl[i].split(':');
-                        var val = G.readLoadedString(spl2[0]);
-                        if (val) {
-                            mods.push(val.replaceAll('&quot;', '"'));
-                        }
-                    }
-                    G.LoadMods(mods, G.Load, false);
-                    return 1;
-                }
-
-                G.importStr = 0;
-
-                //mod achievs & tracked stats
-                var spl = str[s++].split(';');
-                for (var i in spl) {
-                    var spl2 = spl[i].split(':');
-                    var mod = G.mods[i];
-                    if (spl2[1] && mod.achievs) {
-                        bit = spl2[1].split(',');
-                        for (var ii in bit) {
-                            if (bit[ii]) {
-                                if (mod.achievs[ii]) mod.achievs[ii].won = parseInt(bit[ii]);
-                            }
-                        }
-                    }
-                    if (spl2[2]) {
-                        bit = spl2[2].split(',');
-                        for (var ii in bit) {
-                            if (bit[ii]) {
-                                G.trackedStat = parseFloat(bit[ii]);
-                            }
-                        }
-                    }
-                }
-
-                //culture and names
-                var spl = str[s++].split(';');
-                var ss = 0;
-                G.cultureSeed = spl[ss++];
-                G.setSafeName('ruler', G.readLoadedString(spl[ss++]), 'Anonymous');
-                G.setSafeName('civ', G.readLoadedString(spl[ss++]), 'nameless tribe');
-                G.setSafeName('civadj', G.readLoadedString(spl[ss++]), 'tribal');
-                G.setSafeName('inhab', G.readLoadedString(spl[ss++]), 'inhabitant');
-                G.setSafeName('inhabs', G.readLoadedString(spl[ss++]), 'inhabitants');
-                if (G.releaseNumber > 54)
-                    G.setSafeName('island', G.readLoadedString(spl[ss++]), 'Plain Island');
-
-                //maps
-                var spl = str[s++].split(';');
-                //console.log('Map tiles : '+spl);
-                G.currentMap = new G.Map(0, 24, 24, spl[0]);
-
-                var map = G.currentMap;
-                var spl2 = spl[1].split(',');
-                var I = 0;
-                for (var x = 0; x < map.w; x++) {
-                    for (var y = 0; y < map.h; y++) {
-                        if (spl2[I]) {
-                            var tile = map.tiles[x][y];
-                            spl3 = spl2[I].split(':');
-                            tile.owner = parseInt(spl3[0]);
-                            tile.explored = parseInt(spl3[1]) / 100;
-                        }
-                        I++;
-                    }
-                }
-
-                G.updateMapForOwners(map);
-                G.centerMap(map);
-
-                //techs & traits
-                var spl = str[s++].split(';');
-                //console.log('Techs : '+spl);
-                var len = spl.length;
-                for (var i = len - 1; i >= 0; i--) { if (spl[i] != '') { G.gainTech(G.know[parseInt(spl[i])]); } }
-
-                var spl = str[s++].split(';');
-                //console.log('Traits : '+spl);
-                var len = spl.length;
-                for (var i = len - 1; i >= 0; i--) {
-                    if (spl[i] != '') {
-                        var spl2 = spl[i].split(',');
-                        G.gainTrait(G.know[parseInt(spl2[0])]);
-                        if (G.releaseNumber > 54) G.know[parseInt(spl2[0])].yearOfObtainment = parseFloat(spl2[1]);
-                    }
-                }
-
-                //policies
-                var spl = str[s++].split(';');
-                //console.log('Policies : '+spl);
-                var len = spl.length;
-                for (var i = len - 1; i >= 0; i--) {
-                    if (spl[i] != '') {
-                        var spl2 = spl[i].split(',');
-                        var me = G.policy[parseInt(spl2[0])];
-                        G.gainPolicy(me);
-                        me.mode = me.modesById[parseInt(spl2[1])];
-                    }
-                }
-
-                //res
-                var spl = str[s++].split(';');
-                //console.log('Resources : '+spl);
-                var len = G.res.length;
-                for (var i = 0; i < len; i++) {
-                    if (spl[i]) {
-                        var me = G.res[i];
-                        var spl2 = spl[i].split(',');
-                        if (parseInt(spl2[spl2.length - 1]) == 1) me.visible = true; else me.visible = false;
-                        if (!me.meta) me.amount = parseFloat(spl2[0]);
-                        if (me.displayUsed) me.used = parseFloat(spl2[1]);
-                    }
-                }
-
-                //units
-                var spl = str[s++].split(';');
-                //console.log('Units : '+spl);
-                var len = spl.length;
-                for (var i = len - 1; i >= 0; i--) {
-                    if (spl[i] != '') {
-                        var spl2 = spl[i].split(',');
-                        //unit id, amount, and if unit has gizmos : mode, percent
-                        var obj = {
-                            id: G.unitN,
-                            unit: G.unit[parseInt(spl2[0])],
-                            amount: parseFloat(spl2[1]),
-                            targetAmount: ((typeof spl2[4] !== 'undefined') ? parseFloat(spl2[4]) : parseFloat(spl2[1])),
-                            idle: ((typeof spl2[5] !== 'undefined') ? parseFloat(spl2[5]) : 0),
-                            displayedAmount: 0,
-                            mode: parseInt(spl2[2]) || 0,
-                            percent: parseInt(spl2[3]),
-                            popups: []
-                        };
-                        G.unitsOwned.unshift(obj);
-                        var unit = G.unitsOwned[0];
-                        if (unit.unit.modesById[0]) unit.mode = unit.unit.modesById[unit.mode];
-                        G.unitsOwnedNames.unshift(G.unit[parseInt(spl2[0])].name);
-                        G.unitN++;
-                    }
-                }
-
-                //assign unit .splitOf
-                var prev = 0;
-                var len = G.unitsOwned.length;
-                for (var i = 0; i < len; i++) {
-                    var me = G.unitsOwned[i];
-                    if (prev && me.unit.id == prev.unit.id) me.splitOf = prev;
-                    else prev = me;
-                }
-                prev = 0;
-
-                //chooseboxes
-                var spl = str[s++].split(';');
-                var len = spl.length;
-                for (var i = len - 1; i >= 0; i--) {
-                    if (spl[i] != '') {
-                        G.chooseBox[i].choices = [];
-                        var spl2 = spl[i].split(',');
-                        for (var ii in spl2) {
-                            if (ii == 0) G.chooseBox[i].roll = parseFloat(spl2[ii]);
-                            else G.chooseBox[i].choices[ii - 1] = G.know[parseInt(spl2[ii])];
-                        }
-                    }
-                }
-
-                var tSpl = str[s++].split('$')
-                var spl = tSpl[0].split(';');
-                var num = parseInt(spl[0]);
-                G.getDict('research box').cooldown = isFinite(num) ? num : 0;
-                if (tSpl.length >= 3) G.PARTY = 1; // new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
-
-                G.runUnitReqs();
-                G.runPolicyReqs();
-
-                G.applyAchievEffects('load');
-
-                G.updateEverything();
-                G.createTopInterface();
-                G.createDebugMenu();
-                if (G.tabs[G.settingsByName['tab'].value]) G.setTab(G.tabs[G.settingsByName['tab'].value]);
-                G.setSetting('forcePaused', 0);
-
-                l('blackBackground').style.opacity = 0;
-                if (timeOffline >= 1) G.middleText('- Welcome back -<br><small>You accumulated ' + B(timeOffline) + ' fast ticks while you were away.</small>', true);
-
-                G.rememberAchievs = true;
-
-                G.animIntro = true;
-                G.introDur = G.fps * 1;
-
-                G.doFunc('game loaded');
-
-                G.Logic(true);//force a tick (solves some issues with display updates; this however means loading a paused game, saving and reloading will make a single day go by every time, which isn't ideal)
-                G.releaseNumber = 55; //this must be assigned here or else we will have issues
-                tabs();
-                console.log('Game loaded successfully (release ' + G.releaseNumber + ').');
-                return true;
-            }
-            return false;
-        }
 
         /*==========================
         CSS stuff
@@ -5397,6 +5399,8 @@ G.AddData({
 
         G.NewGameWithSameMods = function () {
             delete G.storageObject.drought;
+            delete G.storageObject.iconTick;
+            delete G.storageObject.gatherIcon;
             G.Save();
             G.loadMenu = undefined;
             G.loadCiv = 0;
