@@ -5832,7 +5832,7 @@ if (getObj("civ") != "1") {
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay')
                         var iconTick = +getObj('iconTick')
                         var chosenIcon = getObj('gatherIcon')
-                        if (isFinite(chosenIcon) && G.getDict('gatherer').icon[0] !== chosenIcon) {
+                        if (chosenIcon != null && isFinite(chosenIcon) && G.getDict('gatherer').icon[0] !== chosenIcon) {
                             G.getDict('gatherer').icon = [chosenIcon, 24, 'magixmod']
                         }
                         if (!isFinite(iconTick)) {
@@ -26711,7 +26711,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
-                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches will require a third less of [discernment,Essentials] (excluding your [battery of discoveries,Battery power]) if the number of your technologies ends with 0. @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
+                desc: '@[dreamer]s produce 25% more [discernment] and 12.5% more [creativity] @rolling researches will require a third less of [discernment,Essentials] (excluding your [battery of discoveries,Battery power]) if the number of your technologies ends with 0 @gaining traits will provide 1 [gentility] @obtaining techs refunds 1 [discernment] for every 150 [discernment] spent on research. <>The manifestation of one thing for the meaning of another; to make the cosmos relate to itself; this one focuses on colours. There are three types of [symbI] that you can unlock!',
                 icon: [28, 17, 'c2'],
                 cost: { 'gentility': 18, 'discernment': 20, 'creativity': 4 },
                 req: { 'oral tradition 2/2': true, 'intuition': true, 'symbolism': false, 'symbN': false },
