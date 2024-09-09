@@ -4364,7 +4364,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Res({
                 name: 'mana',
-                desc: '[mana] is used to make essences. It is used in wizardry and magic in many, many ways!',
+                desc: '[mana] is used to make [magic essences,Essences]. It is a very important part of wizardry and magic in many, many ways!',
                 icon: [2, 3, 'magixmod'],
                 partOf: 'misc materials',
                 whenGathered: researchWhenGathered,
@@ -5212,7 +5212,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'magic essences',
-                desc: 'This is how many <b>Essences</b> you have in total currently. [magic essences] are important for [wizard]s and are greatly respected among them.',
+                desc: 'This is the total amount of all [magic essences,Essence types] you currently have. These are important for [wizard]s and are greatly respected among them.',
                 icon: [20, 13, 'magixmod'],
                 meta: true
             });

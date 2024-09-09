@@ -3637,6 +3637,9 @@ G.AddData({
             var success = true;
             if (!G.testCost(costs, 1)) success = false;
             var randomTxt = Math.round(Math.random() * 5);
+            if (!isFinite(me.cooldown)) {
+                me.cooldown = 0;
+            }
             if (me.cooldown <= 0) {
                 if (randomTxt <= 1) {
                     if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#fdd">There is nothing more to research for now.</font></small>'); }
