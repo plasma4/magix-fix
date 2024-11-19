@@ -5118,6 +5118,9 @@ G.AddData({
             for (var i = 0; i < len; i++) {
                 var effect = me.unit.effects[i];
                 if (!effect.req || G.checkReq(effect.req)) {
+                    if (typeof me.mode === "undefined") {
+                        me.mode = 0
+                    }
                     if ((!effect.mode || me.mode.id == effect.mode) && (!effect.notMode || me.mode.id != effect.notMode)) {
                         if (type == 0)//effects that happen every tick
                         {
