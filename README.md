@@ -45,18 +45,17 @@ This offline version of Magix...
 ### Alternate links for Magix
 Want a few other links for loading Magix? Try some of these:
 ```
-https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magix.js
 https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magixUtils.js
+https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magix.js
 ```
 ```
-https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
 https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magixUtils.js
+https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
 ```
 ```
-https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js
-https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js
+https://plasma4.github.io/magix-fix/magixUtils.js
+https://plasma4.github.io/magix-fix/magix.js
 ```
-(This last one is actually used in the file version of Magix due to it updating quickly and working with XML requests. **However, it will not work for loading Magix normally; try one of the other links instead.**)
 
 ---
-<sup>:></sup>
+<sup>Be aware that the file version uses raw.githubusercontent.com links for uncached XML request purposes whenever the user has an internet connection instead. The link will automatically fix itself when importing or exporting, and this shouldn't be something you need to worry about. If you are a programmer and want to use the magix.js and magixUtils.js files in the code, set `offlineMode` to `true` in localDevelopment.js.</sup>
