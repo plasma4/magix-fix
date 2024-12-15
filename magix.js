@@ -2489,9 +2489,9 @@ if (getObj("civ") != "1") {
                         }
                         if (G.getRes('land').amount == 100 && !explorepop && G.getUnitAmount('scout') < 1) {
                             if (G.has('intuition')) {
-                                G.Message({ type: 'tutorial', text: '<b>Maybe it is a good time to hire a Scout!</b><br>A wanderer can\'t discover new tiles but may explore and discover secrets hidden in new territory. If you haven\'t hired a <b>Scout</b> yet, think about hiring one sometime and focus on getting the <b>Scouting</b> research if you don\'t already have it. Land becomes a must later on!', icon: [5, 28, 'magixmod'] })
+                                G.Message({ type: 'tutorial', text: '<b>Maybe it is a good time to hire a Scout!</b><br>A wanderer can\'t discover new tiles. If you haven\'t hired a <b>Scout</b> yet, think about hiring one sometime and focus on getting the <b>Scouting</b> research if you don\'t already have it. Land becomes a must later on!', icon: [5, 28, 'magixmod'] })
                             } else {
-                                G.Message({ type: 'tutorial', text: '<b>You\'ll be able to get a scout in the future.</b><br>A wanderer can\'t discover new tiles but may explore and discover secrets hidden in new territory. Wait for some traits to appear so you can unlock more techs!', icon: [5, 28, 'magixmod'] })
+                                G.Message({ type: 'tutorial', text: '<b>You\'ll be able to get a scout in the future.</b><br>A wanderer can\'t discover new tiles and can only explore and discover secrets hidden in already discovered territory. Make sure you research as much as you can, get various resources, and wait for some traits to appear so you can unlock more techs!', icon: [5, 28, 'magixmod'] })
                             }
                             explorepop = true
                         }
