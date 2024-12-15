@@ -28,7 +28,7 @@ function getGameJSON(objectMode) {
         achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"]),
         lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
-        resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf"]),
+        resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf", "whenGathered"]),
         units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"]),
         policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
         techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
@@ -63,6 +63,7 @@ function getGameJSON(objectMode) {
             getDisplayAmount: "Gets how the resource is displayed; is a function",
             getIcon: "Gets how the thing is displayed; is a function",
             partOf: "What this resource is considered a part of, not the category displayed",
+            whenGathered: "What to do when the resource is gathered",
             subRes: "The subresources of a specific resource, if it exists",
             wonder: "The identifier of the achievment to gain upon completing the wonder if the unit is a wonder",
             wideIcon: "The wide icon for a wonder",
@@ -144,6 +145,16 @@ function extractObject(toExtract, properties, funcProperties) {
         data[i] = obj
     }
     return data
+}
+
+// Returns an object where the keys are the raw names of the resources and the values are the display names.
+function getDictionaryObject() {
+    var resObj = {}
+    var keys = Object.keys(G.dict)
+    for (var i = 0; i < keys.length; i++) {
+        resObj[G.dict[keys[i]].name] = G.dict[keys[i]].displayName
+    }
+    return resObj
 }
 
 /* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod. */
