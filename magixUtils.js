@@ -362,9 +362,9 @@ G.Load = function (doneLoading) {
         var i = 0;
         var fromVersion = parseFloat(spl[i++]);
         G.releaseNumber = parseFloat(spl[i++]);
-        if (G.releaseNumber > 1000) {
-            G.releaseNumber = 54; // assume it's NOT the newest version
-            i--;
+        if (G.releaseNumber > 1000 || !isFinite(G.releaseNumber)) {
+            G.releaseNumber = 54; // assume it's an older version simply due to a save being corrupted
+            i++;
         }
         G.startDate = parseFloat(spl[i++]);
         G.fullDate = parseFloat(spl[i++]);
