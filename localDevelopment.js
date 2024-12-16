@@ -1,5 +1,5 @@
 // THIS VARIABLE IS FOR LOCALLY MODIFYING MAGIX AND SHOULD NOT BE CHANGED WHEN PLAYING NORMALLY OR WHEN CHANGING YOUR OWN MOD.
-// If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to modify Magix!
+// If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to test modifications of Magix!
 
 var offlineMode = false
 
@@ -23,13 +23,17 @@ testFunction()
 // The function below is for extracting data out of various properties within the game. You can run it in the console if you wish to get a rather large JSON-safe string or object containing some raw data about the game.
 // For some mods like Magix, there may be several possible JSON files generated because of different civs/races in the gameplay. You'll have to get the data separately, however.
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
+
+
+// Tip: in order to minimize RNG changing exported data, add the code below after the seedrandom function script:
+// Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
     var result = {
         achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"]),
         lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
         resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf", "whenGathered"]),
-        units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"]),
+        units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"], ["tick"]),
         policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
         techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
         traits: extractObject(G.trait, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req"]),

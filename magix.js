@@ -20914,7 +20914,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ostrich',
-                desc: '[meat] source that can be found in the <b>Savanna</b>, <b>Desert</b> and <b>Badlands</b> biomes. Ostriches are birds without wings and run very fast, making hunting them more challenging.',
+                desc: '[ostrich,Ostriches] are a source of [meat] that can be found in the <b>Savanna</b>, <b>Desert</b> and <b>Badlands</b>. They are birds without wings and run very fast, making hunting them more challenging.',
                 icon: [choose([4, 5]), 29, 'magixmod'],
                 res: {
                     'hunt': { 'meat': 2, 'bone': 0.25 },
