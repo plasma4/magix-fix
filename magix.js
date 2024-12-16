@@ -10427,9 +10427,9 @@ if (getObj("civ") != "1") {
                                     if (chance <= 0.05 + bonus) {
                                         G.lose('snowman', 1 * ((bonus * 1.1) + 1), 'failed essence extraction');
                                     }
-                                    G.getDict(me).upkeep = { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 };
+                                    me.unit.upkeep = { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 };
                                 } else {
-                                    G.getDict(me).upkeep = { 'snow': 0, 'magic essences': 0, 'lightning essence': 0 };
+                                    me.unit.upkeep = { 'snow': 0, 'magic essences': 0, 'lightning essence': 0 };
                                 }
                             }
                         }, every: 7
