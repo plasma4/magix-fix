@@ -1921,7 +1921,7 @@ if (getObj("civ") != "1") {
                             st9 = true
                         }
                         if (G.techN > 108 && G.techN <= 112 && !st10) {
-                            G.Message({ type: 'story1', text: 'An angel appears in your dreams. The angel speaks to you and tells you that Paradise will be open for you and your tribe. You clearly remembered his words:<br><b><font color="#FFFED6">\u201cDear ' + G.getName('ruler') + '. I am so proud of you and the and people you rule. They are a sign that shows how worthy you are.<br>You taught them a lot.<br>Someday the Paradise will be open for you, ' + G.getName('ruler') + ', and your ' + G.getName('inhabs') + ' so do not worry at all!\u201d</font></b>', icon: [32, 8, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'An angel appears in your dreams. The angel speaks to you and tells you that Paradise will be open for you and your tribe. You clearly remembered his words:<br><b><font color="#FFFED6">\u201cDear ' + G.getName('ruler') + '. I am so proud of you and the and people you rule. They are a sign that shows how worthy you are.<br>You taught them a lot.<br>Someday the Paradise will be open for you, ' + G.getName('ruler') + ', and your ' + G.getName('inhabs') + ', so don\'t worry at all!\u201d</font></b>', icon: [32, 8, 'magixmod'] });
                             st10 = true
                         }
                         if (G.techN > 112 && G.techN <= 119 && !st11) {
