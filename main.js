@@ -552,7 +552,7 @@ G.Launch=function()
 	G.FileSave=function()
 	{
 		var filename='legacySave';
-		var text=G.Export().replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js");
+		var text=G.Export();
 		var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
 		saveAs(blob,filename+'.txt');
 	}
@@ -735,6 +735,11 @@ G.Launch=function()
 		}
 		str+='|';
 		
+		if (toStr)
+		{
+			str=str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
+			console.log(str)
+		}
 		//console.log('SAVE');
 		//console.log(str);
 		str=escape(str);

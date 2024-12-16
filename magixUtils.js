@@ -269,6 +269,12 @@ G.Save = function (toStr) {
     // storage object
     str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT') + (G.PARTY ? '$' : '')
     str += '|';
+
+    // Important for file-based saves
+    if (toStr) {
+        str = str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
+        console.log(str)
+    }
     //console.log('SAVE');
     //console.log(str);
     str = escape(str);
