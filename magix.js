@@ -10854,16 +10854,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'well of ideas',
-                desc: '@has many steps but does not need to be finished @requires various [magic essences,Essences] @every 10 steps built, you can can claim 2 [idea tablet]s @cost increases every 10 steps',
+                desc: '@has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
                 wonder: '.',
                 icon: [68, 0, 'magix2'],
                 wideIcon: [67, 0, 'magix2'],
-                cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000 },
-                costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25 },
+                cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000, 'magic essences': 100000 },
+                costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25, 'magic essences': 10000 },
                 steps: 25000,
                 messageOnStart: 'You begin throwing things down of the Well of Ideas. It seems to be endless.',
-                finalStepCost: { 'population': 100 },
-                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife.',
                 require: { 'worker': 40 },
                 req: { 'the well of ideas': true },
                 type: 'portal',
@@ -21966,6 +21964,9 @@ if (getObj("civ") != "1") {
                     setObj("civ", 1);
                     newDayLines(true);
 
+                    if (G.has('plain island building') && !G.has('plain island ideas')) {
+                        G.gainTech(G.techByName['plain island ideas']);
+                    }
 
 
                     G.trackedStat = Math.max(G.trackedStat, G.getRes('population').amount);
