@@ -10406,7 +10406,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'f.r.o.s.t.y',
                 displayName: 'F.R.O.S.T.Y',
-                desc: '@From snowmen created by children extracts [christmas essence]. However, there is a chance that the extraction will destroy the snowman.//It is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
+                desc: '@Extracts [christmas essence] from various snowmen created by children. (However, it is possible the extraction will destroy the snowman.)//It is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
                 icon: [15, 12, 'seasonal'],
                 cost: { 'strong metal ingot': 100, 'hard metal ingot': 15, 'precious metal ingot': 2, 'basic building materials': 10, 'magic essences': 5000, 'platinum ore': 10 },
                 upkeep: { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 },
@@ -10469,7 +10469,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'globetrotter',
-                desc: '@[globetrotter]s are able to discover new [land] and explore places already discovered, but slower than than a [scout]@can explore occupied tiles, but does it slower than a [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen their knowledge about territories already known.',
+                desc: '@[globetrotter]s are able to discover new [land] and explore places already discovered (but slower than normal [scout]s)@can explore occupied tiles, but does it slower than a [wanderer]@may sometimes get lost<>[globetrotter]s explore the world in search of new territories and deepen their knowledge about territories already known.',
                 icon: [35, 2, 'magixmod'],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
@@ -10555,7 +10555,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'spirit summoner',
-                desc: '@during Halloween summons spirits, souls of dead [population,people], gaining [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @later he will be able to summon demons.',
+                desc: '@Summons spirits during Halloween (which are the souls of dead [population,people]), producing [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @later he will be able to summon demons.',
                 icon: [4, 9, 'seasonal'],
                 upkeep: { 'food': 0.3 },
                 limitPer: { 'population': 30 },
@@ -10581,7 +10581,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'halloween essence storage',
-                desc: 'This essence storage allows you to store 6,000 [halloween essence]. //It is a simple sphere of [glass] with a small essence faucet.',
+                desc: 'This special essence storage allows you to store 6,000 [halloween essence]. //It is a simple sphere of [glass] with a small essence faucet.',
                 icon: [7, 8, 'seasonal'],
                 cost: { 'basic building materials': 200, 'glass': 400 },
                 use: { 'land': 0.8 },
@@ -11518,7 +11518,7 @@ if (getObj("civ") != "1") {
                 icon: [24, 8],
                 cost: { 'insight': 90, 'culture': 40 },
                 req: { 'construction': true, 'burial': true, 'belief in the afterlife': true, 'intuition': true },
-                tutorialMesg: ['tutorial', 'After getting <b>Monument-building</b>, you may begin construction of the very first wonder of your people. Check it out in the <u>Production</u> tab!', [32, 18, 'magixmod']]
+                tutorialMesg: ['tutorial', 'After getting <b>Monument-building</b>, you may begin constructing the very first wonder of your people. Check it out in the <u>Production</u> tab!', [32, 18, 'magixmod']]
             });
             //MAGIX
             new G.Tech({
