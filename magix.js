@@ -18330,7 +18330,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'cultural people',
-                desc: 'Your tribe is growing more and more [culture II,Cultural], meaning that they have begun to think of ways to use their creativity to create more and more... @[painter]s create [painting]s and [culture II] faster @[musician]s provide a little bit of [culture II] now, just like [painter]s',
+                desc: 'Your tribe is growing more and more [culture II,Cultural], meaning that they have begun to think of ways to use their creativity to create more and more... @[painter]s create [painting]s and [culture II] faster @[musician]s provide a little bit of [culture II] now, just like [painter]s @may lead to [eota,Something new]...',
                 icon: [38, 0, 'magix2'],
                 cost: { 'culture II': 20 },
                 chance: 20,
@@ -18383,7 +18383,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'superior culture', category: 'tier1',
-                desc: '@may lead to [eota,Something new]... @provides 2 [inspiration II]',
+                desc: '@provides 2 [inspiration II]',
                 icon: [40, 0, 'magix2'],
                 cost: { 'culture II': 30 },
                 req: { 'cultural people': true },
@@ -18405,7 +18405,7 @@ if (getObj("civ") != "1") {
                 desc: '@[art school]s will now be twice as likely to turn a [child] into a [virtuoso of art] @provides 10 [inspiration II]',
                 icon: [42, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 100 },
-                req: { 'passionate artistry': true },
+                req: { 'superior culture': true, 'passionate artistry': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 10 } },
                 ],
