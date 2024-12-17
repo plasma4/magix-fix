@@ -6228,6 +6228,7 @@ if (getObj("civ") != "1") {
                 },
                 limit: 'christmas essence limit',
                 whenGathered: researchWhenGathered,
+                partOf: 'magic essences',
             });
             new G.Res({
                 name: 'christmas essence limit',
