@@ -7493,7 +7493,7 @@ G.Launch=function()
 			if ((offlineMode && isMagixMod) || directAccessMode || mod.url.slice(0, 4) !== 'http') {
 				if (!magixNote) {
 					if (isMagixMod) {
-						console.warn("Magix was loaded locally because you enabled offline mode, which simulates a lack of internet for Magix. However, a side effect of this is that sprites are loaded using internet!");
+						console.warn("Magix was loaded using magix.js and magixUtils.js because you enabled offline mode, which allows you to modify the program easily.");
 					}
 					magixNote=true;
 				}

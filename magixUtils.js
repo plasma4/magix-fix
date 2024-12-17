@@ -1874,7 +1874,7 @@ G.AddData({
         ==========================*/
         G.getResTooltip = function (me, amountStr) {
             var str = '<div class="info">';
-            str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div><div class="fancyText infoAmount">' + (amountStr || me.getDisplayAmount()) + '</div></div>';
+            str += '<div class="infoIcon"><div class="thing standalone' + G.getIconClasses(me, true) + '">' + G.getIconStr(me, 0, 0, true) + '</div><div class="fancyText infoAmount margined">' + (amountStr || me.getDisplayAmount()) + '</div></div>';
             str += '<div class="fancyText barred infoTitle">' + me.displayName + '</div>';
             if (me.partOf && !G.getDict(me.partOf).hidden) str += '<div class="fancyText barred">part of ' + G.getSmallThing(G.getDict(me.partOf)) + '</div>';
             if (me.limit) str += '<div class="fancyText barred">limit: ' + (G.getDict(me.limit)).getDisplayAmount() + ' ' + G.getSmallThing(G.getDict(me.limit)) + '</div>';

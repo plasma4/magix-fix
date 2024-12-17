@@ -999,8 +999,8 @@ if (getObj("civ") != "1") {
                     G.getDict("culture rise").cost = { 'fortress construction point': 2000 };
                     G.getDict("fortress of cultural legacy").icon = [4, 33, 'magixmod'];
                     G.getDict("fortress of cultural legacy").wideIcon = [choose([9, 12, 15]), 17, 'magixmod', 3, 33, 'magixmod'];
-                    G.getDict("fortress of cultural legacy").cost = { 'basic building materials': 1100, 'precious building materials': 800, 'inspiration': 10 },
-                        G.getDict("fortress of cultural legacy").costPerStep = { 'basic building materials': 25, 'precious building materials': 5, 'culture': 125, 'glass': 1, 'fortress construction point': -1, 'dyes': 2 };
+                    G.getDict("fortress of cultural legacy").cost = { 'basic building materials': 1100, 'precious building materials': 800, 'inspiration': 10 };
+                    G.getDict("fortress of cultural legacy").costPerStep = { 'basic building materials': 25, 'precious building materials': 5, 'culture': 125, 'glass': 1, 'fortress construction point': -1, 'dyes': 2 };
                     G.getDict("fortress of cultural legacy").steps = 2000;
                     G.getDict("fortress of cultural legacy").messageOnStart = 'You began the construction of <b>Fortress of Cultural Legacy</b>. <font color="#aaffaa">But this time, ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
                     G.getDict("fortress of cultural legacy").finalStepCost = { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'gem block': 50, 'culture': 650 };
@@ -3705,7 +3705,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'herb',
                 displayName: 'Herbs',
-                desc: '[herb] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
+                desc: '[herb] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
                 icon: [4, 6],
                 startWith: 300,
                 turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herb': 0.2, 'spoiled food': 0.8 } },
@@ -6593,7 +6593,7 @@ if (getObj("civ") != "1") {
                     'net': { name: 'Craft fishing net', icon: [13, 8, 'magixmod'], desc: 'Your artisan will craft [fishing net]s using 30 wool [thread]s and a piece of [dried leather] to make it stronger.', req: { 'fishing II': true }, use: { 'stone tools': 2, 'worker': 1 } },
                     'firstaid': { name: 'Craft first aid things', icon: [8, 0, 'magix2'], desc: 'Your artisan will craft equipment for [healer]s by producing [first aid things].', req: { 'first aid': true }, use: { 'stone tools': 1 } },
                     'dyes': { name: 'Craft dyes', desc: 'Your artisan will convert [flowers] into [dyes].', req: { 'plant lore II': true, 'manufacture units I': false, 'a gift from the mausoleum': true }, icon: [11, 7, 'magixmod'] },
-                    'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [Empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
+                    'book': { name: 'Craft books', icon: [13, 12, 'magixmod'], desc: 'Your artisan will craft [empty book,books].', req: { 'bookcrafting': true }, use: { 'stone tools': 1 } },
                     'enchseeds': { name: 'Enchant seeds', icon: [27, 10, 'magixmod'], desc: 'Enchant [seeds,Normal seeds] using [magic essences] and [mana]. These seeds can be useful for starting essence farms!', req: { 'seed-enchanting': true }, use: { 'wand': 1 } },
                 },
                 effects: [
@@ -7146,7 +7146,8 @@ if (getObj("civ") != "1") {
                     'forgearmorhard': { name: 'Forge armor out of hard metals', icon: [16, 11, 'magixmod'], desc: 'Forge [armor set] out of 5 [hard metal ingot]s each.', req: { 'armor blacksmithery': true }, use: { 'worker': 2, 'metal tools': 1, 'stone tools': 1 } },
                     'platinum blocks': { name: 'Craft platinum blocks', icon: [4, 11, 'magixmod'], desc: 'Forge [platinum block]s out of 10 [platinum ingot]s each.', req: { 'platinum-working': true, 'block-smithery': false }, use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 } },
                     'factgear': { name: 'Forge factory equipment', icon: [9, 18, 'magixmod'], desc: 'Forge [basic factory equipment] out of 11 [hard metal ingot]s each.', req: { 'advanced casting': true }, use: { 'worker': 3, 'metal tools': 3 } },
-                    'golden fish': { name: 'Craft golden fish', icon: [12, 0, 'magix2'], desc: 'Make [golden fish] by using 1 [seafood,Fish] and 2 yellow [fruit]. Has a large chance to fail!', use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 }, req: { 't6': true } },
+                    'golden fish': { name: 'Craft golden fish', icon: [12, 0, 'magix2'], desc: 'Make [golden fish] by using 1 [seafood,Fish] and 2 yellow [fruit]. Has a chance to fail!', use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 }, req: { 't6': true } },
+                    'golden mushrooms': { name: 'Craft golden mushrooms', icon: [64, 0, 'magix2'], desc: 'Make [golden mushroom]s by using 1 [mushroom] and 2 [gold block]s. Has a large chance to fail, though.', use: { 'worker': 1, 'metal tools': 1, 'stone tools': 1 }, req: { 'mushroom crafting': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'soft metal ingot': 2 }, into: { 'metal tools': 1 }, repeat: 3, mode: 'metal tools' },
@@ -7162,6 +7163,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'hard metal ingot': 11 }, into: { 'basic factory equipment': 1 }, every: 4, mode: 'factgear' },
                     { type: 'convert', from: { 'precious metal ingot': 1, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.2, mode: 'golden fish', req: { 'golden crafting': false } },
                     { type: 'convert', from: { 'fruit': 2, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.6, mode: 'golden fish', req: { 'golden crafting': true } },
+                    { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.3, mode: 'golden mushrooms', req: { 'mushroom crafting': true } },
                     { type: 'mult', value: 0.95, req: { 'dt1': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'mult', value: 1.2, req: { 'ground weapons': true } },
@@ -9024,7 +9026,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
                 category: 'plainisleunit',
-                req: { 'well-digging': true, 'first portal to new world': true, 'plain island building': true },
+                req: { 'well-digging': true, 'first portal to new world': true, 'plain island ideas': true },
                 limitPer: { 'land of the Plain Island': 10 },
             });
             new G.Unit({
@@ -9343,7 +9345,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'vegetable farm',
-                desc: '@Specialized farm  which will harvest tasty [vegetable] (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
+                desc: '@Specialized farm which will harvest tasty [vegetable] (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
                 icon: [14, 2, 'magixmod'],
                 cost: { 'seeds': 200 },
                 req: { 'agriculture': true },
@@ -10834,6 +10836,39 @@ if (getObj("civ") != "1") {
                 ],
                 category: 'alchemy',
             });
+            new G.Unit({ // running out of comment ideas now :/
+                name: 'mushroom farm',
+                desc: 'A unique farm that produces a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
+                icon: [65, 0, 'magix2'],
+                cost: { 'herb': 10000 },
+                req: { 'mushroom farming': true },
+                use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
+                upkeep: { 'water': 12 },
+                category: 'production',
+                effects: [
+                    { type: 'gather', what: { 'mushroom': 3.7 }, amount: 1 },
+                    { type: 'mult', value: 0.6, req: { 'drought': true } },
+                    { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
+                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } }
+                ],
+            });
+            new G.Unit({
+                name: 'well of ideas',
+                desc: '@has many steps but does not need to be finished @requires various [magic essences,Essences] @every 10 steps built, you can can claim 2 [idea tablet]s @cost increases every 10 steps',
+                wonder: '.',
+                icon: [68, 0, 'magix2'],
+                wideIcon: [67, 0, 'magix2'],
+                cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000 },
+                costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25 },
+                steps: 25000,
+                messageOnStart: 'You begin throwing things down of the Well of Ideas. It seems to be endless.',
+                finalStepCost: { 'population': 100 },
+                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife.',
+                require: { 'worker': 40 },
+                req: { 'the well of ideas': true },
+                type: 'portal',
+                category: 'dimensions'
+            });
 
             /*=====================================================================================
             MAGIX MODIFICATIONS FOR VANILLA UNITS
@@ -10874,6 +10909,9 @@ if (getObj("civ") != "1") {
                     if (G.has('t3')) { costs['culture'] = calcCost('inspiration', 0.1); costs['influence'] = calcCost('authority', 0.1) };
                     if (G.has('eotm')) costs['science'] = calcCost('education', G.has("do we need that much science?") ? 0.1 : 0.2);
                     if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.04);
+                    if (G.chooseBox[0].choices.length === 0 && G.has('the well of ideas')) {
+                        costs['idea tablet'] = 1
+                    }
                     return costs;
                 },
                 getCardCosts: function (what) {
@@ -10921,8 +10959,7 @@ if (getObj("civ") != "1") {
                 },
                 onTick: function () {
                     this.cooldown--;
-                    this.roll -= 0.01;
-                    this.roll = Math.max(this.roll, 0);
+                    this.roll = Math.max(Math.pow(this.roll, 0.995) - 0.01, 0);
                 },
                 buttonText: function () {
                     if (this.cooldown > 0) {
@@ -11328,7 +11365,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'knitting', category: 'tier1',
-                desc: 'Knitting is a method by which yarn is manipulated to create a textile or fabric. It is used in many types of garments. //@[clothier]s are 10% more efficient in all modes.',
+                desc: 'Knitting is a method by which yarn is manipulated to create a textile or fabric. It is used in many types of garments. @[clothier]s are 10% more efficient in all modes.',
                 icon: [36, 27, 'magixmod'],
                 cost: { 'insight': 45 },
                 req: { 'tool-making': true, 'sewing': true, 'weaving': true },
@@ -11630,10 +11667,10 @@ if (getObj("civ") != "1") {
                 name: 'plain island building', category: 'tier1',
                 desc: 'Unlocks a sheet of buildings which can only be built in your new dimension.',
                 icon: [9, 0, 'magixmod'],
-                cost: { 'insight': 120, 'plain island tablet': 1 },
+                cost: { 'insight': 1800, 'influence': 100 },
                 effects: [
                 ],
-                req: { 'first portal to new world': true },
+                req: { 'the well of ideas': true },
             });
             new G.Tech({
                 name: 'construction II', category: 'tier1',
@@ -11759,21 +11796,21 @@ if (getObj("civ") != "1") {
                 desc: '[artisan] will be able to craft [ink], which can be used by [poet]s. You can craft ink using a new [artisan] mode.',
                 icon: [18, 7, 'magixmod'],
                 cost: { 'insight': 360 },
-                req: { 'plain island building': true },
+                req: { 'plain island ideas': true },
             });
             new G.Tech({
                 name: 'poetry', category: 'tier1',
                 desc: 'A beautiful art of culture. Poems, stories, essays, novels and so much more can now be written down and be cherished for generations!',
                 icon: [18, 8, 'magixmod'],
                 cost: { 'insight': 650, 'culture': 300, 'inspiration': 25 },
-                req: { 'plain island building': true, 'ink crafting': true },
+                req: { 'ink crafting': true },
             });
             new G.Tech({
                 name: 'moar juices', category: 'tier1',
                 desc: 'Allows you to craft [juices] out of [vegetable] now.//<small>Moar juice!!!</small>',
                 icon: [17, 4, 'magixmod'],
                 cost: { 'insight': 805 },
-                req: { 'plain island building': true, 'juice-crafting': true },
+                req: { 'plain island ideas': true, 'juice-crafting': true },
             });
             new G.Tech({
                 name: 'medicaments brewing', category: 'tier1',
@@ -14315,7 +14352,6 @@ if (getObj("civ") != "1") {
                             G.getDict('grass').res['gather']['herb'] = 10;
                             G.getDict('berry bush').res['gather']['herb'] = 0.25;
                             G.getDict('wild bush').res['gather']['herb'] = 0.25;
-                            G.getDict('forest mushrooms').res['gather']['herb'] = 4;
                             G.getDict('succulents').res['gather']['herb'] = 3;
                             G.getDict('jungle fruits').res['gather']['herb'] = 1;
                         }
@@ -15497,7 +15533,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'factories II', category: 'tier2',
-                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work.//@Getting this tech unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes!',
+                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work.@Getting this tech unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes!',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 330, 'lightning essence': 8000 },
@@ -15819,7 +15855,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. //@You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @However, you still can\'t see exactly how many of a resource you have within your territory!',
+                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. @You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @However, you still can\'t see exactly how many of a resource you have within your territory!',
                 icon: [34, 14, 'magixmod'],
                 cost: { 'insight': 10, 'culture': 15 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -15835,7 +15871,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'enlightenment',
-                desc: '[soothsayer]s and [druid]s from now on are more efficient. //@[soothsayer] is more likely to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="#f70054">Note: [enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
+                desc: '[soothsayer]s and [druid]s from now on are more efficient. @[soothsayer] is more likely to generate [faith] successfully. [church] generates 2% more [faith]. Also, for every 5 [church,Churches], you will gain 1 [spirituality]. //<font color="#f70054">Note: [enlightenment] is fragile and will no longer work once any evolution occurs.</font>',
                 icon: [35, 28, 'magixmod'],
                 req: { 'tribalism': false },
                 chance: 30,
@@ -16352,7 +16388,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'spirit-summoning',
-                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely, they will challenge themselves to summon a demon...which ends up with some rather concerning sickness. //@another source of [spookiness]. //Note: [spirit summoner] will only work during Halloween. //<small>Don\'t you dare to disturb their eternal sleep!</small>',
+                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely, they will challenge themselves to summon a demon...which ends up with some rather concerning sickness. @another source of [spookiness]. //Note: [spirit summoner] will only work during Halloween. //<small>Don\'t you dare to disturb their eternal sleep!</small>',
                 icon: [3, 9, 'seasonal'],
                 cost: { 'faith': 80, 'culture': 40 },
                 req: { "Wizard complex": true, '"dark season"': true },
@@ -18099,7 +18135,7 @@ if (getObj("civ") != "1") {
                 desc: 'Use a more effective method of creating [mana], allowing [mana maker]s and [alchemist]s to make it 50% faster. //<small>first, add some water here...</small>',
                 icon: [1, 35, 'magixmod', 19, 2, 'magixmod'],
                 cost: { 'insight': 1500, 'water': 2e5, 'mana': 50000 },
-                req: { 'alchemy': true },
+                req: { 'mana brewery II': true },
             });
             new G.Tech({
                 name: 'hive frames', category: 'tier1',
@@ -18518,7 +18554,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'veggie fertilizer', category: 'tier1',
-                desc: '@[vegetable farm]s will now use much better fertilizer, improving their harvests by +80%',
+                desc: '@[vegetable farm]s and [mushroom farm]s will now use much better fertilizer, improving their harvests by +80%',
                 icon: [52, 0, 'magix2', 2, 22, 'magixmod'],
                 cost: { 'insight': 800, 'culture': 100 },
                 req: { 'agriculture': true },
@@ -18569,6 +18605,44 @@ if (getObj("civ") != "1") {
                 req: { 'caretaking': true },
                 effects: [
                 ],
+            });
+            new G.Tech({
+                name: 'plain island ideas', category: 'tier1',
+                desc: 'Using the tablet, unlock a few new construction possibilities and a new type of farm.',
+                icon: [14, 9, 'magixmod', 24, 1],
+                cost: { 'insight': 120, 'plain island tablet': 1 },
+                effects: [
+                ],
+                req: { 'first portal to new world': true },
+            });
+            new G.Tech({
+                name: 'mushroom farming', category: 'tier1',
+                desc: '@unlocks the [mushroom farm] @allows you to gather a small amount of [mushroom]s from gathering [forest mushrooms]',
+                icon: [65, 0, 'magix2', 24, 1],
+                cost: { 'insight': 300, 'culture': 25 },
+                effects: [
+                    { type: 'provide res', what: { 'mushroom': 1 } },
+                ],
+                req: { 'plain island ideas': true },
+                chance: 2
+            });
+            new G.Tech({
+                name: 'mushroom crafting', category: 'tier1',
+                desc: '@gain the ability to craft [golden mushroom]s from [gold block]s and [mushroom]s in your [blacksmith workshop]s',
+                icon: [0, 35, 'magixmod', 65, 0, 'magix2', 24, 1],
+                cost: { 'insight': 300, 'culture': 25 },
+                req: { 'mushroom farming': true },
+                chance: 1.5
+            });
+            new G.Tech({
+                name: 'the well of ideas', category: 'tier1',
+                desc: 'Unlocks a new well: the [well of ideas]. This well is able to produce [idea tablet]s that help you unlock new researches. //<font color="#f70054"><b>However, rolling new researches will cost [idea tablet]s from now on.</b> (Rerolling doesn\'t cost extra though!)</font> @gain 10 [idea tablet]s',
+                icon: [68, 0, 'magix2'],
+                cost: { 'insight': 120 },
+                effects: [
+                    { type: 'provide res', what: { 'idea tablet': 10 } },
+                ],
+                req: { 'mushroom farming': true },
             });
 
 
@@ -18746,6 +18820,31 @@ if (getObj("civ") != "1") {
                 turnToByContext: { 'eating': { 'health': 0.035, 'happiness': 0.02 } },
                 partOf: 'food',
                 category: 'food',
+            });
+            new G.Res({
+                name: 'mushroom',
+                desc: 'Unfortunately not edible. :(',
+                icon: [63, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'misc'
+            });
+            new G.Res({
+                name: 'golden mushroom',
+                desc: 'Certainly not edible, but has its niche uses. :)',
+                icon: [64, 0, 'magix2'],
+                partOf: 'misc materials',
+                category: 'misc'
+            });
+            new G.Res({
+                name: 'idea tablet',
+                desc: 'A unique tablet that lets you unlock more complex researches.',
+                icon: [66, 0, 'magix2'],
+                category: 'main',
+                tick: function (me, tick) {
+                    var percent = G.unitsOwned[G.unitsOwnedNames.indexOf("well of ideas")].percent
+                    var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
+                    G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation) }
+                }
             });
 
 
@@ -20340,10 +20439,9 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'forest mushrooms',
-                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and may very rarely yield a [herb,Herb] or two.',
+                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and may extremely rarely yield a [mushroom] or two. It\'s much more easy to gather these by farming though.',
                 icon: [5, 10],
                 res: {
-                    'gather': { 'herb': 0.03 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 10,
@@ -21055,7 +21153,7 @@ if (getObj("civ") != "1") {
                                     if (G.getSetting('animations') && me.l) triggerAnim(me.l, 'plop');
                                 }
                                 if (me.mode == 1 && G.testCost(me.unit.costPerStep, 1)) {
-                                    if (me.unit.type == 'portal' && me.unit.name != 'grand mirror') { //for paradise, ancestors and plain island only
+                                    if (me.unit.type == 'portal' && me.unit.name != 'grand mirror' && me.unit.name != 'well of ideas') { //for paradise, ancestors and plain island only
                                         if (me.percent > 25) {
                                             G.getDict(me.unit.name).costPerStep = me.unit.costPerStep2;
                                             G.getDict(me.unit.name).wideIcon = me.unit.wideIcon2; //apply activated
@@ -21070,6 +21168,9 @@ if (getObj("civ") != "1") {
                                         setObj('drought', 5 - me.percent * 0.1)
                                     }
                                     G.doCost(me.unit.costPerStep, 1);
+                                    if (me.unit.name == 'well of ideas' && me.percent > 0 && me.percent % 10 === 0) {
+                                        G.gain('idea tablet', 2);
+                                    }
                                     if (G.getSetting('animations') && me.l) triggerAnim(me.l, 'plop');
                                 }
                                 if (me.percent >= me.unit.steps) {
@@ -22769,7 +22870,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'herb',
                 displayName: 'Herbs',
-                desc: '[herb] are various plants, roots, and mushrooms that can be collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
+                desc: '[herb] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
                 icon: [4, 6, 'c2'],
                 startWith: 175,
                 turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herb': 0.2, 'spoiled food': 0.8 } },
@@ -25576,7 +25677,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tile inspection', category: 'tier1',
-                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. //@You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @<font color="#f70054">However, you still can\'t see exactly how many of a resource you have within your territory!</font>',
+                desc: '@From now on, you can inspect discovered tiles in you <b>Territory</b> tab by clicking on them. @You can see goods and their density on the tile. @You can also inspect newly discovered tiles and get full info about its goods. @<font color="#f70054">However, you still can\'t see exactly how many of a resource you have within your territory!</font>',
                 icon: [29, 10, 'c2'],
                 cost: { 'discernment': 20, 'gentility': 18, 'creativity': 10 },
                 req: { 'intuition': true, 'scouting': true, 'plant lore': true, 'hunting': true },
@@ -25778,7 +25879,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'knitting', category: 'tier1',
-                desc: 'Knitting is a method by which yarn is manipulated to create a textile or fabric. It is used in many types of garments. //@[clothier]s are 8% more efficient in all modes.',
+                desc: 'Knitting is a method by which yarn is manipulated to create a textile or fabric. It is used in many types of garments. @[clothier]s are 8% more efficient in all modes.',
                 icon: [26, 11, 'c2'],
                 cost: { 'discernment': 39, 'creativity': 15 },
                 req: { 'tool-making': true, 'sewing': true, 'weaving': true },
