@@ -362,9 +362,12 @@ G.Load = function (doneLoading) {
         var i = 0;
         var fromVersion = parseFloat(spl[i++]);
         G.releaseNumber = parseFloat(spl[i++]);
+        var corrupted = false;
         if (G.releaseNumber > 1000 || !isFinite(G.releaseNumber)) {
             G.releaseNumber = 54; // assume it's an older version simply due to a save being corrupted
+            corrupted = true;
             i++;
+            console.warn("A corruption has happened with the save, meaning that the game likely loaded with the G.Load function from the main script due to an error. An attempt to correct it has been made!")
         }
         G.startDate = parseFloat(spl[i++]);
         G.fullDate = parseFloat(spl[i++]);
@@ -375,7 +378,9 @@ G.Load = function (doneLoading) {
         G.furthestDay = parseFloat(spl[i++]);
         G.totalDays = parseFloat(spl[i++]);
         G.resets = parseFloat(spl[i++]);
-        G.influenceTraitRemovalCooldown = parseFloat(spl[i++]);
+        if (!corrupted) {
+            G.influenceTraitRemovalCooldown = parseFloat(spl[i++]);
+        }
         //accumulate fast ticks when offline
         var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
         G.fastTicks += Math.floor(timeOffline);

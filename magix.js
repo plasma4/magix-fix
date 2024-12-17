@@ -18841,9 +18841,12 @@ if (getObj("civ") != "1") {
                 icon: [66, 0, 'magix2'],
                 category: 'main',
                 tick: function (me, tick) {
-                    var percent = G.unitsOwned[G.unitsOwnedNames.indexOf("well of ideas")].percent
-                    var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
-                    G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation) }
+                    var index = G.unitsOwnedNames.indexOf("well of ideas")
+                    if (index !== -1) {
+                        var percent = G.unitsOwned[G.unitsOwnedNames.indexOf("well of ideas")].percent
+                        var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
+                        G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation) }
+                    }
                 }
             });
 
