@@ -10417,7 +10417,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'lumber': 20, 'stone': 70, 'fire pit': 5, 'thread': 2 }, into: { 'stone tools': 15 }, every: 20 },
                     { type: 'convert', from: { 'lumber': 20, 'stone': 70, 'fire pit': 5, 'thread': 2 }, into: { 'stone weapons': 15 }, every: 20 },
                     { type: 'convert', from: { 'lumber': 90, 'stone': 880 }, into: { 'arrow': 200 }, every: 35 },
-                    { type: 'convert', from: { 'lumber': 10, 'stone': 20, 'thread': 10 }, into: { 'crossbow': 30 }, every: 11 },
+                    { type: 'convert', from: { 'lumber': 10, 'stone': 20, 'thread': 10 }, into: { 'bow': 15, 'crossbow': 15 }, every: 11 },
                     { type: 'mult', value: 1.2, req: { 'ground tools': true } },
                     { type: 'mult', value: 1.5, req: { 'larger toolhuts': true } },
                 ],
@@ -14082,7 +14082,7 @@ if (getObj("civ") != "1") {
                 desc: 'The third level of [symbolism] will make symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10 },
-                req: { 'doctrine of the dark wormhole 5/5': true, 'symbI': false },
+                req: { 'doctrine of the dark wormhole 5/5': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 10 } },
                     { type: 'provide res', what: { 'wisdom II': 10 } },
@@ -17668,7 +17668,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'symbolic cultural colors',
-                desc: '@another [culture] point will be refunded for every trait obtained if the trait. In addition, the amount needed for each refund is reduced to 100. Having [symbolic cultural colors] or <b>this</b> trait allows to get [coloral symbolism III]. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
+                desc: '@another [culture] point can be refunded every research, and the amount needed for each refund is reduced to 100. @having [symbolic cultural colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 35, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -17681,7 +17681,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'symbolic knowledge colors',
-                desc: '@another [insight] point can be refunded every research, and the amount needed for each refund is reduced to 100. Having [symbolic cultural colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
+                desc: '@another [insight] point can be refunded every research, and the amount needed for each refund is reduced to 100. @having [symbolic cultural colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
                 icon: [0, 35, 'magixmod', 36, 33, 'magixmod'],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
@@ -18880,8 +18880,8 @@ if (getObj("civ") != "1") {
                 category: 'main',
                 tick: function (me, tick) {
                     var index = G.unitsOwnedNames.indexOf("well of ideas")
-                    if (index !== -1) {
-                        var percent = G.unitsOwned[G.unitsOwnedNames.indexOf("well of ideas")].percent
+                    if (index !== -1 && G.unitsOwned[index]) {
+                        var percent = G.unitsOwned[index].percent
                         var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
                         G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation) }
                     }
