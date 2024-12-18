@@ -10900,7 +10900,7 @@ if (getObj("civ") != "1") {
                     let calcCost = (name, constGain = 0.025, rollGain = 0.05) => Math.floor(G.getRes(name).amount * (constGain + this.roll * rollGain));
                     var costs = {};
                     if (G.has('eotm')) {
-                        costs['insight II'] = Math.pow(calcCost('wisdom II', G.has("faster understanding") ? 0.3 : 0.5), 0.7) + (G.has('eotm') ? Math.floor(G.techN / 7) : 0);
+                        costs['insight II'] = Math.pow(calcCost('wisdom II', G.has("faster understanding") ? 0.3 : 0.5), 0.7) + Math.ceil(Math.pow(G.techN / 7 - 2, 1.1));
                     } else {
                         costs['insight'] = calcCost('wisdom');
                     }
@@ -10986,10 +10986,10 @@ if (getObj("civ") != "1") {
                         return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> resource.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
                     }
                     else if (!G.has('eota')) {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b> resources (Insight II costs scale with the number of techs).' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b> resources (Insight II costs scale with the number of techs too).' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
                     }
                     else {
-                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b>/<b>Inspiration II</b> resources (Insight II costs scale with the number of techs).' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
+                        return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom II</b>/<b>Education</b>/<b>Inspiration II</b> resources (Insight II costs scale with the number of techs too).' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + G.getCostString(this.getCosts(), true) + '</div></div>';
                     }
                 }
             });
