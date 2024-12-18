@@ -5539,7 +5539,6 @@ G.AddData({
                 else if (me.mode == 1) {
                     //building in progress; pausing construction
                     if (success) {
-                        console.log(me.percent);
                         me.mode = 2;
                         if (G.getSetting('animations')) triggerAnim(me.l, 'plop');
                     }

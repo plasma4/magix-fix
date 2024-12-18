@@ -817,6 +817,7 @@ G.traitTick = function (race, permachiev) {
             return true;
         }
         if (!G.has(me.name)) {
+            // if (G.checkReq(me.req) && G.testCost(me.cost, 1)) console.log(me.name, me.chance)
             if (Math.random() < 1 / (me.chance * (300 - mausoBonus))) {
                 if (G.checkReq(me.req) && G.testCost(me.cost, 1)) {
                     G.doCost(me.cost, 1);
@@ -1599,22 +1600,22 @@ if (getObj("civ") != "1") {
                                 if (G.has('famine')) G.deleteTrait('famine')
                                 setObj('drought', 0)
                             }
-                        } else if (G.year > 220 - G.techN * 0.35 && G.has("primary time measure") && G.year - 2 >= G.getRes('ignoreItem').amount) {
+                        } else if (G.year > 220 - G.techN * 0.35 && G.has("primary time measure") && G.year - 2 >= G.getRes('drought year').amount) {
                             if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
                             // Drought data starts being calculated now
-                            G.getRes('ignoreItem').amount = G.year + Math.floor(Math.random() * 6 + 4)
+                            G.getRes('drought year').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
                             if (G.year < 200) {
                                 G.Message({ type: 'good', text: 'After a <b>drought</b> has happened, it can take anywhere from 7 to 15 years for the next one to strike.', icon: [9, 10] })
                             }
                             droughtmesg = false
                             setObj('drought', -1)
-                        } else if (G.year === G.getRes('ignoreItem').amount - 2) {
+                        } else if (G.year === G.getRes('drought year').amount - 2) {
                             G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
-                        } else if (G.year > 49 && Math.random() < 0.8 && G.year === G.getRes('ignoreItem').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
+                        } else if (G.year > 49 && Math.random() < 0.8 && G.year === G.getRes('drought year').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
                             G.gainTrait(G.traitByName['drought'])
                             setObj('drought', G.year)
-                            G.getRes('ignoreItem').amount = G.year + Math.round(Math.random() * 8 + 6)
+                            G.getRes('drought year').amount = G.year + Math.round(Math.random() * 8 + 6)
                         }
                     } else if (G.has('t6') && G.year == 5) {
                         G.Message({ type: 'bad', text: 'Your people have noticed that the land has been slowly <b>turning into ocean</b>! However, remember that the further you progress, the more researches you can obtain to balance this out. Once you start getting <b>deep ocean</b>, you should consider leaving this trial as soon as you can!', icon: [16, 0, 'magix2'] })
@@ -5723,11 +5724,11 @@ if (getObj("civ") != "1") {
                         u3popup = true
                     }
                     if (me.amount == 750 && !G.has('a feeling from the Underworld') && !u4popup) {
-                        G.Message({ type: 'underworldig', text: 'Out of nowhere, people yell and run away in panic except small group of brave people who still dig down. Souls start to behave weird...or you just don\'t understand them yet.<br><b><font color="#f70054">Don\'t let the Gods<br>Send there his crowds<br>Danger for people abounds<br>and there are forbidden crowds</font></b>', icon: [3, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'Out of nowhere, people yell and run away in panic except small group of brave people who still dig down. Souls start to behave weird...or you just don\'t understand them yet. Suddenly an echo rings:<br><b><font color="red">Don\'t let the Gods<br>Send there his crowds<br>The danger for YOUR people abounds.</font></b>', icon: [3, 19, 'magixmod'] });
                         u4popup = true
                     }
                     if (me.amount == 950 && !G.has('a feeling from the Underworld') && !u5popup) {
-                        G.Message({ type: 'underworldig', text: 'A huge cavern starts to show while braves continued digging down. They run away to you...empowered weirdly by these souls. Another lightning essence creature paralyses you and water essence creatures have started behaving insane. Is this a greeting from a new world?<br><b><font color="silver">Alright ' + G.getName('ruler') + '...<br>Call your soul and make it go...<br>Right to the world<br>The Under...world</font></b>', icon: [4, 19, 'magixmod'] });
+                        G.Message({ type: 'underworldig', text: 'A huge cavern starts to show while braves continued digging down. They run away to you...empowered weirdly by these souls. Another lightning essence creature paralyses you and water essence creatures have started behaving insane. Is this a greeting from a new world?<br><b><font color="silver">Alright ' + G.getName('ruler') + '...<br>Call your soul and make it go...<br>Right down to the <font color="red">UNDERWORLD</font></font></b>', icon: [4, 19, 'magixmod'] });
                         u5popup = true
                     }
                     if (me.amount == 1500 && !G.has('a feeling from the Underworld') && !finalupopup) {
@@ -7806,7 +7807,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Unit({
                 name: 'hovel of colours',
-                desc: 'Does same thing as an [artisan] crafting dyes.',
+                desc: 'Does the same thing as an [artisan] crafting dyes.',
                 icon: [19, 18, 'magixmod'],
                 cost: { 'basic building materials': 975 },
                 upkeep: { 'fire pit': 1 },
@@ -7985,7 +7986,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'windmill',
-                desc: '[windmill]s are able to convert [wheat] into [flour].',
+                desc: '[windmill]s are able to convert [wheat] into [flour]. //<small>(Note that [flour] is pretty difficult to get and requires some advanced researches.)</small>',
                 icon: [24, 11, 'magixmod'],
                 cost: { 'basic building materials': 600 },
                 req: { 'flour-crafting II': true },
@@ -8837,7 +8838,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'Wizard Complex',
-                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower and also needs [mana]. May provide more housing with further researches.',
+                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower but only needs 6 times the [mana]. May provide more housing with further researches.',
                 icon: [3, 3, 'magixmod'],
                 cost: { 'basic building materials': 12500, 'precious building materials': 3000 },
                 use: { 'land': 9, 'worker': 10, 'wizard': 60 },
@@ -9682,7 +9683,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'paradise portal', displayName: '<font color="#E0CE00">Portal to the Paradise</font>',
-                desc: 'Opens a portal to a huge <b>God\'s Paradise</b>: a troublesome project, guided by God\'s worship!//A dream of Paradise, angels, and much more comes real! You will also get +21.5k [land of the Paradise] that you can use!',
+                desc: 'Opens a portal to a huge <b>God\'s Paradise</b>: a troublesome project, guided by God\'s worship!//A dream of Paradise, angels, and much more could become real. Completing this will provide +21.5k [land of the Paradise] that you can use for various buildings!',
                 wideIcon: [31, 29, 'magixmod'],
                 wideIcon2: [7, 4, 'magixmod'],
                 icon: [32, 29, 'magixmod'],
@@ -9715,7 +9716,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'temple of deities',
                 displayName: 'Temple of Deities',
-                desc: 'A mystical monument dedicated to angels, archangels, Seraphins, and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is towers above the world\'s clouds, and despite the fact there is cold on top, some brave people may come up to prey its god, or listen to heavenly symphonies and hums.',
+                desc: 'A mystical monument dedicated to angels, archangels, Seraphins, and many other deities.//A temple housing a tomb deep under its rocky platform, where the Temple\'s relics lie and there is last bastion of your religion if it will start fall. @The tower it does have is way above the world\'s clouds, and despite the fact that it is freezing up there, some brave people often pray to their God there or listen to heavenly symphonies and hums from up above.',
                 wonder: 'heavenly',
                 icon: [1, 11, 'magixmod'],
                 wideIcon: [0, 11, 'magixmod'],
@@ -10146,7 +10147,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'university of science',
-                desc: '@This wonder is different than other wonders. You cannot ascend via the [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of Plain Island, the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.',
+                desc: '@This wonder is different from the other wonders. You cannot ascend via the [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of Plain Island, the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.',
                 wonder: '.',
                 icon: [13, 29, 'magixmod'],
                 wideIcon: [12, 29, 'magixmod'],
@@ -10211,7 +10212,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fort',
-                desc: '@provides 30 [housing]. Uses some guards guards to protect citizens from cruel and possesed dark powers.',
+                desc: '@provides 30 [housing]. Uses some guards to protect citizens from cruel and possesed dark powers.',
                 icon: [8, 6, 'magixmod'],
                 cost: { 'basic building materials': 800, 'strong metal ingot': 400, 'cobalt ingot': 100 },
                 effects: [
@@ -10528,7 +10529,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fortress of love',
                 displayName: '<font color="pink">Fortress of love</font>',
-                desc: 'Constucted in Paradise as a gigantic [fortress of love]. Settled into special region separated as much as possible from other isles gives even more uniqueness. Vibrant. //Only allowed there are: love, respect, good mood, empathy. //That is why not everyone is supposed to arrive there. Only the most kind people and souls will live there. //Happy valentines! @The final step will require 2 full [love] levels.',
+                desc: 'Constucted in Paradise as a gigantic [fortress of love]. It is in a unique region separated as much as possible from other island, giving it even more uniqueness. //In this unique island, there are mutual feelings of respect, good feelings, and true empathy. //Only the kindest people and souls are able to live there! //Happy valentines! @(The final step will require 2 full [love] levels.)',
                 icon: [0, 16, 'seasonal'],
                 wonder: '.',
                 steps: 999,
@@ -10909,7 +10910,7 @@ if (getObj("civ") != "1") {
                     if (G.has('eotm')) costs['science'] = calcCost('education', G.has("do we need that much science?") ? 0.1 : 0.2);
                     if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.04);
                     if (G.chooseBox[0].choices.length === 0 && G.has('the well of ideas')) {
-                        costs['idea tablet'] = 1
+                        costs['idea tablet'] = G.has('paradise building') ? 2 : 1
                     }
                     return costs;
                 },
@@ -11970,14 +11971,14 @@ if (getObj("civ") != "1") {
                 category: 'tier1',
                 desc: 'After your people heard [the god\'s call], your wizards full of faith figured out a way to activate a portal to Paradise!',
                 icon: [20, 3, 'magixmod'],
-                cost: { 'insight': 1595, 'culture': 300, 'mana': 2500, 'influence': 70, 'spirituality': 50, 'population': 1000 },
+                cost: { 'insight': 1595, 'culture': 300, 'mana': 2500, 'influence': 70, 'spirituality': 50, 'population': 1000, 'idea tablet': 5 },
                 req: { 'belief in portals': true, 'first portal to new world': true, 'the god\'s call': true, 'monument-building II': true },
             });
             new G.Tech({
                 name: 'paradise building', category: 'tier1',
-                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<small>I\'d construct...a huge campfire</small>',
+                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1 from now on.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>I\'d construct...a huge campfire</small>',
                 icon: [19, 13, 'magixmod'],
-                cost: { 'insight': 4, 'paradise tablet': 1 },
+                cost: { 'insight': 4, 'paradise tablet': 1, 'idea tablet': 25 },
                 effects: [
                     { type: 'provide res', what: { 'industry point': 800 } },
                     { type: 'show res', what: ['industry point'] },
@@ -12007,7 +12008,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: '7th essence', category: 'tier1',
-                desc: 'Your people have discovered another essence which can be felt in the Paradise\'s air. @Unlocks the [holy wizard tower], which produces a new type of essence!//<small>But shouldn\'t holy essence vaporize dark essence?</small>',
+                desc: 'Your people have discovered another essence which can be felt in the Paradise\'s air. @Unlocks the [holy wizard tower] and [holy essence storage], which produces a new type of essence!//<small>But shouldn\'t holy essence vaporize dark essence?</small>',
                 icon: [20, 6, 'magixmod', 8, 12, 23, 1],
                 cost: { 'insight': 1325 },
                 effects: [
@@ -12298,14 +12299,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'moderated workstation planning', category: 'tier1',
-                desc: 'People lead by [moderation] want the exact plans of building. It leads to more advanced constructions.',
+                desc: 'People led by [moderation] wish for more exact building plans. This can lead to more advanced constructions!',
                 icon: [11, 18, 'magixmod'],
                 cost: { 'insight': 995, 'wisdom': 5 },
                 req: { 'paradise crafting': true, 'moderation': true, 'measuring system': true }
             });
             new G.Tech({
                 name: 'workstation planning', category: 'tier1',
-                desc: 'People lead by [caretaking] do not need exact plans of building. They are interested in how many people it needs and where components will be arranged without super exact descriptions.',
+                desc: 'People led by [caretaking] do not need exact building plans. They are interested in how many people it needs and where components will be arranged without super exact descriptions.',
                 icon: [12, 18, 'magixmod'],
                 cost: { 'insight': 995, 'wisdom': 5 },
                 req: { 'paradise crafting': true, 'caretaking': true, 'measuring system': true }
@@ -12952,7 +12953,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dark side',
-                desc: 'People now believe that if there are good deities and helpful spirits, then there must be something opposite to them. They think that some eveil beings of terror and pain exist in this world...',
+                desc: 'People now believe that if there are good deities and helpful spirits, then there must be something opposite to them. They start to think that some evil beings of terror and pain exist in this world...',
                 icon: [11, 19, 'magixmod'],
                 cost: { 'spirituality': 10, 'faith': 200 },
                 chance: 40,
@@ -18646,13 +18647,13 @@ if (getObj("civ") != "1") {
 
 
             new G.Res({
-                name: 'ignoreItem', // A resource that tells you the next predicted drought
+                name: 'drought year', // A resource that tells you the next predicted drought
                 displayName: 'Next predicted drought year',
                 desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
                 icon: [9, 10],
                 category: 'demog',
                 getDisplayAmount: function () {
-                    return B(G.has('time measuring 1/2') ? G.getRes('ignoreItem').amount : (Math.round(G.getRes('ignoreItem').amount / 10)) * 10)
+                    return B(G.has('time measuring 1/2') ? G.getRes('drought year').amount : (Math.round(G.getRes('drought year').amount / 10)) * 10)
                 },
             });
             new G.Res({
