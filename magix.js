@@ -13741,7 +13741,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunting III', category: 'upgrade',
-                desc: '@[hunter]s become more coordinated. This tech decreases the amount of accidents where a victim becomes [hunter]. @[hunter] will have a new icon and endurance hunting will no longer be available.',
+                desc: '@[hunter]s become more coordinated. This tech decreases the amount of accidents where a victim becomes [hunter]. @[hunter]s will have a new icon and endurance hunting will no longer be available.',
                 icon: [8, 22, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 2, 'influence II': 3 },
                 req: { 'policy revaluation': true, 'magical presence': true, 'fishing II': true },
@@ -14071,7 +14071,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
-                desc: 'The third level of [symbolism] will symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
+                desc: 'The third level of [symbolism] will make symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'symbI': false },
@@ -14154,7 +14154,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'leaves of wisdom',
-                desc: 'A weird thought strikes the head of scholars. It\'s all about the [wisdom II,Wisdom tree], which grows ruby red leaves now. This tree produces leaves faster than it can grow branches for them! //Learning about these gives you 2 [education], 35 [wisdom II], and 250 [wisdom] and allows you to unlock more techs. In addition, [essential conversion tank]s become 25% faster.',
+                desc: 'A weird thought strikes the heads of some of your scholars. It\'s all about the [wisdom II,Wisdom tree], which grows ruby red leaves now. This tree produces leaves faster than it can grow branches for them! //Learning about these gives you 2 [education], 35 [wisdom II], and 250 [wisdom] and allows you to unlock more techs. In addition, [essential conversion tank]s become 25% faster.',
                 icon: [31, 10, 'magixmod'],
                 req: { 'symbolism II': true, 'branches of wisdom': false },
                 chance: 20,
