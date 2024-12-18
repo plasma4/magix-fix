@@ -3,7 +3,7 @@ Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made b
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
 Paste in the following script into the console:
 ```js
-javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
+javascript:localStorage.setItem("legacySave-alpha",btoa(encodeURIComponent(decodeURIComponent(atob(localStorage.getItem("legacySave-alpha"))).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),location.reload()
 ```
 It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your bookmarks bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ## IF YOU ARE STARTING AS A NEW PLAYER
@@ -13,7 +13,7 @@ It's that easy! If you can't open the console for some reason, you can try selec
 
 Upon loading it, you should be able to play the game!
 ##
-***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be, well, modded by anyone who wishes. This mod has an unclear license, however. I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
+***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be modded by anyone who wishes, despite the comments in magix.us. This mod has an unclear license, however; therefore, I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
 
 <sup>This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source.</sup>
 ## What does this fixed mod do?
