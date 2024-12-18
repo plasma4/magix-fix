@@ -15847,7 +15847,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'spark\'o religion',
-                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such as spirits, beliefs, and hopes. Who knows if you can even reach some sort of...[magic essences,Magic]?',
+                desc: '[spark\'o religion] opens a path to [ritualism] and things related to religion (such as spirits, beliefs, and hopes). Who knows if you can even reach some sort of...[magic essences,Magic]?',
                 icon: [35, 15, 'magixmod'],
                 chance: 1.3,
                 cost: { 'culture': 2 },
@@ -18667,7 +18667,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'baking III', category: 'tier2',
                 desc: '<li>Baking [bread] even faster and tastier!</li>//Wheat farms also become four times faster.<small>Maybe one day, every citizen can enjoy this food...</small>',
-                icon: [0, 35, 'magixmod', 22, 12, 'magixmod'],
+                icon: [1, 35, 'magixmod', 22, 12, 'magixmod'],
                 cost: { 'insight II': 65, 'culture II': 5 },
                 req: { 'baking II': true },
                 effects: [
@@ -25884,7 +25884,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'spark\'o religion',
-                desc: '[spark\'o religion] opens a way to [ritualism] and things related to <b>Religion</b> such as spirits, beliefs, and hopes. Who knows if you can even reach some sort of strange, wonderful <b>magic</b>? //<small>(It\'s the name of the game...after all...)</small>',
+                desc: '[spark\'o religion] opens a path to [ritualism] and things related to religion (such as spirits, beliefs, and hopes). Who knows if you can even reach some sort of strange, wonderful <b>magic</b>? //<small>(It\'s the name of the game...after all...)</small>',
                 icon: [24, 12, 'c2'],
                 chance: 2,
                 cost: { 'gentility': 6 },
