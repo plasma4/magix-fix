@@ -776,12 +776,12 @@
                 }
                 var max = effect.max
                 if (max) {
-                    info += " with its gathering capped at " + max
+                    info += " its gathering is capped at " + max
                 }
                 var every = effect.every
                 if (every && every !== 1) {
-                    info += " every " + every + " ticks"
-                }
+                    info += (max ? " for every " : " every ") + every + " ticks"
+                } else
                 if (info) result.push(info)
             }
             return result
