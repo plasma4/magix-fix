@@ -13788,7 +13788,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fisher\'s smartness', category: 'tier2',
-                desc: '[fisher]s are twice as efficient, but as an upkeep he requires some [food]. //[fisher]s can now know how to lure different types of fishes optimally.',
+                desc: '[fisher]s become twice as efficient with new skills, but require some [food] as upkeep. //<small>We now know how to lure different types of fish!</small>',
                 icon: [0, 23, 'magixmod'],
                 cost: { 'insight II': 45, 'science': 5 },
                 req: { 'fishing III': true },
@@ -13826,7 +13826,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fertile bushes', category: 'upgrade',
-                desc: '[house,Next-to house fruitbushes] are 20% more fertile. In fact, they gather 20% more [fruit]s! Yummy :) Also, [hovel with garden] gains 10% more.',
+                desc: '[house,Next-to house fruitbushes] are 20% more fertile. In fact, they gather 20% more [fruit]s! Yummy :) Also, [hovel with garden,Hovels with gardens] gain 10% more.',
                 icon: [1, 24, 'magixmod'],
                 cost: { 'insight II': 100, 'culture II': 20 },
                 req: { 'hunters & fishers unification': true, 'next-to house fruitbushes': true },
@@ -13927,7 +13927,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'burial wormhole 2/2', category: 'tier2',
-                desc: 'Unlocks the [dark wormhole] (finally). It is a massive burial spot bonus but requires upkeep (in both [mana] and [dark essence]). Dark powers like death and fear exist within, and the corpses look scary and spooky. That keeps the wormhole stable.',
+                desc: 'Unlocks the [dark wormhole] (finally). It is a massive burial spot bonus but requires upkeep (more specifically, both [mana] and [dark essence]). Dark powers like death and fear exist within, and the corpses inside look quite scary and spooky. That keeps the wormhole stable.',
                 icon: [27, 2, 'magixmod', 22, 22, 'magixmod'],
                 cost: { 'insight II': 150, 'science': 10, 'culture II': 40 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'master mana-making': true },
@@ -14085,7 +14085,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard\'s grain fertilizer', category: 'upgrade',
-                desc: 'You make can now make a fertilizer that make [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
+                desc: 'Your people can now make some unique fertilizer, letting [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -15055,7 +15055,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ink-fishing', category: 'tier2',
-                desc: 'Now fishing can provide some [ink]. <>Fishers from camp now are able to gather [ink] out of some squids.',
+                desc: 'Now fishing can provide some [ink]. <>Fishers from your camps will finally be able to gather [ink] out of some squids.',
                 icon: [32, 19, 'magixmod'],
                 req: { 'outstanding wisdom': true, 'hunters & fishers unification': true },
                 cost: { 'insight II': 267, 'science': 20 },
