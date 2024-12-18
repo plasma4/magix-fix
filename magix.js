@@ -7987,7 +7987,8 @@ if (getObj("civ") != "1") {
                 upkeep: { 'log': 0.6 },
                 effects: [
                     { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1 / 25, req: { 'baking': true, 'baking II': false } },
-                    { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking': true, 'baking II': true } },
+                    { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking II': true, 'baking III': false } },
+                    { type: 'convert', from: { 'flour': 100 }, into: { 'bread': 40 }, every: 4, chance: 4.6 / 5, req: { 'baking III': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } }
                 ],
                 req: { 'baking': true },
@@ -8025,6 +8026,9 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true, 'wizard\'s grain fertilizer': false } },
                     { type: 'mult', value: 2.5, req: { 'wizard\'s grain fertilizer': true, 'grain fertilizer': true } },
                     { type: 'mult', value: 2, req: { 'backshift at farms': true } },
+                    { type: 'mult', value: 2.25, req: { 'gardening II': true } },
+                    { type: 'mult', value: 2, req: { 'gardening III': true } },
+                    { type: 'mult', value: 4, req: { 'baking III': true } },
                 ],
             });
             new G.Unit({
@@ -9367,7 +9371,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'vegetable': 0.16 } },
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
-                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } }
+                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } },
+                    { type: 'mult', value: 2.25, req: { 'gardening II': true } }
                 ],
             });
             new G.Unit({
@@ -9388,7 +9393,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 4, req: { 'empowered canes': true } },
                     { type: 'mult', value: 4, req: { 'essenced soil for moisture-loving plants': true } },
                     { type: 'mult', value: 2.5, req: { 'backshift at farms': true } },
-                    { type: 'mult', value: 2.25, req: { 'gardening II': true } }
+                    { type: 'mult', value: 2.25, req: { 'gardening II': true } },
+                    { type: 'mult', value: 1.2, req: { 'gardening III': true } }
                 ],
             });
             new G.Unit({//I was removed because I didn't change that much in game. I was a beet farm but I am going to be something different more useful
@@ -10860,7 +10866,9 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'mushroom': 3.7 }, amount: 1 },
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
-                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } }
+                    { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } },
+                    { type: 'mult', value: 2.25, req: { 'gardening II': true } },
+                    { type: 'mult', value: 1.2, req: { 'gardening III': true } }
                 ],
             });
             new G.Unit({
@@ -12156,28 +12164,28 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'flour-crafting I', category: 'tier1',
-                desc: '<li>Unlocks a mode for [artisan] that allows you to process [wheat] into [flour].</li>',
+                desc: '@Unlocks a mode for [artisan]s that lets you process [wheat] into [flour].</li>',
                 icon: [9, 7, 'magixmod'],
                 cost: { 'insight': 685 },
                 req: { 'Farm of wheat': true },
             });
             new G.Tech({
                 name: 'flour-crafting II', category: 'tier2',
-                desc: '<li>Unlocks the [windmill]. Uses [land] but can process way more [wheat] at a time!</li>',
+                desc: '@Unlocks the mighty [windmill]. Uses [land] but can process way more [wheat] at a time!',
                 icon: [0, 35, 'magixmod', 22, 11, 'magixmod'],
                 cost: { 'insight II': 10 },
                 req: { 'Farm of wheat': true, 'flour-crafting I': true, 'eotm': true },
             });
             new G.Tech({
                 name: 'baking', category: 'tier1',
-                desc: '<li>Unlocks the [bakery]. To bake [bread] more effectively, however, you will need more upgrades!//For now, your people will have a high chance to fail [bread]-baking, making it neither edible nor nutritious.</li>',
+                desc: 'Unlocks the [bakery]. To bake [bread] more effectively, however, you will need more upgrades!//For now, your people will have a high chance to fail [bread]-baking, making it neither edible nor nutritious.</li>',
                 icon: [9, 8, 'magixmod'],
                 cost: { 'insight': 600 },
                 req: { 'flour-crafting I': true, 'construction II': true },
             });
             new G.Tech({
                 name: 'baking II', category: 'tier2',
-                desc: '<li>Baking [bread] is way more successful.</li>//<small>Not only does the [bread] actually look like its edible now, but you\'ll also produce bread faster.</small>',
+                desc: '@Baking [bread] is way more successful.//<small>Not only does the [bread] actually look like its edible now, but you\'ll also produce bread faster.</small>',
                 icon: [0, 35, 'magixmod', 22, 12, 'magixmod'],
                 cost: { 'insight II': 15 },
                 req: { 'baking': true, 'eotm': true },
@@ -12458,7 +12466,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'weaving III', category: 'upgrade',
-                desc: 'Upgrades the sewing skills of your civilization again! @[clothier]s can craft [hardened clothes] when they learn how to weave better and more durable clothing.',
+                desc: 'Upgrades the sewing skills of your civilization again! @[clothier]s can craft [hardened clothes] to create more durable clothing.',
                 icon: [1, 35, 'magixmod', 27, 12, 'magixmod'],
                 cost: { 'insight II': 20 },
                 req: { 'wizardry': true, 'sewing II': true, 'weaving II': true, 'eotm': true },
@@ -13826,7 +13834,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fertile bushes', category: 'upgrade',
-                desc: '[house,Next-to house fruitbushes] are 20% more fertile. In fact, they gather 20% more [fruit]s! Yummy :) Also, [hovel with garden,Hovels with gardens] gain 10% more.',
+                desc: '[house,Next-to house fruitbushes] are 20% more fertile. Now, they will gather 20% more [fruit]! Yummy :) Also, [hovel with garden,Hovels with gardens] gain 10% more.',
                 icon: [1, 24, 'magixmod'],
                 cost: { 'insight II': 100, 'culture II': 20 },
                 req: { 'hunters & fishers unification': true, 'next-to house fruitbushes': true },
@@ -15342,7 +15350,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mining II', category: 'upgrade',
-                desc: 'Strike the earth (even stronger) for new minerals and mystical wonders! @[mine]s can mine even deeper. To unlock prospecting for them get [prospecting III] research.',
+                desc: 'Strike the earth (even stronger) for new minerals and mystical wonders! @[mine]s can mine even deeper. To unlock prospecting for them, get the [prospecting III] research.',
                 icon: [0, 35, 'magixmod', 12, 1, 'magixmod'],
                 cost: { 'insight II': 190, 'science': 12, 'culture II': 8 },
                 req: { 'digging': true, 'construction': true, 'eotm': true, 'deep mining & quarrying': true },
@@ -15429,7 +15437,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mythril-working', category: 'tier2',
-                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop] can now Forge [various metal block]s out of [mystical metal ingot]s',
+                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop] can now forge [various metal block]s out of [mystical metal ingot]s',
                 icon: [14, 30, 'magixmod'],
                 cost: { 'insight II': 200, 'science': 5 },
                 req: { 'mining II': true, 'furnace modernization': true },
@@ -18108,7 +18116,7 @@ if (getObj("civ") != "1") {
                 name: 'art of cooking III', category: 'tier1',
                 desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb,Herb], [fruit], or [vegetable,Vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s). //They will switch what [food] that they use every ten days.',
                 icon: [1, 35, 'magixmod', 23, 13, 'magixmod'],
-                cost: { 'insight': 750, 'influence': 150 },
+                cost: { 'insight II': 200, 'influence II': 12 },
                 req: { 'spicy foods III': true },
                 effects: [
                 ],
@@ -18642,7 +18650,9 @@ if (getObj("civ") != "1") {
                 icon: [0, 35, 'magixmod', 65, 0, 'magix2', 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 req: { 'mushroom farming': true },
-                chance: 1.5
+                chance: 1.5,
+                effects: [
+                ],
             });
             new G.Tech({
                 name: 'the well of ideas', category: 'tier1',
@@ -18653,6 +18663,24 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'idea tablet': 10 } },
                 ],
                 req: { 'mushroom farming': true },
+            });
+            new G.Tech({
+                name: 'baking III', category: 'tier2',
+                desc: '<li>Baking [bread] even faster and tastier!</li>//Wheat farms also become four times faster.<small>Maybe one day, every citizen can enjoy this food...</small>',
+                icon: [0, 35, 'magixmod', 22, 12, 'magixmod'],
+                cost: { 'insight II': 65, 'culture II': 5 },
+                req: { 'baking II': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'gardening III', category: 'tier2',
+                desc: 'Get even better [wheat] farms! [wheat farm]s become twice as fast now, and the [sugar cane] and [mushroom] farms become +20% faster.//<small>It can finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
+                icon: [1, 35, 'magixmod', 10, 0, 'magixmod'],
+                cost: { 'insight II': 200, 'culture II': 30 },
+                req: { 'baking III': true, 'art of cooking III': true },
+                effects: [
+                ],
             });
 
 
@@ -25947,7 +25975,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'missionary', category: 'tier1',
-                desc: '@unlocks [druidish travellers team] //Send religious tribe to spread your religion and ideas to as much of elves as possible and explore the world at the same time merging with Mother Nature. Also, each [soothsayer] gains 25% more faith but, from now on, they will have limit of one per 10 [population]//<small>Hey! Do not consider it as profanation. It is not like that...</small>',
+                desc: '@unlocks [druidish travellers team] //Send religious tribe to spread your religion and ideas to as much of elves as possible and explore the world at the same time merging with Mother Nature. In addition, each [soothsayer] will gain 25% more faith but, from now on, they are limited//<small>Hey! Do not consider it as profanation. It is not like that...</small>',
                 icon: [28, 14, 'c2'],
                 cost: { 'faith': 10, 'creativity': 12, 'discernment': 2 },
                 req: { 'ritualism': true, 'symbolism': true, 'belief in the afterlife': true },

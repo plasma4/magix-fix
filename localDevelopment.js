@@ -149,7 +149,7 @@ function extractObject(toExtract, properties, funcProperties) {
         obj.id = item.id
         data[i] = obj
     }
-    return data
+    return data.replace(/<b>0<\/b> runs\/legacies/, "<b>7</b> runs/legacies") // Replace this part of the data because it's a seasonal text thing that doesn't update properly
 }
 
 // Returns an object where the keys are the raw names of the resources and the values are the display names.
