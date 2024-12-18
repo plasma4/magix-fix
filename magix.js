@@ -10457,7 +10457,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wonderful fortress of christmas',
-                desc: 'Constucted in snowy biomes, the colossal and giant [wonderful fortress of christmas,Wonderful fortress of Christmas] is taller and bigger than anything else nearby, showing its shadow to festive villages and cities all around. //Full of lights and ornaments so that its mightiness is also the art of beauty. //This giant wonder takes a lot of steps to be built. //<small>Merry Christmas!</small>',
+                desc: 'Constucted in snowy biomes, the colossal and giant [wonderful fortress of christmas,Wonderful fortress of Christmas] is taller and bigger than anything else nearby, showing its shadow to festive villages and cities all around. //Full of lights and ornaments so that its mightiness is also the art of beauty. //This giant wonder takes a lot of steps to be built though! //<small>Merry Christmas!</small>',
                 icon: [0, 12, 'seasonal'],
                 wonder: '.',
                 steps: 1200,
@@ -10574,7 +10574,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'spirit summoner',
-                desc: '@Summons spirits during Halloween (which are the souls of dead [population,people]), producing [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @later he will be able to summon demons.',
+                desc: '@Summons spirits during Halloween (which are the souls of dead [population,people]), producing [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @will be able to summon demons with more advanced researches',
                 icon: [4, 9, 'seasonal'],
                 upkeep: { 'food': 0.3 },
                 limitPer: { 'population': 30 },
@@ -17949,7 +17949,7 @@ if (getObj("civ") != "1") {
                 name: 'magical filtering II', category: 'tier1',
                 desc: 'Use the power of water, wind, and clouds! @your filters that process [cloudy water] work twice as fast',
                 icon: [0, 35, 'magixmod', 25, 8, 'magixmod'],
-                cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 50000 },
+                cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 21000 },
                 req: { 'magical filtering': true },
                 effects: [
                 ],
