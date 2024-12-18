@@ -9832,7 +9832,7 @@ if (getObj("civ") != "1") {
                 steps: 200,
                 messageOnStart: 'Your people who worship magic and believe in the power of the essences started building a wonder that will be related to that.<br>Will magic award your and your people\'s hard work?',
                 finalStepCost: { 'population': 5000, 'fire essence': 5e4, 'lightning essence': 5e4, 'dark essence': 5e4, 'wind essence': 5e4, 'nature essence': 5e4, 'water essence': 5e4, 'holy essence': 5e4 },
-                finalStepDesc: 'To complete this giant wonder, 50k [fire essence,Fire], [water essence,Water], [nature essence,Nature], [dark essence,Dark], [lightning essence,Lightning], [wind essence,Wind], and [holy essence,Holy] essence must be sacrificed along with some of your [population] in order to make [magic essences,Magic] continue to be cultivated.',
+                finalStepDesc: 'To complete this giant wonder, 50k [fire essence,Fire], [water essence,Water], [nature essence,Nature], [dark essence,Dark], [lightning essence,Lightning], [wind essence,Wind], and [holy essence,Holy] essence must be sacrificed along with some of your [population] in order to cultivate [magic essences,Magic]!',
                 use: { 'land': 15 },
                 category: 'wonder',
                 wonder: 'magical',

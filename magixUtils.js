@@ -5557,7 +5557,7 @@ G.AddData({
                     G.dialogue.popup(function (me, instance) {
                         return function (div) {
                             var str =
-                                '<div style="width:280px;min-height:380px;">' +
+                                '<div style="width:275px;min-height:400px;">' +
                                 '<div class="thing standalone' + G.getIconClasses(me, true) + '' + (instance.mode == 3 ? ' wonderUnbuilt' : ' wonderBuilt') + '" style="transform:scale(2);position:absolute;left:70px;top:52px;">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                 '<div class="fancyText title">' + me.displayName + '</div><div class="bitBiggerText scrollBox underTitle shadowed" style="text-align:center;overflow:hidden;top:118px;bottom:50px;">';
                             if (instance.mode == 3) {
