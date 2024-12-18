@@ -2320,6 +2320,15 @@ if (getObj("civ") != "1") {
                         G.getDict('digger').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }//at least it works as it is supposed to    
                     }
 
+                    if (G.has('plain island building')) {
+                        if (!G.has('plain island ideas')) {
+                            G.gainTech(G.techByName['plain island ideas']);
+                        }
+                        if (!G.has('the well of ideas')) {
+                            G.gainTech(G.techByName['the well of ideas']);
+                        }
+                    }
+
                     ///On purpose crash. Occurs while playing market without magix utils
                     if (G.modsByName['Market mod'] && !(G.modsByName['Magix utils for market'] || G.modsByName['Magix market mod utils'])) {
                         console.log('Install Magix utilities for the market mod in order to use it!');
@@ -17627,6 +17636,7 @@ if (getObj("civ") != "1") {
                         type: 'function', func: function () {
                             G.getDict('code of law').req = { 'sedentism': true, 'writing': true, 'chieftains': true };
                             G.getDict('druidism').req = { 'ritualism': true, 'language': true };
+                            G.getDict('symbolism II').req = { 'oral tradition': true, 'ritualism II': true, 'Improved rhetoric': true, 'richer language': true };
                         }
                     }
                 ],
@@ -21965,11 +21975,6 @@ if (getObj("civ") != "1") {
                     if (G.getRes("pressure resistance").used >= G.getRes("pressure resistance").amount) G.achievByName['limit reached'].won = 1;
                     setObj("civ", 1);
                     newDayLines(true);
-
-                    if (G.has('plain island building') && !G.has('plain island ideas')) {
-                        G.gainTech(G.techByName['plain island ideas']);
-                    }
-
 
                     G.trackedStat = Math.max(G.trackedStat, G.getRes('population').amount);
                     //JUST PLAIN LUCKY

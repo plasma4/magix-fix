@@ -554,7 +554,7 @@
                 if (t.id === id) {
                     var tIcon = t.icon
                     var icon = getIcon(tIcon, true, civ2)
-                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? "" : 'Icon layout: <div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>')
+                    var text = "<button onclick='changeFunc()'>Back</button>" + (category === "achievements" && !t.visible ? "<br><small>Note: this achievement is normally not visible</small><br><h3>Display name: " : "<h3>Display name: ") + (category === "policies" || category === "lands" ? cap(t.name) : t.displayName) + "</h3>Description: " + parseDesc(t.desc).replace("\r\n", "<br>") + (category === "lands" ? "" : 'Icon layout: <div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>')
                     if (t.wideIcon) {
                         var icon = getIcon(t.wideIcon, true, civ2)
                         text += '<div class="wide noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
@@ -562,6 +562,9 @@
                     if (t.threexthreeIcon) {
                         var icon = getIcon(t.threexthreeIcon, true, civ2)
                         text += '<div class="triple noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br><br><br><br><br><br>'
+                    }
+                    if (category !== "lands") {
+                        text += "<br>Icon array: <pre>" + JSON.stringify(t.icon) + "</pre></br>"
                     }
 
                     if (t.icon.length > 3) {
@@ -679,10 +682,6 @@
                             text += parseRes(objc, Object.assign(...noticeEffects(e, "provide res", 1, "what").concat(noticeEffects(e, "provide", 1, "what")))) // Sorry Internet Explorer, but we ain't supporting ya for this wiki (also yeah, this is some pretty weird spread operation, eh?)
                         }
                         if (category === "units") {
-                            var reqs = parseReq(objc, t.req)
-                            if (reqs !== "nothing") {
-                                text += "<br>Unlocks after you get " + reqs
-                            }
                             var breakdown = breakDownEffects(objc, e)
                             if (breakdown.length !== 0) {
                                 text += "<br>Effect breakdown: <ul>"
@@ -697,6 +696,13 @@
                             }
                         }
                     }
+                    if (category === "units") {
+                        var reqs = parseReq(objc, t.req)
+                        if (reqs !== "nothing") {
+                            text += "<br>Unlocks after you get " + reqs
+                        }
+                    }
+
                     if (t.modes) {
                         var modeKeys = Object.keys(t.modes)
                         var modeLen = modeKeys.length

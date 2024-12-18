@@ -9,6 +9,7 @@ var offlineMode = false
 
 var directAccessMode = false
 
+
 // This file is loaded before main.js and after style.css, so, if you wish, you can modify various values in this script.
 /*
 In order to make files work offline, the NEL Toolkit automatically uses XMLHttpRequests to get script data and stores that into localStorage. The first mod will be stored in "nelOffline0", the second in "nelOffline1", and so on. So, for example, a script stored into localStorage might look like this:
@@ -131,7 +132,7 @@ function extractObject(toExtract, properties, funcProperties) {
                     var effects = JSON.parse(JSON.stringify(thing)) // Not the best way, but it gets the job done
                     for (var e = 0; e < l; e++) {
                         var effect = effects[e]
-                        if (effect.function) {
+                        if (effect.type === "function") {
                             effect.function = String(effect.function)
                         }
                         effects[e] = effect
