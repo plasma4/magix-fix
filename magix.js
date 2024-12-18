@@ -13701,10 +13701,10 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'magic adept',
-                desc: 'May unlock a new wonder. This trait is a reward for getting at least 2.1 million [magic essences]. //<small>Good job :)</small>',
+                desc: 'Unlocks a new wonder! This trait is a reward for getting at least 1.7 million [magic essences]. //<small>Good job :D</small>',
                 icon: [12, 22, 'magixmod'],
-                cost: { 'magic essences': 2100000 },
-                chance: 45,
+                cost: { 'magic essences': 1700000 },
+                chance: 4,
                 req: { 'eotm': true },
                 category: 'main'
             });

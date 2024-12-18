@@ -2500,7 +2500,7 @@ G.AddData({
             tier: 3,
             icon: [12, 22, 'magixmod'],
             name: 'man of essences',
-            desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M magical essences! //Obtaining it may unlock a new wonder.',
+            desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M magical essences! //Getting this will unlock a brand-new wonder...',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 40 },
             ],
