@@ -5875,7 +5875,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'essenced seeds',
-                desc: '[essenced seeds] are a magic-infused creation that uses [magic essences], [mana], and [seeds,Normal seeds]. These can be used to start farming magic flowers that will allow you to gather even more essences.',
+                desc: '[essenced seeds] are a magic-infused creation that uses [magic essences], [mana], and [seeds,Normal seeds]. These can be used to start farming magic flowers that will allow you to gather even more [magic essences,Magic essence].',
                 icon: [27, 10, 'magixmod'],
                 category: 'misc',
                 tick: function (me, tick) {
@@ -5974,7 +5974,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'blood',
-                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). You need to glory Bersaria and research more with [fear of death] active. You start with 200 [blood] in that case. <>Be aware that the [blood] will be needed to keep Hartar\'s servants hunting meat for you!',
+                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). (Note that you need to glory Bersaria and research more with [fear of death] active.) //<small>Oh, and you start with 200 blood.</small> <>Be aware that the [blood] will be needed to keep Hartar\'s servants hunting meat for you!',
                 icon: [33, 6, 'magixmod'],
                 startWith: 200,
                 category: 'main',
@@ -6150,7 +6150,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dinium ore',
-                desc: 'What to do with that ore? Seems like furnaces cannot smelt it.',
+                desc: 'What can you even do with this ore? Seems like furnaces can\'t smelt it.',
                 icon: [11, 5, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -6346,7 +6346,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark decay',
-                desc: 'Completing <b>Buried</b> granted you [dark decay]. Starting with 50 slots and growing for up to 400, it will take away [corpse]s. If all of your [dark decay] slots are be used up, this resource will disappear and for rest of the run the bonus from [voodoo spirit] will be activated. The cap of [dark decay] slots can be increased by gaining early-game traits including [fear of death]/[acceptance of death], or afterlife traits.',
+                desc: 'Completing <b>Buried</b> grants you [dark decay]! Starting with 50 slots and capping at a certain point, it will take away [corpse]s. If all of your [dark decay] slots are be used up, this resource will disappear and for rest of the run the bonus from [voodoo spirit] will be activated. The cap of [dark decay] slots can be increased by gaining early-game traits such as [fear of death]/[acceptance of death], or afterlife traits.',
                 icon: [23, 5, 'magixmod'],
                 displayUsed: true,
                 startWith: 50,
@@ -6355,7 +6355,7 @@ if (getObj("civ") != "1") {
                         G.getRes('corpse').amount--;
                         G.getRes('dark decay').used++;
                     }
-                    if (me.used >= me.amount) me.hidden = true;
+                    if (me.used >= me.amount) { me.hidden = true; if (!G.has('voodoo spirit')) G.gainTrait(G.traitByName['voodoo spirit']); }
                 },
                 hidden: true,
             });
@@ -10516,7 +10516,7 @@ if (getObj("civ") != "1") {
                     { type: 'waste', chance: 0.2 / 10000, req: { 'construction III': true, 'improved construction': false } },
                     { type: 'waste', chance: 0.14 / 10000, req: { 'improved construction': true } },
                 ],
-                req: { 'stockpiling': true, 'building': true, 'essence storages': true, 'the christmas': true, 'tribalism': false },
+                req: { 'stockpiling': true, 'building': true, 'essence storages': true, 'the christmas': true },
                 category: 'seasonal',
             });
             new G.Unit({
@@ -10607,7 +10607,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'spirit summoner',
-                desc: '@Summons spirits during Halloween (which are the souls of dead [population,people]), producing [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence]. @will be able to summon demons with more advanced researches',
+                desc: '@Summons spirits during Halloween (which are the souls of dead [population,people]), producing [spookiness]. @can summon spirits and souls, gaining [spookiness] and [halloween essence] @will be able to summon demons with more advanced researches',
                 icon: [4, 9, 'seasonal'],
                 upkeep: { 'food': 0.3 },
                 limitPer: { 'population': 30 },
@@ -19671,7 +19671,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> and <font color="white">Land</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to do this this trial again after its completion, however.<br><Br><BR>' +
+                                    'My plane full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> and <font color="white">Land</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to do get anything from this trial again after its completion, however.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
