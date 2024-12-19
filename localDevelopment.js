@@ -1,5 +1,5 @@
 // THIS VARIABLE IS FOR LOCALLY MODIFYING MAGIX AND SHOULD NOT BE CHANGED WHEN PLAYING NORMALLY OR WHEN CHANGING YOUR OWN MOD.
-// If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to test modifications of Magix!
+// If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to test modifications of Magix! (Should you be modifying data.js or importing OTHER local files, you don't need to do this.)
 
 var offlineMode = false
 
@@ -97,7 +97,8 @@ function getGameJSON(objectMode) {
         },
         sheets: G.sheets
     }
-    return objectMode ? JSON.parse(JSON.stringify(result)) : JSON.stringify(result)
+    var str = JSON.stringify(result).replace(/<b>(0|-[0-9])<\/b> runs\/legacies/g, "<b>7</b> runs/legacies") // Replace this part of the data because it's a seasonal text thing that doesn't update properly
+    return objectMode ? JSON.parse(str) : str
 }
 
 // Extracts the object data of a specific item (like G.res, G.unit, and so on)
@@ -149,7 +150,7 @@ function extractObject(toExtract, properties, funcProperties) {
         obj.id = item.id
         data[i] = obj
     }
-    return data.replace(/<b>0<\/b> runs\/legacies/, "<b>7</b> runs/legacies") // Replace this part of the data because it's a seasonal text thing that doesn't update properly
+    return data
 }
 
 // Returns an object where the keys are the raw names of the resources and the values are the display names.

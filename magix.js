@@ -2266,6 +2266,7 @@ if (getObj("civ") != "1") {
                     //     G.getDict('wheat farm').use = { 'worker': 12, 'land': 13.75 }
                     // }
                     if (!G.has('t10')) { G.getDict('precious metal ingot').partOf = 'misc materials' }//this resource will not decay during Pocket but normally without active trial will
+                    G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -2 - G.year * 0.04, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }; // Gets worse over time
                     if (G.checkPolicy('reset health level') == 'activate') {  //hunted special policy
                         G.getDict('reset health level').cost = { 'land': 1e5 }; G.getRes('health').amount = 0; G.setPolicyModeByName('reset health level', 'alreadyused');
                     }
@@ -2315,9 +2316,9 @@ if (getObj("civ") != "1") {
                         G.getDict('plain island portal').wideIcon = [7, 3, 'magixmod'];
                     }
                     if (G.has('no knapping anymore')) {
-                        G.getDict('healer').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 } //had to addk knapped tools -1 because declaring just
+                        G.getDict('healer').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 } //had to add knapped tools -1 because declaring
                         G.getDict('woodcutter').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }// s.t and wrkr didn't make knapped tools usage disappear
-                        G.getDict('digger').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }//at least it works as it is supposed to    
+                        G.getDict('digger').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }// at least it works as it is supposed to now
                     }
 
                     if (G.has('plain island building')) {
@@ -3292,14 +3293,17 @@ if (getObj("civ") != "1") {
                             }
 
                             if (G.has('revenants') && !G.has('peace')) {
-                                if (G.day % 40 === 0) {
-                                    var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125)
+                                if (G.day % 25 === 0) {
+                                    var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125 * (G.traitByName['revenants'].yearOfObtainment ? (1 + Math.pow(G.year - G.traitByName['revenants'].yearOfObtainment, 0.9) * 0.001) : 1))
                                     G.lose('corpse', wildCorpses, 'revenge of corpses');
                                     G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
                                     G.gain('wild corpse', wildCorpses, 'revenge of corpses');
-                                } else if (G.day % 30 == 0) {
+                                } else if (G.day % 35 == 0) {
                                     G.lose('corpse', 1, 'revenge of corpses');
                                     G.gain('wild corpse', 1, 'revenge of corpses');
+                                } else if (G.day % 60 == 0) {
+                                    G.lose('corpse', 2, 'revenge of corpses');
+                                    G.gain('wild corpse', 2, 'revenge of corpses');
                                 }
                             }
 
@@ -5648,7 +5652,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
                         if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { // The spawning rate is increased or decreased by various factors
-                            var n = G.getRes('adult').amount * 0.000000125 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.01 * G.year - 0.2, 0.9), 1.15), 3.5);
+                            var n = G.getRes('adult').amount * 0.0000004 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.012 * G.year - 0.3, 0.9), 1.15), 3.5);
                             if (G.checkPolicy('se02') == 'on') {
                                 G.gain('thief', n * 1.02, 'unhappiness');
                             } else {
@@ -5658,7 +5662,7 @@ if (getObj("civ") != "1") {
                     }
                     var toCalm = me.amount * 0.007;
                     var spent = G.lose(me.name, randomFloor(toCalm), 'thief calmdown'); G.gain('adult', (toCalm), 'thief calmdown');
-                    var toNeut = Math.random() < 0.2 ? randomFloor(me.amount * 0.001) : 0;
+                    var toNeut = Math.random() < 0.2 ? randomFloor(me.amount * (0.0006 + Math.random() * 0.0005)) : 0;
                     if (G.has('CaP(cruel)')) {
                         var spent = G.lose(me.name, toNeut, 'exiled by a civilian');
                     } else {
@@ -6473,7 +6477,7 @@ if (getObj("civ") != "1") {
                 category: 'magic',
             });
             new G.Res({
-                name: 'demon decay' //debug res to track if devil's trait 29 or ancestor 10 already worked or not        
+                name: 'demon decay' //debug res to track if devil's trait 29 or ancestor 10 already worked or not
             });
             /*=====================================================================================
             UNITS
@@ -7963,11 +7967,37 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function (me) {
-                            var toNeuMax = me.amount > G.getRes('thief').amount ? G.getRes('thief').amount : me.amount;
-                            var toNeu = Math.random() * toNeuMax;
-                            if (G.getRes('thief').amount > toNeu * 1.8) {
+                            var toNeuMax = (me.amount > G.getRes('thief').amount ? G.getRes('thief').amount : me.amount) * (G.has('battling thieves III') ? 2 : 1);
+                            var toNeu = Math.sqrt(Math.random() + 0.2) * toNeuMax * 0.35;
+                            if (Math.random() < 1.05 - Math.min(G.year, 400) * 0.002 && G.getRes('thief').amount > toNeu * (1.2 + Math.random())) {
                                 if (G.getRes('prison space').used <= G.getRes('prison space').amount && G.getRes('prison space').amount > 0) { G.lose('thief', toNeu, 'being arrested'); G.gain('prisoner', toNeu, 'being arrested') }
                                 else if (Math.random() < 0.3) { G.lose('thief', toNeu * (0.8 + Math.random()), 'neutralization'); G.gain('adult', toNeu * (0.8 + Math.random()), 'neutralization') };
+                            }
+
+                            if (Math.random() < 1.05 - Math.min(G.year, 400) * 0.001) { // Thieves become smarter over time, so they get harder to catch
+                                var extraNeu1 = 0
+                                var extraNeu2 = 0
+                                if (G.has('battling thieves II')) {
+                                    extraNeu1 = toNeuMax * (30 + 10 * Math.random())
+                                    extraNeu2 = toNeuMax * (15 + 3 * Math.random())
+                                    if (G.getRes('windy spikes').amount < extraNeu1 * 2) {
+                                        extraNeu1 = 0
+                                    }
+                                    if (G.getRes('dark concoction').amount < extraNeu2 * 2) {
+                                        extraNeu2 = 0
+                                    }
+                                    toNeu = extraNeu1 + extraNeu2
+                                    if (G.getRes('thief').amount > toNeu * (1 + 0.4 * Math.random())) {
+                                        G.lose('windy spikes', extraNeu1 * 2)
+                                        G.lose('dark concoction', extraNeu2 * 2)
+                                        if (G.getRes('prison space').used <= G.getRes('prison space').amount && G.getRes('prison space').amount > 0) { G.lose('thief', toNeu, 'being arrested'); G.gain('prisoner', toNeu, 'being arrested') }
+                                        else if (Math.random() < 0.28) {
+                                            var neutralized = toNeu * (0.8 + 0.3 * Math.random())
+                                            G.lose('thief', neutralized, 'neutralization');
+                                            G.gain('adult', neutralized, 'neutralization')
+                                        };
+                                    }
+                                }
                             }
                         }, every: 8
                     },
@@ -9103,12 +9133,12 @@ if (getObj("civ") != "1") {
                     'off': G.MODE_OFF,
                     'lumber': { name: 'Cut logs into lumber', icon: [1, 8], desc: 'Cut [log]s into 3 [lumber] each.', use: { 'worker': 1, 'stone tools': 1 }, req: {} },
                     'frames': { name: 'Cut lumber into hive frames', icon: [35, 0, 'magix2'], desc: 'Cut a piece of [lumber] into 2 ready-made [hive frame]s.', use: { 'worker': 1, 'stone tools': 1 }, req: { 'magical hive frames': true } },
-                    'essence': { name: 'Add essence to hive frames', icon: [37, 0, 'magix2'], desc: 'Add 10 [nature essence] into a single [hive frame] to turn it into an [essenced hive frame]. Has a chance to fail and requires two [worker]s.', use: { 'worker': 2 }, req: { 'magical hive frames': true } },
+                    'essence': { name: 'Add essence to hive frames', icon: [37, 0, 'magix2'], desc: 'Add 2 [nature concoction]s into a single [hive frame] to turn it into an [essenced hive frame]. Has a chance to fail.', use: { 'worker': 2 }, req: { 'magical hive frames': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'log': 1 }, into: { 'lumber': 3 }, repeat: 2, mode: 'lumber' },
                     { type: 'convert', from: { 'lumber': 1 }, into: { 'hive frame': 2 }, every: 5, mode: 'frames' },
-                    { type: 'convert', from: { 'hive frame': 1, 'nature essence': 10 }, into: { 'essenced hive frame': 1 }, every: 5, chance: 0.8, mode: 'essence' },
+                    { type: 'convert', from: { 'hive frame': 1, 'nature concoction': 2 }, into: { 'essenced hive frame': 1 }, every: 6, chance: 0.8, mode: 'essence' },
                     { type: 'mult', value: 0.8, req: { 'dt17': true } },
                     { type: 'mult', value: 3, req: { 'moderated carpentry': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
@@ -10905,7 +10935,7 @@ if (getObj("civ") != "1") {
             G.getDict('artisan').effects.push({ type: 'mult', value: 0, mode: 'dyes', req: { 'manufacture units I': true, 'caretaking': true } });
             ////////////////////////////////////////////
             /*=====================================================================================
-            TECHS  
+            TECHS
             =======================================================================================*/
 
             new G.ChooseBox({
@@ -18166,7 +18196,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'magical hive frames', category: 'tier1',
-                desc: '@allows you to create [essenced hive frame]s from [carpenter workshop]s using some [lumber] and [nature essence] @unlocks a new mode for [firekeeper]s that will collect both [honey] and [honeycomb]s @also lets you craft both normal and essenced frames in the Paradise version',
+                desc: '@allows you to create [essenced hive frame]s from [carpenter workshop]s using some [lumber] and [nature concoction]s @unlocks a new mode for [firekeeper]s that will collect both [honey] and [honeycomb]s @also lets you craft both normal and essenced frames in the Paradise version',
                 icon: [36, 0, 'magix2'],
                 cost: { 'insight': 1250, 'wisdom': 200, 'culture': 50 },
                 req: { 'paradise crafting': true, 'hive frames': true },
@@ -18310,7 +18340,7 @@ if (getObj("civ") != "1") {
                             G.getDict('hunting').req = { 'tribalism': false };
                             G.getDict('famine').chance = 0.2;
                             G.getDict('seafood').desc = "[seafood,Raw seafood] such as fish, clams, and shrimps aren\'t exactly the best for the body. Unfortunately for you, they are absolutely <b>hated</b> by your [population,people], causing your [happiness] level to rapidly drop!";
-                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -1, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
+                            G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -2, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } };
                             if (!G.has("well-digging")) G.gainTech(G.techByName['well-digging']);
                             G.getDict('well').cost = { 'stone': 3, 'archaic building materials': 15 };
                             G.getDict('well').limitPer = { 'land': 125 };
@@ -18679,6 +18709,24 @@ if (getObj("civ") != "1") {
                 icon: [1, 35, 'magixmod', 10, 0, 'magixmod'],
                 cost: { 'insight II': 200, 'culture II': 30 },
                 req: { 'baking III': true, 'art of cooking III': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'battling thieves II', category: 'tier1',
+                desc: 'Thieves are quite smart, but you can also fight back against them! @let your soldiers use [windy spikes] and [dark concoction]s against [thief,Thieves]',
+                icon: [0, 35, 'magixmod', 22, 16, 'magixmod'],
+                cost: { 'windy spikes': 10, 'dark concoction': 10 },
+                req: { 'combat potion & concoction brewing': true, 'battling thieves': true },
+                effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'battling thieves III', category: 'tier1',
+                desc: '[population,People] in your tribe grow smarter and find ways to help [guard]s do their job better. @[guard]s become twice as effective!',
+                icon: [1, 35, 'magixmod', 22, 16, 'magixmod'],
+                cost: { 'insight II': 40, 'windy spikes': 1200, 'dark concoction': 1200 },
+                req: { 'eota': true },
                 effects: [
                 ],
             });

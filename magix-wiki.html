@@ -563,9 +563,6 @@
                         var icon = getIcon(t.threexthreeIcon, true, civ2)
                         text += '<div class="triple noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br><br><br><br><br><br>'
                     }
-                    if (category !== "lands") {
-                        text += "<br>Icon array: <pre>" + JSON.stringify(t.icon) + "</pre></br>"
-                    }
 
                     if (t.icon.length > 3) {
                         var i0 = null, i1 = null
@@ -591,6 +588,9 @@
                             icon = getIcon([i0, i1], true, civ2)
                             text += '<div class="icon noclick shadow" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div><br>'
                         }
+                    }
+                    if (category !== "lands") {
+                        text += "<br><pre>" + JSON.stringify(t.icon) + "</pre>"
                     }
                     text += "<br>Raw name: " + t.name + "<br>Type: " + t.type + (t.precededBy ? "<br>Preceded by: " + parseReq(objc, t.precededBy) : "") + (t.leadsTo ? "<br>Leads to: " + parseReq(objc, t.leadsTo) : "") + (t.precededBy && (parseReq(objc, t.req, true) !== "nothing") ? "<br>Also requires: " + parseReq(objc, t.req, true) : "") + (t.steps ? "<br>Steps: " + t.steps : "") + "<br>Internal ID: " + id
                     var c = t.cost
