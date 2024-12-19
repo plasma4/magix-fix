@@ -3972,7 +3972,7 @@ if (getObj("civ") != "1") {
                 tick: function () {
                     if (G.has('sandy shores')) {
                         // The cap is at 100 because your discovered [wtr] is ten times that amount!
-                        G.gain('sand', unitAmount('digger', 'wtr', 100) * (G.has('sandy shores II') ? 0.06 : 0.03), 'sand digging');
+                        G.gain('sand', unitAmount('digger', 'wtr', 100) * (G.has('sandy shores II') ? 0.02 : 0.01), 'sand digging');
                     }
                 }
             });
@@ -14009,7 +14009,7 @@ if (getObj("civ") != "1") {
             if (G.modsByName['Market mod']) {
                 new G.Tech({
                     name: 'backshift', category: 'tier1',
-                    desc: '[bazaar_buy,Bazaars] and [market_buy,Markets] work 50% more efficient but requires another [worker].',
+                    desc: '[bazaar_buy,Bazaars] and [market_buy,Markets] work 50% more efficient but require another [worker].',
                     icon: [30, 22, 'magixmod'],
                     cost: { 'insight': 997, 'culture': 264 },
                     req: { 'ingredient crafting': true },
@@ -14123,7 +14123,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard\'s grain fertilizer', category: 'upgrade',
-                desc: 'Your people can now make some unique fertilizer, letting [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
+                desc: 'Your people can learn how to make some unique fertilizer, letting [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -20977,7 +20977,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
                 icon: [33, 20, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -20993,7 +20993,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
                 icon: [33, 18, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -28181,7 +28181,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,Olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,Olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
                 icon: [9, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -28195,7 +28195,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,Olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,Olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
                 icon: [6, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },

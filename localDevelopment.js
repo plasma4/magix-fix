@@ -33,7 +33,7 @@ function getGameJSON(objectMode) {
         achievements: extractObject(G.achiev, ["name", "displayName", "desc", "tier", "visible", "icon", "wideIcon", "civ", "special", "plural"]),
         lands: extractObject(G.land, ["name", "displayName", "desc", "names", "goods", "icon", "image", "ocean", "score"]),
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
-        resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta"], ["tick", "getDisplayAmount", "getIcon", "partOf", "whenGathered"]),
+        resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta", "partOf"], ["tick", "getDisplayAmount", "getIcon", "whenGathered"]),
         units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"], ["tick"]),
         policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
         techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
@@ -64,10 +64,10 @@ function getGameJSON(objectMode) {
             fractional: "Determines if when gaining or losing the resource, the amount gained or lost is not randomly rounded using the randomFloor function",
             turnToByContext: "What happens when this resource is consumed",
             meta: "If this resource contains other resources within",
+            partOf: "What this resource is considered a part of, not the category displayed",
             tick: "What happens when a tick occurs; is a function",
             getDisplayAmount: "Gets how the resource is displayed; is a function",
             getIcon: "Gets how the thing is displayed; is a function",
-            partOf: "What this resource is considered a part of, not the category displayed",
             whenGathered: "What to do when the resource is gathered",
             subRes: "The subresources of a specific resource, if it exists",
             wonder: "The identifier of the achievment to gain upon completing the wonder if the unit is a wonder",
@@ -136,11 +136,12 @@ function extractObject(toExtract, properties, funcProperties) {
                         if (effect.type === "function") {
                             effect.function = String(effect.function)
                         }
-                        effects[e] = effect
                     }
                     obj[key] = effects
+                } else if (funcProperties.includes(key)) {
+                    obj[key] = String(thing)
                 } else {
-                    obj[key] = funcProperties.includes(key) ? String(thing) : thing
+                    obj[key] = thing
                 }
             }
         }

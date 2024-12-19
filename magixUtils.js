@@ -89,9 +89,12 @@ function setObj(key, value) {
     G.storageObject[key] = value
 }
 
-function unitAmount(res, res2, cap) {
-    var item = G.unitByName[res]
-    return (item.amount - item.idle) * Math.min(res2 == null ? 1 : G.getAmount(res2), cap == null ? Infinity : cap)
+function unitAmount(name, res2, cap) {
+    var index = G.unitsOwnedNames.indexOf(name)
+    if (index !== -1 && G.unitsOwned[index]) {
+        var item = G.unitsOwned[index]
+        return (item.amount - item.idle) * Math.min(res2 == null ? 1 : G.getAmount(res2), cap == null ? Infinity : cap)
+    }
 }
 
 G.setDict = function (name, what) {
