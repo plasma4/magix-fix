@@ -1634,15 +1634,16 @@ if (getObj("civ") != "1") {
                     if (G.has('belief in the beforelife') && G.traitByName['belief in the beforelife'].yearOfObtainment > 100 && !G.has('culture of the beforelife') && G.testCost('culture of the beforelife', 1)) G.gainTrait(G.traitByName['culture of the beforelife']);
 
                     if (G.has("t5") && G.year > 0) {
-                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow((G.year - 1) * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
                         var population = G.getRes("population").amount
+                        G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow((G.year - 1) * 0.6, 1.06) * population * 3 + 1);
                         if (G.getRes("fruit").amount >= G.fruitReq) {
                             G.Message({ type: 'good', text: "Your current stockpile of fruit is enough to please your people, making your " + G.getName("inhabs") + " much happier. Keep this up and do not forget that your people will long for more and more fruit as time goes on!", icon: [4, 7] });
                             changeHappiness(8 * population, "fruit happiness");
                             G.lose("fruit", G.fruitReq, "population pleasing");
                         } else {
                             G.Message({ type: 'bad', text: "Your current stockpile of fruit is not enough to your " + G.getName("inhabs") + ", making them much less happy. Do not forget that your civilization will be extremely unhappy if this continues!", icon: [4, 7] });
-                            changeHappiness(-8 * population, "fruit unhappiness");
+                            G.gain("trial point", 1)
+                            changeHappiness(-1.8 * G.getRes("trial point").amount * (Math.random() + 1.4) * population, "fruit unhappiness");
                             G.lose("fruit", G.fruitReq, "failed population pleasing");
                         }
                         var fishReq = Math.pow(G.fruitReq, 0.95) - 1
@@ -1655,6 +1656,8 @@ if (getObj("civ") != "1") {
                             G.lose("seafood", G.fruitReq, "pleasing Fishyar");
                         } else {
                             G.Message({ type: 'bad', text: "Your current stockpile of fish is not enough to please Fishyar, which prevents your " + G.getName("inhabs") + " from getting water. Do not forget that your civilization will be unable to have sufficient water if this continues, as you could have gotten " + B(35 * population + 10) + " water for this year!", icon: [5, 6] });
+                            G.gain("trial point", 1)
+                            changeHappiness(-1.8 * G.getRes("trial point").amount * (Math.random() + 1.4) * population, "fruit unhappiness");
                             G.lose("seafood", G.fruitReq, "failed pleasing of Fishyar");
                         }
                         G.fruitReq = parseInt((G.achievByName['unfishy'].won == 0 ? 1 : (0.8 + G.achievByName['unfishy'].won * 0.4)) * Math.pow(G.year * 0.6, 1.06) * G.getRes('population').amount * 3 + 1);
