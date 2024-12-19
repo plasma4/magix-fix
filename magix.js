@@ -10643,7 +10643,7 @@ if (getObj("civ") != "1") {
                     { type: 'waste', chance: 0.2 / 10000, req: { 'construction III': true, 'improved construction': false } },
                     { type: 'waste', chance: 0.14 / 10000, req: { 'improved construction': true } },
                 ],
-                req: { '"dark season"': true, 'essence storages': true, 'tribalism': false },
+                req: { '"dark season"': true, 'essence storages': true },
                 category: 'seasonal',
             });
             new G.Unit({
