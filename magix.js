@@ -10906,7 +10906,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'well of ideas',
-                desc: '@has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
+                desc: 'This rather unique well has the ability to produce [idea tablet]s out of thin air. However, it requires some [precious building materials,Precious resources] and [food] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
                 wonder: '.',
                 icon: [68, 0, 'magix2'],
                 wideIcon: [67, 0, 'magix2'],
@@ -18934,7 +18934,7 @@ if (getObj("civ") != "1") {
                     if (index !== -1 && G.unitsOwned[index]) {
                         var percent = G.unitsOwned[index].percent
                         var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
-                        G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation) }
+                        G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation), 'herb': 400000 * inflation, 'fruit': 100000 * inflation, 'vegetable': 20000 * inflation }
                     }
                 }
             });
