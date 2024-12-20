@@ -981,7 +981,7 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = magixURL2 + 'magix2.png?v=2.2' // Version 2.2: 63 sprites
+var magix2Link = magixURL2 + 'magix2.png?v=2.3' // Version 2.2: 63 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
