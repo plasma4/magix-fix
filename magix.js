@@ -5503,14 +5503,14 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'basic factory equipment',
-                desc: 'Mostly useful while in [moderation] path. Without it some automation would be impossible. It involves metal hooks or weights or elements of a conveyor.',
+                desc: 'Mostly useful while in [moderation] path. Without it some automation would be impossible. Parts include metal hooks, weights, or pieces of a conveyor.',
                 icon: [choose([9, 10]), 18, 'magixmod'],
                 category: 'gear',
             });
             //But books has to be stored somewhere right?
             new G.Res({
                 name: 'book storage',
-                desc: 'Each unit of [book storage] will slow down decay for one [books,Book].',
+                desc: 'Each unit of [book storage] slows decay for one [books,Book].',
                 icon: [21, 4, 'magixmod'],
                 getDisplayAmount: function () {
                     return B(Math.min(this.displayedAmount, G.getRes('books').displayedAmount)) + '<wbr>/' + B(this.displayedAmount);
@@ -5570,7 +5570,7 @@ if (getObj("civ") != "1") {
                 icon: [19, 11, 'magixmod'],
                 tick: function (me, tick) {
                     if (me.amount >= 300 && !madeWarnCorpseMesg) {
-                        G.Message({ type: 'bad', text: '<b>Beware of Wild corpses!</b> Ever since you obtained <font color="#d21"><b>Revenants</b></font>, you noticed some insane corpses began to appear. They cause your dark essence to leak and, even worse, they will kill your people! Slay them at any way that you can. Note that you\'ll be able to use <b>Back to grave</b> items from combat potion brewing to defend against them...', icon: [24, 0, 'magixmod'] });
+                        G.Message({ type: 'bad', text: '<b>Beware of Wild corpses!</b> Ever since you obtained <font color="#d21"><b>Revenants</b></font>, you noticed some insane corpses began to appear. They cause your dark essence to leak and, even worse, they will kill your people! Slay them at any opportunity that you can. Note that you\'ll be able to use <b>Back to grave</b> items from combat potion brewing to defend against them...', icon: [24, 0, 'magixmod'] });
                         madeWarnCorpseMesg = true
                     }
 
@@ -7771,8 +7771,8 @@ if (getObj("civ") != "1") {
                 costPerStep: { 'basic building materials': 200, 'precious building materials': 20 },
                 steps: 100,
                 messageOnStart: 'You begin the construction of the Mausoleum. Its towering mass already dominates the city, casting fear and awe wherever its shadow reaches.',
-                finalStepCost: { 'population': 100 },
-                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife.',
+                finalStepCost: { 'population': 100, 'housing': -2000 },
+                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife. Finishing the Mausoleum also provides 2,000 free [housing]. Finishing the Mausoleum also provides 2,000 free [housing].',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 //require:{'worker':10,'stone tools':10},
                 req: { 'monument-building': true, 'trial': false },
