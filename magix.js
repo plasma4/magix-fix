@@ -12028,7 +12028,7 @@ if (getObj("civ") != "1") {
                 name: 'paradise building', category: 'tier1',
                 desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1 from now on.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>I\'d construct...a huge campfire</small>',
                 icon: [19, 13, 'magixmod'],
-                cost: { 'insight': 4, 'paradise tablet': 1, 'idea tablet': 25 },
+                cost: { 'insight': 4, 'paradise tablet': 1, 'idea tablet': 20 },
                 effects: [
                     { type: 'provide res', what: { 'industry point': 800 } },
                     { type: 'show res', what: ['industry point'] },
