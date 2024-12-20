@@ -5850,7 +5850,7 @@ if (getObj("civ") != "1") {
                 icon: [choose([27, 28]), choose([0, 1]), 'magixmod'],
                 category: 'gear',
                 tick: function (me, tick) {
-                    if (G.has('magical presence') && !G.has('t7')) {
+                    if (G.has('magical presence') && !G.has('t7') && G.getRes('hardened clothes').amount >= 1) {
                         var toSpoil = me.amount * 0.00008
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay')
                         var iconTick = +getObj('iconTick')
@@ -9993,7 +9993,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'the outstander',
                 displayName: 'The Outstander',
-                desc: 'Strangely, [the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite? Likely not. People call Outstanders like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained) and 1 [education] each.',
+                desc: 'Interestingly, [the outstander] has a lot of knowledge, and some people speculate that he is a true erudite. Anyway, people call [the outstander,Outstanders] like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained) and 1 [education] each.',
                 icon: [12, 28, 'magixmod'],
                 use: { 'worker': 1 },
                 limitPer: { 'population': 38000 },
@@ -18415,7 +18415,7 @@ if (getObj("civ") != "1") {
                                     unit.amount = 0
                                 }
                             }
-                            G.getDict('the outstander').desc = 'Strangely, [the outstander] has a lot of knowledge and is very smart. Who knows if he is some sort of erudite? Likely not. People call Outstanders like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained), 2 [inspiration II], and 1 [education] each.'
+                            G.getDict('the outstander').desc = 'Interestingly, [the outstander] has a lot of knowledge, and some people speculate that he is a true erudite. Anyway, people call [the outstander,Outstanders] like this one Guru\'s children.<>Each outstander provides 5 [wisdom II] (1 extra for every 4 [the outstander,Outstanders] obtained), 2 [inspiration II], and 1 [education] each.'
                         }
                     }
                 ],

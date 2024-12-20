@@ -738,7 +738,6 @@ G.Launch=function()
 		if (toStr)
 		{
 			str=str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js","https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js","https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
-			console.log(str)
 		}
 		//console.log('SAVE');
 		//console.log(str);
