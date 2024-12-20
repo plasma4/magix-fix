@@ -6471,7 +6471,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'herb essence',
-                desc: '[herb essence] is a natural essence obtainable only in Herbalia\'s plane. It is a requirement to please your population and to build the wonder of this plane!',
+                desc: '[herb essence] is a natural essence obtainable exclusively in Herbalia\'s plane. It is a requirement to please your population and to build the wonder of this plane!',
                 icon: [36, 19, 'magixmod'],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -8032,7 +8032,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'windmill',
-                desc: '[windmill]s are able to convert [wheat] into [flour]. //<small>(Note that [flour] is pretty difficult to get and requires some advanced researches.)</small>',
+                desc: '[windmill]s are able to convert [wheat] into [flour]. //<small>(Note that [flour] is pretty difficult to make in large batches.)</small>',
                 icon: [24, 11, 'magixmod'],
                 cost: { 'basic building materials': 600 },
                 req: { 'flour-crafting II': true },
@@ -12821,7 +12821,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'the god\'s call',
                 displayName: 'The God\'s call',
-                desc: '<b>Your god...he called your people to his world...full of hopes, full of new adventures, and full of new ideas.</b>//<small>To his Paradise!</small>',
+                desc: '<b>Your god...he called your people to his world...full of hopes, full of new adventures, and brimming with new ideas!</b>//<small>Let us go to His Paradise!</small>',
                 icon: [20, 2, 'magixmod'],
                 cost: { 'insight': 650, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 175,
@@ -19394,7 +19394,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t1");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Patience trial has been started. You are in Chra-nos\'s plane', 'slow');
+                                                G.middleText('The Patience trial has been started. You are in Chra-nos\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19433,7 +19433,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t2");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Unhappy trial has been started. You are in Bersaria\'s plane', 'slow');
+                                                G.middleText('The Unhappy trial has been started. You are in Bersaria\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19472,7 +19472,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t3");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Cultural trial has been started. You are in Tu-ria\'s plane', 'slow');
+                                                G.middleText('The Cultural trial has been started. You are in Tu-ria\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19511,7 +19511,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t4");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Hunted trial has been started. You are in Hartar\'s plane', 'slow');
+                                                G.middleText('The Hunted trial has been started. You are in Hartar\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19584,7 +19584,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t5");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Unfishy trial has been started. You are in Fishyar\'s plane', 'slow');
+                                                G.middleText('The Unfishy trial has been started. You are in Fishyar\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19623,7 +19623,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t6");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Ocean trial has been started. You are in Ocean\'s plane', 'slow');
+                                                G.middleText('The Ocean trial has been started. You are in Ocean\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19662,7 +19662,7 @@ if (getObj("civ") != "1") {
                                         onclick: function () {
                                             trialPrep("t7");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Herbalism trial has been started. You are in Herbalia\'s plane', 'slow');
+                                                G.middleText('The Herbalism trial has been started. You are in Herbalia\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19704,7 +19704,7 @@ if (getObj("civ") != "1") {
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
                                             trialPrep("t8");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Buried trial has been started. You are in Buri\'o dak\'s plane', 'slow');
+                                                G.middleText('The Buried trial has been started. You are in Buri\'o dak\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19753,7 +19753,7 @@ if (getObj("civ") != "1") {
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
                                             trialPrep("t10");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Pocket trial has been started. You are in Mamuun\'s plane', 'slow');
+                                                G.middleText('The Pocket trial has been started. You are in Mamuun\'s plane now.', 'slow');
                                                 G.Save(); return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
@@ -19791,7 +19791,7 @@ if (getObj("civ") != "1") {
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
                                             trialPrep("t11");
                                             G.dialogue.popup(function (div) {
-                                                G.middleText('The Faithful trial has been started. You are in Enlightened\'s plane', 'slow');
+                                                G.middleText('The Faithful trial has been started. You are in Enlightened\'s plane now.', 'slow');
                                                 return '<div class="fancyText">Alrighty then...good luck<br>The trial will begin :)</font></div>' + G.dialogue.getCloseButton('Okay')
                                             })
                                         }
