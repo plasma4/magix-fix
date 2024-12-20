@@ -11631,7 +11631,7 @@ if (getObj("civ") != "1") {
             //New tech to allow wizards progressing
             new G.Tech({
                 name: 'mana brewery', category: 'tier1',
-                desc: 'You can find a specimen who will convert [water] into [mana]. //<small>But how?</small>',
+                desc: 'Getting this will let you find a specimen who will convert [water] into [mana]. //<small>But how?</small>',
                 icon: [3, 2, 'magixmod'],
                 cost: { 'insight': 50 },
                 req: { 'wizardry': true },
@@ -14684,7 +14684,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 75) * (G.has('roots of insight') ? 4 : 3)
                                     G.know[i].cost[res] -= reduction > 70 ? 70 : reduction;
-                                    addbacksIns[i] = reduction;
+                                    addbacksIns[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -14717,7 +14717,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 75) * (G.has('roots of insight') ? 3 : 2)
                                     G.know[i].cost[res] += reduction > 70 ? 70 : reduction;
-                                    addbacksIns[i] = reduction;
+                                    addbacksIns[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -14882,6 +14882,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 20) * (G.has('even bigger university') ? 2 : 1);
                                     G.know[i].cost[res] -= reduction > 15 ? 15 : reduction;
+                                    addbacksSci[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -14947,6 +14948,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * (G.has('political roots') ? 1 : 2);
                                     G.know[i].cost[res] -= reduction > 38 ? 38 : reduction;
+                                    addbacksInf[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -14979,6 +14981,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * (G.has('political roots') ? 1 : 2);
                                     G.know[i].cost[res] += reduction > 38 ? 38 : reduction;
+                                    addbacksInf[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -16067,7 +16070,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'policies',
                 displayName: '<font color="fuschia">Policies</font>',
-                desc: '@Now you can spend your [influence]! @Unlocks policies, one of the main parts of your civilization. Go to the <b>Policies</b> tab to unlock new options.',
+                desc: '@Now you can spend your [influence]! @Unlocks policies, one of the main parts of your civilization. Go to the <b>Policies</b> tab to unlock new options!',
                 icon: [34, 13, 'magixmod'],
                 chance: 0.25,
                 effects: [
@@ -24904,7 +24907,7 @@ if (getObj("civ") != "1") {
                 icon: [choose([21, 22, 23, 24]), 8, 'magixmod'],
                 cost: { 'creativity': 3, 'discernment': 1, 'stick': 2, 'food': 1 },
                 use: { 'elder': 1, 'wand': 1 },
-                upkeep: { 'food': 1.5, 'water': 0.06 },
+                upkeep: { 'food': 1.5, 'water': 0.03 },
                 req: { 'wizard wisdom': true },
                 effects: [
                     { type: 'provide', what: { 'wisdom': 0.4 } },
@@ -26523,7 +26526,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 75) * 3;
                                     G.know[i].cost[res] -= reduction > 70 ? 70 : reduction;
-                                    addbacksIns[i] = reduction;
+                                    addbacksIns[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -26556,7 +26559,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 75) * 3;
                                     G.know[i].cost[res] += reduction > 70 ? 70 : reduction;
-                                    addbacksIns[i] = reduction;
+                                    addbacksIns[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -26721,6 +26724,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 20);
                                     G.know[i].cost[res] -= reduction > 15 ? 15 : reduction;
+                                    addbacksSci[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -26786,6 +26790,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * 2;
                                     G.know[i].cost[res] -= reduction > 38 ? 38 : reduction;
+                                    addbacksInf[i] = reduction
                                 }
                         }, invert: false
                     },
@@ -26818,6 +26823,7 @@ if (getObj("civ") != "1") {
                                 if (G.know[i].cost[res] != undefined) {
                                     var reduction = Math.floor(G.know[i].cost[res] / 40) * 2;
                                     G.know[i].cost[res] += reduction > 38 ? 38 : reduction;
+                                    addbacksInf[i] = reduction
                                 }
                         }, invert: false
                     },
