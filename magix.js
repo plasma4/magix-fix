@@ -12160,7 +12160,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'combat potion & concoction brewing', category: 'tier1',
-                desc: '<font color="#93db70">Allows you to craft basic 4 [combat potions] and 2 [jar for concoctions,Concoctions] with new stands.</font>',
+                desc: '<font color="#93db70">Allows you to craft 4 basic [combat potions] and 2 [jar for concoctions,Concoctions] with some brand-new stands.</font>',
                 icon: [20, 16, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -17410,7 +17410,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'city planning III', category: 'upgrade',
-                desc: '@[architect]s can construct 3 more building each (so instead 12 houses per 1 architect, now it will be 15). <>Also, with each construction setup that an [architect] builds, you will get some [happiness].//<small>\u201cNow that street I walk along every day looks stunning,\u201d says an elder who lived has lived in the same house since their birth.</small>',
+                desc: '@[architect]s can construct 3 more buildings each (so instead 12 houses per 1 architect, now it will be 15). <>Also, with each construction setup that an [architect] builds, you will get some [happiness].//<small>\u201cNow that street I walk along every day looks stunning,\u201d says an elder who lived has lived in the same house since their birth.</small>',
                 icon: [32, 34, 'magixmod'],
                 cost: { 'insight II': 75, 'science': 10 },
                 req: { 'city planning II': true, 'caretaking': true, 'eotm': true },
