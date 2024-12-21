@@ -24,7 +24,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 /////////
 ///READ THIS: All rights reserved to mod creator and people that were helping the main creator with coding. Mod creator rejects law to copying icons from icon sheets used for this mod. All noticed plagiarism will be punished. Copyright: 2020
 //===========================
-// Detect invalid mods
+//Detect invalid mods
 if (window.magixLoaded === 1 && !window.skipModCheck) {
     window.magixLoaded = 2
     var modLen = G.mods.length
@@ -42,18 +42,30 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
     }
 }
 
+//Hide warnings...why? Well, because some achievements will throw a LOT of errors, and that can clog up the console (and that's just because they are for the human race, nothing actually notable). Attempts have already been made to wipe out every last issue for both races, so hopefully this won't cause any problems. :)
+G.getDict = function (name) {
+    if (G.dict[name]) {
+        if (G.dict[name].type == 'res') return G.resolveRes(G.dict[name]);
+        else return G.dict[name];
+    }
+}
+G.getBrokenSmallThing = function (what, text) {
+    return '<b style="color: #f99">' + cap(text == '*PLURAL*' ? (what + 's') : (text || what)) + '</b>'
+}
+
+
 var isUsingFile = window.offlineMode != null
 var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
 var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
 var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 
-// Disable double click's default behavior for mobile users and scale properly
+//Disable double click's default behavior for mobile users and scale properly
 var meta = document.createElement('meta');
 meta.name = "viewport";
 meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 document.getElementsByTagName('head')[0].appendChild(meta);
 
-// Touchscreen fix
+//Touchscreen fix
 var modeFunction = null
 var isChangedMagix = true
 document.addEventListener("click", function (e) {
@@ -64,7 +76,7 @@ document.addEventListener("click", function (e) {
     }
 })
 
-// Detect non-fixed MagixUtils
+//Detect non-fixed MagixUtils
 if (!window.getObj) {
     if (window.getCookie) {
         G.dialogue.popup(function () {
@@ -79,11 +91,11 @@ if (!window.getObj) {
 }
 
 G.setDict = function (name, what) {
-    // No more warnings :p
+    //No more warnings :p
     G.dict[name] = what
 }
 
-// Allow touchscreen or mobile users to change policies
+//Allow touchscreen or mobile users to change policies
 G.widget.update = function () {
     var me = this;
     var time = 3;//how many frames to open and close
@@ -201,7 +213,7 @@ G.widget.update = function () {
     }
 }
 
-// Allow touchscreen or mobile users to click on gizmos
+//Allow touchscreen or mobile users to click on gizmos
 G.selectModeForUnit = function (me, div) {
     if (div == G.widget.parent) G.widget.close();
     else {
@@ -281,7 +293,7 @@ G.selectModeForUnit = function (me, div) {
     }
 }
 
-// We can override this function to hide negative costs and make numbers more specific
+//We can override this function to hide negative costs and make numbers more specific
 G.getCostString = function (costs, verbose, neutral, mult) {
     //returns a string that displays resource costs with icons and amount; the amounts will be red if our current resources don't match them, unless neutral is set to true; only the amount will be displayed unless verbose is true, in which case the amount and the resource name will be displayed; costs will be multiplied by mult if specified
     var costsStr = [];
@@ -306,7 +318,7 @@ G.getCostString = function (costs, verbose, neutral, mult) {
     return costsStr.join(', ');
 }
 
-// Same as above, but takes into account the unused amount of a usable resource instead of its total amount
+//Same as above, but takes into account the unused amount of a usable resource instead of its total amount
 G.getUseString = function (costs, verbose, neutral, mult) {
     var costsStr = [];
     mult = mult || 1;
@@ -327,7 +339,7 @@ G.getUseString = function (costs, verbose, neutral, mult) {
     return costsStr.join(', ');
 }
 
-// Custom new value for ungratefulness
+//Custom new value for ungratefulness
 var ungrateful = 1
 
 ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
@@ -704,7 +716,7 @@ var archaeologyRare = function () //mesg can toggle message
 }
 var updateNewDayLines = function (fools, civ2) {
     if (fools) {
-        G.props['new day lines'] = [ // Fools mode/April Fools active
+        G.props['new day lines'] = [ //Fools mode/April Fools active
             'Mantisk blades have been discovered.', 'You met a friend today.',
             'Creatures are lurking nearby.', 'Danger abounds.',
             'NeverEnding......Fools! (Yeah, its April 1st today, or...is it?)', 'An idiot tried to fall up.',
@@ -736,7 +748,7 @@ var updateNewDayLines = function (fools, civ2) {
             'You thought of a neat idea, but forgot it when you woke up...again. How is this happening?', 'Someone manages to slip on a banana peel.'
         ];
     } else {
-        G.props['new day lines'] = [ // Normal quotes
+        G.props['new day lines'] = [ //Normal quotes
             'Creatures are lurking nearby.', 'Danger abounds.',
             'Wild beasts are on the prowl.', 'Large monsters roam, unseen.',//'BRUH','OOF',
             'This is a cold night.', 'No sound but the low hum of a gray sky.',
@@ -809,15 +821,15 @@ G.traitTick = function (race, permachiev) {
             if (lt > 50) me.category = 'long'; else me.category = 'short';
         if (G.year - me.yearOfObtainment > (typeof (me.lifetime) === 'function' ? me.lifetime() : me.lifetime) && G.has(me.name)) { //with this we can make traits have vary lifetime length , not just constant
             if (G.getSetting('trait messages') || G.resets < 3) G.Message({ type: 'important tall', text: (me.category == 'long' || me.category == 'short' ? 'The ' + me.category + '-term trait <b>' : 'The trait <b>') + me.displayName + '</b> ' + choose(['has expired', 'has come to an end', 'has become outdated', 'is no longer active', 'has lost its effect']) + '.', icon: me.icon });
-            if (expTraits.indexOf(me.displayName) == -1) { // we don't want names to repeat if we have the century system
+            if (expTraits.indexOf(me.displayName) == -1) { //we don't want names to repeat if we have the century system
                 expTraits.push(me.displayName);
             }
             G.deleteTrait(me.name);
-            G.playSound(magixURL + 'GainedTech.mp3'); // Let's just...ignore the name of the sound effect, all right?
+            G.playSound(magixURL + 'GainedTech.mp3'); //Let's just...ignore the name of the sound effect, all right?
             return true;
         }
         if (!G.has(me.name)) {
-            // if (G.checkReq(me.req) && G.testCost(me.cost, 1)) console.log(me.name, me.chance)
+            //if (G.checkReq(me.req) && G.testCost(me.cost, 1)) console.log(me.name, me.chance)
             if (Math.random() < 1 / (me.chance * (300 - mausoBonus))) {
                 if (G.checkReq(me.req) && G.testCost(me.cost, 1)) {
                     G.doCost(me.cost, 1);
@@ -899,11 +911,11 @@ function newDayLines(civ2) {
 function AoD() {
     var changed = 0;
     var n = G.lose('corpse', randomFloor(G.getRes('corpse').amount * 0.01), '<font color="#f70054">art of death</font>'); G.gain('bone', n * 3, 'unused corpse parts'); changed += n;
-    // var happMult = 1;
-    // if (G.has('fear of death')) happMult *= 1.05;
-    // if (G.has('acceptance of death')) happMult *= 0.95;
-    // if (G.has('death scepticism')) happMult -= G.year % 40 > 19 ? 0.05 : -0.05;
-    // changeHappiness(-changed * 0.1 * happMult, 'art of death');
+    //var happMult = 1;
+    //if (G.has('fear of death')) happMult *= 1.05;
+    //if (G.has('acceptance of death')) happMult *= 0.95;
+    //if (G.has('death scepticism')) happMult -= G.year % 40 > 19 ? 0.05 : -0.05;
+    //changeHappiness(-changed * 0.1 * happMult, 'art of death');
     if (n > 0) {
         G.pseudoGather(G.getRes('culture'), changed);
         G.gain('health', -changed * 0.1, 'art of death');
@@ -1082,7 +1094,7 @@ if (getObj("civ") != "1") {
                 G.getDict('xmas3').desc = 'The spirits of Christmas thank your [potter]s for crafting festive pots and bowls with Christmas symbols that bring Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [potter]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
                 G.getDict('xmas4').desc = 'The spirits of Christmas thank your [carver]s for carving festive statuettes out of various materials and for decorating cut stone with festive shapes/symbols, bringing Christmas to this world. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['xmas buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [carver]s are 3% more efficient. //<font color="#f70054">Note: During Christmas the use won\'t disable, however, when it ends, you will start losing that bonus, meaning that you will have to wait until next Christmas.</font>';
                 G.getDict('valentine1').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 80 extra [water]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herb]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
+                G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herbs]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
@@ -1108,7 +1120,7 @@ if (getObj("civ") != "1") {
                     G.getDict("artisan").modes['candies'].req = { 'tribalism': true, 'candy-crafting': true };
                     G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
                     G.getDict("clothier").modes['weave leather colored clothing'] = { name: 'Weave leather costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [leather].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
-                    G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herb].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
+                    G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herbs].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
                     G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier]s and will bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
                 } else {
                     G.getDict('spirit summoner').effects.push({ type: 'mult', value: 0 });
@@ -1492,9 +1504,9 @@ if (getObj("civ") != "1") {
                         G.makePartOf('honeycomb', '');
                     }
                     if (G.modsByName['Laws Of Food'] || G.modsByName['Laws Of Food Free Version']) {
-                        // oh boy, here we go
+                        //oh boy, here we go
                         if (G.checkPolicy("eat herbs") == "off") {
-                            G.makePartOf('herb', '');
+                            G.makePartOf('herbs', '');
                         }
                         if (G.checkPolicy("eat raw meat") == "off") {
                             G.makePartOf('meat', '');
@@ -1532,7 +1544,7 @@ if (getObj("civ") != "1") {
                             G.makePartOf('meals', '');
                         }
                         if (G.checkPolicy("eat vegetables") == "off") {
-                            G.makePartOf('vegetable', '');
+                            G.makePartOf('vegetables', '');
                         }
                         if (G.checkPolicy("drink juices") == "off") {
                             G.makePartOf('juices', '');
@@ -1586,7 +1598,7 @@ if (getObj("civ") != "1") {
             G.funcs['new year'] = function () {
                 if (G.on) {
                     if (!G.has('trial')) {
-                        // Drought/famine calculations
+                        //Drought/famine calculations
                         if (!droughtwarnmesg && G.year >= 39 && G.year < 60) {
                             G.Message({ type: 'important tall', text: 'Be warned: <b>droughts and famines may start occuring after year 50!</b> Droughts will increase water decay significantly and cause you to lose a significant amount of water production. Famines may occur after several years of drought and are much more severe! However, they may be a key to new discoveries...', icon: [9, 10] })
                             droughtwarnmesg = true
@@ -1595,14 +1607,18 @@ if (getObj("civ") != "1") {
                         var droughtYear = getObj('drought')
                         if (droughtYear > 0) {
                             if ((droughtYear - Math.sqrt(Math.random() * 4.2 + 2) + 5) + 2 > G.year || droughtYear + 7 < G.year) {
-                                G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
+                                if (G.getSetting('drought messages')) {
+                                    G.Message({ type: 'good', text: '<b>The drought has (finally) been lifted!</b>', icon: [9, 10] })
+                                }
                                 if (G.has('drought')) G.deleteTrait('drought')
                                 if (G.has('famine')) G.deleteTrait('famine')
                                 setObj('drought', 0)
                             }
                         } else if (G.year > 220 - G.techN * 0.35 && G.has("primary time measure") && G.year - 2 >= G.getRes('drought year').amount) {
-                            if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
-                            // Drought data starts being calculated now
+                            if (G.getSetting('drought messages')) {
+                                if (G.year < 80) G.Message({ type: 'bad2', text: 'A <b>drought</b> may happen at some point in the future. You can check when the next predicted year that one will happen in your people\'s demographics.', icon: [9, 10] })
+                            }
+                            //Drought data starts being calculated now
                             G.getRes('drought year').amount = G.year + Math.floor(Math.random() * 6 + 4)
                         } else if (droughtYear === 0) {
                             if (G.year < 200) {
@@ -1611,7 +1627,9 @@ if (getObj("civ") != "1") {
                             droughtmesg = false
                             setObj('drought', -1)
                         } else if (G.year === G.getRes('drought year').amount - 2) {
-                            G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
+                            if (G.getSetting('drought messages')) {
+                                G.Message({ type: 'bad2', text: 'A drought could happen soon: you may want to prepare.', icon: [9, 10] })
+                            }
                         } else if (G.year > 49 && Math.random() < 0.8 && G.year === G.getRes('drought year').amount + (Math.round(Math.random() * 2.7 - 1.04))) {
                             G.gainTrait(G.traitByName['drought'])
                             setObj('drought', G.year)
@@ -1667,8 +1685,8 @@ if (getObj("civ") != "1") {
                     G.isMap = G.isMapFullyExplored();
                     if (G.has("t7") && G.year > 0) {
                         G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * ((G.year - 1) / 1.5) * (G.getRes('population').amount / 4));
-                        var h = G.getRes("herb").amount;
-                        G.lose("herb", h);
+                        var h = G.getRes("herbs").amount;
+                        G.lose("herbs", h);
                         G.gain("herb essence", h * 0.08);
                         var population = G.getRes("population").amount;
                         if (G.getRes('herb essence').amount >= G.herbReq) {
@@ -1716,8 +1734,8 @@ if (getObj("civ") != "1") {
                                 setTimeout(function () { G.middleText('<p id="loading">are you ready for the <i>NEW</i> adventure?</p>', 'slow'); }, 28000);
                                 setTimeout(function () {
                                     G.dialogue.popup(function (div) {
-                                        // var message = new Audio(magixURL + 'SpecialMessage.wav');
-                                        // message.play()
+                                        //var message = new Audio(magixURL + 'SpecialMessage.wav');
+                                        //message.play()
                                         return '<div style="width:580px;min-height:600px;height:75%;">' +
                                             '<div class="fancyText title"><font color="pink">A whole new world</font></div>' +
                                             '<div class="fancyText"><font color="#4d4">The green meteor has fallen down from space!<br>It didn\'t take long to cause damage...<br>but you suddenly became the survivor.</font></div>' +
@@ -1735,7 +1753,7 @@ if (getObj("civ") != "1") {
                                             '<div class="bulleted"><small><font color="lime">(Fortunately, you were in a shelter far far away from the place where the meteor fell. After your befriended wizards helped you to travel to this new place, you noticed some, well, rather off-putting things about it, to say the least.)</font></small></div>' +
                                             '</div>' +
                                             '</div><div class="buttonBox">' +
-                                            '</div></div>' // aroundMeteor.png removed
+                                            '</div></div>' //aroundMeteor.png removed
                                     }, 'noClose');
                                 }, 25000);
                                 break;
@@ -2119,7 +2137,7 @@ if (getObj("civ") != "1") {
                         var amount;
 
                         if (pumpkinroulette >= 1 && pumpkinroulette <= 15) {
-                            if (loot == 0) { amount = G.getRes('cooked meat').amount / 3; G.gain('cooked meat', amount, '<font color="#f80">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount / 3; G.gain('fruit', amount, '<font color="#f80">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="#f80">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="#f80">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herb').amount / 3; G.gain('herb', amount, '<font color="#f80">Treat</font>'); };
+                            if (loot == 0) { amount = G.getRes('cooked meat').amount / 3; G.gain('cooked meat', amount, '<font color="#f80">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount / 3; G.gain('fruit', amount, '<font color="#f80">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="#f80">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="#f80">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herbs').amount / 3; G.gain('herbs', amount, '<font color="#f80">Treat</font>'); };
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a strong smash your people managed to collect ' + B(amount) + ' <font color="pink">' + loottabfcase[loot] + '</font> outta it. <b>Noice!</b>', icon: [ic, 7, 'seasonal'] }); //7,8
                         } else if (pumpkinroulette > 15 && pumpkinroulette <= 28) {
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a loud, strong smash you see...the inside of this pumpkin...there was...nothing...<br><b>Trick!</b>', icon: [9, 7, 'seasonal'] });
@@ -2163,7 +2181,7 @@ if (getObj("civ") != "1") {
             G.funcs['new day'] = function () {
                 if (G.on) {
                     if (!droughtmesg && G.has('drought')) {
-                        G.Message({ type: 'bad3', text: 'You are currently in ' + (G.has('trial') ? 'an eternal' : 'a') + ' <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). However, droughts present unique research opportunities! (Check the trait for more info.)', icon: [9, 10] })
+                        G.Message({ type: 'bad3', text: 'You are currently in ' + (G.has('trial') ? 'an eternal' : 'a') + ' <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). (Check the trait for more info.)', icon: [9, 10] })
                         droughtmesg = true
                     }
                     if (G.influenceTraitRemovalCooldown > 0) G.influenceTraitRemovalCooldown--;
@@ -2265,11 +2283,11 @@ if (getObj("civ") != "1") {
                     if (G.has('outstanders club')) {
                         G.getDict('the outstander').limitPer = { 'population': 26500 }
                     }
-                    // if (G.has('smaller shacks') && G.has('backshift at farms')) {
-                    //     G.getDict('wheat farm').use = { 'worker': 12, 'land': 13.75 }
-                    // }
+                    //if (G.has('smaller shacks') && G.has('backshift at farms')) {
+                    //    G.getDict('wheat farm').use = { 'worker': 12, 'land': 13.75 }
+                    //}
                     if (!G.has('t10')) { G.getDict('precious metal ingot').partOf = 'misc materials' }//this resource will not decay during Pocket but normally without active trial will
-                    G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -2 - G.year * 0.04, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }; // Gets worse over time
+                    G.getDict('seafood').turnToByContext = { 'eating': { 'health': -0.02, 'happiness': -2 - G.year * 0.04, 'bone': 0.02 }, 'decay': { 'spoiled food': 1 } }; //Gets worse over time
                     if (G.checkPolicy('reset health level') == 'activate') {  //hunted special policy
                         G.getDict('reset health level').cost = { 'land': 1e5 }; G.getRes('health').amount = 0; G.setPolicyModeByName('reset health level', 'alreadyused');
                     }
@@ -2320,8 +2338,8 @@ if (getObj("civ") != "1") {
                     }
                     if (G.has('no knapping anymore')) {
                         G.getDict('healer').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 } //had to add knapped tools -1 because declaring
-                        G.getDict('woodcutter').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }// s.t and wrkr didn't make knapped tools usage disappear
-                        G.getDict('digger').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }// at least it works as it is supposed to now
+                        G.getDict('woodcutter').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }//s.t and wrkr didn't make knapped tools usage disappear
+                        G.getDict('digger').use = { 'stone tools': 1, 'worker': 1, 'knapped tools': -1 }//at least it works as it is supposed to now
                     }
 
                     if (G.has('plain island building')) {
@@ -3320,7 +3338,7 @@ if (getObj("civ") != "1") {
                         changeHappiness(-toExhume * 2, 'not enough burial spots');//this fixes a funny little thing where you can kinda cheese happiness by rapidly getting and removing burial spots (which are free)
                     }
 
-                    // Very slow normal corpse decay
+                    //Very slow normal corpse decay
                     if (G.day % 30 == 0) {
                         var toSpoil = me.amount * 0.0075;
                         var spent = G.lose('corpse', randomFloor(toSpoil), 'decay');
@@ -3331,7 +3349,7 @@ if (getObj("civ") != "1") {
                     if (G.has('belief in revenants')) unhappiness *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
                     changeHappiness(-me.amount * unhappiness, 'corpses');
                     G.gain('health', -me.amount * 0.02, 'corpses');
-                    // Corpse decay trait: Normal decay still works dark wormholes provide additional decay
+                    //Corpse decay trait: Normal decay still works dark wormholes provide additional decay
                     if (G.has('corpse decay')) {
                         var toSpoil = me.amount * 0.002 * (G.getRes('corpsedecaypoint').amount);
                         var spent = G.lose('corpse', randomFloor(toSpoil), 'corpse decay from wormholes');
@@ -3459,17 +3477,17 @@ if (getObj("civ") != "1") {
             ungrateful = 1
             new G.Res({
                 name: 'happiness',
-                desc: '[happiness] describes the global level of well-being of your [population].//Happy people work even harder, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
+                desc: '[happiness] describes the global level of well-being of your [population].//Happy people work even harder and improve unit speeds, while unhappy people tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
                 startWith: 0,
                 visible: true,
                 icon: [3, 4],
                 colorGood: 'lime', colorBad: '#f44',
                 fractional: true,
                 tick: function (me, tick) {
-                    // Calculate ungratefulness
+                    //Calculate ungratefulness
                     ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 8 ? 0.98 : (G.achievByName['mausoleum'].won > 5 ? 0.9 : (G.achievByName['mausoleum'].won > 2 ? 0.85 : 0.75)) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
                     if (G.has('tribe of eaters')) {
-                        // Decrease the effect by half
+                        //Decrease the effect by half
                         ungrateful = 1 - 0.5 * (1 - ungrateful)
                     }
                     var se = 0;
@@ -3720,12 +3738,11 @@ if (getObj("civ") != "1") {
             //a trick to make different food types spoil at different speeds : turnToByContext:{'decay':{'fruit':0.2}} would make fruit last 20% longer (note : the food may still produce spoiled food)
 
             new G.Res({
-                name: 'herb',
-                displayName: 'Herbs',
-                desc: '[herb] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
+                name: 'herbs',
+                desc: '[herbs] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
                 icon: [4, 6],
                 startWith: 300,
-                turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herb': 0.2, 'spoiled food': 0.8 } },
+                turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herbs': 0.2, 'spoiled food': 0.8 } },
                 partOf: 'food',
                 category: 'food',
             });
@@ -3738,9 +3755,8 @@ if (getObj("civ") != "1") {
                 category: 'food',
             });
             new G.Res({
-                name: 'vegetable',
-                displayName: 'Vegetables',
-                desc: '[vegetable], whether gathered from bushes or gardens, are both healthy and good for you.',
+                name: 'vegetables',
+                desc: '[vegetables], whether gathered from bushes or gardens, are both healthy and good for you.',
                 icon: [11, 11, 'magixmod'],
                 turnToByContext: { 'eating': { 'health': 0.02, 'happiness': 0.01 }, 'decay': { 'spoiled food': 1 } },
                 partOf: 'food',
@@ -3974,7 +3990,7 @@ if (getObj("civ") != "1") {
                 category: 'build',
                 tick: function () {
                     if (G.has('sandy shores')) {
-                        // The cap is at 100 because your discovered [wtr] is ten times that amount!
+                        //The cap is at 100 because your discovered [wtr] is ten times that amount!
                         G.gain('sand', unitAmount('digger', 'wtr', 100) * (G.has('sandy shores II') ? 0.02 : 0.01), 'sand digging');
                     }
                 }
@@ -4136,7 +4152,7 @@ if (getObj("civ") != "1") {
             var clothesInfo = '//Your people automatically wear the highest-quality clothing available, moving on to the next type if there isn\'t enough.';
             new G.Res({
                 name: 'primitive clothes',
-                desc: 'Made out of rudimentary materials such as [hide]s or [herb].//Each [population,Person] wearing clothing is slightly happier and healthier.' + clothesInfo,
+                desc: 'Made out of rudimentary materials such as [hide]s or [herbs].//Each [population,Person] wearing clothing is slightly happier and healthier.' + clothesInfo,
                 icon: [15, 7],
                 category: 'gear',
                 tick: function (me, tick) {
@@ -4196,7 +4212,7 @@ if (getObj("civ") != "1") {
                 category: 'misc',
                 tick: function () {
                     if (G.has('salty sand')) {
-                        // The cap is at 100 because your discovered [wtr] is ten times that amount!
+                        //The cap is at 100 because your discovered [wtr] is ten times that amount!
                         G.gain('salt', unitAmount('digger', 'wtr', 100) * (G.has('salty sand II') ? 0.012 : 0.07), 'salty sand');
                     }
                 }
@@ -4865,7 +4881,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'herb syrup',
-                desc: 'Pretty bad to taste. Made out of healthy [herb] and [flowers,Various flowers]. Can be used to cure diseases.',
+                desc: 'Pretty bad to taste. Made out of healthy [herbs] and [flowers,Various flowers]. Can be used to cure diseases.',
                 icon: [5, 10, 'magixmod'],
                 category: 'alchemypotions',
                 partOf: 'medicament brews',
@@ -4876,7 +4892,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'essenced herb syrup',
-                desc: 'A little bit tastier than [herb syrup]. Made out of healthy [herb], [flowers,Various flowers] with a little [water essence] and [nature essence] added. Can be used to cure diseases.',
+                desc: 'A little bit tastier than [herb syrup]. Made out of healthy [herbs], [flowers,Various flowers] with a little [water essence] and [nature essence] added. Can be used to cure diseases.',
                 icon: [9, 10, 'magixmod'],
                 category: 'alchemypotions',
                 partOf: 'medicament brews',
@@ -4887,7 +4903,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'antidotum',
-                desc: 'Made using a [mundane water pot], a small amount of [alcohol pot,Alcohol], a little bit of [herb] and a little [salt].',
+                desc: 'Made using a [mundane water pot], a small amount of [alcohol pot,Alcohol], a little bit of [herbs] and a little [salt].',
                 icon: [4, 10, 'magixmod'],
                 category: 'alchemypotions',
                 partOf: 'medicament brews',
@@ -4941,7 +4957,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'seeds',
-                desc: 'Some mixed seeds that may allow you to set up farms of [vegetable,Lettuce] or [sugar cane].',
+                desc: 'Some mixed seeds that may allow you to set up farms of [vegetables,Lettuce] or [sugar cane].',
                 icon: [50, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -5065,7 +5081,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'herb of the undead',
-                desc: 'Crafted using a mysterious recipe that merges [herb], [fruit], and [dark essence] into something new. Quite poisonous.',//Coming very very soon types of potions
+                desc: 'Crafted using a mysterious recipe that merges [herbs], [fruit], and [dark essence] into something new. Quite poisonous.',//Coming very very soon types of potions
                 icon: [20, 11, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5085,7 +5101,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'grass of growing',
-                desc: 'Made by combining [herb], [mana], and [nature essence]. Used in various nature-based potions. This grass can be the friend of soldiers and people who are trying to hide!',
+                desc: 'Made by combining [herbs], [mana], and [nature essence]. Used in various nature-based potions. This grass can be the friend of soldiers and people who are trying to hide!',
                 icon: [16, 13, 'magixmod'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
@@ -5480,9 +5496,9 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     if (G.has('art of cooking II')) G.getDict('meals').turnToByContext['decay'] = { 'meals': 0.3, 'spoiled food': 0.7 }
                     if (G.has('art of cooking III')) {
-                        // People cooking meals
+                        //People cooking meals
                         var recipes1 = ['cooked meat', 'cooked meat', 'cooked meat', 'cooked seafood', 'cooked seafood', 'cooked seafood']
-                        var recipes2 = ['herb', 'fruit', 'vegetable', 'herb', 'fruit', 'vegetable']
+                        var recipes2 = ['herbs', 'fruit', 'vegetables', 'herbs', 'fruit', 'vegetables']
                         var cookingAmount = Math.ceil(G.getRes('population').amount / 750)
                         var index = Math.floor(0.1 * (G.day % 60))
                         var spent1 = G.lose(recipes1[index], cookingAmount, 'people cooking')
@@ -5550,7 +5566,7 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 icon: [17, 0, 'magixmod'],
                 tick: function (me, tick) {
-                    // Various things about prisoners added properly by @1_e0 (pretty complex, right?)
+                    //Various things about prisoners added properly by @1_e0 (pretty complex, right?)
                     var punishmentLevel = G.has('CaP(light)') ? 0.7 : (G.has('CaP(cruel)') ? 1.4 : 1)
                     var fleeMult = (G.has('sharp edges') ? 0.0075 : (G.has('fragile bars') ? 0.0125 : 0.01)) * (G.has('longer prison sentences') ? 1.2 : (G.has('shorter prison sentences') ? 0.6 : 1))
                     var freedAmount = randomFloor(G.getRes('prisoner').amount * 0.012 / punishmentLevel) * (G.has('longer prison sentences') ? 0.6 : (G.has('shorter prison sentences') ? 1.2 : 1))
@@ -5574,7 +5590,7 @@ if (getObj("civ") != "1") {
                         madeWarnCorpseMesg = true
                     }
 
-                    // More content for wild corpses by @1_e0 because it's a shame all this code only had 2 chance types
+                    //More content for wild corpses by @1_e0 because it's a shame all this code only had 2 chance types
                     const corpses = G.getDict('wild corpse').amount
                     const chances = [
                         {
@@ -5654,7 +5670,7 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 tick: function (me, tick) {
                     if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
-                        if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { // The spawning rate is increased or decreased by various factors
+                        if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { //The spawning rate is increased or decreased by various factors
                             var n = G.getRes('adult').amount * 0.0000004 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.012 * G.year - 0.3, 0.9), 1.15), 3.5);
                             if (G.checkPolicy('se02') == 'on') {
                                 G.gain('thief', n * 1.02, 'unhappiness');
@@ -6144,7 +6160,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'unknownium ore',
-                desc: 'unknown ore \xaf\\_(\u30c4)_/\xaf //<small>we are not sure what it is</small>', // yeah I think the character encoding makes it even more unknownium, eh, pelletsstar?
+                desc: 'unknown ore \xaf\\_(\u30c4)_/\xaf //<small>we are not sure what it is</small>', //yeah I think the character encoding makes it even more unknownium, eh, pelletsstar?
                 icon: [10, 5, 'magixmod'],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -6187,14 +6203,14 @@ if (getObj("civ") != "1") {
             new G.Res({//WIP
                 name: 'modernium ore',
                 desc: 'A red ore with a pinkish tint. Interesting but is sadly a waste.',
-                // desc: 'A red ore with a pinkish tint. Getting an ingot from it, however, requires a bit of luck. At least it can be smelt into random things like [coal]. Only obtainable if people will be led by [moderation]. Mind you, work on this ore isn\'t complete!',
+                //desc: 'A red ore with a pinkish tint. Getting an ingot from it, however, requires a bit of luck. At least it can be smelt into random things like [coal]. Only obtainable if people will be led by [moderation]. Mind you, work on this ore isn\'t complete!',
                 icon: [10, 8, 'magixmod'],
                 category: 'ore',
             });
             new G.Res({//WIP
                 name: 'caretakium ore',
                 desc: 'A dark green ore that is of some interest but has no use.',
-                // desc: 'A dark green ore. Getting an ingot from it, however, requires a bit of luck. At least it can be used in some other purposes like forging blocks. Some people say it can be like a herb...but unedible. Only obtainable if people will be led by [caretaking]. Mind you, work on this ore isn\'t complete!',
+                //desc: 'A dark green ore. Getting an ingot from it, however, requires a bit of luck. At least it can be used in some other purposes like forging blocks. Some people say it can be like a herb...but unedible. Only obtainable if people will be led by [caretaking]. Mind you, work on this ore isn\'t complete!',
                 icon: [10, 7, 'magixmod'],
                 category: 'ore',
             });
@@ -6320,7 +6336,7 @@ if (getObj("civ") != "1") {
                     }
                 },
                 getDisplayAmount: function (me) {
-                    if (G.getRes('population').amount <= 0) return '<b>-</b>';
+                    if (G.getRes('population').amount <= 0) return '<b>None</b>';
                     var amount = G.getRes('love').amount;
                     var xpreq = ((((G.getRes('love').amount + 10) * 35000) ^ (G.getRes('love').amount + 1)) * (G.getRes('love').amount + 3)) * ((G.getRes('love').amount + 1) / 1.85);
                     return '<font color="yellow"><b>Lvl ' + B(amount + 1) + '</b></font> ' + B(G.getRes('love xp').amount) + '/<br>' + B(xpreq) + '';
@@ -6353,8 +6369,11 @@ if (getObj("civ") != "1") {
                 startWith: 50,
                 tick: function (me) {
                     if (G.achievByName['buried'].won > 0 && me.amount > 0) {
+                        if (!G.has('voodoo spirit')) {
+                            G.gainTrait(G.traitByName['voodoo spirit'])
+                        }
                         me.hidden = false;
-                        if (G.getRes('corpse').amount > 0 && me.used <= me.amount) {
+                        if (G.getRes('corpse').amount > 0 && me.used < me.amount) {
                             G.getRes('corpse').amount--;
                             G.getRes('dark decay').used++;
                         }
@@ -6381,7 +6400,7 @@ if (getObj("civ") != "1") {
                     }
                 },
                 getDisplayAmount: function (me) {
-                    if (G.getRes('population').amount <= 0) return '<b>-</b>';
+                    if (G.getRes('population').amount <= 0) return '<b>None</b>';
                     var amount = G.getRes('spookiness').amount;
                     var xpreq = ((((G.getRes('spookiness').amount + 10) * 55500) ^ (G.getRes('spookiness').amount + 1)) * (G.getRes('spookiness').amount + 3)) * ((G.getRes('spookiness').amount + 1) / 1.85);
                     return '<font color="yellow"><b>Lvl ' + B(amount + 1) + '</b></font> ' + B(G.getRes('spookiness xp').amount) + '/<br>' + B(xpreq) + '';
@@ -6500,15 +6519,15 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', context: 'gather', amount: 2, max: 4 },
                     { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } },
-                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 'herbalism': false } },//To keep early game possible (there is a function within herbalism that provides more methods of herb gathering)
-                    { type: 'gather', context: 'gather', what: { 'herb': 4.5 }, req: { 't7': true } },//For the trial
+                    { type: 'gather', context: 'gather', what: { 'herbs': 4.5 }, req: { 'herbalism': false } },//To keep early game possible (there is a function within herbalism that provides more methods of herb gathering)
+                    { type: 'gather', context: 'gather', what: { 'herbs': 4.5 }, req: { 't7': true } },//For the trial
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
                     { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3, req: { 'drought': false } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'drought': true } },
-                    { type: 'gather', context: 'gather', what: { 'herb': 0.5, 'fruit': 0.25, 'vegetable': 0.25 }, amount: 1, max: 1, req: { 'plant lore': true, 'fruit identification II': false } },
+                    { type: 'gather', context: 'gather', what: { 'herbs': 0.5, 'fruit': 0.25, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'plant lore': true, 'fruit identification II': false } },
                     { type: 'gather', context: 'exotic', amount: 0.015, max: 1, req: { 'fruit identification': true, 'fruit identification II': false } },
                     { type: 'gather', context: 'exotic', amount: 0.01575, max: 1, req: { 'fruit identification II': true } },
-                    { type: 'gather', context: 'exotic', what: { 'herb': 0.55, 'fruit': 0.3, 'vegetable': 0.25 }, amount: 1, max: 1, req: { 'fruit identification II': true } },
+                    { type: 'gather', context: 'exotic', what: { 'herbs': 0.55, 'fruit': 0.3, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'fruit identification II': true } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.002 }, amount: 1, max: 1, req: { 'spicy foods': true, 'spicy foods II': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.003 }, amount: 1, max: 1, req: { 'spicy foods II': true, 'spicy foods III': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.009 }, amount: 1, max: 1, req: { 'spicy foods III': true } },
@@ -6521,7 +6540,7 @@ if (getObj("civ") != "1") {
                     //Random trends
                     { type: 'gather', context: 'gather', what: { 'stick': 0.035 }, req: { 'gtt1': true } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.035 }, req: { 'gtt2': true } },
-                    // Trial/Seraphin stuff
+                    //Trial/Seraphin stuff
                     { type: 'gather', context: 'gather', what: { 'seafood': 35 }, req: { 't5': true } },
                     { type: 'mult', value: 0.2, req: { 't5': true } },
                     { type: 'mult', value: 0.4, req: { 't6': true } },
@@ -6633,9 +6652,9 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'stick': 4, 'stone': 1 }, into: { 'wand': 1 }, every: 8, mode: 'wands' },
                     { type: 'convert', from: { 'dyes': 1, 'mud': 0.0015, 'water': 0.015 }, into: { 'ink': 0.75 }, every: 6, mode: 'ink' },
                     { type: 'convert', from: { 'thread': 30, 'dried leather': 1 }, into: { 'fishing net': 1 }, every: 7, mode: 'net' },
-                    { type: 'convert', from: { 'thread': 1.5, 'herb': 0.75 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
-                    { type: 'convert', from: { 'thread': 0.5, 'herb': 1 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
-                    { type: 'convert', from: { 'thread': 2, 'herb': 1.5, 'hide': 1 }, into: { 'first aid things': 1 }, every: 9, mode: 'firstaid' },
+                    { type: 'convert', from: { 'thread': 1.5, 'herbs': 0.75 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
+                    { type: 'convert', from: { 'thread': 0.5, 'herbs': 1 }, into: { 'first aid things': 1 }, every: 7, mode: 'firstaid' },
+                    { type: 'convert', from: { 'thread': 2, 'herbs': 1.5, 'hide': 1 }, into: { 'first aid things': 1 }, every: 9, mode: 'firstaid' },
                     { type: 'convert', from: { 'stick': 3, 'stone': 2 }, into: { 'crossbow': 1 }, every: 7, req: { 'hunting II': true, 'manufacture units II': false, 'factories II': false }, mode: 'bows' },
                     { type: 'convert', from: { 'lumber': 2, 'stone': 10 }, into: { 'arrow': 10 }, every: 7, req: { 'manufacture units II': false, 'factories II': false }, mode: 'arrows' },
                     { type: 'convert', from: { 'flowers': 12 }, into: { 'dyes': 4 }, every: 7, mode: 'dyes' },
@@ -6716,29 +6735,29 @@ if (getObj("civ") != "1") {
                 upkeep: { 'food': 0.2 },
                 gizmos: true,
                 modes: {
-                    'sew grass clothing': { name: 'Sew grass clothing', icon: [15, 7], desc: 'Craft [primitive clothes] from 30 [herb] each.', use: { 'stone tools': 1 } },
+                    'sew grass clothing': { name: 'Sew grass clothing', icon: [15, 7], desc: 'Craft [primitive clothes] from 30 [herbs] each.', use: { 'stone tools': 1 } },
                     'sew hide clothing': { name: 'Sew hide clothing', icon: [15, 7], desc: 'Craft [primitive clothes] from 3 [hide]s each.', use: { 'stone tools': 1 } },
-                    'weave fiber clothing': { name: 'Weave fiber clothing', icon: [16, 7], desc: 'Craft [basic clothes] from 50 [herb] each.', use: { 'stone tools': 1 }, req: { 'weaving': true } },//TODO : implement fibers
+                    'weave fiber clothing': { name: 'Weave fiber clothing', icon: [16, 7], desc: 'Craft [basic clothes] from 50 [herbs] each.', use: { 'stone tools': 1 }, req: { 'weaving': true } },//TODO : implement fibers
                     'weave leather clothing': { name: 'Weave leather clothing', icon: [16, 7], desc: 'Craft [basic clothes] from 2 [leather] each.', use: { 'stone tools': 1 }, req: { 'weaving': true, 'leather-working': true } },
                     'make leather': { name: 'Make leather', icon: [10, 7], desc: 'Produce [leather] from [hide]s, [water], [salt], and [log]s.', use: { 'stone tools': 1 }, req: { 'leather-working': true, 'factories I': false } },
-                    'cheap make leather': { name: 'Make leather (cheap)', icon: [10, 7], desc: 'Slowly produce [leather] from [hide]s, [muddy water] and [herb].', use: { 'stone tools': 1 }, req: { 'factories I': false } },
+                    'cheap make leather': { name: 'Make leather (cheap)', icon: [10, 7], desc: 'Slowly produce [leather] from [hide]s, [muddy water] and [herbs].', use: { 'stone tools': 1 }, req: { 'factories I': false } },
                     'weave leather colored clothing': { name: 'Weave leather colored clothing', icon: [13, 0, 'magixmod'], desc: 'Your clothier will now weave [colored clothing] out of [leather].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
-                    'weave fiber colored clothing': { name: 'Weave fiber colored clothing', icon: [13, 0, 'magixmod'], desc: 'Your clothier will now weave [colored clothing] out of [herb].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
+                    'weave fiber colored clothing': { name: 'Weave fiber colored clothing', icon: [13, 0, 'magixmod'], desc: 'Your clothier will now weave [colored clothing] out of [herbs].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
                     'dye already made clothing': { name: 'Dye already made clothing', icon: [13, 0, 'magixmod'], desc: 'Your clothier will now dye already made [basic clothes], turning them into[colored clothing].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
-                    'craft thread': { name: 'Craft thread', icon: [13, 9, 'magixmod'], desc: 'Your clothier will now craft [thread] out of [herb].', req: { 'weaving II': true }, use: { 'stone tools': 1 } },
+                    'craft thread': { name: 'Craft thread', icon: [13, 9, 'magixmod'], desc: 'Your clothier will now craft [thread] out of [herbs].', req: { 'weaving II': true }, use: { 'stone tools': 1 } },
                     'weave hardened clothes': { name: 'Weave hardened clothes', icon: [choose([27, 28]), choose([0, 1]), 'magixmod'], desc: 'Craft [hardened clothes] out of [dried leather] and [thread].', req: { 'weaving III': true, 'sewing II': true }, use: { 'stone tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'hide': 3 }, into: { 'primitive clothes': 1 }, every: 12, mode: 'sew hide clothing' },
-                    { type: 'convert', from: { 'herb': 30 }, into: { 'primitive clothes': 1 }, every: 35, mode: 'sew grass clothing' },
+                    { type: 'convert', from: { 'herbs': 30 }, into: { 'primitive clothes': 1 }, every: 35, mode: 'sew grass clothing' },
                     { type: 'convert', from: { 'leather': 2 }, into: { 'basic clothes': 1 }, every: 12, mode: 'weave leather clothing' },
-                    { type: 'convert', from: { 'herb': 50 }, into: { 'basic clothes': 1 }, every: 25, mode: 'weave fiber clothing' },
+                    { type: 'convert', from: { 'herbs': 50 }, into: { 'basic clothes': 1 }, every: 25, mode: 'weave fiber clothing' },
                     { type: 'convert', from: { 'hide': 1, 'water': 5, 'salt': 1, 'log': 0.1 }, into: { 'leather': 1 }, every: 25, mode: 'make leather' },
-                    { type: 'convert', from: { 'hide': 1, 'muddy water': 5, 'herb': 10 }, into: { 'leather': 1 }, every: 40, mode: 'cheap make leather' },
+                    { type: 'convert', from: { 'hide': 1, 'muddy water': 5, 'herbs': 10 }, into: { 'leather': 1 }, every: 40, mode: 'cheap make leather' },
                     { type: 'convert', from: { 'leather': 2, 'dyes': 3 }, into: { 'colored clothing': 1 }, every: 18, mode: 'weave leather colored clothing' },
-                    { type: 'convert', from: { 'herb': 52, 'dyes': 4 }, into: { 'colored clothing': 1 }, every: 30, mode: 'weave fiber colored clothing' },
+                    { type: 'convert', from: { 'herbs': 52, 'dyes': 4 }, into: { 'colored clothing': 1 }, every: 30, mode: 'weave fiber colored clothing' },
                     { type: 'convert', from: { 'basic clothes': 1, 'dyes': 4 }, into: { 'colored clothing': 1 }, every: 3, mode: 'dye already made clothing' },
-                    { type: 'convert', from: { 'herb': 18 }, into: { 'thread': 3 }, every: 8, mode: 'craft thread' },
+                    { type: 'convert', from: { 'herbs': 18 }, into: { 'thread': 3 }, every: 8, mode: 'craft thread' },
                     { type: 'convert', from: { 'dried leather': 4, 'thread': 7 }, into: { 'hardened clothes': 1 }, every: 6, mode: 'weave hardened clothes' },
                     { type: 'mult', value: 1.03, req: { 'xmas2': true } },
                     { type: 'mult', value: 1.1, req: { 'knitting': true } },
@@ -6799,6 +6818,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
                     { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
+                    { type: 'mult', value: 2, req: { 'hunter\'s coordination': true } },
                     //Trait trends
                     { type: 'gather', context: 'hunt', what: { 'hide': 1 }, req: { 'htt1': true } },
                     { type: 'gather', context: 'hunt', what: { 'meat': 1 }, req: { 'htt2': true } },
@@ -6832,6 +6852,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.5, req: { 't6': true } },
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
                     { type: 'mult', value: 0.2, req: { 'hunters & fishers unification': true } },
+                    { type: 'mult', value: 2, req: { 'fisher\'s smartness': true } },
                 ],
                 req: { 'fishing': true, 't4': false },
                 upkeep: { 'bugs': 0.5 },
@@ -6839,7 +6860,7 @@ if (getObj("civ") != "1") {
                 priority: 5,
             });
             new G.Unit({
-                name: 'firekeeper', // Added beekeeping
+                name: 'firekeeper', //Added beekeeping
                 desc: '@creates [fire pit]s from fuel@gains more fuel types as technology progresses@handles other fire-related tasks<>Each [firekeeper] is tasked with starting and maintaining fires to keep the tribe warm.',
                 icon: [16, 2],
                 cost: {},
@@ -7265,7 +7286,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'healer',
-                desc: '@uses some [herb] to heal the [sick] and the [wounded] slowly<>The [healer] knows the secrets of many special plants that make illness stay away.',
+                desc: '@uses some [herbs] to heal the [sick] and the [wounded] slowly<>The [healer] knows the secrets of many special plants that make illness stay away.',
                 icon: [23, 3],
                 cost: {},
                 use: { 'worker': 1 },
@@ -7283,24 +7304,24 @@ if (getObj("civ") != "1") {
                         type: 'function', func: function (me) {
                             var herb = 0.3;
                             var flower = 1;
-                            G.lose('herb', herb, 'unit upkeep');
+                            G.lose('herbs', herb, 'unit upkeep');
                             G.lose('flowers', flower, 'unit upkeep');
                         }, mode: 'sick'
                     },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'adult': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': false } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': true } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1, 'first aid things': 3 }, into: { 'elder': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': false } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': true } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3 }, into: { 'adult': 1 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 3 }, into: { 'adult': 1 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1, 'first aid things': 3 }, into: { 'adult': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': false } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 1, 'medicament brews': 2.5 }, into: { 'adult': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'off', 'healing with brews': true } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3 }, into: { 'elder': 1 }, chance: 1 / 4, every: 10, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 3 }, into: { 'elder': 1 }, chance: 1 / 6, every: 13, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'first aid': false, 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1, 'first aid things': 3 }, into: { 'elder': 1 }, chance: 1.2 / 3, every: 6, mode: 'wounded', req: { 'first aid': true, 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.2 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': false } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 1, 'medicament brews': 2.5 }, into: { 'elder': 1 }, chance: 1.55 / 2, every: 5, mode: 'brews', req: { 'elder workforce': 'on', 'healing with brews': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'nutrition': true } },
                     { type: 'gather', what: { 'health': 0.014 }, req: { 'meat diet': true } },
                     { type: 'mult', value: 1.03, req: { 'more experienced healers': true, 'moderation': true } },
@@ -7785,11 +7806,11 @@ if (getObj("civ") != "1") {
             //debug units
             new G.Unit({
                 name: 'auto nanny',
-                desc: '@generates 25 [fruit]s, 25 [vegetable], 50 [cooked meat,Meat], and 100 [water]<>Keeps your people fed so you don\'t have to.//Powered by strange energies.',
+                desc: '@generates 25 [fruit]s, 25 [vegetables], 50 [cooked meat,Meat], and 100 [water]<>Keeps your people fed so you don\'t have to.//Powered by strange energies.',
                 icon: [4, 2],
                 cost: {},
                 effects: [
-                    { type: 'gather', what: { 'fruit': 25, 'vegetable': 25, 'cooked meat': 50, 'water': 100 } }
+                    { type: 'gather', what: { 'fruit': 25, 'vegetables': 25, 'cooked meat': 50, 'water': 100 } }
                 ],
                 category: 'debug',
             });
@@ -7886,7 +7907,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'leather': 20 }, into: { 'dried leather': 20 }, every: 7, req: { 'bigger factory racks': false } },
                     { type: 'convert', from: { 'leather': 40 }, into: { 'dried leather': 40 }, every: 7, req: { 'bigger factory racks': true } },
                     { type: 'convert', from: { 'hide': 250, 'water': 1000, 'salt': 150, 'log': 15 }, into: { 'leather': 235 }, every: 15 },
-                    { type: 'convert', from: { 'hide': 250, 'muddy water': 1000, 'herb': 145 }, into: { 'leather': 235 }, every: 20 },
+                    { type: 'convert', from: { 'hide': 250, 'muddy water': 1000, 'herbs': 145 }, into: { 'leather': 235 }, every: 20 },
                 ],
             });
             new G.Unit({
@@ -7939,7 +7960,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'muddy water': 37 }, into: { 'water': 28 }, every: 1 },
                     { type: 'mult', value: 1.75, req: { 'better filtering': true } },
-                    { type: 'mult', value: 1.75, req: { 'non-magical filters improvement': true } },
+                    { type: 'mult', value: 1.5, req: { 'non-magical filters improvement': true } },
                     { type: 'mult', value: 1.75, req: { 'magical filtering': true } },
                     { type: 'mult', value: 2, req: { 'supreme fast filtering': true } },
                 ],
@@ -7956,7 +7977,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'muddy water': 15 }, into: { 'water': 14 }, every: 1 },
                     { type: 'mult', value: 1.75, req: { 'better filtering': true } },
-                    { type: 'mult', value: 1.75, req: { 'non-magical filters improvement': true } },
+                    { type: 'mult', value: 1.5, req: { 'non-magical filters improvement': true } },
                     { type: 'mult', value: 1.75, req: { 'magical filtering': true } },
                     { type: 'mult', value: 2, req: { 'supreme fast filtering': true } },
                 ],
@@ -7980,7 +8001,7 @@ if (getObj("civ") != "1") {
                                 else if (Math.random() < 0.3) { G.lose('thief', toNeu * (0.8 + Math.random()), 'neutralization'); G.gain('adult', toNeu * (0.8 + Math.random()), 'neutralization') };
                             }
 
-                            if (Math.random() < 1.05 - Math.min(G.year, 400) * 0.001) { // Thieves become smarter over time, so they get harder to catch
+                            if (Math.random() < 1.05 - Math.min(G.year, 400) * 0.001) { //Thieves become smarter over time, so they get harder to catch
                                 var extraNeu1 = 0
                                 var extraNeu2 = 0
                                 if (G.has('battling thieves II')) {
@@ -8017,7 +8038,7 @@ if (getObj("civ") != "1") {
                 name: 'bakery',
                 desc: '@converts crafted [flour] crafted by your [windmill]s into [bread]. Requires fuel to work.',
                 icon: [24, 10, 'magixmod'],
-                cost: { 'basic building materials': 100 },
+                cost: { 'basic building materials': 100, 'brick': 10000 },
                 use: { 'land': 1, 'worker': 3 },
                 require: { 'metal tools': 2 },
                 upkeep: { 'log': 0.6 },
@@ -8076,23 +8097,23 @@ if (getObj("civ") != "1") {
                 upkeep: { 'fire pit': 0.2, 'food': 0.2 },
                 modes: {
                     'off': G.MODE_OFF,
-                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cook a tasty salad using [vegetable] and [herb], producing a full [meals,Meal].' },
-                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herb] to improve its taste, crafting a well-prepared [meals,Meal].' },
-                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herb] to improve its taste, crafting some well-prepared seafood that means a full [meals,Meal].' },
+                    'salad': { name: 'Salad', icon: [22, 14, 'magixmod'], desc: 'Cook a tasty salad using [vegetables] and [herbs], producing a full [meals,Meal].' },
+                    'wellmeat': { name: 'Well-prepared meat', icon: [22, 15, 'magixmod'], desc: 'Uses 1 [cooked meat] or 1 [cured meat] and adds [herbs] to improve its taste, crafting a well-prepared [meals,Meal].' },
+                    'wellseafood': { name: 'Well-prepared seafood', icon: [23, 15, 'magixmod'], desc: 'Uses 1 [cooked seafood] or 1 [cured seafood] and adds [herbs] to improve its taste, crafting some well-prepared seafood that means a full [meals,Meal].' },
                     'cutlet': { name: 'Cutlets', icon: [24, 14, 'magixmod'], desc: 'Using [fire pit], 1 [cooked meat], and 1 [salt], you\'ll get roast cutlets of various meats worth one and a half [meals,Meal] (and providing a little extra [happiness] due to the amazing smell).', req: { 'art of cooking II': true } },
-                    'sandwich': { name: 'Sandwiches', icon: [19, 0, 'magix2'], desc: '4 giant healthy sandwiches (worth 2 [meals] and providing some [health]) will be made using 3 [vegetable] and 1 loaf of fresh [bread].', req: { 'art of cooking II': true } },
+                    'sandwich': { name: 'Sandwiches', icon: [19, 0, 'magix2'], desc: '4 giant healthy sandwiches (worth 2 [meals] and providing some [health]) will be made using 3 [vegetables] and 1 loaf of fresh [bread].', req: { 'art of cooking II': true } },
                     'honey': { name: 'Honeycomb berries', icon: [18, 0, 'magix2'], desc: 'This meal will quickly become a top choice among your people, as it will provide an insane amount of [happiness] and [health]! It is worth 3 [meals] and is carefully crafted from using 2 [honeycomb]s and some [fruit,Tasty berries].', req: { 'art of cooking II': true } },
-                    'spice': { name: 'Spicy herbs', icon: [22, 0, 'magix2'], desc: '[herb] with [spices] added may not look very appetizing at first, but when they combined with other foods, they become quite tasty! Uses 2 [herb] and some [spices] and [vegetable,Veggies] to produce one and a half [meals].', req: { 'spicy foods': true } },
+                    'spice': { name: 'Spicy herbs', icon: [22, 0, 'magix2'], desc: '[herbs] with [spices] added may not look very appetizing at first, but when they combined with other foods, they become quite tasty! Uses 2 [herbs] and some [spices] and [vegetables,Veggies] to produce one and a half [meals].', req: { 'spicy foods': true } },
                 },
                 effects: [
-                    { type: 'convert', from: { 'vegetable': 2, 'herb': 1 }, into: { 'meals': 1 }, every: 2, mode: 'salad' },
-                    { type: 'convert', from: { 'cooked meat': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
-                    { type: 'convert', from: { 'cured meat': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
-                    { type: 'convert', from: { 'cooked seafood': 1, 'herb': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
+                    { type: 'convert', from: { 'vegetables': 2, 'herbs': 1 }, into: { 'meals': 1 }, every: 2, mode: 'salad' },
+                    { type: 'convert', from: { 'cooked meat': 1, 'herbs': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
+                    { type: 'convert', from: { 'cured meat': 1, 'herbs': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellmeat' },
+                    { type: 'convert', from: { 'cooked seafood': 1, 'herbs': 0.4 }, into: { 'meals': 1 }, every: 4, mode: 'wellseafood' },
                     { type: 'convert', from: { 'fire pit': 1, 'cooked meat': 1, 'salt': 1 }, into: { 'meals': 1.5, 'happiness': 0.04 }, every: 4, mode: 'cutlet' },
-                    { type: 'convert', from: { 'vegetable': 3, 'bread': 1 }, into: { 'meals': 2, 'health': 0.03 }, every: 4, mode: 'sandwich' },
+                    { type: 'convert', from: { 'vegetables': 3, 'bread': 1 }, into: { 'meals': 2, 'health': 0.03 }, every: 4, mode: 'sandwich' },
                     { type: 'convert', from: { 'honeycomb': 2, 'fruit': 1 }, into: { 'meals': 3, 'happiness': 0.15, 'health': 0.2 }, every: 4, mode: 'honey' },
-                    { type: 'convert', from: { 'herb': 2, 'vegetable': 1.2, 'spices': 0.2 }, into: { 'meals': 1.5 }, every: 4, mode: 'spice' },
+                    { type: 'convert', from: { 'herbs': 2, 'vegetables': 1.2, 'spices': 0.2 }, into: { 'meals': 1.5 }, every: 4, mode: 'spice' },
                 ],
                 req: { 'art of cooking': true },
                 gizmos: true,
@@ -8559,9 +8580,9 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'mana': 0.75, 'ice': 2, 'wind essence': 1 }, into: { 'enchanted ice': 2 }, every: 4, mode: 'enchantice' },
                     { type: 'convert', from: { 'fire pit': 1, 'dark essence': 1.75 }, into: { 'dark fire pit': 1.02 }, every: 6, mode: 'darkfire' },
                     { type: 'convert', from: { 'salt': 1, 'dark essence': 1 }, into: { 'withering salt': 1 }, every: 6, mode: 'withersalt' },
-                    { type: 'convert', from: { 'herb': 5, 'mana': 0.5, 'nature essence': 1 }, into: { 'grass of growing': 1.25 }, every: 5, mode: 'growgrass' },
+                    { type: 'convert', from: { 'herbs': 5, 'mana': 0.5, 'nature essence': 1 }, into: { 'grass of growing': 1.25 }, every: 5, mode: 'growgrass' },
                     { type: 'convert', from: { 'mana': 0.75, 'sugar': 1, 'wind essence': 1 }, into: { 'windy sugar': 2 }, every: 4, mode: 'windsugar' },
-                    { type: 'convert', from: { 'herb': 2, 'dark essence': 1, 'fruit': 0.5 }, into: { 'herb of the undead': 2 }, every: 4, mode: 'undeadherb' },
+                    { type: 'convert', from: { 'herbs': 2, 'dark essence': 1, 'fruit': 0.5 }, into: { 'herb of the undead': 2 }, every: 4, mode: 'undeadherb' },
                     { type: 'convert', from: { 'mana': 0.75, 'scobs': 1, 'nature essence': 1, 'water': 0.25 }, into: { 'scobs of life': 1.05 }, every: 8, mode: 'scoblife' },
                 ],
                 category: 'alchemy',
@@ -8648,7 +8669,7 @@ if (getObj("civ") != "1") {
                 upkeep: { 'food': 1.2, 'water': 0.04 },
                 req: { 'wizard wisdom': true },
                 effects: [
-                    { type: 'convert', from: { 'herb': 6, 'mana': 2 }, into: { 'herb essence': 3 }, every: 4, req: { 't7': true } },
+                    { type: 'convert', from: { 'herbs': 6, 'mana': 2 }, into: { 'herb essence': 3 }, every: 4, req: { 't7': true } },
                     { type: 'provide', what: { 'wisdom': 0.5, 'wizard': 1 } },
                 ],
                 category: 'discovery',
@@ -9211,8 +9232,8 @@ if (getObj("civ") != "1") {
                 },
                 effects: [
                     { type: 'convert', from: { 'potion pot': 1, 'water': 0.75, 'sugar': 1 / 3 }, into: { 'sweet water pot': 1 }, every: 4, mode: 'sweetwater' },
-                    { type: 'convert', from: { 'potion pot': 1, 'water': 0.75, 'muddy water': 0.05, 'herb': 0.1 }, into: { 'mundane water pot': 1 }, every: 4, mode: 'mundanewater' },
-                    { type: 'convert', from: { 'potion pot': 1, 'water': 0.8, 'salt': 0.2, 'herb': 0.1 }, into: { 'salted water pot': 1 }, every: 4, mode: 'saltwater' },
+                    { type: 'convert', from: { 'potion pot': 1, 'water': 0.75, 'muddy water': 0.05, 'herbs': 0.1 }, into: { 'mundane water pot': 1 }, every: 4, mode: 'mundanewater' },
+                    { type: 'convert', from: { 'potion pot': 1, 'water': 0.8, 'salt': 0.2, 'herbs': 0.1 }, into: { 'salted water pot': 1 }, every: 4, mode: 'saltwater' },
                     { type: 'convert', from: { 'potion pot': 1, 'water': 0.8, 'salt': 0.02, 'fire pit': 0.12 }, into: { 'bubbling water pot': 1 }, every: 4, mode: 'bubblingwater' },
                     { type: 'mult', value: 1.5, req: { 'Improved alchemy techniques': true } },
                     { type: 'mult', value: 3, req: { 'science blessing': true } },
@@ -9281,9 +9302,9 @@ if (getObj("civ") != "1") {
                     'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, 'magixmod'], desc: 'At this stand you may craft [essenced herb syrup] (although it has a small chance to fail), a medicament that may be used to heal people who are severely [sick].', use: { 'alchemist': 1 } },
                 },
                 effects: [
-                    { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'herb': 0.05, 'sweet water pot': 0.1 }, into: { 'antidotum': 1 }, every: 4, mode: 'antidotum' },
-                    { type: 'convert', from: { 'salted water pot': 0.3, 'bubbling water pot': 0.05, 'water': 0.15, 'herb': 0.25, 'nature essence': 0.2, 'mana': 0.01 }, into: { 'essenced herb syrup': 1 }, every: 5, mode: 'EssHerbsyrup', chance: 0.85 },
-                    { type: 'convert', from: { 'sweet water pot': 0.5, 'water': 0.15, 'herb': 0.5, 'fruit': 0.005 }, into: { 'herb syrup': 1 }, every: 5, mode: 'herbsyrup' },
+                    { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'herbs': 0.05, 'sweet water pot': 0.1 }, into: { 'antidotum': 1 }, every: 4, mode: 'antidotum' },
+                    { type: 'convert', from: { 'salted water pot': 0.3, 'bubbling water pot': 0.05, 'water': 0.15, 'herbs': 0.25, 'nature essence': 0.2, 'mana': 0.01 }, into: { 'essenced herb syrup': 1 }, every: 5, mode: 'EssHerbsyrup', chance: 0.85 },
+                    { type: 'convert', from: { 'sweet water pot': 0.5, 'water': 0.15, 'herbs': 0.5, 'fruit': 0.005 }, into: { 'herb syrup': 1 }, every: 5, mode: 'herbsyrup' },
                 ],
                 category: 'alchemy',
             });
@@ -9291,7 +9312,7 @@ if (getObj("civ") != "1") {
                 name: 'school of alchemy',
                 desc: '@The building where people may learn the basics of alchemy. Needs water to work though! //<small>you know why it needs water</small>',
                 icon: [5, 6, 'magixmod'],
-                cost: { 'basic building materials': 1500, 'glass': 5 },
+                cost: { 'basic building materials': 1500, 'glass': 5, 'brick': 2 },
                 use: { 'land of the Plain Island': 1, 'worker': 3 },
                 upkeep: { 'water': 5 },
                 effects: [
@@ -9351,7 +9372,7 @@ if (getObj("civ") != "1") {
                 },
                 effects: [
                 ],
-                // req: { 'construction II': true, 'water construction': true },
+                //req: { 'construction II': true, 'water construction': true },
                 req: { 'tribalism': false },
                 category: 'civil',
             });
@@ -9369,7 +9390,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'artisan of juice',
-                desc: '@This subclass of [artisan] can make [sugar] from [sugar cane] and then make delicious [juices]!',
+                desc: '@This subclass of [artisan] makes [sugar] from [sugar cane], and can also produce delicious [juices]!',
                 icon: [15, 5, 'magixmod'],
                 cost: {},
                 use: {},
@@ -9378,15 +9399,15 @@ if (getObj("civ") != "1") {
                 modes: {
                     'sugar': { name: 'Extract sugar from sugar cane', icon: [15, 2, 'magixmod'], desc: 'This artisan will only extract [sugar] out of [sugar cane]. At least he will craft needed ingredient of tasty [juices].', use: { 'worker': 1 } },
                     'juicesF': { name: 'Craft juices out of fruits', icon: [14, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [fruit]s, [sugar] and [water]. They have a good taste. <b>:></b>', use: { 'worker': 1 } },
-                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetable], [sugar] and [water]. They also have a good taste, but you cannot craft [juices] out of all [vegetable,Vegetable] types, so this mode is 10% less effective at conversion. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
+                    'juicesW': { name: 'Craft juices out of vegetables', icon: [17, 3, 'magixmod'], desc: 'This artisan will craft [juices] out of [vegetables], [sugar] and [water]. They also have a good taste, but you cannot craft [juices] out of all [vegetables,Vegetable] types, so this mode is 10% less effective at conversion. <b>:)</b>', use: { 'worker': 1 }, req: { "moar juices": true } },
                     'juicesE': { name: 'Craft juices out of exotic fruits', icon: [24, 0, 'magix2'], desc: 'This artisan will craft [exotic juices] out of [exotic fruit]s, [sugar] and [water]. These taste much better compared to normal [juices]! <b>:O</b>', use: { 'worker': 1 }, req: { "exotic blending": true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'sugar cane': 1.5 }, into: { 'sugar': 1 }, every: 5, mode: 'sugar' },
                     { type: 'convert', from: { 'sugar': 1, 'fruit': 0.4, 'water': 1.25 }, into: { 'juices': 2 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': false } },
-                    { type: 'convert', from: { 'sugar': 1, 'vegetable': 0.4, 'water': 1.25 }, into: { 'juices': 1.8 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': false } },
+                    { type: 'convert', from: { 'sugar': 1, 'vegetables': 0.4, 'water': 1.25 }, into: { 'juices': 1.8 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': false } },
                     { type: 'convert', from: { 'sugar': 2, 'fruit': 0.8, 'water': 3.75 }, into: { 'juices': 4 }, every: 5, mode: 'juicesF', req: { 'concentrated juices': true } },
-                    { type: 'convert', from: { 'sugar': 2, 'vegetable': 0.8, 'water': 3.75 }, into: { 'juices': 3.6 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': true } },
+                    { type: 'convert', from: { 'sugar': 2, 'vegetables': 0.8, 'water': 3.75 }, into: { 'juices': 3.6 }, every: 5, mode: 'juicesW', req: { 'concentrated juices': true } },
                     { type: 'convert', from: { 'sugar': 1, 'exotic fruit': 0.4, 'water': 1.25 }, into: { 'exotic juices': 1.75 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': false } },
                     { type: 'convert', from: { 'sugar': 2, 'exotic fruit': 0.4, 'water': 3.75 }, into: { 'exotic juices': 3.5 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': true } },
                     { type: 'mult', value: 1.25, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
@@ -9397,7 +9418,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'vegetable farm',
-                desc: '@Specialized farm which will harvest tasty [vegetable] (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
+                desc: '@Specialized farm which will harvest tasty [vegetables] (well, mostly cabbages, carrots, and tomatoes) faster than [gatherer]s.',
                 icon: [14, 2, 'magixmod'],
                 cost: { 'seeds': 200 },
                 req: { 'agriculture': true },
@@ -9405,7 +9426,7 @@ if (getObj("civ") != "1") {
                 upkeep: { 'water': 12 },
                 category: 'production',
                 effects: [
-                    { type: 'gather', context: 'gather', what: { 'vegetable': 0.16 } },
+                    { type: 'gather', context: 'gather', what: { 'vegetables': 0.16 } },
                     { type: 'mult', value: 0.6, req: { 'drought': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } },
@@ -9453,7 +9474,7 @@ if (getObj("civ") != "1") {
                 name: 'essential conversion tank',
                 desc: '@A tank that converts 500 [insight], [culture], [faith] and [influence] into their respective second tiers. <>You can specify which essential this tank will convert by switching the mode of this unit. It will only be able to convert when you obtain enough of that particular [insight,Essential]!',
                 icon: [26, 19, 'magixmod'],
-                cost: { 'glass': 500, 'basic building materials': 150 },
+                cost: { 'glass': 8000, 'brick': 5000 },
                 req: { 'eotm': true },
                 use: { 'worker': 2, 'land': 1 },
                 upkeep: { 'mana': 50 },
@@ -9488,7 +9509,7 @@ if (getObj("civ") != "1") {
                 name: 'farm of smokers',
                 desc: 'At this farm, a bunch of smoke is released into the sky every single day. From this farm, your people will be able to gather useful [fire essence].',
                 icon: [28, 7, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'fire essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'fire essence': 1000, 'herbs': 100 },
                 req: { 'smokers & Windferns': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2 },
                 upkeep: { 'water': 14, 'fire essence': 1, 'mana': 7 },
@@ -9504,7 +9525,7 @@ if (getObj("civ") != "1") {
                 name: 'farm of windferns',
                 desc: 'From his white leaves, you can find tiny grains that can fly away from your hand quickly. From this farm, your people can gather useful [wind essence].',
                 icon: [28, 8, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'wind essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'wind essence': 1000, 'herbs': 100 },
                 req: { 'smokers & Windferns': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2 },
                 upkeep: { 'water': 14, 'wind essence': 1, 'mana': 7 },
@@ -9520,7 +9541,7 @@ if (getObj("civ") != "1") {
                 name: 'farm of holy roses',
                 desc: 'Holy rose\'s petals radiate a lot of light (so much so that sometimes it is blinding)! Carefully gathered can be disenchanted allowing you to obtain some useful [holy essence].',
                 icon: [28, 4, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'holy essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'holy essence': 1000, 'herbs': 100 },
                 req: { 'holy roses farm': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2 },
                 upkeep: { 'water': 14, 'holy essence': 1, 'mana': 7 },
@@ -9534,9 +9555,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'farm of watorchids',
-                desc: 'This farm is muddy and wet, which is required to start farming [water essence]. Small pools of essenced droplets can be collected to buckets, making sure to keep the essence within. This is a way your people can gather useful [water essence]!',
+                desc: 'This farm is muddy and wet, which is required to start farming [water essence]. Small pools of essenced droplets can be collected from these plants, producing some rather useful [water essence]!',
                 icon: [28, 10, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'water essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'water essence': 1000, 'herbs': 100 },
                 req: { 'withering tulips & Watorchids': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2 },
                 upkeep: { 'water': 21, 'water essence': 1, 'mana': 21 },
@@ -9550,9 +9571,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'farm of withering tulips',
-                desc: 'These tulips darken fires from far far away. Farmers of these tulips don\'t want to share the way how do they collect useful [dark essence] out of these flowers, but you want to discover those mysteries!',
+                desc: 'These tulips darken fires from far far away. Farmers of these tulips don\'t want to share the way how do they collect the useful [dark essence] out of these flowers, and those mysteries are well-kept!',
                 icon: [28, 9, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'dark essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'dark essence': 1000, 'herbs': 100 },
                 req: { 'withering tulips & Watorchids': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'dark essence': 1, 'mana': 7 },
@@ -9568,7 +9589,7 @@ if (getObj("civ") != "1") {
                 name: 'farm of naturdaisies',
                 desc: 'Naturdaisies like to grow on big "trees" that can release these essenced beauties. Then people gather them and disenchant them, gaining useful [nature essence] from them.',
                 icon: [28, 6, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'nature essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'nature essence': 1000, 'herbs': 100 },
                 req: { 'lightlilies & naturdasies': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'nature essence': 1, 'mana': 7 },
@@ -9582,9 +9603,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'farm of lightlilies',
-                desc: 'A lightlily can have petals with a mysterious lightning shape. People are a little cautious around them due to their risk of being electrified. Cutting the stalk and disenchanting it allows people to gather some useful [lightning essence].',
+                desc: 'Most lightlilies have petals with a shiny lightning bolt shape in the center. People are generally cautious around them due to their electric nature. Cutting the stalk and disenchanting it allows people to gather some useful [lightning essence].',
                 icon: [28, 5, 'magixmod'],
-                cost: { 'essenced seeds': 300, 'lightning essence': 1000, 'herb': 100 },
+                cost: { 'essenced seeds': 300, 'lightning essence': 1000, 'herbs': 100 },
                 req: { 'lightlilies & naturdasies': true },
                 use: { 'worker': 8, 'land of the Plain Island': 15, 'worker': 2, 'wand': 10 },
                 upkeep: { 'water': 14, 'lightning essence': 1, 'mana': 7 },
@@ -9669,11 +9690,12 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fishers & hunters camp',
-                desc: '@An camp where [hunter]s and [fisher]s train at. //There, they learn to be better at their job. //One [fishers & hunters camp] can associate up to 800 [worker]s divided into 400 [hunter]s and 400 [fisher]s! //[hunter]s that work at this camp also have a very low chance to be the victim of an accident. //It may be more expensive, but it can gather you a lot of delectable [food].',
+                displayName: 'Hunting and fishing camp',
+                desc: '@An camp where [hunter]s and [fisher]s train to hunt food. //There, they learn improve their craft. //A single [fishers & hunters camp] will hire 400 [worker]s divided into 200 [hunter]s and 200 [fisher]s! //[hunter]s that work at this camp also have a very tiny chance to have accidents. //It might be costly, but it can gather delectable [food] more easily!',
                 icon: [5, 23, 'magixmod'],
                 wideIcon: [3, 23, 'magixmod'],
                 cost: { 'basic building materials': 4850, 'food': 2500, 'paper': 3000, 'thread': 500 },
-                use: { 'worker': 450, 'land': 44, 'armor set': 200, 'fishing net': 200, 'metal weapons': 200, 'stone weapons': 100, 'crossbow': 200, 'arrow': 30, 'bow': 200 },
+                use: { 'worker': 400, 'land': 44, 'armor set': 200, 'fishing net': 200, 'metal weapons': 200, 'stone weapons': 100, 'crossbow': 200, 'arrow': 30, 'bow': 200 },
                 upkeep: { 'food': 75, 'fire pit': 2, 'bugs': 3 },
                 limitPer: { 'population': 40000, 'land': 2500 },
                 effects: [
@@ -9694,6 +9716,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.35, req: { 'se05': true } },
                     { type: 'mult', value: 1.35, req: { 'harvest rituals': 'on' } },
                     { type: 'convert', from: { 'meat': 4, 'seafood': 3 }, into: { 'cooked meat': 4, 'seafood': 3 }, every: 2, req: { 'camp-cooking': true } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.005, true, '[X] [people] wounded while camp hunting.', 'hunter was', 'hunters were'), chance: 1 / 1200, req: {} },
                 ],
                 req: { 'hunters & fishers unification': true },
                 category: 'production',
@@ -9965,7 +9988,7 @@ if (getObj("civ") != "1") {
                 name: 'paradise shelter',
                 desc: '@provides 4 [housing] @You get +1 [housing] for every 4 [paradise shelter,Shelters] so that people can socialize a little more. Seems like God doesn\'t mind too much.',
                 icon: [13, 27, 'magixmod'],
-                cost: { 'archaic building materials': 100, 'cut stone': 150, 'lumber': 25 /*lumber because scaffolding*/, 'clay': 100/*mortar*/, 'herb': 2500/*Cover*/ },
+                cost: { 'archaic building materials': 100, 'cut stone': 150, 'lumber': 25 /*lumber because scaffolding*/, 'clay': 100/*mortar*/, 'herbs': 2500/*Cover*/ },
                 use: { 'land of the Paradise': 1 },
                 limitPer: { 'land': 11, 'population': 400 },
                 effects: [
@@ -10108,11 +10131,11 @@ if (getObj("civ") != "1") {
                 wonder: 'herbalism',
                 icon: [13, 26, 'magixmod'],
                 wideIcon: [12, 26, 'magixmod'],
-                cost: { 'basic building materials': 250, 'herb': 600, 'fruit': 500, 'vegetable': 400 },
+                cost: { 'basic building materials': 250, 'herbs': 600, 'fruit': 500, 'vegetables': 400 },
                 costPerStep: { 'precious metal ingot': 20, 'precious building materials': 50, 'herb essence': 10 },
                 steps: 100,
                 messageOnStart: 'You and your people started to build <b>The Herboleum</b>.<br>Around the dense forest of herbs, bushes, and occasionally small ponds, the mostly natural wonder turns out to be slightly taller than the other human-made buildings nearby.',
-                finalStepCost: { 'population': 999, 'gem block': 5, 'herb': 10000, 'fruit': 200, 'vegetable': 200 },
+                finalStepCost: { 'population': 999, 'gem block': 5, 'herbs': 10000, 'fruit': 200, 'vegetables': 200 },
                 finalStepDesc: 'To perform the final step, 999 [population,people] and some goods must be sacrificed to finish this "healthy" trial and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't7': true, 'trial': true },
@@ -10247,14 +10270,14 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'hovel with garden',
-                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Can provide you an occasional tasty [fruit] or [vegetable,Vegetable].',
+                desc: '@provides 8 [housing] and can gather [ambrosium shard]s for you. Can provide you an occasional tasty [fruit] or [vegetables,Vegetable].',
                 icon: [9, 6, 'magixmod'],
                 cost: { 'basic building materials': 90 },
                 effects: [
                     { type: 'provide', what: { 'housing': 8 } },
                     { type: 'gather', what: { 'ambrosium shard': 0.04 } },
                     { type: 'gather', what: { 'fruit': 0.025 }, chance: 1 / 50 },
-                    { type: 'gather', what: { 'vegetable': 0.04 }, chance: 1 / 50 },
+                    { type: 'gather', what: { 'vegetables': 0.04 }, chance: 1 / 50 },
                     { type: 'mult', value: 1.1, req: { 'fertile bushes': true } },
                     { type: 'mult', value: 1.1, req: { 'backshift at farms': true } },
                 ],
@@ -10581,7 +10604,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'fortress of love',
-                displayName: '<font color="pink">Fortress of love</font>',
+                displayName: '<font color="#f9c">Fortress of love</font>',
                 desc: 'Constucted in Paradise as a gigantic [fortress of love]. It is in a unique region separated as much as possible from other island, giving it even more uniqueness. //In this unique island, there are mutual feelings of respect, good feelings, and true empathy. //Only the kindest people and souls are able to live there! //Happy valentines! @(The final step will require 2 full [love] levels.)',
                 icon: [0, 16, 'seasonal'],
                 wonder: '.',
@@ -10677,7 +10700,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'archaeologist',
-                desc: '@digs in the ground to find some [relic]s and also providing a good source essentials, as finding treasures won\'t just give you [insight]. Depending on what your [archaeologist]s found, you may even gain [culture], [faith], or [influence]! If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
+                desc: '@digs in the ground to find some [relic]s and also providing a good source essentials, as finding treasures won\'t just give you [insight]. Depending on what your [archaeologist]s found, you may even gain [culture], [faith], or [influence]! If a super rare [relic] is found, it will give more essentials.//When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [insight,Essentials]).',
                 icon: [22, 33, 'magixmod'],
                 use: { 'worker': 1, 'metal tools': 2 },
                 upkeep: { 'food': 1, 'water': 1 },
@@ -10750,7 +10773,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'vegetable farmland',
-                desc: '@Specifically harvests [vegetable]. This rather charming farm not only produces [vegetable], but also provides 50 [housing] and 1,000 [food storage].',
+                desc: '@Specifically harvests [vegetables]. This rather charming farm not only produces [vegetables], but also provides 50 [housing] and 1,000 [food storage].',
                 icon: [5, 9, 'magixmod'],
                 cost: { 'seeds': 2000, 'basic building materials': 800 },
                 req: { 'glorious agriculture': true },
@@ -10783,7 +10806,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mason',
-                desc: '@Crafts [brick]s using [clay] and [fire pit,Fuel] // This [mason] uses an old recipe to craft very durable [brick]s which you can use to build whatever you need to build.',
+                desc: '@Crafts [brick]s using [clay] and [fire pit,Fire] //This [mason] uses an old recipe to craft very durable [brick]s which you can use to build whatever you need.',
                 icon: [3, 1, 'magixmod', 8, 9, 'magixmod'],
                 cost: { 'basic building materials': 100 },
                 req: { 'ancestors world crafting': true },
@@ -10861,7 +10884,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'charcoal': 10 }, into: { 'lightning essence': 5 }, every: 6, chance: 0.15, mode: 'oil' },
                 ],
             });
-            new G.Unit({ // New unit!!!!!
+            new G.Unit({ //New unit!!!!!
                 name: 'art school',
                 desc: 'Here, some [child,Children] will learn about art. Some of these students will become [artist]s when they grow up! Very rarely, a [virtuoso of art] learns enough about their subject to be a true master of painting.',
                 icon: [42, 0, 'magix2'],
@@ -10876,7 +10899,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'child': 1 }, into: { 'virtuoso of art': 1 }, every: 400, chance: 1 / 300, req: { 'better art schools': true } },
                 ],
             });
-            new G.Unit({ // New unit!!!!! Again!!!!!
+            new G.Unit({ //New unit!!!!! Again!!!!!
                 name: 'golden mana maker',
                 desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water]. Requires [alchemy zone]s instead of normal [land].',
                 icon: [59, 0, 'magix2'],
@@ -10891,11 +10914,11 @@ if (getObj("civ") != "1") {
                 ],
                 category: 'alchemy',
             });
-            new G.Unit({ // running out of comment ideas now :/
+            new G.Unit({ //running out of comment ideas now :/
                 name: 'mushroom farm',
                 desc: 'A unique farm that produces a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
                 icon: [65, 0, 'magix2'],
-                cost: { 'herb': 10000 },
+                cost: { 'herbs': 10000 },
                 req: { 'mushroom farming': true },
                 use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 12 },
@@ -11275,7 +11298,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'plant lore', category: 'upgrade',
-                desc: '@[gatherer]s find more [herb], [fruit]s and [vegetable]<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.',
+                desc: '@[gatherer]s find more [herbs], [fruit]s and [vegetables]<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.',
                 icon: [23, 7],
                 cost: { 'insight': 10 },
                 req: { 'oral tradition': true, 'herbalism': true },
@@ -11670,7 +11693,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Wizard complex', category: 'tier1',
-                desc: 'Unlocks a complex of wizard towers. Expensive, but the complex produces all types of Essences three times faster than usual towers. Each complex tower will increase your max [faith], [culture], and [influence] as well, so they are quite useful!',
+                desc: 'Unlocks a complex of wizard towers. Expensive, but the complex produces all types of [magic essences,Essences] three times faster than usual towers. Each complex tower will increase your max [faith], [culture], and [influence] as well, so they are quite useful!',
                 icon: [2, 2, 'magixmod'],
                 cost: { 'insight': 480, 'culture': 30, 'mana': 1000, 'influence': 20 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard towers': true },
@@ -11691,14 +11714,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'churches', category: 'tier1',
-                desc: 'Unlocks [church,Churches]. Another source of [faith].',
+                desc: 'Unlocks [church,Churches], which are another source of [faith].',
                 icon: [7, 2, 'magixmod'],
                 cost: { 'insight': 135 },
                 req: { 'wizardry': true, 'wizard wisdom': true },
             });
             new G.Tech({
                 name: 'essence storages', category: 'tier1',
-                desc: '[magic essences] have to be stored somewhere, of course, so don\'t hesitate to store them! // Unlocks [water essence storage,Essence storages]. //<small>And nobody knows why these look like hourglasses...even the creator of them.</small>',
+                desc: '[magic essences] have to be stored somewhere, of course, so don\'t hesitate to store them! //Unlocks [water essence storage,Essence storages]. //<small>And nobody knows why these look like hourglasses...even the creator of them.</small>',
                 icon: [5, 0, 'magixmod'],
                 cost: { 'insight': 100, 'mana': 300, 'faith': 8, 'wand': 1 },
                 effects: [
@@ -11729,7 +11752,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'construction II', category: 'tier1',
-                desc: '@unlocks [floored house]s for your new island! These provide much more housing but are more limited. //Allows some mortal world units which use land to be set on [wtr], but with a very, very low risk of collapsing.',
+                desc: '@Unlocks [floored house]s for your new island! These provide much more [housing] but are more limited and take up more spaces. @Also unlocks [lodge on water,Lodges on water]!',
                 icon: [0, 35, 'magixmod', 8, 1, 'magixmod'],
                 cost: { 'insight': 100 },
                 req: { 'first portal to new world': true, 'plain island building': true },
@@ -11737,7 +11760,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'burial in new world', category: 'tier1',
                 displayName: 'Island burials',
-                desc: 'Provides a good use of the Plain Island. You may build now some cemetries which consume more [land of the Plain Island] (but will allow you to get many more [burial spot]s).',
+                desc: 'Provides a good use of the new island. You may build now some cemetries which consume more [land of the Plain Island] (but will allow you to get many more [burial spot]s).',
                 icon: [1, 6, 'magixmod'],
                 cost: { 'insight': 80 },
                 req: { 'first portal to new world': true, 'plain island building': true },
@@ -11751,28 +11774,28 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunting II', category: 'upgrade',
-                desc: 'Upgrades hunting skills of your civilization. @Unlocks a way to craft a new weapon, allowing artisans to make [crossbow]s.',
+                desc: 'Builds upon the hunting skills of your civilization. @Unlocks a way to craft a new weapon, allowing artisans to make [crossbow]s.',
                 icon: [15, 0, 'magixmod'],
                 cost: { 'insight': 385, 'wisdom': 10 },
                 req: { 'wizardry': true, 'hunting': true },
             });
             new G.Tech({
                 name: 'fishing II', category: 'upgrade',
-                desc: 'Upgrades fishing skills of your civilization. @Makes [fishing net] introduced into common use.',
+                desc: 'Builds upon the fishing skills of your civilization. @Introduces [fishing net] to your [fisher]s!',
                 icon: [1, 7, 'magixmod'],
                 cost: { 'insight': 385, 'wisdom': 10 },
                 req: { 'wizardry': true, 'fishing': true },
             });
             new G.Tech({
                 name: 'cobalt-working', category: 'tier1',
-                desc: '@[furnace]s can now make [cobalt ingot]s from [cobalt ore]',
+                desc: '@[furnace]s can now make special [cobalt ingot]s from [cobalt ore]',
                 icon: [16, 0, 'magixmod'],
                 cost: { 'insight': 145 },
                 req: { 'smelting': true, 'construction II': true },
             });
             new G.Tech({
                 name: 'agriculture', category: 'tier1',
-                desc: '@Unlocks [wheat farm,Farms]. Later on, you will not only be able to produce [food] for your civilization, but also a variety of [magic essences,Essences] out of magical plants! @Since you may have trouble fitting all these farms in the mortal world, you will unlock some extra space to set them up later!',
+                desc: '@Unlocks [wheat farm,Farms]. Later on, you will be able to use these to produce [food] for your civilization, and possibly even get [magic essences,Essences] out of magical plants!',
                 icon: [16, 2, 'magixmod'],
                 cost: { 'insight': 575 },
                 req: { 'Wizard complex': true, 'gardening': true },
@@ -11841,7 +11864,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths III', category: 'tier1',
-                desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wizardry. Depending on their [will to know more], they can know slightly more than that. @increases current equation knowledge and introduces functions //<small>I would research it now!</small>',
+                desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wizardry. @increases your people\'s knowledge of equations and functions //<small>I, personally, would research it now!</small>',
                 icon: [1, 35, 'magixmod', 18, 4, 'magixmod'],
                 cost: { 'insight': 360, 'wisdom': 10 },
                 req: { 'oral tradition': true, 'maths II': true, 'plain island building': true },
@@ -11862,14 +11885,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'moar juices', category: 'tier1',
-                desc: 'Allows you to craft [juices] out of [vegetable] now.//<small>Moar juice!!!</small>',
+                desc: 'Allows you to craft [juices] out of [vegetables] now.//<small>Moar juice!!!</small>',
                 icon: [17, 4, 'magixmod'],
                 cost: { 'insight': 805 },
                 req: { 'plain island ideas': true, 'juice-crafting': true },
             });
             new G.Tech({
                 name: 'medicaments brewing', category: 'tier1',
-                desc: '[alchemist]s will now be able to craft medicaments out of [flowers,Various flowers] and [herb] at their stands.',
+                desc: '[alchemist]s will now be able to craft medicaments out of [flowers,Various flowers] and [herbs] at their stands.',
                 icon: [18, 2, 'magixmod'],
                 cost: { 'insight': 750 },
                 req: { 'alchemy': true },
@@ -12111,14 +12134,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'better influence & authority', category: 'upgrade',
-                desc: 'Unlocks the [lawyer] and [mediator] roles. A [mediator] will solve conflicts and gain [happiness] from solving them, while a [lawyer] will copy and share the code of law.',
+                desc: 'Unlocks the [lawyer] and [mediator] units. A [mediator] will solve conflicts and gain [happiness] from solving them, while a [lawyer] will copy and share the code of law.',
                 icon: [21, 0, 'magixmod'],
                 cost: { 'insight': 1015 },
                 req: { 'Wizard complex': true },
             });
             new G.Tech({
                 name: 'ambrosium treeplanting', category: 'tier1',
-                desc: '@Unlocks the [holy orchard] from which you can get [ambrosium leaf,Ambrosium leaves].',
+                desc: '@Unlocks the [holy orchard], which makes [ambrosium leaf,Ambrosium leaves].',
                 icon: [21, 11, 'magixmod'],
                 cost: { 'insight': 1015 },
                 req: { 'paradise building': true, 'land acknowledge': true, 'treeplanting': true },
@@ -12132,8 +12155,8 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise crafting', category: 'tier1',
-                desc: '@Some buildings / crafting shacks from mortal world can be built in Paradise as a separated unit.',
-                icon: [0, 14, 'magixmod', 21, 15, 'magixmod'],
+                desc: '@Some buildings and crafting shacks from mortal world can be built in Paradise as a separated unit.',
+                icon: [21, 15, 'magixmod', 0, 0, 'magix2'],
                 cost: { 'insight': 650 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
             });
@@ -12218,8 +12241,8 @@ if (getObj("civ") != "1") {
                 name: 'baking', category: 'tier1',
                 desc: 'Unlocks the [bakery]. To bake [bread] more effectively, however, you will need more upgrades!//For now, your people will have a high chance to fail [bread]-baking, making it neither edible nor nutritious.</li>',
                 icon: [9, 8, 'magixmod'],
-                cost: { 'insight': 600 },
-                req: { 'flour-crafting I': true, 'construction II': true },
+                cost: { 'insight': 600, 'culture': 100 },
+                req: { 'flour-crafting I': true, 'more useful bricks': true, 'construction II': true },
             });
             new G.Tech({
                 name: 'baking II', category: 'tier2',
@@ -12238,7 +12261,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'culture rise', category: 'upgrade',
-                desc: 'Makes the [fortress of cultural legacy] increase the power of [culture,cultural units].',
+                desc: 'Makes the [fortress of cultural legacy] increase the power of [culture,Cultural units].',
                 icon: [22, 17, 'magixmod'],
                 cost: { 'insight': 70, 'fortress construction point': 200 },
                 req: { 'cultural roots': true },
@@ -12269,14 +12292,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'better filtering', category: 'upgrade',
-                desc: 'Water filtrating units such as [water filter]s and [;water filter,its Moderation version] that can convert [muddy water] into potable [water] work 75% faster!',
+                desc: 'All types of water filtrating units will convert [muddy water] into potable [water] work 75% faster!',
                 icon: [25, 15, 'magixmod'],
                 cost: { 'insight': 520, 'wisdom': 15 },
                 req: { 'water filtering': true, 'burial in new world': true },
             });
             new G.Tech({
                 name: 'non-magical filters improvement', category: 'upgrade',
-                desc: 'Water filtrating units that can convert [muddy water] into potable [water], such as [water filter] and [;water filter,its Moderation version] will work 75% faster! //<small>Upgrades, people, upgrades.</small>',
+                desc: 'Water filtrating units that convert [muddy water] into potable [water] will work 50% faster! //<small>Upgrades, people, upgrades.</small>',
                 icon: [25, 14, 'magixmod'],
                 cost: { 'insight': 405, 'wisdom': 15 },
                 req: { 'better filtering': true, 'mo\' floorz': true },
@@ -12340,10 +12363,13 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'automation', category: 'tier1',
-                desc: '[moderation] is a path where people are going for automation to produce more and do less. Therefore, people will try to figure out ways to automate production.',
+                desc: '[moderation] is a path where people are going for automation to produce more and do less. Therefore, people will try to figure out ways to automate production. @provides 300 [industry point]s',
                 icon: [6, 18, 'magixmod'],
                 cost: { 'insight': 1000, 'wisdom': 15, 'inspiration': 5, 'culture': 80, 'influence': 205 },
-                req: { '2nd portal sky': true, 'moderation': true }
+                req: { '2nd portal sky': true, 'moderation': true },
+                effects: [
+                    { type: 'provide res', what: { 'industry point': 300 } },
+                ],
             });
             new G.Tech({
                 name: 'manufacturing', category: 'tier1',
@@ -12518,7 +12544,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'seed-enchanting', category: 'tier2',
-                desc: '@unlocks a new mode for [artisan] that will allow them to enchant [seeds], turning them into [essenced seeds]! Planting and taking care of these special items will enable you to plant magical plants that help you gather essences.',
+                desc: '@Unlocks a new mode for [artisan]s that will let them enchant [seeds], turning them into [essenced seeds]! Planting and taking care of these special items will enable you to plant magical plants that help you gather essences.',
                 icon: [27, 17, 'magixmod'],
                 cost: { 'insight II': 20, 'science': 2, 'spellbook': 100 },
                 req: { 'eotm': true, 'magical soil': true },
@@ -12612,7 +12638,7 @@ if (getObj("civ") != "1") {
                 displayName: '<font color="#fee6d5">Rules of food</font>',
                 desc: '@unlocks policies that manage which food types can be eaten. //<small>Can I eat fried chips?</small>',
                 icon: [19, 1],
-                chance: 0.4,// average chance decreased (meaning it is more likely) by @1_e0
+                chance: 0.4,//average chance decreased (meaning it is more likely) by @1_e0
                 req: { 'tribalism': true, 'policies': true },
                 effects: [
                 ]
@@ -12761,14 +12787,14 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'nutrition',
-                desc: '@makes [healer]s provide health @[fruit]s and [vegetable] will generate 10% more [health] <>Some rules on nutrition will increase your [population,people]\'s health, slightly improving their condition.',
+                desc: '@makes [healer]s provide health @[fruit]s and [vegetables] will generate 10% more [health] <>Some rules on nutrition will increase your [population,people]\'s health, slightly improving their condition.',
                 icon: [16, 7, 'magixmod'],
                 cost: { 'culture': 150, 'wisdom': 25, 'insight': 100, 'influence': 10 },
                 chance: 120,
                 effects: [
                     { type: 'provide res', what: { 'dark decay': 50 } },
                     { type: 'function', func: function () { G.getDict('fruit').turnToByContext['eating']['health'] *= 1.1; } },
-                    { type: 'function', func: function () { G.getDict('vegetable').turnToByContext['eating']['health'] *= 1.1; } },
+                    { type: 'function', func: function () { G.getDict('vegetables').turnToByContext['eating']['health'] *= 1.1; } },
                 ],
                 lifetime: function () { return Math.pow(this.yearOfObtainment, 3) % 1000 },
                 switchCategory: false,
@@ -12785,7 +12811,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'revenants',
-                desc: 'The dark powers got mad because your people are using [corpse]s as a toy or ritual. Some of them will come back to life, but they will behave like an evil zombie. Just know: they won\'t replicate. You will need to defend your people against them. Every revenant will harm your [happiness] and kill your [population,people].',
+                desc: 'The dark powers got mad because your people are using [corpse]s as a toy or ritual. Some of them will come back to life and will behave like an evil zombie. Just know: they won\'t replicate. You will need to defend your people against them. Every [wild corpse] that appears will harm your [happiness] and kill your [population,people].',
                 icon: [19, 0, 'magixmod'],
                 cost: { 'insight': 50, 'corpse': 500 },
                 chance: 200,
@@ -12840,7 +12866,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'land acknowledge',
                 displayName: 'Acknowledging of lands',
-                desc: 'Your people will acknowledge new lands faster thanks to Paradise exploration. This knowledge unlocks a few new things...',
+                desc: 'Your people will acknowledge new lands faster thanks to [land of the Paradise,Paradise] exploration. This knowledge unlocks a few new things...',
                 icon: [21, 10, 'magixmod'],
                 cost: {},
                 chance: 100,
@@ -12859,7 +12885,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'cooking II',
                 displayName: 'Advanced cooking',
-                desc: 'Your [population,people] can now use various ingredients to cook and make even better-tasting dishes. <><b>bon appetit</b>',
+                desc: 'Your [population,people] can now use various ingredients to cook and make even better-tasting dishes. <><small>oh, and <b>bon appetit :D</b></small>',
                 icon: [22, 10, 'magixmod'],
                 cost: { 'insight': 250, 'wisdom': 15 },
                 chance: 20,
@@ -12885,7 +12911,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'healthy life',
-                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of moderation. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait allows each person to generate a little bit of [health]. People won\'t eat more food, so do not worry.',
+                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of their moderation culture. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait allows each person to generate a little bit of [health]. People won\'t eat more food, so do not worry.',
                 icon: [22, 1, 'magixmod'],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
                 chance: 200,
@@ -13257,13 +13283,13 @@ if (getObj("civ") != "1") {
                 icon: [25, 19, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 500, 'influence': 300, 'faith': 250 },
                 chance: 150,
-                req: { 'underworld building 2/2': true },
+                req: { 'more useful bricks': true, 'underworld building 2/2': true },
                 effects: [
                     { type: 'show res', what: ['insight II'] },
                     { type: 'show res', what: ['culture II'] },
                     { type: 'show res', what: ['faith II'] },
                     { type: 'show res', what: ['influence II'] },
-                    { type: 'provide res', what: { 'wisdom II': 60 } }, // A bit more because there's more researches in this Magix fix
+                    { type: 'provide res', what: { 'wisdom II': 60 } }, //A bit more because there's more researches in this Magix fix
                     { type: 'provide res', what: { 'inspiration II': 30 } },
                     { type: 'provide res', what: { 'spirituality II': 5 } },
                     { type: 'provide res', what: { 'authority II': 5 } },
@@ -13332,7 +13358,7 @@ if (getObj("civ") != "1") {
                 desc: '@Some buildings or crafting shacks from the mortal world can be built in the ancestors world as a separate unit!',
                 icon: [0, 14, 'magixmod', 0, 18, 'magixmod'],
                 cost: { 'insight': 650 },
-                req: { 'ambrosium treeplanting': true, 'ancestors world building': true },
+                req: { 'ambrosium treeplanting': true, 'ancestors world building': true, 'more useful bricks': true },
             });
             //Special techs from achievements and their functions
             /*============================================================================================
@@ -13427,7 +13453,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'symbolism II', category: 'upgrade',
-                desc: '@increases the [symbolism] bonus from 20 to 40%, and also works with [druid]s.',
+                desc: '@Increases the [symbolism] bonus from to 40%, and also lets it work with [druid]s.',
                 icon: [0, 35, 'magixmod', 30, 14, 'magixmod'],
                 cost: { 'culture II': 15, 'insight II': 10 },
                 req: { 'oral tradition': true, 'ritualism II': true, 'Improved rhetoric': true, 'richer language': true, 'symbolism': true },
@@ -13516,7 +13542,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt6',
                 displayName: 'God\'s trait #6 Fertile essence farms',
-                desc: 'All essence farms make 50% more essences at the same upkeep. //<small>Blessed plants grow bigger and stronger!</small>',
+                desc: 'All [magic essences,Essence] farms make 50% more essences at the same upkeep. @also unlocks a variety of new techs //<small>Blessed plants grow bigger and stronger!</small>',
                 icon: [5, 21, 'magixmod'],
                 cost: { 'insight II': 25, 'faith II': 3, 'culture II': 4 },
                 chance: 80,
@@ -13582,7 +13608,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'oil-digging', category: 'tier2',
-                desc: '[quarry,Quarries] will now try to look for [oil]. Although they don\'t understand exactly, what it is, they think it could be useful... //<small>kind of weird-looking</small>',
+                desc: '[quarry,Quarries] will now try to look for [oil]. Although they don\'t understand exactly what it is, they think it could be useful... //<small>kind of weird-looking</small>',
                 icon: [29, 2, 'magixmod'],
                 cost: { 'insight II': 25 },
                 req: { 'moderation': true, 'eotm': true },
@@ -13605,7 +13631,7 @@ if (getObj("civ") != "1") {
                 req: { 'caretaking': true, 'eotm': true, 'cozier building': true }
             });
             new G.Tech({
-                name: '<font color="lime">Fruit supplies</font>', category: 'misc', // Uhhhh why is this not in the displayName...that's fun
+                name: '<font color="lime">Fruit supplies</font>', category: 'misc', //Uhhhh why is this not in the displayName...that's fun
                 desc: 'Obtaining Experienced gives you an extra 100 [fruit]s at the start! Hope your people enjoy it :) //<small>Let\'s make a prehistoric fruit salad...</small>',
                 icon: [4, 12, 'magixmod', 28, 22, 'magixmod'],
                 cost: {},
@@ -13616,7 +13642,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'life has its theme', displayName: '<font color="#e5a700">Life has its theme</font>', category: 'misc',
-                desc: 'From now on, you can change the game theme :) // A special reward for upgrading the [mausoleum] to <b>Level 6</b>...enjoy!',
+                desc: 'From now on, you can change the game theme :) //A special reward for upgrading the [mausoleum] to <b>Level 6</b>...enjoy!',
                 icon: [4, 12, 'magixmod', 29, 23, 'magixmod'],
                 cost: {},
                 effects: [
@@ -13680,7 +13706,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'essential conversion tank overclock I',
                 displayName: 'Essential conversion overclocking', category: 'upgrade',
-                desc: '@[essential conversion tank]s will be able to convert essentials a little more often. People can overclock these tanks to cause conversion to occur even more often!',
+                desc: 'Getting this will let [essential conversion tank]s convert essentials a little more often. People can overclock these tanks to cause conversion to occur even more often!',
                 icon: [6, 22, 'magixmod'],
                 cost: { 'insight II': 80 },
                 req: { 'maths IV': true, 'gt6': true, 'monument-building': true, 'construction': true }
@@ -13729,7 +13755,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mining strategy', category: 'tier2',
-                desc: 'Decreases the accident rate in [mine]s. @Increases the efficiency of [mine] by 5%. @Applies a visual change to [mine]s.',
+                desc: '@Decreases the accident rate in your normal [mine]s. @Increases the efficiency of [mine] by 5%. @Also applies a small visual change to [mine]s!',
                 icon: [17, 23, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 2 },
                 effects: [
@@ -13787,7 +13813,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunting III', category: 'upgrade',
-                desc: '@[hunter]s become more coordinated. This tech decreases the amount of accidents where a victim becomes [hunter]. @[hunter]s will have a new icon and endurance hunting will no longer be available.',
+                desc: '@[hunter]s become more coordinated. This tech decreases the amount of accidents where a victim becomes [hunter]. @[hunter]s will have a new icon and endurance hunting will no longer be available. @[hunter]s become limited to 1 per 10 [population]',
                 icon: [8, 22, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 2, 'influence II': 3 },
                 req: { 'policy revaluation': true, 'magical presence': true, 'fishing II': true },
@@ -13802,7 +13828,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fishing III', category: 'upgrade',
-                desc: 'This tech may unlock something that improve [fisher]s quite a lot! @[fisher]s will get a new icon, but catching by hand will no longer be available.',
+                desc: 'This tech may unlock something that improve [fisher]s quite a lot! @[fisher]s will get a new icon, but catching by hand will no longer be available. @[fisher]s become limited to 1 per 10 [population]',
                 icon: [7, 22, 'magixmod'],
                 cost: { 'insight II': 65, 'science': 3, 'culture II': 2 },
                 req: { 'policy revaluation': true, 'magical presence': true, 'hunting III': true },
@@ -13817,30 +13843,44 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunter\'s coordination', category: 'tier2',
-                desc: '@Decreases the amount of hunting accidents slightly. Requires a small amount of [food] as upkeep. @Increases [wisdom II] by 10.',
+                desc: '@Decreases the amount of hunting accidents slightly and makes them [hunter]s twice as fast. Requires a small amount of [food] as upkeep. @gain 10 [wisdom II] //<small>Hunting is now much easier...</small>',
                 icon: [6, 23, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 10 } },
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('hunter').upkeep.food = 0.75
+                        }
+                    }
                 ]
             });
             new G.Tech({
                 name: 'an armor for Hunter', displayName: 'Hunter armor', category: 'tier2',
-                desc: '@Let your [hunter]s get some armor! //Getting this will decrease the amount of hunting accidents even more.',
+                desc: '@Let your [hunter]s get some makeshift armor! //Getting this will decrease the amount of hunting accidents even more.',
                 icon: [14, 24, 'magixmod'],
                 cost: { 'insight II': 80, 'science': 5 },
                 req: { 'hunting III': true },
             });
             new G.Tech({
                 name: 'fisher\'s smartness', category: 'tier2',
-                desc: '[fisher]s become twice as efficient with new skills, but require some [food] as upkeep. //<small>We now know how to lure different types of fish!</small>',
+                desc: '[fisher]s become twice as efficient with new skills, but require some [food] as upkeep. @gain 10 [wisdom II] //<small>We now know how to lure different types of fish!</small>',
                 icon: [0, 23, 'magixmod'],
                 cost: { 'insight II': 45, 'science': 5 },
                 req: { 'fishing III': true },
+                effects: [
+                    { type: 'provide res', what: { 'wisdom II': 10 } },
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('fisher').upkeep.food = 0.75
+                        }
+                    }
+                ]
             });
             new G.Tech({
                 name: 'hunters & fishers unification', category: 'tier2',
+                displayName: 'Hunting and fishing unification',
                 desc: 'Unlocks a unit that merges [hunter]s and [fisher]s into one. @[harvest rituals] now boosts the speed of the [fishers & hunters camp] by 35% instead of [fisher]s and [hunter]s. @basic [hunter]s and [fisher]s will still be available, but will now become a lot slower',
                 icon: [2, 23, 'magixmod'],
                 cost: { 'insight II': 55, 'science': 5 },
@@ -13914,7 +13954,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'doctrine of the dark wormhole 1/5', category: 'tier2',
-                desc: 'This part of the doctrine is about conception of making a small plane where the [corpse]s will lie in the way that will allow to fit over millions of [corpse]s. //Your [wizard]s seem really impressed reading about the doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
+                desc: 'This part of the doctrine is about conception of making a small plane where the [corpse]s will lie in such a way that it can fit millions of [corpse]s! //Luckily, your [wizard]s seem really impressed reading about the doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [21, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 100, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 10 },
                 req: { 'burial wormhole 1/2': true },
@@ -14008,11 +14048,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Conveyor conception', category: 'tier2',
-                desc: 'People lead by [automation] think about automating movement of produced things so they wouldn\'t have to move it by using their hands and they would focus more on work increasing efficiency of their [factories I,Factories].',
+                desc: 'People led by [automation] think about automating movement of produced things so they wouldn\'t have to move it by using their hands and they would focus more on work increasing efficiency of their [factories I,Factories]. @gives 50 bonus [industry point]s',
                 icon: [0, 24, 'magixmod'],
                 cost: { 'insight II': 135 },
                 req: { 'policy revaluation': true, 'moderation': true },
-                chance: 10
+                chance: 10,
+                effects: [
+                    { type: 'provide res', what: { 'industry point': 50 } },
+                ],
             });
             if (G.modsByName['Market mod']) {
                 new G.Tech({
@@ -14140,7 +14183,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'plain island mining strategy', category: 'tier2',
-                desc: 'Decreases the accident rate at the [mine of the plain island]. @Increases the efficiency of [mine of the plain island] by 5%. @Applies a visual change to [mine of the plain island]\'s icon.',
+                desc: '@Decreases the accident rate at the [mine of the plain island]. @Increases the efficiency of [mine of the plain island] by 5%. @Applies a new visual change to [mine of the plain island]\'s icon!',
                 icon: [31, 7, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 2 },
                 req: { 'mining strategy': true }
@@ -14330,7 +14373,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb3',
                 displayName: 'Soothsayer not-blessing',
-                desc: 'Sadly, getting closer to the religion doesn\'t make [soothsayer]s gain more [faith]. Try your luck next time, I guess!',
+                desc: 'Sadly, getting closer to the religion doesn\'t make [soothsayer]s gain more [faith]. //<small>Try your luck next time, I guess!</small>',
                 icon: [15, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb1': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14340,7 +14383,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb4',
                 displayName: 'Soothsayer un-blessing',
-                desc: 'Nobody knows how or why, but [soothsayer]s will now gain 5% less [faith] even after getting closer to the God and the entire religion!',
+                desc: 'Nobody knows how or why, but [soothsayer]s will now gain 5% less [faith] even after getting closer to the God and the entire religion! //<small>unlucky...</small>',
                 icon: [16, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb1': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14397,18 +14440,18 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'herbalism', category: 'tier1',
-                desc: '[gatherer] can now gather [herb] from some types of grass, bushes, and other plants.//Previously they were missing most of the herbs because they thought that it was simple grass.',
+                desc: '[gatherer]s can now gather [herbs] from some types of grass, bushes, and other plants.//Previously they were missing most of the plants because they thought that it just grass.',
                 icon: [31, 27, 'magixmod'],
                 req: { 'language': true },
                 cost: { 'insight': 10 },
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('grass').res['gather']['herb'] = 10;
-                            G.getDict('berry bush').res['gather']['herb'] = 0.25;
-                            G.getDict('wild bush').res['gather']['herb'] = 0.25;
-                            G.getDict('succulents').res['gather']['herb'] = 3;
-                            G.getDict('jungle fruits').res['gather']['herb'] = 1;
+                            G.getDict('grass').res['gather']['herbs'] = 10;
+                            G.getDict('berry bush').res['gather']['herbs'] = 0.25;
+                            G.getDict('wild bush').res['gather']['herbs'] = 0.25;
+                            G.getDict('succulents').res['gather']['herbs'] = 3;
+                            G.getDict('jungle fruits').res['gather']['herbs'] = 1;
                         }
                     },
                 ],
@@ -15086,8 +15129,8 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'outstanders club', category: 'upgrade',
-                desc: 'Decreases [population] limit per one [the outstander] from 38k to 26.5k. @provides 5 [wisdom II]',
-                icon: [14, 28, 'magixmod'],
+                desc: 'Decreases the [population] for [the outstander,Outstanders] from 38k to 26.5k. @provides 5 [wisdom II]',
+                icon: [0, 35, 'magixmod', 14, 28, 'magixmod'],
                 req: { 'outstanding wisdom': true },
                 cost: { 'insight II': 300, 'science': 15, 'culture II': 25 },
                 effects: [
@@ -15112,7 +15155,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus1',
                 displayName: '. . .',
-                desc: 'You seem powerful. [guru]s can probably make more science.',
+                desc: 'You seem powerful. [guru]s can probably make more [science] now!',
                 icon: [32, 5, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15121,7 +15164,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus2',
                 displayName: '. . .',
-                desc: 'You seem to have enough potential and enough power! It feels like everything is going faster.',
+                desc: 'You seem to have enough potential and enough power! It feels like everything is going faster and faster, which is a weird feeling.',
                 icon: [32, 4, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15130,7 +15173,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus3',
                 displayName: '. . .',
-                desc: 'You are powerful. Your glory can is clearing away some secret darkness.',
+                desc: 'You are powerful. Your glory seems to be clearing away some secret darkness.',
                 icon: [32, 3, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15139,7 +15182,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bonus4',
                 displayName: '. . .',
-                desc: 'You have . . . \'s attention. But who is he? Feels like that entity or whoever is quite proud of your strength.',
+                desc: 'You have . . . \'s attention. But who is he? Feels like that entity or whoever is quite proud of your strength. //<small>me???</small>',
                 icon: [32, 2, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
@@ -15247,7 +15290,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'well stored',
                 displayName: '<font color="gold">Well stored I</font>',
-                desc: '<font color="#aaaaff">All storage units (except [essence storages]) provide 35% more storage. Complete Pocket for 2nd time to increase this bonus from 35 to 55%. This bonus does not stack with [spell of capacity].</font> //<small>but why does it not apply to wells</small>',
+                desc: '<font color="#aaaaff">All storage units (except [essence storages]) provide 35% more storage. Complete Pocket for the second time to increase this bonus from 35 to 55%. This bonus does not stack with [spell of capacity].</font> //<small>but why does it not apply to wells</small>',
                 icon: [12, 15, 'magixmod', 13, 15, 'magixmod'],
                 cost: {},
                 effects: [
@@ -15326,7 +15369,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mirror world 2/2', category: 'tier2',
-                desc: 'The amount of [land] and [wtr] you have is doubled from now on! Enjoy...but it is seriously time to stop. // <b>The more worlds you open, the more unstable your world will become...</b>',
+                desc: 'The amount of [land] and [wtr] you have is doubled from now on! Enjoy...but it is seriously time to stop. //<b>The more worlds you open, the more unstable your world will become...</b>',
                 req: { 'mirror world 1/2': true },
                 cost: { 'insight II': 425, 'science': 62, 'culture II': 38, 'faith II': 30, 'dark essence': 200000, 'tablet \'o mirror': 1 },
                 icon: [27, 2, 'magixmod', 10, 30, 'magixmod'],
@@ -15335,7 +15378,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bigger university', category: 'tier2',
-                desc: '@Unlocks the next level of the [university of science]. Requires 4 [victory point]s to level up. Unlocks the [grand mirror].',
+                desc: '@Unlocks the next level of the [university of science]. Requires 4 [victory point]s to level up. Also unlocks a huge mirror...',
                 icon: [9, 29, 'magixmod'],
                 cost: { 'insight II': 300, 'university point': 300, 'science': 50 },
                 req: { 'wonder \'o science': true, 'Wizard complex': true },
@@ -15409,7 +15452,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'quarrying III', category: 'upgrade',
-                desc: 'Quarries can reach even deeper, allowing you to gain 10% more from <b>all</b> modes. @If you have [prospecting III], this will unlock a new mode that will mainly focus on gathering these minerals.',
+                desc: 'Quarries can reach even deeper, allowing you to gain 10% more from <b>all</b> modes. @If you have [prospecting III], this will unlock a new mode that will mainly focus on gathering deeper and rarer minerals.',
                 icon: [12, 0, 'magixmod'],
                 cost: { 'insight II': 170, 'science': 12, 'faith II': 4, 'culture II': 2, 'influence II': 2 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
@@ -15427,7 +15470,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'furnace modernization', category: 'upgrade',
-                desc: '<b>Furnaces</b> will become <b>Blackium furnaces</b>. These require three times the upkeep but can smelt plenty of new ores. In addition, it is 2% more efficient, regardless of the path chosen by your people.',
+                desc: '<b>Furnaces</b> will turn into <b>Blackium furnaces</b>. These require three times the upkeep but can smelt plenty of new ores. In addition, it is 2% more efficient, regardless of the path chosen by your people.',
                 icon: [8, 12, 11, 0, 'magixmod', 0, 18, 'magixmod'],
                 cost: { 'insight II': 235, 'science': 15 },
                 req: { 'quarrying III': true, 'mining II': true, 'deep mining & quarrying': true },
@@ -15478,7 +15521,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mythril-working', category: 'tier2',
-                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop] can now forge [various metal block]s out of [mystical metal ingot]s',
+                desc: '@[furnace]s can now make [precious metal ingot]s from [mythril ore]@[blacksmith workshop]s can forge [various metal block]s out of [mystical metal ingot]s now',
                 icon: [14, 30, 'magixmod'],
                 cost: { 'insight II': 200, 'science': 5 },
                 req: { 'mining II': true, 'furnace modernization': true },
@@ -15547,7 +15590,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'primary intuition', category: 'tier1',
-                desc: '[primary intuition] is an important key for some researches. However, if [population,people] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].', // fun how it actually doesn't do anything except for like one thing in second civ
+                desc: '[primary intuition] is an important key for some researches. However, if [population,people] will expand their intuition, they should be able to think about further, more complicated researching. //Having just [primary intuition] allows you to research up to [oral tradition]. More complicated researches like sewing and crafting can be unlocked only with "secondary" [intuition].', //fun how it actually doesn't do anything except for like one thing in second civ
                 startWith: true,
                 icon: [34, 31, 'magixmod'],
             });
@@ -15591,7 +15634,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'factories II', category: 'tier2',
-                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work.@Getting this tech unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s. You will still be able to specify from what resource [heat factory,Heat factories] will produce [fire pit]s by switching modes!',
+                desc: 'Now, more units will be merged into one. [artisan]s that craft [stone weapons], [stone tools], and [bow]s will refuse to work. @unlocks the [heat factory], which will replace the <b>Start fires</b> mode for [firekeeper]s @you can also specify what resource [heat factory,Heat factories] will use to make [fire pit]s',
                 icon: [17, 31, 'magixmod'],
                 req: { 'moderation': true, 'caretaking': false, 'factories I': true, 'outstanding wisdom': true, 'wonder \'o science': true, 'tool refinery 2/2': true },
                 cost: { 'insight II': 330, 'lightning essence': 8000 },
@@ -15626,7 +15669,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: '"dark season"', category: 'seasonal',
                 displayName: '\u201cDark season\u201d',
-                desc: 'People will find entertainment out of spooky things. //<small>Prepare for a festival of fear...</small>',
+                desc: 'With this tech, people will begin to find entertainment out of spooky things. //<small>Prepare for a festival of fear...</small>',
                 icon: [5, 7, 'seasonal'],
                 req: { 'tribalism': false, 'culture of celebration': true, 'sedentism': true, 'intuition': true },//tribalism switches to true when halloween season starts
                 cost: { 'culture': 30, 'faith': 5 },
@@ -15636,7 +15679,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pumpkins', category: 'seasonal',
-                desc: 'Your people will now be able to discover various pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. // <b>Happy Halloween!</b><br><font color="#f70054">Note! It won\'t make you get pumpkins permanently. Once Halloween ends you won\'t be able to get new Pumpkins until Halloween starts again. You can only get them during Halloween.</font>',
+                desc: 'Your people will now be able to discover various pumpkins that will give you some treats...but some of them are just a tricks. This should help your civilization grow up. //<b>Happy Halloween!</b><br>However, you won\'t keep getting pumpkins forever. Once Halloween ends you won\'t be able to get any more until Halloween starts again!',
                 icon: [6, 7, 'seasonal'],
                 req: { '"dark season"': true },
                 cost: { 'insight': 100 },
@@ -15846,17 +15889,19 @@ if (getObj("civ") != "1") {
                 ],
             });
             new G.Tech({
-                name: 'at(ct)',
-                displayName: 'Automation', category: 'tier1',
-                desc: 'Caretaking has one feature: people do not focus that much on industrialization or technological progress or innovations. That means that for some parts of automation, people will want to discover it later, but they won\'t want to make every single thing being automated.',
+                name: 'Automation', category: 'tier1', //capitalized since it is the caretaking version
+                desc: 'One effect of [caretaking] is that people do not focus that much on industrialization or technological innovations. That means that for some parts of automation, people will want to discover it later. However, they are still willing to progress technology to some extent, so... @provides 200 [industry point]s',
                 icon: [15, 31, 'magixmod'],
-                req: { 'paradise crafting': true, 'bigger university': true },
+                req: { 'paradise crafting': true, 'bigger university': true, },
                 cost: { 'insight': 1500, 'wisdom': 15 },
+                effects: [
+                    { type: 'provide res', what: { 'industry point': 200 } },
+                ],
                 chance: 3
             });
             new G.Tech({
                 name: 'even bigger university', category: 'upgrade',
-                desc: '@Unlocks the 3rd level of the [university of science]! Requires 10 [victory point]s to level up. @Makes [season for inventing] reduce science costs more and also causes [sabotaged knowledge] to increase the amount of required [science] slower.',
+                desc: '@Unlocks the 3rd level of the [university of science]! Requires 10 [victory point]s to level up. @Makes [season for inventing] reduce science costs more and also decreases the effect of [sabotaged knowledge].',
                 icon: [21, 30, 'magixmod'],
                 cost: { 'insight II': 600, 'university point': 300, 'science': 80, 'culture II': 115, 'faith II': 80 },
                 req: { 'wonder \'o science': true, 'Wizard complex': true, 'bigger university': true, 'deep-rooted faith': true, 'dynamics II': true },
@@ -15947,14 +15992,14 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'the christmas', category: 'seasonal',
                 displayName: '<font color="#30b783">Christmas</font>',
-                desc: '@People acknowledged that the important parts of this event will not only expand the holiday cheer of your people, but also make various decorations like like ornaments and lights.',
+                desc: 'People realize that the important parts of this event will expand the holiday cheer of your people, and even create various decorations like ornaments and lights! They are excited to begin.',
                 icon: [2, 11, 'seasonal'],
                 cost: { 'insight': 400, 'culture': 100, 'faith': 32 },
                 req: { 'culture of celebration': true, 'Wizard complex': true, 'tribalism': false, 'winter holidays': true },
             });
             new G.Tech({
                 name: 'carols', category: 'seasonal',
-                desc: 'Christmas is a special time. Now people will sing/play not only normal songs but also they are no afraid to sing/play carols. //[musician]s will now be able to craft [christmas essence]!',
+                desc: 'Christmas is a very special time indeed. Now people will sing/play not only normal songs, but also various carols! @[musician]s will now be able to craft [christmas essence] from those songs!',
                 icon: [9, 11, 'seasonal'],
                 cost: { 'insight II': 20, 'culture II': 30, 'christmas essence': 1020 },
                 req: { 'symbolism II': true, 'ritualism II': true, 'music': true, 'tribalism': false },
@@ -15998,14 +16043,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'snowmen', category: 'seasonal',
-                desc: 'Since [digger]s are able to dig for snow and you understand what it is, you can explain what is and what snowmen look like! @Unlocks a new tech.',
+                desc: 'Since [digger]s are able to dig for [snow] and they understand the concept of it, you can explain what [snow] is to all of the kids in your civilization!',
                 icon: [10, 11, 'seasonal'],
                 cost: { 'insight': 90, 'culture': 50 },
                 req: { 'winter holidays': true },
             });
             new G.Tech({
                 name: 'festive robot print', category: 'seasonal',
-                desc: 'A [festive robot print] may help you to gather [christmas essence] out of snowmen kids. Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon getting [christmas essence,Essence] increases.',
+                desc: 'A [festive robot print] can now help gather [christmas essence] from snowmen built by [child,Children]! Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon getting [christmas essence,Essence] increases.',
                 icon: [14, 12, 'seasonal'],
                 cost: { 'insight': 1000, 'wisdom': 100 },
                 req: { 'the christmas': true, 'snowmen': true },
@@ -16090,14 +16135,14 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'globetrottering', category: 'tier1',
-                desc: '@Unlocks the [globetrotter]. // [globetrotter]s not only want to explore and discover new landscapes and terrain but also want to deepen their knowledge about new lands a little more.',
+                desc: '@Unlocks the curious [globetrotter]. //[globetrotter]s not only want to explore and discover new landscapes and terrain but also want to deepen their knowledge about new lands a little more.',
                 icon: [35, 1, 'magixmod'],
                 cost: { 'insight': 30, 'culture': 10 },
                 req: { 'scouting': true, 'building': true, 'a gift from the mausoleum': true },
             });
             new G.Tech({
                 name: 'festive artisanistry', category: 'seasonal',
-                desc: 'Unlocks the [artisan of christmas]. //<small>Ho, ho, ho!</small>',
+                desc: '@unlocks the [artisan of christmas] //<small>That\'s quite a long word, isn\'t it?</small>',
                 icon: [15, 11, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50 },
                 req: { 'winter holidays': true, 'tribalism': false },
@@ -16114,7 +16159,7 @@ if (getObj("civ") != "1") {
                 name: 'valentine2',
                 displayName: 'Lovely herbs',
                 icon: [4, 18, 'seasonal'],
-                effects: [{ type: 'provide res', what: { 'herb': 80 } }],
+                effects: [{ type: 'provide res', what: { 'herbs': 80 } }],
                 req: { 'tribalism': false },
                 category: 'misc'
             });
@@ -16136,7 +16181,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'love grows around us', category: 'seasonal', displayName: '<font color="pink">Love grows around us</font>',
-                desc: '@One person that loves a lot of other people is enough...Wait ' + G.getName('ruler') + '! You are ruler of the tribe and love people a lot. And they also love you. Let\'s plant the seeds of this festival... //Getting this will unlock [love], which is important to this event and may even provide some rewards if your [love] level is high enough.',
+                desc: '@One person that loves a lot of other people is enough...right? You are ruler of the tribe and love people a lot. And they also seem to love you back. @Getting this will unlock [love], which is important for this season and may even provide some rewards if your [love] level is high enough.',
                 icon: [18, 17, 'seasonal'],
                 cost: { 'insight': 240, 'culture': 45, 'faith': 5, 'research': 80 },
                 req: { 'culture of celebration': true, 'philosophy': true, 'tribalism': false },
@@ -16194,7 +16239,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'families full of love',
-                desc: 'Every year, you gain some [love] from the [elder]s of all the families.',
+                desc: 'Every year, you gain some [love] from the [elder]s of all the families in your world.',
                 icon: [10, 16, 'seasonal'],
                 cost: { 'culture': 75, 'research': 130, 'faith': 120, 'influence': 10, 'insight': 600 },
                 req: { 'love grows around us': true, 'time measuring 2/2': true, 'compliments': true, 'alchemy': true },
@@ -16446,7 +16491,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'spirit-summoning',
-                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely, they will challenge themselves to summon a demon...which ends up with some rather concerning sickness. @another source of [spookiness]. //Note: [spirit summoner] will only work during Halloween. //<small>Don\'t you dare to disturb their eternal sleep!</small>',
+                desc: 'Unlocks the [spirit summoner]. //Can summon ghosts of dead people from the past. Rarely, they will challenge themselves to summon a demon...which ends up with some rather concerning sickness. @This is another source of [spookiness]! //Note: [spirit summoner]s will only work during Halloween. //<small>Don\'t you DARE disturb their eternal sleep!</small>',
                 icon: [3, 9, 'seasonal'],
                 cost: { 'faith': 80, 'culture': 40 },
                 req: { "Wizard complex": true, '"dark season"': true },
@@ -16464,7 +16509,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'trick or treat',
-                desc: 'People living in houses can now use their halloween costumes to gather sweet [candy,Candies] in the tribe. //Thanks to [trick or treat], you have another source of [halloween essence] and [spookiness]. //Note: [paradise housing] does not provide [halloween essence] or [spookiness] with this upgrade.//<small>Candies are so sweet and tasty...wonderful!</small>',
+                desc: 'People living in houses can now use their halloween costumes to gather sweet [candy,Candies] in the tribe. //And, thanks to this tech, you have another source of [halloween essence] and [spookiness]! //Note: [paradise housing] does not provide [halloween essence] or [spookiness] with this upgrade.//<small>Candies are so sweet and tasty...wonderful!</small>',
                 icon: [19, 8, 'seasonal'],
                 cost: { 'insight': 800, 'culture': 100, 'colored clothing': 1000, 'halloween essence': 2500 },
                 req: { 'candy-crafting': true, 'costume-crafting': true },
@@ -16497,7 +16542,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'demon-summoning',
-                desc: '[spirit summoner]s are now able to summon demons of Halloween at the cost of [halloween essence] to minimalize risk of any sort of curses. //While in the new mode, [spirit summoner,Summoners] gain more [spookiness] but use more. //Note: [spirit summoner] will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
+                desc: '[spirit summoner]s are now able to summon demons of Halloween at the cost of [halloween essence] to minimalize risk of any sort of curses. //While in the new mode, [spirit summoner,Summoners] gain more [spookiness] but use more. //Note: [spirit summoner]s will only work during Halloween. //<small>Eh? Ok, but don\'t tell me later that I didn\'t warn you.</small>',
                 icon: [6, 9, 'seasonal'],
                 cost: { 'faith': 100, 'culture': 100 },
                 req: { "spirit-summoning": true, 'trick or treat': true },
@@ -16535,7 +16580,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'halloween-spirits',
                 displayName: 'Ancient spirits',
-                desc: '[spirit summoner] can now summon Halloween spirits granting small amount of [spookiness] but their kindness may provide you extra [halloween essence]. //<small>Those are probably the safest and best ancient spirits to summon.</small>',
+                desc: '[spirit summoner]s can now summon Halloween spirits granting small amount of [spookiness] but their kindness may provide you extra [halloween essence]. //<small>Those are probably the safest and best ancient spirits to summon, but they won\'t last forever.</small>',
                 icon: [11, 9, 'seasonal'],
                 cost: { 'culture II': 10 },
                 req: { "eotm": true, 'spirit-summoning': true },
@@ -16544,21 +16589,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. //Increases the exploration cap.',
                 icon: [9, 9, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //Increases the exploration cap.',
                 icon: [10, 9, 'magixmod'],
                 cost: { 'insight': 1200 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true, 'plain island building': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier2',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //<b>Removes</b> the exploration cap.',
                 icon: [11, 9, 'magixmod'],
                 cost: { 'insight II': 85 },
                 req: { 'map details': true, 'focused scouting': true },
@@ -16705,7 +16750,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'missionary', category: 'tier1',
-                desc: '@provides 1 [spirituality] when your [mausoleum]\'s level is at or above <b>LV5</b> @also increases your [faith] gain from [druid]s by 5% //Send a religious tribe to spread your religion and its concept all over the world. //<small>Hey! Do not consider it as profanation. It is not like that...</small>',
+                desc: '@provides 1 [spirituality] when your [mausoleum]\'s level is at least <b>LV5</b> @also increases your [faith] gain from [druid]s by 5% //Send a religious tribe to spread your religion and its concept all over the world. //<small>Hey! Do not consider it as profanation. It is not like that...</small>',
                 icon: [17, 33, 'magixmod'],
                 cost: { 'faith': 10, 'culture': 5, 'insight': 10 },
                 req: { 'ritualism': true, 'symbolism': true, 'belief in the afterlife': true },
@@ -16725,7 +16770,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'doctoral analysis',
-                desc: '@[archaeologist]s gain [wisdom II,Essentials II] instead of [wisdom,Essentials I] from rare relics. Also, every relic at or above <font color="#d4af37">Legendary</font> rarity provides [science]. //Doctoral analysis can give way more information than a simple [archaeologist] has.',
+                desc: '@[archaeologist]s gain [wisdom II,Essentials II] instead of [wisdom,Essentials I] from rare relics. Also, every relic that is <font color="#d4af37">Legendary</font> or rarer provides [science]. //<small>This type of analysis can give way more information!</small>',
                 icon: [21, 33, 'magixmod'],
                 cost: { 'science': 70, 'insight II': 300 },
                 req: { 'better seeking': true, 'bigger university': true },
@@ -16760,7 +16805,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ancestors world building', category: 'tier1',
-                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>ancestors world</b>. //<small>It would be nice to construct huge houses in their world. But if you did...it\'ll insult them.</small>',
+                desc: 'Unlocks a unique sheet of buildings which can only be built in the newly opened <b>Ancestors world</b>! //<small>It would be nice to construct huge houses in their world. But if you did...it\'ll insult them.</small>',
                 icon: [32, 33, 'magixmod'],
                 cost: { 'insight': 4, 'ancestors tablet': 1 },
                 effects: [
@@ -16771,7 +16816,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tree-caring', category: 'tier1',
-                desc: '@Unlocks [holy orchard]s from which you can get [ambrosium leaf,Ambrosium leaves]. //<small>It is hard to believe that something as holy as Ambrosium can be found within the ancestors world...</small>',
+                desc: '@Unlocks [holy orchard]s, letting you get [ambrosium leaf,Ambrosium leaves]. //<small>It is hard to believe that something as holy as Ambrosium can be found within the ancestors world...</small>',
                 icon: [4, 7, 'magixmod'],
                 cost: { 'insight': 1015 },
                 req: { 'ancestors world building': true, 'land acknowledge': true, 'treeplanting': true },
@@ -16786,7 +16831,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.resByName['food'].subRes = [G.getRes('herb')];
+                            G.resByName['food'].subRes = [G.getRes('herbs')];
                             G.getDict('gatherer').icon = [17, 0, 'magix2'];
                             if (!G.has("herbalism")) G.gainTech(G.techByName['herbalism']);
                             if (!G.has("wizardry")) G.gainTech(G.techByName['wizardry']);
@@ -16794,10 +16839,10 @@ if (getObj("civ") != "1") {
                             G.getDict("mana").limit = 'herb essence';
                             G.getDict("wizard").req = { 'wizardry': true };
                             G.getDict("the Herboleum").costPerStep = { 'precious metal ingot': 20, 'precious building materials': 50, 'herb essence': 100 * (G.achievByName['herbalism'].won + 1) }
-                            G.getDict("the Herboleum").finalStepCost['herb'] = 10000 * (G.achievByName['herbalism'].won + 1);
+                            G.getDict("the Herboleum").finalStepCost['herbs'] = 10000 * (G.achievByName['herbalism'].won + 1);
                             for (i in G.res) {
                                 if (G.res[i].turnToByContext == undefined) continue;
-                                if (G.res[i].partOf == "food" && G.res[i].name != "herb") {
+                                if (G.res[i].partOf == "food" && G.res[i].name != "herbs") {
                                     G.res[i].hidden = true;
                                     G.res[i].turnToByContext['eating'] = { 'spoiled food': 0.01 };
                                     G.res[i].partOf = 'misc materials';
@@ -16811,15 +16856,15 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'blessed herbs',
-                desc: '[herb] provide a little bit more [health] when consumed and no longer harm [happiness].',
+                desc: '[herbs] provide a little bit more [health] when consumed and no longer harm [happiness].',
                 icon: [8, 12, 4, 6, 3, 22, 'magixmod'],
                 req: { 'tribalism': false },
                 cost: {},
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict("herb").desc += " However, eating them won\'t make [population,people] people mad.";
-                            G.getDict("herb").turnToByContext['eating'] = { 'health': 0.006 };
+                            G.getDict("herbs").desc += " However, eating them won\'t make [population,people] people mad.";
+                            G.getDict("herbs").turnToByContext['eating'] = { 'health': 0.006 };
                         }
                     }
                 ],
@@ -16936,7 +16981,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at5',
                 displayName: 'Ancestors trait #5 Afterlife punishment',
-                // desc: '@[thief,Thieves] are a quarter more likely to be killed for their actions, so their spawn rate is reduced by a quarter. @harms [happiness] with [fear of death], while with [acceptance of death], this trait makes everyone less scared of [thief,Thieves]. @[fear of death] reduces their spawn rate by an additional 5% @[acceptance of death] increases the probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
+                //desc: '@[thief,Thieves] are a quarter more likely to be killed for their actions, so their spawn rate is reduced by a quarter. @harms [happiness] with [fear of death], while with [acceptance of death], this trait makes everyone less scared of [thief,Thieves]. @[fear of death] reduces their spawn rate by an additional 5% @[acceptance of death] increases the probability of [thief] being sentenced to death instead of being sent to prison by 2.5%//<small>Just don\'t execute them in public please.</small>',
                 desc: '@[thief,Thieves] are more likely to be killed for their actions, so their spawn rate is reduced by a quarter. However, they end up living twice as long!//<small>Just don\'t execute them in public please.</small>',
                 icon: [12, 34, 'magixmod', 22, 1],
                 cost: {},
@@ -17253,7 +17298,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'at8',
-                displayName: 'Ancestors trait #8 Mistress of the forests blessing',
+                displayName: 'Ancestors trait #8 Blessing of the forests',
                 desc: 'Every good provides 1% more from chopping. //<small>\u201cHer blessing is real! I have just enough wood I need for this winter,\u201d an old woodcutter says.</small>',
                 icon: [4, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
@@ -17264,7 +17309,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'at9',
-                displayName: 'Ancestors trait #9 Ancestor wizards blessing',
+                displayName: 'Ancestors trait #9 Ancestor wizardry',
                 desc: 'Units related to magic and wizardry produce 3.5% more of magical resources. //<small>Bibiddi bobiddi boo! Did it sound familiar to you?</small>',
                 icon: [6, 34, 'magixmod', 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
@@ -17413,7 +17458,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'city planning III', category: 'upgrade',
-                desc: '@[architect]s can construct 3 more buildings each (so instead 12 houses per 1 architect, now it will be 15). <>Also, with each construction setup that an [architect] builds, you will get some [happiness].//<small>\u201cNow that street I walk along every day looks stunning,\u201d says an elder who lived has lived in the same house since their birth.</small>',
+                desc: '@[architect]s can construct 3 more buildings each (so instead of 12 houses per architect, it will be 15). <>Also, with each construction setup that an [architect] builds, you will get some [happiness].//<small>\u201cNow that street I walk along every day looks stunning,\u201d says an elder who lived has lived in the same house since their birth.</small>',
                 icon: [32, 34, 'magixmod'],
                 cost: { 'insight II': 75, 'science': 10 },
                 req: { 'city planning II': true, 'caretaking': true, 'eotm': true },
@@ -17607,7 +17652,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'physics III', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now on, people will be able to understand the 3-dimensional world more. //<small>It is x axis, y axis and z axis...</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now on, people will be able to understand the 3-dimensional world more. //<small>So this thing moves here...</small>',
                 icon: [1, 35, 'magixmod', 16, 28, 'magixmod'],
                 cost: { 'insight II': 300, 'science': 100 },
                 effects: [
@@ -17807,7 +17852,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'sandy shores II', category: 'tier1',
-                desc: 'Your [digger]s collect twice as much [sand] from [sandy shores].',
+                desc: 'Your [digger]s collect twice as much [sand] from your world\'s shores.',
                 icon: [0, 35, 'magixmod', 4, 9, 24, 1],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
@@ -17961,7 +18006,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'deeper wells II', category: 'tier1',
-                desc: 'Making sure to have plenty of depth within your people\'s wells can ensure that they have enough when droughts or famines strike. @boosts all types of wells by 50%',
+                desc: 'Making sure to make your people\'s wells deep enough can ensure that they have enough when droughts or famines strike. @boosts all types of [well]s by 50%',
                 icon: [0, 35, 'magixmod', 31, 15, 'magixmod'],
                 cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'careful water storage': true },
@@ -17988,7 +18033,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'magical filtering II', category: 'tier1',
-                desc: 'Use the power of water, wind, and clouds! @your filters that process [cloudy water] work twice as fast',
+                desc: 'Use the power of the [water essence,Waters], [wind essence,Winds], and [cloud]s! @your filters that process [cloudy water] work twice as fast',
                 icon: [0, 35, 'magixmod', 25, 8, 'magixmod'],
                 cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 21000 },
                 req: { 'magical filtering': true },
@@ -17997,9 +18042,9 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'plant-loving bees', category: 'tier1',
-                desc: 'Use some [nature essence] and gather some nearby plants to increase all [honey] gain by 50%.',
+                desc: 'Use some [nature essence] and gather some nearby [herbs] to improve the production of bees. @increases all [honey] gain by 50%',
                 icon: [1, 2, 'magixmod', 24, 1],
-                cost: { 'insight': 400, 'nature essence': 5000, 'honey': 1200, 'faith': 15 },
+                cost: { 'insight': 400, 'nature essence': 5000, 'herbs': 10000, 'faith': 15 },
                 req: { 'beekeeping II': true, 'wizard wisdom': true, 'druidism': true, 'plant lore II': true },
                 effects: [
                 ],
@@ -18101,7 +18146,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fruit identification', category: 'tier1',
-                desc: 'Most people in your tribe seem to have a particular soft spot for some types of unique fruits. What if you could categorize them? @From now on, you will be able to gain two unique types of fruits: [exotic fruit] and [fruit,Normal fruit]. [exotic fruit] cannot be found in all lands with fruit. However, they will provide 250% as much [happiness] than normal [fruit] without any backfire! @Also unlocks a new tech related to [juices]...',
+                desc: 'Most people in your tribe seem to have a particular soft spot for some types of unique fruits. What if you could categorize them? @From now on, you will be able to gain two unique types of fruits: [exotic fruit] and [fruit,Normal fruit]. [exotic fruit] cannot be found in all lands with fruit. These unique fruit provide 250% as much [happiness] than normal [fruit], with no downsides! @also unlocks a new tech related to [exotic juices,A new type of juice]',
                 icon: [23, 0, 'magix2', 24, 1],
                 cost: { 'insight': 100 },
                 req: { 'juicy expertise': true },
@@ -18119,7 +18164,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fruit identification II', category: 'tier1',
-                desc: 'Your people will be better-trained at finding out if various plants are poisonous or not, increasing [fruit] gain by 20%, [herb,Herb] gain by 10%, and [exotic fruit] gain by 5%.',
+                desc: 'Your people will be better-trained at finding out if various plants are poisonous or not, increasing [fruit] gain by 20%, [herbs,Herb] gain by 10%, and [exotic fruit] gain by 5%.',
                 icon: [0, 35, 'magixmod', 23, 0, 'magix2', 24, 1],
                 cost: { 'insight': 100 },
                 req: { 'exotic blending': true },
@@ -18155,7 +18200,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art of cooking III', category: 'tier1',
-                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herb,Herb], [fruit], or [vegetable,Vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s). //They will switch what [food] that they use every ten days.',
+                desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herbs,Herb], [fruit], or [vegetables,Vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s). //They will switch what ingredients that they use every ten days and cycle through them.',
                 icon: [1, 35, 'magixmod', 23, 13, 'magixmod'],
                 cost: { 'insight II': 200, 'influence II': 12 },
                 req: { 'spicy foods III': true },
@@ -18164,7 +18209,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'smarter people', category: 'tier1',
-                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s (this, however, requires you to unlock a special world)',
+                desc: '@Increases the chance of getting [eotm] significantly if you don\'t already have it. That trait is a key step in unlocking more advanced ideas and technologies! @provides 100 [wisdom] and 1 [education] @also triples the chance of unlocking [transcendentalist]s from a lucky trait',
                 icon: [23, 19, 'magixmod', 0, 0, 'magix2'],
                 cost: { 'insight': 4000, 'influence': 1000 },
                 req: { 'power from beneath': true },
@@ -18216,7 +18261,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'people of the arts II', category: 'tier1',
-                desc: '@getting this doubles the [culture II] gain from [painter]s @[essential conversion tank]s produce [culture II] 50% faster',
+                desc: 'Getting this tech doubles the [culture II] gain from [painter]s and lets [essential conversion tank,Conversion tanks] produce [culture II] 50% faster!',
                 icon: [0, 35, 'magixmod', 11, 7, 'magixmod', 12, 4, 'magixmod', 24, 1],
                 cost: { 'insight II': 50, 'culture II': 35 },
                 req: { 'caretaking': true, 'smartness of essentials': true, 'people of the arts': true },
@@ -18233,28 +18278,28 @@ if (getObj("civ") != "1") {
                 ],
             });
 
-            new G.Trait({ // New trait by @1_e0 to counter happiness slightly
+            new G.Trait({ //New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe',
                 desc: '@people consume 3% less [food] and 1% less [water], but gain 25% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum].//<small>we\'re getting used to it...</small>',
                 icon: [2, 4, 1, 0, 'magix2'],
                 chance: 1.25,
                 req: { 'rules of food': true },
             });
-            new G.Trait({ // New trait by @1_e0 to counter happiness slightly
+            new G.Trait({ //New trait by @1_e0 to counter happiness slightly
                 name: 'ungrateful tribe II',
                 desc: '@people consume 3% less [food] again, but gain 10% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect cannot be decreased in any way.//<small>we\'re getting used to it...once more...</small>',
                 icon: [3, 6, 1, 0, 'magix2'],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'tribe of eaters': false },
             });
-            new G.Trait({ // New trait by @1_e0
+            new G.Trait({ //New trait by @1_e0
                 name: 'tribe of eaters',
                 desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will continue to be ungrateful, but at least they don\'t mind so much anymore.</small>',
                 icon: [0, 3, 4, 12, 24, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
             });
-            new G.Trait({ // New trait by @1_e0
+            new G.Trait({ //New trait by @1_e0
                 name: 'care for nature',
                 desc: '@people now respect nature much more, and appreciate its resources @unlocks a tech related to [honey]',
                 icon: [2, 0, 'magix2'],
@@ -18311,7 +18356,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            // Uhhh that's a lot, isn't it?
+                            //Uhhh that's a lot, isn't it?
                             G.getDict('hunting').req = { 'tribalism': false };
                             G.getDict('boat building').req = { 'woodcutting': true };
                             G.getDict('scouting').req = { 'language': true };
@@ -18346,7 +18391,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            // Whelp, i suppose i've gotta do this all over again...
+                            //Whelp, i suppose i've gotta do this all over again...
                             G.getDict('fishing').req = { 'tribalism': false };
                             G.getDict('hunting').req = { 'tribalism': false };
                             G.getDict('famine').chance = 0.2;
@@ -18410,7 +18455,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            // Update outstanders so that this trait works properly
+                            //Update outstanders so that this trait works properly
                             for (var i = 0; i < G.unitsOwned.length; i++) {
                                 if (G.unitsOwned[i].unit.name == "the outstander") {
                                     var unit = G.unitsOwned[i]
@@ -18425,7 +18470,7 @@ if (getObj("civ") != "1") {
                 category: 'main'
             });
 
-            // so uh this is bad news...but some saves may have been screwed up because traits and techs are considered to be similar in the code, meaning that they will have the same ID structure...which means various issues could happen with techs/traits swapping! (this is quite fun, whelp)
+            //so uh this is bad news...but some saves may have been screwed up because traits and techs are considered to be similar in the code, meaning that they will have the same ID structure...which means various issues could happen with techs/traits swapping! (this is quite fun, whelp)
             new G.Tech({
                 name: 'larger toolhuts', category: 'tier1',
                 desc: 'Your [Toolhut]s will now work 50% faster, but will require 40 more [worker]s and 32 more [stone tools].',
@@ -18453,7 +18498,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'passionate artistry', category: 'tier1',
-                desc: 'Unlocks the [art school], which may turn [child,Children] into an [artist]. //<small>quite arty art indeed</small>',
+                desc: 'Unlocks the [art school], which may turn a [child] into an [artist]. //<small>quite arty art indeed</small>',
                 icon: [41, 0, 'magix2'],
                 cost: { 'culture II': 60 },
                 req: { 'eota': true },
@@ -18472,7 +18517,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art shows', category: 'tier1',
-                desc: '@[art school]s will now host art shows to show off the drawing skills of their [artist]s, meaning that each [work of art] will provide a little bit of culture @[work of art,Works of art] will decay a little slower with proper art storage',
+                desc: '@[art school]s will now host art shows to show off the drawing skills of their [artist]s, meaning that each [work of art] will provide a little bit of [culture II] @[work of art,Works of art] will decay a little slower with proper art storage',
                 icon: [45, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 140 },
                 req: { 'passionate artistry': true },
@@ -18640,7 +18685,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'gardening II', category: 'tier1',
-                desc: '<font color="#1f7def">Learn about how to use irrigation to create more advanced farms, boosting crop gains of your large farms by +125%.</font>',
+                desc: 'Learn about how to use irrigation to create more advanced farms, boosting crop gains of your large farms by +125%.',
                 icon: [0, 35, 'magixmod', 10, 0, 'magixmod'],
                 cost: { 'insight II': 40 },
                 req: { 'agriculture': true, 'eotm': true },
@@ -18667,7 +18712,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'plain island ideas', category: 'tier1',
-                desc: 'Using the tablet, unlock a few new construction possibilities and a new type of farm.',
+                desc: 'Using the [plain island tablet], unlock a several new possibilities for your people!',
                 icon: [14, 9, 'magixmod', 24, 1],
                 cost: { 'insight': 120, 'plain island tablet': 1 },
                 effects: [
@@ -18676,7 +18721,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mushroom farming', category: 'tier1',
-                desc: '@unlocks the [mushroom farm] @allows you to gather a small amount of [mushroom]s from gathering [forest mushrooms]',
+                desc: '@unlocks the [mushroom farm], which lets you to gather some [mushroom]s every day',
                 icon: [65, 0, 'magix2', 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 effects: [
@@ -18707,7 +18752,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'baking III', category: 'tier2',
-                desc: '<li>Baking [bread] even faster and tastier!</li>//Wheat farms also become four times faster.<small>Maybe one day, every citizen can enjoy this food...</small>',
+                desc: '<li>Baking [bread] becomes even faster and tastier!</li>//Wheat farms also become four times faster. //<small>Maybe one day, every citizen can enjoy this food...</small>',
                 icon: [1, 35, 'magixmod', 22, 12, 'magixmod'],
                 cost: { 'insight II': 65, 'culture II': 5 },
                 req: { 'baking II': true },
@@ -18716,14 +18761,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'gardening III', category: 'tier2',
-                desc: 'Get even better [wheat] farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetable], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
+                desc: 'Get even better [wheat] farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
                 icon: [1, 35, 'magixmod', 10, 0, 'magixmod'],
                 cost: { 'insight II': 200, 'culture II': 30 },
                 req: { 'baking III': true, 'art of cooking III': true },
                 effects: [
                     {
                         type: 'function', func: function () {
-                            // This way of setting use costs doesn't seem to be implemented in the rest of the code, but it makes it much more readable, so...
+                            //This way of setting use costs doesn't seem to be implemented in the rest of the code, but it makes it much more readable, so...
                             G.getDict("wheat farm").use.land = 10
                             G.getDict("vegetable farm").use.land = 25
                             G.getDict("sugar cane farm").use.land = 25
@@ -18752,17 +18797,26 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'advanced flower gathering', category: 'tier1',
-                desc: 'Your [florist]s aren\'t very good at collecting [flower]s, sadly. So why not teach them about it? @use [nature book]s to help teach [florist]s, tripling their production',
+                desc: 'Your [florist]s aren\'t very good at collecting [flowers], sadly. So why not teach them about it? @use [nature book]s to help teach [florist]s, tripling their production',
                 icon: [71, 0, 'magix2'],
                 cost: { 'insight II': 9, 'nature book': 100 },
                 req: { 'eota': true },
                 effects: [
                 ],
             });
+            new G.Tech({
+                name: 'more useful bricks', category: 'tier1',
+                desc: 'So far, you have only been able to construct [brick house with a silo,Brick houses] with your [brick]s, but you are sure that there could be more uses for them. @unlocks buildings that require [brick]s in the future',
+                icon: [0, 35, 'magixmod', 5, 2, 'magixmod'],
+                cost: { 'insight': 1200, 'brick': 1500 },
+                req: { 'construction II': true },
+                effects: [
+                ],
+            });
 
 
             new G.Res({
-                name: 'drought year', // A resource that tells you the next predicted drought
+                name: 'drought year', //A resource that tells you the next predicted drought
                 displayName: 'Next predicted drought year',
                 desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
                 icon: [9, 10],
@@ -18772,7 +18826,7 @@ if (getObj("civ") != "1") {
                 },
             });
             new G.Res({
-                name: 'honey', // Added by @1_e0 (the only food that doesn't spoil)
+                name: 'honey', //Added by @1_e0 (the only food that doesn't spoil)
                 desc: 'Eating [honey] is both extraordinarily satisfying and quite healthy for the body, and is even better when eaten in combination with other [food]. Although it is quite difficult to find, it never spoils and will provide the most [happiness] out of all [food]! //<small>yummers</small>',
                 icon: [6, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.1 }, 'decay': { 'honey': 1 } },
@@ -18780,7 +18834,7 @@ if (getObj("civ") != "1") {
                 category: 'food',
             });
             new G.Res({
-                name: 'honeycomb', // Added by @1_e0 (well, the only OTHER food that doesn't spoil)
+                name: 'honeycomb', //Added by @1_e0 (well, the only OTHER food that doesn't spoil)
                 desc: 'Although [honeycomb]s may be difficult to find, they are absolutely packed with various nutrients and quite tasty! They will never spoil and provide the most [health] out of any other [food].',
                 icon: [5, 0, 'magix2'],
                 turnToByContext: { 'eating': { 'health': 0.15, 'happiness': 0.025 }, 'decay': { 'honeycomb': 1 } },
@@ -18805,7 +18859,7 @@ if (getObj("civ") != "1") {
                 category: 'build',
             });
             new G.Res({
-                name: 'wtrDecay', // Debug res to track ocean decay; can have an override or become positive if you wish
+                name: 'wtrDecay', //Debug res to track ocean decay; can have an override or become positive if you wish
                 displayName: 'Water decay',
                 icon: [10, 0, 'magix2'],
                 hidden: true,
@@ -18851,7 +18905,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'hive frame',
-                desc: 'Each [hive frame] is carefully crafted from part of a [log] and may be used in beekeeping. They will work for all types of honey collection, although essenced collection will make these more effective.',
+                desc: 'Each [hive frame] is carefully crafted from part of a [log] and may be used in beekeeping. They will work for all types of [honey] collection, although essenced collection will make these more effective.',
                 icon: [35, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
@@ -18899,7 +18953,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     if (G.has('art shows')) {
-                        toSpoil *= 0.7; // art shows decrease the decay of works of art
+                        toSpoil *= 0.7; //art shows decrease the decay of works of art
                         G.gain('culture II', randomFloor(toSpoil * 0.3), 'art shows');
                     }
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -18960,7 +19014,7 @@ if (getObj("civ") != "1") {
                     if (index !== -1 && G.unitsOwned[index]) {
                         var percent = G.unitsOwned[index].percent
                         var inflation = percent > 0 ? Math.pow(Math.floor(percent * 0.1) * 0.24, 0.82) + 1 : 1
-                        G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation), 'herb': 400000 * inflation, 'fruit': 100000 * inflation, 'vegetable': 20000 * inflation }
+                        G.getDict("well of ideas").costPerStep = { 'platinum block': 15 * Math.sqrt(inflation), 'golden mushroom': 100 * Math.pow(inflation, 0.9), 'precious building materials': 25 * Math.sqrt(inflation), 'herbs': 400000 * inflation, 'fruit': 100000 * inflation, 'vegetables': 20000 * inflation }
                     }
                 }
             });
@@ -19875,17 +19929,17 @@ if (getObj("civ") != "1") {
                 });
                 new G.Policy({
                     name: 'eat vegetables',
-                    desc: 'Decide if your people can eat [vegetable] or not.',
+                    desc: 'Decide if your people can eat [vegetables] or not.',
                     icon: [6, 12, 11, 11, 'magixmod'],
                     cost: { 'influence': 0 },
                     startMode: 'on',
                     req: { 'rules of food': true },
                     category: 'food',
                     effects: [
-                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                        { type: 'make part of', what: ['vegetables'], parent: 'food' },
                     ],
                     effectsOff: [
-                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                        { type: 'make part of', what: ['vegetables'], parent: '' },
                     ],
                 });
                 new G.Policy({
@@ -19922,17 +19976,17 @@ if (getObj("civ") != "1") {
                 });
                 new G.Policy({
                     name: 'eat vegetables',
-                    desc: 'Decide if your people can eat [vegetable] or not.',
+                    desc: 'Decide if your people can eat [vegetables] or not.',
                     icon: [6, 12, 11, 11, 'magixmod'],
                     cost: { 'influence': 0 },
                     startMode: 'on',
                     req: { 'rules of food': true },
                     category: 'food',
                     effects: [
-                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                        { type: 'make part of', what: ['vegetables'], parent: 'food' },
                     ],
                     effectsOff: [
-                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                        { type: 'make part of', what: ['vegetables'], parent: '' },
                     ],
                 });
                 new G.Policy({
@@ -19960,7 +20014,7 @@ if (getObj("civ") != "1") {
                 category: 'work',
             });
             new G.Policy({
-                name: 'eat honey and honeycombs', // New policy by @1_e0
+                name: 'eat honey and honeycombs', //New policy by @1_e0
                 desc: 'Your people will eat [honey] and [honeycomb]s, which makes them both happy and healthy.',
                 icon: [6, 12, 6, 0, 'magix2'],
                 cost: { 'influence': 1 },
@@ -20528,10 +20582,10 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wild bush',
-                desc: '[wild bush,Wild bushes] can be foraged for [vegetable], [stick]s, and the occasional [herb,Herb] or rare [exotic fruit].',
+                desc: '[wild bush,Wild bushes] can be foraged for [vegetables], [stick]s, and the occasional [herbs,Herb] or rare [exotic fruit].',
                 icon: [17, 10, 'magixmod'],
                 res: {
-                    'gather': { 'vegetable': 3, 'stick': 0.5, 'herb': 0.02 },
+                    'gather': { 'vegetables': 3, 'stick': 0.5, 'herbs': 0.02 },
                     'exotic': { 'exotic fruit': 0.05 }
                 },
                 affectedBy: ['scarce forageables'],
@@ -20917,7 +20971,7 @@ if (getObj("civ") != "1") {
                 },
                 mult: 5,
             });
-            G.getDict('grass').res['gather']['vegetable'] = 0.001;
+            G.getDict('grass').res['gather']['vegetables'] = 0.001;
             G.getDict('palm tree').res['gather']['bamboo'] = 0.0000035;
             new G.Goods({
                 name: 'jacaranda',
@@ -21072,7 +21126,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'dead grass',
-                desc: '[dead grass] is a bad source of [herb], however, you may gain a piece of [fruit] or a [stick] when foraging.',
+                desc: '[dead grass] is a bad source of [herbs], however, you may gain a piece of [fruit] or a [stick] when foraging.',
                 icon: [33, 15, 'magixmod'],
                 res: {
                     'gather': { 'fruit': 0.1, 'stick': 0.5 },
@@ -21181,7 +21235,7 @@ if (getObj("civ") != "1") {
             });
 
 
-            new G.Goods({ // By @1_e0
+            new G.Goods({ //By @1_e0
                 name: 'bee nest',
                 desc: 'Each bee nest is full of tiny cells may provide a small source of [honey] and [honeycomb]s. Bees may also help pollinate nearby [flowers], ensuring that they grow properly.',
                 res: {
@@ -21562,16 +21616,6 @@ if (getObj("civ") != "1") {
         }
     });
 } else {
-    // Hide warnings...why? Well, because some achievements will throw a LOT of errors, and that can clog up the console (and that's just because they are for the human race, nothing actually notable). Attempts have already been made to wipe out every last issue, so hopefully this won't cause any problems.
-    G.getDict = function (name) {
-        if (G.dict[name]) {
-            if (G.dict[name].type == 'res') return G.resolveRes(G.dict[name]);
-            else return G.dict[name];
-        }
-    }
-    G.getBrokenSmallThing = function (what, text) {
-        return '<b style="color: #f99">' + cap(text == '*PLURAL*' ? (what + 's') : (text || what)) + '</b>'
-    }
     G.AddData({
         name: 'Elves',
         author: 'pelletsstarPL',
@@ -21653,7 +21697,7 @@ if (getObj("civ") != "1") {
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">x1</div>', '1 Elder') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">x2</div>', '2 Children') +
-                    G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
+                    G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herbs')) + '"></div><div class="freelabel">x175</div>', '175 Herbs') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">x200</div>', '200 Water') +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">x25</div>', '25 Fruits') +
                     (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "") +
@@ -21760,9 +21804,9 @@ if (getObj("civ") != "1") {
                         G.makePartOf('seafood', '');
                     }
                     if (G.modsByName['Laws Of Food'] || G.modsByName['Laws Of Food Free Version']) {
-                        // oh boy, here we go
+                        //oh boy, here we go
                         if (G.checkPolicy("eat herbs") == "off") {
-                            G.makePartOf('herb', '');
+                            G.makePartOf('herbs', '');
                         }
                         if (G.checkPolicy("eat raw meat") == "off") {
                             G.makePartOf('meat', '');
@@ -21797,7 +21841,7 @@ if (getObj("civ") != "1") {
                             G.makePartOf('bread', '');
                         }
                         if (G.checkPolicy("eat vegetables") == "off") {
-                            G.makePartOf('vegetable', '');
+                            G.makePartOf('vegetables', '');
                         }
                     }
                     G.ta = 1;
@@ -22111,11 +22155,11 @@ if (getObj("civ") != "1") {
                         //};
                         var toSpoil = (G.getRes('bow').amount * 0.0005); G.lose(('bow'), randomFloor(toSpoil), 'decay');
                         //var toSpoil=(G.getRes('wand').amount*0.0006);G.lose(('wand'),randomFloor(toSpoil),'decay');
-                        //    var toSpoil=(G.getRes('crossbow').amount*0.0006);G.lose(('crossbow'),randomFloor(toSpoil),'decay');
+                        //   var toSpoil=(G.getRes('crossbow').amount*0.0006);G.lose(('crossbow'),randomFloor(toSpoil),'decay');
                         var toSpoil = (G.getRes('arrow').amount * 0.0006); G.lose(('arrow'), randomFloor(toSpoil), 'decay');
-                        //    var toSpoil=(G.getRes('metal weapons').amount*0.0002);G.lose(('metal weapons'),randomFloor(toSpoil),'decay');
-                        //    var toSpoil=(G.getRes('armor set').amount*0.0002);G.lose(('armor set'),randomFloor(toSpoil),'decay');
-                        //    var toSpoil=(G.getRes('fishing net').amount*0.0003);G.lose(('fishing net'),randomFloor(toSpoil),'decay');
+                        //   var toSpoil=(G.getRes('metal weapons').amount*0.0002);G.lose(('metal weapons'),randomFloor(toSpoil),'decay');
+                        //   var toSpoil=(G.getRes('armor set').amount*0.0002);G.lose(('armor set'),randomFloor(toSpoil),'decay');
+                        //   var toSpoil=(G.getRes('fishing net').amount*0.0003);G.lose(('fishing net'),randomFloor(toSpoil),'decay');
                     }
 
                     G.traitTick("elves", "eternal moments"); //gaining and removing traits every day
@@ -22190,7 +22234,7 @@ if (getObj("civ") != "1") {
             G.initializeFixIcons = function () {
                 if (G.parse("http://").search("http://") == -1) {
                     G.fixTooltipIcons();
-                    setTimeout(G.initializeFixIcons, 500);    // check again to make sure this version of the function stays applied during page load
+                    setTimeout(G.initializeFixIcons, 500);    //check again to make sure this version of the function stays applied during page load
                 }
             }
             G.initializeFixIcons();
@@ -22775,7 +22819,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'happiness',
-                desc: '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
+                desc: '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder and improve unit speeds, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.',
                 startWith: 0,
                 visible: true,
                 icon: [3, 4, 'c2'],
@@ -22988,12 +23032,11 @@ if (getObj("civ") != "1") {
             //a trick to make different food types spoil at different speeds : turnToByContext:{'decay':{'fruit':0.2}} would make fruit last 20% longer (note : the food may still produce spoiled food)
 
             new G.Res({
-                name: 'herb',
-                displayName: 'Herbs',
-                desc: '[herb] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
+                name: 'herbs',
+                desc: '[herbs] are various plants and roots collected by simply foraging around. While relatively healthy to eat, they tend to taste unpleasant.',
                 icon: [4, 6, 'c2'],
                 startWith: 175,
-                turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herb': 0.2, 'spoiled food': 0.8 } },
+                turnToByContext: { 'eating': { 'health': 0.005, 'happiness': -0.03 }, 'decay': { 'herbs': 0.2, 'spoiled food': 0.8 } },
                 partOf: 'food',
                 category: 'food',
             });
@@ -23007,9 +23050,9 @@ if (getObj("civ") != "1") {
                 category: 'food',
             });
             new G.Res({
-                name: 'vegetable',
+                name: 'vegetables',
                 displayName: 'Vegetables',
-                desc: '[vegetable], whether gathered from bushes or any gardens, are both healthy and quite good for you.',
+                desc: '[vegetables], whether gathered from bushes or any gardens, are both healthy and quite good for you.',
                 icon: [13, 6, 'c2'],
                 turnToByContext: { 'eating': { 'health': 0.02, 'happiness': 0.01 }, 'decay': { 'spoiled food': 1 } },
                 partOf: 'food',
@@ -23368,7 +23411,7 @@ if (getObj("civ") != "1") {
             var clothesInfo = '//Your elves automatically wear the highest-quality clothing available, moving on to the next type if there isn\'t enough.';
             new G.Res({
                 name: 'primitive clothes',
-                desc: 'Made out of rudimentary materials such as [hide]s or [herb].//Each [population,Elf] wearing clothing is slightly happier and healthier.' + clothesInfo,
+                desc: 'Made out of rudimentary materials such as [hide]s or [herbs].//Each [population,Elf] wearing clothing is slightly happier and healthier.' + clothesInfo,
                 icon: [15, 7, 'c2'],
                 category: 'gear',
                 tick: function (me, tick) {
@@ -23837,8 +23880,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } },
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
                     { type: 'gather', context: 'gather', what: { 'water': 1, 'muddy water': 1 }, amount: 1, max: 3 },
-                    { type: 'gather', context: 'gather', what: { 'herb': 0.1 }, amount: 1, max: 1, req: { 'herbalism': true } },
-                    { type: 'gather', context: 'gather', what: { 'herb': 0.45, 'fruit': 0.45 }, amount: 1, max: 1, req: { 'plant lore': true } },
+                    { type: 'gather', context: 'gather', what: { 'herbs': 0.1 }, amount: 1, max: 1, req: { 'herbalism': true } },
+                    { type: 'gather', context: 'gather', what: { 'herbs': 0.45, 'fruit': 0.45 }, amount: 1, max: 1, req: { 'plant lore': true } },
                     //Random trends
                     { type: 'gather', context: 'gather', what: { 'stick': 0.035 }, req: { 'gtt1': true } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.035 }, req: { 'gtt2': true } },
@@ -23993,21 +24036,21 @@ if (getObj("civ") != "1") {
                 upkeep: { 'food': 0.2 },
                 gizmos: true,
                 modes: {
-                    'sew grass clothing': { name: 'Sew grass clothing', icon: [15, 7, 'c2'], desc: 'Craft [primitive clothes] from 30 [herb] each.', use: { 'stone tools': 1 } },
+                    'sew grass clothing': { name: 'Sew grass clothing', icon: [15, 7, 'c2'], desc: 'Craft [primitive clothes] from 30 [herbs] each.', use: { 'stone tools': 1 } },
                     'sew hide clothing': { name: 'Sew hide clothing', icon: [15, 7, 'c2'], desc: 'Craft [primitive clothes] from 3 [hide]s each.', use: { 'stone tools': 1 } },
-                    'weave fiber clothing': { name: 'Weave fiber clothing', icon: [16, 7, 'c2'], desc: 'Craft [basic clothes] from 50 [herb] each.', use: { 'stone tools': 1 }, req: { 'weaving': true } },//TODO : implement fibers
+                    'weave fiber clothing': { name: 'Weave fiber clothing', icon: [16, 7, 'c2'], desc: 'Craft [basic clothes] from 50 [herbs] each.', use: { 'stone tools': 1 }, req: { 'weaving': true } },//TODO : implement fibers
                     'weave leather clothing': { name: 'Weave leather clothing', icon: [16, 7, 'c2'], desc: 'Craft [basic clothes] from 2 [leather] each.', use: { 'stone tools': 1 }, req: { 'weaving': true, 'leather-working': true } },
                     'make leather': { name: 'Make leather', icon: [10, 7, 'c2'], desc: 'Produce [leather] from [hide]s, [water], [salt] and [log]s.', use: { 'stone tools': 1 }, req: { 'leather-working': true } },
-                    'cheap make leather': { name: 'Make leather (cheap)', icon: [10, 7, 'c2'], desc: 'Slowly produce [leather] from [hide]s, [muddy water] and [herb].', use: { 'stone tools': 1 } },
+                    'cheap make leather': { name: 'Make leather (cheap)', icon: [10, 7, 'c2'], desc: 'Slowly produce [leather] from [hide]s, [muddy water] and [herbs].', use: { 'stone tools': 1 } },
                 },
                 effects: [
                     { type: 'mult', value: 1.08, req: { 'knitting': true } },
                     { type: 'convert', from: { 'hide': 3.5 }, into: { 'primitive clothes': 1 }, every: 12, mode: 'sew hide clothing' },
-                    { type: 'convert', from: { 'herb': 35 }, into: { 'primitive clothes': 1 }, every: 30, mode: 'sew grass clothing' },
+                    { type: 'convert', from: { 'herbs': 35 }, into: { 'primitive clothes': 1 }, every: 30, mode: 'sew grass clothing' },
                     { type: 'convert', from: { 'leather': 2 }, into: { 'basic clothes': 1 }, every: 12, mode: 'weave leather clothing' },
-                    { type: 'convert', from: { 'herb': 70 }, into: { 'basic clothes': 1 }, every: 30, mode: 'weave fiber clothing' },
+                    { type: 'convert', from: { 'herbs': 70 }, into: { 'basic clothes': 1 }, every: 30, mode: 'weave fiber clothing' },
                     { type: 'convert', from: { 'hide': 1, 'water': 5, 'salt': 1, 'log': 0.1 }, into: { 'leather': 1 }, every: 23, mode: 'make leather' },
-                    { type: 'convert', from: { 'hide': 1, 'muddy water': 5, 'herb': 12 }, into: { 'leather': 1 }, every: 40, mode: 'cheap make leather' },
+                    { type: 'convert', from: { 'hide': 1, 'muddy water': 5, 'herbs': 12 }, into: { 'leather': 1 }, every: 40, mode: 'cheap make leather' },
                 ],
                 req: { 'sewing': true },
                 category: 'crafting',
@@ -24363,7 +24406,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'healer',
-                desc: '@uses [herb] to heal the [sick] and the [wounded] slowly<>The [healer] knows the secrets of special plants that make illness stay away.',
+                desc: '@uses [herbs] to heal the [sick] and the [wounded] slowly<>The [healer] knows the secrets of special plants that make illness stay away.',
                 icon: [23, 3, 'c2'],
                 cost: {},
                 use: { 'worker': 1 },
@@ -24372,32 +24415,32 @@ if (getObj("civ") != "1") {
                 modes: {
                     'off': G.MODE_OFF,
                     'normal': { name: 'Normal', icon: [16, 1, 'magixmod'], desc: 'This [healer] will heal both the [sick] and [wounded], but very slowly.', use: { 'knapped tools': 1 }, req: {} },
-                    'wounded': { name: 'Heal wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] elves but with doubled efficiency.', use: { 'knapped tools': 1, 'herb': 0.3, 'flowers': 1 } },
-                    'sick': { name: 'Heal sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] elves but with doubled efficiency. <>Requires [flowers] along with [herb].', use: { 'knapped tools': 1, 'herb': 0.3, 'flowers': 1 }, req: { 'plant lore II': true } },
+                    'wounded': { name: 'Heal wounded', icon: [18, 1, 'magixmod'], desc: 'This [healer] will heal only [wounded] elves but with doubled efficiency.', use: { 'knapped tools': 1, 'herbs': 0.3, 'flowers': 1 } },
+                    'sick': { name: 'Heal sick', icon: [18, 0, 'magixmod'], desc: 'This [healer] will heal only [sick] elves but with doubled efficiency. <>Requires [flowers] along with [herbs].', use: { 'knapped tools': 1, 'herbs': 0.3, 'flowers': 1 }, req: { 'plant lore II': true } },
                 },
                 effects: [
                     {
                         type: 'function', func: function (me) {
                             var herb = 0.3;
                             var flower = 1;
-                            if (G.getRes('herb').amount < herb * me.amount || G.getRes('flowers').amount < flower * me.amount) {
+                            if (G.getRes('herbs').amount < herb * me.amount || G.getRes('flowers').amount < flower * me.amount) {
                                 G.killUnitByName('healer', me.amount, 'sick')
                             } else {
-                                G.lose('herb', arrowUpkeep, 'unit upkeep');
+                                G.lose('herbs', arrowUpkeep, 'unit upkeep');
                                 G.lose('flowers', arrowUpkeep, 'unit upkeep');
                             }
                         }, mode: 'sick'
                     },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'adult': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 3 }, into: { 'elder': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'wounded': 1, 'herb': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'on' } },
-                    { type: 'convert', from: { 'sick': 1, 'herb': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3 }, into: { 'adult': 1 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 3 }, into: { 'adult': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1 }, into: { 'adult': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3, 'flowers': 1 }, into: { 'adult': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'off' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3 }, into: { 'elder': 1 }, chance: 1 / 10, every: 5, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 3 }, into: { 'elder': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'wounded': 1, 'herbs': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'on' } },
+                    { type: 'convert', from: { 'sick': 1, 'herbs': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
                     //{type:'mult',value:1.03,req:{'more experienced healers':true,'moderation':true}},
-                    //    {type:'mult',value:1.06,req:{'more experienced healers':true,'caretaking':true}},
+                    //   {type:'mult',value:1.06,req:{'more experienced healers':true,'caretaking':true}},
                     //{type:'mult',value:1.25,req:{'se07':'on'}},
                 ],
                 gizmos: true,
@@ -24773,11 +24816,11 @@ if (getObj("civ") != "1") {
             //debug units
             new G.Unit({
                 name: 'auto nanny',
-                desc: '@generates 15 [fruit]s, 15 [vegetable], 30 [cooked meat,Meat], and 80 [water]<>Keeps your elves fed so you don\'t have to.//Powered by strange energies.',
+                desc: '@generates 15 [fruit]s, 15 [vegetables], 30 [cooked meat,Meat], and 80 [water]<>Keeps your elves fed so you don\'t have to.//Powered by strange energies.',
                 icon: [4, 2, 'c2'],
                 cost: {},
                 effects: [
-                    { type: 'gather', what: { 'fruit': 15, 'vegetable': 15, 'cooked meat': 30, 'water': 80 } }
+                    { type: 'gather', what: { 'fruit': 15, 'vegetables': 15, 'cooked meat': 30, 'water': 80 } }
                 ],
                 category: 'debug',
             });
@@ -24884,7 +24927,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'archaeologist',
-                desc: '@digs in the ground to find some [relic]s. Good source of essentials, as finding treasures won\'t just give you [discernment]. Depending on what [archaeologist] found you can also gain [gentility], [faith] or [influence]. If a super rare [relic] is found, it will give more essentials.// When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [discernment,Essentials]).',
+                desc: '@digs in the ground to find some [relic]s. Good source of essentials, as finding treasures won\'t just give you [discernment]. Depending on what [archaeologist] found you can also gain [gentility], [faith] or [influence]. If a super rare [relic] is found, it will give more essentials.//When no more [relic]s are left, this unit will look for stuff left by previous generations (but this will provide much less [discernment,Essentials]).',
                 icon: [30, 3, 'c2'],
                 use: { 'worker': 1, 'metal tools': 2 },
                 upkeep: { 'food': 1, 'water': 1 },
@@ -25241,7 +25284,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'plant lore', category: 'upgrade',
-                desc: '@[gatherer]s find more [herb] and [fruit]s<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.<br>//<small>There are a whole lot of unique plant types and categories, so this tech won\'t let you learn about them all at once, friend.</small>',
+                desc: '@[gatherer]s find more [herbs] and [fruit]s<>The knowledge of which plants are good to eat and which mean certain death is slow and perilous to learn.<br>//<small>There are a whole lot of unique plant types and categories, so this tech won\'t let you learn about them all at once, friend.</small>',
                 icon: [23, 7, 'c2'],
                 cost: { 'discernment': 10, 'creativity': 1, 'gentility': 1 },
                 req: { 'oral tradition 1/2': true },
@@ -25758,7 +25801,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'herbalism', category: 'tier1',
-                desc: '[gatherer]s can now gather some [herb] in small amounts.<br>//<small>But it still just looks like plain grass!</small>',
+                desc: '[gatherer]s can now gather some [herbs] in small amounts.<br>//<small>But it still just looks like plain grass!</small>',
                 icon: [22, 10, 'c2'],
                 req: { 'language': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
@@ -26008,21 +26051,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. // Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. //Increases the exploration cap.',
                 icon: [28, 13, 'c2'],
                 cost: { 'discernment': 48, 'creativity': 6 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //Increases the exploration cap.',
                 icon: [29, 13, 'c2'],
                 cost: { 'discernment': 104, 'creativity': 16 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. // <b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //<b>Removes</b> the exploration cap.',
                 icon: [30, 13, 'c2'],
                 cost: { 'discernment': 660, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
@@ -27155,14 +27198,14 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at <font color="#cd5983">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="#cd5983">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
+                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder and improve unit speeds, while unhappy elves tend to slack off; at <font color="#cd5983">+90%</font> happiness, most of your workers will work twice as fast, while at <font color="#cd5983">-120%</font> happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                         }
                     },
                 ],
                 effectsOff: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
+                            G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population].//Happy elves work even harder and improve unit speeds, while unhappy elves tend to slack off; at +100% happiness, most of your workers will work twice as fast, while at -100% happiness, they will work twice as slow. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.';
                         }
                     },
                 ],
@@ -27188,34 +27231,34 @@ if (getObj("civ") != "1") {
             if (G.modsByName['Laws Of Food']) {
                 new G.Policy({
                     name: 'eat vegetables',
-                    desc: 'Decide if your people can eat [vegetable] or not.',
+                    desc: 'Decide if your people can eat [vegetables] or not.',
                     icon: [6, 12, 11, 11, 'magixmod'],
                     cost: { 'influence': 0 },
                     startMode: 'on',
                     req: { 'rules of food': true },
                     category: 'food',
                     effects: [
-                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                        { type: 'make part of', what: ['vegetables'], parent: 'food' },
                     ],
                     effectsOff: [
-                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                        { type: 'make part of', what: ['vegetables'], parent: '' },
                     ],
                 });
             }
             if (G.modsByName['Laws Of Food Free Version']) {
                 new G.Policy({
                     name: 'eat vegetables',
-                    desc: 'Decide if your people can eat [vegetable] or not.',
+                    desc: 'Decide if your people can eat [vegetables] or not.',
                     icon: [6, 12, 11, 11, 'magixmod'],
                     cost: { 'influence': 0 },
                     startMode: 'on',
                     req: { 'rules of food': true },
                     category: 'food',
                     effects: [
-                        { type: 'make part of', what: ['vegetable'], parent: 'food' },
+                        { type: 'make part of', what: ['vegetables'], parent: 'food' },
                     ],
                     effectsOff: [
-                        { type: 'make part of', what: ['vegetable'], parent: '' },
+                        { type: 'make part of', what: ['vegetables'], parent: '' },
                     ],
                 });
             }
@@ -27736,10 +27779,10 @@ if (getObj("civ") != "1") {
             //plants
             new G.Goods({
                 name: 'grass',
-                desc: '[grass] is a good source of [herb]; you may also occasionally find some [fruit]s and [stick]s while foraging.',
+                desc: '[grass] is a good source of [herbs]; you may also occasionally find some [fruit]s and [stick]s while foraging.',
                 icon: [11, 17, 'c2'],
                 res: {
-                    'gather': { 'herb': 10, 'fruit': 0.5, 'stick': 0.4 },
+                    'gather': { 'herbs': 10, 'fruit': 0.5, 'stick': 0.4 },
                 },
                 mult: 9,
             });
@@ -27877,40 +27920,40 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'berry bush',
-                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s, and the occasional [herb,Herb].',
+                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s, and the occasional [herbs,Herb].',
                 icon: [3, 17, 'c2'],
                 res: {
-                    'gather': { 'fruit': 3, 'stick': 0.5, 'herb': 0.25 },
+                    'gather': { 'fruit': 3, 'stick': 0.5, 'herbs': 0.25 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 9,
             });
             new G.Goods({
                 name: 'wild bush',
-                desc: '[wild bush,Wild bushes] can be foraged for [vegetable], [stick]s, and sometimes [herb].',
+                desc: '[wild bush,Wild bushes] can be foraged for [vegetables], [stick]s, and sometimes [herbs].',
                 icon: [18, 17, 'c2'],
                 res: {
-                    'gather': { 'vegetable': 3, 'stick': 0.5 },
+                    'gather': { 'vegetables': 3, 'stick': 0.5 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 10,
             });
             new G.Goods({
                 name: 'forest mushrooms',
-                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [herb]. They also have multiple unique styles that are quite fascinating.',
+                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [herbs]. They also have multiple unique styles that are quite fascinating.',
                 icon: [choose([4, 5, 6]), 17, 'c2'],
                 res: {
-                    'gather': { 'herb': 4 },
+                    'gather': { 'herbs': 4 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 9,
             });
             new G.Goods({
                 name: 'big warped shrooms',
-                desc: '[big warped shrooms] are a variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be met in <b>Warplands</b>. Will yield [herb] and easily harvested [spoiled food]. Can be chopped for its stem that can be later used to make a building material.',
+                desc: '[big warped shrooms] are a variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be met in <b>Warplands</b>. Will yield [herbs] and easily harvested [spoiled food]. Can be chopped for its stem that can be later used to make a building material.',
                 icon: [8, choose([14, 15]), 'c2'],
                 res: {
-                    'gather': { 'herb': 1, 'spoiled food': 4 },
+                    'gather': { 'herbs': 1, 'spoiled food': 4 },
                     'chop': { 'shroom stem': 1 / 3 }
                     //add and include stem context chop
                 },
@@ -27919,10 +27962,10 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'big shrooms',
-                desc: '[big shrooms] can be found in <b>Shroomests</b>//These tall shrooms can be gathered for some [herb] and [spoiled food]. They can also sometimes be chopped for [shroom stem]s.',
+                desc: '[big shrooms] can be found in <b>Shroomests</b>//These tall shrooms can be gathered for some [herbs] and [spoiled food]. They can also sometimes be chopped for [shroom stem]s.',
                 icon: [9, choose([14, 15]), 'c2'],
                 res: {
-                    'gather': { 'herb': 4 },
+                    'gather': { 'herbs': 4 },
                     'chop': { 'shroom stem': 1 / 3 }
                 },
                 affectedBy: ['scarce forageables'],
@@ -27930,20 +27973,20 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'succulents',
-                desc: 'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide [herb] and [fruit]s.',
+                desc: 'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide [herbs] and [fruit]s.',
                 icon: [12, 17, 'c2'],
                 res: {
-                    'gather': { 'fruit': 1, 'herb': 3 },
+                    'gather': { 'fruit': 1, 'herbs': 3 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 9,
             });
             new G.Goods({
                 name: 'jungle fruits',
-                desc: '[jungle fruits] come in all shapes, colors and sizes, and will yield [fruit]s and [herb] to those who forage them.',
+                desc: '[jungle fruits] come in all shapes, colors and sizes, and will yield [fruit]s and [herbs] to those who forage them.',
                 icon: [13, 17, 'c2'],
                 res: {
-                    'gather': { 'fruit': 2, 'herb': 1 },
+                    'gather': { 'fruit': 2, 'herbs': 1 },
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 9,
@@ -28347,10 +28390,10 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ominous grass',
-                desc: '[ominous grass] is a good source of [herb]; you may also occasionally find some [fruit]s and [stick]s while foraging.',
+                desc: '[ominous grass] is a good source of [herbs]; you may also occasionally find some [fruit]s and [stick]s while foraging.',
                 icon: [17, 17, 'c2'],
                 res: {
-                    'gather': { 'herb': 8, 'fruit': 0.5, 'stick': 0.7 },
+                    'gather': { 'herbs': 8, 'fruit': 0.5, 'stick': 0.7 },
                 },
                 mult: 9,
             });

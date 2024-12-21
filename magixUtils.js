@@ -21,7 +21,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
-// Custom storage tools that 1) don't break the save data and 2) are saved when exporting
+//Custom storage tools that 1) don't break the save data and 2) are saved when exporting
 if (!window.magixLoaded) {
     window.magixLoaded = 1
     var conflictingStorageObjects = ["civ"]
@@ -54,7 +54,7 @@ var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
 var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
 var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 
-// Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
+//Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
 function getObj(key) {
     var storageItem = G.storageObject[key]
     if (storageItem != null) {
@@ -98,7 +98,7 @@ function unitAmount(name, res2, cap) {
 }
 
 G.setDict = function (name, what) {
-    // No more warnings :p
+    //No more warnings :p
     G.dict[name] = what
 }
 
@@ -269,11 +269,11 @@ G.Save = function (toStr) {
         var me = G.chooseBox[i];
         str += me.cooldown + ';';
     }
-    // storage object
+    //storage object
     str += '$' + JSON.stringify(G.storageObject).replaceAll('"', '&QOT') + (G.PARTY ? '$' : '')
     str += '|';
 
-    // Important for file-based saves
+    //Important for file-based saves
     if (toStr) {
         str = str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
         console.log(str)
@@ -316,7 +316,7 @@ G.Load = function (doneLoading) {
                 if (G.storageObject) {
                     G.storageObject = JSON.parse(G.storageObject.slice(1).replaceAll('&QOT', '"'));
                     for (var i = 0; i < conflictingStorageObjects.length; i++) {
-                        var key = conflictingStorageObjects[i]; // over here we compare storage object data and try to detect conflicts
+                        var key = conflictingStorageObjects[i]; //over here we compare storage object data and try to detect conflicts
                         var newItem = G.storageObject[key];
                         if (oldStorage[key] !== newItem) {
                             G.dialogue.popup(function (div) {
@@ -367,7 +367,7 @@ G.Load = function (doneLoading) {
         G.releaseNumber = parseFloat(spl[i++]);
         var corrupted = false;
         if (G.releaseNumber > 1000 || !isFinite(G.releaseNumber)) {
-            G.releaseNumber = 54; // assume it's an older version simply due to a save being corrupted
+            G.releaseNumber = 54; //assume it's an older version simply due to a save being corrupted
             corrupted = true;
             i++;
             console.warn("A corruption has happened with the save, meaning that the game likely loaded with the G.Load function from the main script due to an error. An attempt to correct it has been made!")
@@ -580,7 +580,7 @@ G.Load = function (doneLoading) {
         var spl = tSpl[0].split(';');
         var num = parseInt(spl[0]);
         G.getDict('research box').cooldown = isFinite(num) ? num : 0;
-        if (tSpl.length >= 3) G.PARTY = 1; // new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
+        if (tSpl.length >= 3) G.PARTY = 1; //new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
 
         G.runUnitReqs();
         G.runPolicyReqs();
@@ -612,7 +612,7 @@ G.Load = function (doneLoading) {
     return false;
 }
 
-// Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
+//Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
 G.Res = function (obj) {
     this.type = 'res';
     this.amount = 0;
@@ -981,7 +981,7 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = magixURL2 + 'magix2.png?v=2.3' // Version 2.2: 63 sprites
+var magix2Link = magixURL2 + 'magix2.png?v=2.3' //Version 2.2: 63 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
@@ -997,7 +997,7 @@ G.AddData({
         easterDay = Math.floor((easterDay - new Date(easterDay.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
         ///
 
-        // Add more numbers
+        //Add more numbers
         var numberFormatters =
             [
                 function rawFormatter(value) { return value % 1 ? Math.floor(value * 1000) / 1000 : value },
@@ -1086,7 +1086,8 @@ G.AddData({
                     G.writeSettingButton({ text: 'Toggle exploration messages', tooltip: 'Toggle messages related to exploration.', name: 'exploration messages', id: 'exploration messages' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle lost messages', tooltip: 'Toggle messages related to losing your units.', name: 'lost messages', id: 'lost messages' }) +
                     G.writeSettingButton({ text: 'Toggle wonder messages', tooltip: 'Toggle messages generated by wonders.', name: 'wonder messages', id: 'wonder messages' }) +
-                    G.writeSettingButton({ text: 'Toggle relic messages', tooltip: 'Toggle messages related to relics (from archaeologists).', name: 'relic messages', id: 'relic messages' });
+                    G.writeSettingButton({ text: 'Toggle relic messages', tooltip: 'Toggle messages related to relics (from archaeologists).', name: 'relic messages', id: 'relic messages' }) +
+                    G.writeSettingButton({ text: 'Toggle relic messages', tooltip: 'Toggle messages giving info about droughts in your world.', name: 'drought messages', id: 'drought messages' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle annual messages', tooltip: 'Toggle annual reports that tell you about your tribe.', name: 'annual raports', id: 'annual raports' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle fools mode', tooltip: 'You\'d be a fool to think it\'s April Fools.', name: 'fools', id: 'fools' });
             } else {
@@ -1226,10 +1227,10 @@ G.AddData({
                 var str = '';
                 var len = G.policyCategories.length;
                 str += '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div class="barred fancyText"><center style="line-height: 1.25"><font size="2.5">Get the <font color="fuschia">Policies</font> trait to unlock this tab.<br>Policies are one of the main aspects of ruling a tribe.<br>Wait until you get this trait to learn more about them :)</font></center></div>';
-                // for (var iC = 0; iC < len; iC++) {
-                //     if (G.policyCategories[iC].id != 'mag') continue;
-                //     else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
-                // }
+                //for (var iC = 0; iC < len; iC++) {
+                //    if (G.policyCategories[iC].id != 'mag') continue;
+                //    else str += '<center><div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div></div></div></center><br>';
+                //}
                 l('policyDiv').innerHTML = str;
                 var len = G.policyCategories.length;
                 var len = G.policy.length;
@@ -1406,7 +1407,7 @@ G.AddData({
             G.addCallbacks();
 
             var str = '';
-            if (G.getSetting('tieredDisplay')) { // idk why this was commented out
+            if (G.getSetting('tieredDisplay')) { //idk why this was commented out
                 //tiered display
                 for (var i in G.techByTier) {
                     str += '<div><div style="width:32px;height:52px;display:inline-block;"><div class="fullCenteredOuter"><div class="fullCenteredInner fancyText bitBiggerText">' + i + '</div></div></div>&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -1743,7 +1744,7 @@ G.AddData({
                                 if (!isEmpty(me.limitPer)) str += '<div>Limit: ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
                                 if (isEmpty(me.cost) && isEmpty(me.use) && isEmpty(me.staff) && isEmpty(me.upkeep) && isEmpty(me.require)) str += '<div>Free</div>';
                                 if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses: ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
-                                //    if (me.modesById[0] && !isEmpty(instance.mode.upkeep) && instance.mode.upkeep!='undefined') str+='<div>Current mode has upkeep : '+G.getUseString(instance.mode.upkeep,true,false,amount)+'</div>';
+                                //   if (me.modesById[0] && !isEmpty(instance.mode.upkeep) && instance.mode.upkeep!='undefined') str+='<div>Current mode has upkeep : '+G.getUseString(instance.mode.upkeep,true,false,amount)+'</div>';
                                 str += '</div>';
                                 if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
                                 str += '</div>';
@@ -2110,7 +2111,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">\xd71</div>', '1 Elder') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">\xd72</div>', '2 Children') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">\xd7175</div>', '175 Herbs') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herbs')) + '"></div><div class="freelabel">\xd7175</div>', '175 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7200</div>', '200 Water') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">\xd725</div>', '25 Fruits') +
                 (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "") +
@@ -2126,7 +2127,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('elder')) + '"></div><div class="freelabel">\xd71</div>', '1 Elder') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">\xd72</div>', '2 Children') +
-                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herb')) + '"></div><div class="freelabel">\xd7300</div>', '300 Herbs') +
+                G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herbs')) + '"></div><div class="freelabel">\xd7300</div>', '300 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7250</div>', '250 Water') +
                 (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.</b>') : "") +
                 '</div>' +
@@ -2269,7 +2270,7 @@ G.AddData({
 
         G.deleteTrait = function (me) {
             var index = G.traitsOwnedNames.indexOf(me);
-            // console.log(index);
+            //console.log(index);
             G.applyKnowEffects(G.traitsOwned[index].trait, true, true);
             G.traitsOwned.splice(index, 1);//remove trait
             G.traitsOwnedNames.splice(index, 1);
@@ -2277,7 +2278,7 @@ G.AddData({
         }
         G.deleteTech = function (me) {
             var index = G.techsOwnedNames.indexOf(me);
-            // console.log(index);
+            //console.log(index);
             G.applyKnowEffects(G.techsOwned[index].tech, true, true);
             G.techsOwned.splice(index, 1);//remove trait
             G.techsOwnedNames.splice(index, 1);
@@ -2845,7 +2846,7 @@ G.AddData({
             tier: 0,
             name: 'that was so brutal',
             icon: [35, 8, 'magixmod'],
-            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! // Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //You need to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
+            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! //Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //You need to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
             effects: [
             ],
             visible: false,
@@ -3632,7 +3633,7 @@ G.AddData({
         G.getIconClasses = function (me, allowWide) {
             //returns some CSS classes
             var str = '';
-            if (me.widerIcon && allowWide) str += ' wide2'; // 48x24
+            if (me.widerIcon && allowWide) str += ' wide2'; //48x24
             if (me.wideIcon && allowWide) str += ' wide3'; //default 72x24 for wonders
             if (me.twoxtwoIcon && allowWide) str += ' widenhigh1'; //48x48
             if (me.threexthreeIcon && allowWide) str += ' widenhigh2'; //72x72
@@ -3698,7 +3699,7 @@ G.AddData({
             }
         }
 
-        // Added by @1_e0 to make canoes and rafts work properly
+        //Added by @1_e0 to make canoes and rafts work properly
         G.canoeRaftEffect = function (amount, tileName) {
             var multiplier = 0
             if (G.has('canoes')) {
@@ -4019,7 +4020,7 @@ G.AddData({
                     }
                 }) +
                 G.writeSettingButton({ id: 'showAllRes', name: 'showAllRes', text: '<font color="aqua">Show resources</font>', tooltip: 'Toggle whether all resources should be visible.' }) +
-                // G.writeSettingButton({ id: 'tieredDisplay', name: 'tieredDisplay', text: '<font color="yellow">Show tiers</font>', tooltip: 'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>While active, you can click a tech to highlight its ancestors and descendants.' }) +
+                //G.writeSettingButton({ id: 'tieredDisplay', name: 'tieredDisplay', text: '<font color="yellow">Show tiers</font>', tooltip: 'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>While active, you can click a tech to highlight its ancestors and descendants.' }) +
                 '<br>' +
                 G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
                 G.button({ text: '<font color="#e28">Party</font>', tooltip: 'Add some color to your gameplay!', onclick: function () { G.PARTY = G.PARTY == 0 ? 1 : 0 } }) +
@@ -4135,7 +4136,7 @@ G.AddData({
             var totalw = map.w;//x2-x1;
             var totalh = map.h;//y2-y1;
 
-            var img = new Image();   // Create new img element
+            var img = new Image();   //Create new img element
             img.src = magixURL + 'terrainMagix.png';
             var fog = Pic('img/blot.png');
 
@@ -4807,7 +4808,7 @@ G.AddData({
 
 
             if (G.PARTY) {
-                // Messing with CSS is goofy
+                //Messing with CSS is goofy
                 var pulse = Math.pow((G.T % 10) / 10, 0.5);
                 G.l.style.filter = 'hue-rotate(' + ((G.T * 5) % 360) + 'deg) brightness(' + (150 - 50 * pulse) + '%)';
                 G.l.style.webkitFilter = 'hue-rotate(' + ((G.T * 5) % 360) + 'deg) brightness(' + (150 - 50 * pulse) + '%)';
@@ -5281,7 +5282,7 @@ G.AddData({
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
                                                 var upkeepMet = true
                                                 if (effect.upkeep) {
-                                                    if (G.lose(effect.upkeep[0], effect.upkeep[1], 'unit upkeep') < effect.upkeep[1]) upkeepMet = false // Bad upkeep programming is fun
+                                                    if (G.lose(effect.upkeep[0], effect.upkeep[1], 'unit upkeep') < effect.upkeep[1]) upkeepMet = false //Bad upkeep programming is fun
                                                 }
                                                 if (upkeepMet) {
                                                     if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
@@ -5408,7 +5409,7 @@ G.AddData({
         G.initializeFixIcons = function () {
             if (G.parse("http://").search("http://") == -1) {
                 G.fixTooltipIcons();
-                setTimeout(G.initializeFixIcons, 500); // check again to make sure this version of the function stays applied during page load
+                setTimeout(G.initializeFixIcons, 500); //check again to make sure this version of the function stays applied during page load
             }
         }
         G.initializeFixIcons();

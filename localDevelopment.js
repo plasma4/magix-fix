@@ -134,7 +134,7 @@ function extractObject(toExtract, properties, funcProperties) {
                     for (var e = 0; e < l; e++) {
                         var effect = effects[e]
                         if (effect.type === "function") {
-                            effect.function = String(effect.function)
+                            effect.func = String(effect.func)
                         }
                     }
                     obj[key] = effects
