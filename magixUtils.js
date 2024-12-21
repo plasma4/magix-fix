@@ -1847,9 +1847,9 @@ G.AddData({
         G.settings.push({ name: "lost messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "wonder messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "relic messages", type: "toggle", def: 1, value: 1 });
+        G.settings.push({ name: "drought messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "annual raports", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "fools", type: "toggle", def: 0 });
-        G.settings.push({ name: "drought messages", type: "toggle", def: 1, value: 1 });
 
         for (var i in G.settings) { G.settingsByName[G.settings[i].name] = G.settings[i]; }
 

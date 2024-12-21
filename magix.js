@@ -9310,7 +9310,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'school of alchemy',
-                desc: '@The building where people may learn the basics of alchemy. Needs water to work though! //<small>you know why it needs water</small>',
+                desc: 'This is the building where [adult]s can learn the basics of alchemy. Needs water to work though! //<small>you know why it needs water</small>',
                 icon: [5, 6, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'glass': 5, 'brick': 2 },
                 use: { 'land of the Plain Island': 1, 'worker': 3 },
@@ -10352,8 +10352,8 @@ if (getObj("civ") != "1") {
                 ],
                 gizmos: true,
                 modes: {
-                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Cantor will convert [wooden coin]s into 1 [silver coin].<br>The amount of [wooden coin]s needed is equal to<br><b><font color="#cfbaa8">50*(Pocket trial completions*3+1)</font></b>' },
-                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Cantor will convert [silver coin]s into 1 [golden coin].<br>The amount of coins of the [silver coin]s needed is equal to<br><b><font color="#dbb406">50*(Pocket trial completions*3+1)</font></b>' },
+                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [wooden coin]s into 1 [silver coin].<br>The amount of [wooden coin]s needed is equal to<br><b><font color="#cfbaa8">50*(Pocket trial completions*3+1)</font></b>' },
+                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [silver coin]s into 1 [golden coin].<br>The amount of coins of the [silver coin]s needed is equal to<br><b><font color="#dbb406">50*(Pocket trial completions*3+1)</font></b>' },
                 },
                 use: { 'land': 1, 'worker': 1 },
                 req: { 't10': true, 'trial': true },
