@@ -3379,7 +3379,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'land',
-                desc: 'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile normally) upon which you can construct buildings. If for some reason you find yourself with less land than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much land is occupied, while the number on the right is how much land you have in total.',
+                desc: 'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile normally) upon which you can construct buildings. If, for some reason, you find yourself with less [land] than your buildings are using, some of them will start to crumble away.//The number on the left is how much [land] is occupied, while the number on the right is how much of i you have in total.',
                 icon: [14, 4],
                 displayUsed: true,
                 partOf: 'tl',
@@ -13713,7 +13713,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'policy revaluation',
-                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost [faith II] to toggle and upkeep. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]! Rituals will also require 1 more of an [influence II,Essential II].',
+                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost [faith II] to toggle and upkeep. @But don\'t worry, as they won\'t consume too much for things like [wisdom rituals] or [flower rituals]! Rituals will also require 1 more of a second-tier essential.',
                 icon: [1, 23, 'magixmod'],
                 cost: { 'insight II': 15, 'culture II': 15, 'influence II': 5 },
                 chance: 45,
@@ -14225,7 +14225,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'backshift at farms', category: 'upgrade',
-                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s and 40% more land due to way people increase the harvests of the farms. //Requires [moderation] to unlock this tech. Also, each [hovel with garden] is 10% more effective.',
+                desc: '[sugar cane farm]s produce 150% more and [wheat farm]s become twice as efficient. //However, now these farms require 50% more [worker]s and 40% more [land] due to way people increase the harvests of the farms. //Requires [moderation] to unlock this tech. Also, each [hovel with garden] is 10% more effective.',
                 icon: [31, 14, 'magixmod'],
                 cost: { 'insight II': 180, 'science': 5, 'influence II': 10, 'culture II': 5 },
                 req: { 'improved windmill motors': true, 'moderation': true },
@@ -19892,7 +19892,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'far foraging',
-                desc: '@[gatherer]s will explore like [wanderer]s but have a chance to become lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //When you have explored 60 [land], this policy will be disabled automatically and won\'t be visible from then on. (That autotoggle won\'t cost you any [influence].)',
+                desc: '@[gatherer]s will explore like [wanderer]s but have a chance to become lost in terrain. This policy will keep working until you get more [land] explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //When you have explored 60 [land], this policy will be disabled automatically and won\'t be visible from then on. (That autotoggle won\'t cost you any [influence].)',
                 icon: [15, 33, 'magixmod'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
@@ -22752,7 +22752,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'land',
-                desc: 'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile normally) upon which you can construct buildings. If for some reason you find yourself with less land than your buildings are using, some of them will start to slowly crumble away.//The number on the left is how much land is occupied, while the number on the right is how much land you have in total.',
+                desc: 'Each tile of territory you own grants you some [land] (100 per fully-explored non-ocean tile normally) upon which you can construct buildings. If, for some reason, you find yourself with less [land] than your buildings are using, some of them will start to crumble away.//The number on the left is how much [land] is occupied, while the number on the right is how much of i you have in total.',
                 icon: [14, 4, 'c2'],
                 displayUsed: true,
                 tick: function (me) {
@@ -27221,7 +27221,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'creative foraging',
-                desc: '@[gatherer]s will explore terrain just like [wanderer]s but have a much larger chance to become lost in terrain. This policy will work until you get some land explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //To keep this policy active, you will need 1 [creativity] every year. Once you get 80 [land], [creative foraging] will stop taking [creativity].',
+                desc: '@[gatherer]s will explore terrain just like [wanderer]s but have a much larger chance to become lost in terrain. This policy will keep working until you get more [land] explored. //It doesn\'t affect the food gathering efficiency of [gatherer]s. //To keep this policy active, you will need 1 [creativity] every year. Once you get 80 [land], [creative foraging] will stop taking [creativity].',
                 icon: [25, 0, 'c2'],
                 cost: { 'influence': 3 },
                 startMode: 'off',
