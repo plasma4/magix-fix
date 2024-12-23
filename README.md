@@ -15,7 +15,7 @@ Upon loading it, you should be able to play the game!
 ##
 ***PLEASE BE AWARE:*** The creator of this mod has personally stated in Discord messages that the Magix mod can be modded by anyone who wishes, despite the comments in magix.us. This mod has an unclear license, however; therefore, I AM NOT RESPONSIBLE IF THE PROJECT IS NOT PUBLIC-DOMAIN.
 
-<sup>This mod provides a few important fixes that prevent the game from breaking. Minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source.</sup>
+<sup>This mod provides a few important fixes that prevent the game from breaking. Non-minimal changes have been made to the contents of the mod. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js to find the original source of magix.js and https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js for magixUtils.js.</sup>
 ## What does this fixed mod do?
 Here are a few examples:
 - Multiple game-breaking bugs are **fixed** now (in particular, bookwriting will no longer cause problems)
