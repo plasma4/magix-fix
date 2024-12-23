@@ -1155,7 +1155,6 @@ if (getObj("civ") != "1") {
                     //also not only greetings but also some content unlocks
                     G.getDict('firecracker').hidden = false; G.getDict('blue firework').hidden = false; G.getDict('orange firework').hidden = false; G.getDict('dark blue firework').hidden = false; G.getDict('dark orange firework').hidden = false;
                     G.getDict('firework crafting').req = { 'culture of celebration': true, 'tribalism': true };
-                    G.getDict('firework launcher').req = { 'culture of celebration': true, 'dark launching': true, 'tribalism': true };
                     G.getDict('artisan of new year').req = { 'culture of celebration': true, 'firework crafting': true, 'tribalism': true };
                     G.getDict('firework launching').req = { 'culture of celebration': true, 'firework crafting': true, 'tribalism': true };
                     G.getDict('dark essenced fireworks').req = { 'culture of celebration': true, 'firework crafting': true, 'Wizard complex': true, 'tribalism': true };
@@ -2193,15 +2192,19 @@ if (getObj("civ") != "1") {
                     }
                     timeAchievs();
                     if (G.day % 10 == 0 || G.tab.id == 'tech') theme();
-                    if (G.checkPolicy('se04') == 'on') {
-                        G.policyByName['se05'].visible = false;
+                    if (G.checkPolicy('se05') == 'on') {
+                        if (G.getPolicy('se05').visible) {
+                            G.policyByName['se05'].visible = false;
+                            G.update['policy']();
+                        }
                         G.setPolicyModeByName('se05', 'off');
-                        G.update['policy']();
                     }
                     if (G.checkPolicy('se05') == 'on') {
-                        G.policyByName['se04'].visible = false;
+                        if (G.getPolicy('se04').visible) {
+                            G.policyByName['se04'].visible = false;
+                            G.update['policy']();
+                        }
                         G.setPolicyModeByName('se04', 'off');
-                        G.update['policy']();
                     }
                     if (G.getRes("land").amount > 59) {
                         G.policyByName['far foraging'].visible = false;
@@ -6294,7 +6297,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'festive light',
-                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay, this may provide some [christmas essence].',
+                desc: 'Used to decorate [house]s, streets, and many other places! Brings festivity to your civilization. Provides some [christmas essence] on decay.',
                 icon: [choose([6, 7]), 12, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -6308,12 +6311,13 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'snowman',
-                desc: 'Used to decor streets, houses, hovels and other buildings. Brings festivity to your civilization. On decay, this may provide some [christmas essence].',
+                desc: 'Used to decorate streets, [house]s, and many other buildings! Brings festivity to your civilization. Provides some [christmas essence] on decay.',
                 icon: [12, 11, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.011;
+                    G.gain('snowman', randomFloor(Math.pow(G.getRes('child').amount, 0.97) / 1700), 'children building snowmen');
+                    var toSpoil = me.amount * (0.003 + 0.01 * Math.random());
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
             });
@@ -10486,9 +10490,10 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'f.r.o.s.t.y',
                 displayName: 'F.R.O.S.T.Y',
-                desc: '@Extracts [christmas essence] from various snowmen created by children. (However, it is possible the extraction will destroy the snowman.)//It is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
+                desc: '@Extracts [christmas essence] from various [snowman,Snowmen] created by children. @Be warned, as it is possible the extraction will destroy the [snowman]! @[snowman,Snowmen] may be extracted multiple times//This weird machine is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
                 icon: [15, 12, 'seasonal'],
                 cost: { 'strong metal ingot': 100, 'hard metal ingot': 15, 'precious metal ingot': 2, 'basic building materials': 10, 'magic essences': 5000, 'platinum ore': 10 },
+                use: { 'land': 3 },
                 upkeep: { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 },
                 req: { 'festive robot print': true, 'tribalism': false },
                 limitPer: { 'land': 200000 },//MAX 1
@@ -10497,15 +10502,15 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function (me) {
                             if (day >= 350 && day <= 363) {
-                                if (G.getRes('snowman').amount > me.amount) {
+                                if (G.getRes('snowman').amount >= 3) {
                                     var chance = Math.random();
                                     var bonus = 0;
-                                    if (G.has('f.r.o.s.t.y overclock I') && bonus < 0.05) bonus += 0.05;
-                                    if (G.has('f.r.o.s.t.y overclock II') && bonus < 0.12) bonus += 0.07;
-                                    if (G.has('f.r.o.s.t.y overclock III') && bonus < 0.22) bonus += 0.1;
-                                    G.gain('christmas essence', 1 * (bonus + 1), 'F.R.O.S.T.Y');
+                                    if (G.has('f.r.o.s.t.y overclock I')) bonus += 0.5;
+                                    if (G.has('f.r.o.s.t.y overclock II')) bonus += 0.7;
+                                    if (G.has('f.r.o.s.t.y overclock III')) bonus = bonus * 2 + 1;
+                                    G.gain('christmas essence', 3 * (bonus + 1), 'F.R.O.S.T.Y');
                                     if (chance <= 0.05 + bonus) {
-                                        G.lose('snowman', 1 * ((bonus * 1.1) + 1), 'failed essence extraction');
+                                        G.lose('snowman', randomFloor(1 * ((bonus * 1.1) + 1)), 'failed essence extraction');
                                     }
                                     me.unit.upkeep = { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 };
                                 } else {
@@ -13962,11 +13967,11 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'wisdom II': 10 } },
                     { type: 'provide res', what: { 'inspiration II': 2 } },
                 ],
-                tutorialMesg: ['tutorial', 'Next part of the doctrine is knowledge. You don\'t have to roll new researches for it though. All you should do now is wait and not spend essentials, because the next part of the doctrine is not cheap. Even numbered stages are traits while odd numbered stages are represented as researches.', [32, 27, 'magixmod']]
+                tutorialMesg: ['tutorial', 'The next part of the wormhole doctrine is related to knowledge! Be aware that the next part of the doctrine is not cheap though. (Stages 2 and 4 are traits, while stages 1, 3, and 5 are manual researches.)', [32, 27, 'magixmod']]
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 2/5',
-                desc: 'This part of the doctrine is about spells or rituals that will sucessfully make a wormhole working and stable. //Your [wizard]s seem quite interested in making the first wormhole, but they want a finished doctrine first. They don\'t want to do it by just themselves, however, so they will calmly wait for the finished doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
+                desc: 'This part of the doctrine is about various spells or rituals that can keep a wormhole stable. //Your [wizard]s seem quite interested in making the first wormhole, but they want a finished doctrine first. They don\'t want to do it by just themselves, however, so they will calmly wait for the finished doctrine. @provides 10 [wisdom II] and 2 [inspiration II]',
                 icon: [20, 22, 'magixmod', 16, 22, 'magixmod'],
                 cost: { 'insight II': 105, 'science': 6, 'faith II': 4, 'influence II': 5, 'culture II': 15, 'wisdom': 100 },
                 req: { 'burial wormhole 1/2': true, 'doctrine of the dark wormhole 1/5': true },
@@ -14156,7 +14161,7 @@ if (getObj("civ") != "1") {
                         }
                     }
                 ],
-                tutorialMesg: ['story2', '<b>Mo\' beauty</b> made cities look much, much nicer. Lanterns and flower decorations are finally spreading everywhere. Sometimes even <b>tools</b> (not joking now) have some shapes and patterns carved. You wander around and the huts are even more beautiful than they ever were; it seems like your people are always in a festival!']
+                tutorialMesg: ['story2', '<b>Mo\' beauty</b> made your cities look much, much nicer. Lanterns and flower decorations are finally spreading everywhere. Sometimes even <b>tools</b> (not joking now) have some shapes and patterns carved. You wander around and the huts are even more beautiful than they ever were; it seems like your people are always in a festival!']
             });
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
@@ -15984,7 +15989,7 @@ if (getObj("civ") != "1") {
             //* * * * * CHRISTMAS TECHS/TRAITS * * * * *
             new G.Tech({
                 name: 'winter holidays', category: 'seasonal',
-                desc: '@You want to bring one of events/festivities you know from somewhere else right to your tribe...something about winter. //It is all about snow, snowmen, etc. However, no one has shown to anyone what a snowman looks like or what a winter ornament is. @[digger]s will start digging for [snow] if available.',
+                desc: '@You want to bring one of events/festivities you know from somewhere else right to your tribe...something about winter. //It is mainly about snow! However, no one has shown to anyone what a [snowman] looks like or what a winter ornament is. @[digger]s will start digging for [snow] if available.',
                 icon: [1, 11, 'seasonal'],
                 cost: { 'insight': 210, 'culture': 45, 'faith': 5 },
                 req: { 'culture of celebration': true, 'philosophy': true, 'tribalism': false },
@@ -16050,28 +16055,28 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'festive robot print', category: 'seasonal',
-                desc: 'A [festive robot print] can now help gather [christmas essence] from snowmen built by [child,Children]! Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a snowman upon getting [christmas essence,Essence] increases.',
+                desc: 'A new unit can now help gather [christmas essence] from [snowman,Snowmen] built by [child,Children]! Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a [snowman] upon getting [christmas essence,Essence] increases.',
                 icon: [14, 12, 'seasonal'],
                 cost: { 'insight': 1000, 'wisdom': 100 },
                 req: { 'the christmas': true, 'snowmen': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock I', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] is 25% faster</font> @<font color="#f70054">[f.r.o.s.t.y] is 5% more likely to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] is 50% faster</font> @<font color="#f70054">[f.r.o.s.t.y] is 5% more likely to destroy a [snowman]</font>',
                 icon: [5, 12, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50, 'christmas essence': 114 },
                 req: { 'festive robot print': true, 'land acknowledge': true, 'tribalism': false },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock II', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. Also they know from previous experiences that the faster he is the bigger "snowman destruction" it causes...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 25% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 7% more likely to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. Also they know from previous experiences that the faster he is the bigger "snowman destruction" it causes...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 70% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 7% more likely to destroy a [snowman]</font>',
                 icon: [4, 12, 'seasonal'],
                 cost: { 'insight II': 110, 'culture II': 20, 'influence II': 5, 'science': 5, 'christmas essence': 546 },
                 req: { 'festive robot print': true, 'policy revaluation': true, 'f.r.o.s.t.y overclock I': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock III', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of snowman being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] is 45% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 10% more likely to destroy a snowman</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 10% more likely to destroy a [snowman]</font>',
                 icon: [3, 12, 'seasonal'],
                 cost: { 'insight II': 400, 'science': 45 },
                 req: { 'festive robot print': true, 'bigger university': true, 'f.r.o.s.t.y overclock II': true, 'dynamics II': true },
@@ -16101,8 +16106,14 @@ if (getObj("civ") != "1") {
                         type: 'function', func: function () {
                             if (day >= 350 && day <= 363) {
                                 if (G.getRes('snow').amount >= 12 && G.getRes('stone').amount >= 4) {
-                                    G.lose('snow', 12, 'winter punishment'); G.lose('stone', 4, 'winter punishment'); G.lose('thief', 1, 'winter punishment');
-                                    G.gain('wounded', 1, 'thief punished'); G.lose('wild corpse', 1, 'winter punishment'); G.gain('slain corpse', 1);
+                                    G.lose('snow', 12, 'winter punishment');
+                                    G.lose('stone', 4, 'winter punishment');
+
+                                    G.lose('thief', 2, 'winter punishment');
+                                    G.gain('wounded', 1, 'thief punished');
+
+                                    G.lose('wild corpse', 2, 'winter punishment');
+                                    G.gain('slain corpse', 2);
                                 }
                             }
                         }
@@ -18811,6 +18822,20 @@ if (getObj("civ") != "1") {
                 cost: { 'insight': 1200, 'brick': 1500 },
                 req: { 'construction II': true },
                 effects: [
+                ],
+            });
+            new G.Tech({
+                name: 'festive robot print II', category: 'seasonal',
+                desc: '[f.r.o.s.t.y] is no longer so limited!',
+                icon: [0, 35, 'magixmod', 14, 12, 'seasonal'],
+                cost: { 'insight II': 8 },
+                req: { 'the christmas': true, 'snowmen': true, 'eotm': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict("f.r.o.s.t.y").limitPer.land = 2500
+                        }
+                    }
                 ],
             });
 
@@ -22089,8 +22114,8 @@ if (getObj("civ") != "1") {
                         G.policyByName['creative foraging'].visible = false;
                         if (G.checkPolicy("creative foraging") == 'on') {
                             G.setPolicyModeByName('creative foraging', 'off'); //auto hide and disable foraging
+                            G.update['policy']();
                         }
-                        G.update['policy']();
                     }
                     var eatOnGatherVisible = G.getPolicy('eat on gather').visible
                     if (G.checkPolicy('food rations') == 'plentiful' || G.checkPolicy('water rations') == 'plentiful' || !G.has('rules of food')) {
