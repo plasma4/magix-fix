@@ -12161,7 +12161,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'paradise crafting', category: 'tier1',
                 desc: '@Some buildings and crafting shacks from mortal world can be built in Paradise as a separated unit.',
-                icon: [21, 15, 'magixmod', 0, 0, 'magix2'],
+                icon: [0, 14, 'magixmod', 21, 15, 'magixmod'],
                 cost: { 'insight': 650 },
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
             });
