@@ -6316,7 +6316,7 @@ if (getObj("civ") != "1") {
                 category: 'seasonal',
                 hidden: true,
                 tick: function (me, tick) {
-                    G.gain('snowman', randomFloor(Math.pow(G.getRes('child').amount, 0.97) / 1700), 'children building snowmen');
+                    if (G.has('snowmen')) G.gain('snowman', randomFloor(Math.pow(G.getRes('child').amount, 0.97) / 1700), 'children building snowmen');
                     var toSpoil = me.amount * (0.003 + 0.01 * Math.random());
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
@@ -16069,14 +16069,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock II', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. Also they know from previous experiences that the faster he is the bigger "snowman destruction" it causes...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 70% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 7% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. However, getting this upgrade also increases the risk of [snowman,Snowmen] destruction...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 70% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 7% more likely to destroy a [snowman]</font>',
                 icon: [4, 12, 'seasonal'],
                 cost: { 'insight II': 110, 'culture II': 20, 'influence II': 5, 'science': 5, 'christmas essence': 546 },
                 req: { 'festive robot print': true, 'policy revaluation': true, 'f.r.o.s.t.y overclock I': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock III', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 10% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards really want to overclock [f.r.o.s.t.y] even more! They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 10% more likely to destroy a [snowman]</font>',
                 icon: [3, 12, 'seasonal'],
                 cost: { 'insight II': 400, 'science': 45 },
                 req: { 'festive robot print': true, 'bigger university': true, 'f.r.o.s.t.y overclock II': true, 'dynamics II': true },
@@ -16126,7 +16126,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'policies',
                 displayName: '<font color="fuschia">Policies</font>',
-                desc: '@Now you can spend your [influence]! @Unlocks policies, one of the main parts of your civilization. Go to the <b>Policies</b> tab to unlock new options!',
+                desc: '@Now you can spend your [influence]! @Unlocking this lets you control some policies, one of the main parts of your civilization. Go to the <b>Policies</b> tab to unlock new options!',
                 icon: [34, 13, 'magixmod'],
                 chance: 0.25,
                 effects: [
@@ -25843,7 +25843,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'policies',
                 displayName: '<font color="#f7a">Policies</font>',
-                desc: '@Now you can spend your [influence] in the <b>Policies</b> tab. @Unlocks policies, one of the main parts of your civilization.',
+                desc: '@Now you can spend your [influence] in the <b>Policies</b> tab. @Unlocking this lets you control some policies, one of the main parts of your civilization.',
                 icon: [24, 11, 'c2'],
                 chance: 0.3,
                 cost: { 'battery of discoveries': 5 },
