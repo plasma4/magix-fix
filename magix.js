@@ -881,7 +881,7 @@ function onTechBuy(race, tec) {
     }
     if (techCnt == 50) G.Message({ type: 'important', text: 'Your tribe can now survive. Thanks to you (' + G.getName('ruler') + '), dreamers, and lots of insight. You stare at your tribe with a smile.', icon: [8, 12, 8, 4] })
     if (techCnt == 100) G.Message({ type: 'important', text: 'Your civilization is becoming smarter and smarter, and your people are thanking you for ruling them. They believe you are the only person fit for helping them build a great and never-ending civilization! Discover, research, and prosper.', icon: [24, 18, 'magixmod', 8, 4] })
-    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is advanced, and your people hope to see and a lot of researches, ideas, and improvements! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. You wonder secrets will you uncover next...', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
+    if (techCnt == 250) G.Message({ type: 'important tall', text: 'Your civilization is now quite advanced, and yet your people still hope to learn a lot more researches, ideas, and improvements! You stare at your empire. One of you workers comes to you, thanking you for raising humanity to such a high level. Now, you wonder what you\'ll uncover next...', icon: [24, 18, 'magixmod', 18, 19, 'magixmod'] })
 }
 function timeAchievs() {
     var time = Date.now() - G.fullDate;
@@ -18531,7 +18531,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art shows', category: 'tier1',
-                desc: '@[art school]s will now host art shows to show off the amazing drawing skills of their [virtuoso of art,Virtuoso]s, meaning that each [work of art] will provide a little bit of [culture II] @[work of art,Works of art] will decay a little slower with proper art storage',
+                desc: '@[art school]s will now host art shows to show off the amazing drawing skills of their [virtuoso of art,Virtuoso], meaning that each [work of art] will provide a little bit of [culture II] @[work of art,Works of art] will decay a little slower with proper art storage',
                 icon: [45, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 140 },
                 req: { 'passionate artistry': true },
@@ -18845,7 +18845,7 @@ if (getObj("civ") != "1") {
                 name: 'ultimate mushroom crafting', category: 'tier1',
                 desc: 'Getting this makes [blacksmith workshop]s twice as likely to craft [golden mushroom]s successfully!',
                 icon: [1, 35, 'magixmod', 65, 0, 'magix2', 24, 1],
-                cost: { 'insight': 300, 'culture': 25 },
+                cost: { 'insight II': 320, 'culture': 35 },
                 req: { 'eota': true, 'mushroom crafting': true },
                 chance: 1.5,
                 effects: [
