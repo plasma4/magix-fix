@@ -11691,7 +11691,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard wisdom', category: 'tier1',
-                desc: 'Now you can hire [wizard]s to improve your tribe. For every two [wizard]s, you will gain you 1 [wisdom] point. //<small>wisdom++</small>',
+                desc: 'Now you can hire [wizard]s to improve your tribe. For every two [wizard]s, you will gain 1 [wisdom] point. //<small>wisdom++</small>',
                 icon: [3, 0, 'magixmod'],
                 cost: { 'insight': 85, 'culture': 30, 'mana': 50, 'influence': 10 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true },
@@ -19482,7 +19482,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%. In addition, Dreamers in this plane don\'t exist and nobody knows who they are, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After completing the trial for the first time, the bonus cap will be increased by 2.5% and you will gain your first Victory point from this challenge. (This trial will be repeatable but will get harder and harder after each time you retry it. The difficulty will start increasing after the first trial completion!)<br><Br><BR>' +
+                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%. In addition, Dreamers in this plane don\'t exist and nobody knows who they are, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After completing the trial for the first time, the bonus cap will be increased by 2.5% and you will gainr first Victory point from this challenge. (This trial will be repeatable but will get harder and harder after each time you retry it. The difficulty will start increasing after the first trial completion!)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice now...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
