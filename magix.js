@@ -5427,8 +5427,8 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'novel',
-                desc: 'A book written by writers with the help of [poet]\'s beautiful notes.',
-                icon: [1, 13, 'magixmod'],
+                desc: 'A book written by writers with the help of the beautiful notes of your [poet]s.',
+                icon: [74, 0, 'magix2'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.003;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -8168,8 +8168,8 @@ if (getObj("civ") != "1") {
                 category: 'alchemy',
             });
             new G.Unit({
-                name: 'specified potter (alchemy)',
-                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and will also produce [jar for concoctions,Jars for concoctions].',
+                name: 'deadly concoction maker',
+                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and also produces [jar for concoctions,Jars for concoctions].',
                 icon: [19, 16, 'magixmod'],
                 cost: {},
                 use: { 'worker': 1, 'metal tools': 1, 'alchemy zone': 0.3 },
@@ -12181,7 +12181,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bigger potion pallet', category: 'tier1',
-                desc: 'Unlocks more potion types. These are [combat potions], which are throwable and may be used in battle. This unlocks [jar for concoctions,Concoctions], which are used to craft other potions. <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
+                desc: 'Unlocks more potion types. This includes [combat potions], which are throwable and may be used in battle as well as [jar for concoctions,Concoction jars], which are used for more advanced potions! <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
                 icon: [21, 16, 'magixmod'],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -14167,7 +14167,7 @@ if (getObj("civ") != "1") {
                 name: 'symbolism III', category: 'upgrade',
                 desc: 'The third level of [symbolism] will make symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 35, 'magixmod', 31, 17, 'magixmod'],
-                cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10, 'novel': 200 },
+                cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10, 'novel': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 10 } },
