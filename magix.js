@@ -10180,7 +10180,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'temple of the Stone',
                 desc: '@Leads to the completion of the <b>Underground</b> trial. //A weird temple built out of rocks that can be found on surface.<><font color="#b0baab">How you feel without mining? How is it?</font>',
-                wonder: 'Underground',
+                wonder: 'underground',
                 icon: [16, 26, 'magixmod'],
                 wideIcon: [15, 26, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'soft metal ingot': 200 },
@@ -10196,7 +10196,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'Mausoleum of richness',
                 desc: '@Leads to the completion of the <b>Pocket</b> trial. //It is a gleaming monument of richness. The prestige of it spreads all around.<><font color="#D4af37">Richness can do a lot...good and bad.</font>',
-                wonder: 'Pocket',
+                wonder: 'pocket',
                 icon: [10, 26, 'magixmod'],
                 wideIcon: [9, 26, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious metal ingot': 20 },
@@ -10212,7 +10212,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'Mausoleum of the Dreamer',
                 desc: '@Leads to the completion of the <b>Dreamy</b> trial. //A monument where the acknowledged dead lie. It is a towering monument built from ideas and discoveries.<><font color="#D4a000">Wisdom is key...and it can open a lot of doors.</font>',
-                wonder: 'Dreamy',
+                wonder: 'dreamy',
                 icon: [28, 26, 'magixmod'],
                 wideIcon: [27, 26, 'magixmod'],
                 cost: { 'basic building materials': 1000, 'precious building materials': 400, 'magic essences': 300, 'mana': 400 },
@@ -11859,7 +11859,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,People] will know more about math, making them even more intelligent. @Your [population,people] have a larger chance to understand more complex things. @improves your civilization\'s numeral system @introduces equations',
+                desc: '@[population,People] will know more about math, making them even more intelligent. @They will have a larger chance to understand more complex ideas and concepts. @improves your civilization\'s numeral system @introduces equations',
                 icon: [0, 35, 'magixmod', 17, 1, 'magixmod', 23, 1],
                 cost: { 'insight': 80 },
                 effects: [
@@ -25971,7 +25971,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths II', category: 'tier1',
-                desc: '@[population,Elves] will know more a little more advanced math, making them even more intelligent. @Your [population,elves] have a larger chance to understand more advanced things. @improves your civilization\'s numeral system',
+                desc: '@[population,Elves] will know more a little more advanced math, making them even more intelligent. @Now, they will have a greater chance to understand more complex concepts. @improves your civilization\'s numeral system',
                 icon: [3, 13, 'c2', 26, 13, 'c2'],
                 cost: { 'creativity': 42, 'discernment': 12 },
                 req: { 'oral tradition 2/2': true, 'maths': true, 'city planning': true },
