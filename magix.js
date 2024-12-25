@@ -2241,7 +2241,7 @@ if (getObj("civ") != "1") {
                             G.middleText('- Completed <font color="pink">3rd party</font> achievement -', 'slow')
                         }
                     }
-                    if (G.has('plain island mining strategy')) {
+                    if (G.has('plain island mining strategies')) {
                         G.getDict('mine of the plain island').icon = [31, 8, 'magixmod']
                     }
 
@@ -9028,10 +9028,10 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 0.95, req: { 'dt5': true }, mode: 'iron' },
                     { type: 'mult', value: 0.95, req: { 'dt6': true }, mode: 'tin' },
                     //Collapsing chance
-                    { type: 'mult', value: 1.05, req: { 'plain island mining strategy': true } },
+                    { type: 'mult', value: 1.05, req: { 'plain island mining strategies': true } },
                     { type: 'mult', value: 1.25, req: { 'se09': 'on' } },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 50, req: { 'plain island mining strategy': false } },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 70, req: { 'plain island mining strategy': true } }
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 50, req: { 'plain island mining strategies': false } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, true, '[X] [people].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding their miners'), chance: 1 / 70, req: { 'plain island mining strategies': true } }
                 ],
                 tick: function (me, tick) {
                     me.displayName = 'Mine of the ' + islandName()
@@ -14179,7 +14179,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'wizard\'s grain fertilizer', category: 'upgrade',
-                desc: 'Your people can learn how to make some unique fertilizer, letting [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating bread for breakfast. (They cannot imagine life without any bread!)',
+                desc: 'Your people can learn how to make some unique fertilizer, letting [wheat farm]s produce 150% more [wheat] instead of 50%. It was made by group of wizards who love eating [bread] for breakfast. (They cannot imagine life without it!)',
                 icon: [30, 17, 'magixmod'],
                 cost: { 'insight II': 100, 'mana': 500, 'culture II': 33, 'faith II': 2 },
                 req: { 'doctrine of the dark wormhole 3/5': true },
@@ -14187,7 +14187,7 @@ if (getObj("civ") != "1") {
                 ]
             });
             new G.Tech({
-                name: 'plain island mining strategy', category: 'tier2',
+                name: 'plain island mining strategies', category: 'tier2',
                 desc: '@Decreases the accident rate at the [mine of the plain island]. @Increases the efficiency of [mine of the plain island] by 5%. @Applies a new visual change to [mine of the plain island]\'s icon!',
                 icon: [31, 7, 'magixmod'],
                 cost: { 'insight II': 50, 'science': 2 },
@@ -14195,7 +14195,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'respect for the corpse',
-                desc: '@this trait removes and disables the effects of [ritual necrophagy] @[art of death] no longer uses any corpses, but [painter,Artists] can still use death as a theme (they will draw or paint corpses instead using actual ones). @allows [art of death] to be obtainable with the [belief in the beforelife,Beforelife] religion path. @unhappiness from unburied corpses is decreased by a quarter',
+                desc: '@this trait removes and disables the effects of [ritual necrophagy] @[art of death] no longer uses any corpses, but [painter,Artists] will still use death as a theme (without using actual [corpse]s). @allows [art of death] to be obtainable with the [belief in the beforelife,Beforelife] religion path. @unhappiness from unburied corpses is decreased by a quarter',
                 icon: [25, 24, 'magixmod'],
                 cost: { 'culture II': 25, 'faith II': 5, 'influence II': 5 },
                 req: { 'ritual necrophagy': true, 'liberating darkness': true },
@@ -14222,7 +14222,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'improved windmill motors', category: 'upgrade',
-                desc: '[windmill]s will craft 35% more [flour] with improved construction.',
+                desc: 'By improving the quality of your [windmill]s by using better construction methods, they will craft 35% more [flour].',
                 icon: [31, 13, 'magixmod'],
                 cost: { 'insight II': 165, 'science': 5, 'culture II': 21 },
                 req: { 'symbolism III': true },
@@ -14268,7 +14268,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'cremation', category: 'tier2',
-                desc: 'Unlocks the [crematorium]. Burns embalmed [corpse]s then all dust from [corpse] they put into the [urn].//You\'ll unlock better way of burying people. 1 [burial spot] can store 4 [urn]s.',
+                desc: 'Unlocks the [crematorium]. Burns embalmed [corpse]s and turns them into dust before putting them in an [urn].//You\'ll be able to get better ways of burying people as well. @each [burial spot] can store 4 [urn]s',
                 icon: [30, 16, 'magixmod'],
                 cost: { 'insight II': 155, 'science': 10, 'influence II': 10, 'culture II': 35 },
                 req: { 'embalmment': true },
@@ -14358,7 +14358,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb1',
                 displayName: 'Soothsayer blessing',
-                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 10% due to getting closer to the religion. //<small>you got lucky this time...this increases it by the most out of all four of these traits</small>',
+                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 10% due to them getting closer to your religion. //<small>you got lucky this time...this increases it by the most out of all four of these traits</small>',
                 icon: [13, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14368,7 +14368,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb2',
                 displayName: 'Soothsayer blessing',
-                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 5% due to getting closer to the religion.',
+                desc: 'Increases the amount of [faith] gained by [soothsayer]s by 5% due to them getting closer to your religion.',
                 icon: [14, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb1': false, 'sb3': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14378,7 +14378,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb3',
                 displayName: 'Soothsayer not-blessing',
-                desc: 'Sadly, getting closer to the religion doesn\'t make [soothsayer]s gain more [faith]. //<small>Try your luck next time, I guess!</small>',
+                desc: 'Sadly, getting closer to your religion doesn\'t make [soothsayer]s gain more [faith]. //<small>Try your luck next time, I guess!</small>',
                 icon: [15, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb1': false, 'sb4': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
@@ -14388,7 +14388,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sb4',
                 displayName: 'Soothsayer un-blessing',
-                desc: 'Nobody knows how or why, but [soothsayer]s will now gain 5% less [faith] even after getting closer to the God and the entire religion! //<small>unlucky...</small>',
+                desc: 'Nobody knows how or why, but [soothsayer]s will now gain 5% less [faith] even after getting closer to entire God and religion! //<small>unlucky...</small>',
                 icon: [16, 25, 'magixmod'],
                 req: { 'gods and idols': true, 'power of the faith': true, 'sb2': false, 'sb3': false, 'sb1': false },
                 cost: { 'faith II': 8, 'influence II': 7, 'insight II': 35, 'culture II': 10 },
