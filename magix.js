@@ -10042,7 +10042,7 @@ if (getObj("civ") != "1") {
                 steps: 100,
                 messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have an angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
                 finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'blood': 75 },
-                finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,People], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape this plane of Wrath and Madness and award you with [victory point]s.',
+                finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,people], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape this plane of Wrath and Madness and award you with [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't2': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -11970,7 +11970,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mo\' floorz', category: 'upgrade',
-                desc: 'Each [floored house] will gain a 4th floor, allowing them to fit 10 more [population,People] for every [floored house]. However, the chance for a house collapsing is increased by 1%.//<small>nothing is better than the view from atop a floored house</small>',
+                desc: 'Each [floored house] will gain a 4th floor, allowing them to fit 10 more [population,people] for every [floored house]. However, the chance for a house collapsing is increased by 1%.//<small>nothing is better than the view from atop a floored house</small>',
                 icon: [14, 11, 'magixmod'],
                 cost: { 'insight': 750, 'wisdom': 15 },
                 req: { 'physics': true },
@@ -14585,7 +14585,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise shelters', category: 'tier2',
-                desc: 'Unlocks the [paradise shelter]. It is made out of stones and can fit 4 people, but will also be limited.<br>In addition, it adds +1 bonus [housing] for every 4 [paradise shelter]s.',
+                desc: 'Unlocks the [paradise shelter]. It is made out of [stone]s and can fit 4 [population,people], but will also be limited.<br>In addition, it adds +1 bonus [housing] for every 4 [paradise shelter]s.',
                 icon: [14, 27, 'magixmod'],
                 req: { 'paradise housing': true, 'leaves of wisdom': true },
                 cost: { 'insight II': 150, 'culture II': 40, 'influence II': 10, 'science': 10 },
@@ -15566,7 +15566,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'block-smithery', category: 'tier2',
-                desc: '@Unlocks the [block-smith workshop]. It is a subtype of the [blacksmith workshop] that will forge blocks out of precious resources. @After obtaining this, your [blacksmith workshop] will no longer forge blocks. @Uses [land of the Plain Island].',
+                desc: '@Unlocks the [block-smith workshop]. This is a subtype of the [blacksmith workshop], but will forge blocks out of even more precious resources. @After obtaining this, your [blacksmith workshop] will no longer forge blocks. @Uses [land of the Plain Island].',
                 icon: [20, 30, 'magixmod'],
                 cost: { 'insight II': 340, 'science': 40 },
                 req: { 'dinium & unknownium working': true, 'mirror world 1/2': true },
