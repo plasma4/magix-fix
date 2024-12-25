@@ -7209,7 +7209,8 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'hard metal ingot': 11 }, into: { 'basic factory equipment': 1 }, every: 4, mode: 'factgear' },
                     { type: 'convert', from: { 'precious metal ingot': 1, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.2, mode: 'golden fish', req: { 'golden crafting': false } },
                     { type: 'convert', from: { 'fruit': 2, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.6, mode: 'golden fish', req: { 'golden crafting': true } },
-                    { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.3, mode: 'golden mushrooms', req: { 'mushroom crafting': true } },
+                    { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.3, mode: 'golden mushrooms', req: { 'mushroom crafting': true, 'ultimate mushroom crafting': false } },
+                    { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.6, mode: 'golden mushrooms', req: { 'ultimate mushroom crafting': true } },
                     { type: 'mult', value: 0.95, req: { 'dt1': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'mult', value: 1.2, req: { 'ground weapons': true } },
@@ -10471,9 +10472,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Toolhut',
-                desc: 'This hut can craft for you: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s. //They produce bigger packets of these items, but at a slower rate. @Materials used in processing: [thread], [stone], [lumber], [fire pit], and [coal].',
+                desc: 'This hut will craft various tools that your people need. These are: @[stone tools] @[stone weapons] @[bow]s @[crossbow]s @[arrow]s //These huts produce bigger packets of these items, but at a slower rate. @Additional materials used in processing are [thread], [stone], [lumber], [fire pit], and [coal].',
                 icon: [18, 31, 'magixmod'],
-                cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
+                cost: { 'basic building materials': 1600, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 0.2, 'food': 65, 'water': 85 },
                 use: { 'worker': 80, 'land': 1 },
                 req: { 'caretaking': true, 'manufacture units II': true, 'tool refinery 2/2': true },
@@ -10991,7 +10992,7 @@ if (getObj("civ") != "1") {
                     if (G.has("t7")) costs['herb essence'] = G.techN * Math.max(G.achievByName['herbalism'].won * 2, 1.8) * 2;
                     if (G.has('t3')) { costs['culture'] = calcCost('inspiration', 0.1); costs['influence'] = calcCost('authority', 0.1) };
                     if (G.has('eotm')) costs['science'] = calcCost('education', G.has("do we need that much science?") ? 0.1 : 0.2);
-                    if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.04);
+                    if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.06);
                     if (G.chooseBox[0].choices.length === 0 && G.has('the well of ideas')) {
                         costs['idea tablet'] = G.has('paradise building') ? 2 : 1
                     }
@@ -15876,7 +15877,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'tool refinery 2/2', category: 'tier2',
-                desc: '[stone tools] become refined, making them decay slower. Also, [artisan]s are no longer able to craft them. Obtain [factories II] or [manufacture units II] to unlock a unit that will let you craft them again if you do not have it yet!',
+                desc: '[stone tools] become refined, making them decay slower. Also, [artisan]s are no longer able to craft them. Obtain [factories II] or [manufacture units II] to unlock a unit that will let you craft them again if you do not have it yet! //<font color="#f70054">Make sure that you get those technologies quickly once you research this. You only have a limited time to do so before your [metal tools] decay, at which point you will no longer be able to get all of the items needed for [Toolhut]s to function!</font>',
                 icon: [27, 2, 'magixmod', 25, 31, 'magixmod'],
                 req: { 'tool refinery 1/2': true, 'outstanding wisdom': true, 'wonder \'o science': true },
                 cost: { 'insight II': 150, 'science': 5 },
@@ -15884,6 +15885,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
+                            G.getDict('artisan').modes["stone tools"].desc = 'No longer produce anything due to [tool refinery 2/2]!';
                             G.getDict('stone tools').icon = [22, 31, 'magixmod'];
                             G.getDict('stone weapons').icon = [23, 31, 'magixmod'];
                             G.getDict('metal tools').icon = [20, 31, 'magixmod'];
@@ -17984,7 +17986,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'trees of faith', category: 'tier1',
-                desc: '[cathedral]s become 25% more effective and will provide some [health] now.//<small>planting these unique trees help us gain a truly ultimate belief</small>',
+                desc: '[cathedral]s become 25% more effective and will provide some [health] now.//<small>planting these unique trees will give us a truly ultimate belief</small>',
                 icon: [36, choose([2, 3]), 'magixmod', 24, 1],
                 cost: { 'faith': 800 },
                 req: { 'stronger faith II': true, 'mentors of nature': true, 'better healing': true },
@@ -18446,7 +18448,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'cultural people',
-                desc: 'Your tribe is growing more and more [culture II,Cultural], meaning that they have begun to think of ways to use their creativity to create more and more... @[painter]s create [painting]s and [culture II] faster @[musician]s provide a little bit of [culture II] now, just like [painter]s @may lead to [eota,Something new]...',
+                desc: 'Your tribe is becoming more and more [culture II,Cultural], meaning that they have begun to think of ways to use their creativity to create more and more... @[painter]s create [painting]s and [culture II] faster @[musician]s provide a little bit of [culture II] now, just like [painter]s @may also lead to [eota,Something new]...',
                 icon: [38, 0, 'magix2'],
                 cost: { 'culture II': 20 },
                 chance: 20,
@@ -18484,14 +18486,15 @@ if (getObj("civ") != "1") {
             //so uh this is bad news...but some saves may have been screwed up because traits and techs are considered to be similar in the code, meaning that they will have the same ID structure...which means various issues could happen with techs/traits swapping! (this is quite fun, whelp)
             new G.Tech({
                 name: 'larger toolhuts', category: 'tier1',
-                desc: 'Your [Toolhut]s will now work 50% faster, but will require 40 more [worker]s and 32 more [stone tools].',
+                desc: 'Your [Toolhut]s will now work 50% faster, but will require 60 more [worker]s and will also need 10 [stone tools]. (Really make sure you won\'t run out of [stone tools]!)',
                 icon: [11, 15, 'magixmod', 17, 18, 'magixmod'],
                 req: { 'manufacture units II': true },
                 cost: { 'insight II': 350 },
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.getDict('Toolhut').use = { 'worker': 160, 'land': 1, 'worker': 20, 'stone tools': 128 }
+                            G.getDict('Toolhut').use.worker = 140
+                            G.getDict('Toolhut').use["stone tools"] = 10
                         }
                     },
                 ],
@@ -18528,7 +18531,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'art shows', category: 'tier1',
-                desc: '@[art school]s will now host art shows to show off the drawing skills of their [artist]s, meaning that each [work of art] will provide a little bit of [culture II] @[work of art,Works of art] will decay a little slower with proper art storage',
+                desc: '@[art school]s will now host art shows to show off the amazing drawing skills of their [virtuoso of art,Virtuoso]s, meaning that each [work of art] will provide a little bit of [culture II] @[work of art,Works of art] will decay a little slower with proper art storage',
                 icon: [45, 0, 'magix2', 24, 1],
                 cost: { 'culture II': 140 },
                 req: { 'passionate artistry': true },
@@ -18836,6 +18839,16 @@ if (getObj("civ") != "1") {
                             G.getDict("f.r.o.s.t.y").limitPer.land = 2500
                         }
                     }
+                ],
+            });
+            new G.Tech({
+                name: 'ultimate mushroom crafting', category: 'tier1',
+                desc: 'Getting this makes [blacksmith workshop]s twice as likely to craft [golden mushroom]s successfully!',
+                icon: [1, 35, 'magixmod', 65, 0, 'magix2', 24, 1],
+                cost: { 'insight': 300, 'culture': 25 },
+                req: { 'eota': true, 'mushroom crafting': true },
+                chance: 1.5,
+                effects: [
                 ],
             });
 
