@@ -10475,7 +10475,7 @@ if (getObj("civ") != "1") {
                 icon: [18, 31, 'magixmod'],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 0.2, 'food': 65, 'water': 85 },
-                use: { 'worker': 120, 'land': 1, 'worker': 20, 'stone tools': 96 },
+                use: { 'worker': 80, 'land': 1 },
                 req: { 'caretaking': true, 'manufacture units II': true, 'tool refinery 2/2': true },
                 category: 'crafting',
                 effects: [
