@@ -1864,13 +1864,19 @@ if (getObj("civ") != "1") {
                         }
                     }
                     if (G.achievByName['mausoleum'].won > 0) {
-                        if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t2')) {
+                        if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t2') && !G.has('t10')) {
                             G.getDict('battling thieves').req = { 'hunting': true };
-                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t prevent any thieves from appearing, sadly. Adults (and more rarely, old people) may die after encountering a Thief. Expect them at a more advanced game stage.', icon: [23, 1, 'magixmod'] });
+                            G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t prevent any thieves from appearing, sadly. Adults (and more rarely, old people) may die after encountering a Thief. Expect these bad guys from now on.', icon: [23, 1, 'magixmod'] });
                             madeThievesWarn = true
                         } else if (G.has('t1') || G.has('t2')) {
                             if (G.year >= 109 && G.year <= 121 && !madeThievesWarn) {
-                                G.Message({ type: 'important', text: 'You got used to Thieves and the fact that they tend to appear. But in this plane, Thieves don\'t exist. It is quite good for you!', icon: [28, 2, 'magixmod', 23, 0, 'magixmod'] });
+                                G.Message({ type: 'important', text: 'You got used to Thieves and the fact that they tend to appear. But in this plane, Thieves don\'t exist. Indeed, this is quite good for you!', icon: [28, 2, 'magixmod', 23, 0, 'magixmod'] });
+                                madeThievesWarn = true
+                            }
+                        } else if (G.has('t10')) {
+                            if (G.year >= 80 - G.achievByName['pocket'].won * 2 && !madeThievesWarn) {
+                                G.getDict('battling thieves').req = { 'hunting': true };
+                                G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t prevent any thieves from appearing, sadly. Adults (and more rarely, old people) may die after encountering a Thief. Expect these bad guys to take your money from now on.', icon: [23, 1, 'magixmod'] });
                                 madeThievesWarn = true
                             }
                         }
@@ -5673,7 +5679,7 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 tick: function (me, tick) {
                     if (!(day + leap >= 40 && day + leap <= 46 && G.has('peace'))) {
-                        if (G.year > 109 && !G.has('t1') && !G.has('t2') && G.resets > 0) { //The spawning rate is increased or decreased by various factors
+                        if (G.year >= (G.has('t10') ? 80 - G.achievByName['pocket'].won * 2 : 110) && !G.has('t1') && !G.has('t2') && G.resets > 0) { //The spawning rate is increased or decreased by various factors
                             var n = G.getRes('adult').amount * 0.0000004 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.012 * G.year - 0.3, 0.9), 1.15), 3.5);
                             if (G.checkPolicy('se02') == 'on') {
                                 G.gain('thief', n * 1.02, 'unhappiness');
@@ -5994,7 +6000,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'blood',
-                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). (Note that you need to glory Bersaria and research more with [fear of death] active.) //<small>Oh, and you start with 200 blood.</small> <>Be aware that the [blood] will be needed to keep Hartar\'s servants hunting meat for you!',
+                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). (Note that you need to glory Bersaria and research more with [fear of death] active.) //<small>Oh, and you start with 200 blood.</small> <>Be aware that the [blood] will be needed to to keep getting meat from [hartar\'s servant]s!',
                 icon: [33, 6, 'magixmod'],
                 startWith: 200,
                 category: 'main',
@@ -10082,10 +10088,10 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'hartar\'s servant',
-                desc: '@hunts wild animals for [meat], [bone]s, and [hide]s @cannot be wounded and may replace a [gatherer]',
+                desc: '@hunts wild animals for [meat], [bone]s, and [hide]s, and collects various [stick]s and [stone]s @cannot be wounded and entirely replaces [gatherer]s',
                 icon: [7, 29, 'magixmod'],
                 cost: {},
-                limitPer: { 'population': 3 },
+                limitPer: { 'population': 2 },
                 use: { 'worker': 1 },
                 upkeep: { 'blood': 0.01 + (0.025 * G.achievByName['hunted'].won) },
                 effects: [
@@ -10228,7 +10234,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'university of science',
-                desc: '@This wonder is different from the other wonders. You cannot ascend via the [university of science,University], but instead, you\'ll be able to unlock bonuses and new upgrades for your great civilization with it. <>Settled at the lands of Plain Island, the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.',
+                desc: '@This wonder is different from the other wonders. You cannot ascend via the [university of science,University], but instead, you\'ll be able to unlock bonuses and new upgrades for your great civilization with it. <>Settled at the lands of Plain Island, the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody really knows.',
                 wonder: '.',
                 icon: [13, 29, 'magixmod'],
                 wideIcon: [12, 29, 'magixmod'],
@@ -10237,10 +10243,10 @@ if (getObj("civ") != "1") {
                 steps: 200,
                 messageOnStart: 'The construction of a science-focused university has been started. It is the complex of education where each knowledge can be deepened. You are proud of that.',
                 finalStepCost: { 'population': 1000, 'insight II': 100, 'wisdom': 250, 'science': 50, 'wisdom II': -25, 'education': -25, 'university point': -100 },
-                finalStepDesc: 'To finish this stage of the [university of science,University], you need to sacrifice some resources. To unlock the next stage, remember that you will need to gain more [victory point]s! After each stage that you finish, you will unlock new researches.',
+                finalStepDesc: 'To finish this stage of the [university of science,University], you need to sacrifice some resources. To unlock the next stage, remember it requires enough [victory point]s! You will also unlock new researches when finishing a stage.',
                 use: { 'land of the Plain Island': 15, 'worker': 5, 'metal tools': 5 },
                 tick: function (me, tick) {
-                    G.getDict('university of science').desc = '@This wonder is different than other wonders. You cannot ascend via the [university of science,University], but you can unlock bonuses and new upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody knows.'
+                    G.getDict('university of science').desc = '@This wonder is different than other wonders. You cannot ascend via the [university of science,University], but can get unique bonuses and upgrades for your great civilization. <>Settled at the lands of ' + islandName() + ', the university is where all dreamers, philosophers, gurus, outstanders meet to discover and research new never-seen gizmos. Who knows what will they discover? Maybe they will build the first computer or...time machine...Nobody really knows.'
                 },
                 req: { 'wonder \'o science': true },
                 category: 'civil',
@@ -10248,14 +10254,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'money stockpile',
-                desc: 'This unit stores valuable money, slowing its decay. The amount of money that the [money stockpile] can store is not affected by your Pocket completions, and you do not need [stockpiling] to unlock this unit!',
+                desc: 'This unit stores valuable currency, slowing its decay. The amount of money that the [money stockpile] can store is not affected by your Pocket completions, and you do not need [stockpiling] to unlock this unit!',
                 icon: [25, 29, 'magixmod'],
                 cost: { 'archaic building materials': 50 },
                 effects: [
                     { type: 'provide', what: { 'money storage': 10000 } },
                 ],
                 use: { 'land': 1 },
-                limitPer: { 'land': 1e7 },
+                limitPer: { 'land': 40000 },
                 req: { 't10': true, 'trial': true },
                 category: 'trial',
             });
@@ -19842,10 +19848,14 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year 110 and above, you will start losing money because of thievery. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35%. (The one that applies a bonus for beating this trial the second time will increase the effect to 55%.)<br><Br><BR>' +
+                                    'My plane is for rich people. Are you one of them? Well. In this plane you will earn money. Gatherers can also gather money there...in 3 tiers. Also, exploring units are 250% as efficient. To buy resources that you can\'t gather, you will need the 3rd tier of currency. None of the crafting units exist (in fact, crafting isn\'t even possible in this plane)! Remember, however, that lower tiers of currency decay faster. From year ' + (80 - G.achievByName['pocket'].won * 2) + ' onwards, you will start losing money because of thievery, which is earlier than normal. See if you can lead your people to build a wonder of Mamuun and ascend! Completing this trial for the first time will increase the capacity of all [stockpile,storage units] by 35%. (Beating this trial a second time will increase the effect to 55%. You can only complete this trial 10 times.)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
+                                            if (G.achievByName['pocket'].won >= 10) {
+                                                G.setPolicyModeByName('Pocket', 'off');
+                                                return
+                                            }
                                             trialPrep("t10");
                                             G.dialogue.popup(function (div) {
                                                 G.middleText('The Pocket trial has been started. You are in Mamuun\'s plane now.', 'slow');
