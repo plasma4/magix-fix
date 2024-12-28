@@ -9266,14 +9266,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mana crafting stand',
-                desc: 'Here, [alchemist]s can craft [mana] with the same recipe that your [mana maker]s discovered.',
+                desc: 'Here, [alchemist]s can craft [mana] with the same recipe that your [mana maker]s discovered. However, it is 25 times slower than a normal [mana maker]!',
                 icon: [19, 10, 'magixmod'],
                 cost: { 'basic building materials': 4 },
                 upkeep: { 'water': 0.25 },
                 req: { 'alchemy': true, 'mana brewery II': true },
                 use: { 'alchemy zone': 0.5, 'alchemist': 1 },
                 effects: [
-                    { type: 'gather', what: { 'mana': 0.75 } },
+                    { type: 'gather', what: { 'mana': 0.8 } },
                     { type: 'mult', value: 1.5, req: { 'mana brewery III': true } },
                     { type: 'mult', value: 1.035, req: { 'at9': true } },
                     { type: 'mult', value: 0.95, req: { 'dt28': true } },
@@ -10913,12 +10913,12 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({ //New unit!!!!! Again!!!!!
                 name: 'golden mana maker',
-                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water]. Requires [alchemy zone]s instead of normal [land].',
+                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water]. Requires lots more [alchemy zone]s since it is 150 times faster than [mana crafting stands]!',
                 icon: [59, 0, 'magix2'],
                 cost: { 'insight': 100, 'gold block': 50 },
-                use: { 'alchemy zone': 5, 'worker': 1 },
+                use: { 'alchemy zone': 8, 'worker': 1 },
                 upkeep: { 'food': 10, 'water': 10, 'insight': 5, 'gold block': 2 },
-                limitPer: { 'population': 1000 },
+                limitPer: { 'population': 6000 },
                 req: { 'more mana making': true },
                 //require:{'wizard':3},
                 effects: [
