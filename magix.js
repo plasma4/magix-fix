@@ -1097,10 +1097,10 @@ if (getObj("civ") != "1") {
                 G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herbs]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="#f70054">Note: While Valentines is active the use won\'t disable, however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
-                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font>';
+                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>we are no longer scared of the darkness!</small>';
+                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>the ancients sure do love flowers for whatever reason</small>';
+                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>it\'s a good thing?</small>';
+                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', all your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During Halloween the use won\'t disable, however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>that\'s pretty magical...</small>';
                 var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
                 if (day + leap >= 289 && day + leap <= 305) {
                     G.getDict('"dark season"').req = { 'tribalism': true, 'culture of celebration': true, 'sedentism': true, 'intuition': true };
@@ -1703,7 +1703,7 @@ if (getObj("civ") != "1") {
                         G.update['unit']();
                     }
                     G.lose('tragedy', 1);//thats a need
-                    if (G.achievByName['???'].won == 0 && G.has('constelations'))
+                    if (G.achievByName['???'].won == 0 && G.has('constellations'))
                         switch (G.getRes('tragedy').amount) {
                             case 8: G.Message({ type: 'story1', text: 'Some rumors tell that something terrible is going to happen...Who knows if that\'s true...or not.<br>Some people say that they\'ll wait and they\'ll see.', icon: [32, 32, 'magixmod'] }); break;
                             case 6: G.Message({ type: 'story2', text: 'Wizards believe in the tragedy. After now, happiness will go lower and lower. Soon, that won\'t seem like its just a rumor. But is there any confirmation or any proof about incoming tragedy?', icon: [33, 32, 'magixmod'] }); break;
@@ -6394,7 +6394,7 @@ if (getObj("civ") != "1") {
             new G.Res({ //debug res
                 name: 'tragedy',
                 tick: function (me) {
-                    if (me.amount == 1 && G.achievByName['???'].won == 0 && G.has('constelations')) {
+                    if (me.amount == 1 && G.achievByName['???'].won == 0 && G.has('constellations')) {
                         G.Message({ type: 'story1', text: '<big>THIS IS THE END!</big>', icon: [10, 32, 'magixmod'] });
                     }
                 },
@@ -6976,7 +6976,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'well',
-                desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable water.',
+                desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable [water].',
                 icon: [25, 3],
                 cost: { 'stone': 50, 'archaic building materials': 20 },
                 use: { 'land': 1 },
@@ -7020,7 +7020,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'quarry',
-                desc: '@carves [cut stone] out of the ground@may find other minerals such as [limestone] and [marble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.',
+                desc: '@carves [cut stone] out of the ground@may find various other minerals such as [limestone] and [marble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.',
                 icon: [22, 3],
                 cost: { 'archaic building materials': 100 },
                 use: { 'land': 4 },
@@ -7057,7 +7057,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mine',
-                desc: '@extracts ores, [coal] and [stone] out of the ground@may occasionally collapse<>The workers that work in [mine]s burrow deep into the earth to gain all kinds of minerals.',
+                desc: '@extracts ores, [coal] and [stone] out of the ground@may occasionally collapse<>The workers that work in [mine]s burrow deep into the earth to provide all kinds of minerals.',
                 icon: [22, 2],
                 cost: { 'archaic building materials': 100 },
                 use: { 'land': 3 },
@@ -8547,7 +8547,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy well',
-                desc: '@produces fresh [cloudy water], up to 35 per day<>The [holy well] is a steady source of drinkable water, but requires some [holy essence] to start operating.',
+                desc: '@produces fresh [cloudy water], up to 35 per day<>The [holy well] is a steady source of drinkable [water], but requires some [holy essence] to start operating.',
                 icon: [10, 14, 'magixmod'],
                 cost: { 'stone': 50, 'basic building materials': 120, 'holy essence': 100 },
                 use: { 'land of the Paradise': 1 },
@@ -9094,7 +9094,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'well of the Plain Island',
                 displayName: 'Well of the Island',
-                desc: '@produces fresh [water], up to 25 per day<>The [well] is a steady source of drinkable water.',
+                desc: '@produces fresh [water], up to 25 per day<>The [well] is a steady source of drinkable [water].',
                 icon: [25, 3],
                 cost: { 'stone': 70, 'archaic building materials': 30, 'basic building materials': 15 },
                 use: { 'land of the Plain Island': 1 },
@@ -14472,7 +14472,7 @@ if (getObj("civ") != "1") {
                 name: 'instruction', category: 'tier1',
                 desc: 'This will improve your people\'s communication among themselves. [population,People] will now be able to guide each other while doing their work to help out! //<small>in fact, it can reduce confusion by a lot</small>',
                 icon: [30, 27, 'magixmod'],
-                req: { 'language': true, 'a gift from the mausoleum': true, 'alphabet 1/3': true },
+                req: { 'message memory': true, 'language': true, 'a gift from the mausoleum': true, 'alphabet 1/3': true },
                 cost: { 'insight': 30 },
                 effects: [
                 ]
@@ -14724,7 +14724,7 @@ if (getObj("civ") != "1") {
             /*Insight traits will work together with culture one*/
             new G.Trait({
                 name: 'creativity over smartness', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [insight] costs reduced. <>For every 75 [insight] from the original cost, the new cost is reduced by 3 (with [roots of insight] it\'s 4). (For example, if a research costs 225 [insight], it will cost 216 as long as this trait is active.) @maximum reduction is 70.//<small>smort</small>',
+                desc: '@all researches, knowledges and traits have their [insight] costs reduced. <>For every 75 [insight] from the original cost, the new cost is reduced by 3 (with [roots of insight] it\'s 4). (For example, if a research costs 225 [insight], it will cost 216 as long as this trait is active.) @The maximum reduction for this is 70.//<small>smort</small>',
                 icon: [24, 3, 'magixmod', 8, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14757,7 +14757,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'slower synapses',
-                desc: '@all researches, knowledges and traits have their [insight] costs increased. <>For every 75 [insight] from the original cost, the new cost is increased by 3 (with [roots of insight] it\'s 2). (For example, if a research costs 225 [insight], it will cost 234 as long as this trait is active.) @maximum reduction is 70.//<small>not smort</small>',
+                desc: '@all researches, knowledges and traits have their [insight] costs increased. <>For every 75 [insight] from the original cost, the new cost is increased by 3 (with [roots of insight] it\'s 2). (For example, if a research costs 225 [insight], it will cost 234 as long as this trait is active.) @The maximum reduction for this is 70.//<small>not smort</small>',
                 icon: [23, 3, 'magixmod', 8, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14790,7 +14790,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'artistic thinking II', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [culture] costs reduced. <>For every 50 [culture] from the original cost, the new cost is reduced by 2 (with [cultural roots] it\'s 3). (For example, if a research costs 200 [culture], it will cost 192 as long as this trait is active.) @maximum reduction is 45.//<small>that\'s very arty art, isn\'t it?</small>',
+                desc: '@all researches, knowledges and traits have their [culture] costs reduced. <>For every 50 [culture] from the original cost, the new cost is reduced by 2 (with [cultural roots] it\'s 3). (For example, if a research costs 200 [culture], it will cost 192 as long as this trait is active.) @The maximum reduction for this is 45.//<small>that\'s very arty art, isn\'t it?</small>',
                 icon: [24, 3, 'magixmod', 10, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14856,7 +14856,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'faithful thinking',
-                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2 (with [deep-rooted faith] it\'s 3). (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @maximum reduction is 45.//<small>Have fun with this trait: it doesn\'t last very long!</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2 (with [deep-rooted faith] it\'s 3). (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @The maximum reduction for this is 45.//<small>Have fun with this trait: it doesn\'t last very long!</small>',
                 icon: [24, 3, 'magixmod', 7, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14889,7 +14889,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'atheism',
-                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.) @maximum reduction is 45.//<small>it seems like there are...dissenters...</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2 (with [deep-rooted faith] it\'s 1). (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.) @The maximum reduction for this is 45.//<small>it seems like there are...dissenters...</small>',
                 icon: [23, 3, 'magixmod', 7, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -14922,7 +14922,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //science powerup/powerdown is standalone. Is short and very, very rare
                 name: 'season for inventing',
-                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @maximum reduction is 15.//<small>This trait is very rare...</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @The maximum reduction for this is 15.//<small>This trait is very rare...</small>',
                 icon: [24, 3, 'magixmod', 6, 4, 23, 1],
                 cost: { 'culture II': 15, 'insight II': 5 },
                 chance: 1500,
@@ -14988,7 +14988,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'liberality', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2 (with [political roots] it\'s 3). (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @maximum reduction is 30.//<small>democration...right?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2 (with [political roots] it\'s 3). (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @The maximum reduction for this is 30.//<small>democration...right?</small>',
                 icon: [24, 3, 'magixmod', 11, 4, 23, 1],
                 cost: { 'culture': 15, 'insight': 5 },
                 chance: 150,
@@ -16463,8 +16463,7 @@ if (getObj("civ") != "1") {
                 chance: 15,
             });
             new G.Trait({
-                name: 'constelations',
-                displayName: 'Constellations',
+                name: 'constellations',
                 desc: '<font color="#a4baff">A naming system for star constellations has been invented. //<small>Big dog, Little dog, Dove, Centaur, Water bearer, Octant, Balance, Sea serpent, Crane...yeah, these are names of our constellations...</small></font>',
                 icon: [36, 32, 'magixmod'],
                 cost: { 'culture II': 35, 'insight II': 600, 'science': 100 },
@@ -16484,7 +16483,7 @@ if (getObj("civ") != "1") {
             //halloween part two
             new G.Tech({
                 name: 'halloween ornaments',
-                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various ornaments create better a Halloween climate, which makes everything more spooky. //<small>Woah...*trembles*</small>',
+                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various [halloween ornaments,Spooky ornaments] create better a Halloween climate, which makes everything more festive in a slightly scary way. //<small>Woah...*trembles*</small>',
                 icon: [7, 9, 'seasonal'],
                 cost: { 'insight': 250, 'culture': 100, 'wisdom': 25 },
                 req: { 'trick or treat': true },
@@ -16570,7 +16569,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hallow1',
-                displayName: 'Wander into darkness',
+                displayName: 'Darkness wandering',
                 icon: [16, 9, 'seasonal'],
                 req: { 'tribalism': false },
                 category: 'misc'
@@ -16608,21 +16607,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. //Increases the exploration cap.',
                 icon: [9, 9, 'magixmod'],
                 cost: { 'insight': 40 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore more. They will become more advanced and may explore further lands. //Increases the exploration cap.',
                 icon: [10, 9, 'magixmod'],
                 cost: { 'insight': 1200 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true, 'plain island building': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier2',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //<b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more! //<b>Removes</b> the exploration cap.',
                 icon: [11, 9, 'magixmod'],
                 cost: { 'insight II': 85 },
                 req: { 'map details': true, 'focused scouting': true },
@@ -18799,7 +18798,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'battling thieves II', category: 'tier1',
-                desc: 'Thieves are quite smart, but you can also fight back against them! @let your soldiers use [windy spikes] and [dark concoction]s against [thief,Thieves]',
+                desc: '[thief,Thieves] are quite smart, but you can also fight back against them! @let your soldiers use [windy spikes] and [dark concoction]s against [thief,Thieves]',
                 icon: [72, 0, 'magix2'],
                 cost: { 'windy spikes': 10, 'dark concoction': 10 },
                 req: { 'combat potion & concoction brewing': true, 'battling thieves': true },
@@ -18817,7 +18816,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'advanced flower gathering', category: 'tier1',
-                desc: 'Your [florist]s aren\'t very good at collecting [flowers], sadly. So why not teach them about it? @use [nature book]s to help teach [florist]s, tripling their production',
+                desc: 'Your [florist]s aren\'t very good at collecting [flowers], sadly. So why not teach them better ways of going about it? @use [nature book]s to help teach [florist]s just starting off, tripling their production',
                 icon: [71, 0, 'magix2'],
                 cost: { 'insight II': 9, 'nature book': 100 },
                 req: { 'eota': true },
@@ -18956,14 +18955,14 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'essenced hive frame',
-                desc: 'Each and every [essenced hive frame] is meticulously crafted with the utmost care, and is combined with some [nature essence].',
+                desc: 'Each and every [essenced hive frame] is meticulously crafted with the utmost care, and can be used with [nature essence] to get [honey] and [honeycomb]s quickly.',
                 icon: [37, 0, 'magix2'],
                 partOf: 'misc materials',
                 category: 'misc',
             });
             new G.Res({
                 name: 'artist',
-                desc: '[artist]s are those who have studied art from a young age and have turned into [adult]s. Although they are talented and skilled, they may still fail to produce a [work of art] and make a plain [painting].',
+                desc: '[artist]s are those who have studied art from a young age and have turned into [adult]s.They are able to draw [painting]s (and very rarely, they may produce a [work of art]).',
                 category: 'demog',
                 partOf: 'population',
                 icon: [43, 0, 'magix2'],
@@ -24251,7 +24250,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'well',
-                desc: '@produces 20 fresh [water] each day<>The [well] is a steady source of drinkable water.',
+                desc: '@produces 20 fresh [water] each day<>The [well] is a steady source of drinkable [water].',
                 icon: [25, 3, 'c2'],
                 cost: { 'stone': 50, 'archaic building materials': 20 },
                 use: { 'land': 1 },
@@ -24285,7 +24284,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'quarry',
-                desc: '@carves [cut stone] out of the ground@may find other minerals such as [limestone] and [fazble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.',
+                desc: '@carves [cut stone] out of the ground@may find various other minerals such as [limestone] and [fazble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.',
                 icon: [22, 3, 'c2'],
                 cost: { 'archaic building materials': 100 },
                 use: { 'land': 4 },
@@ -26106,14 +26105,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel even further beyond! They become more advanced and may explore more distant lands. //Increases the exploration cap.',
                 icon: [29, 13, 'c2'],
                 cost: { 'discernment': 104, 'creativity': 16 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more. They become more advanced and may explore further lands. //<b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and very very far! They become more advanced and may explore far into the world. //<b>Removes</b> the exploration cap.',
                 icon: [30, 13, 'c2'],
                 cost: { 'discernment': 660, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
@@ -26602,7 +26601,7 @@ if (getObj("civ") != "1") {
             /*Insight traits will work together with culture one*/
             new G.Trait({
                 name: 'natural discernment', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, the new cost is reduced by 3. (For example, if a research costs 225 [discernment], it will cost 216 as long as this trait is active.) @maximum reduction is 70.//<small>much smort</small>',
+                desc: '@all researches, knowledges and traits have their [discernment] costs reduced. <>For every 75 [discernment] from the original cost, the new cost is reduced by 3. (For example, if a research costs 225 [discernment], it will cost 216 as long as this trait is active.) @The maximum reduction for this is 70.//<small>much smort</small>',
                 icon: [24, 3, 'magixmod', 8, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26635,7 +26634,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'slower synapses',
-                desc: '@all researches, knowledges and traits have their [discernment] costs increased. <>For every 75 [discernment] from the original cost, the new cost is increased by 3. (For example, if a research costs 225 [discernment], it will cost 234 as long as this trait is active.) @maximum reduction is 70.//<small>not smort</small>',
+                desc: '@all researches, knowledges and traits have their [discernment] costs increased. <>For every 75 [discernment] from the original cost, the new cost is increased by 3. (For example, if a research costs 225 [discernment], it will cost 234 as long as this trait is active.) @The maximum reduction for this is 70.//<small>not smort</small>',
                 icon: [23, 3, 'magixmod', 8, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26668,7 +26667,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'artistic thinking II', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [gentility] costs reduced. <>For every 50 [gentility] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [gentility], it will cost 192 as long as this trait is active.) @maximum reduction is 45.//<small>that\'s very arty art, isn\'t it?</small>',
+                desc: '@all researches, knowledges and traits have their [gentility] costs reduced. <>For every 50 [gentility] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [gentility], it will cost 192 as long as this trait is active.) @The maximum reduction for this is 45.//<small>that\'s very arty art, isn\'t it?</small>',
                 icon: [24, 3, 'magixmod', 10, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26734,7 +26733,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'druidish thinking',
-                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @maximum reduction is 45.//<small>Have fun with this trait: it doesn\'t last very long!</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs reduced. <>For every 50 [faith] from the original cost, the new cost is reduced by 2. (For example, if a research costs 200 [faith], it will cost 192 as long as this trait is active.) @The maximum reduction for this is 45.//<small>Have fun with this trait: it doesn\'t last very long!</small>',
                 icon: [24, 3, 'magixmod', 7, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26767,7 +26766,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'druid\'s hatred',
-                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2. (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.)@maximum reduction is 45.//<small>dissenters...it sure seems like</small>',
+                desc: '@all researches, knowledges and traits have their [faith] costs increased. <>For every 50 [faith] from the original cost, the new cost is increased by 2. (For example, if a research costs 200 [faith], it will cost 208 as long as this trait is active.)@The maximum reduction for this is 45.//<small>dissenters...it sure seems like</small>',
                 icon: [23, 3, 'magixmod', 7, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
@@ -26800,7 +26799,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //science powerup/powerdown is standalone. Is short and very, very rare
                 name: 'season for inventing',
-                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @maximum reduction is 15.//<small>This trait is very rare...</small>',
+                desc: '@all researches, knowledges and traits have their [science] costs reduced. <>For every 20 [science] from the original cost, the new cost is reduced by 1. (For example, if a research costs 100 [science], it will cost 95 as long as this trait is active.) @The maximum reduction for this is 15.//<small>This trait is very rare...</small>',
                 icon: [24, 3, 'magixmod', 6, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 1500,
@@ -26866,7 +26865,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //faith will go together with influence
                 name: 'liberality', //will be unlockable after level 5 mausoleum 
-                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2. (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @maximum reduction is 30.//<small>democration...right?</small>',
+                desc: '@all researches, knowledges and traits have their [influence] costs reduced. <>For every 40 [influence] from the original cost, the new cost is reduced by 2. (For example, if a research costs 100 [influence], it will cost 92 as long as this trait is active.) @The maximum reduction for this is 30.//<small>democration...right?</small>',
                 icon: [24, 3, 'magixmod', 11, 4, 'c2', 23, 1, 'c2'],
                 cost: { 'gentility': 25, 'creativity': 5 },
                 chance: 150,
