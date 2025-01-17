@@ -5126,7 +5126,7 @@ G.AddData({
 
             var len = me.unit.effects.length;
             var visible = false;
-            //if (me.l && G.tab.id=='unit') visible=true;
+            if (me.l && G.tab.id == 'unit') visible = true;
             var out = 0;//return value; only used by type 2 effects
             if (type == 2) out = me.amount - me.idle;
 
@@ -5333,7 +5333,7 @@ G.AddData({
                                 if (effect.what) {
                                     for (var ii in effect.what) {
                                         var amount = effect.what[ii] * amountParam;
-                                        if (amountParam > 0 || !effect.noTakeBack) {
+                                        if (amountParam > 0) {
                                             if (G.getRes(ii).whenGathered) G.getRes(ii).whenGathered(G.getRes(ii), amount, me, effect);
                                             else G.gain(ii, amount, me.unit.displayName);
                                             if (visible && amount > 0) me.popups.push(G.dict[ii].icon);
@@ -5414,7 +5414,35 @@ G.AddData({
         }
         G.initializeFixIcons();
 
-
+        // Modify particle setting to just hide most particles with a random function
+        G.showParticle = function (obj) {
+            if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.03)) return 0;
+            if (obj.y && (obj.y > G.h - 102 || obj.y < 26)) return 0;//cull if on black interface
+            var me = G.particles[G.particlesI];
+            me.x = 0;
+            me.y = 0;
+            me.lm = 0;
+            me.icon = [0, 0];
+            me.type = 0;
+            for (var i in obj) { me[i] = obj[i]; }
+            me.on = true;
+            me.l = 0;
+            if (me.type == 0) {
+                me.x += Math.random() * 32 - 16;
+                me.xd = Math.random() * 4 - 2;
+                me.yd = -(Math.random() * 2 + 1);
+                me.lm = me.lm || 30;
+                //me.icon=choose(G.res).icon;
+                me.el.style.transform = 'translate(' + (me.x - 12) + 'px,' + (me.y - 12) + 'px)';
+                var iconStr = G.getIcon(me.icon, true);
+                me.el.style.background = iconStr[0];
+                me.el.style.backgroundPosition = iconStr[1];
+                //me.el.style.backgroundPosition=(-me.icon[0]*24*G.iconScale)+'px '+(-me.icon[1]*24*G.iconScale)+'px';
+                me.el.style.display = 'block';
+            }
+            G.particlesI++;
+            if (G.particlesI >= G.particlesN) G.particlesI = 0;
+        }
 
 
 
