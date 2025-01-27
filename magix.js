@@ -17163,7 +17163,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid, meaning that its effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@unhappiness from death is fluid, meaning that its effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 25, 34, 'magixmod'],
                 cost: { 'culture': 4, 'insight': 1 },
                 chance: 50,
@@ -17935,7 +17935,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'salty sand II', category: 'tier1',
-                desc: '[digger]s are now able to get much more [salt] from your oceans by drying out the salty water within. //<small>that\'s pretty salty...</small>',
+                desc: 'After getting this tech, [digger]s will be able to get significantly more [salt] from your oceans by drying some saltwater out. //<small>that\'s pretty salty...</small>',
                 icon: [0, 35, 'magixmod', 11, 7, 0, 0, 'magix2'],
                 cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
@@ -26380,7 +26380,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'death scepticism',
-                desc: 'unhappiness from death is fluid, meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@unhappiness from death is fluid, meaning that it\'s effect will change between: @being increased by one-third @being reduced by one-third. <> @may evolve into more complex spiritual thinking @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [9, 15, 'magixmod', 26, 16, 'c2'],
                 cost: { 'gentility': 12, 'creativity': 3 },
                 chance: 30,

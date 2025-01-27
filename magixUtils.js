@@ -5333,11 +5333,9 @@ G.AddData({
                                 if (effect.what) {
                                     for (var ii in effect.what) {
                                         var amount = effect.what[ii] * amountParam;
-                                        if (amountParam > 0) {
-                                            if (G.getRes(ii).whenGathered) G.getRes(ii).whenGathered(G.getRes(ii), amount, me, effect);
-                                            else G.gain(ii, amount, me.unit.displayName);
-                                            if (visible && amount > 0) me.popups.push(G.dict[ii].icon);
-                                        }
+                                        if (G.getRes(ii).whenGathered) G.getRes(ii).whenGathered(G.getRes(ii), amount, me, effect);
+                                        else G.gain(ii, amount, me.unit.displayName);
+                                        if (visible && amount > 0) me.popups.push(G.dict[ii].icon);
                                     }
                                 }
                             }
