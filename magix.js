@@ -3198,14 +3198,14 @@ if (getObj("civ") != "1") {
                             changeHappiness(-changed * 15 * deathUnhappinessMult * (G.has("t7") ? 0.2 : 1), 'death');
                             G.getRes('died this year').amount += changed;
                             if (G.getSetting('death messages') || G.resets < 3) { //toggle
-                                if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' died from their wounds.'; }, args: { n: changed }, icon: [5, 4] });
+                                if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + choose([' died from their wounds.', ' died from their injuries.', ' died from being injured.', ' died from severe injuries.']); }, args: { n: changed }, icon: [5, 4] });
                             }
                             var sickHealing = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('accident messages') || G.resets < 3) {
-                                if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3] });
+                                if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + choose([' recovered from their wounds.', ' recovered from their injuries.']); }, args: { n: changed }, icon: [4, 3] });
                             }
                         }
                     }
@@ -3239,7 +3239,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children], although [baby,Babies] will consume 40% as much as them.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your people make.//Over time, babies will grow into [child,Children], although [baby,Babies] will only consume 40% as much as [child,Kids].',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',
@@ -16063,7 +16063,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'festive robot print', category: 'seasonal',
-                desc: 'A new unit can now help gather [christmas essence] from [snowman,Snowmen] built by [child,Children]! Works slowly and is very limited, but you can unlock magical overclocks later. @However, with each overclock, a chance to lose a [snowman] upon getting [christmas essence,Essence] increases.',
+                desc: 'A new unit can now help gather [christmas essence] from [snowman,Snowmen] built by [child,Children]! This unit is slow and quite limited, but can be upgraded many times. @However, with each overclock, a chance to lose a [snowman] upon getting [christmas essence,Essence] increases.',
                 icon: [14, 12, 'seasonal'],
                 cost: { 'insight': 1000, 'wisdom': 100 },
                 req: { 'the christmas': true, 'snowmen': true },
@@ -22640,14 +22640,14 @@ if (getObj("civ") != "1") {
                             changeHappiness(-changed * 15 * deathUnhappinessMult, 'death');
                             G.getRes('died this year').amount += changed;
                             if (G.getSetting('death messages') || G.resets < 3)
-                                if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' died from their wounds.'; }, args: { n: changed }, icon: [5, 4, 'c2'] });
+                                if (changed > 0) G.Message({ type: 'bad', mergeId: 'diedWounded', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + choose([' died from their wounds.', ' died from their injuries.', ' died from being injured.', ' died from severe injuries.']); }, args: { n: changed }, icon: [5, 4, 'c2'] });
 
                             var sickHealing = 0.005;
                             var changed = 0;
                             var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
                             changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets < 3)
-                                if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + ' recovered from their wounds.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
+                                if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + choose([' recovered from their wounds.', ' recovered from their injuries.']); }, args: { n: changed }, icon: [4, 3, 'c2'] });
                         }
                     }
                     else if (G.T > 0) { G.GameOver(); }
@@ -22679,7 +22679,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'baby',
-                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children], although [baby,Babies] will consume 40% as much as them.',
+                desc: '[baby,Babies] are born when you have 2 or more [adult]s left to their own devices.//Any 2 adults can have babies, even if they are working. [elder]s can also have babies, though much slower.//[happiness] affects how many babies your elves make.//Over time, babies will grow into [child,Children], although [baby,Babies] will only consume 40% as much as [child,Kids].',
                 startWith: 0,
                 visible: true,
                 partOf: 'population',

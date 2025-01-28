@@ -1045,7 +1045,7 @@ G.AddData({
         G.ocean;
         G.civ = 0; var displayAchievs = 0; G.influenceTraitRemovalCooldown = 0;
 
-        ascended = false;
+        var ascended = false;
 
         /*=========================
         Sounds
