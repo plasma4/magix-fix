@@ -1045,6 +1045,8 @@ G.AddData({
         G.ocean;
         G.civ = 0; var displayAchievs = 0; G.influenceTraitRemovalCooldown = 0;
 
+        ascended = false;
+
         /*=========================
         Sounds
         Just to optimize code
@@ -5659,7 +5661,11 @@ G.AddData({
                                         G.button({
                                             text: '<font color="#d4af37">Ascend</font>', style: 'box-shadow:0px 0px 10px 1px #39f;', tooltipFunc: function (me) { return function () { return '<div style="max-width:240px;padding:16px 24px;"><div class="par">Ascending will end this game and let you create a new one.</div><div class="par">You will unlock permanent legacy bonuses for completion of this wonder.</div><div class="par">You can decide to do this later; you can click on this wonder again to ascend at any time.</div><div class="par">Make sure you\'re certain you\'re done with this world (seriously)!</div></div>'; } }(me), onclick: function (me) {
                                                 return function () {
-                                                    //ascend
+                                                    //ascend and prevent rapid reascend
+                                                    if (ascended) {
+                                                        return;
+                                                    }
+                                                    ascended = true;
                                                     G.dialogue.close();
                                                     var middleText = '';
                                                     var achiev = G.getAchiev(me.unit.wonder);

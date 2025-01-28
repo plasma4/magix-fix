@@ -1884,9 +1884,9 @@ if (getObj("civ") != "1") {
                     if (G.year == 29) G.Message({ type: 'important', text: '<font color="#d9d9d9"><b>Your people noticed that their tools have started decaying.</font> <li>This doesn\'t seem good.</li></b>', icon: [24, 6, 'magixmod'] });
                     if (G.year == 89)
                         if (G.achievByName['mausoleum'].won == 0) {
-                            G.Message({ type: 'tutorial', text: 'Try to ascend. When you start a new run you will unlock way more technlogies.', icon: [32, 27, 'magixmod'] });
+                            G.Message({ type: 'tutorial', text: 'It\'s a good idea to ascend now! When you start a new run after getting the Mausoleum victory, you will unlock way more technlogies, and something magical...', icon: [32, 27, 'magixmod'] });
                         } else {
-                            G.Message({ type: 'tutorial', text: 'I need to warn you. In next 20 years something bad will start to occur. It seems like you ascended already. That is a good choice. You should prepare some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, 'magixmod'] });
+                            G.Message({ type: 'tutorial', text: 'I need to warn you. In next 20 yearsm something bad will start to occur. It seems like you ascended already, which is a good choice. To prepare for this event, you should start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, 'magixmod'] });
                         }
                     if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may recieve future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, 'magixmod'] });
                     if (G.year == 9000) {
