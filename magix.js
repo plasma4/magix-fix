@@ -85,9 +85,9 @@ if (!window.getObj) {
         throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
     }
     G.dialogue.popup(function () {
-        return "It appears that the script may have been loaded too quickly. Try reloading."
+        return "It appears that magix.js may have loaded before magixUtils.js. Try reloading."
     }, 'noClose')
-    throw TypeError("It appears that the script may have been loaded too quickly. Try reloading.")
+    throw Error("It appears that magix.js may have loaded before magixUtils.js. Try reloading.")
 }
 
 G.setDict = function (name, what) {
@@ -10986,7 +10986,7 @@ if (getObj("civ") != "1") {
                 context: 'tech',
                 choicesN: 4,
                 cooldown: 0,
-                noMoreChoicesTexts: ['There is currently nothing to research', 'No new technologies can now be found', 'There are over three hundred technologies. Maybe wait up a bit.', 'There are currently no new available researches', 'No new technologies are currently available'],
+                noMoreChoicesTexts: ['<small><font color="#fdd">There is currently nothing to research.</font></small>', '<small><font color="#ccf">No new technologies can be found for now.</font></small>', '<small><font color="#afd">There are over three hundred technologies; maybe wait for a bit.</font></small>', '<small><font color="#aaa">There are currently no new available researches</font></small>', '<small><font color="#f459cf">Sometimes you\'ll need to wait a bit to unlock something new...</font></small>', '<small><font color="#f7930f">No new technologies are currently available ):</font></small>'],
                 getCosts: function () {
                     let calcCost = (name, constGain = 0.025, rollGain = 0.05) => Math.floor(G.getRes(name).amount * (constGain + this.roll * rollGain));
                     var costs = {};
