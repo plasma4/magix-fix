@@ -3657,8 +3657,8 @@ G.AddData({
                 me.cooldown = 0;
             }
             if (me.cooldown <= 0) {
-                success = false;
                 if (me.getCards().length == 0) {
+                    success = false;
                     if (me.noMoreChoicesTexts == null) G.middleText('<small><font color="#fdd">There are no more possible options.</font></small>');
                     else G.middleText(choose(me.noMoreChoicesTexts));
                 }
