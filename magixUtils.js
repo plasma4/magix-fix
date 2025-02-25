@@ -3647,32 +3647,21 @@ G.AddData({
 
 
         /*================================
-                Tech rerolling
+                ChooseBox rerolling revamped
         ================================*/
         G.rerollChooseBox = function (me) {
             var costs = me.getCosts();
             var success = true;
             if (!G.testCost(costs, 1)) success = false;
-            var randomTxt = Math.round(Math.random() * 5);
             if (!isFinite(me.cooldown)) {
                 me.cooldown = 0;
             }
             if (me.cooldown <= 0) {
-                if (randomTxt <= 1) {
-                    if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#fdd">There is nothing more to research for now.</font></small>'); }
-                } else if (randomTxt <= 2) {
-                    if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#ccf">Wait patiently. There will be something to research...unless you researched everything (which takes a very long time), then yeah. There is light at the end of the tunnel!</font></small>'); }
-                } else if (randomTxt <= 3) {
-                    if (me.getCards().length == 0) {
-                        success = false;
-                        if (G.modsByName['Elves']) G.middleText('<small><font color="#afd">There aren\'t a lot of techs for the elves for now, but the elf race can still provide bonuses!</font></small>');
-                        else G.middleText('<small><font color="#afd">There are over 400 techs for the human race (although you won\'t be able to get all of them at the same time)! Just know that it will take a while to get many of them...<br>well, unless there are more updates.</font></small>');
-                    }
-                } else if (randomTxt <= 4) {
-                    if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#aaa">More techs coming soon :)</font></small>'); }
-                } else {
-                    if (me.getCards().length == 0) { success = false; G.middleText('<small><font color="#f7930f">Keep playing and you may discover more! Sometimes you\'ll have to wait for a trait in order to progress.</font></small>'); }
-                }
+				success = false;
+				if(me.noMoreChoicesTexts == null)G.middleText('<small><font color="#fdd">There are no more possible options.</font></small>');
+				else G.middleText(me.noMoreChoicesTexts[Math.floor(Math.random() * me.noMoreChoicesTexts.length));
+					
+               
             } else {
                 G.middleText('<small><font color="#999">Wait for the cooldown to end.</font></small>');
                 success = false;
