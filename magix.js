@@ -10986,6 +10986,7 @@ if (getObj("civ") != "1") {
                 context: 'tech',
                 choicesN: 4,
                 cooldown: 0,
+                noMoreChoicesTexts:['There is currently nothing to research','No new technologies can now be found','There are over three hundred technologies. Maybe wait up a bit.','There are currently no new available researches','No new technologies are currently available'],
                 getCosts: function () {
                     let calcCost = (name, constGain = 0.025, rollGain = 0.05) => Math.floor(G.getRes(name).amount * (constGain + this.roll * rollGain));
                     var costs = {};
@@ -25031,6 +25032,7 @@ if (getObj("civ") != "1") {
                 name: 'research box',
                 context: 'tech',
                 choicesN: 4,
+                noMoreChoicesTexts:['There is currently nothing to research','No new technologies can now be found','There is like one hundred technologies. Maybe wait up a bit.','There are currently no new available researches','No new technologies are currently available'],
                 getCosts: function () {
                     var techCntLastNmbr = G.has('symbN') ? (G.techN + G.knowN) % 10 : -1;
                     var batterycost = (G.achievByName['the fortress'].won >= 5 ? 25 : 0) + (G.has('symbN') && techCntLastNmbr == 1 ? 5 : 0);
