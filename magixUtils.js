@@ -3657,11 +3657,11 @@ G.AddData({
                 me.cooldown = 0;
             }
             if (me.cooldown <= 0) {
-				success = false;
-				if(me.noMoreChoicesTexts == null)G.middleText('<small><font color="#fdd">There are no more possible options.</font></small>');
-				else G.middleText(me.noMoreChoicesTexts[Math.floor(Math.random() * me.noMoreChoicesTexts.length));
-					
-               
+                success = false;
+                if (me.noMoreChoicesTexts == null) G.middleText('<small><font color="#fdd">There are no more possible options.</font></small>');
+                else G.middleText(choose(me.noMoreChoicesTexts));
+
+
             } else {
                 G.middleText('<small><font color="#999">Wait for the cooldown to end.</font></small>');
                 success = false;
