@@ -928,30 +928,6 @@ function islandName() {
 function changeHappiness(amount, description) {
     G.gain('happiness', amount, description)
 }
-G.gain = function (what, amount, context) {
-    //add some amount to a resource; do not use on meta-resources
-    if (amount < 0) { return G.lose(what, -amount, context); }
-    if (what === 'happiness') { amount *= ungrateful }
-    var me = G.getRes(what);
-    if (me.replacement) me = G.getRes(me.replacement);
-    if (amount > 0) {
-        if (me.meta) {
-            return 0;
-        }
-        else {
-            var oldAmount = me.amount;
-            me.amount += amount * me.mult;
-            if (!me.fractional) me.amount = randomFloor(me.amount);
-            if (context != '-') me.gained += me.amount - oldAmount;
-            if (context && context != '-' && !me.gainedBy.includes(context)) me.gainedBy.push(context);
-            if (me.partOf) {
-                var meta = G.getRes(me.partOf);
-                if (context != '-') meta.gained += me.amount - oldAmount;
-                if (context && context != '-' && !meta.gainedBy.includes(context)) meta.gainedBy.push(context);
-            }
-        }
-    }
-}
 
 if (getObj("civ") != "1") {
     //////////////////////////////////////////////////////////////
@@ -17059,7 +17035,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'neutral heart',
-                desc: '@un/happiness from lacking of/having [fire pit]s or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s neutral.</small>',
+                desc: '@[happiness] from having or lacking [fire pit]s or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s neutral.</small>',
                 icon: [22, 34, 'magixmod', 22, 1],
                 cost: { 'culture': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'fluid heart': false, 'oral tradition': true },
@@ -17099,7 +17075,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'clothing unconcern',
-                desc: '@un/happiness from lacking of or having [colored clothing,Clothing] isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
+                desc: '@[happiness] from having or lacking [colored clothing,Clothing] isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
                 icon: [19, 34, 'magixmod', 22, 1],
                 cost: { 'culture': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
@@ -17649,7 +17625,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@A [corpse,Dead person\'s] belongings are preserved and left for the family instead of being taken for common use (unless the person didn\'t have one). @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@A [corpse,Dead person\'s] belongings become preserved and stored by the family instead of being taken for common use (unless the person didn\'t have one). @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'culture': 25 },
                 category: 'long',
@@ -26296,7 +26272,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'neutral heart',
-                desc: '@un/happiness from lacking of/having [fire pit]s or other heating sources isn\'t increased or decreased in any way. //<small>simply it\'s neutral.</small>',
+                desc: '@[happiness] from having or lacking [fire pit]s or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s neutral.</small>',
                 icon: [29, 15, 'c2', 22, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'fire-making': true, 'cold heart': false, 'hot heart': false, 'fluid heart': false, 'oral tradition 1/2': true },
@@ -26336,7 +26312,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'clothing indifference',
-                desc: '@un/happiness from lacking of/having [primitive clothes,Clothing] or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
+                desc: '@[happiness] from having or lacking [primitive clothes,Clothing] or other heating sources isn\'t increased or decreased in any way. //<small>simply, it\'s just neutral.</small>',
                 icon: [29, 16, 'c2', 22, 1, 'c2'],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'fluid dress code': false, 'nudist culture': false, 'strict dress code': false },
@@ -26499,7 +26475,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'belongings preservance',
-                desc: '@A [corpse,corpse\'s] belongings are preserved and left for the family instead of being taken for common use (unless the elf didn\'t have one). @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
+                desc: '@A [corpse,corpse\'s] belongings become preserved and stored by the family instead of being taken for common use (unless the elf didn\'t have one). @<b><font color="#f70054">Note: This trait is rather temporary, but there is a slight chance that this trait will become permanent.</font></b>',
                 icon: [16, 6, 'magixmod'],
                 cost: { 'gentility': 25, 'discernment': 5 },
                 chance: 500,
