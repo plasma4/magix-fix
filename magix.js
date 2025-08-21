@@ -11073,7 +11073,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'speech', category: 'tier1',
-                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
+                desc: '@unlocks the [dreamer] and [wanderer]@provides 50 [wisdom]<>[speech], in its most primitive form, is a series of groans and grunts that makes it possible to communicate things, events, and concepts.',
                 icon: [1, 1],
                 startWith: true,
                 effects: [
