@@ -1906,9 +1906,9 @@ if (getObj("civ") != "1") {
                     if (G.year == 29) G.Message({ type: 'important', text: '<font color="#d9d9d9"><b>Your people noticed that their tools have started decaying.</font> <li>This doesn\'t seem good.</li></b>', icon: [24, 6, 'magixmod'] });
                     if (G.year == 89)
                         if (G.achievByName['mausoleum'].won == 0) {
-                            G.Message({ type: 'tutorial', text: 'It\'s a good idea to ascend now! When you start a new run after getting the Mausoleum victory, you will unlock way more technlogies, and something magical...', icon: [32, 27, 'magixmod'] });
+                            G.Message({ type: 'tutorial', text: 'It\'s a good idea to ascend with the Mausoleum! When you start a new run after getting the Mausoleum victory, you will unlock way more technologies, and something magical...', icon: [32, 27, 'magixmod'] });
                         } else {
-                            G.Message({ type: 'tutorial', text: 'I need to warn you. In next 20 yearsm something bad will start to occur. It seems like you ascended already, which is a good choice. To prepare for this event, you should start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, 'magixmod'] });
+                            G.Message({ type: 'tutorial', text: 'I need to warn you. In next 20 years, something bad will start to occur. It seems like you ascended already, which is a good choice. To prepare for this event, you should start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, 'magixmod'] });
                         }
                     if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may recieve future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, 'magixmod'] });
                     if (G.year == 9000) {
@@ -3797,7 +3797,7 @@ if (getObj("civ") != "1") {
                 name: 'meat',
                 desc: '[meat,Raw meat] is gathered from dead animals and, while fairly tasty, can harbor a variety of diseases.',
                 icon: [5, 7],
-                turnToByContext: { 'eating': { 'health': -0.03, 'happiness': 0.012, 'bone': 0.1 }, 'decay': { 'spoiled food': 1 } },
+                turnToByContext: { 'eating': { 'health': -0.03, 'happiness': 0.008, 'bone': 0.1 }, 'decay': { 'spoiled food': 1 } },
                 partOf: 'food',
                 category: 'food',
             });
@@ -6302,7 +6302,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'child of Christmas',
-                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them even say they are elves, although this isn\'t confirmed!//After a while, they will grow up into [adult]s.//These children also eat and drink half as much as adults.//They can work as an [artisan of christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite being assigned to work (as long as their work is related to their favorite season, of course).',
+                desc: '[child of Christmas,Children of Christmas] leave after many meetings with each other. Some of them even say they are elves, although this isn\'t confirmed!//After a while, they will grow up into [adult]s.//These children also eat and drink half as much as adults.//They can work as an [artisan of christmas,Artisan of Christmas], can be hired to take care about [christmas essence storage], and can also craft gifts for people, bringing [happiness]. @They are happy, despite being assigned to work (as long as their work is related to their favorite season, of course).',
                 partOf: 'population',
                 icon: [56, 0, 'magix2'],
                 hidden: true,
@@ -6311,7 +6311,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'christmas ornament',
-                desc: 'The [artisan of christmas] can craft this. It is used to decorate christmas trees, lamps, and many more. On decay, these may provide some [christmas essence].',
+                desc: 'The [artisan of christmas,Artisan of Christmas] can craft this. It is used to decorate Christmas trees, lamps, and many more. On decay, these may provide some [christmas essence].',
                 icon: [choose([6, 7]), 11, 'seasonal'],
                 category: 'seasonal',
                 hidden: true,
@@ -6998,14 +6998,14 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'well',
-                desc: '@produces fresh [water], up to 20 per day<>The [well] is a steady source of drinkable [water].',
+                desc: '@produces fresh [water] daily, unaffected by [happiness]<>The [well] is a steady source of drinkable [water].',
                 icon: [25, 3],
                 cost: { 'stone': 50, 'archaic building materials': 20 },
                 use: { 'land': 1 },
                 //require:{'worker':2,'stone tools':2},
                 //upkeep:{'food':0.2},
                 effects: [
-                    { type: 'gather', what: { 'water': 15 } },
+                    { type: 'gather', what: { 'water': 35 } },
                     { type: 'gather', what: { 'water': 5 }, chance: 0.4 },
                     { type: 'mult', value: 0.3, req: { 'drought': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
@@ -7829,7 +7829,7 @@ if (getObj("civ") != "1") {
                 steps: 100,
                 messageOnStart: 'You begin the construction of the Mausoleum. Its towering mass already dominates the city, casting fear and awe wherever its shadow reaches.',
                 finalStepCost: { 'population': 100, 'housing': -2000 },
-                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife. Finishing the Mausoleum also provides 2,000 free [housing]. Finishing the Mausoleum also provides 2,000 free [housing].',
+                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife. Finishing the Mausoleum also provides 2,000 free [housing].',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 //require:{'worker':10,'stone tools':10},
                 req: { 'monument-building': true, 'trial': false },
@@ -10519,7 +10519,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'f.r.o.s.t.y',
                 displayName: 'F.R.O.S.T.Y',
-                desc: '@Extracts [christmas essence] from various [snowman,Snowmen] created by children. @Be warned, as it is possible the extraction will destroy the [snowman]! @[snowman,Snowmen] may be extracted multiple times//This weird machine is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas].',
+                desc: '@Extracts [christmas essence] from various [snowman,Snowmen] created by children. @Be warned, as it is possible the extraction will destroy the [snowman]! @[snowman,Snowmen] may be extracted multiple times//This weird machine is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas,The Christmas].',
                 icon: [15, 12, 'seasonal'],
                 cost: { 'strong metal ingot': 100, 'hard metal ingot': 15, 'precious metal ingot': 2, 'basic building materials': 10, 'magic essences': 5000, 'platinum ore': 10 },
                 use: { 'land': 3 },
@@ -12680,7 +12680,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'ground tools',
-                desc: '@[artisan]s and [carver]s use ground tools, allowing them to craft their stuff between 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas] (with [culture of celebration] obtained), but provides only a 10% boost.',
+                desc: '@[artisan]s and [carver]s use ground tools, allowing them to craft their stuff between 20% faster. //Note: it also applies to seasonal artisans, such as the [artisan of christmas,Artisan of Christmas] (with [culture of celebration] obtained), but provides only a 10% boost.',
                 icon: [15, 10, 'magixmod'],
                 cost: { 'insight': 7 },
                 chance: 10,
@@ -15926,7 +15926,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Automation', category: 'tier1', //capitalized since it is the caretaking version
-                desc: 'One effect of [caretaking] is that people do not focus that much on industrialization or technological innovations. That means that for some parts of automation, people will want to discover it later. However, they are still willing to progress technology to some extent, so... @provides 200 [industry point]s',
+                desc: 'One effect of [caretaking] is that people focus less on industrialization or technological innovations, but that doesn\'t mean they don\'t care about automating things! @provides 200 [industry point]s',
                 icon: [15, 31, 'magixmod'],
                 req: { 'paradise crafting': true, 'bigger university': true, },
                 cost: { 'insight': 1500, 'wisdom': 15 },
@@ -16184,7 +16184,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'festive artisanistry', category: 'seasonal',
-                desc: '@unlocks the [artisan of christmas] //<small>That\'s quite a long word, isn\'t it?</small>',
+                desc: '@unlocks the [artisan of christmas,Artisan of Christmas] //<small>That\'s quite a nice name, isn\'t it?</small>',
                 icon: [15, 11, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50 },
                 req: { 'winter holidays': true, 'tribalism': false },
@@ -19668,7 +19668,7 @@ if (getObj("civ") != "1") {
 
             new G.Policy({
                 name: 'reset health level',
-                desc: 'Only available while in Hunted and will reset your [health] back to 0%. Available only once per Hunted attempt.',
+                desc: 'Resets your [health] back to 0%. Available only once per Hunted attempt and only exists in this trial.',
                 icon: [21, 29, 'magixmod'],
                 cost: { 'influence': 1 },
                 startMode: 'inactive',
@@ -21384,7 +21384,7 @@ if (getObj("civ") != "1") {
                         var amount = G.applyUnitAmountEffects(me);//modify the effective amount
                         if (amount > 0) {
                             //apply effects every tick
-                            var repeat = randomFloor(mult);
+                            var repeat = me.unit.name == 'well' ? 1 : randomFloor(mult);
                             if (repeat > 0) {
                                 for (var ii = 0; ii < repeat; ii++) {
                                     G.applyUnitEffects(me, amount);
@@ -24273,14 +24273,14 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'well',
-                desc: '@produces 20 fresh [water] each day<>The [well] is a steady source of drinkable [water].',
+                desc: '@produces 20 fresh [water] each day, unaffected by [happiness]<>The [well] is a steady source of drinkable [water].',
                 icon: [25, 3, 'c2'],
                 cost: { 'stone': 50, 'archaic building materials': 20 },
                 use: { 'land': 1 },
                 //require:{'worker':2,'stone tools':2},
                 //upkeep:{'food':0.2},
                 effects: [
-                    { type: 'gather', what: { 'water': 20 } },
+                    { type: 'gather', what: { 'water': 25 } },
                 ],
                 category: 'production',
                 req: { 'well-digging': true },
