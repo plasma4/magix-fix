@@ -53,6 +53,52 @@ G.getBrokenSmallThing = function (what, text) {
     return '<b style="color: #f99">' + cap(text == '*PLURAL*' ? (what + 's') : (text || what)) + '</b>'
 }
 
+if (!window.loadedMagix) {
+    // Custom implementation of keyboard events
+    document.addEventListener("keydown", function (e) {
+        var key = e.key
+        if (key >= '0' && key <= '9') {
+            if (G.tab.id == 'tech') {
+                pressed = parseInt(key)
+                var chooseBox = G.chooseBox[0]
+                if (pressed === 0) {
+                    if (G.speed > 0) { G.rerollChooseBox(chooseBox); } else G.cantWhenPaused();
+                } else if (pressed <= chooseBox.choices.length) {
+                    if (G.speed > 0) { G.purchaseChooseBox(chooseBox, G.chooseBox[0].choices[pressed - 1], l("chooseOption-" + pressed + "-0")); } else G.cantWhenPaused();
+                }
+            }
+        } else if (key == "_" || key == "-") {
+            if (G.tab.id == 'unit') l('removeBulk').click()
+            if (G.tab.id == 'land' && G.mapZoomT == 2) {
+                G.mapZoomT = 1;
+                G.mapOffXT /= 2;
+                G.mapOffYT /= 2;
+                G.tooltip.close();
+            }
+        } else if (key == "+" || key == "=") {
+            if (G.tab.id == 'unit') l('addBulk').click()
+            if (G.tab.id == 'land' && G.mapZoomT == 1) {
+                G.mapZoomT = 2;
+                G.mapOffXT *= 2;
+                G.mapOffYT *= 2;
+                G.tooltip.close();
+            }
+            G.Scroll = 1;
+        } else if (e.altKey) {
+            l("fastButton").click()
+        }
+    })
+    document.addEventListener("keyup", function (e) {
+        if (e.key === "Alt") {
+            l("playButton").click()
+        }
+    })
+    document.addEventListener("blur", function () {
+        l("playButton").click()
+    })
+    var loadedMagix = 1
+}
+
 
 var isUsingFile = window.offlineMode != null
 var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
@@ -67,7 +113,6 @@ document.getElementsByTagName('head')[0].appendChild(meta);
 
 //Touchscreen fix
 var modeFunction = null
-var isChangedMagix = true
 document.addEventListener("click", function (e) {
     var target = e.target
     if (modeFunction !== null && (target.id === "resources" || target.id === "generalInfo" || target.className.slice(0, 4) === "tab " || (target.parentElement.className && target.parentElement.className.slice(0, 4) === "tab "))) {
@@ -382,6 +427,7 @@ var civ2 = function () {
             '</div>';
     }, 'noClose');
 }
+
 G.NewGame = function (doneLoading, mods) {
     if (G.resets == 0) G.loadmenu = 1;
     document.title = 'Setup: NeverEnding Legacy';
@@ -954,8 +1000,8 @@ if (getObj("civ") != "1") {
                 //res and messages tab
                 document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDownRock' + Theme + '.jpg")';
                 document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDarkRock' + Theme + '.jpg")';
-                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
-                document.getElementById("messagesList").style['background-image'] = 'url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
+                l("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
+                l("messagesList").style['background-image'] = 'url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgMidRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("sideCategory").length; i++) document.getElementsByClassName("sideCategory")[i].style.width = "100px";
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgDarkRock' + Theme + '.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-repeat'] = 'no-repeat, repeat';
@@ -1693,7 +1739,7 @@ if (getObj("civ") != "1") {
                                 else if (G.getRes('housing').amount < survivors) G.getRes('population').amount = survivors - over;
                                 G.achievByName['???'].won++;
                                 G.settingsByName['paused'].value = 1;
-                                document.getElementById('blackBackground').style.opacity = 1;
+                                l('blackBackground').style.opacity = 1;
                                 G.settingsByName['autosave'].value = 0;
                                 var audio = new Audio(magixURL + 'meteor.mp3');
                                 audio.play();
@@ -1724,7 +1770,7 @@ if (getObj("civ") != "1") {
                                             '<div class="bulleted">You will need to finish some Civilization 2 runs in order to unlock a few more human-related things</div>' +
                                             '<div class="bulleted">Civilization 2 is settled in an entirely different environment!</div>' +
                                             '<div class="bulleted">Prepare for mystic, unnatural names.</div>' +
-                                            '<div class="bulleted">Also...Civilization 1 will be able to boost Civilization 2 and vice-versa.</div><center>' + G.button({ tooltip: 'Ascend and start a whole new adventure!', text: 'Ascend', onclick: function () { G.settingsByName['autosave'].value = 1; G.NewGameWithSameMods(); G.resets++; message.pause(); G.achievByName['first glory'].won++ } }) + '' + G.button({ tooltip: 'Prepare mentally for the new adventure. Spend your last moments in that dead world.', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.settingsByName['paused'].value = 0; G.settingsByName['autosave'].value = 1; document.getElementById('blackBackground').style.opacity = 0; message.pause() } }) + '</center>' +
+                                            '<div class="bulleted">Also...Civilization 1 will be able to boost Civilization 2 and vice-versa.</div><center>' + G.button({ tooltip: 'Ascend and start a whole new adventure!', text: 'Ascend', onclick: function () { G.settingsByName['autosave'].value = 1; G.NewGameWithSameMods(); G.resets++; message.pause(); G.achievByName['first glory'].won++ } }) + '' + G.button({ tooltip: 'Prepare mentally for the new adventure. Spend your last moments in that dead world.', text: 'Wait, I\'m not ready yet!', onclick: function () { G.dialogue.forceClose(); G.settingsByName['paused'].value = 0; G.settingsByName['autosave'].value = 1; l('blackBackground').style.opacity = 0; message.pause() } }) + '</center>' +
                                             '<div class="bulleted"><small><font color="lime">(Fortunately, you were in a shelter far far away from the place where the meteor fell. After your befriended wizards helped you to travel to this new place, you noticed some, well, rather off-putting things about it, to say the least.)</font></small></div>' +
                                             '</div>' +
                                             '</div><div class="buttonBox">' +
@@ -21667,8 +21713,8 @@ if (getObj("civ") != "1") {
                 }
                 document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + 'bgDownRockC2.jpg")';
                 document.getElementsByClassName("tab")[0].style['background-image'] = 'url("' + magixURL + 'bgDarkRockC2.jpg")';
-                document.getElementById("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + magixURL + 'bgMidRockC2.jpg")';
-                document.getElementById("messagesList").style['background-image'] = 'url("' + magixURL + 'bgMidRockC2.jpg")';
+                l("resources").style['background-image'] = 'url(img/darkBorders.png),url("' + magixURL + 'bgMidRockC2.jpg")';
+                l("messagesList").style['background-image'] = 'url("' + magixURL + 'bgMidRockC2.jpg")';
 
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background'] = 'url(img/darkBorders.png),url("' + magixURL + 'bgDarkRockC2.jpg")';
                 for (var i = 0; i < document.getElementsByClassName("subsection").length; i++) document.getElementsByClassName("subsection")[i].style['background-repeat'] = 'no-repeat, repeat';

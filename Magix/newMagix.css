@@ -25,6 +25,14 @@ body {
 	line-height: 1.25;
 }
 
+.smallSize {
+	transform: scale(0.7);
+    transform-origin: 0 0;
+    width: 142.857142857%;
+    height: 142.857142857%;
+    overflow: hidden;
+}
+
 .halfSize {
 	transform: scale(0.5);
     transform-origin: 0 0;

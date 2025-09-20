@@ -781,7 +781,13 @@ G.stabilizeResize = function () {
     l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
     l('game').style.bottom = G.h < 600 ? 0 : null;
     l('fpsGraph').style.display = G.h < 600 ? 'none' : 'block';
-    if (G.w * G.h < 200000 || G.w < 625) { document.body.classList.add('halfSize'); } else { document.body.classList.remove('halfSize'); }
+    if (G.w < 405) {
+        document.body.classList.add('halfSize'); document.body.classList.remove('smallSize');
+    } else if (G.w * G.h < 200000 || G.w < 625) {
+        document.body.classList.add('smallSize'); document.body.classList.remove('halfSize');
+    } else {
+        document.body.classList.remove('smallSize', 'halfSize');
+    }
     if (G.w < 950) { G.wrapl.classList.remove('narrow'); G.wrapl.classList.add('narrower'); }
     else if (G.w < 1152) { G.wrapl.classList.remove('narrower'); G.wrapl.classList.add('narrow'); }
     else { G.wrapl.classList.remove('narrower'); G.wrapl.classList.remove('narrow'); }
@@ -1858,10 +1864,10 @@ G.AddData({
         /*==========================
         CSS stuff
         ==========================*/
-        document.getElementById("logo").style['background-image'] = 'url(' + magixURL + 'Magixlogo2.png)';
-        document.getElementById("logoOverB").style['background-image'] = 'url(' + magixURL + 'Elves.png)';
+        l("logo").style['background-image'] = 'url(' + magixURL + 'Magixlogo2.png)';
+        l("logoOverB").style['background-image'] = 'url(' + magixURL + 'Elves.png)';
         var cssId = 'utils';
-        if (!document.getElementById(cssId)) {
+        if (!l(cssId)) {
             var head = document.getElementsByTagName('head')[0];
             var link = document.createElement('link');
             link.id = cssId;
@@ -4769,6 +4775,7 @@ G.AddData({
         }
 
         G.Logic = function (forceTick) {
+            if (l("display")) l("display").style.display = G.w < 800 ? "none" : null
             for (var i in G.unit) {
                 if (G.unit[i].visible == undefined) G.unit[i].visible = true;
             }
