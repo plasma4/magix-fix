@@ -5502,7 +5502,7 @@ G.AddData({
             delete G.storageObject.iconTick;
             delete G.storageObject.gatherIcon;
             G.setSetting('buyAmount', 1);
-            G.Save();
+            // G.Save();
             G.setTab = function (tab) {
                 if (tab.popup) {
                     if (G.getSetting('animations')) triggerAnim(tab.l, 'plop');

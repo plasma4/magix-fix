@@ -1429,6 +1429,10 @@ if (getObj("civ") != "1") {
                 }
                 //G.achievByName['first glory'].won=G.resets;
                 G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
+                for (var u = 0; u < G.unitsOwned.length; u++) {
+                    let defaultUnit = G.unitsOwned[u]
+                    defaultUnit.amount = defaultUnit.unit.startWith
+                }
                 G.Save();
             }
             G.funcs['game over'] = function () {
@@ -1919,7 +1923,7 @@ if (getObj("civ") != "1") {
                         backupmesg = true
                     }
                     if (G.year >= 999 && G.year <= 1005 && !milleniummesg) {
-                        G.Message({ type: 'good', text: 'Woah! It\'s been <b>1 thousand</b> years since your tribe started their existence!<br><b>Thank you, and wow ;)</b><br><font color="lime"><tt>Continue enjoying Magix expansion.</tt></font>', icon: [27, 23, 'magixmod'] });
+                        G.Message({ type: 'good', text: 'Woah! It\'s been <b>1 thousand</b> years since your tribe started their existence!<br><b>Thank you, and wow ;)</b><br><font color="lime"><tt>Continue to enjoy the Magix expansion!</tt></font>', icon: [27, 23, 'magixmod'] });
                         milleniummesg = true
                     }
                     if (G.year >= 1999 && G.year <= 2005 && !millenium2mesg) {
@@ -1936,18 +1940,17 @@ if (getObj("civ") != "1") {
                             G.Message({ type: 'story2', text: 'All is as it should be.' });
                             st2 = true
                         }
-                        if (G.techN > 49 && G.techN <= 55 && !st3) {
+                        if (G.resets > 0 && G.techN > 49 && G.techN <= 55 && !st3) {
                             G.Message({ type: 'story1', text: 'You want some mirrors. But sadly, no one can craft any mirrors yet.', icon: [32, 14, 'magixmod'] });
                             st3 = true
                         }
                         if (G.techN > 60 && G.techN <= 74 && !st4) {
                             if (G.resets == 0) {
                                 G.Message({ type: 'story2', text: 'You think that you should ascend someday no matter what. You feel it in your inner being.', icon: [32, 13, 'magixmod'] });
-                                st4 = true
-                            } else if (G.resets >= 1) {
+                            } else {
                                 G.Message({ type: 'story2', text: 'You wonder how your tribe will look and how advanced it will become within the next few centuries. (And hope nothing goes awry.)', icon: [32, 12, 'magixmod'] });
-                                st4 = true
                             }
+                            st4 = true
                         }
                         if (G.techN > 74 && G.techN <= 77 && !st5) {
                             G.Message({ type: 'story1', text: 'You organize storytelling at the beach. Some wolf was lurking to wound some of your ' + G.getName('inhabs') + ', but a worker takes it down before a tragedy occurs.', icon: [7, 11] });
@@ -1958,7 +1961,11 @@ if (getObj("civ") != "1") {
                             st6 = true
                         }
                         if (G.techN > 86 && G.techN <= 92 && !st7) {
-                            G.Message({ type: 'story2', text: 'One of your dreamers asked you how you were feeling. You answered that you were all right! While you talking with this dreamer, some firekeeper comes to you with a water pot and some tasty cured seafood. Tasty ;)', icon: [32, 10, 'magixmod'] });
+                            if (G.resets == 0) {
+                                G.Message({ type: 'story2', text: 'One of your dreamers sits down with you and passionately describes to you a world where magic and insight abounds. Upon reflecting on his story, you also get a feeling that ascension may be the key to unlock more.', icon: [32, 10, 'magixmod'] });
+                            } else {
+                                G.Message({ type: 'story2', text: 'One of your dreamers asked you how you were feeling. You answered that you were all right! While you talking with this dreamer, some firekeeper comes to you with a water pot and some tasty cured seafood. Tasty ;)', icon: [32, 10, 'magixmod'] });
+                            }
                             st7 = true
                         }
                         if (G.techN > 93 && G.techN <= 99 && !st8) {
@@ -1998,11 +2005,11 @@ if (getObj("civ") != "1") {
                             st16 = true
                         }
                         if (G.techN > 171 && G.techN <= 200 && !st17) {
-                            G.Message({ type: 'story1', text: 'You will be remembered forever by your people as a great leader!', icon: [31, 30, 'magixmod'] });
+                            G.Message({ type: 'story1', text: 'You people think that you will be remembered forever as a great leader!', icon: [31, 30, 'magixmod'] });
                             st17 = true
                         }
-                        if (G.techN > 200 && G.techN <= 240 && !st18) {
-                            G.Message({ type: 'story1', text: 'Your people say that they will remember you until the end of time.', icon: [31, 30, 'magixmod'] });
+                        if (G.techN > 200 && (foolsToggle || G.techN <= 250) && !st18) {
+                            G.Message({ type: 'story1', text: foolsToggle ? 'the end is never the end is never the end is never the end is never the end' : 'Your people say that they will remember you until the end of time.', icon: [31, 30, 'magixmod'] });
                             st18 = true
                         }
                     }
@@ -2014,9 +2021,9 @@ if (getObj("civ") != "1") {
                             //G.getRes('population')/150+(G.year+G.achievByName['unhappy'].won*4/5)
                             /////////////////////
                             if (G.has('time measuring 1/2')) {
-                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob and kill. That\'s what Madness looks like.<br>Here comes this cruel year\'s report: <li>People murdered: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li><br>Population above <font color="#f60">' + popinfo + '</font> will present cruel behaviours.' })
+                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob and kill. That\'s what Madness looks like.<br>Here comes this cruel year\'s report: <li>People murdered: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li><br>Population above <font color="#f60">' + popinfo + choose(['</font> will present cruel behaviours.', '</font> will do cruel things.']) })
                             } else if (rese == true) {
-                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob and kill. That\'s what Madness looks like.<br><li>People that got murdered last time: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li><br>Population above <font color="#f60">' + popinfo + '</font> will present cruel behaviours.' })
+                                G.Message({ type: 'bad', text: 'Madness everywhere...people rob and kill. That\'s what Madness looks like.<br><li>People that got murdered: ' + Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))) + '</li><br>Population above <font color="#f60">' + popinfo + choose(['</font> will present cruel behaviours.', '</font> will do cruel things.']) })
                             }
                             G.lose('adult', Math.round((G.getRes('population').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))), 'The Madness')
                             G.gain('corpse', Math.round((G.getRes('corpse').amount / 80 + ((G.year / 5) + G.achievByName['unhappy'].won * 4 / 5))), 'The Madness')
@@ -2026,7 +2033,7 @@ if (getObj("civ") != "1") {
                                 G.dialogue.popup(function (div) {
                                     return '<div style="width:320x;min-height:200px;height:75%;">' +
                                         '<div class="fancyText title"><font color="#f70054">Trial failed</font></div>' +
-                                        '<tt><div class="fancyText">You failed the Unhappy trial by reaching the -400% unhappiness cap</tt>' +
+                                        '<tt><div class="fancyText">You failed the Unhappy trial by reaching the -400% unhappiness cap.</tt>' +
                                         '<br>All people murdered themselves, leaving no one remaining.<br>This was quite cruel...<br>' +
                                         '<br><br>' +
                                         'But you can try again by reaching the Pantheon again and choosing Bersaria.</div><br>' +
@@ -3431,8 +3438,8 @@ if (getObj("civ") != "1") {
                         G.dialogue.popup(function (div) {
                             return '<div style="width:320x;min-height:200px;height:75%;">' +
                                 '<div class="fancyText title"><font color="#f70054">Trial failed</font></div>' +
-                                '<tt><div class="fancyText">You failed the Ocean trial</tt>' +
-                                '<br>Your people ran out of land and perished...quite sad.<br>' +
+                                '<tt><div class="fancyText">You failed the Ocean trial by running out of land.</tt>' +
+                                '<br>Your people had nowhere to stay and perished...quite sad.<br>' +
                                 '<br><br>' +
                                 'But you can try again by reaching the Pantheon again and choosing Ocean.</div><br>' +
                                 'Technical note: Start a new run by opening the settings.' +
@@ -10968,14 +10975,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'well of ideas',
-                desc: 'This rather unique well has the ability to produce [idea tablet]s out of thin air. However, it requires some [precious building materials,Precious resources] and [food] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
+                desc: 'This rather unique and seemingly infinite well has the ability to produce [idea tablet]s upon sacrificing resources to it. However, it requires various [precious building materials,Precious resources] and [magic essences,Essences] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
                 wonder: '.',
                 icon: [68, 0, 'magix2'],
                 wideIcon: [67, 0, 'magix2'],
                 cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000, 'magic essences': 100000 },
                 costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25, 'magic essences': 10000 },
                 steps: 25000,
-                messageOnStart: 'You begin throwing things down of the Well of Ideas. It seems to be endless.',
+                messageOnStart: 'You begin throwing things down of the Well of Ideas. It looks more like a shallow pit currently, but you have a suspicion it might go on forever.',
                 require: { 'worker': 40 },
                 req: { 'the well of ideas': true },
                 type: 'portal',
@@ -18774,7 +18781,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mushroom crafting', category: 'tier1',
-                desc: '@gain the ability to craft [golden mushroom]s from [gold block]s and [mushroom]s in your [blacksmith workshop]s',
+                desc: '@gain the ability to craft [golden mushroom]s from [gold block]s and [mushroom]s in your [blacksmith workshop]s//<small>why golden mushrooms, you may ask? honestly not sure myself</small>',
                 icon: [0, 35, 'magixmod', 65, 0, 'magix2', 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 req: { 'mushroom farming': true },
@@ -18784,7 +18791,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'the well of ideas', category: 'tier1',
-                desc: 'Unlocks a new well: the [well of ideas]. This well is able to produce [idea tablet]s that help you unlock new researches. //<font color="#f70054"><b>However, rolling new researches will cost [idea tablet]s from now on.</b> (Rerolling doesn\'t cost extra though!)</font> @gain 10 [idea tablet]s to start off',
+                desc: 'Unlocks a new well: the [well of ideas]. This well is able to produce [idea tablet]s are needed to unlock new researches. //<font color="#f70054"><b>However, rolling new researches will cost [idea tablet]s from now on.</b> (Rerolling doesn\'t cost extra though!)</font> @gain 10 [idea tablet]s from the well to start off',
                 icon: [70, 0, 'magix2'],
                 cost: { 'insight': 120 },
                 effects: [

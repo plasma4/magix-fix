@@ -26,7 +26,7 @@ testFunction()
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 
 
-// Tip: in order to minimize RNG changing exported data, add the code below after the seedrandom function script (around line 270)
+// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), and reload
 // Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
     var result = {
