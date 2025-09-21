@@ -25,8 +25,8 @@ testFunction()
 // For some mods like Magix, there may be several possible JSON files generated because of different civs/races in the gameplay. You'll have to get the data separately, however.
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 
-
-// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), and reload
+// getGameJSON() is used in conjunction with JSON.stringify(getDictionaryObject()) to construct the data for MagixData.js automatically.
+// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and reload. For Magix, run c1() for human race and c2() for second race.
 // Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
     var result = {
