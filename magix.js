@@ -3203,7 +3203,7 @@ if (getObj("civ") != "1") {
                             var sickHealing = 0.01;
                             if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.25;
                             var changed = 0;
-                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
+                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain((G.checkPolicy('elder workforce') == 'on') ? 'elder' : 'adult', n, 'healing from sickness'); changed += n;
                             changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('disease messages') || G.resets < 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'person' : 'people') + ' got better.'; }, args: { n: changed }, icon: [4, 3] });
@@ -3236,7 +3236,7 @@ if (getObj("civ") != "1") {
                             }
                             var sickHealing = 0.005;
                             var changed = 0;
-                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
+                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, 'healing from injury'); changed += n;
                             changeHappiness(changed * 10 * (G.has("t7") ? 0.2 : 1), 'recovery');
                             if (G.getSetting('accident messages') || G.resets < 3) {
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'person' : 'people') + choose([' recovered from their wounds.', ' recovered from their injuries.']); }, args: { n: changed }, icon: [4, 3] });
@@ -3267,7 +3267,7 @@ if (getObj("civ") != "1") {
 
                     if (G.getRes('sick').amount > 0 && G.year < 1 && G.day < 10) {
                         var n = G.getRes('sick').amount;
-                        G.lose('sick', n); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n);
+                        G.lose('sick', n); G.gain('adult', n);
                     };
                 },
             });
@@ -19136,9 +19136,8 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] people are more likely to age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
-                //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds,
-                //and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] people will age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
+                //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
                 //however, i've balanced this by making sick and wounded people turn into elders when healed whenever this policy is on!
                 icon: [7, 12, 5, 3],
                 cost: { 'influence': 2 },
@@ -22646,7 +22645,7 @@ if (getObj("civ") != "1") {
                             var sickHealing = 0.01;
                             if (G.checkPolicy('flower rituals') == 'on') sickHealing *= 1.25;
                             var changed = 0;
-                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
+                            var n = G.lose('sick', randomFloor(Math.random() * G.getRes('sick').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, 'healing from sickness'); changed += n;
                             changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets < 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'sickRecovered', textFunc: function (args) { return B(args.n) + ' sick ' + (args.n == 1 ? 'elf' : 'elves') + ' got better.'; }, args: { n: changed }, icon: [4, 3, 'c2'] });
@@ -22676,7 +22675,7 @@ if (getObj("civ") != "1") {
 
                             var sickHealing = 0.005;
                             var changed = 0;
-                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, '-'); changed += n;
+                            var n = G.lose('wounded', randomFloor(Math.random() * G.getRes('wounded').amount * sickHealing), '<font color="lime">healing</font>'); G.gain(G.checkPolicy('elder workforce') == 'on' ? 'elder' : 'adult', n, 'healing from injury'); changed += n;
                             changeHappiness(changed * 10, 'recovery');
                             if (G.getSetting('disease messages') || G.resets < 3)
                                 if (changed > 0) G.Message({ type: 'good', mergeId: 'woundedRecovered', textFunc: function (args) { return B(args.n) + ' ' + (args.n == 1 ? 'elf' : 'elves') + choose([' recovered from their wounds.', ' recovered from their injuries.']); }, args: { n: changed }, icon: [4, 3, 'c2'] });
@@ -27131,9 +27130,9 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'elder workforce',
-                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] elves are more likely to age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
+                desc: '[elder]s now count as [worker]s; working elders are more prone to accidents and malnutrition and early death. //<b>In addition, [sick] and [wounded] elves will age after recovering, and other [worker]s are at a higher risk of being [wounded] due to additional risks.</b>',
                 //an interesting side-effect of this and how population is coded is that elders are now much more prone to illness and wounds, and should they recover they will magically turn back into adults, thus blessing your civilization with a morally dubious way of attaining eternal life
-                //however, i've balanced this by making sick and wounded elves turn into elders when healed whenever this policy is on!
+                //however, i've balanced this by making sick and wounded elves turn into uncs when healed whenever this policy is on!
                 icon: [7, 12, 'c2', 5, 3, 'c2'],
                 cost: { 'influence': 2 },
                 req: { 'tribalism': true },

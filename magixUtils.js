@@ -5415,7 +5415,7 @@ G.AddData({
 
         // Modify particle setting to just hide most particles with a random function
         G.showParticle = function (obj) {
-            if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.03)) return 0;
+            if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
             if (obj.y && (obj.y > G.h - 102 || obj.y < 26)) return 0;//cull if on black interface
             var me = G.particles[G.particlesI];
             me.x = 0;

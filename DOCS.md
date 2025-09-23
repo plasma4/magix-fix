@@ -352,6 +352,11 @@ G.fixTooltipIcons = function () {
 }
 ```
 which is where the shortcuts are from.
+15. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
+```js
+if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
+```
+which you may want if there are many new units in your mod.
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:
