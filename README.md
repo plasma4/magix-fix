@@ -1,5 +1,5 @@
 # Setting up the Magix fixer
-Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). The original mod creator developed most of the mod but  You can follow the instructions below on how to fix Magix. To locally download Magix and mess around with it, read the bottom section.
+Magix is a gigantic content mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). The original mod creator developed most of the mod but unfortunately stopped working on the project a while back due to IRL stuff. You can follow the instructions below on how to fix Magix; to locally download Magix and mess around with it, read the bottom section.
 
 <sup>Devs and curious individuals, please take a peek at `DOCS.md` for a better understanding of how NeverEnding Legacy actually works.</sup>
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
