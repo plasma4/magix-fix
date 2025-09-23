@@ -18,16 +18,16 @@ Do note, this is an non-exhaustive list and when in doubt, you should check the 
 - Code executed at launch is located in `G.Launch()`. `G.Launch()` then calls `G.Init()` once image resources are done loading.
 - `l(what: String)`: Gets the HTML element with ID `what`.
 - `choose(arr: object[])`/`shuffle(arr: object[])`: Chooses a random item in the array; shuffles items in the array.
-- `res.tick`: function to run during a tick
-- `item.icon`: icon for an item. You can find the sheets in the `sheets` propery of `G.AddData`. The coordinates are 0-indexed; sprites are meant to be square 24-by-24 pixels, and the game also has some internal sheets loaded by default. Icons can stack, too! (Magix Wiki can help visualize this stacking.)
-- `G.gain(what: String, amount: number, context: String)`/`G.lose(what,amount,context)`: Gain or lose a certain amount of an item (`what`). The `context` value is used to display to the user info when hovering over a resource (so they might see -6.0 from eating when hovering over herbs). (Note that it is safe to plug in negative values to either function.)
+- `res.tick`: Function to run during a tick (resources and units).
+- `item.icon`: Icon for an item, like `[2, 3, "magix2"]`. You can find the sheets in the `sheets` property of `G.AddData`. The coordinates are 0-indexed; sprites are meant to be 24x24 pixels and put into a sprite sheet, and the game also has some internal sheets loaded by default. Icons can stack, too! (Magix Wiki can help visualize this stacking.)
+- `G.gain(what: String, amount: number, context: String)`/`G.lose(what,amount,context)`: Gain or lose a certain amount of an item (`what`). The `context` value is used to display to the user info when hovering over a resource (so they might see "-6.0 from eating" when hovering over the herbs resource). Note that it is safe to plug in negative values to either function.
 - `G.has(what: String)`: Determines if you have a knowledge of something. Knowledge would be your techs and traits.
 - `G.checkReq(req: object)`: The universal function for checking requirements. It's more powerful than `G.has()` because it can check for more details (like `{'wisdom rituals':'on'}`) and multiple conditions at once since it is an object. It returns `true` only if all conditions in the `req` object are met. (Note that unit modes can have their own `req` values as well.)
 - `G.testCost(costs: object, mult: number)`/`G.doCost(costs: object, mult: number)`: `testCost` returns `true` or `false` if you can afford the items in `costs`, while `doCost` actually subtracts them. Used for purchases.
 - `G.checkPolicy(name: String)`: Same as `.has` but for policies. Set a policy using `G.setPolicyModeByName(me: String, mode: String)`.
 - `randomFloor(x: number)`: `if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);`. Basically, rounding down is more likely if the fractional part of x is less than 0.5 and more likely to round up if greater than 0.5.
 - `G.getSetting(name: String)`/`G.setSetting(name: String)`: Gets or sets a setting. (An example setting name is `debug`.)
-- `G.Message(obj: {type?: String, text?: String, icon?: [number, number, string?], ...})`
+- `G.Message(obj: {type?: String, text?: String, icon?: [number, number, string?], ...})` Simply sends a message to the right panel. Various other options exist.
 - `G.resets`: Number of times reset. Increments when ascending, not when starting a "New game" from settings.
 - `G.tick`/`G.day`/`G.year`: ticks (increments once per new day, doesn't reset on year change); days (resets to 0 if `G.day>300` and increments `G.year`); years.
 - `G.fps`: frame rate.
@@ -35,9 +35,9 @@ Do note, this is an non-exhaustive list and when in doubt, you should check the 
 - There's also `G.update` and `G.draw` which are also an array of functions, and `G.funcs` for misc functions. (`G.funcs['create map']`, for example, creates a random map with biomes, while `G.update['unit']()` updates the production tab.)
 - `G.Logic()`: Runs every game tick (different from `G.logic`, an array). This is where all game state changes should happen (resource decay, unit production, random events). Your custom tick functions on resources and units are called from here.
 - `G.saveTo`: Where to save in `localStorage`. (Do note that saving does have a chance to fail if there isn't enough storage left or the total stored data is too much!)
-- `ERROR(what)`: logs the data in `what` and uses `console.trace()`.
+- `ERROR(what: object)`: Logs the error in `what` and uses `console.trace()`.
 Note that if you need more details on how these functions work you can probably find them in `main.js` (or `magixUtils.js`). This isn't an exhaustive list either; search stuff within the code when you need it!
-- `G.stabilizeResize()`: custom code to handle resizing. Magix attempts to improve upon this significantly for mobile support.
+- `G.stabilizeResize()`: Custom code to handle resizing. Magix attempts to improve upon this significantly for mobile support.
 - `G.dialogue.popup(func: string, classes: string, from)` This is the function for creating pop-ups (like the settings or legacy menus). `func` takes in HTML (and this is especially useful with buttons). Buttons can be added to HTML with `G.button` (which takes in an object with many arguments), and inputs/textareas can be added with `G.field`/`G.textarea`.
 - `G.widget.popup(obj: object)` This creates the small pop-up menus that appear when you click and hold a "gizmo" button (like the unit mode selector).
 - `unitGetsConverted(...)` This is a special kind of function found in data.js (and modified in magixUtils.js) called a "function factory." It doesn't perform an action itself; instead, it returns a new function that does. It has many uses in effects, such as for workers being wounded/killed, and can have a custom message.
@@ -436,3 +436,5 @@ function getGameJSON(objectMode) {
     return objectMode ? JSON.parse(str) : str
 }
 ```
+
+That's it! Happy coding :)
