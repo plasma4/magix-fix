@@ -5,7 +5,7 @@ Have any questions? DM me on Discord (@1_e0) or preferably join the [Dashnet ser
 
 Want to add a mod URL to the end of an already existing game? [It's not that hard actually.](https://github.com/plasma4/magix-extras?tab=readme-ov-file#injecting-a-mod-without-wiping-the-save) If you want to work with mods locally (or offline), this repo is actually a great way to do that, even if you don't want to deal with Magix, as you can still use custom mods and choose files.
 
-Orteil also has his own basic debugging tools. You can run `G.Cheat()` in order to enable them! (Or `G.RuinTheFun()`, or `G.Debug()`, because why not I suppose.) There are also additional debug variables in a few functions like `G.renderMap()`.
+Orteil also made some basic debugging tools. You can run `G.Cheat()` in order to enable them! (Or `G.RuinTheFun()`, or `G.Debug()`, because why not I suppose.) There are also additional debug variables in a few functions like `G.renderMap()`.
 
 ## Basics
 Do note, this is an non-exhaustive list and when in doubt, you should check the code!
@@ -46,8 +46,6 @@ Note that if you need more details on how these functions work you can probably 
 ## Digging on your own
 This document unfortunately can't explain every single little detail about the game. If you're trying to understand something, perhaps look for examples in the code and try to get a function call stack with `console.trace()`! (Or you could just ask me on Discord if you're super stuck.)
 
-will make you fulfill one of two requirements to start cleaning [muddy water] and making [water] from it -> is part of what is needed to clean [muddy water] and turn it into normal [water]
-
 ## Effects
 Effects can be found from `item.effect`. (Find code for how effects function in `G.fullApplyUnitEffects` in `main.js` or `magixUtils.js`.)
 
@@ -67,7 +65,7 @@ new G.Unit({
     cost: {},
     use: { 'worker': 1 },
     //upkeep:{'food':0.2},
-    //alternateUpkeep:{'food':'spoiled food'}, (not in the original code, but Orteil never implemented this. What a legend)
+    //alternateUpkeep:{'food':'spoiled food'}, (This part in parens isn't in the original code, but I would like to point out that Orteil never implemented this. What a legend)
     effects: [
         { type: 'gather', context: 'gather', amount: 2, max: 4 }, // Gather something within the harvesting context of 'gather' (explained later), 
         { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } }, // In the 'hunt' context with a smaller chance and a requirement
