@@ -85,7 +85,8 @@ if (!window.loadedMagix) {
             }
             G.Scroll = 1;
         } else if (e.altKey) {
-            l("fastButton").click()
+            e.preventDefault()
+            if (!e.repeat) l("fastButton").click()
         }
     })
     document.addEventListener("keyup", function (e) {
@@ -5586,7 +5587,7 @@ if (getObj("civ") != "1") {
             //To make game not crash by precious pots i had to add it
             new G.Res({
                 name: 'wizard',
-                desc: 'Your [elder]s can become [wizard]s, who are essential to upkeep [fire wizard tower,Wizard towers], [Wizard Complex,Wizard Complexes] and other related to magic constructions. //Some constructions will need many, many [wizard]s to upkeep it.',
+                desc: 'Your [elder]s can become [wizard]s, who are essential to upkeep [fire wizard tower,Wizard towers], [Wizard Complex,Wizard Complexes] and other buildings related to magic constructions. //Some constructions will need many, many [wizard]s to upkeep it.',
                 icon: [2, 7, 'magixmod'],
                 displayUsed: true,
                 category: 'demog',
@@ -5856,10 +5857,7 @@ if (getObj("civ") != "1") {
                 hidden: true,
                 icon: [10, 5],
                 category: 'main',
-                tick: function (me, tick) {
-                }
             });
-            var value = (G.getAchiev('pocket').won * 3 + 1) * 100;
             new G.Res({
                 name: 'faith II',
                 desc: '[faith II] derives from all things divine, from meditation to sacrifices.//' + limitDesc('[spirituality II]') + '//Some cultural traits and technologies depend on faith. This is a higher tier essential. <><font color="#d7d4a2">Every 500 [faith] can be converted into 1 [faith II] point.</font>',
@@ -12331,7 +12329,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'water filtering', category: 'tier1',
-                desc: 'Obtaining this tech will make you fulfill one of two requirements to start cleaning [muddy water] and making [water] from it. <>The other one is obtaining [caretaking] or [moderation].',
+                desc: 'Obtaining this tech is part of what is needed to clean [muddy water] and turn it into normal [water]; you also need [caretaking] or [moderation].',
                 icon: [25, 16, 'magixmod'],
                 cost: { 'insight': 30 },
                 req: { 'bows': true, 'a gift from the mausoleum': true },//IK it seems strange but i wanted to make it equal to other tech at tech tier tree
@@ -18899,7 +18897,7 @@ if (getObj("civ") != "1") {
                 icon: [9, 10],
                 category: 'demog',
                 getDisplayAmount: function () {
-                    return B(G.has('time measuring 1/2') ? G.getRes('drought year').amount : (Math.round(G.getRes('drought year').amount / 10)) * 10)
+                    return B(G.has('time measuring 1/2') ? G.getRes('drought year').amount : ("???"))
                 },
             });
             new G.Res({
@@ -21225,7 +21223,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'animal corpse',
-                desc: '[animal corpse]s are exclusively found here. Some of them are dug underground by the ages, so both digging and gathering may provide some [bone]s.',
+                desc: '[animal corpse]s are exclusively found here. Some of these are found underground and kept safe through time, so both digging and gathering may provide some [bone]s.',
                 icon: [33, 14, 'magixmod'],
                 res: {
                     'gather': { 'bone': 0.1 },
@@ -21235,7 +21233,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'dead fishes',
-                desc: 'These stinky fish have a decisively bad smell. This can give you an insignificant amount of [spoiled food].',
+                desc: 'These stinky fish have a decisively bad smell. Might give an insignificant amount of [spoiled food].',
                 icon: [33, 13, 'magixmod'],
                 res: {
                     'fish': { 'spoiled food': 0.02 },

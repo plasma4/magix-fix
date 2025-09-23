@@ -1,5 +1,7 @@
 # Setting up the Magix fixer
-Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). You can follow the instructions below on how to fix Magix. To locally download Magix and mess around with it, read the bottom section.
+Magix is a mod developed by @pelletsstarPL for NeverEnding Legacy, a game made by Orteil (open [here](https://orteil.dashnet.org/legacy/)). The original mod creator developed most of the mod but  You can follow the instructions below on how to fix Magix. To locally download Magix and mess around with it, read the bottom section.
+
+<sup>Devs and curious individuals, please take a peek at `DOCS.md` for a better understanding of how NeverEnding Legacy actually works.</sup>
 ## IF YOU ALREADY HAVE MAGIX INSTALLED (if you don't, look at the section below)
 Paste in the following script into the console:
 ```js
@@ -42,6 +44,11 @@ This offline version of Magix...
 
 <sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html). You are even able to **create** your own mods from there, so check it out!</sup>
 
+## Information for devs
+Check `localDevelopment.js` to mess with some settings, and `DOCS.md` for lots more context on how the game works and how to develop a basic mod yourself (hopefully to avoid dev headaches).
+
+---
+<sup>Be aware that the file version uses raw.githubusercontent.com links for uncached XML request purposes whenever the user has an internet connection instead. The link will automatically fix itself when importing or exporting, and this shouldn't be something you need to worry about. If you are a programmer and want to use the magix.js and magixUtils.js files in the code, set `offlineMode` to `true` in localDevelopment.js.</sup>
 ### Alternate links for Magix
 Want a few other links for loading Magix? Try some of these:
 ```
@@ -56,6 +63,3 @@ https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
 https://plasma4.github.io/magix-fix/magixUtils.js
 https://plasma4.github.io/magix-fix/magix.js
 ```
-
----
-<sup>Be aware that the file version uses raw.githubusercontent.com links for uncached XML request purposes whenever the user has an internet connection instead. The link will automatically fix itself when importing or exporting, and this shouldn't be something you need to worry about. If you are a programmer and want to use the magix.js and magixUtils.js files in the code, set `offlineMode` to `true` in localDevelopment.js.</sup>

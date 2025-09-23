@@ -35,9 +35,9 @@ function getGameJSON(objectMode) {
         goods: extractObject(G.goods, ["name", "displayName", "desc", "res", "icon", "mult"]),
         resources: extractObject(G.res, ["name", "displayName", "hidden", "desc", "category", "startWith", "colorGood", "colorBad", "icon", "fractional", "turnToByContext", "meta", "partOf"], ["tick", "getDisplayAmount", "getIcon", "whenGathered"]),
         units: extractObject(G.unit, ["name", "displayName", "desc", "wonder", "icon", "wideIcon", "threexthreeIcon", "startWith", "cost", "costPerStep", "steps", "type", "messageOnStart", "finalStepCost", "finalStepDesc", "use", "req", "category", "modes", "gizmos", "limitPer", "upkeep"], ["tick"]),
-        policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category"]),
-        techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg"]),
-        traits: extractObject(G.trait, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req"]),
+        policies: extractObject(G.policy, ["name", "displayName", "desc", "icon", "startMode", "req", "modes", "category", "skip"]),
+        techs: extractObject(G.tech, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "tutorialMesg", "skip"]),
+        traits: extractObject(G.trait, ["name", "displayName", "desc", "icon", "type", "cost", "category", "startWith", "tier", "chance", "req", "skip"]),
         descriptions: {
             name: "The identifier name of the thing",
             displayName: "The displayed name of the thing, which will be used instead of the identifier name",
@@ -93,7 +93,8 @@ function getGameJSON(objectMode) {
             id: "The ID value of the thing",
             mod: "The link of the mod that was used to create the thing",
             precededBy: "What the thing requires to obtain",
-            leadsTo: "What the thing leads to when obtained"
+            leadsTo: "What the thing leads to when obtained",
+            skip: "Skips gaining this item when using the ALMIGHTY button in debug mode"
         },
         sheets: G.sheets
     }
@@ -164,4 +165,4 @@ function getDictionaryObject() {
     return resObj
 }
 
-/* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod. */
+/* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod; check DOCS.md for extensive NEL documentation. */

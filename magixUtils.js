@@ -21,8 +21,15 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
+var isUsingFile = window.offlineMode != null
+var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
+var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
+var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
+
 //Custom storage tools that 1) don't break the save data and 2) are saved when exporting
 if (!window.magixLoaded) {
+    var terrainMagixImg = new Image()
+    terrainMagixImg.src = magixURL + 'terrainMagix.png'
     window.magixLoaded = 1
     var conflictingStorageObjects = ["civ"]
     G.storageObject = {}
@@ -48,11 +55,6 @@ if (!window.magixLoaded) {
         G.storageObject = {}
     }
 }
-
-var isUsingFile = window.offlineMode != null
-var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
-var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
-var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cookieclicker/snd/"
 
 //Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
 function getObj(key) {
@@ -4133,8 +4135,7 @@ G.AddData({
             var totalw = map.w;//x2-x1;
             var totalh = map.h;//y2-y1;
 
-            var img = new Image();   //Create new img element
-            img.src = magixURL + 'terrainMagix.png';
+            var img = terrainMagixImg;
             var fog = Pic('img/blot.png');
 
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;

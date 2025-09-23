@@ -244,7 +244,8 @@
             line-height: 1.2;
         }
 
-        .ocean {
+        .ocean,
+        a {
             color: #459bf2;
             text-decoration: underline;
         }
@@ -332,16 +333,9 @@
         <button>Import script</button>
         <hr>
         <div>
-            Tip: effects and modes are <b>very</b> complex to learn! It's a good idea to look at a few examples.
-            Here are a few key parts to know:
+            Tip: You should check <a href="https://plasma4.github.io/magix-fix/DOCS.md">DOCS.md</a>
+            for a lot more context! It tries to explain concepts in much more detail.
         </div>
-        <ul class="darker">
-            <li>each effect or mode is able to have a requirement (the <span class="mono">req</span> property)</li>
-            <li>modes are unique in that they can have an icon and description</li>
-            <li>effects are able to work for a specific mode, this works for multiplier effects as well</li>
-            <li>enable all debug values and look at a few examples; you might understand them much better after</li>
-            <li>also, be aware that some things might not work as you expect; sometimes, examples teach well</li>
-        </ul>
         <hr>
     </span>
     <div></div>
@@ -520,7 +514,7 @@
                 for (var i = 0; i < inputValue.length; i++) {
                     var search = inputValue[i]
                     var icon = getIcon(category === "lands" ? (search.ocean ? [25, 18, "magixmod"] : [14, 4]) : search.icon, true, civ2)
-                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
+                    text.push((category === "achievements" && !search.visible ? "<small>Note: this achievement is normally not visible</small>\r\n<header>Display name: " : "<header>Display name: ") + (category === "policies" || category === "lands" ? cap(search.name) : search.displayName) + "</header>\r\nDescription: " + parseDesc(search.desc) + ('Icon: <div tabindex="0" onclick="c(' + search.id + ')" class="icon" style="background-image:' + icon[0] + ';background-position:' + icon[1] + '"></div>') + (search.leadsTo ? "\r\nPreceded by: " + parseReq(obj, search.precededBy) + "\r\nLeads to: " + parseReq(obj, search.leadsTo) : ""))
                 }
                 result.innerHTML = (text.length !== 0 ? "<i><strong>Results:</strong></i> \r\n" + text.join("\r\n-------------------------\r\n") : "<strong>No results found</strong>")
                 result.removeAttribute("class")
