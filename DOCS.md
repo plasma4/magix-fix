@@ -309,12 +309,12 @@ new G.Unit({
 ## Additional info
 1. Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was Array(2102051) and `techByTier` was Array(297288). The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does.
 2. The game will execute your mod file twice after initially creating a "New game" through the settings (or ascending), even if that code is outside of the `func` function. If this is a problem you may want to do something like this in your mod file:
-```js
-if (!window.johnsModLoaded) {
-  // Replace this comment with code. Code in here will only be executed once!
-  var johnsModLoaded = true
-}
-```
+    ```js
+    if (!window.johnsModLoaded) {
+    // Replace this comment with code. Code in here will only be executed once!
+    var johnsModLoaded = true
+    }
+    ```
 3. If you want to create a smaller mod and not a large overhaul it's almost certain that you do not need to replace `data.js` like Magix does. Depending on what you want though, your mod doesn't have to function with Magix (or and mods at all)!
 4. Importantly, the `main.js` in this repo is [different than the actual `main.js`](https://orteil.dashnet.org/legacy/main.js).
 5. Oh, yeah, and `data.js` was also changed for this repo. [Original data.js here.](https://orteil.dashnet.org/legacy/main.js) One of these changes is that fertility rituals only consumed faith every 50 days instead of 20 days, despite the text saying otherwise. Might want to change that in your mod :p
@@ -322,41 +322,41 @@ if (!window.johnsModLoaded) {
 7. Magix fundamentally alters many mechanics in the game, and `magix-fix` has edited more of them. Currently it is unfortunately at the point where so many base mechanics have been changed that it would be near impossible to find them all. These would include mobile features (in `G.widget.update`), making `stabilizeResize` more responsive, removal of empty tick functions in `G.Res()`. If you want mobile support or perhaps a more detailed attempt at fiding the differences, contact me on Discord (see top of this document).
 8. The [Magix Wiki](https://plasma4.github.io/magix-fix/magix-wiki.html) might be helpful in order to quickly look for and examine certain items and their interactions between them! In particular, clicking on a unit provides an actually readable explanation of what goes on, and knowledge has detailed explanation (do note, though, that requirements or other properties that are changed with the JS will NOT be shown here).
 9. Not everything might be in a place you expect initially; for example, this code:
-```js
-if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
-```
-is actually located in `G.funcs['game loaded']`! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
+    ```js
+    if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
+    ```
+    is actually located in `G.funcs['game loaded']`! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
 10. Gathering is based on the total goods available across all owned tiles, weighted by each tile's exploration percentage. The `chance` property determines if a good spawns on a tile at all, and this happens only once when the world is created. However...the actual amount gathered isn't just `Math.min(resAmount, toGather)`. The game "soft-caps" it to make gathering less effective when you have far more workers than available resources, but it doesn't drop to zero. The formula is:
-```js
-amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05
-```
-So, with 35 herbs available and 10 desired, you would only get 10 herbs.
+    ```js
+    amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05
+    ```
+    So, with 35 herbs available and 10 desired, you would only get 10 herbs.
 However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
 11. Techs and traits' IDs are unified because they both are actually considered knowledge, and extend `G.Know`. (What a weird piece of trivia!)
 12. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
 13. If you try to have text `[custom resource]` that doesn't exist then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
 14. On the topic of custom text, you can use HTML in descriptions, and custom shortcuts. Magix has this function:
-```js
-G.fixTooltipIcons = function () {
-    G.parse = function (what) {
-        var str = '<div class="par">' + ((what
-            .replaceAll(']s', ',*PLURAL*]'))
-            .replace(/\[(.*?)\]/gi, G.parseFunc))
-            .replaceAll('http(s?)://', 'http$1:#SLASH#SLASH#')
-            .replaceAll('//', '</div><div class="par">')
-            .replaceAll('#SLASH#SLASH#', '//')
-            .replaceAll('@', '</div><div class="par bulleted">')
-            .replaceAll('<>', '</div><div class="divider"></div><div class="par">') + '</div>';
-        return str;
+    ```js
+    G.fixTooltipIcons = function () {
+        G.parse = function (what) {
+            var str = '<div class="par">' + ((what
+                .replaceAll(']s', ',*PLURAL*]'))
+                .replace(/\[(.*?)\]/gi, G.parseFunc))
+                .replaceAll('http(s?)://', 'http$1:#SLASH#SLASH#')
+                .replaceAll('//', '</div><div class="par">')
+                .replaceAll('#SLASH#SLASH#', '//')
+                .replaceAll('@', '</div><div class="par bulleted">')
+                .replaceAll('<>', '</div><div class="divider"></div><div class="par">') + '</div>';
+            return str;
+        }
     }
-}
-```
-which is where the shortcuts are from.
+    ```
+    which is where the shortcuts are from.
 15. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
-```js
-if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
-```
-which you may want if there are many new units in your mod.
+    ```js
+    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
+    ```
+    which you may want if there are many new units in your mod.
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:
