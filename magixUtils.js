@@ -27,6 +27,8 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 // TODO: FUNCTIONAL TERRITORY UI, GAMEPLAY ADDITIONS
 var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game, or not function; be warned!
 
+// window.location.origin.slice(0, 4) === "file" || window.location.toString().slice(0, 16) === "http://127.0.0.1" || window.location.toString().slice(0, 17) === "https://127.0.0.1"
+// The real purpose of this is to detect if localDevelopment.js exists, which shows that assets exist locally already.
 var isUsingFile = window.offlineMode != null
 var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
 var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
@@ -1230,7 +1232,7 @@ G.AddData({
                 var len = G.policyCategories.length;
                 for (var iC = 0; iC < len; iC++) {
                     if (G.policyCategories[iC].id == 'pantheon' && strByCat[G.policyCategories[iC].id] != '') {
-                        str += '<div class="category" style="display:inline-block;width:75%;height:95%"><center><Div class="framed bgMid" style=\'width:75%;height:65%;background-image:url(img/cloudsBottom.png),url(' + magixURL + 'GoldenTheme/bgDarkRockGolden.jpg);animation:wonderCloudsDriftRight 180s infinite linear\'><div class="categoryName barred fancyText" id="policy-catName-' + iC + '"><font size="2" style="letter-spacing:3px">' + G.policyCategories[iC].name + '</font></div>' + strByCat[G.policyCategories[iC].id] + '</div></div><br>';
+                        str += '<div class="category" style="display:inline-block;width:75%;height:95%"><center><Div class="framed bgMid" style=\'width:75%;height:65%;background-image:url(img/cloudsBottom.png),url(' + magixURL2 + 'bgDarkRockGolden.jpg);animation:wonderCloudsDriftRight 180s infinite linear\'><div class="categoryName barred fancyText" id="policy-catName-' + iC + '"><font size="2" style="letter-spacing:3px">' + G.policyCategories[iC].name + '</font></div>' + strByCat[G.policyCategories[iC].id] + '</div></div><br>';
                     } else {
                         if (G.getSetting('linearDp') == true) {
                             if (strByCat[G.policyCategories[iC].id] != '') str += '<div class="category" style="display:inline-block;"><div class="categoryName barred fancyText" id="policy-catName-' + iC + '">' + G.policyCategories[iC].name + '</div>' + strByCat[G.policyCategories[iC].id] + '</div><br>';
@@ -4216,7 +4218,7 @@ G.AddData({
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;
             var ctx = c.getContext('2d');
             ctx.translate(ts / 2, ts / 2);
-                        var m = G.storageObject.map
+            var m = G.storageObject.map
             for (var x = 0; x < map.w; x++) {
                 for (var y = 0; y < map.h; y++) {
                     if (x >= x1 && x < x2 && y >= y1 && y < y2) {

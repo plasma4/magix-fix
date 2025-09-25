@@ -13028,7 +13028,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt4',
                 displayName: 'God\'s trait #4 Potter\'s frenzy',
-                desc: 'Increases the efficiency of [factory of pots] and [hut of potters] by a quarter without harming any [happiness]. //<small>we must make as many pots as we can</small>',
+                desc: 'Increases the efficiency of [factory of pots] and [hut of potters] by a quarter //<small>we must make as many pots as we can</small>',
                 icon: [21, 18, 'magixmod'],
                 cost: { 'faith': 100 },
                 chance: 275,
@@ -13038,7 +13038,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'gt5',
                 displayName: 'God\'s trait #5 Colored life',
-                desc: 'Increases the efficiency of [hovel of colours] by a quarter without harming any [happiness]. //<small>first you put the materials here...</small>',
+                desc: 'Increases the efficiency of [hovel of colours] by a quarter //<small>first you put the materials here...</small>',
                 icon: [22, 18, 'magixmod'],
                 cost: { 'faith': 100 },
                 chance: 275,
