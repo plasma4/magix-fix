@@ -10531,13 +10531,13 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'f.r.o.s.t.y',
                 displayName: 'F.R.O.S.T.Y',
-                desc: '@Extracts [christmas essence] from various [snowman,Snowmen] created by children. @Be warned, as it is possible the extraction will destroy the [snowman]! @[snowman,Snowmen] may be extracted multiple times//This weird machine is powered by strange energies, [snow], and by [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas,The Christmas].',
+                desc: '@Extracts [christmas essence] from various [snowman,Snowmen] created by children. @Be warned, as it is possible the extraction will destroy some unlucky [snowman,Snowmen]!//This weird machine is powered by strange energies, [snow], and [lightning essence]. //[f.r.o.s.t.y]\'s upkeep is only active during [the christmas,The Christmas].',
                 icon: [15, 12, 'seasonal'],
                 cost: { 'strong metal ingot': 100, 'hard metal ingot': 15, 'precious metal ingot': 2, 'basic building materials': 10, 'magic essences': 5000, 'platinum ore': 10 },
                 use: { 'land': 3 },
                 upkeep: { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 },
                 req: { 'festive robot print': true, 'tribalism': false },
-                limitPer: { 'land': 200000 },//MAX 1
+                limitPer: { 'land': 50000 },//MAX 1
                 category: 'seasonal',
                 effects: [
                     {
@@ -10545,13 +10545,13 @@ if (getObj("civ") != "1") {
                             if (day >= 350 && day <= 363) {
                                 if (G.getRes('snowman').amount >= 3) {
                                     var chance = Math.random();
-                                    var bonus = 0;
-                                    if (G.has('f.r.o.s.t.y overclock I')) bonus += 0.5;
-                                    if (G.has('f.r.o.s.t.y overclock II')) bonus += 0.7;
-                                    if (G.has('f.r.o.s.t.y overclock III')) bonus = bonus * 2 + 1;
-                                    G.gain('christmas essence', 3 * (bonus + 1), 'F.R.O.S.T.Y');
+                                    var bonus = 1, risk = 2.5;
+                                    if (G.has('f.r.o.s.t.y overclock I')) risk *= 1.05, bonus *= 1.5;
+                                    if (G.has('f.r.o.s.t.y overclock II')) risk *= 1.08, bonus += 1.8;
+                                    if (G.has('f.r.o.s.t.y overclock III')) risk *= 1.3, bonus *= 2;
+                                    G.gain('christmas essence', 3 * bonus, 'F.R.O.S.T.Y');
                                     if (chance <= 0.05 + bonus) {
-                                        G.lose('snowman', randomFloor(1 * ((bonus * 1.1) + 1)), 'failed essence extraction');
+                                        G.lose('snowman', randomFloor(risk * Math.random()), 'failed essence extraction');
                                     }
                                     me.unit.upkeep = { 'snow': 6, 'magic essences': 10, 'lightning essence': 5 };
                                 } else {
@@ -10980,7 +10980,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'well of ideas',
-                desc: 'This rather unique and seemingly infinite well has the ability to produce [idea tablet]s upon sacrificing resources to it. However, it requires various [precious building materials,Precious resources] and [magic essences,Essences] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>increases</b> every 10 steps',
+                desc: 'This rather unique and seemingly infinite well has the ability to produce [idea tablet]s upon sacrificing resources to it. However, it requires various [precious building materials,Precious resources] and [magic essences,Essences] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>rises</b> every 10 steps',
                 wonder: '.',
                 icon: [68, 0, 'magix2'],
                 wideIcon: [67, 0, 'magix2'],
@@ -16105,21 +16105,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock I', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] is 50% faster</font> @<font color="#f70054">[f.r.o.s.t.y] is 5% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y]. However, it seems this increase in speed comes at a slightly higher likelyhood of [snowman,Snowmen] being destroyed. @<font color="#54d431">[f.r.o.s.t.y] becomes 50% faster</font> @<font color="#f70054">[f.r.o.s.t.y] is 5% more likely to destroy a [snowman]</font>',
                 icon: [5, 12, 'seasonal'],
                 cost: { 'insight': 600, 'culture': 100, 'influence': 50, 'christmas essence': 114 },
                 req: { 'festive robot print': true, 'land acknowledge': true, 'tribalism': false },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock II', category: 'seasonal',
-                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before. They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. However, getting this upgrade also increases the risk of [snowman,Snowmen] destruction...<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 70% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 7% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards figured out how to overclock [f.r.o.s.t.y] even more than before and are excited to speed up the process!<br>but this overclock increases the chance for that at least as for now it is possible. @<font color="#54d431">[f.r.o.s.t.y] is 80% faster (compounding)</font> @<font color="#f70054">[f.r.o.s.t.y] is 8% more likely to destroy a [snowman]</font>',
                 icon: [4, 12, 'seasonal'],
                 cost: { 'insight II': 110, 'culture II': 20, 'influence II': 5, 'science': 5, 'christmas essence': 546 },
                 req: { 'festive robot print': true, 'policy revaluation': true, 'f.r.o.s.t.y overclock I': true },
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock III', category: 'seasonal',
-                desc: 'Wizards really want to overclock [f.r.o.s.t.y] even more! They know how to do it and also they know that there is no way to remove probability of [snowman] being destroyed by extraction. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 10% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards really want to overclock [f.r.o.s.t.y] even more! They have come up with an elaborate scientific solution to tackle this problem, although the [snowman,Snowmen] aren\'t really happy about it. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 30% more likely to destroy a [snowman]</font>',
                 icon: [3, 12, 'seasonal'],
                 cost: { 'insight II': 400, 'science': 45 },
                 req: { 'festive robot print': true, 'bigger university': true, 'f.r.o.s.t.y overclock II': true, 'dynamics II': true },

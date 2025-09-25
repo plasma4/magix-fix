@@ -1,7 +1,3 @@
-some special ingredients
-Alcohol can be used to craft trunks.
-Manage your wonderful tribe well enough
-Alchemy after terrain conservancy
 # NEL Documentation and Modding Guide
 NeverEnding Legacy is a civ building game but its code is a mess. Maybe not as much as Cookie Clicker but it's pretty cobbled together. The goal of this document is to provide a better explanation of basics and tips to minimize your time wasted (or if you're rather curious, I suppose.)
 
