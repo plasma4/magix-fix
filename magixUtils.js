@@ -21,6 +21,12 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
+// CURRENTLY TESTING: CUSTOM MAPS FOR PLAIN ISLAND (MAP TYPE 1)
+// STATUS: VISUAL-ONLY, INCOMPLETE
+// DONE: SEEDING AND TERRITORY TYPE GENERATION
+// TODO: FUNCTIONAL TERRITORY UI, GAMEPLAY ADDITIONS
+var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game, or not function; be warned!
+
 var isUsingFile = window.offlineMode != null
 var magixURL = isUsingFile ? "Magix/" : "https://file.garden/Xbm-ilapeDSxWf1b/"
 var magixURL2 = isUsingFile ? "Magix/" : "https://file.garden/ZmatEHzFI2_QBuAF/"
@@ -70,7 +76,7 @@ function getObj(key) {
     } catch (e) {
 
     }
-    if (navigator.cookieEnabled) {
+    if (window.location.origin.slice(0, 4) !== "file" && navigator.cookieEnabled) {
         let name = key + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
@@ -464,7 +470,7 @@ G.Load = function (doneLoading) {
         var spl = str[s++].split(';');
         //console.log('Map tiles : '+spl);
         G.currentMap = new G.Map(0, 24, 24, spl[0]);
-
+        G.islandMap = new G.Map(1, 24, 24, spl[0]);
         var map = G.currentMap;
         var spl2 = spl[1].split(',');
         var I = 0;
@@ -612,6 +618,46 @@ G.Load = function (doneLoading) {
         return true;
     }
     return false;
+}
+
+// Literally just add extra argument to create map
+G.Map = function (type, w, h, seed) {
+    //create a new unpopulated map with specified type, width and height, with an optional seed
+    this.type = type;//type : 0=main, 1=space, 2=moon, 3=other planet
+    this.w = w;
+    this.h = h;
+    this.computedPlayerRes = [];
+    this.tilesByOwner = [];//lists of tiles indexed by civs owning them ([0]=unexplored)
+    this.territoryByOwner = [];//total amount of explored owned tile percents across all tiles owned by a given civ
+    this.seed = seed || makeSeed(5);
+
+    var time = Date.now();
+
+    if (!G.land[0]) throw 'Whoah there! You can\'t generate a map if you don\'t even have one terrain type to default to!';
+
+    Math.seedrandom(this.seed);
+    this.tiles = [];
+    for (var x = 0; x < w; x++) {
+        this.tiles[x] = [];
+        for (var y = 0; y < h; y++) {
+            var land = G.land[0];
+            var tile = { owner: 0, land: land, goods: [], explored: 0, effects: [], x: x, y: y, map: this };
+            this.tiles[x][y] = tile;
+        }
+    }
+
+    var lvl = G.doFuncWithArgs('create map', [w, h, type]); // Added type argument
+    for (var x = 0; x < w; x++) {
+        for (var y = 0; y < h; y++) {
+            this.tiles[x][y].land = G.getLand(lvl[x][y]);
+            this.tiles[x][y].goods = G.getRandomLandGoods(this.tiles[x][y].land);
+        }
+    }
+
+    //console.log('generating map took '+(Date.now()-time)+'ms');
+
+    G.maps.push(this);
+    Math.seedrandom();
 }
 
 //Remove the empty tick functions for a little performance boost (how much? not sure...in particular, considering the amount of problems this has/may cause)
@@ -1149,7 +1195,7 @@ G.AddData({
                 str +=
                     '<div class="regularWrapper">' +
                     G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Policies help you regulate various aspects of the life of your citizens.</div><div class="par">Some policies provide multiple modes of operation, while others are simple on/off switches.</div><div class="par">Changing policies usually costs something, such as influence points or faith. Depending on how drastic or generous the change is, it may have an impact on your people\'s morale.</div></div>', 'infoButton') +
-                    '<div class="fullCenteredOuter"><div id="policyBox" class="thingBox fullCenteredInner"></div></div></div>';
+                    '<div class="fullCenteredOuter"><div id="policyBox" class="thingBox"></div></div></div>';
                 str += '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
                     G.button({
                         id: 'display',
@@ -2737,7 +2783,7 @@ G.AddData({
             tier: 'trait',
             name: 'trait-or',
             icon: [12, 25, 'magixmod'],
-            desc: 'Manage your wonderful tribe to adopt 50 total traits and knowledges.',
+            desc: 'Manage your wonderful tribe well enough to adopt 50 total traits and knowledges.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
             ],
@@ -3715,7 +3761,7 @@ G.AddData({
             More exact tile inspection
         ==============================*/
         G.inspectTile = function (tile) {
-            if (G.has('tile inspection')) {
+            if (G.has('tile inspection') && !G.storageObject.map) {
                 //display the tile's details in the land section
                 //note : this used to display every territory owned until i realized 3 frames per second doesn't make for a very compelling user experience
                 var str = '';
@@ -3798,6 +3844,10 @@ G.AddData({
             G.updateMapDisplay();
             G.tabs[1].showMap = true;
             if (G.has('where am i?')) {
+                function showPlain() {
+                    G.storageObject.map = 1;
+                    G.updateMapDisplay();
+                }
                 var str = '';
                 str += G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">This is your territory. While you only start with a small tile of land, there is a whole map for you to explore if you have units with that ability.</div><div class="par">Each tile you control adds to the natural resources available for your units to gather. You get more resources from fully-explored tiles than from tiles you\'ve just encountered.</div><div class="par">If you unlocked <b>Tile inspection</b>, you can click on an explored tile on the map to the right to see what goods can be found in it, and how those goods contribute to your natural resources.</div></div>', 'infoButton');
                 str += '<div id="landBox">';
@@ -3806,6 +3856,26 @@ G.AddData({
                     //display list of total gatherable resources per context
                     var I = 0;
                     var cI = 0;
+                    if (G.getSetting('debug')) str += '<br><br>' + G.button({ text: '<font>Reseed</font>', tooltip: 'Reseed and reset the territory completely.', onclick: function () { delete G.storageObject.map; G.createMaps(); G.update['land']; } });
+                    if (testingMagix) {
+                        if (G.storageObject.map) {
+                            showPlain()
+                            str += "<br>" + G.button({
+                                text: '<font>View main map</font>', tooltip: 'View the map of your main world.', onclick: function () {
+                                    delete G.storageObject.map
+                                    G.update['land']()
+                                }
+                            })
+                        } else {
+                            if (G.getSetting('debug') || G.getDict('land of the Plain Island').amount > 1000) str += '<br>' + G.button({
+                                text: '<font>View island map</font>', tooltip: 'View the map of your island world.', onclick: function () {
+                                    // A few hacky ways to prevent updates and fake current map here
+                                    showPlain()
+                                    G.update['land']()
+                                }
+                            })
+                        }
+                    }
                     if (G.has('tile inspection II')) {
                         str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Total natural resources in your territory:</div>';
                     } else {
@@ -4021,7 +4091,7 @@ G.AddData({
                 G.writeSettingButton({ id: 'showAllRes', name: 'showAllRes', text: '<font color="aqua">Show resources</font>', tooltip: 'Toggle whether all resources should be visible.' }) +
                 //G.writeSettingButton({ id: 'tieredDisplay', name: 'tieredDisplay', text: '<font color="yellow">Show tiers</font>', tooltip: 'Toggle whether technologies should display in tiers instead of in the order they were researched.<br>While active, you can click a tech to highlight its ancestors and descendants.' }) +
                 '<br>' +
-                G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.revealMap(G.currentMap); } }) +
+                G.button({ text: '<font color="fuschia">Reveal map</font>', tooltip: 'Explore the whole map instantly.', onclick: function () { G.gainTrait(G.traitByName['where am i?']); G.revealMap(G.currentMap); l('tab-land').click(); } }) +
                 G.button({ text: '<font color="#e28">Party</font>', tooltip: 'Add some color to your gameplay!', onclick: function () { G.PARTY = G.PARTY == 0 ? 1 : 0 } }) +
                 '<br><font color="lime">Debug mode has been enabled!</font>' +
                 G.textWithTooltip('?', '<div style="width:240px;text-align:left;">This is the debug menu. Please debug responsibly.<br>Further debug abilities while this mode is active:<div class="bulleted">click resources to add/remove some (keyboard shortcuts work the same way they do for purchasing units)</div><div class="bulleted">ctrl-click a trait or policy to remove it (may have strange, buggy effects)</div><div class="bulleted">click the Fast ticks display to get more fast ticks<br>(the gain is ten times the amount that the add amount is)</div><div class="bulleted">always see tech costs and requirements</div><div class="bulleted">gain access to debug robot units<br><b>BEEP BOOP BEEP</b></div><div class="bulleted">edit the map</div></div>', 'infoButton') +
@@ -4063,8 +4133,9 @@ G.AddData({
 
         G.createMaps = function ()//when creating a new game
         {
-            G.currentMap = new G.Map(0, 24, 24);
-
+            var seed = makeSeed(12)
+            G.currentMap = new G.Map(0, 24, 24, seed); // increase seed len
+            G.islandMap = new G.Map(1, 24, 24, seed)
             //set starting tile by ranking all land tiles by score and picking one
             var goodTiles = [];
             for (var x = 1; x < G.currentMap.w - 1; x++) {
@@ -4097,7 +4168,7 @@ G.AddData({
             } else {
                 exp = 10 + bonus;
             };
-            tile.explored = (exp) / 100;//create one tile and 9-11% of it will be explored already. Oh, and +1 to 5 percent depending on how evolved your mauso is
+            tile.explored = exp / 100;//create one tile and 9-11% of it will be explored already. Oh, and +1 to 5 percent depending on how evolved your mauso is
 
             G.updateMapForOwners(G.currentMap);
 
@@ -4107,7 +4178,12 @@ G.AddData({
         G.getLandIconBG = function (land) {
             return 'url(' + magixURL + '/terrainMagix.png),url(' + magixURL + '/terrainMagix.png)';
         }
-        G.renderMap = function (map, obj) {
+        G.renderMap = function (_map, obj) {
+            // TODO MAP TO RENDER
+            if (!G.islandMap) {
+                G.islandMap = new G.Map(1, 24, 24, G.currentMap.seed)
+            }
+            var map = G.storageObject.map ? G.islandMap : G.currentMap
             var time = Date.now();
             var timeStep = Date.now();
             var verbose = false;
@@ -4116,7 +4192,6 @@ G.AddData({
             if (breakdown) toDiv.style.display = 'block';
 
             if (verbose) { console.log('Now rendering map.'); }
-
             Math.seedrandom(map.seed);
 
             var ts = 16;//tile size
@@ -4141,20 +4216,22 @@ G.AddData({
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;
             var ctx = c.getContext('2d');
             ctx.translate(ts / 2, ts / 2);
+                        var m = G.storageObject.map
             for (var x = 0; x < map.w; x++) {
                 for (var y = 0; y < map.h; y++) {
                     if (x >= x1 && x < x2 && y >= y1 && y < y2) {
                         var tile = map.tiles[x][y];
-                        if (tile.explored > 0) {
-                            ctx.globalAlpha = tile.explored * 0.9 + 0.1;
+                        var explored = m ? 1 : tile.explored;
+                        if (explored > 0) {
+                            ctx.globalAlpha = explored * 0.9 + 0.1;
                             Math.seedrandom(map.seed + '-fog-' + x + '/' + y);
                             var s = 1;
                             //"pull" the center to other explored tiles
                             var sx = 0; var sy = 0; var neighbors = 0;
-                            if (x == 0 || map.tiles[x - 1][y].explored > 0) { sx -= 1; neighbors++; }
-                            if (x == map.w - 1 || map.tiles[x + 1][y].explored > 0) { sx += 1; neighbors++; }
-                            if (y == 0 || map.tiles[x][y - 1].explored > 0) { sy -= 1; neighbors++; }
-                            if (y == map.h - 1 || map.tiles[x][y + 1].explored > 0) { sy += 1; neighbors++; }
+                            if (m || x == 0 || map.tiles[x - 1][y].explored > 0) { sx -= 1; neighbors++; }
+                            if (m || x == map.w - 1 || map.tiles[x + 1][y].explored > 0) { sx += 1; neighbors++; }
+                            if (m || y == 0 || map.tiles[x][y - 1].explored > 0) { sy -= 1; neighbors++; }
+                            if (m || y == map.h - 1 || map.tiles[x][y + 1].explored > 0) { sy += 1; neighbors++; }
                             s *= 0.6 + 0.1 * (neighbors);
                             sx += Math.random() * 2 - 1;
                             sy += Math.random() * 2 - 1;

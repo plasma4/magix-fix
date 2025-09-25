@@ -70,22 +70,20 @@ if (!window.loadedMagix) {
         } else if (key == "_" || key == "-") {
             if (G.tab.id == 'unit') l('removeBulk').click()
             if (G.tab.id == 'land' && G.mapZoomT == 2) {
-                G.mapZoomT = 1;
-                G.mapOffXT /= 2;
-                G.mapOffYT /= 2;
-                G.tooltip.close();
+                G.mapZoomT = 1
+                G.mapOffXT /= 2
+                G.mapOffYT /= 2
+                G.tooltip.close()
             }
         } else if (key == "+" || key == "=") {
             if (G.tab.id == 'unit') l('addBulk').click()
             if (G.tab.id == 'land' && G.mapZoomT == 1) {
-                G.mapZoomT = 2;
-                G.mapOffXT *= 2;
-                G.mapOffYT *= 2;
-                G.tooltip.close();
+                G.mapZoomT = 2
+                G.mapOffXT *= 2
+                G.mapOffYT *= 2
+                G.tooltip.close()
             }
-            G.Scroll = 1;
         } else if (e.altKey) {
-            e.preventDefault()
             if (!e.repeat) l("fastButton").click()
         }
     })
@@ -4339,6 +4337,7 @@ if (getObj("civ") != "1") {
                 name: 'wisdom',
                 hidden: true,
                 icon: [8, 5],
+                fractional: true,
                 category: 'main',
             });
 
@@ -4361,6 +4360,7 @@ if (getObj("civ") != "1") {
                 name: 'education',
                 hidden: true,
                 icon: [6, 5],
+                fractional: true,
                 category: 'main',
             });
 
@@ -4387,6 +4387,7 @@ if (getObj("civ") != "1") {
                 name: 'inspiration',
                 hidden: true,
                 icon: [10, 5],
+                fractional: true,
                 category: 'main',
             });
 
@@ -4413,6 +4414,7 @@ if (getObj("civ") != "1") {
                 name: 'spirituality',
                 hidden: true,
                 icon: [7, 5],
+                fractional: true,
                 category: 'main',
             });
 
@@ -4440,6 +4442,7 @@ if (getObj("civ") != "1") {
                 name: 'authority',
                 hidden: true,
                 icon: [11, 5],
+                fractional: true,
                 category: 'main',
             });
             //MAGIX
@@ -7404,7 +7407,7 @@ if (getObj("civ") != "1") {
                 icon: [19, 3],
                 cost: { 'food': 100 },
                 use: { 'worker': 1 },
-                upkeep: { 'food': 0.75 },
+                upkeep: { 'food': 1 },
                 effects: [
                     { type: 'gather', what: { 'influence': 0.2 } },
                     { type: 'gather', what: { 'influence': 0.05 }, req: { 'code of law': true } },
@@ -11867,7 +11870,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'alchemy', category: 'tier1',
-                desc: '@Now you may start a new adventure with...potions! //<small>splash potions when though</small>',
+                desc: '@Now you may start a new adventure with...potions! (Note that you must get [terrain conservacy] to get [alchemy zone]s.) //<small>splash potions when though</small>',
                 icon: [16, 9, 'magixmod'],
                 cost: { 'insight': 720, 'wisdom': 60 },
                 req: { 'maths III': true },
@@ -11943,7 +11946,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'alcohol brewing', category: 'tier1',
-                desc: '[alchemist]s will now be able to craft alcohol at their stands (using their own recipe). Alcohol can be used to craft trunks.',
+                desc: '[alchemist]s will now be able to craft alcohol at their stands (using their own recipe).',
                 icon: [18, 3, 'magixmod'],
                 cost: { 'insight': 750 },
                 req: { 'alchemy': true },
@@ -12080,7 +12083,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ingredient crafting', category: 'tier1',
-                desc: 'Alchemists can now craft a special ingredients for more advanced potions. They will use up [basic brews] and [misc materials].',
+                desc: 'Alchemists can now craft some special ingredients for more advanced potions. They will use up [basic brews] and [misc materials].',
                 icon: [17, 9, 'magixmod'],
                 cost: { 'insight': 500, 'wisdom': 5 },
                 req: { 'alchemy': true },
@@ -21488,9 +21491,8 @@ if (getObj("civ") != "1") {
             MAP GENERATOR
             =======================================================================================*/
 
-            G.funcs['create map'] = function (w, h) {
-                //generate basic geography using Conway's Game of Life (rule : births from 4 to 9 neighbors, survival from 6 to 9 neighbors)
-                w *= 2;
+            G.funcs['create map'] = function (w, h, type) {
+                // w *= 2; (removed because not needed)
                 var generate = function (w, h) {
                     var getAt = function (map, x, y) {
                         //if (x<0||x>=map.length||y<0||y>=map[0].length) return 0;
@@ -21502,36 +21504,76 @@ if (getObj("civ") != "1") {
                         return map[x][y];
                     }
 
+                    var lvl = Array(w);
                     //init map
-                    var lvl = [];
-                    for (var x = 0; x < w; x++) {
-                        lvl[x] = [];
-                        for (var y = 0; y < h; y++) {
-                            lvl[x][y] = Math.random() < 0.5 ? 1 : 0;
-                        }
-                    }
-
-                    //init buffer
-                    var lvlBuffer = [];
-                    for (var x = 0; x < w; x++) { lvlBuffer[x] = []; for (var y = 0; y < h; y++) { lvlBuffer[x][y] = 0; } }
-
-                    var passes = 1;
-                    for (var i = 0; i < passes; i++) {
-                        //live
-                        for (var x = 0; x < w; x++) {
-                            for (var y = 0; y < h; y++) {
-                                var n = getAt(lvl, x - 1, y) + getAt(lvl, x - 1, y - 1) + getAt(lvl, x, y - 1) + getAt(lvl, x + 1, y - 1) + getAt(lvl, x + 1, y) + getAt(lvl, x + 1, y + 1) + getAt(lvl, x, y + 1) + getAt(lvl, x - 1, y + 1);
-                                var on = lvl[x][y];
-                                if (on && n >= 4 && n <= 9) on = 1; else on = 0;
-                                if (!on && n >= 6 && n <= 9) on = 1;
-                                if (Math.random() < 0.05) on = Math.random() < 0.5 ? 1 : 0;//just a bit of extra randomness
-                                lvlBuffer[x][y] = on;
+                    if (type) {
+                        // Custom new map generation for other islands
+                        // We know that the map size is 24x24 which means 576 tiles. For plain island there are 220 cells, for paradise or ancestors there are 215. Instead of doing the CGOL approach opting for an "erosion" approach is better.
+                        var target = type === 1 ? 220 : 215
+                        var cellsAdded = 0
+                        while (cellsAdded < 300) { // Make sure there are actually enough cells for eroding
+                            cellsAdded = 0
+                            for (var x = 0; x < w; x++) {
+                                lvl[x] = Array(h);
+                                for (var y = 0; y < h; y++) {
+                                    var add = +(Math.random() < 0.65)
+                                    cellsAdded += add
+                                    lvl[x][y] = add
+                                }
                             }
                         }
-                        //copy buffer back
-                        for (var x = 0; x < w; x++) { for (var y = 0; y < h; y++) { lvl[x][y] = lvlBuffer[x][y]; } }
-                    }
 
+                        while (cellsAdded !== target) {
+                            // Find all land cells and their neighbor counts
+                            var landCells = [];
+                            for (var x = 0; x < w; x++) {
+                                for (var y = 0; y < h; y++) {
+                                    if (lvl[x][y] === 1) {
+                                        var neighbors = getAt(lvl, x - 1, y) + getAt(lvl, x - 1, y - 1) + getAt(lvl, x, y - 1) + getAt(lvl, x + 1, y - 1) + getAt(lvl, x + 1, y) + getAt(lvl, x + 1, y + 1) + getAt(lvl, x, y + 1) + getAt(lvl, x - 1, y + 1);
+                                        landCells.push({ x: x, y: y, neighbors: neighbors });
+                                    }
+                                }
+                            }
+
+                            // Sort cells to remove based on having the fewest neighbors with some RNG
+                            landCells.sort((a, b) => a.neighbors - b.neighbors + (2 * Math.random() - 1))
+
+                            // Remove one cell and decrement the count
+                            var cellToRemove = landCells[0]
+                            lvl[cellToRemove.x][cellToRemove.y] = 0
+                            cellsAdded--
+                        }
+                    } else {
+                        // default, for main world
+                        //generate basic geography using Conway's Game of Life (rule : births from 4 to 9 neighbors, survival from 6 to 9 neighbors)
+                        for (var x = 0; x < w; x++) {
+                            lvl[x] = Array(h);
+                            for (var y = 0; y < h; y++) {
+                                lvl[x][y] = Math.random() < 0.5 ? 1 : 0;
+                            }
+                        }
+
+                        //init buffer
+                        var lvlBuffer = [];
+                        for (var x = 0; x < w; x++) { lvlBuffer[x] = []; for (var y = 0; y < h; y++) { lvlBuffer[x][y] = 0; } }
+
+                        var passes = 1;
+                        for (var i = 0; i < passes; i++) {
+                            //live
+                            for (var x = 0; x < w; x++) {
+                                for (var y = 0; y < h; y++) {
+                                    var n = getAt(lvl, x - 1, y) + getAt(lvl, x - 1, y - 1) + getAt(lvl, x, y - 1) + getAt(lvl, x + 1, y - 1) + getAt(lvl, x + 1, y) + getAt(lvl, x + 1, y + 1) + getAt(lvl, x, y + 1) + getAt(lvl, x - 1, y + 1);
+                                    var on = lvl[x][y];
+                                    if (on && n >= 4 && n <= 9) on = 1; else on = 0;
+                                    if (!on && n >= 6 && n <= 9) on = 1;
+                                    if (Math.random() < 0.05) on = Math.random() < 0.5 ? 1 : 0;//just a bit of extra randomness
+                                    lvlBuffer[x][y] = on;
+                                }
+                            }
+                            //copy buffer back
+                            for (var x = 0; x < w; x++) { for (var y = 0; y < h; y++) { lvl[x][y] = lvlBuffer[x][y]; } }
+                        }
+                    }
                     return lvl;
                 }
 
@@ -21548,7 +21590,7 @@ if (getObj("civ") != "1") {
                 var seaTiles = [];
                 var fit = false;
                 i = 0;
-                while (i < 20 && fit == false)//discard any map with less than 30% or more than 50% land
+                while (fit == false)//discard any map with less than 30% or more than 50% land
                 {
                     var lvl = generate(w, h);
 
@@ -21561,7 +21603,8 @@ if (getObj("civ") != "1") {
                         }
                     }
                     var total = landTiles.length + seaTiles.length;
-                    if (landTiles.length / total > 0.3 && landTiles.length / total < 0.5) fit = true;
+                    var fractionLand = landTiles.length / total
+                    if (type || (fractionLand > 0.3 && fractionLand < 0.5)) fit = true;
                     i++;
                 }
 
@@ -21634,59 +21677,80 @@ if (getObj("civ") != "1") {
                 }
 
                 //biomes
-                for (var x = 0; x < w; x++) {
-                    for (var y = 0; y < h; y++) {
-                        var tempTile = temp[x][y];
-                        var wetTile = wet[x][y];
-                        var landTile = lvl[x][y];
+                if (type) {
+                    if (type == 1) {
+                        // CODE IN TESTING PHASE
+                        for (var x = 0; x < w; x++) {
+                            for (var y = 0; y < h; y++) {
+                                var tempTile = temp[x][y];
+                                var wetTile = wet[x][y];
+                                var landTile = lvl[x][y];
+                                lvl[x][y] = landTile == 'ocean' ? 'lukewarm ocean' : (wetTile < 0.4 ? 'desert' : 'prairie');
+                            }
+                        }
 
-                        var biomes = [];
-                        if (tempTile < -0.1275) {
-                            biomes.push('glacier');
+                        for (var x = 0; x < w; x++)//clean all tiles with no terrain
+                        {
+                            for (var y = 0; y < h; y++) {
+                                if (lvl[x][y] == 'none') lvl[x][y] = 'forest';
+                            }
                         }
-                        else if (tempTile < -0.1 && tempTile > -0.1275) {
-                            if (landTile == 'ocean') biomes.push('arctic ocean');
-                            else biomes.push('ice desert');
-                        }
-                        else if (tempTile < 0.15) {
-                            if (landTile == 'ocean') biomes.push('arctic ocean');
-                            else if (wetTile < 0.25) biomes.push('ice desert');
-                            else if (wetTile > 0.5 && wetTile < 0.75) biomes.push('boreal forest');
-                            else if (wetTile > 0.75) biomes.push('swamplands');
-                            else biomes.push('tundra');
-                        }
-                        else if (tempTile > 1.1) {
-                            if (landTile == 'ocean') biomes.push('tropical ocean');
-                            else if (wetTile > 0.04) biomes.push('xeric shrubland');
-                            else biomes.push('desert');
-                        }
-                        else if (tempTile > 0.85) {
-                            if (landTile == 'ocean') biomes.push('tropical ocean');
-                            else if (wetTile <= 0.12) biomes.push('badlands');
-                            else if (wetTile < 0.25 && wetTile > 0.18) biomes.push('desert');
-                            else if (wetTile > 0.3 && wetTile < 0.385) biomes.push('xeric shrubland');
-                            else if (wetTile > 0.5 && wetTile < 0.75) biomes.push('jungle');
-                            else if (wetTile > 0.884) biomes.push('dead forest');
-                            else biomes.push('savanna');
-                        }
-                        else {
-                            if (landTile == 'ocean' && tempTile < 1.1 && tempTile > 0.6) biomes.push('lukewarm ocean');
-                            else if (tempTile < 0.65 && tempTile > 0.6 && wetTile < 0.6) biomes.push('cherry blossom grove');
-                            else if (landTile == 'ocean') biomes.push('ocean');
-                            else if (wetTile < 0.25) biomes.push('shrubland');
-                            else if (wetTile > 0.5 && wetTile < 0.78) biomes.push('forest');
-                            else if (wetTile > 0.78) biomes.push('lavender fields');
-                            else biomes.push('prairie');
-                        }
-                        if (biomes.length == 0) biomes.push('prairie');
-                        lvl[x][y] = choose(biomes);
                     }
-                }
+                } else {
+                    for (var x = 0; x < w; x++) {
+                        for (var y = 0; y < h; y++) {
+                            var tempTile = temp[x][y];
+                            var wetTile = wet[x][y];
+                            var landTile = lvl[x][y];
 
-                for (var x = 0; x < w; x++)//clean all tiles with no terrain
-                {
-                    for (var y = 0; y < h; y++) {
-                        if (lvl[x][y] == 'none') lvl[x][y] = 'forest';
+                            var biomes = [];
+                            if (tempTile < -0.1275) {
+                                biomes.push('glacier');
+                            }
+                            else if (tempTile < -0.1 && tempTile > -0.1275) {
+                                if (landTile == 'ocean') biomes.push('arctic ocean');
+                                else biomes.push('ice desert');
+                            }
+                            else if (tempTile < 0.15) {
+                                if (landTile == 'ocean') biomes.push('arctic ocean');
+                                else if (wetTile < 0.25) biomes.push('ice desert');
+                                else if (wetTile > 0.5 && wetTile < 0.75) biomes.push('boreal forest');
+                                else if (wetTile > 0.75) biomes.push('swamplands');
+                                else biomes.push('tundra');
+                            }
+                            else if (tempTile > 1.1) {
+                                if (landTile == 'ocean') biomes.push('tropical ocean');
+                                else if (wetTile > 0.04) biomes.push('xeric shrubland');
+                                else biomes.push('desert');
+                            }
+                            else if (tempTile > 0.85) {
+                                if (landTile == 'ocean') biomes.push('tropical ocean');
+                                else if (wetTile <= 0.12) biomes.push('badlands');
+                                else if (wetTile < 0.25 && wetTile > 0.18) biomes.push('desert');
+                                else if (wetTile > 0.3 && wetTile < 0.385) biomes.push('xeric shrubland');
+                                else if (wetTile > 0.5 && wetTile < 0.75) biomes.push('jungle');
+                                else if (wetTile > 0.884) biomes.push('dead forest');
+                                else biomes.push('savanna');
+                            }
+                            else {
+                                if (landTile == 'ocean' && tempTile < 1.1 && tempTile > 0.6) biomes.push('lukewarm ocean');
+                                else if (tempTile < 0.65 && tempTile > 0.6 && wetTile < 0.6) biomes.push('cherry blossom grove');
+                                else if (landTile == 'ocean') biomes.push('ocean');
+                                else if (wetTile < 0.25) biomes.push('shrubland');
+                                else if (wetTile > 0.5 && wetTile < 0.78) biomes.push('forest');
+                                else if (wetTile > 0.78) biomes.push('lavender fields');
+                                else biomes.push('prairie');
+                            }
+                            if (biomes.length == 0) biomes.push('prairie');
+                            lvl[x][y] = choose(biomes);
+                        }
+                    }
+
+                    for (var x = 0; x < w; x++)//clean all tiles with no terrain
+                    {
+                        for (var y = 0; y < h; y++) {
+                            if (lvl[x][y] == 'none') lvl[x][y] = 'forest';
+                        }
                     }
                 }
                 return lvl;

@@ -1,3 +1,7 @@
+some special ingredients
+Alcohol can be used to craft trunks.
+Manage your wonderful tribe well enough
+Alchemy after terrain conservancy
 # NEL Documentation and Modding Guide
 NeverEnding Legacy is a civ building game but its code is a mess. Maybe not as much as Cookie Clicker but it's pretty cobbled together. The goal of this document is to provide a better explanation of basics and tips to minimize your time wasted (or if you're rather curious, I suppose.)
 
@@ -5,7 +9,7 @@ Have any questions? DM me on Discord (@1_e0) or preferably join the [Dashnet ser
 
 Want to add a mod URL to the end of an already existing game? [It's not that hard actually.](https://github.com/plasma4/magix-extras?tab=readme-ov-file#injecting-a-mod-without-wiping-the-save) If you want to work with mods locally (or offline), this repo is actually a great way to do that, even if you don't want to deal with Magix, as you can still use custom mods and choose files.
 
-Orteil also made some basic debugging tools. You can run `G.Cheat()` in order to enable them! (Or `G.RuinTheFun()`, or `G.Debug()`, because why not I suppose.) There are also additional debug variables in a few functions like `G.renderMap()`.
+Orteil also made some basic debugging tools. You can run `G.Cheat()` in order to enable them! (Or `G.RuinTheFun()`, or `G.Debug()`, because why not I suppose.) There are also additional debug variables in a few functions like `G.renderMap()` (`breakdown` and `verbose`).
 
 ## Basics
 Do note, this is an non-exhaustive list and when in doubt, you should check the code!
@@ -15,6 +19,7 @@ Do note, this is an non-exhaustive list and when in doubt, you should check the 
 - You can also access other properties like `prop.displayName`. (See how to *create* an property in the Basic mod structure section.)
 - About `unit` properties, they are weird. If you want to actually access info about the owned unit then you have to use `var u = G.unitsOwned[G.unitsOwnedNames.indexOf('scout')]`. (`u` would be undefined here if scouts aren't visible in the Production tab.) Then you can access specific properties like `u.targetAmount`.
 - Also, you may want to consider using `eval()` or `Function()` to replace function contents. Depending on if you need mod support you may need to be specific about your replacement. If necessary you may need to modify base functions for custom features, or it's the easiest way to do something. Unfortunately Magix is super rude and doesn't play very politely, so you might be in for some more trouble if you want to support both Magix and base game. If you're trying to develop something alongside `magix-fix` then it's suggested to check the `magixLoaded` and you almost certainly want your mod to load AFTER.
+- Handling of population is done in the `population` resource's tick function. (Tip: it is usually easier to find a specific item like resources by searching up `'population',` with the Find tool since it gets rid of many incorrect results.)
 - Code executed at launch is located in `G.Launch()`. `G.Launch()` then calls `G.Init()` once image resources are done loading.
 - `l(what: String)`: Gets the HTML element with ID `what`.
 - `choose(arr: object[])`/`shuffle(arr: object[])`: Chooses a random item in the array; shuffles items in the array.
@@ -32,7 +37,7 @@ Do note, this is an non-exhaustive list and when in doubt, you should check the 
 - `G.tick`/`G.day`/`G.year`: ticks (increments once per new day, doesn't reset on year change); days (resets to 0 if `G.day>300` and increments `G.year`); years.
 - `G.fps`: frame rate.
 - `G.logic`: an array of various logic functions.
-- There's also `G.update` and `G.draw` which are also an array of functions, and `G.funcs` for misc functions. (`G.funcs['create map']`, for example, creates a random map with biomes, while `G.update['unit']()` updates the production tab.)
+- There's also `G.update` and `G.draw` which are also an array of functions, and `G.funcs` for misc functions. (`G.funcs['create map']`, for example, creates terrain types, while `G.update['unit']()` updates the Production tab.)
 - `G.Logic()`: Runs every game tick (different from `G.logic`, an array). This is where all game state changes should happen (resource decay, unit production, random events). Your custom tick functions on resources and units are called from here.
 - `G.saveTo`: Where to save in `localStorage`. (Do note that saving does have a chance to fail if there isn't enough storage left or the total stored data is too much!)
 - `ERROR(what: object)`: Logs the error in `what` and uses `console.trace()`.
@@ -47,7 +52,7 @@ Note that if you need more details on how these functions work you can probably 
 This document unfortunately can't explain every single little detail about the game. If you're trying to understand something, perhaps look for examples in the code and try to get a function call stack with `console.trace()`! (Or you could just ask me on Discord if you're super stuck.)
 
 ## Effects
-Effects can be found from `item.effect`. (Find code for how effects function in `G.fullApplyUnitEffects` in `main.js` or `magixUtils.js`.)
+Effects can be found from `item.effect`. (Find code for how effects function in `G.fullApplyUnitEffects` in `main.js` or `magixUtils.js`; it explains a lot!)
 
 Effects can be added during runtime, just like other properties such as `icon` or `req` (meaning requirements):
 ```js
@@ -65,7 +70,7 @@ new G.Unit({
     cost: {},
     use: { 'worker': 1 },
     //upkeep:{'food':0.2},
-    //alternateUpkeep:{'food':'spoiled food'}, (This part in parens isn't in the original code, but I would like to point out that Orteil never implemented this. What a legend)
+    //alternateUpkeep:{'food':'spoiled food'},
     effects: [
         { type: 'gather', context: 'gather', amount: 2, max: 4 }, // Gather something within the harvesting context of 'gather' (explained later), 
         { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } }, // In the 'hunt' context with a smaller chance and a requirement
@@ -133,7 +138,7 @@ and this should give you some basics into how to use effects. Look for some exam
 - Units have categories they are split into, and might use resources
 - When you add/remove resources you're actually adding or subtracting from a queue, which handles using or return resources.
 
-Except, this doesn't explain where the gather or hunt context actually come from, does it? That's where territory comes in.
+While some gathering doesn't use a `context`, which simply pulls out resources from thin air, many resources do. But where does the gather or hunt `context` actually come from? That's where territory comes in.
 
 ## Territory basics
 (See the section on terrain generation below; this just discusses what territories have.)
@@ -224,11 +229,14 @@ From `main.js`:
 */
 ```
 
-As you can see, lands contain certain goods inside, and goods have specific resources. (Note: some `Goods` have an `affectedBy` property but this is an unused feature, so it is safe to ignore.)
+As you can see, lands contain certain goods inside, and goods have specific resources. (Note: some `Goods` have an `affectedBy` property but this is an unused feature, so it is safe to ignore.) In Magix, the exploration cap is implemented in `effect.type == 'explore'` (although the base game also uses this to calculate unit exploration). (The exploration cap determines if your land owned is above the cap when trying to explore and fails if it is.)
 
-The image below is of the base game's terrain image:
-![Terrain image](img/terrain.png)
+The image below is of Magix's terrain image:
+![Terrain image](magix/terrainMagix.png)
+
 Each 32x32 block corresponds to a biome (such as prairie, forest, desert). (Note that this resolution is different from icons, which are 24x24.) The code doesn't use the whole block, but rather picks random individual pixels from it to create a noisy color base, which is later blurred into a smooth gradient. Grayscale rows (2 and 4) contain textures to add physical texture, and color detail rows (3 and 5) add variations to textures. Additionally, `blot.png` creates a natural effect of unexplored territory.
+
+Actual generation of terrain types is done in `G.funcs['create map']`, which is located in `data.js`/`magix.js`. Terrain types get rendered in the incredibly complicated `G.renderMap` with the `image` property of a `G.Land` type being the x-axis location of the terrain image (labeled in the Magix terrain with the numbers). (The base game uses `img/terrain.png` instead.)
 
 
 ## Example code
@@ -239,16 +247,18 @@ new G.Trait({
     displayName: 'Ancestors trait #1 Authority in churches',
     desc: '@[church,Churches] and [cathedral]s have a small chance to generate [influence]. Every 3 [church,Churches] and [cathedral]s increase the annual influence bonus by 1. In addition, getting this trait provides 25 [authority].',
     icon: [16, 34, 'magixmod', 22, 1], // Look, icons can stack! The Magix Wiki has icon layout info for a more visual explanation; just click on an image of something.
-    cost: {}, // For techs, this is the resources it costs to purchase that tech. For traits this is a minimum requirement of resources for it to be possible to obtain that trait.
+    cost: {}, // For techs, this is the resources it costs to purchase that tech. For traits this is a minimum requirement of resources for it to be possible to obtain that trait. Note that when you obtain a trait, the cost gets subtracted from your current resource!
     chance: 250, // Odds for something to happen. For traits, lower values are more likely, while for techs, higher values increase the probability of seeing that technology. For traits the odds of getting that trait is 1 / (chance * 300) per day.
     effects: [
-        { type: 'provide res', what: { 'authority': 25 } }, // One time resource gain
+        { type: 'provide res', what: { 'authority': 25 } }, // One-time resource gain.
     ],
     req: { 'the ancestors call': true, '7th essence': true, 'roots of insight': true, 'at5': false }, // Various requirements
     category: 'ancestors', // Trait gets placed in a specific category shown in the UI
 });
 ```
 Resources, achievements, and policies can be made invisible by setting `visible` to false. By default, policies have `'on'`/`'off'` modes. Remember, more detailed information on all possible properties is in `getGameJSON()`, shown at the end of this document!
+
+Do note that Magix uses `traitTick` to randomly generate traits, while `data.js` does so in `G.funcs['new day']`.
 
 ## Basic mod structure
 Automatic construction of mod structure can be done with [this tool](https://plasma4.github.io/magix-fix/magix-wiki.html) although it's still rather clunky and not very extendable. (Click on "Show mod creator") It might give you an idea of the basics though!
@@ -330,10 +340,11 @@ new G.Unit({
     ```
     So, with 35 herbs available and 10 desired, you would only get 10 herbs.
 However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
-11. Techs and traits' IDs are unified because they both are actually considered knowledge, and extend `G.Know`. (What a weird piece of trivia!)
-12. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
-13. If you try to have text `[custom resource]` that doesn't exist then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
-14. On the topic of custom text, you can use HTML in descriptions, and custom shortcuts. Magix has this function:
+11. By default, resources are not `fractional`. One of the most annoying bugs is when resources inconsistently become higher or lower than before, and this might happen if the resource you are doing math on isn't fractional, such as when wizards in Magix `'provide'` 0.5 insight each, resulting in weird queue/unqueue problems with changing insight. Note that queue/unqueue code is in `G.update['unit']()`. (To the user, `fractional` resources still appear as integers.)
+12. Tech and trait IDs are unified because they both are actually considered "knowledge" internally, and extend `G.Know`. (What a weird piece of trivia!)
+13. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
+14. If you try to have text like `[custom resource name]` that doesn't exist, then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
+15. On the topic of custom text, you can use HTML in descriptions, and custom shortcuts. Magix has this function:
     ```js
     G.fixTooltipIcons = function () {
         G.parse = function (what) {
@@ -350,11 +361,13 @@ However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. Yo
     }
     ```
     which is where the shortcuts are from.
-15. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
+16. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
     ```js
     if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
     ```
     which you may want if there are many new units in your mod.
+17. (Magix-specific) Magix frequently checks for `G.modsByName['default dataset']` in `magixUtils.js` to determine if the race is human or not, since there are two races in the game.
+18. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually literally 0 due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83).
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:

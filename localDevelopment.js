@@ -10,6 +10,10 @@ var offlineMode = false
 var directAccessMode = false
 
 
+// For testing highly unstable features that are not fully implemented. May break saves, the game, or not function; be warned! See the start of magixUtils.js to determine what is being tested right now.
+var testingMagix = false
+
+
 // This file is loaded before main.js and after style.css, so, if you wish, you can modify various values in this script.
 /*
 In order to make files work offline, the NEL Toolkit automatically uses XMLHttpRequests to get script data and stores that into localStorage. The first mod will be stored in "nelOffline0", the second in "nelOffline1", and so on. So, for example, a script stored into localStorage might look like this:
