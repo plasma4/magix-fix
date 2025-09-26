@@ -53,6 +53,58 @@ G.getBrokenSmallThing = function (what, text) {
     return '<b style="color: #f99">' + cap(text == '*PLURAL*' ? (what + 's') : (text || what)) + '</b>'
 }
 
+// Custom function for effect replacement: given a single thing or array of things (either by dict name or actual object), determines if property matches the "original" value and if so replaces it.
+G.replaceEffectValues = function (things, type, property, original, replacement, multiple) {
+    if (typeof things !== "object") {
+        things = [things]
+    }
+    var result = []
+    for (var i = 0; i < things.length; i++) {
+        var thing = things[i]
+        if (typeof thing === "string") {
+            thing = G.getDict(thing)
+        }
+        var effects = thing.effects
+        for (var t = 0; t < effects.length; t++) {
+            var effect = effects[t]
+            if ((type == null || effect.type === type) && effect[property] === original) {
+                effect[property] = replacement
+                result.push(effect)
+                if (!multiple) {
+                    break
+                }
+            }
+        }
+    }
+    return result
+}
+
+// More complicated callback version for more complicated scenarios, compareEffect could be `e => (e.mult == 0.5)` and changedEffect could be `e => { e.mult = 1 }`. If changedEffect returns a truthy value then replacing values quits.
+G.replaceEffectValues2 = function (things, compareEffect, changedEffect) {
+    if (typeof things !== "object") {
+        things = [things]
+    }
+    var result = []
+    for (var i = 0; i < things.length; i++) {
+        var thing = things[i]
+        if (typeof thing === "string") {
+            thing = G.getDict(thing)
+        }
+        var effects = thing.effects
+        for (var t = 0; t < effects.length; t++) {
+            var effect = effects[t]
+            if (compareEffect(effect, original, thing)) {
+                if (changedEffect(effect, original, thing)) {
+                    result.push(effect)
+                    break
+                }
+                result.push(effect)
+            }
+        }
+    }
+    return result
+}
+
 if (!window.loadedMagix) {
     // Custom implementation of keyboard events
     document.addEventListener("keydown", function (e) {
@@ -1009,8 +1061,9 @@ if (getObj("civ") != "1") {
 
             function rootPolicyEvolve() {
                 if (G.achievByName['democration'].won > 0 && G.achievByName['the fortress'].won > 2) {
-                    G.getDict("trustworthy influence").cost = { 'pagoda construction point': 2000 };
+                    G.getDict("trustworthy influence").cost['pagoda construction point'] = 2000;
                     G.getDict("trustworthy influence").desc = G.techByName["trustworthy influence"].desc.replace(" 5%", " 17.5%");
+                    G.replaceEffectValues(['clan leader', 'chieftain'], 'mult', 'value', 1.05, 1.175);
                     G.getDict("pagoda of democracy").wideIcon = [0, 33, 'magixmod'];
                     G.getDict("pagoda of democracy").icon = [1, 33, 'magixmod'];
                     G.getDict("pagoda of democracy").cost = { 'basic building materials': 800, 'precious building materials': 700 };
@@ -1030,17 +1083,19 @@ if (getObj("civ") != "1") {
             }
             function rootCultureEvolve() {
                 if (G.achievByName['sacrificed for culture'].won > 0 && G.achievByName['the fortress'].won > 3) {
-                    G.getDict("culture rise").cost = { 'fortress construction point': 2000 };
+                    G.getDict("culture rise").cost['fortress construction point'] = 2000;
+                    G.getDict("culture rise").desc = G.techByName["culture rise"].desc.replace(" 5%", " 17.5%");
+                    G.replaceEffectValues(['storyteller', 'painter', 'poet'], 'mult', 'value', 1.05, 1.175);
                     G.getDict("fortress of cultural legacy").icon = [4, 33, 'magixmod'];
                     G.getDict("fortress of cultural legacy").wideIcon = [choose([9, 12, 15]), 17, 'magixmod', 3, 33, 'magixmod'];
                     G.getDict("fortress of cultural legacy").cost = { 'basic building materials': 1100, 'precious building materials': 800, 'inspiration': 10 };
                     G.getDict("fortress of cultural legacy").costPerStep = { 'basic building materials': 25, 'precious building materials': 5, 'culture': 125, 'glass': 1, 'fortress construction point': -1, 'dyes': 2 };
                     G.getDict("fortress of cultural legacy").steps = 2000;
-                    G.getDict("fortress of cultural legacy").messageOnStart = 'You began the construction of <b>Fortress of Cultural Legacy</b>. <font color="#aaffaa">But this time, ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
+                    G.getDict("fortress of cultural legacy").messageOnStart = 'You began the construction of Fortress of Cultural Legacy. <font color="#aaffaa">But this time, ancient powers of nature brought from the elvish universe can lead this wonder to be better than ever.</font>';
                     G.getDict("fortress of cultural legacy").finalStepCost = { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'gem block': 50, 'culture': 650 };
                     G.getDict("fortress of cultural legacy").finalStepDesc = 'To complete the wonder and prevent culture and traditions from being truly perditioned...you need to perform that final step.';
                     G.getDict("fortress of cultural legacy").use = { 'land': 15, 'worker': 20, 'metal tools': 20 };
-                    if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
+                    if (G.getUnit("fortress of cultural legacy").desc.indexOf("better than ever") == -1)
                         G.getDict("fortress of cultural legacy").desc += '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder! Complete it and ascend to increase the <b>Sacrificed for culture</b> achievement\'s starting bonus by 2.</font>';
                 }
                 if (G.achievByName['sacrificed for culture'].won > 0) {
@@ -1050,10 +1105,9 @@ if (getObj("civ") != "1") {
             }
             function rootKnowEvolve() {
                 if (G.achievByName['insight-ly'].won > 0 && G.achievByName['the fortress'].won > 2) {
-                    G.getDict("knowledgeable").cost = { 'complex construction point': 2000 };
-                    G.getDict("knowledgeable").desc = G.techByName["knowledgeable"].desc.replace(" 7500", 7500 * 1.25);
-                    if (G.getUnit("pagoda of democracy").desc.indexOf("better than ever") == -1)
-                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder. Complete it and ascend to increase the <b>Insight-ly</b> achievement\'s starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
+                    G.getDict("knowledgeable").cost['complex construction point'] = 2000;
+                    G.getDict("knowledgeable").desc = G.techByName["knowledgeable"].desc.replace(" 5%", " 17.5%");
+                    G.replaceEffectValues(['dreamer'], 'mult', 'value', 1.05, 1.175);
                     G.getDict("complex of dreamers").icon = [7, 33, 'magixmod'];
                     G.getDict("complex of dreamers").wideIcon = [6, 33, 'magixmod'];
                     G.getDict("complex of dreamers").cost = { 'basic building materials': 700, 'precious building materials': 800, 'wisdom': 20 };
@@ -1063,6 +1117,8 @@ if (getObj("civ") != "1") {
                     G.getDict("complex of dreamers").finalStepCost = { 'wisdom': 125, 'population': 2500, 'precious building materials': 6000, 'gem block': 50, 'insight': 1000, 'housing': -1875 };
                     G.getDict("complex of dreamers").finalStepDesc = 'To complete the wonder and make your whole civilization much smarter you will need to perform a final step.';
                     G.getDict("complex of dreamers").use = { 'land': 40, 'worker': 32, 'metal tools': 32 };
+                    if (G.getUnit("complex of dreamers").desc.indexOf("better than ever") == -1)
+                        G.getDict("complex of dreamers").desc += G.achievByName['insight-ly'].won == 1 ? '//<font color="#aaffaa">Evolving the elvish fortress unlocked the second level of this wonder. Complete it and ascend to increase the <b>Insight-ly</b> achievement\'s starting bonus by 2.</font>' : "This wonder is maxed and elvish fortress bonus is alredy obtained.";
                 }
                 if (G.achievByName['insight-ly'].won > 0) {
                     G.gain("insight", G.achievByName['insight-ly'].won > 1 ? 8 : 6);
@@ -2669,7 +2725,7 @@ if (getObj("civ") != "1") {
                 if (pop > 0) {
                     toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
-                    var text = 'elated and eternally jubilant'; if (stat <= -200) text = G.has('t2') ? 'irreversibly miserable' : 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high'; else if (stat < 350) text = 'euphoric';
+                    var text = 'euphoric'; if (stat <= -200) text = G.has('t2') ? 'irreversibly miserable' : 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high';
                     toParse += 'Happiness: <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
                     var text = 'exemplary'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming';
@@ -3414,6 +3470,7 @@ if (getObj("civ") != "1") {
                 name: 'housing',
                 desc: 'Each [housing,Housing spot] accommodates one [population,Person].//Beyond the 15 people a basic nomad tribe can support, your population will only grow if you have unoccupied [housing].//Homelessness (having less housing than population) will lead to unhappiness and disease.//The number on the left is how much housing is occupied, while the number on the right is how much housing room you have in total.',
                 icon: [12, 4],
+                fractional: true,
                 getDisplayAmount: function () {
                     return B(Math.min(this.displayedAmount, G.getRes('population').displayedAmount)) + '<wbr>/' + B(this.displayedAmount);
                 },
@@ -5385,7 +5442,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'complex construction point',
-                displayName: 'Complex points (from building the Complex of Dreamers)',
+                displayName: 'Complex points',
                 icon: [choose([1, 4, 7]), 17, 'magixmod'],
                 hidden: true
             });
@@ -5827,7 +5884,7 @@ if (getObj("civ") != "1") {
             //2nd tier essentials
             new G.Res({
                 name: 'insight II',
-                desc: '[insight II] represents your people\'s ideas and random sparks of intuition.//' + limitDesc('[wisdom II]') + '//A variety of technologies require this higher tier of essential to be researched. <><font color="#bce8eb">Every 500 [insight] can be converted into 1 [insight II] point.</font>',
+                desc: '[insight II] represents your people\'s best ideas and random sparks of intuition.//' + limitDesc('[wisdom II]') + '//A variety of technologies require this higher tier of essential to be researched. <><font color="#bce8eb">Every 500 [insight] can be converted into 1 [insight II] point.</font>',
                 icon: [18, 19, 'magixmod'],
                 category: 'main',
                 limit: 'wisdom II',
@@ -5842,7 +5899,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'culture II',
-                desc: '[culture II] is produced when your people create beautiful and thought-provoking things.//' + limitDesc('[inspiration II]') + '//Culture is used to develop cultural traits. This is a higher tier essential. <><font color="#92eba0">Every 500 [culture] can be converted into 1 [culture II] point.</font>',
+                desc: '[culture II] is produced when your people create truly beautiful and thought-provoking things.//' + limitDesc('[inspiration II]') + '//Culture is used to develop cultural traits. This is a higher tier essential. <><font color="#92eba0">Every 500 [culture] can be converted into 1 [culture II] point.</font>',
                 icon: [19, 19, 'magixmod'],
                 category: 'main',
                 limit: 'inspiration II',
@@ -5863,7 +5920,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'faith II',
-                desc: '[faith II] derives from all things divine, from meditation to sacrifices.//' + limitDesc('[spirituality II]') + '//Some cultural traits and technologies depend on faith. This is a higher tier essential. <><font color="#d7d4a2">Every 500 [faith] can be converted into 1 [faith II] point.</font>',
+                desc: '[faith II] derives from all things highly divine, from meditation to sacrifices.//' + limitDesc('[spirituality II]') + '//Some cultural traits and technologies depend on faith. This is a higher tier essential. <><font color="#d7d4a2">Every 500 [faith] can be converted into 1 [faith II] point.</font>',
                 icon: [17, 19, 'magixmod'],
                 category: 'main',
                 limit: 'spirituality II',
@@ -5884,7 +5941,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'influence II',
-                desc: '[influence II] is generated by power structures.//' + limitDesc('[authority II]') + '//Influence is required to enact most policies or remove traits. This is a higher tier essential. <><font color="#ffb0c8">Every 500 [influence] can be converted into 1 [influence II] point.</font>',
+                desc: '[influence II] is generated by significant power structures.//' + limitDesc('[authority II]') + '//Influence is required to enact most policies or remove traits. This is a higher tier essential. <><font color="#ffb0c8">Every 500 [influence] can be converted into 1 [influence II] point.</font>',
                 icon: [20, 19, 'magixmod'],
                 category: 'main',
                 limit: 'authority II',
@@ -6615,7 +6672,7 @@ if (getObj("civ") != "1") {
                     { type: 'addFree', what: { 'worker': 0.1 }, req: { 'dreaming': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on', 'ritualism II': false } },
                     { type: 'mult', value: 1.25, req: { 'wisdom rituals': 'on', 'ritualism II': true } },
-                    { type: 'mult', value: 1.05, req: { 'knowledgeable': true } },
+                    { type: 'mult', value: 1.05, req: { 'knowledgeable': true } }, // NOTE: rootKnowEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 1.1, req: { 'bonus5': true } },
                     { type: 'mult', value: 1.3, req: { 'bonus6': true } },
                     { type: 'mult', value: 1.75, req: { 'philosophy II': true } },
@@ -6645,7 +6702,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on', 'ritualism II': false } },
                     { type: 'mult', value: 1.25, req: { 'wisdom rituals': 'on', 'ritualism II': true } },
-                    { type: 'mult', value: 1.05, req: { 'culture rise': true } },
+                    { type: 'mult', value: 1.05, req: { 'culture rise': true } }, // NOTE: rootCultureEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.1, req: { 'eotm': true } },
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
@@ -7248,7 +7305,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'platinum ingot': 10 }, into: { 'platinum block': 1 }, every: 4, mode: 'platinum blocks' },
                     { type: 'convert', from: { 'hard metal ingot': 11 }, into: { 'basic factory equipment': 1 }, every: 4, mode: 'factgear' },
                     { type: 'convert', from: { 'precious metal ingot': 1, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.2, mode: 'golden fish', req: { 'golden crafting': false } },
-                    { type: 'convert', from: { 'fruit': 2, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.6, mode: 'golden fish', req: { 'golden crafting': true } },
+                    { type: 'convert', from: { 'precious metal ingot': 2, 'seafood': 1 }, into: { 'golden fish': 1 }, chance: 0.6, mode: 'golden fish', req: { 'golden crafting': true } },
                     { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.3, mode: 'golden mushrooms', req: { 'mushroom crafting': true, 'ultimate mushroom crafting': false } },
                     { type: 'convert', from: { 'gold block': 2, 'mushroom': 1 }, into: { 'golden mushroom': 1 }, chance: 0.6, mode: 'golden mushrooms', req: { 'ultimate mushroom crafting': true } },
                     { type: 'mult', value: 0.95, req: { 'dt1': true } },
@@ -7391,7 +7448,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'influence': 0.1 } },
                     { type: 'gather', what: { 'influence': 0.05 }, req: { 'code of law': true } },
-                    { type: 'mult', value: 1.05, req: { 'trustworthy influence': true } },
+                    { type: 'mult', value: 1.05, req: { 'trustworthy influence': true } }, // NOTE: rootPolicyEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.1, req: { 'eotm': true } },
                     { type: 'mult', value: 1.1, req: { 'glory': true } },
                     { type: 'mult', value: 0.75, req: { 'se11': 'on' } },
@@ -7411,7 +7468,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'influence': 0.2 } },
                     { type: 'gather', what: { 'influence': 0.05 }, req: { 'code of law': true } },
-                    { type: 'mult', value: 1.05, req: { 'trustworthy influence': true } },
+                    { type: 'mult', value: 1.05, req: { 'trustworthy influence': true } }, // NOTE: rootPolicyEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.1, req: { 'eotm': true } },
                     { type: 'mult', value: 1.1, req: { 'glory': true } },
                     { type: 'mult', value: 0.75, req: { 'se11': 'on' } },
@@ -8698,7 +8755,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'culture II': 0.000003 }, req: { 'cultural people': true } },
                     { type: 'mult', value: 1.3, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.2, req: { 'wisdom rituals': 'on' } },
-                    { type: 'mult', value: 1.05, req: { 'culture rise': true } },
+                    { type: 'mult', value: 1.05, req: { 'culture rise': true } }, // NOTE: rootCultureEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
                 ],
@@ -8943,7 +9000,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.31, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.21, req: { 'wisdom rituals': 'on' } },
                     { type: 'convert', from: { 'paper': 21 }, into: { 'poet\'s notes': 1 }, every: 11, req: { 'bookwriting': true } },
-                    { type: 'mult', value: 1.05, req: { 'culture rise': true } },
+                    { type: 'mult', value: 1.05, req: { 'culture rise': true } }, // NOTE: rootCultureEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
                 ],
@@ -9703,7 +9760,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Hardened house',
-                desc: '@provides 16 [housing]<>This is a huge house that can fit 2 or 3 large families at the same time. Due to its capacity, it is a far more limited type of [housing]! Inside of this [Hardened house], people feel quite safe and will probably never even think about moving away.',
+                desc: '@provides 16 [housing]<>This is a huge house that can fit 2 or 3 large families at the same time. Due to its capacity, it is a far more limited type of [housing]! Inside of a [Hardened house], people feel safe and will probably never consider moving away.',
                 icon: [4, 21, 'magixmod'],
                 cost: { 'basic building materials': 1200, 'glass': 5 },
                 use: { 'land of the Paradise': 1 },
@@ -9726,7 +9783,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'happiness': 0.28 } },
                     { type: 'gather', what: { 'happiness': 0.28 }, req: { 'music instruments II': true } },
                     { type: 'gather', what: { 'culture': 0.125 } },
-                    { type: 'gather', what: { 'culture II': 0.000004 }, req: { 'cultural people': true } },
+                    { type: 'gather', what: { 'culture II': 0.000005 }, req: { 'cultural people': true } },
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
                 ],
@@ -9736,7 +9793,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fishers & hunters camp',
                 displayName: 'Hunting and fishing camp',
-                desc: '@An camp where [hunter]s and [fisher]s train to hunt food. //There, they learn improve their craft. //A single [fishers & hunters camp] will hire 400 [worker]s divided into 200 [hunter]s and 200 [fisher]s! //[hunter]s that work at this camp also have a very tiny chance to have accidents. //It might be costly, but it can gather delectable [food] more easily!',
+                desc: '@An camp where [hunter]s and [fisher]s get trained to hunt [food]. //There, they learn improve their craft. //A single [fishers & hunters camp] will hire 400 [worker]s divided into 200 [hunter]s and 200 [fisher]s! //[hunter]s that work at this camp also have a very tiny chance to have accidents. //It might be costly, but may gather delectable [food] more easily!',
                 icon: [5, 23, 'magixmod'],
                 wideIcon: [3, 23, 'magixmod'],
                 cost: { 'basic building materials': 4850, 'food': 2500, 'paper': 3000, 'thread': 500 },
@@ -9876,14 +9933,14 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fortress of cultural legacy',
                 displayName: 'Fortress of Cultural Legacy',
-                desc: '@leads to the <b>Sacrificed for culture victory</b><>This is a fortress built out of [precious building materials] in the name of [storyteller,people of culture]! It is their home a place where they may give their creations for future generations. This wonder may empower your people\'s cultural ideas and increase [culture] gain by 20% if finished! This wonder is tied to [culture] and [inspiration] so they will be required during construction. <>Inside of the Fortress, people store the most important and most beautiful arts, statues, and sculptures of their people. That wonder makes the culture immune to perditions.//<small>wonderFULL indeed</small>',
+                desc: '@leads to the <b>Sacrificed for culture victory</b><>This is a fortress built out of [precious building materials] in the name of [storyteller,people of culture]! It is their home a place where they may give their creations for future generations. This wonder is tied to [culture] and [inspiration] so they will be required during construction. <>Inside of the Fortress, people store the most important and most beautiful arts, statues, and sculptures of their people, which makes this culture immune to perditions.//<small>wonderFULL indeed</small>',
                 wonder: 'sacrificed for culture',
                 icon: [6, 12, 'magixmod'],
                 wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
                 cost: { 'basic building materials': 1500, 'precious building materials': 400, 'inspiration': 10 },
                 costPerStep: { 'basic building materials': 2500, 'precious building materials': 500, 'culture': 400, 'inspiration': 1, 'glass': 1, 'fortress construction point': -1 },
                 steps: 200,
-                messageOnStart: 'You began the construction of <b>Fortress of Cultural Legacy</b>. This will make people come inside to watch the arts of the centuries. <b>Unleash unbreakable cultural roots!</b>',
+                messageOnStart: 'You began the construction of Fortress of Cultural Legacy. Your people are confident that the artistry and ideas within the fortress will last for centuries to come!',
                 finalStepCost: { 'inspiration': 125, 'population': 2000, 'precious building materials': 4500, 'statuette': 250, 'wooden statuette': 150, 'gem block': 50, 'culture': 650 },
                 finalStepDesc: 'To complete the wonder and prevent culture and traditions from being perditioned...you need to perform that final step.',
                 use: { 'land': 10, 'worker': 10, 'metal tools': 10 },
@@ -12308,27 +12365,57 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'culture rise', category: 'upgrade',
-                desc: 'Makes the [fortress of cultural legacy] increase the power of [culture,Cultural units].',
+                desc: 'Makes the [fortress of cultural legacy] increase the power of [culture,Cultural units] by 5%. @allows similar wonder-related traits to be obtained simultaneously',
                 icon: [22, 17, 'magixmod'],
-                cost: { 'insight': 70, 'fortress construction point': 200 },
+                cost: { 'culture': 440, 'fortress construction point': 200 },
                 req: { 'cultural roots': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            // Allow unlocking of the other techs at the same time!
+                            G.getDict('political roots').req = { 'will to know more': true }
+                            G.getDict('cultural roots').req = { 'will to know more': true }
+                            G.getDict('roots of insight').req = { 'will to know more': true }
+                        }
+                    }
+                ],
             });
             new G.Tech({
                 name: 'trustworthy influence', category: 'upgrade',
-                desc: 'Makes the [pagoda of democracy] increase the power of [influence,influence gathering units] by increasing the gain of [chieftain]s and [clan leader]s by 5%.',
+                desc: 'Makes the [pagoda of democracy] increase the power of [influence,influence gathering units] by increasing the gain of [chieftain]s and [clan leader]s by 5%. @allows similar wonder-related traits to be obtained simultaneously',
                 icon: [21, 17, 'magixmod'],
-                cost: { 'insight': 25, 'pagoda construction point': 200 },
+                cost: { 'influence': 75, 'pagoda construction point': 200 },
                 req: { 'political roots': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            // Allow unlocking of the other techs at the same time!
+                            G.getDict('political roots').req = { 'will to know more': true }
+                            G.getDict('cultural roots').req = { 'will to know more': true }
+                            G.getDict('roots of insight').req = { 'will to know more': true }
+                        }
+                    }
+                ],
             });
             new G.Tech({
                 name: 'knowledgeable', category: 'upgrade',
-                desc: 'Makes the [complex of dreamers] increase the power of [dreamer]s a little more. In addition, it directly adds 7,500 to your total [housing]. Let it have something from the [Wizard Complex]...',
+                desc: 'Makes the [complex of dreamers] increase the power of [dreamer]s by 5%. In addition, this tech adds 7,500 to your total [housing]. @allows similar wonder-related traits to be obtained simultaneously',
                 icon: [23, 17, 'magixmod'],
-                cost: { 'complex construction point': 200 },
+                cost: { 'insight': 500, 'complex construction point': 200 },
                 effects: [
                     { type: 'provide res', what: { 'housing': 7500 } }
                 ],
                 req: { 'roots of insight': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            // Allow unlocking of the other techs at the same time!
+                            G.getDict('political roots').req = { 'will to know more': true }
+                            G.getDict('cultural roots').req = { 'will to know more': true }
+                            G.getDict('roots of insight').req = { 'will to know more': true }
+                        }
+                    }
+                ],
             });
             new G.Tech({
                 name: 'water filtering', category: 'tier1',
@@ -15369,7 +15456,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mirrors', category: 'tier1',
-                desc: 'People now know how mirrors work and even know how to make simple ones themselves! @provides 20 [wisdom II] and 1 [education]',
+                desc: 'Getting this will let your people can learn a whole lot more about mirrors work and even know how to make simple ones themselves! @provides 20 [wisdom II] and 1 [education]',
                 req: { 'burial in new world': true },
                 cost: { 'insight': 625 },
                 icon: [8, 30, 'magixmod'],
@@ -16586,7 +16673,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'vampirism',
-                desc: '@some [population,people] will start to occasionally drink blood from living [population,people] and their [corpse]s, increasing [spookiness] but harming [health] even more, and increasing people\'s fear (in turn decreasing [happiness]) in exchange for [spookiness]. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>that is even more eww</small>',
+                desc: '@some [population,people] will start to occasionally drink blood from living [population,people] and their [corpse]s, generating [spookiness] but harming [health] even more, as well as sacring people and decreasing their [happiness] more. //Note: [vampirism] works only during Halloween. That means after Halloween, [vampirism] and its [health] harm will stop. //<small>that is even more eww</small>',
                 icon: [2, 9, 'seasonal'],
                 cost: { 'faith': 50, 'culture': 50 },
                 req: { '"dark season"': true, 'ritual necrophagy': true },
@@ -18129,7 +18216,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'golden crafting', category: 'tier1',
-                desc: '[golden fish] currently have only a 20% chance to work properly. Triple the chance of success by teaching your people how to more carefully use the ingots involved.',
+                desc: '[golden fish] normally only a 20% chance to work properly. Triple the chance of success by teaching your people how to more carefully shape the [seafood,Fish]!',
                 icon: [12, 0, 'magix2', 24, 1],
                 cost: { 'insight': 80, 'precious metal ingot': 1 },
                 req: { 'smelting': true, 't6': true },
@@ -18217,7 +18304,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fruit identification II', category: 'tier1',
-                desc: 'Your people will be better-trained at finding out if various plants are poisonous or not, increasing [fruit] gain by 20%, [herbs,Herb] gain by 10%, and [exotic fruit] gain by 5%.',
+                desc: 'People will become better-trained at finding out if various plants are poisonous or not, increasing [fruit] gain by 20%, [herbs,Herb] gain by 10%, and [exotic fruit] gain by 5%.',
                 icon: [0, 35, 'magixmod', 23, 0, 'magix2', 24, 1],
                 cost: { 'insight': 100 },
                 req: { 'exotic blending': true },
@@ -18347,7 +18434,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({ //New trait by @1_e0
                 name: 'tribe of eaters',
-                desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will continue to be ungrateful, but at least they don\'t mind so much anymore.</small>',
+                desc: '@people consume 20% more [food], but the negative effect of [ungrateful tribe] is halved.//<small>Your tribe apologizes for being ungrateful. They know they will probably keep complaining, but at least they don\'t mind so much anymore.</small>',
                 icon: [0, 3, 4, 12, 24, 1],
                 chance: 600,
                 req: { 'ungrateful tribe': true, 'sedentism': true, 'ungrateful tribe II': false },
@@ -22320,7 +22407,7 @@ if (getObj("civ") != "1") {
                 if (pop > 0) {
                     toParse += 'Population: <b>' + B(pop) + ' [population,' + G.getName((pop == 1 ? 'inhab' : 'inhabs')) + ']</b>//';
                     var stat = G.getRes('happiness').amount / pop;
-                    var text = 'elated and eternally jubilant'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high'; else if (stat < 350) text = 'euphoric';
+                    var text = 'euphoric'; if (stat <= -200) text = 'miserable'; else if (stat <= -100) text = 'mediocre'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'pleasant'; else if (stat < 200) text = 'high';
                     toParse += 'Happiness: <b>' + text + '</b>//';
                     var stat = G.getRes('health').amount / pop;
                     var text = 'exemplary'; if (stat <= -200) text = 'dreadful'; else if (stat <= -100) text = 'sickly'; else if (stat <= -50) text = 'low'; else if (stat < 50) text = 'average'; else if (stat < 100) text = 'good'; else if (stat <= 200) text = 'gleaming';
@@ -22888,6 +22975,7 @@ if (getObj("civ") != "1") {
                 name: 'housing',
                 desc: 'Each [housing,Housing spot] accommodates one [population,Elf].//Beyond the 15 elves a basic nomad tribe can support, your population will only grow if you have unoccupied [housing].//Homelessness (having less housing than population) will lead to unhappiness and disease.//The number on the left is how much housing is occupied, while the number on the right is how much housing room you have in total.',
                 icon: [12, 4, 'c2'],
+                fractional: true,
                 getDisplayAmount: function () {
                     return B(Math.min(this.displayedAmount, G.getRes('population').displayedAmount)) + '<wbr>/' + B(this.displayedAmount);
                 },
@@ -23687,6 +23775,7 @@ if (getObj("civ") != "1") {
                 name: 'wisdom',
                 hidden: true,
                 icon: [8, 5, 'c2'],
+                fractional: true,
                 category: 'main',
             });
             new G.Res({
@@ -23702,6 +23791,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'quick-wittinity',
                 hidden: true,
+                fractional: true,
                 icon: [9, 4, 'c2'],
                 category: 'main',
             });
@@ -23737,6 +23827,7 @@ if (getObj("civ") != "1") {
                 name: 'inspiration',
                 hidden: true,
                 icon: [10, 5, 'c2'],
+                fractional: true,
                 category: 'main',
             });
 
@@ -23754,6 +23845,7 @@ if (getObj("civ") != "1") {
                 name: 'spirituality',
                 hidden: true,
                 icon: [7, 5, 'c2'],
+                fractional: true,
                 category: 'main',
             });
 
@@ -23772,6 +23864,7 @@ if (getObj("civ") != "1") {
                 name: 'authority',
                 hidden: true,
                 icon: [11, 5, 'c2'],
+                fractional: true,
                 category: 'main',
             });
             new G.Res({
