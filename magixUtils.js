@@ -1037,7 +1037,7 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = magixURL2 + 'magix2.png?v=2.4' //Version 2.4: 75 sprites
+var magix2Link = magixURL2 + 'magix2.png?v=3.0' //Version 2.4: 75 sprites
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
@@ -3058,7 +3058,7 @@ G.AddData({
         new G.Achiev({
             tier: 5,
             name: '???',
-            icon: [0, 0, 0, 0, 'magix2'],
+            icon: [0, 0, 0, 0, "magix2"],
             desc: '???',
             visible: true,
             civ: 0,
@@ -3401,7 +3401,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 0,
-            icon: [16, 0, 'magix2'],
+            icon: [9, 0, "magix2"],
             name: 'an ocean\'s voyage',
             desc: 'While in the [t6,Ocean trial], manage to get the [Wizard complex] tech to gain all <b>seven</b> trial-related upgrades! //<small>How did you get that far with the world practically falling apart?</small>',
             effects: [
@@ -5528,7 +5528,7 @@ G.AddData({
             delete G.storageObject.drought;
             delete G.storageObject.iconTick;
             delete G.storageObject.gatherIcon;
-            G.Save();
+            // G.Save();
             G.loadMenu = undefined;
             G.loadCiv = 0;
             G.setTab = function (tab) {

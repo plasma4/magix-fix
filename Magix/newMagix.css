@@ -1,3 +1,7 @@
+#logoOverB {
+	pointer-events: none;
+}
+
 .pixelate {
 	/* totally not taken from style.css */
 	/* http://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
