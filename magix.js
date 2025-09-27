@@ -11040,7 +11040,7 @@ if (getObj("civ") != "1") {
                 desc: 'This rather unique and seemingly infinite well has the ability to produce [idea tablet]s upon sacrificing resources to it. However, it requires various [precious building materials,Precious resources] and [magic essences,Essences] to build. @has many steps but does not need to be finished @every 10 steps built, you can can claim 2 [idea tablet]s @cost <b>rises</b> every 10 steps',
                 wonder: '.',
                 icon: [1, 6, "magix2"],
-                wideIcon: [-1, -1, "magix2"],
+                wideIcon: [0, 6, "magix2"],
                 cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000, 'magic essences': 100000 },
                 costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25, 'magic essences': 10000 },
                 steps: 25000,
@@ -16403,7 +16403,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron1',
                 displayName: 'Aflamtnaja the Phoenix of Fire',
-                desc: '[patron1] represents flames and fires. @This patron also symbolizes fight and decisivwness. @Your [wizard]s and people picking this patron wish to mark that their decisions are made with confidence. Also, [wizard]s believe that the Phoenix will lead them to the right paths of their lives. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron1] represents flames and fires. @This patron also symbolizes fight and decisiveness. @Your [wizard]s and people picking this patron wish to mark that their decisions are made with confidence. Also, [wizard]s believe that the Phoenix will lead them to the right paths of their lives. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [0, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16417,7 +16417,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron2',
                 displayName: 'Wuraloik The Son of the Forest',
-                desc: '[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has keys to fix a lot of troubles and no agression is needed to solve every problem. Also, [wizard]s believe that The Son created once a true Oasis of Peace. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has often fixes a lot of troubles and that aggression isn\'t needed to solve most problems. Also, [wizard]s believe that The Son created once a true Oasis of Peace. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [1, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron1': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16431,7 +16431,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron3',
                 displayName: 'Rvikol The Guide of the Winds',
-                desc: '[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuosity. @Your [wizard]s picking and sending their hopes to [patron3,Him] want to mark that each hard decision can be taken easily. Also, [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven, preventing them from being absorbed by darkness of the Hell or Underworld. //Belief in that patron persists through the ages. Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuosity. @Your [wizard]s picking and sending their hopes to [patron3,Him] want to mark that change may be sudden, but can result in being better off. Also, [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven, preventing them from being absorbed by darkness of the Hell or Underworld. //Belief in that patron persists through the ages. Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [2, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron1': false, 'patron4': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16445,7 +16445,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron4',
                 displayName: 'Uselatarraya the Dark Dragon',
-                desc: '[patron4] represents mysteries, secrets and insecurity. @This patron also symbolizes withdrawal and concealment. @Your [wizard]s picking this patron want to mark that their lives are full of secrets and mysteries. Also, [wizard]s believe that [patron4,The Dragon] will protect their secrets from being leaked and will curse "the leakers" involved. Are there any miserables here? //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron4] represents mysteries, secrets and insecurity. @This patron also symbolizes withdrawal and concealment. @Your [wizard]s picking this patron know that their lives are full of secrets and mysteries. Also, [wizard]s believe that [patron4,The Dragon] will protect their secrets from being leaked and will curse "the leakers" involved. Isn\'t that just great? //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [3, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron1': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16473,7 +16473,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron6',
                 displayName: 'Kolier\'ali, Eye of the Sea',
-                desc: '[patron6] represents restraint and observation. @This patron also symbolizes cautioness and prudence. @Your [wizard]s picking this patron want to mark that you cannot always finish something quickly...you need to do it slowly and thoughtfully. Also, [wizard]s believe that [patron6,The Eye] will help [population,people] keep restraint and prevent obsession to appear in their hearts. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron6] represents restraint and observation. @This patron also symbolizes cautioness and prudence. @Your [wizard]s picking this patron want to mark that you cannot always finish something quickly...you need to do it slowly and thoughtfully. Also, [wizard]s believe that [patron6,The Eye] will help [population,people] restrain the impatient and prevent obsession. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [5, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16497,7 +16497,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron7',
                 displayName: 'Chirus the time watcher',
-                desc: '[patron7] is all about time and how it passes. @This patron also symbolizes that things pass way all the time. @Your [wizard]s picking this patron want to mark that they realize it. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong [population,people] lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron7] is all about time and how it passes. @This patron also symbolizes how things pass away all the time. @Your [wizard]s picking this patron want to mark that they realize this. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong their lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [8, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron8': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16511,7 +16511,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'patron8',
                 displayName: 'Hzakilok the homepeace keeper',
-                desc: '[patron8] is a patron of [housing,Houses]. @This patron also symbolizes that everywhere you can feel good but the best place is still your own home. @Your [wizard]s picking this patron want to mark that their homeland can also be a peaceful place. Also, [wizard]s believe that [patron8,The Homepeace keeper] will protect [housing,Houses] from evil and dark powers. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                desc: '[patron8] is a patron of [housing,Houses]. @This patron also symbolizes how the best place is still your own home. @Your [wizard]s picking this patron want to point out how their homeland should be a peaceful place. Also, [wizard]s believe that [patron8,The Homepeace keeper] will protect [housing,Houses] from evil and dark powers. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [7, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
@@ -16524,7 +16524,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'nonpatronage',
-                desc: 'Seems like your tribe wants to live without any patrons. <b>The reasons might be:</b> @First decision that has been spread through tribe @Fear @Insecurity @Their religion say nothing about patronage //Through the rest of the run, [wizard]s and eventually [population,people] will not pick or create their own Patron. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font> //<small>Not having a patron is also fine, don\'t worry too much :)</small>',
+                desc: 'Seems like your tribe wants to live without any patrons. <b>The reasons might be:</b> @A first decision that has been spread through the tribe @Fear @Insecurity @Their religion say nothing about patronage //Through the rest of the run, [wizard]s and eventually [population,people] will not pick or create their own Patron. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font> //<small>Not having a patron is also fine, don\'t worry too much :)</small>',
                 icon: [9, 32, 'magixmod'],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron7': false, 'patron8': false, 'patron6': false, 'unknown patron': false },
@@ -16547,7 +16547,7 @@ if (getObj("civ") != "1") {
                             G.getDict('hovel').desc = '@provides 20 [housing]<>A simple home for a family of villagers.';
                             G.getDict('hut').desc = '@provides 12 [housing]<>Small dwelling built out of hardened mud and branches.';
                             G.getDict('mud shelter').desc = '@provides 8 [housing]<>Basic, frail dwelling in which a small family can live.';
-                            G.getDict('branch shelter').desc = '@provides 8 [housing]<>Basic, very frail dwelling in which a small family can live.';
+                            G.getDict('branch shelter').desc = '@provides 8 [housing]<>Basic, very frail dwelling in which a small family can live. The weakest shelter.';
                             G.getDict('shelter on water').desc = '@provides 15 [housing]<>Small dwelling with roof out of branches and walls out of [bamboo].';
                             //G.getDict('dark essence').limit=null;
                         }
@@ -16575,7 +16575,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
                 icon: [0, 35, 'magixmod', 13, 23, 'magixmod', 24, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(normal)': false },
@@ -17781,7 +17781,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(normal)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
                 icon: [0, 35, 'magixmod', 13, 23, 'magixmod', 22, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
@@ -27159,7 +27159,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(normal)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
                 icon: [3, 13, 'c2', 24, 16, 'c2', 22, 1, 'c2'],
                 cost: { 'discernment': 195, 'creativity': 85, 'gentility': 50 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
@@ -27171,7 +27171,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
-                desc: '@Increases the positive effects of [acceptance of death] by 5%. <>@Funeral cerermonies are more common. @provides 30 [inspiration]',
+                desc: '@Increases the positive effects of [acceptance of death] by 5%. <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
                 icon: [3, 13, 'c2', 24, 16, 'c2', 24, 1, 'c2'],
                 cost: { 'discernment': 195, 'creativity': 85, 'gentility': 50 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
