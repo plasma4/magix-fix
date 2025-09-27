@@ -939,7 +939,7 @@ G.traitTick = function (race, permachiev) {
                             case "religion": G.Message({ type: 'story2 tall', text: 'Various beliefs and hopes of your ' + race + ' have brought a religious trait: <b>' + me.displayName + '</b>.', icon: me.icon }); break;
                             case "short": G.Message({ type: 'important tall', text: 'Your ' + race + ' have adopted the temporary trait <b>' + me.displayName + '</b>.', icon: me.icon }); break;
                             case "long": G.Message({ type: 'important tall', text: 'Your ' + race + ' have adopted the <u>long-term</u> trait <b>' + me.displayName + '</b>.', icon: me.icon }); break;
-                            default: G.Message({ type: me.name == "famine" ? 'bad2 tall' : 'important tall', text: 'Your ' + race + ' have adopted the trait <b>' + me.displayName + '</b>.', icon: me.icon }); break;
+                            default: G.Message({ type: me.name == "famine" ? 'bad2 tall' : 'important tall', text: me.name == "famine" ? ('Your ' + race + ' is now experiencing a famine.') : ('Your ' + race + ' have adopted the trait <b>' + me.displayName + '</b>.'), icon: me.icon }); break;
                         }
                     }
                     if (G.has('symbI'));
@@ -5824,7 +5824,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !UnderworldMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere, a Tablet appears behind you. It is hot to the touch and its red glowing will only attract curses.</b><br><font color="fuschia">Prepare to tame 6 Devil\'s traits in order to continue your adventure! Without this tablet, the Underworld won\'t allow you discover its secrets...</font>', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a way to the Underworld. Out of nowhere, a Tablet appears behind you. It is hot to the touch and its red glowing is only something that will attract curses.</b><br><font color="fuschia">Prepare to tame 6 Devil\'s traits in order to continue your adventure! Without this tablet, the Underworld won\'t allow you discover its secrets...</font>', icon: [12, 19, 'magixmod'] });
                         UnderworldMESG = true
                         G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
@@ -6036,7 +6036,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'dark blue firework',
-                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day.', icon: [5, 0, 'seasonal'],
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day too!', icon: [5, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -6046,7 +6046,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark orange firework',
-                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day.',
+                desc: 'Happy New Year! You can launch this firework high into the sky...Provides [happiness] for every firework launched into the sky. This is a [dark essence,Dark-essenced] firework so that it can unleash its spectacular show during the day too!',
                 icon: [4, 0, 'seasonal'],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -6148,7 +6148,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wooden coin',
-                desc: 'The lowest tier of currency used by the Pocket trial. To get 1 [silver coin] you will need: 100*((times you have completed Pocket*3)+1) [wooden coin]s. Can be used to buy primary, archaic resources.',
+                desc: 'The lowest tier of currency used by the Pocket trial. To get 1 [silver coin] you will need 50 \u00D7 (Pocket trial completions \u00D7 3 + 1) [wooden coin]s. Can be used to buy primary and archaic resources.',
                 category: 'misc',
                 icon: [5, 25, 'magixmod'],
                 tick: function (me, tick) {
@@ -6160,7 +6160,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'silver coin',
-                desc: 'The second tier of currency used by the Pocket trial. To get 1 [golden coin] you will need: 100*((times you have completed Pocket*3)+1) [silver coin]s. Can be used to buy basic resources.',
+                desc: 'The second tier of currency used by the Pocket trial. To get 1 [golden coin] you will need 50 \u00D7 (Pocket trial completions \u00D7 3 + 1) [silver coin]s. Can be used to buy basic resources.',
                 category: 'misc',
                 icon: [6, 25, 'magixmod'],
                 tick: function (me, tick) {
@@ -6189,11 +6189,11 @@ if (getObj("civ") != "1") {
             let MirrorMESG = false
             new G.Res({
                 name: 'tablet \'o mirror',
-                desc: 'A heavy tablet that you will get from opening the <b>Grand mirror</b> that allows you to double your [land] and [wtr]. (You can obtain only <b>one</b> Tablet of this type!) //<small><b>You are cloning the world via magic, but the more portals you open, the more unstable the world will become, which will cause many huge disasters! It is time to stop...before something bad happens.</b></small>',
+                desc: 'A heavy tablet that you will get from opening the <b>Grand mirror</b> that allows you to double your [land] and [wtr]. (You can obtain only <b>one</b> Tablet of this type!) //<small><b>You are cloning the world via magic, but the more portals you open, the more unstable the world might become, which may lead to huge disasters!</b></small>',
                 icon: [11, 30, 'magixmod'],
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !MirrorMESG) {
-                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, an Emblem appears behind you. It is cold to the touch and perfectly symmetrical. A Tablet has a warning carved onto it, and you\'ve unlocked a new resource!</b>', icon: [12, 19, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>Your people finally made the Grand Mirror work like a normal portal. Out of nowhere, a bright Emblem appears behind you, followed by a smooth Tablet. The Tablet is cold to the touch and perfectly symmetrical and has a warning carved into it: "It is time to stop now...before something terrible happens."</b>', icon: [12, 19, 'magixmod'] });
                         MirrorMESG = true
                         G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
@@ -10454,8 +10454,8 @@ if (getObj("civ") != "1") {
                 ],
                 gizmos: true,
                 modes: {
-                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [wooden coin]s into 1 [silver coin].<br>The amount of [wooden coin]s needed is equal to<br><b><font color="#cfbaa8">50*(Pocket trial completions*3+1)</font></b>' },
-                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [silver coin]s into 1 [golden coin].<br>The amount of coins of the [silver coin]s needed is equal to<br><b><font color="#dbb406">50*(Pocket trial completions*3+1)</font></b>' },
+                    'wts': { name: 'Wooden to Silver', icon: [26, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [wooden coin]s into 1 [silver coin].<br>The amount of [wooden coin]s needed is equal to<br><b><font color="#cfbaa8">50 \u00D7 (Pocket trial completions \u00D7 3 + 1)</font></b>' },
+                    'stg': { name: 'Silver to Golden', icon: [27, 29, 'magixmod'], desc: 'Each of these [cantor]s will convert [silver coin]s into 1 [golden coin].<br>The amount of coins of the [silver coin]s needed is equal to<br><b><font color="#dbb406">50 \u00D7 (Pocket trial completions \u00D7 3 + 1)</font></b>' },
                 },
                 use: { 'land': 1, 'worker': 1 },
                 req: { 't10': true, 'trial': true },
@@ -20982,7 +20982,7 @@ if (getObj("civ") != "1") {
             //substrates
             new G.Goods({
                 name: 'rocky substrate',
-                desc: 'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [gold ore,Ores], and precious [gems].',
+                desc: 'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces [mud], more [stone]s and occasionally [copper ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [gold ore,Ores], and precious [gems].',
                 icon: [11, 10],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -21232,7 +21232,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
                 icon: [33, 20, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -21248,7 +21248,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
                 icon: [33, 18, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -21264,7 +21264,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'lush rocky substrate',
-                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less of ores like [copper ore,Copper], [tin ore,Tin], and [iron ore,Iron]. Also, you will find less [coal] here.//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
+                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces [mud], more [stone]s and occasionally [copper ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [gold ore,Ores], and precious [gems] but less of ores like [copper ore,Copper], [tin ore,Tin], and [iron ore,Iron]. Also, you will find less [coal] here.//Quarrying there gives a little bit more [marble] and [platinum ore,Platinum].',
                 icon: [33, 19, 'magixmod'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -21677,7 +21677,7 @@ if (getObj("civ") != "1") {
                 var seaTiles = [];
                 var fit = false;
                 i = 0;
-                while (fit == false)//discard any map with less than 30% or more than 50% land
+                while (fit == false && i !== 50)//discard any map with less than 30% or more than 50% land
                 {
                     var lvl = generate(w, h);
 
@@ -26617,7 +26617,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dry throats',
-                desc: '@elves drink 15% less [water], but derive less joy from drinking. @may unlock more drinking habit traits //<small>Make sure to drink several of water daily. (You don\'t truly need several cups, actually; you\'ll get quite a bit of water from the other things you consume.)</small>',
+                desc: '@elves drink 15% less [water], but derive less joy from drinking. @may unlock more drinking habit traits //<small>Make sure your elves drink enough water! The food here isn\'t very hydrating exactly...</small>',
                 icon: [3, 12, 30, 17, 'c2'],
                 cost: { 'gentility': 15, 'discernment': 2 },
                 chance: 40,
@@ -28361,7 +28361,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'ocealoes',
-                desc: 'Carnivorous semi-aquatic mammal with long tail. Can be rather found in sea than on land; provides [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
+                desc: 'Carnivorous semi-aquatic mammal with long tail. A fairly unique species that provides [meat], [bone]s and [hide]s.//Carcasses can also be gathered for [spoiled food].',
                 icon: [7, 18, 'c2'],
                 res: {
                     'gather': { 'spoiled food': 1 },
@@ -28440,7 +28440,7 @@ if (getObj("civ") != "1") {
             //NEW SUBSTRATES
             new G.Goods({
                 name: 'rocky substrate',
-                desc: 'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s, and occasionally [olivnum ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [greenold ore,Ores], and precious [gems].',
+                desc: 'A [rocky substrate] is found underneath terrain with moderate temperature and humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces [mire], more [stone]s, and occasionally [olivnum ore,Ores] and [clay].//Mining provides the best results, outputting a variety of [stone]s, rare [greenold ore,Ores], and precious [gems].',
                 icon: [3, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -28496,7 +28496,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,Olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [mire] and [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [olivnum ore,Olivnum], and precious [gems]. Also, mining here provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [fazble] but less [cut stone].',
                 icon: [9, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -28510,7 +28510,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,Olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [clay], more [stone]s and occasionally [olivnum ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [olivnum ore,Olivnum] amounts. Also, mining here provides way less [iron ore,Iron].',
                 icon: [6, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
@@ -28524,7 +28524,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'lush rocky substrate',
-                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging often produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [greenold ore,Ores], and precious [gems] but less ores like [olivnum ore,Olivnum], [tin ore,Tin],insert new ore here, [iron ore,Iron]. You will find less [coal] here.',
+                desc: 'A [lush rocky substrate] is found underneath terrain with a lush temperature and stable humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces [mire], more [stone]s and occasionally [olivnum ore,Ores] and a bit less [clay].//Mining provides the best results, outputting a variety of [stone]s, a little bit more rarely [greenold ore,Ores], and precious [gems] but less ores like [olivnum ore,Olivnum], [tin ore,Tin],insert new ore here, [iron ore,Iron]. You will find less [coal] here.',
                 icon: [5, 16, 'c2'],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
