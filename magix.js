@@ -16947,7 +16947,7 @@ if (getObj("civ") != "1") {
                 name: 'ancestors world building', category: 'tier1',
                 desc: 'Unlocks a unique sheet of buildings which can only be built in the newly opened <b>Ancestors world</b>! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1 from now on.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>It would be quite useful to construct huge houses in their world. But if you did...it would really insult the ancestors.</small>',
                 icon: [32, 33, 'magixmod'],
-                cost: { 'insight': 4, 'ancestors tablet': 1 },
+                cost: { 'insight': 4, 'ancestors tablet': 1, 'idea tablet': 20 },
                 effects: [
                     { type: 'provide res', what: { 'industry point': 800 } },
                     { type: 'show res', what: ['industry point'] },
@@ -26301,7 +26301,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and very very far! They become more advanced and may explore far into the world. //<b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and very very far! They become more advanced and may explore far into the world. //<b>Removes</b> the exploration cap entirely!',
                 icon: [30, 13, 'c2'],
                 cost: { 'discernment': 660, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
