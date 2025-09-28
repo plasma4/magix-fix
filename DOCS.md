@@ -363,7 +363,7 @@ However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. Yo
     ```
     which you may want if there are many new units in your mod.
 17. (Magix-specific) Magix frequently checks for `G.modsByName['default dataset']` in `magixUtils.js` to determine if the race is human or not, since there are two races in the game.
-18. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually literally 0 due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83).
+18. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.)
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:

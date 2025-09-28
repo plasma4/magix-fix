@@ -9010,7 +9010,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'Wizard Complex',
-                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower but only needs 6 times the [mana]. May provide more housing with further researches.',
+                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower but only needs 6 times the [mana], <b>and increases your [wisdom], [inspiration], [spirituality], and [authority] after built</b>. May provide more housing with further researches.',
                 icon: [3, 3, 'magixmod'],
                 cost: { 'basic building materials': 12500, 'precious building materials': 3000 },
                 use: { 'land': 9, 'worker': 10, 'wizard': 60 },
@@ -11092,7 +11092,7 @@ if (getObj("civ") != "1") {
                     if (G.has('eotm')) costs['science'] = calcCost('education', G.has("do we need that much science?") ? 0.1 : 0.2);
                     if (G.has('eota')) costs['culture II'] = calcCost('inspiration II', 0.06);
                     if (G.chooseBox[0].choices.length === 0 && G.has('the well of ideas')) {
-                        costs['idea tablet'] = G.has('paradise building') ? 2 : 1
+                        costs['idea tablet'] = (G.has('ancestors world building') || G.has('paradise building')) ? 2 : 1
                     }
                     return costs;
                 },
@@ -13651,7 +13651,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise housing conceptions', category: 'tier1',
-                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his the homeland to be filled with houses and look like your mortal world.',
+                desc: 'This technology doesn\'t unlock new housing for the Paradise yet. But, in the future, you will obtain similar technologies that finally will unlock new [housing] options. <>Paradise housing is limited, however. God doesn\'t want his homeland to be filled with houses and look like your main world.',
                 icon: [0, 21, 'magixmod'],
                 cost: { 'insight': 1000, 'culture': 390, 'inspiration': 16, 'faith': 259 },
                 req: { 'paradise building': true },
@@ -16945,7 +16945,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ancestors world building', category: 'tier1',
-                desc: 'Unlocks a unique sheet of buildings which can only be built in the newly opened <b>Ancestors world</b>! //<small>It would be nice to construct huge houses in their world. But if you did...it\'ll insult them.</small>',
+                desc: 'Unlocks a unique sheet of buildings which can only be built in the newly opened <b>Ancestors world</b>! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1 from now on.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>It would be quite useful to construct huge houses in their world. But if you did...it would really insult the ancestors.</small>',
                 icon: [32, 33, 'magixmod'],
                 cost: { 'insight': 4, 'ancestors tablet': 1 },
                 effects: [
