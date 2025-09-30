@@ -828,9 +828,9 @@ G.logic['res'] = function () {
 //change page layout to fit width (for Magix, the defaults are TOO LOW, sadly)
 G.stabilizeResize = function () {
     G.resizing = false;
+    if (l('civBlurb')) l('civBlurb').style.marginTop = (G.w < 1410 ? 42 : 0) + 'px';
     l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
-    l('game').style.bottom = G.h < 600 ? 0 : null;
-    l('fpsGraph').style.display = G.h < 600 ? 'none' : 'block';
+    l('game').style.bottom = (G.h < 600 || !G.getSetting('fpsgraph')) ? 0 : null;
     if (G.w < 405) {
         document.body.classList.add('halfSize'); document.body.classList.remove('smallSize');
     } else if (G.w * G.h < 200000 || G.w < 625) {
@@ -1318,24 +1318,16 @@ G.AddData({
                 if (G.traitsOwned[i].trait.category != 'anomaly') G.traitN2++;
             }
             var str = '';
-            str += '<div style=position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>' +
-                G.button({
-                    id: 'display',
-                    text: '<span style="position:relative;width:20px;margin-left:-4px;margin-right:0px;z-index:10;font-weight:bold;">Wide display: ' + (G.getSetting('linearDt') == true ? '<font color="#bbffbb">ON</font>' : '<font color="#ffbbbb">OFF</font>') + '</span>',
-                    tooltip: 'Toggle between displaying trait categories in bulk or one category per line.',
-                    onclick: function () { linearDisplay('trait'); G.update['trait']() }
-                });
+            str += '<div style=position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>';
             if (G.traitN >= 15) {
                 str += '<br><div class="flourishL"></div>';
-                /*str+=G.writeSettingButton({
-                    text:'Manage temporary traits',tooltip:'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait per some period of time at a cost of 2/3 of your Authority level ('+G.selfUpdatingText(function(){return Math.floor(G.getRes('authority').amount*0.66);})+' Influence ). This option shows up after having currently 15 traits.<br>Also temporary traits that became permanent may also be removed but cooldown until next<br>available removal will be significantlly longer and will cost <b>max</b> available influence.<br><b>DO NOT think too carelessly while using up trait removal. Sometimes some traits that negatively affect your civilization may be a key to traits that will support you.</b>',name:'traitRemovalMode',id:'traitRemovalMode',style:'box-shadow:0px 0px 2px 1px #f00;'});*/
                 str += G.button({
                     id: 'traitManagement',
                     name: 'traitManagement',
                     classes: G.getSetting('traitRemovalMode') ? ["on"] : [],
-                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait at the cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time, and has a cooldown.<br>Also, temporary traits that became permanent may also be removed, but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> (Sometimes, some traits that negatively affect your civilization may be a key to traits or unlocks that will support you.)',
+                    tooltip: 'Spend influence to manipulate <b>temporary</b> traits.<br>You can remove one temporary trait at the cost of 60% of your Authority level (' + G.selfUpdatingText(function () { return Math.floor(G.getRes('authority').amount * 0.6) }) + ' Influence). This option shows up after having 15 traits at the same time, and has a cooldown.<br>Also, temporary traits that became permanent may also be removed, but the cooldown until<br>your next available removal will be significantlly longer and will cost your <b>max</b> available influence.<br><b>Do NOT think too carelessly while using up trait removal.</b> (Do note that some traits that negatively affect your civilization might be a key to traits or unlocks that will support you though!)',
                     text: 'Manage temporary traits',
-                    style: 'box-shadow:-1px 0px 2px 2px red;',
+                    style: 'box-shadow:-1px 0px 2px 2px red;transform:translateX(-15px)',
                     onclick: function () {
                         G.setSetting('traitRemovalMode', !G.getSetting('traitRemovalMode'));
                         G.update['trait']();
@@ -1364,7 +1356,7 @@ G.AddData({
 
 
 
-            str += '<div id="civBlurb" class="framed bgMid" style="width:320px;margin:8px auto;padding:10px 16px 4px 16px;"></div>' +
+            str += '<div id="civBlurb" class="framed bgMid" style="width:320px;margin:8px auto;margin-top:' + (G.w < 1410 ? 42 : 0) + 'px;padding:10px 16px 4px 16px;"></div>' +
                 G.button({
                     tooltip: 'Lets you change the names of various things,<br>such as your civilization, your people, and yourself.', text: 'Rename civilization', onclick: function (e) {
                         G.dialogue.popup(function (div) {
@@ -4854,10 +4846,16 @@ G.AddData({
             G.addCallbacks();
         }
 
+        var oldFPSShow = G.getSetting('fpsgraph')
         G.Logic = function (forceTick) {
             if (l("display")) l("display").style.display = G.w < 800 ? "none" : null
             for (var i in G.unit) {
                 if (G.unit[i].visible == undefined) G.unit[i].visible = true;
+            }
+            var fpsSetting = G.getSetting('fpsgraph');
+            if (fpsSetting !== oldFPSShow) {
+                l('game').style.bottom = (G.h < 600 || !fpsSetting) ? 0 : null;
+                oldFPSShow = fpsSetting;
             }
             //Speedresearcher
             var techs = G.techN - G.miscTechN + G.knowN;
@@ -5668,7 +5666,7 @@ G.AddData({
                         return function (div) {
                             var str =
                                 '<div style="width:275px;min-height:400px;">' +
-                                '<div class="thing standalone' + G.getIconClasses(me, true) + '' + (instance.mode == 3 ? ' wonderUnbuilt' : ' wonderBuilt') + '" style="transform:scale(2);position:absolute;left:70px;top:52px;">' + G.getIconStr(me, 0, 0, true) + '</div>' +
+                                '<div class="thing standalone' + G.getIconClasses(me, true) + '' + (instance.mode == 3 ? ' wonderUnbuilt' : ' wonderBuilt') + '" style="transform:scale(1.98) translateX(-1px);position:absolute;left:70px;top:52px;">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                 '<div class="fancyText title">' + me.displayName + '</div><div class="bitBiggerText scrollBox underTitle shadowed" style="text-align:center;overflow:hidden;top:118px;bottom:50px;">';
                             if (instance.mode == 3) {
                                 str += '<div class="fancyText par"><font color="' + (getObj('civ') == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';

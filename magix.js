@@ -1133,7 +1133,7 @@ if (getObj("civ") != "1") {
                     G.getDict('mausoleum').icon = [1 + (G.achievByName['mausoleum'].won - 1) * 3, 20, 'magixmod'];//icon
                     G.getDict('mausoleum').wideIcon = [0 + (G.achievByName['mausoleum'].won - 1) * 3, 20, 'magixmod']//wide icon
                     G.getDict('mausoleum').finalStepCost = { 'population': population };//final cost
-                    G.getDict('mausoleum').finalStepDesc = 'To complete the ' + (G.achievByName['mausoleum'].won > 9 ? "Great" : "") + ' Mausoleum, ' + population + ' of your [population,people] must be sacrificed to accompany you as servants in the afterlife.'
+                    G.getDict('mausoleum').finalStepDesc = 'To complete the ' + (G.achievByName['mausoleum'].won > 9 ? "Great" : "") + ' Mausoleum, ' + population + ' of your [population,people] must be sacrificed to accompany you as servants in the afterlife. //Finishing the Mausoleum also provides 2,000 extra [housing].'
                     G.getDict('mausoleum').desc = '@leads to the <b>Mausoleum Victory</b><>A mystical monument where the dead lie.//A temple housing a tomb deep under its rocky platform, the Mausoleum stands tall, its eternal shadow forever reminding your people of your greatness. <font color="#eac733">@The Mausoleum is evolved to level ' + (G.achievByName['mausoleum'].won <= 10 ? G.achievByName['mausoleum'].won : 10) + ' of 10. ' + (G.achievByName['mausoleum eternal'].won > 0 ? 'You have obtained all bonuses already' : 'Continue evolving up to unlock a special achievement and more bonuses. You can evolve up the Mausoleum to the next stage by ascending with it') + '. //To see level bonuses, hover over [a gift from the mausoleum]\'s tech icon.</font>';//description
                     G.getDict('mausoleum').cost = { 'basic building materials': 1000 + (G.achievByName['mausoleum'].won <= 10 ? 200 * G.achievByName['mausoleum'].won : 2000) }
                     if (G.achievByName['mausoleum'].won > 9) {
@@ -4805,7 +4805,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessage) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to the Plain Island. Out of the portal a Tablet falls and hits a rock next to you. Within the square portal, you can finally see what is beyond it! It appears to be a bunch of flat plains, but you are sure there are a variety of new discoveries that you can find. (You can also rename this island in the Traits tab.)</b>', icon: [8, 3, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to the Plain Island. Out of the portal a Tablet falls and hits a rock next to you. Within the square portal, you can finally see what is beyond it! It appears to be a bunch of flat plains, but you are sure there are a variety of new discoveries that you can find. Some small text at the bottom of the tablet tells you that can also rename this island (in the Traits tab).</b>', icon: [8, 3, 'magixmod'] });
                         madeUnlockMessage = true
                         G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
@@ -5230,7 +5230,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to Paradise. Out of the portal a Tablet falls and falls next to your feet. A large golden portal shines and you can see what is beyond it. You come through and notice it is perfect to live. Now it is time for more discoveries.</b>', icon: [8, 4, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated the passage to Paradise. Out of the portal a Tablet falls and falls next to your feet. A large golden portal shines and you can see what is beyond it. You come through and notice it is perfect to live. It feels like now it is the time for more discoveries.</b>', icon: [8, 4, 'magixmod'] });
                         madeUnlockMessageP = true
                         G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
@@ -5592,7 +5592,7 @@ if (getObj("civ") != "1") {
             new G.Res({
                 name: 'meals',
                 desc: '[meals] are tastier than most types of [food]. All [meals] will make people happy and provide some bonus [health] benefits.',
-                icon: [2, 7, "magix2"],
+                icon: [7, 2, "magix2"],
                 turnToByContext: { 'eating': { 'health': 0.03, 'happiness': 0.05, 'bone': 0.1 }, 'decay': { 'meals': 0.2, 'spoiled food': 0.8 } },
                 category: 'food',
                 partOf: 'food',
@@ -6579,7 +6579,7 @@ if (getObj("civ") != "1") {
                 startWith: 0,
                 tick: function (me, tick) {
                     if (me.amount >= 1 && !madeUnlockMessageP) {
-                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a passage to the ancestors world. Out of the portal, a strange Tablet falls and falls next to your feet. A big ruby portal shines and you can now see what is beyond it! You come through and notice there is perfect moderate heat and autumn is everywhere. Now it is time for more discoveries.</b>', icon: [30, 33, 'magixmod'] });
+                        G.Message({ type: 'tabletobtain', text: '<b>You and your people activated a passage to the ancestors world. Out of the portal, a strange Tablet falls and falls next to your feet. A large ruby portal shines and you can now see what is beyond it! A comforting glow and autumn feel emits from the portal. It feels like now it is the time for more discoveries.</b>', icon: [30, 33, 'magixmod'] });
                         madeUnlockMessageP = true
                         G.playSound(magixURL + 'GainedEmblem.mp3');
                     }
@@ -7898,7 +7898,7 @@ if (getObj("civ") != "1") {
                 steps: 100,
                 messageOnStart: 'You begin the construction of the Mausoleum. Its towering mass already dominates the city, casting fear and awe wherever its shadow reaches.',
                 finalStepCost: { 'population': 100, 'housing': -2000 },
-                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife. Finishing the Mausoleum also provides 2,000 free [housing].',
+                finalStepDesc: 'To complete the Mausoleum, 100 of your [population,people] must be sacrificed to accompany you as servants in your afterlife. //Finishing the Mausoleum also gives 2,000 extra [housing].',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 //require:{'worker':10,'stone tools':10},
                 req: { 'monument-building': true, 'trial': false },
