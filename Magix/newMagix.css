@@ -2,6 +2,18 @@
 	pointer-events: none;
 }
 
+#sectionTabs {
+	z-index: 2;
+}
+
+#dialogues.on {
+	height: 100%;
+}
+
+#game {
+	bottom: 65px;
+}
+
 .pixelate {
 	/* totally not taken from style.css */
 	/* http://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */

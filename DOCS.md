@@ -3,7 +3,12 @@ NeverEnding Legacy is a civ building game but its code is a mess. Maybe not as m
 
 Have any questions? DM me on Discord (@1_e0) or preferably join the [Dashnet server](https://discord.gg/cookie); it's a great community. I would also suggest using [Magix Wiki](https://plasma4.github.io/magix-fix/magix-wiki.html) to explore values easier :)
 
-Want to add a mod URL to the end of an already existing game? [It's not that hard actually.](https://github.com/plasma4/magix-extras?tab=readme-ov-file#injecting-a-mod-without-wiping-the-save) If you want to work with mods locally (or offline), this repo is actually a great way to do that, even if you don't want to deal with Magix, as you can still use custom mods and choose files.
+If you want to work with mods locally (or offline), this repo is actually a great way to do that, even if you don't want to deal with Magix, as you can still use custom mods and choose files.
+
+Also, want to add a mod URL to the end of an already existing game? It's pretty simple actually! First, back up your original save (sometimes, injecting new mods might cause problems), and then try this:
+```js
+G.mods.push({url:"modURL.js"});G.Save();location.reload()
+```
 
 Orteil also made some basic debugging tools. You can run `G.Cheat()` in order to enable them! (Or `G.RuinTheFun()`, or `G.Debug()`, because why not I suppose.) There are also additional debug variables in a few functions like `G.renderMap()` (`breakdown` and `verbose`).
 
@@ -94,7 +99,7 @@ At this point, you might have picked up on the fact that units have a lot more p
 ```js
 new G.Unit({
     name: 'quarry',
-    desc: '@carves [cut stone] out of the ground@may find various other minerals such as [limestone] and [marble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.',
+    desc: '@carves [cut stone] out of the ground@may find various other minerals such as [limestone] and [marble]<>The [quarry] dismantles the ground we stand on so that our children may reach higher heights.', // See Additional info for more about what symbols like @ and [thing] mean
     icon: [22, 3],
     cost: { 'archaic building materials': 100 },
     use: { 'land': 4 },
@@ -102,8 +107,8 @@ new G.Unit({
         'off': G.MODE_OFF,
         'quarry': { name: 'Quarry stone', icon: [0, 8], desc: 'Produce [cut stone] and other minerals.', use: { 'worker': 3, 'stone tools': 3 } },
         'advanced quarry': { name: 'Advanced quarry stone', icon: [8, 12, 0, 8], desc: 'Produce [cut stone] and other minerals at a superior rate with metal tools.', use: { 'worker': 3, 'metal tools': 3 } },
-        'quarryotherstones': { name: 'Quarry other stones', icon: [3, 12, 'magixmod'], desc: 'Strike the Earth for [various cut stones] rather than normal [cut stone].', req: { 'quarrying II': true }, use: { 'worker': 3, 'metal tools': 3 } },
-        'quarrydeepores': { name: 'Quarry deep for minerals', icon: [8, 12, 33, 30, 'magixmod'], desc: 'Quarry for resources that require quarrying deep underground. In this mode you will gather three times more ores but six times less of non-ore materials.', req: { 'prospecting III': true }, use: { 'worker': 8, 'metal tools': 8 } },
+        'quarryotherstones': { name: 'Quarry other stones', icon: [3, 12, "magixmod"], desc: 'Strike the Earth for [various cut stones] rather than normal [cut stone].', req: { 'quarrying II': true }, use: { 'worker': 3, 'metal tools': 3 } },
+        'quarrydeepores': { name: 'Quarry deep for minerals', icon: [8, 12, 33, 30, "magixmod"], desc: 'Quarry for resources that require quarrying deep underground. In this mode you will gather three times more ores but six times less of non-ore materials.', req: { 'prospecting III': true }, use: { 'worker': 8, 'metal tools': 8 } },
     },
     effects: [
         { type: 'gather', context: 'quarry', amount: 5, max: 10, every: 3, mode: 'quarry' },
@@ -236,15 +241,15 @@ Actual generation of terrain types is done in `G.funcs['create map']`, which is 
 
 
 ## Example code
-Knowledge (techs and traits) are fairly simple so they don't get their own dedicated section. Here is an example though:
+Knowledge (techs and traits) are fairly simple, so here is an example:
 ```js
 new G.Trait({
     name: 'at1',
     displayName: 'Ancestors trait #1 Authority in churches',
     desc: '@[church,Churches] and [cathedral]s have a small chance to generate [influence]. Every 3 [church,Churches] and [cathedral]s increase the annual influence bonus by 1. In addition, getting this trait provides 25 [authority].',
-    icon: [16, 34, 'magixmod', 22, 1], // Look, icons can stack! The Magix Wiki has icon layout info for a more visual explanation; just click on an image of something.
-    cost: {}, // For techs, this is the resources it costs to purchase that tech. For traits this is a minimum requirement of resources for it to be possible to obtain that trait. Note that when you obtain a trait, the cost gets subtracted from your current resource!
-    chance: 250, // Odds for something to happen. For traits, lower values are more likely, while for techs, higher values increase the probability of seeing that technology. For traits the odds of getting that trait is 1 / (chance * 300) per day.
+    icon: [16, 34, "magixmod", 22, 1], // Look, icons can stack! The Magix Wiki has icon layout info for a more visual explanation; just click on an image of something.
+    cost: {}, // For techs, this is the resources it costs to purchase that tech. For traits this is a minimum requirement of resources for it to be possible to obtain that trait. Note that when you obtain a trait, the cost gets subtracted from your current resources as well!
+    chance: 250, // Odds for something to happen. For techs, higher chance values simply multiply the probability of seeing that technology. For traits, the odds of getting that trait is 1 / (chance * 300) per day.
     effects: [
         { type: 'provide res', what: { 'authority': 25 } }, // One-time resource gain.
     ],
@@ -312,7 +317,7 @@ new G.Unit({
 
 ## Additional info
 1. Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was Array(2102051) and `techByTier` was Array(297288). The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does.
-2. The game will execute your mod file twice after initially creating a "New game" through the settings (or ascending), even if that code is outside of the `func` function. If this is a problem you may want to do something like this in your mod file:
+2. The game will execute your mod file more than once after initially creating a "New game" through the settings (or ascending) or reloading the page, even if that code is outside of the `func` function. If this is a problem you may want to do something like this in your mod file:
     ```js
     if (!window.johnsModLoaded) {
     // Replace this comment with code. Code in here will only be executed once!
@@ -356,14 +361,19 @@ However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. Yo
         }
     }
     ```
-    which is where the shortcuts are from.
+    which is where the shortcuts are from. `G.parseFunc` simply takes something like `[gatherer]` and turns it into the neat icon preview and bold white text by calling `G.getSmallThing`.
 16. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
     ```js
     if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
     ```
     which you may want if there are many new units in your mod.
 17. (Magix-specific) Magix frequently checks for `G.modsByName['default dataset']` in `magixUtils.js` to determine if the race is human or not, since there are two races in the game.
-18. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.)
+18. You can add this line of code in `G.traitTick` below `if (!G.has(me.name))` (or uncomment it in Magix):
+    ```js
+    if (G.checkReq(me.req) && G.testCost(me.cost, 1)) console.log(me.name, me.chance)
+    ```
+    to easily see what traits can be obtained, and chances of each trait. Magix also has a function trait chance function using `G.getTraitChance` that overhauls `G.traitTick`.
+19. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.)
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:

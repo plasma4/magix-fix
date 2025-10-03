@@ -19,13 +19,13 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 >>> You next step should be to extract the .zip file (to ensure assets work properly) and to open the index.html file. Congrats! You can now use Magix or load other mods in without internet.
 */
 
-/* Additionally, PLEASE BE AWARE: The creator of this mod has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes. This mod provides a few important fixes that prevent the game from breaking, as well as a large amount of rewritings and small changes. To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
+/* Small note: the creator of this mod (pelletsstarPL) has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. This mod provides various important fixes that prevent the game from breaking, as well as a significant amount of text rewritings and improvements (and some extra content). To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
 // CURRENTLY TESTING: CUSTOM MAPS FOR PLAIN ISLAND (MAP TYPE 1)
 // STATUS: VISUAL-ONLY, INCOMPLETE
 // DONE: SEEDING AND TERRITORY TYPE GENERATION
 // TODO: FUNCTIONAL TERRITORY UI, GAMEPLAY ADDITIONS
-var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game, or not function; be warned!
+var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game or not function at all; be warned!
 
 // window.location.origin.slice(0, 4) === "file" || window.location.toString().slice(0, 16) === "http://127.0.0.1" || window.location.toString().slice(0, 17) === "https://127.0.0.1"
 // The real purpose of this is to detect if localDevelopment.js exists, which shows that assets exist locally already.
@@ -38,6 +38,7 @@ var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cook
 if (!window.magixLoaded) {
     var terrainMagixImg = new Image()
     terrainMagixImg.src = magixURL + 'terrainMagix.png'
+    G.traitChanceMult = 1 // Simply multiplies trait chances
     window.magixLoaded = 1
     var conflictingStorageObjects = ["civ"]
     G.storageObject = {}
@@ -62,6 +63,10 @@ if (!window.magixLoaded) {
         console.warn("Storage data could not be obtained.")
         G.storageObject = {}
     }
+}
+
+G.getTraitChance = function (me, extraBoost) {
+    return 1 / (me.chance * 300 * G.traitChanceMult * extraBoost)
 }
 
 //Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
@@ -1037,13 +1042,13 @@ G.getDataAmounts = function () {
 }
 
 if (getObj("civ") === null) setObj("civ", 0);
-var magix2Link = magixURL2 + 'magix2.png?v=3.0' //Version 2.4: 75 sprites
+var magix2Link = magixURL2 + 'magix2.png?v=4.0' //Version 4.0: made by @fractylizer on Discord
 G.AddData({
     name: 'MagixUtils',
     author: 'pelletsstarPL',
     desc: 'Some mechanics that are in Magix code are contained within this mod. Required to play Magix.',
     engineVersion: 1,
-    sheets: { 'magixmod': magixURL + 'magixmod.png', 'magix2': magix2Link, 'seasonal': magixURL + 'seasonalMagix.png', 'c2': magixURL + 'CiV2IconSheet.png' },//just for achievs
+    sheets: { "magixmod": magixURL2 + 'magixmod.png', 'magix2': magix2Link, 'seasonal': magixURL + 'seasonalMagix.png', "c2": magixURL2 + 'CiV2IconSheet.png' },//just for achievs
     func: function () {
         ///FOR SEASONAL CONTENT. IK COPIED FROM CC, BUT IT WILL HELP ME. ALSO THAT IS HOW MODDING LOOKS LIKE THAT xD
         var yer = new Date();
@@ -1124,7 +1129,7 @@ G.AddData({
                 'I was checking bunch of mods and noticed...<b>there was no mod about magic...but I changed it</b>! ' +
                 'Even today, I am proud of the fruits of my creativity and time I sacrificed to make this entertaining mod. ' +
                 'I made this mod due to my hobby: IT. I like things like coding and networking. Who knows...maybe I will become an expert of javascript! ' +
-                '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)<br><b>Sprite designs were created by Orteil, @pelletsstarPL, @1_e0, and @theskullyko and merged together.</b>' +
+                '<br>(Various improvements and fixes have been added at @1_e0, a programmer. You can find me in the <a href="https://discord.gg/cookie" target="_blank">Dashnet discord server</a>.)<br><b>Sprite designs were created by Orteil (base game sprites), @pelletsstarPL (base Magix sprites), @fractylizer (much improved new Magix sprites), @1_e0 (original new Magix sprites), and @theskullyko (a few misc sprites) and merged together.</b>' +
                 '<br><font color="#f95e4d"><b>Note: some crazy bugs and issues may occur in debug mode.</b></font>' +
                 '<div class="barred fancyText">Settings:</div>' +
                 G.writeSettingButton({ text: 'Toggle sounds', tooltip: 'Toggle all game sounds.', name: 'sound', id: 'sound' }) + "<br>";
@@ -1442,12 +1447,20 @@ G.AddData({
         //TECH TAB
         G.update['tech'] = function () {
             var str = '';
+            var isC1 = getObj("civ") == 0;
+            if (isC1) {
+                var Theme = G.checkPolicy('theme changer');
+                if (Theme == 0 || Theme == null) {
+                    Theme = 'Default';
+                }
+            }
             str +=
                 '<div class="behindBottomUI">' +
                 G.textWithTooltip('?', '<div style="width:240px;text-align:left;"><div class="par">Technologies are the cornerstone of your civilization\'s long-term development.</div><div class="par">Here, you can invest resources to research new technologies, which can unlock new units and enhance old ones. <div class="par">If you own 30 or more technologies then after many researches purchased, you will gain 1 <b>Science</b> and <b>Education</b>.</div></div></div>', 'infoButton') +
                 //'<div class="fullCenteredOuter"><div id="techBox" class="thingBox fullCenteredInner"></div></div></div>'+
                 '<div class="fullCenteredOuter"><div class="fullCenteredInner"><div id="extraTechStuff" style="text-align:center;margin:auto;margin-bottom:8px;width:200px;"><div class="barred fancyText">Known technologies:</div></div><div id="techBox" class="thingBox"></div></div></div></div>' +
-                '<div id="techUI" class="bottomUI bgPanelUp">';
+                (isC1 ? '<div id="techUI" class="bottomUI bgPanelUp" style="background-image: url(\'img/darkEdgeBorders.png\'),url(\'' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgUpRock' + Theme + '.jpg\')">'
+                    : '<div id="techUI" class="bottomUI bgPanelUp">');
 
             str += G.writeChooseBoxes('tech');
 
@@ -2164,7 +2177,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herbs')) + '"></div><div class="freelabel">\xd7175</div>', '175 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7200</div>', '200 Water') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('fruit')) + '"></div><div class="freelabel">\xd725</div>', '25 Fruits') +
-                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "") +
+                (G.resetsC2 > 0 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, "magixmod"]) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses for this race.</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the mystic wilderness<br>and at the deep parts of the mysterious world.<br>Resources are scarce, and everyone starts foraging.<br>They are insecure.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the<br>leader of this elvish tribe.<br>They call you:</div>';
@@ -2179,7 +2192,7 @@ G.AddData({
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('child')) + '"></div><div class="freelabel">\xd72</div>', '2 Children') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('herbs')) + '"></div><div class="freelabel">\xd7300</div>', '300 Herbs') +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('water')) + '"></div><div class="freelabel">\xd7250</div>', '250 Water') +
-                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, 'magixmod']) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.</b>') : "") +
+                (G.resets >= 1 ? G.textWithTooltip('<div class="icon freestanding" style="' + G.getIcon([7, 30, "magixmod"]) + '"></div><div class="freelabel"></div>', '<b>Complete achievements to<br>unlock more starting<br>bonuses.</b>') : "") +
                 '</div>' +
                 '<div class="par fancyText bitBiggerText">Your tribe finds a place to settle in the wilderness.<br>Resources are scarce, and everyone starts foraging.</div>' +
                 '<div class="par fancyText bitBiggerText">You emerge as the tribe\'s leader.<br>These people...they call you: </div>';
@@ -2196,7 +2209,7 @@ G.AddData({
         new G.Res({
             name: 'victory point',
             desc: 'You can gain [victory point]s for completing some Trials. All of the trials are repeatable, except for the <b>Buried</b> trial. After the first completion of a trial, it grants 1 [victory point], and for every subsequent attempt, you gain additional [victory point]s (this gain grows more and more powerful the more times you complete a single Trial). These points can\'t be spent, but their amount can provide extra bonuses.',
-            icon: [0, 28, 'magixmod'],
+            icon: [0, 28, "magixmod"],
         });
 
 
@@ -2365,8 +2378,8 @@ G.AddData({
             tier: 2,
             name: 'heavenly',
             displayName: '<font color="#decaa0">Heavenly</font>',
-            wideIcon: [0, 11, 'magixmod'],
-            icon: [1, 11, 'magixmod'],
+            wideIcon: [0, 11, "magixmod"],
+            icon: [1, 11, "magixmod"],
             desc: 'Finish the <b>Temple of Deities</b> wonder.<br>Note: You won\'t need to ascend. //<small>Unlike Babel\'s story, languages weren\'t swapped by any God or Gods.</small>',
             fromWonder: 'heavenly',
             effects: [
@@ -2380,8 +2393,8 @@ G.AddData({
             tier: 2,
             name: 'deadly, revenantic',
             displayName: '<font color="#b9aaac">Deadly, revenantic</font>',
-            wideIcon: [0, 16, 'magixmod'],
-            icon: [1, 16, 'magixmod'],
+            wideIcon: [0, 16, "magixmod"],
+            icon: [1, 16, "magixmod"],
             desc: 'You escaped and your soul got escorted right into the dangerous Underworld...you may discover it at some point.',
             fromWonder: 'Deadly, revenantic',
             effects: [
@@ -2395,8 +2408,8 @@ G.AddData({
             tier: 1,
             name: 'sacrificed for culture',
             displayName: '<font color="#beffbc">Sacrificed for culture</font>',
-            wideIcon: [choose([9, 12, 15]), 17, 'magixmod', 5, 12, 'magixmod'],
-            icon: [6, 12, 'magixmod'],
+            wideIcon: [choose([9, 12, 15]), 17, "magixmod", 5, 12, "magixmod"],
+            icon: [6, 12, "magixmod"],
             desc: 'You sacrificed yourself in the name of <b>Culture</b>. That choice made your previous people more inspired and filled with strong artistic powers! It made big profits and they may get on much a higher cultural level since now. They will miss you, but you will get <b><font color="#4d2">+3 culture and inspiration</font></b> at the start of new runs!',
             fromWonder: 'sacrificed for culture',
             effects: [
@@ -2410,8 +2423,8 @@ G.AddData({
             tier: 1,
             name: 'democration',
             displayName: '<font color="#ffa8d3">Democration</font>',
-            wideIcon: [5, 13, 'magixmod'],
-            icon: [6, 13, 'magixmod'],
+            wideIcon: [5, 13, "magixmod"],
+            icon: [6, 13, "magixmod"],
             desc: 'You rested in peace inside the Pagoda of Democracy\'s tombs. Your glorious rest made your previous civilization live in the laws of justice forever. They will miss you. <b>But this provides an additional <font color="fuschia">+1 influence & authority</font> at the start of new runs! Also, you will get the [policies] trait immediately.</b>',
             fromWonder: 'Democration',
             effects: [
@@ -2425,8 +2438,8 @@ G.AddData({
             tier: 1,
             name: 'insight-ly',
             displayName: '<font color="#cbe2ff">Insight-ly</font>',
-            wideIcon: [choose([0, 3, 6]), 17, 'magixmod'],
-            icon: [choose([1, 4, 7]), 17, 'magixmod'],
+            wideIcon: [choose([0, 3, 6]), 17, "magixmod"],
+            icon: [choose([1, 4, 7]), 17, "magixmod"],
             desc: 'You sacrificed your soul for the Dreamer\'s Orb. That choice was unexpectable but glorious. It made dreamers more acknowledged and people got much smarter by sacrifice of yours. They will miss you. But this made a profit...providing <b><font color="#b5bbfd">+6 insight and +6% dreamer speed</font></b> at the start of new runs!',
             fromWonder: 'Insight-ly',
             effects: [
@@ -2440,8 +2453,8 @@ G.AddData({
             tier: 2,
             name: 'in the underworld',
             displayName: '<font color="#e70034">In the underworld</font>',
-            wideIcon: [7, 5, 'magixmod'],
-            icon: [9, 5, 'magixmod'],
+            wideIcon: [7, 5, "magixmod"],
+            icon: [9, 5, "magixmod"],
             desc: 'You sent your soul to the Underworld, leaving your body, which started to decay quickly. But...<br><li>If you have <b><font color="#00e063">Sacrificed for culture</font></b>, <b><font color="#5959d2">Insight-ly</font></b>, and <b><font color="fuschia">Democration</font></b>, you will start new runs with someone new: [adult,The Underworld\'s Ascendant]! (To open the Underworld, you will need to obtain <b>Deadly, revenantic</b> as well.)',
             fromWonder: '"In the underworld"',
             effects: [
@@ -2453,8 +2466,8 @@ G.AddData({
         });
         new G.Achiev({
             tier: 3,
-            wideIcon: [27, 20, 'magixmod'],
-            icon: [28, 20, 'magixmod'],
+            wideIcon: [27, 20, "magixmod"],
+            icon: [28, 20, "magixmod"],
             name: 'mausoleum eternal',
             displayName: '<font color="#d4af37">Mausoleum eternal</font>',
             desc: 'You have been laid to rest many times in the Mausoleum, an ancient monument made out of stone which involves archaic religious thought. Thanks to you, it has become an unforgettable historical monument. <b>Evolve the <font color="white"><b>Mausoleum</b></font> to stage 10/10, then ascend by it for the 11th time to obtain some massive bonuses!</li></b>',
@@ -2467,7 +2480,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [25, 19, 'magixmod'],
+            icon: [25, 19, "magixmod"],
             name: 'level up',
             desc: 'Obtain the <b>Evolution of the minds</b> trait during a legacy! This trait unlocks the second tier of <b>Essentials</b>, which are required for further researches.',
             civ: 0,
@@ -2475,7 +2488,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'population',
-            icon: [36, 31, 'magixmod'],
+            icon: [36, 31, "magixmod"],
             name: 'wild tribe',
             desc: 'Manage to get 1k [population,people] in one legacy.',
             civ: 0,
@@ -2483,7 +2496,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'tech',
-            icon: [14, 33, 'magixmod'],
+            icon: [14, 33, "magixmod"],
             name: 'how to, spear?',
             desc: 'Get 20 or more technologies in a single legacy for the human race.//<small>Baby steps behind us...</small>',
             civ: 0,
@@ -2492,7 +2505,7 @@ G.AddData({
 
         new G.Achiev({
             tier: 2,
-            icon: [26, 9, 'magixmod'],
+            icon: [26, 9, "magixmod"],
             name: 'lucky 9',
             desc: 'Obtain the <b>Devil\'s trait #9</b>.',
             effects: [
@@ -2504,7 +2517,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'trait',
-            icon: [26, 21, 'magixmod'],
+            icon: [26, 21, "magixmod"],
             name: 'traitsman',
             desc: 'Make your tribe attract a total of 30 traits and knowledges.',
             effects: [
@@ -2515,7 +2528,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 3,
-            icon: [27, 21, 'magixmod'],
+            icon: [27, 21, "magixmod"],
             name: 'extremely smart',
             desc: 'Get your <b>Insight II</b> equal to your <b>Wisdom II</b>! It may be a bit harder than you think...',
             effects: [
@@ -2527,7 +2540,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 1,
-            icon: [29, 21, 'magixmod'],
+            icon: [29, 21, "magixmod"],
             name: 'experienced',
             displayName: '<font color="#ebdbfb">Experienced</font>',
             desc: 'To get this achievement you need to complete the other achievements in this tier, along with the <b>Apprentice</b> achievement. @<b>Achievement bonus: +100 [fruit]s at the start of new runs!</b>',
@@ -2540,7 +2553,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [29, 22, 'magixmod'],
+            icon: [29, 22, "magixmod"],
             name: 'smart',
             desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: [house,Houses/Brick houses], [hovel]s, [hut]s, and [branch shelter,Branch/mud shelders] will use less [land] in new runs</b>.',
             effects: [
@@ -2552,7 +2565,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 3,
-            icon: [12, 22, 'magixmod'],
+            icon: [12, 22, "magixmod"],
             name: 'man of essences',
             desc: 'Obtain the <b>Magic adept</b> trait by getting 2.1M magical essences! //Getting this will unlock a brand-new wonder...',
             effects: [
@@ -2565,9 +2578,9 @@ G.AddData({
             tier: 3,
             name: 'magical',
             displayName: '<font color="#c3c8fa">Magical</font>',
-            wideIcon: [9, 22, 'magixmod'],
-            icon: [10, 22, 'magixmod'],
-            desc: 'Construct the Fortress of Magicians, a rather...magical wonder. //This achievement will: @unlock a new theme @increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost //This achievement will unlock you some technologies further down the line such as more advanced hunting and fishing.',
+            wideIcon: [9, 22, "magixmod"],
+            icon: [10, 22, "magixmod"],
+            desc: 'Construct the Fortress of Magicians, a very [magic essences,Magical] wonder! //This achievement will: @unlock a new theme @increase the effect of <b>Wizard towers</b> by 5% without increasing their upkeep cost @unlock advanced technologies related to [hunter]s, [fisher]s, and [grave]s',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 150 },
                 { type: 'addFastTicksOnResearch', amount: 15 },
@@ -2577,14 +2590,14 @@ G.AddData({
 
         new G.Achiev({
             tier: 'tech',
-            icon: [23, 21, 'magixmod'],
+            icon: [23, 21, "magixmod"],
             name: 'apprentice',
-            desc: 'Get 100 or more technologies in a single legacy for the human race.',
+            desc: 'Get 100 or more technologies in a single legacy for the human race.//<small>Cool!</small>',
             civ: 0,
             plural: false
         });
         new G.Achiev({
-            icon: [23, 24, 'magixmod'],
+            icon: [23, 24, "magixmod"],
             tier: 1,
             name: '3rd party',
             desc: 'Play Magix along with some other mod. //<b>Note: You will gain this achievement only if you install a separate mod at the start of the game.</b> //<font color="fuschia">This achievement does not provide any boosts and is not required for anything.</font>',
@@ -2594,8 +2607,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'patience',
-            wideIcon: [3, 26, 'magixmod'],
-            icon: [4, 26, 'magixmod'],
+            wideIcon: [3, 26, "magixmod"],
+            icon: [4, 26, "magixmod"],
             desc: 'Complete Chra-nos\' trial for the first time. Your determination led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2607,8 +2620,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'unhappy',
-            wideIcon: [6, 26, 'magixmod'],
-            icon: [7, 26, 'magixmod'],
+            wideIcon: [6, 26, "magixmod"],
+            icon: [7, 26, "magixmod"],
             desc: 'Complete Bersaria\'s trial for the first time. Your calmness in difficult situations led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2620,8 +2633,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'cultural',
-            wideIcon: [18, 26, 'magixmod'],
-            icon: [19, 26, 'magixmod'],
+            wideIcon: [18, 26, "magixmod"],
+            icon: [19, 26, "magixmod"],
             desc: 'Complete Tu-ria\'s trial for the first time. Your artistic and unique thinking led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2633,8 +2646,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'hunted',
-            wideIcon: [24, 26, 'magixmod'],
-            icon: [25, 26, 'magixmod'],
+            wideIcon: [24, 26, "magixmod"],
+            icon: [25, 26, "magixmod"],
             desc: 'Complete Hartar\'s trial for the first time. Becoming hunting masters and showing \'em what bravery truly is led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2646,8 +2659,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'unfishy',
-            wideIcon: [21, 26, 'magixmod'],
-            icon: [22, 26, 'magixmod'],
+            wideIcon: [21, 26, "magixmod"],
+            icon: [22, 26, "magixmod"],
             desc: 'Complete Fishyar\'s trial for the first time. Making people trust fish a little more led you to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2659,8 +2672,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'ocean',
-            wideIcon: [1, 25, 'magixmod'],
-            icon: [2, 25, 'magixmod'],
+            wideIcon: [1, 25, "magixmod"],
+            icon: [2, 25, "magixmod"],
             desc: 'Complete Posi\'zul\'s trial for the first time. Living near an endless ocean is not impossible, and you are able to prove it! //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2672,8 +2685,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'herbalism',
-            wideIcon: [12, 26, 'magixmod'],
-            icon: [13, 26, 'magixmod'],
+            wideIcon: [12, 26, "magixmod"],
+            icon: [13, 26, "magixmod"],
             desc: 'Complete Herbalia\'s trial for the first time. Herbs are not that bad! //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2685,8 +2698,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'buried',
-            wideIcon: [0, 26, 'magixmod'],
-            icon: [1, 26, 'magixmod'],
+            wideIcon: [0, 26, "magixmod"],
+            icon: [1, 26, "magixmod"],
             desc: 'Complete Buri\'o dak \'s trial for the first and the last time. Death lurks everywhere but coming to terms with it may be the best way to move forward...',
             //fromWonder:'Magical',
             effects: [
@@ -2698,8 +2711,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'underground',
-            wideIcon: [15, 26, 'magixmod'],
-            icon: [16, 26, 'magixmod'],
+            wideIcon: [15, 26, "magixmod"],
+            icon: [16, 26, "magixmod"],
             desc: 'Complete Moai\'s trial for the first time. Stones lead to victory! //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2711,8 +2724,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'pocket',
-            wideIcon: [9, 26, 'magixmod'],
-            icon: [10, 26, 'magixmod'],
+            wideIcon: [9, 26, "magixmod"],
+            icon: [10, 26, "magixmod"],
             desc: 'Complete Mamuun\'s trial for the first time. Seems like you have gotten trading skills! This can lead to victory. //Complete this trial again to gain extra Victory Points. It also increases the bonus of this trial.',
             //fromWonder:'Magical',
             effects: [
@@ -2724,8 +2737,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'faithful',
-            wideIcon: [0, 27, 'magixmod'],
-            icon: [1, 27, 'magixmod'],
+            wideIcon: [0, 27, "magixmod"],
+            icon: [1, 27, "magixmod"],
             desc: 'Complete Enlightened\'s trial for the first time. Belief and faith is everything. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2737,8 +2750,8 @@ G.AddData({
         new G.Achiev({
             tier: 4,
             name: 'dreamy',
-            wideIcon: [27, 26, 'magixmod'],
-            icon: [28, 26, 'magixmod'],
+            wideIcon: [27, 26, "magixmod"],
+            icon: [28, 26, "magixmod"],
             desc: 'Complete Okar the Seer\'s trial for the first time. Knowledge will eventually lead to victory. //Complete this trial again to gain extra Victory Points.',
             //fromWonder:'Magical',
             effects: [
@@ -2751,8 +2764,8 @@ G.AddData({
             tier: 3,
             name: 'next to the God',
             displayName: '<font color="#fddc99">Next to the deities</font>',
-            wideIcon: [0, 9, 'magixmod'],
-            icon: [1, 9, 'magixmod'],
+            wideIcon: [0, 9, "magixmod"],
+            icon: [1, 9, "magixmod"],
             desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be all be tripled @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon upon building this wonder again! (Nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock...) @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
             fromWonder: 'next to the God',
             effects: [
@@ -2765,7 +2778,7 @@ G.AddData({
         new G.Achiev({
             tier: 3,
             name: 'the first choice',
-            icon: [11, 25, 'magixmod'],
+            icon: [11, 25, "magixmod"],
             desc: 'Spend all your <b><font color="#d4af36">Worship points</font></b> for the first time to pick Seraphins that your people will worship.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 100 },
@@ -2776,7 +2789,7 @@ G.AddData({
         new G.Achiev({
             tier: 'trait',
             name: 'trait-or',
-            icon: [12, 25, 'magixmod'],
+            icon: [12, 25, "magixmod"],
             desc: 'Manage your wonderful tribe well enough to adopt 50 total traits and knowledges.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 50 },
@@ -2787,8 +2800,8 @@ G.AddData({
         new G.Achiev({
             tier: 3,
             name: 'not so pious people',
-            icon: [32, 26, 'magixmod'],
-            desc: 'Get: @2 traits that will lower your [faith] income @Also, choose a Seraphin that decreases [faith] income as well. To make this achievement possible, <b><font color="#f66">Devil\'s trait #13</font></b> is not required.',
+            icon: [32, 26, "magixmod"],
+            desc: 'Obtain 2 traits that will lower your [faith] gain and choose a Seraphin that decreases [faith] gain as well. To make this achievement possible, <b><font color="#f66">Devil\'s trait #13</font></b> is not required.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 90 },
             ],
@@ -2798,7 +2811,7 @@ G.AddData({
         new G.Achiev({
             tier: 3,
             name: 'talented?',
-            icon: [32, 25, 'magixmod'],
+            icon: [32, 25, "magixmod"],
             desc: 'To get this achievement you need to complete the other achievements in this tier. @<b>Achievement bonus: All crafting units that use land in the primary world will now use less land.</b> In addition, this bonus applies to <b>Wells</b>, <b>Farms</b>, <b>Filters</b> and <b>Crematoriums</b>. @You also gain <b>1 extra technology choice</b> when rolling researches.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
@@ -2810,8 +2823,8 @@ G.AddData({
         new G.Achiev({
             tier: 5,
             name: 'lands of despair',
-            wideIcon: [0, 29, 'magixmod'],
-            icon: [1, 29, 'magixmod'],
+            wideIcon: [0, 29, "magixmod"],
+            icon: [1, 29, "magixmod"],
             desc: 'Find the <b>Dead forest</b> biome on your world map. This is the rarest biome in the whole mod and is generally the most hostile biome that can exist on this world.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 200 },
@@ -2822,7 +2835,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'population',
-            icon: [36, 30, 'magixmod'],
+            icon: [36, 30, "magixmod"],
             name: 'rising star',
             desc: 'Manage to get 10k [population,people] in one legacy. //<small>Keep it up!</small>',
             civ: 0,
@@ -2830,7 +2843,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 5,
-            icon: [34, 17, 'magixmod', 24, 1],
+            icon: [34, 17, "magixmod", 24, 1],
             name: 'when while becomes eternity',
             desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become permanent. <b>Note: not every temporary trait has a chance to become permanent!</b>',
             effects: [
@@ -2846,10 +2859,9 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'god complex',
-            icon: [35, 5, 'magixmod'],
+            icon: [35, 5, "magixmod"],
             desc: 'Declare yourself as one of the famous ones and get punished for that. @<font color="red">Note: usurpers get -0% [happiness] until they change their name.</font>',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 30 },
             ],
             visible: false,
             civ: "overall",
@@ -2859,10 +2871,9 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'it\'s over 9000',
-            icon: [35, 10, 'magixmod'],
-            desc: 'What?! 9000?! There is no way that can be right.',
+            icon: [35, 10, "magixmod"],
+            desc: 'What?! NINE THOUSAND?! There is no way that can be right.',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 150 },
             ],
             visible: false,
             civ: "overall",
@@ -2871,10 +2882,9 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'just plain lucky',
-            icon: [34, 10, 'magixmod'],
+            icon: [34, 10, "magixmod"],
             desc: 'Every in-game day you have a <b>1</b> in <b>1,777,777</b> chance to get this achievement.',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 150 },
             ],
             visible: false,
             civ: "overall",
@@ -2883,7 +2893,7 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'cruel goal',
-            icon: [34, 8, 'magixmod'],
+            icon: [34, 8, "magixmod"],
             desc: 'Don\'t ya think that was very, very cruel? Murdering the root full of hope for the future? @Get your [mausoleum] to at least Level 4 and sacrifice your civilization fully just to finish the final step.',
             effects: [
             ],
@@ -2895,8 +2905,8 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'that was so brutal',
-            icon: [35, 8, 'magixmod'],
-            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! //Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //You need to have the <b>Cruel goal</b> shadow achievement first to get this shadow achievement.',
+            icon: [35, 8, "magixmod"],
+            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! //Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //The [cruel goal] shadow achievement is also required for this.',
             effects: [
             ],
             visible: false,
@@ -2907,7 +2917,7 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'speedresearcher',
-            icon: [35, 7, 'magixmod'],
+            icon: [35, 7, "magixmod"],
             desc: 'Get at least 60 techs within the first 10 minutes of a legacy.',
             effects: [
             ],
@@ -2918,7 +2928,7 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'speedresearcher II',
-            icon: [35, 6, 'magixmod'],
+            icon: [35, 6, "magixmod"],
             desc: 'Get at least 100 techs within the first 10 minutes of a legacy.',
             effects: [
             ],
@@ -2928,7 +2938,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 5,
-            icon: [34, 17, 'magixmod', 24, 1, 'c2'],
+            icon: [34, 17, "magixmod", 24, 1, "c2"],
             name: 'eternal moments',
             desc: 'Be lucky (or unlucky) enough to make one of the temporary traits become permanent while playing the elf race. <b>Note: not every temporary trait has a chance to become permanent!</b>',
             effects: [
@@ -2938,14 +2948,14 @@ G.AddData({
             plural: true
         });
         new G.Achiev({
-            icon: [1, 0, 'magixmod'],
+            icon: [1, 0, "magixmod"],
             name: 'starting type',
             visible: false //debug achiev
         });
         new G.Achiev({
             tier: 'trait',
             name: 'man o\' trait',
-            icon: [35, 9, 'magixmod'],
+            icon: [35, 9, "magixmod"],
             desc: 'Manage your fantastic tribe and get a total of 70 traits and knowledges.',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 70 },
@@ -2957,11 +2967,9 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'in the shadows',
-            icon: [34, 9, 'magixmod'],
+            icon: [34, 9, "magixmod"],
             desc: 'Obtain 1 shadow achievement for the human race.',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 70 },
-                { type: 'addFastTicksOnResearch', amount: 5 },
             ],
             civ: 0,
             plural: false
@@ -3018,9 +3026,6 @@ G.AddData({
             icon: [9, 15, 'seasonal', 16, 17, 'seasonal'],
             desc: 'Reach [love] <font color="yellow">Level 15</font> during the Valentines event. //This is probably obsession...',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 150 },
-                { type: 'addFastTicksOnResearch', amount: 10 },
-                { type: 'pressure', amount: 1000 },
             ],
             visible: false,
             civ: "overall",
@@ -3064,8 +3069,8 @@ G.AddData({
             name: 'the fortress',
             desc: 'You have been laid to rest in The Fortress, an ancient monument made out of stone that was built in the middle of the forest the purpose of which takes root in archaic elven religious thought.',
             fromWonder: 'the fortress',
-            icon: [1, 14, 'c2'],
-            wideIcon: [0, 14, 'c2'],
+            icon: [1, 14, "c2"],
+            wideIcon: [0, 14, "c2"],
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 100 },
                 { type: 'addFastTicksOnResearch2', amount: 50 },
@@ -3079,8 +3084,8 @@ G.AddData({
             displayName: '<font color="#Da4f37">Fortress eternal</font>',
             desc: 'You have been laid to rest in The Fortress several times. After each time, the Fortress grew bigger and bigger. Evolve the Fortress to 10/10 to get this achievement. Bonuses: @[belief in the afterlife] chance is doubled for the second civilization. @You also gain +1 <b>Insight</b> for the human race at the very start.',
             //fromWonder:'the fortress',
-            icon: [1, 24, 'c2'],
-            wideIcon: [0, 24, 'c2'],
+            icon: [1, 24, "c2"],
+            wideIcon: [0, 24, "c2"],
             effects: [
                 { type: 'addFastTicksOnStart2', amount: 400 },
                 { type: 'addFastTicksOnResearch2', amount: 50 },
@@ -3092,7 +3097,7 @@ G.AddData({
             tier: 'population',
             name: 'first overcome',
             desc: 'Manage to get a tribe of 1k [population,Elves]. //<small>Congrats for dealing with our first problems!</small>',
-            icon: [32, 8, 'c2'],
+            icon: [32, 8, "c2"],
             /*effects:[
                 {type:'pressure',amount:100}
             ],*/
@@ -3103,7 +3108,7 @@ G.AddData({
             tier: 'population',
             name: 'pressed progress',
             desc: 'Manage to get a tribe of 10k [population,Elves]. //<small>gg bro :p</small>',
-            icon: [32, 9, 'c2'],
+            icon: [32, 9, "c2"],
             /*effects:[
                 {type:'pressure',amount:100}
             ],*/
@@ -3114,7 +3119,7 @@ G.AddData({
             tier: 'population',
             name: 'the moral press',
             desc: 'Push <b>Pressure</b> enough to be capable of having 25k [population,Elves]. //<small>You know that pressure also affects your production efficiency. But...do you even care about it?</small>',
-            icon: [32, 10, 'c2'],
+            icon: [32, 10, "c2"],
             effects: [
                 { type: 'pressure', amount: 250 }
             ],
@@ -3125,7 +3130,7 @@ G.AddData({
             tier: 'population',
             name: 'pressure vaccine',
             desc: 'Push <b>Pressure</b> enough to be capable of having 85k [population,Elves]. //<small>Don\'t get too excited...</small>',
-            icon: [32, 11, 'c2'],
+            icon: [32, 11, "c2"],
             effects: [
                 { type: 'pressure', amount: 450 }
             ],
@@ -3136,7 +3141,7 @@ G.AddData({
             tier: 'population',
             name: 'pressure wiper',
             desc: 'Push <b>Pressure</b> enough to be capable of having 175k [population,Elves]. //<small>Do you really feel THAT pressured to remove Pressure?</small>',
-            icon: [32, 12, 'c2'],
+            icon: [32, 12, "c2"],
             effects: [
                 { type: 'pressure', amount: 770 }
             ],
@@ -3147,7 +3152,7 @@ G.AddData({
             tier: 'population',
             name: 'pressure purgator',
             desc: 'Push <b>Pressure</b> enough to be capable of having 300k [population,Elves]. //<small>Now go for 1M...a bajillion years later</small>',
-            icon: [32, 13, 'c2'],
+            icon: [32, 13, "c2"],
             effects: [
                 { type: 'pressure', amount: 1250 }
             ],
@@ -3158,13 +3163,13 @@ G.AddData({
             tier: 1,
             name: 'limit reached',
             desc: 'Use up all the <b>Pressure resistance</b> for the first time. //@<font color="red">Note: you will need to have <b>Pressure resistance</b> at a minimum of level 1000 to get this.</font>',
-            icon: [32, 14, 'c2'],
+            icon: [32, 14, "c2"],
             civ: 1, plural: false,
             special: 'c2',
         });
         new G.Achiev({
             tier: 'population',
-            icon: [36, 29, 'magixmod'],
+            icon: [36, 29, "magixmod"],
             name: 'progressive city',
             desc: 'Manage to get 150k [population,people] in one run.',
             effects: [
@@ -3175,7 +3180,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'population',
-            icon: [25, 21, 'magixmod'],
+            icon: [25, 21, "magixmod"],
             name: 'metropoly',
             desc: 'Manage to get 500k [population,people] in one run.',
             effects: [
@@ -3187,7 +3192,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'population',
-            icon: [35, 27, 'magixmod'],
+            icon: [35, 27, "magixmod"],
             name: 'a huge city made of the smaller cities',
             desc: 'Manage to get 1M [population,people] in one run. //<small>Unbelievable...</small>',
             effects: [
@@ -3199,7 +3204,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 1,
-            icon: [36, 28, 'magixmod'],
+            icon: [36, 28, "magixmod"],
             name: 'first glory',
             displayName: '<font color="#fff2e0">First glory</font>',
             desc: 'Ascend for the first time while playing with the human race. //<small>If you rebirth, you will encounter a new adventure!</small>',
@@ -3208,7 +3213,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 1,
-            icon: [32, 15, 'c2'],
+            icon: [32, 15, "c2"],
             name: 'druidish heart',
             desc: 'Ascend for the first time while playing with the <u>elf race</u>. //<small>If you rebirth, you may encounter a new adventure...like, one more time, right?</small>',
             civ: 1,
@@ -3218,13 +3223,9 @@ G.AddData({
         new G.Achiev({
             tier: 2,
             name: 'In the shadows',
-            icon: [32, 16, 'c2'],
+            icon: [32, 16, "c2"],
             desc: 'Obtain 1 shadow achievement for the elf race.',
             effects: [
-                { type: 'addFastTicksOnStart2', amount: 70 },
-                { type: 'addFastTicksOnResearch2', amount: 2 },
-                { type: 'addFastTicksOnStart', amount: 150 },
-                { type: 'addFastTicksOnResearch', amount: 5 },
             ],
             civ: 1,
             plural: false,
@@ -3267,9 +3268,6 @@ G.AddData({
             icon: [9, 16, 'seasonal', 18, 8, 'seasonal'],
             desc: 'Reach [spookiness] <font color="yellow">Level 15</font> during the Halloween event. //<small><b>boo</b></small>',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 150 },
-                { type: 'addFastTicksOnResearch', amount: 10 },
-                { type: 'pressure', amount: 1000 },
             ],
             visible: false,
             civ: "overall",
@@ -3277,17 +3275,17 @@ G.AddData({
             plural: false
         });
         new G.Achiev({
-            icon: [16, 24, 'magixmod'],
+            icon: [16, 24, "magixmod"],
             tier: 'tech',
             name: 'familiar',
-            desc: 'Get 200 or more technologies in a single run for the human race. //<small>Keep going like that...</small>',
+            desc: 'Get 200 or more technologies in a single run for the human race. //<small>There sure is a lot to know...</small>',
             civ: 0,
             plural: false
         });
 
         new G.Achiev({
             tier: 'tech',
-            icon: [32, 18, 'c2'],
+            icon: [32, 18, "c2"],
             name: 'nature\'s rookie',
             desc: 'Get 20 or more technologies in a single run for the elf race.//<small>Baby steps behind us...again!</small>',
             civ: 1,
@@ -3295,7 +3293,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'tech',
-            icon: [32, 19, 'c2'],
+            icon: [32, 19, "c2"],
             name: 'nature\'s braincell',
             desc: 'Get 60 or more technologies in a single run for the elf race. //<small>You are doing quite great!</small>',
             civ: 1,
@@ -3303,15 +3301,15 @@ G.AddData({
         });
         new G.Achiev({
             tier: 'tech',
-            icon: [13, 33, 'magixmod'],
+            icon: [13, 33, "magixmod"],
             name: 'A+ student',
-            desc: 'Get 250 or more technologies in a single run for the human race. //<small>I\'m about to become a genius...</small>',
+            desc: 'Get 250 or more technologies in a single run for the human race. //<small>Our people sure are genius...</small>',
             civ: 0,
             plural: false
         });
         new G.Achiev({
             tier: 'trait',
-            icon: [32, 20, 'c2'],
+            icon: [32, 20, "c2"],
             name: 'naturality',
             desc: 'Make your elvish tribe attract 20 total traits and knowledges. @Note: traits from the <b>Anomaly</b> category do not count, as they are anomalies, not actual traits or knowledges. //<small>It\'s better to have your own personality than somebody else\'s.</small>',
             effects: [
@@ -3341,7 +3339,7 @@ G.AddData({
         new G.Achiev({
             tier: 0,
             name: 'speeddiscoverer',
-            icon: [32, 17, 'c2'],
+            icon: [32, 17, "c2"],
             desc: 'Get at least 50 techs within the first 30 minutes of a legacy.',
             effects: [
             ],
@@ -3351,7 +3349,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [36, 26, 'magixmod'],
+            icon: [36, 26, "magixmod"],
             name: 'the hour of hope',
             desc: 'Maintain this save for at least <b>a hour</b>. //<small>Why hope? Because hope will move us forward.</small>',
             civ: "overall",
@@ -3359,7 +3357,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [36, 25, 'magixmod'],
+            icon: [36, 25, "magixmod"],
             name: 'the day of rise',
             desc: 'Maintain this save for at least <b>one day</b>. //<small>Well, thanks for playing this game, I guess!</small>',
             civ: "overall",
@@ -3367,7 +3365,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [36, 24, 'magixmod'],
+            icon: [36, 24, "magixmod"],
             name: 'authority\'s week',
             desc: 'Maintain this save for at least <b>one week</b>. //<small>You\'re about 2% of the way there...</small>',
             civ: "overall",
@@ -3375,7 +3373,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 2,
-            icon: [36, 23, 'magixmod'],
+            icon: [36, 23, "magixmod"],
             name: 'golden month',
             desc: 'Maintain this save for at least <b>one month</b>. //<small>We hope that you enjoyed this game!</small>',
             civ: "overall",
@@ -3383,7 +3381,7 @@ G.AddData({
         });
         new G.Achiev({
             tier: 0,
-            icon: [36, 22, 'magixmod'],
+            icon: [36, 22, "magixmod"],
             name: 'so much to do, so much to see',
             desc: 'Maintain this save for at least <b>one year</b>! //<small>Wow...congrats!</small>',
             civ: "overall",
@@ -3397,7 +3395,6 @@ G.AddData({
             name: 'an ocean\'s voyage',
             desc: 'While in the [t6,Ocean trial], manage to get the [Wizard complex] tech to gain all <b>seven</b> trial-related upgrades! //<small>How did you get that far with the world practically falling apart?</small>',
             effects: [
-                { type: 'addFastTicksOnStart', amount: 500 },
             ],
             civ: 0,
             special: "shadow",
@@ -3413,8 +3410,8 @@ G.AddData({
                 if (G.achiev[i].special != 'shadow') continue;
                 if (G.achiev[i].won > 0) G.achiev[i].visible = true;
             }
-            if (G.achievByName['here you go'].won > 0) { G.achievByName['here you go'].icon = [32, 27, 'magixmod']; G.achievByName['here you go'].desc = 'Click on this achievement\'s slot.'; G.achievByName['here you go'].displayName = 'Here you go'; };
-            if (G.achievByName['here you go...again'].won > 0) { G.achievByName['here you go...again'].icon = [33, 5, 'c2']; G.achievByName['here you go...again'].desc = 'Click on this achievement\'s slot...twice. //<small>yeah...twice...actually wild</small>'; G.achievByName['here you go...again'].displayName = 'Here you go...again'; };
+            if (G.achievByName['here you go'].won > 0) { G.achievByName['here you go'].icon = [32, 27, "magixmod"]; G.achievByName['here you go'].desc = 'Click on this achievement\'s slot.'; G.achievByName['here you go'].displayName = 'Here you go'; };
+            if (G.achievByName['here you go...again'].won > 0) { G.achievByName['here you go...again'].icon = [33, 5, "c2"]; G.achievByName['here you go...again'].desc = 'Click on this achievement\'s slot...twice. //<small>yeah...twice...actually wild</small>'; G.achievByName['here you go...again'].displayName = 'Here you go...again'; };
             if (G.achievByName['capital of christmas'].won >= 1 || (day + leap >= 349 && day + leap <= 362)) { G.achievByName['capital of christmas'].visible = true };
             if (G.achievByName['love for eternity'].won >= 1 || (day + leap >= 40 && day + leap <= 46)) { G.achievByName['love for eternity'].visible = true };
             if (G.achievByName['so adorable'].won >= 1 || (day + leap >= 40 && day + leap <= 46)) { G.achievByName['so adorable'].visible = true };
@@ -3789,7 +3786,7 @@ G.AddData({
                         else if (amount < 6.45) bar = 18;
                         else if (amount < 6.7) bar = 19;
                         else bar = 20;
-                        str += '<div class="icon" style="background:url(' + magixURL + 'magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
+                        str += '<div class="icon" style="background:url(' + magixURL2 + 'magixmod.png);' + G.getFreeformIcon(816, 0 + bar * 7, 24, 6) + 'top:100%;"></div>';
                     }
                     str += '</div>';
                     I++;
@@ -5669,7 +5666,7 @@ G.AddData({
                                 '<div class="thing standalone' + G.getIconClasses(me, true) + '' + (instance.mode == 3 ? ' wonderUnbuilt' : ' wonderBuilt') + '" style="transform:scale(1.98) translateX(-1px);position:absolute;left:70px;top:52px;">' + G.getIconStr(me, 0, 0, true) + '</div>' +
                                 '<div class="fancyText title">' + me.displayName + '</div><div class="bitBiggerText scrollBox underTitle shadowed" style="text-align:center;overflow:hidden;top:118px;bottom:50px;">';
                             if (instance.mode == 3) {
-                                str += '<div class="fancyText par"><font color="' + (getObj('civ') == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';
+                                str += '<div class="fancyText par"><font color="' + (getObj("civ") == 0 ? 'fuschia' : '#ccffcc') + '">This wonder only needs one more step to finalize.</font></div>';
                                 if (me.finalStepDesc) str += '<div class="fancyText par">' + G.parse(me.finalStepDesc) + '</div>';
                                 str += '<div class="divider"></div>' +
                                     G.button({
@@ -5855,7 +5852,7 @@ G.AddData({
 
         G.funcs['>9000'] = function () {
             G.Message({ type: 'tutorial', text: '<font size="10">IT\'S OVER 9000!!!!</font>' });
-            if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, it is insane! No way that can be right...</small>', 'slow');
+            if (G.achievByName['it\'s over 9000'].won < 1) G.middleText('- Completed <font color="chocolate">It\'s over 9000</font> shadow achievement - <hr width="300"><br><small>Wow, that number is truly incredible!</small>', 'slow');
             G.achievByName['it\'s over 9000'].won++;
             var audio = new Audio(magixURL + 'EasterEgg.mp3');
             audio.play();
