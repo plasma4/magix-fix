@@ -2416,7 +2416,7 @@ if (getObj("civ") != "1") {
                             G.getDict('badlands substrate').res['deep mine']['modernium ore'] = 0.01;
                             G.getDict('lush rocky substrate').res['deep mine']['modernium ore'] = 0.015;
                         }
-                        G.getDict('maths IV').icon = [2, 35, "magixmod", 8, 21, "magixmod", 0, 18, "magixmod"];
+                        G.getDict('maths IV').icon = [2, 39, "magixmod", 8, 21, "magixmod", 0, 18, "magixmod"];
                         G.getDict('grand mirror').wideIcon = [4, 30, "magixmod"]; G.getDict('grand mirror').cost = { 'strong metal ingot': 7500, 'cobalt ingot': 500, 'precious building materials': 1000, 'basic building materials': 250, 'basic factory equipment': 500 }; G.getDict('grand mirror').costPerStep = { 'magic essences': 25000, 'precious building materials': 1300, 'basic building materials': 250, 'hard metal ingot': 150, 'coal': 3000, 'log': 4000 };
                     }
                     ///UNIVERSITY LEVELLING
@@ -11896,7 +11896,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'construction II', category: 'tier1',
                 desc: '@Unlocks [floored house]s for your new island! These provide much more [housing] but are more limited and take up more spaces. @Also unlocks [lodge on water,Lodges on water]!',
-                icon: [0, 35, "magixmod", 8, 1, "magixmod"],
+                icon: [0, 39, "magixmod", 8, 1, "magixmod"],
                 cost: { 'insight': 100 },
                 req: { 'first portal to new world': true, 'plain island building': true },
             });
@@ -11911,7 +11911,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'weaving II', category: 'upgrade',
                 desc: 'Upgrades the sewing skills of your civilization. @Unlocks [drying rack]s, which make [dried leather] used to craft better quality clothing. @Now artisans can sew [fishing net] @Clothier can craft [thread] that is required to craft a [fishing net].',
-                icon: [0, 35, "magixmod", 13, 5, "magixmod"],
+                icon: [0, 39, "magixmod", 13, 5, "magixmod"],
                 cost: { 'insight': 380, 'wisdom': 10 },
                 req: { 'wizardry': true, 'sewing': true },
             });
@@ -11998,7 +11998,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'maths II', category: 'tier1',
                 desc: '@[population,People] will know more about math, making them even more intelligent. @They will have a larger chance to understand more complex ideas and concepts. @improves your civilization\'s numeral system @introduces equations',
-                icon: [0, 35, "magixmod", 17, 1, "magixmod", 23, 1],
+                icon: [0, 39, "magixmod", 17, 1, "magixmod", 23, 1],
                 cost: { 'insight': 80 },
                 effects: [
                     { type: 'provide res', what: { 'cultural balance': -6 } }
@@ -12008,7 +12008,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'maths III', category: 'tier1',
                 desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wizardry. @increases your people\'s knowledge of equations and functions //<small>I, personally, would research it now!</small>',
-                icon: [1, 35, "magixmod", 18, 4, "magixmod"],
+                icon: [1, 39, "magixmod", 18, 4, "magixmod"],
                 cost: { 'insight': 360, 'wisdom': 10 },
                 req: { 'oral tradition': true, 'maths II': true, 'plain island building': true },
             });
@@ -12050,7 +12050,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mana brewery II', category: 'tier1',
                 desc: '[alchemist]s will now be able to craft [mana] at their stands! To do it, they will use the same recipe as the [mana maker], producing the same amount.',
-                icon: [0, 35, "magixmod", 19, 2, "magixmod"],
+                icon: [0, 39, "magixmod", 19, 2, "magixmod"],
                 cost: { 'insight': 1000 },
                 req: { 'alchemy': true },
             });
@@ -12082,7 +12082,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'monument-building II', category: 'upgrade',
                 desc: '@Unlocks the [temple of deities], a mid-legacy wonder. It is much bigger than than the [mausoleum] and may lead to victory!',
-                icon: [0, 35, "magixmod", 14, 10, "magixmod"],
+                icon: [0, 39, "magixmod", 14, 10, "magixmod"],
                 cost: { 'insight': 1400, 'culture': 300, 'spirituality': 15, 'faith': 125 },
                 req: { 'construction': true, 'burial': true, 'culture of the afterlife': true, 'physics': true },
                 effects: [
@@ -12376,7 +12376,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'flour-crafting II', category: 'tier2',
                 desc: '@Unlocks the mighty [windmill]. Uses [land] but can process way more [wheat] at a time!',
-                icon: [0, 35, "magixmod", 22, 11, "magixmod"],
+                icon: [0, 39, "magixmod", 22, 11, "magixmod"],
                 cost: { 'insight II': 10 },
                 req: { 'Farm of wheat': true, 'flour-crafting I': true, 'eotm': true },
             });
@@ -12390,7 +12390,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'baking II', category: 'tier2',
                 desc: '@Baking [bread] is way more successful.//<small>Not only does the [bread] actually look like its edible now, but you\'ll also produce bread faster.</small>',
-                icon: [0, 35, "magixmod", 22, 12, "magixmod"],
+                icon: [0, 39, "magixmod", 22, 12, "magixmod"],
                 cost: { 'insight II': 15 },
                 req: { 'baking': true, 'eotm': true },
             });
@@ -12627,7 +12627,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'physics II', category: 'tier1',
                 desc: '@People understand physics and weird anomalies in the world more. @provides 5 [education]',
-                icon: [0, 35, "magixmod", 21, 19, "magixmod"],
+                icon: [0, 39, "magixmod", 21, 19, "magixmod"],
                 cost: { 'insight': 1100, 'science': 4, 'culture': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 5 } },
@@ -12684,7 +12684,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'code of law II', category: 'tier2',
                 desc: 'The [code of law] will get more exact and specific. This new [code of law] will result in more complex punishment systems for potential burglars to ensure justice is served. @provides 3 [authority II]',
-                icon: [0, 35, "magixmod", 27, 6, "magixmod"],
+                icon: [0, 39, "magixmod", 27, 6, "magixmod"],
                 cost: { 'insight II': 10, 'influence II': 4, 'culture II': 6 },
                 req: { 'eotm': true, 'richer language': true, 'code of law': true },
                 effects: [
@@ -12694,7 +12694,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'sewing II', category: 'upgrade',
                 desc: '@[clothier]s will be able to sew [hardened clothes] (with [weaving III]) @this clothing type will require a piece of [dried leather] and some [thread]s',
-                icon: [0, 35, "magixmod", 27, 9, "magixmod"],
+                icon: [0, 39, "magixmod", 27, 9, "magixmod"],
                 cost: { 'insight II': 10 },
                 req: { 'weaving': true, 'weaving II': true, 'eotm': true },
                 effects: [
@@ -12704,7 +12704,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'weaving III', category: 'upgrade',
                 desc: 'Upgrades the sewing skills of your civilization again! @[clothier]s can craft [hardened clothes] to create more durable clothing.',
-                icon: [1, 35, "magixmod", 27, 12, "magixmod"],
+                icon: [1, 39, "magixmod", 27, 12, "magixmod"],
                 cost: { 'insight II': 20 },
                 req: { 'wizardry': true, 'sewing II': true, 'weaving II': true, 'eotm': true },
             });
@@ -12725,7 +12725,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ritualism II', category: 'religion',
                 desc: '@provides 3 [spirituality II] @[wisdom rituals] and [flower rituals] can be activated again, but these rituals will require [faith II] as upkeep rather than [faith] @[soothsayer]s and [druid]s will change icons now <>Simple practices, eroded and polished by long time, may turn into rites and traditions!',
-                icon: [0, 35, "magixmod", 27, 5, "magixmod"],
+                icon: [0, 39, "magixmod", 27, 5, "magixmod"],
                 cost: { 'culture II': 5, 'faith II': 2, 'insight II': 10, 'influence II': 2, 'faith': 6 },
                 req: { 'oral tradition': true, 'ritualism': true, 'eotm': true, 'Improved rhetoric': true },
                 effects: [
@@ -13627,7 +13627,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'symbolism II', category: 'upgrade',
                 desc: '@Increases the [symbolism] bonus from to 40%, and also lets it work with [druid]s.',
-                icon: [0, 35, "magixmod", 30, 14, "magixmod"],
+                icon: [0, 39, "magixmod", 30, 14, "magixmod"],
                 cost: { 'culture II': 15, 'insight II': 10 },
                 req: { 'oral tradition': true, 'ritualism II': true, 'Improved rhetoric': true, 'richer language': true, 'symbolism': true },
                 effects: [
@@ -13673,7 +13673,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'maths IV', category: 'tier2',
                 desc: '@Expands the mathematical knowledge of your scholars by letting them study more complex function analysis, calculating variables in terms of other variables, solving more complex equations, and generally pushing their math skills to the limit. @Improves your average citizen\'s math knowledge. @provides 5 [education] and 40 [wisdom II] @Unlocks the fourth tier of a few specific techs //<small>thanks to the math stuff mentioned here, college is getting really hard</small>',
-                icon: [2, 35, "magixmod", 8, 21, "magixmod", 24, 1],
+                icon: [2, 39, "magixmod", 8, 21, "magixmod", 24, 1],
                 cost: { 'insight II': 50, 'science': 8, 'culture II': 12 },
                 effects: [
                     { type: 'provide res', what: { 'education': 5 } },
@@ -13705,7 +13705,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'science blessing', category: 'tier2',
                 desc: '@[guru]s and [transcendentalist]s generate 50% more. @Various alchemy stands will operate thrice as fast. @provides 2 bonus [science] //<small>I\'ve gotten blessed with more knowledge!</small>',
-                icon: [0, 35, "magixmod", 29, 5, "magixmod"],
+                icon: [0, 39, "magixmod", 29, 5, "magixmod"],
                 cost: { 'insight II': 5, 'mana': 500 },
                 req: { 'science master': true },
                 effects: [
@@ -14342,7 +14342,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'symbolism III', category: 'upgrade',
                 desc: 'The third level of [symbolism] will make symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
-                icon: [1, 35, "magixmod", 31, 17, "magixmod"],
+                icon: [1, 39, "magixmod", 31, 17, "magixmod"],
                 cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10, 'novel': 10 },
                 req: { 'doctrine of the dark wormhole 5/5': true },
                 effects: [
@@ -14527,7 +14527,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'monument-building III', category: 'upgrade',
                 desc: '@[population,People] may now use almost every resource while constructing mystical, beautiful wonders.',
-                icon: [1, 35, "magixmod", 0, 25, "magixmod"],
+                icon: [1, 39, "magixmod", 0, 25, "magixmod"],
                 req: { 'gods and idols': true },
                 cost: { 'insight II': 187, 'science': 8, 'culture II': 30 },
             });
@@ -15311,7 +15311,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'outstanders club', category: 'upgrade',
                 desc: 'Decreases the [population] for [the outstander,Outstanders] from 38k to 26.5k. @provides 5 [wisdom II]',
-                icon: [0, 35, "magixmod", 14, 28, "magixmod"],
+                icon: [0, 39, "magixmod", 14, 28, "magixmod"],
                 req: { 'outstanding wisdom': true },
                 cost: { 'insight II': 300, 'science': 15, 'culture II': 25 },
                 effects: [
@@ -15495,7 +15495,7 @@ if (getObj("civ") != "1") {
                 desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 after purchasing this tech (excluding [industry point]s or [worship point]s). [happiness] and [health] will also be completely reset.<hr><font color="#f70054">Note: It does not expand the map and it does not add any new goods. Getting this will give you an extra 7% of [land] and [wtr] rather than 1.5%, overriding the previous tech. It may help you, but there is an even larger risk now! The further you push beyond the edge, a stronger scourge will fall on you and your civilization...</font>',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
-                icon: [0, 35, "magixmod", 0, 30, "magixmod"],
+                icon: [0, 39, "magixmod", 0, 30, "magixmod"],
                 effects: [
                     { type: 'provide res', what: { 'wisdom II': 20 } },
                     { type: 'provide res', what: { 'education': 1 } },
@@ -15616,7 +15616,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mining II', category: 'upgrade',
                 desc: 'Strike the earth (even stronger) for new minerals and mystical wonders! @[mine]s can mine even deeper. To unlock prospecting for them, get the [prospecting III] research.',
-                icon: [0, 35, "magixmod", 12, 1, "magixmod"],
+                icon: [0, 39, "magixmod", 12, 1, "magixmod"],
                 cost: { 'insight II': 190, 'science': 12, 'culture II': 8 },
                 req: { 'digging': true, 'construction': true, 'eotm': true, 'deep mining & quarrying': true },
                 effects: [
@@ -15643,7 +15643,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'prospecting III', category: 'upgrade',
                 desc: '[prospecting] improvements: @[mine]s can get new minerals from <b>Deep mining</b> @[quarry,Quarries] gain a mode that will gather three times more minerals that can only be obtained by quarrying, but six times less of non-minerals',
-                icon: [1, 35, "magixmod", 11, 1, "magixmod"],
+                icon: [1, 39, "magixmod", 11, 1, "magixmod"],
                 cost: { 'insight II': 200, 'science': 15, 'influence II': 5 },
                 req: { 'quarrying II': true, 'cozy building': true, 'deep mining & quarrying': true, 'eotm': true },
                 effects: [
@@ -15871,7 +15871,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'pumpkins II', category: 'seasonal',
                 desc: 'You can find pumpkins that will give you [insight,Essentials], [juices], and various other benefits! //<small>Do you like pumpkins?</small>',
-                icon: [0, 35, "magixmod", 10, 7, 'seasonal'],
+                icon: [0, 39, "magixmod", 10, 7, 'seasonal'],
                 req: { 'pumpkins': true, 'alchemy': true },
                 cost: { 'insight': 1000 },
                 effects: [
@@ -16042,7 +16042,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'dynamics II', category: 'tier2',
                 desc: 'You people will understand dynamics much better, and know exactly how gravity behaves. @Thanks to a more exact understanding of the world, higher-level researches may become easier. @provides 2 [education] and 25 [wisdom II]',
-                icon: [0, 35, "magixmod", 33, 31, "magixmod"],
+                icon: [0, 39, "magixmod", 33, 31, "magixmod"],
                 req: { 'physics II': true, 'gt3': true, 'doctrine of the dark wormhole 3/5': true },
                 cost: { 'insight II': 200, 'science': 15 },
                 effects: [
@@ -16148,7 +16148,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'tile inspection II',
                 desc: '<font color="#3ae3ff">Now you can see how much of a certain resource you have within your territory.</font>',
-                icon: [0, 35, "magixmod", 35, 14, "magixmod"],
+                icon: [0, 39, "magixmod", 35, 14, "magixmod"],
                 cost: { 'insight': 50 },
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
                 chance: 30,
@@ -16268,7 +16268,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'festive lights II', category: 'seasonal',
                 desc: 'Lights bring more [happiness] and are used even more. //<small>So joyful all around!</small>',
-                icon: [0, 35, "magixmod", 16, 12, 'seasonal'],
+                icon: [0, 39, "magixmod", 16, 12, 'seasonal'],
                 cost: { 'insight II': 200, 'science': 5 },
                 req: { 'outstanding wisdom': true, 'the christmas': true, 'festive lights': true, 'mo\' beauty': true },
             });
@@ -16623,7 +16623,7 @@ if (getObj("civ") != "1") {
                 name: 'bII(acceptance)',
                 displayName: 'Burial II', category: 'tier1',
                 desc: '@Increases the positive effects of [acceptance of death] and [belongings preservance] by 5% <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
-                icon: [0, 35, "magixmod", 13, 23, "magixmod", 24, 1],
+                icon: [0, 39, "magixmod", 13, 23, "magixmod", 24, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(normal)': false },
                 effects: [
@@ -17668,7 +17668,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'imprisonment II', category: 'tier1',
                 desc: '@unlocks [prison]s if [construction II] is researched. @[warehouse]s can store 5 [prisoner]s each should one dare to steal some resources.',
-                icon: [0, 35, "magixmod", 5, 15, "magixmod"],
+                icon: [0, 39, "magixmod", 5, 15, "magixmod"],
                 cost: { 'insight': 700 },
                 req: { 'plain island building': true, 'imprisonment': true },
                 effects: [
@@ -17682,7 +17682,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'imprisonment III', category: 'tier2',
                 desc: 'The chance for [prisoner]s escaping a [prison] is lowered by quite a bit, but each [prison] will use 20 more [worker]s for tighter security. Also changes what your [prison]s look like.',
-                icon: [1, 35, "magixmod", 4, 16, "magixmod"],
+                icon: [1, 39, "magixmod", 4, 16, "magixmod"],
                 cost: { 'insight II': 35, 'science': 5 },
                 req: { 'leaves of wisdom': true, 'imprisonment II': true },
                 effects: [
@@ -17829,7 +17829,7 @@ if (getObj("civ") != "1") {
                 name: 'bII(normal)',
                 displayName: 'Burial II', category: 'tier1',
                 desc: '@Reduces the bad effects of [fear of death] and [belief in revenants] by 5%. <>@Funeral ceremonies are more common. @provides 30 [inspiration]',
-                icon: [0, 35, "magixmod", 13, 23, "magixmod", 22, 1],
+                icon: [0, 39, "magixmod", 13, 23, "magixmod", 22, 1],
                 cost: { 'insight': 510 },
                 req: { 'burial': true, 'philosophy': true, 'bII(acceptance)': false },
                 effects: [
@@ -17840,7 +17840,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'physics III', category: 'tier1',
                 desc: '@provides 10 [education] and 25 [wisdom II] @People\'s understanding of physics and anomalies in reality increases. From now on, people will be able to understand the 3-dimensional world more. //<small>So this thing moves here...</small>',
-                icon: [1, 35, "magixmod", 16, 28, "magixmod"],
+                icon: [1, 39, "magixmod", 16, 28, "magixmod"],
                 cost: { 'insight II': 300, 'science': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 10, 'wisdom II': 25 } },
@@ -17851,7 +17851,7 @@ if (getObj("civ") != "1") {
                 name: 'mathV(sums)',
                 displayName: 'Maths V', category: 'tier1',
                 desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc.//<small>Fibonacci, here we go...</small>',
-                icon: [3, 35, "magixmod", 17, 28, "magixmod"],
+                icon: [3, 39, "magixmod", 17, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 10, 'wisdom II': 25 } },
@@ -17862,7 +17862,7 @@ if (getObj("civ") != "1") {
                 name: 'mathV(3dgeo)',
                 displayName: 'Maths V', category: 'tier1',
                 desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
-                icon: [3, 35, "magixmod", 18, 28, "magixmod"],
+                icon: [3, 39, "magixmod", 18, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 10, 'wisdom II': 25 } },
@@ -17873,7 +17873,7 @@ if (getObj("civ") != "1") {
                 name: 'mathV(algebra)',
                 displayName: 'Maths V', category: 'tier1',
                 desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will master algebra.//<small>3 variable equations?</small>',
-                icon: [3, 35, "magixmod", 19, 28, "magixmod"],
+                icon: [3, 39, "magixmod", 19, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
                     { type: 'provide res', what: { 'education': 10, 'wisdom II': 25 } },
@@ -17942,7 +17942,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'symbolic cultural colors',
                 desc: '@another [culture] point can be refunded every research, and the amount needed for each refund is reduced to 100. @having [symbolic cultural colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
-                icon: [0, 35, "magixmod", 35, 33, "magixmod"],
+                icon: [0, 39, "magixmod", 35, 33, "magixmod"],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
                 req: { 'symbI': true, 'philosophy': true, 'time measuring 2/2': true, 'symbolic knowledge colors': false },
@@ -17955,7 +17955,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'symbolic knowledge colors',
                 desc: '@another [insight] point can be refunded every research, and the amount needed for each refund is reduced to 100. @having [symbolic cultural colors] or <b>this</b> trait allows you to get [coloral symbolism III] later on. @this trait is where new small but important breakthroughts have been made @<b><font color="#f70054">Note: This trait is rather temporary and has a long lifetime, with a slight chance to become permanent.</font></b>',
-                icon: [0, 35, "magixmod", 36, 33, "magixmod"],
+                icon: [0, 39, "magixmod", 36, 33, "magixmod"],
                 cost: { 'culture': 75, 'insight': 10 },
                 chance: 125,
                 req: { 'symbI': true, 'philosophy': true, 'time measuring 2/2': true, 'symbolic cultural colors': false },
@@ -17968,7 +17968,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'coloral symbolism III',
                 desc: '@the [dreamer] bonus is increased by 15% @[lawyer]s, [chieftain]s, [druid]s, [cathedral]s, and [guru]s become 20% more efficient',
-                icon: [1, 35, "magixmod", 36, 14, "magixmod"],
+                icon: [1, 39, "magixmod", 36, 14, "magixmod"],
                 cost: { 'culture II': 50, 'insight II': 100, 'science': 10 },
                 chance: 125,
                 category: 'knowledge',
@@ -17989,7 +17989,7 @@ if (getObj("civ") != "1") {
                 name: 'around the world', category: 'tier1',
                 displayName: 'Exploration trips II',
                 desc: 'Increases the speed of [wanderer]s when exploring new tiles by 20%.//<small>We\'re gonna go around the world!</small>',
-                icon: [0, 35, "magixmod", 36, 13, "magixmod"],
+                icon: [0, 39, "magixmod", 36, 13, "magixmod"],
                 cost: { 'insight': 40 },
                 req: { 'exploration trips': true },
                 effects: [
@@ -18040,7 +18040,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'sandy shores II', category: 'tier1',
                 desc: 'Your [digger]s collect twice as much [sand] from your world\'s shores.',
-                icon: [0, 35, "magixmod", 4, 9, 24, 1],
+                icon: [0, 39, "magixmod", 4, 9, 24, 1],
                 cost: { 'insight': 180 },
                 req: { 'sandy shores': true },
                 effects: [
@@ -18050,7 +18050,7 @@ if (getObj("civ") != "1") {
                 name: 'concentrated juices',
                 displayName: 'Moar juices II', category: 'tier1',
                 desc: 'Use a different strategy of transporting materials to your [artisan of juice,Artisans of juice], doubling how fast they can make [juices]. However, making [juices] now requires 3 times as much [water].//<small>Even MOAR JUICE!!! (But concentrated this time.)</small>',
-                icon: [0, 35, "magixmod", 17, 4, "magixmod"],
+                icon: [0, 39, "magixmod", 17, 4, "magixmod"],
                 cost: { 'insight': 1600 },
                 req: { 'more humid water': true },
                 effects: [
@@ -18069,7 +18069,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'beekeeping II', category: 'tier1',
                 desc: 'Teach your people about how to ensure that bees survive through the winter, increasing the chance of future [honey] harvests! @you can also get [honeycomb]s from bee nests slowly, which are great for your people\'s [health] @you can now set a policy that sets the honey-based habits of your people',
-                icon: [0, 35, "magixmod", 1, 1, "magix2"],
+                icon: [0, 39, "magixmod", 1, 1, "magix2"],
                 cost: { 'insight': 450 },
                 req: { 'beekeeping': true, 'wizard wisdom': true },
                 effects: [
@@ -18078,7 +18078,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'beekeeping III', category: 'tier1',
                 desc: 'Discover a way to use [nature essence] to get bees out of hives, increasing [honey] gain. It is also is more likely to succeed! @unlocks a new method of getting [honey] that requires [nature essence] //<small>with a better knowledge of bees, your beekeepers also feel a little safer</small>',
-                icon: [1, 35, "magixmod", 1, 1, "magix2"],
+                icon: [1, 39, "magixmod", 1, 1, "magix2"],
                 cost: { 'insight': 1200, 'wisdom': 25 },
                 req: { 'beekeeping II': true },
                 effects: [
@@ -18105,7 +18105,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'salty sand II', category: 'tier1',
                 desc: 'After getting this tech, [digger]s will be able to get significantly more [salt] from your oceans by drying some saltwater out. //<small>that\'s pretty salty...</small>',
-                icon: [0, 35, "magixmod", 11, 7, 0, 0, "magix2"],
+                icon: [0, 39, "magixmod", 11, 7, 0, 0, "magix2"],
                 cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'sandy shores II': true, 'salty sand': true, 'care for nature': true },
                 effects: [
@@ -18138,7 +18138,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'stronger faith II', category: 'tier1',
                 desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep.',
-                icon: [0, 35, "magixmod", 19, 3, "magixmod"],
+                icon: [0, 39, "magixmod", 19, 3, "magixmod"],
                 cost: { 'insight': 800, 'faith': 200 },
                 req: { 'stronger faith': true, '7th complex tower': true },
                 effects: [
@@ -18170,7 +18170,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'trees of faith II', category: 'tier1',
                 desc: 'The [leaves of wisdom] and [branches of wisdom] traits can now be obtained at the same time! In addition, you have a 5% chance of getting both of them at the same time at the start of a new year. Be warned, however, as <b>getting this trait will cost some [wisdom II]</b> (you can get more, however, by adopting both traits).',
-                icon: [0, 35, "magixmod", 36, choose([2, 3]), "magixmod", 24, 1],
+                icon: [0, 39, "magixmod", 36, choose([2, 3]), "magixmod", 24, 1],
                 cost: { 'insight II': 125, 'wisdom II': 50 },
                 req: { 'treeplanting': true, 'trees of faith': true, 'richer language': true },
                 effects: [
@@ -18194,7 +18194,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'deeper wells II', category: 'tier1',
                 desc: 'Making sure to make your people\'s wells deep enough can ensure that they have enough when droughts or famines strike. @boosts all types of [well]s by 50%',
-                icon: [0, 35, "magixmod", 31, 15, "magixmod"],
+                icon: [0, 39, "magixmod", 31, 15, "magixmod"],
                 cost: { 'insight': 600, 'wisdom': 50 },
                 req: { 'careful water storage': true },
                 effects: [
@@ -18212,7 +18212,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'art of cooking II', category: 'tier1',
                 desc: 'Cooking is complex, but your [chef]s are willing to learn! @Getting this unlocks 2 new modes for them, which may provide additional [happiness] or [health] when produced. @Obtaining this will also make your [population,people] smarter at storing [meals], slowing their decay somewhat.',
-                icon: [0, 35, "magixmod", 23, 13, "magixmod"],
+                icon: [0, 39, "magixmod", 23, 13, "magixmod"],
                 cost: { 'insight': 600, 'wisdom': 50, 'culture': 600 },
                 req: { 'art of cooking': true },
                 effects: [
@@ -18221,7 +18221,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'magical filtering II', category: 'tier1',
                 desc: 'Use the power of the [water essence,Waters], [wind essence,Winds], and [cloud]s! @your filters that process [cloudy water] work twice as fast',
-                icon: [0, 35, "magixmod", 25, 8, "magixmod"],
+                icon: [0, 39, "magixmod", 25, 8, "magixmod"],
                 cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 21000 },
                 req: { 'magical filtering': true },
                 effects: [
@@ -18284,7 +18284,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ocean decay II', category: 'tier1',
                 desc: 'Decrease the rate of [land] decaying by 40% again. This effect does not stack additively with the other techs!',
-                icon: [0, 35, "magixmod", 9, 0, "magix2", 24, 1],
+                icon: [0, 39, "magixmod", 9, 0, "magix2", 24, 1],
                 cost: { 'insight': 25 },
                 req: { 'ocean decay I': true, 'boat building': true },
                 skip: true,
@@ -18294,7 +18294,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ocean decay III', category: 'tier1',
                 desc: 'Decrease the rate of [land] decaying by 40% once more. This effect does not stack additively with the other techs!',
-                icon: [1, 35, "magixmod", 9, 0, "magix2", 24, 1],
+                icon: [1, 39, "magixmod", 9, 0, "magix2", 24, 1],
                 cost: { 'insight': 125 },
                 req: { 'ocean decay II': true, 'wizard wisdom': true },
                 skip: true,
@@ -18304,7 +18304,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ocean decay IV', category: 'tier1',
                 desc: 'Decrease the rate of [land] decaying by 40% yet again. This effect does not stack additively with the other techs!',
-                icon: [2, 35, "magixmod", 9, 0, "magix2", 24, 1],
+                icon: [2, 39, "magixmod", 9, 0, "magix2", 24, 1],
                 cost: { 'insight': 400, 'wisdom': 10 },
                 req: { 'ocean decay III': true, 'Wizard complex': true },
                 skip: true,
@@ -18314,7 +18314,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ocean decay V', category: 'tier1',
                 desc: 'Decrease the rate of [land] decaying by 40% for a final time. This effect does not stack additively with the other techs!',
-                icon: [3, 35, "magixmod", 9, 0, "magix2", 24, 1],
+                icon: [3, 39, "magixmod", 9, 0, "magix2", 24, 1],
                 cost: { 'insight': 600, 'wisdom': 25 },
                 req: { 'ocean decay IV': true },
                 skip: true,
@@ -18352,7 +18352,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'fruit identification II', category: 'tier1',
                 desc: 'People will become better-trained at finding out if various plants are poisonous or not, increasing [fruit] gain by 20%, [herbs,Herb] gain by 10%, and [exotic fruit] gain by 5%.',
-                icon: [0, 35, "magixmod", 9, 2, "magix2", 24, 1],
+                icon: [0, 39, "magixmod", 9, 2, "magix2", 24, 1],
                 cost: { 'insight': 100 },
                 req: { 'exotic blending': true },
                 effects: [
@@ -18370,7 +18370,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'spicy foods II', category: 'tier1',
                 desc: 'Gain more information about how [spices] are collected, increasing its collection rate by 50%. //<small>my tongue is burning</small>',
-                icon: [0, 35, "magixmod", 12, 2, "magix2"],
+                icon: [0, 39, "magixmod", 12, 2, "magix2"],
                 cost: { 'wisdom': 300, 'inspiration': 20 },
                 req: { 'spicy foods': true },
                 effects: [
@@ -18379,7 +18379,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'spicy foods III', category: 'tier1',
                 desc: 'Go deeper into the world of spicy ingredients and start getting your people to begin cultivating various [spices] themselves. //Getting this will triple your [spices,Spice] gain. //<small>THAT IS WAY TOO SPICY!!!!</small>',
-                icon: [1, 35, "magixmod", 12, 2, "magix2"],
+                icon: [1, 39, "magixmod", 12, 2, "magix2"],
                 cost: { 'insight': 750, 'influence': 150 },
                 req: { 'leaves of wisdom': true, 'leaves of wisdom': true, 'spicy foods II': true },
                 effects: [
@@ -18388,7 +18388,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'art of cooking III', category: 'tier1',
                 desc: 'Teach your [population,people] how to cook dishes themselves, allowing them to cook [meals] themselves without needing [chef]s! @Every 10 days, your [population,people] will switch to a different [meals,Meal] to cook!<>Because not all of them are trained [chef]s, they will use 1 [cooked meat] or 1 [cooked seafood] and combine them with half of a [herbs,Herb], [fruit], or [vegetables,Vegetable] to produce 1 [meals,Meal] (using 0.1 more [food] than normally hired [chef]s). //They will switch what ingredients that they use every ten days and cycle through them.',
-                icon: [1, 35, "magixmod", 23, 13, "magixmod"],
+                icon: [1, 39, "magixmod", 23, 13, "magixmod"],
                 cost: { 'insight II': 200, 'influence II': 12 },
                 req: { 'spicy foods III': true },
                 effects: [
@@ -18424,7 +18424,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mana brewery III', category: 'tier1',
                 desc: 'Use a more effective method of creating [mana], allowing [mana maker]s and [alchemist]s to make it 50% faster. //<small>first, add some water here...</small>',
-                icon: [1, 35, "magixmod", 19, 2, "magixmod"],
+                icon: [1, 39, "magixmod", 19, 2, "magixmod"],
                 cost: { 'insight': 1500, 'water': 2e5, 'mana': 50000 },
                 req: { 'mana brewery II': true },
             });
@@ -18449,7 +18449,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'people of the arts II', category: 'tier1',
                 desc: 'Getting this tech doubles the [culture II] gain from [painter]s and lets [essential conversion tank,Conversion tanks] produce [culture II] 50% faster!',
-                icon: [0, 35, "magixmod", 11, 7, "magixmod", 12, 4, "magixmod", 24, 1],
+                icon: [0, 39, "magixmod", 11, 7, "magixmod", 12, 4, "magixmod", 24, 1],
                 cost: { 'insight II': 50, 'culture II': 35 },
                 req: { 'caretaking': true, 'smartness of essentials': true, 'people of the arts': true },
                 effects: [
@@ -18458,7 +18458,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'oil-digging II', category: 'tier1',
                 desc: '[oil] can now be used along with [lightning essence] and [charcoal] to unlock a new mode for your [heat factory,Heat factories].',
-                icon: [0, 35, "magixmod", 29, 2, "magixmod"],
+                icon: [0, 39, "magixmod", 29, 2, "magixmod"],
                 cost: { 'insight II': 400, 'oil': 10000 },
                 req: { 'oil-digging': true },
                 effects: [
@@ -18529,7 +18529,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'care for nature II',
                 desc: '@people now respect nature even more @may result in more advanced techs',
-                icon: [0, 35, "magixmod", 2, 0, "magix2"],
+                icon: [0, 39, "magixmod", 2, 0, "magix2"],
                 chance: 80,
                 req: { 'faith in water': true, 'beekeeping III': true },
             });
@@ -18715,7 +18715,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mentors of nature II', category: 'tier1',
                 desc: '[druid]s generate 50% more [health] now!',
-                icon: [0, 35, "magixmod", 31, 31, "magixmod"],
+                icon: [0, 39, "magixmod", 31, 31, "magixmod"],
                 req: { 'eotm': true, 'trees of faith': true, 'caretaking': true },
                 cost: { 'insight II': 40, 'culture II': 10 },
                 effects: [
@@ -18724,7 +18724,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'beekeeping IV', category: 'tier1',
                 desc: 'Let your [firekeeper]s find the optimal strategies for keeping bees, improving how much [honey] and [honeycomb]s that you gain from [essenced hive frame]s by 20%.',
-                icon: [2, 35, "magixmod", 1, 1, "magix2"],
+                icon: [2, 39, "magixmod", 1, 1, "magix2"],
                 cost: { 'insight II': 150, 'nature essence': 125000 },
                 req: { 'maths IV': true, 'magical hive frames': true },
                 effects: [
@@ -18733,7 +18733,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'quarrying IV', category: 'tier1',
                 desc: 'Quarries will become less dangerous, making injuries much, much less likely!',
-                icon: [2, 35, "magixmod", 12, 0, "magixmod"],
+                icon: [2, 39, "magixmod", 12, 0, "magixmod"],
                 cost: { 'insight II': 200, 'science': 15, 'influence II': 20 },
                 req: { 'quarrying III': true, 'maths IV': true },
                 effects: [
@@ -18742,7 +18742,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'beekeeping V', category: 'tier1',
                 desc: 'The final beekeeping tech... @gives you a small chance to collect some additional [honey] from <b>all</b> firekeeping modes',
-                icon: [3, 35, "magixmod", 1, 1, "magix2"],
+                icon: [3, 39, "magixmod", 1, 1, "magix2"],
                 cost: { 'insight II': 150, 'nature essence': 125000 },
                 req: { 'physics III': true, 'beekeeping IV': true },
                 effects: [
@@ -18751,7 +18751,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mentors of nature III', category: 'tier1',
                 desc: 'From now on, more units will be able to generate [health] in small amounts: @[healer]s (twice as much as [druid]s, adding with any traits that also provide [health]) @[firekeeper]s (one fifth as much as [druid]s) @[florist]s (one tenth as much as [druid]s) @very, very rarely, your [gatherer]s will provide some [health]',
-                icon: [1, 35, "magixmod", 31, 31, "magixmod"],
+                icon: [1, 39, "magixmod", 31, 31, "magixmod"],
                 req: { 'mentors of nature II': true, 'eota': true },
                 cost: { 'insight II': 40, 'culture II': 10 },
                 effects: [
@@ -18811,7 +18811,7 @@ if (getObj("civ") != "1") {
                 name: 'music instruments II', category: 'tier2',
                 displayName: 'Musical instruments II',
                 desc: '[musician]s generate twice as much [happiness] with improved instruments and ideas! //<small>time to compose a song</small>',
-                icon: [0, 35, "magixmod", 29, 18, "magixmod"],
+                icon: [0, 39, "magixmod", 29, 18, "magixmod"],
                 cost: { 'insight II': 200, 'culture II': 75 },
                 req: { 'passionate artistry': true },
                 effects: [
@@ -18820,7 +18820,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'culture of gems III', category: 'tier1',
                 desc: '@[carver]s creating [gem block]s and [valuable gem block]s will be better trained at using their tools, allowing them to make these blocks three times quicker',
-                icon: [1, 35, "magixmod", 1, 4, "magix2"],
+                icon: [1, 39, "magixmod", 1, 4, "magix2"],
                 cost: { 'insight II': 550, 'culture II': 160 },
                 req: { 'culture of gems II': true, 'music instruments II': true },
                 effects: [
@@ -18838,7 +18838,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'charcoal production II', category: 'tier1',
                 desc: '@[charcoal] production produces 25% more [charcoal], without increasing the amount of [log]s needed',
-                icon: [0, 35, "magixmod", 5, 4, "magix2", 23, 1],
+                icon: [0, 39, "magixmod", 5, 4, "magix2", 23, 1],
                 cost: { 'insight II': 550, 'culture II': 160 },
                 req: { 'oil-digging II': true },
                 effects: [
@@ -18874,7 +18874,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'gardening II', category: 'tier1',
                 desc: 'Learn about how to use irrigation to create more advanced farms, boosting crop gains of your large farms by +125%.',
-                icon: [0, 35, "magixmod", 10, 0, "magixmod"],
+                icon: [0, 39, "magixmod", 10, 0, "magixmod"],
                 cost: { 'insight II': 40 },
                 req: { 'agriculture': true, 'eotm': true },
                 effects: [
@@ -18921,7 +18921,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mushroom crafting', category: 'tier1',
                 desc: '@gain the ability to craft [golden mushroom]s from [gold block]s and [mushroom]s in your [blacksmith workshop]s//<small>why golden mushrooms, you may ask? honestly not sure myself</small>',
-                icon: [0, 35, "magixmod", 7, 5, "magix2", 24, 1],
+                icon: [0, 39, "magixmod", 7, 5, "magix2", 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 req: { 'mushroom farming': true },
                 chance: 1.5,
@@ -18941,7 +18941,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'baking III', category: 'tier2',
                 desc: '<li>Baking [bread] becomes even faster and tastier!</li>//Wheat farms also become four times faster. //<small>Maybe one day, every citizen can enjoy this food...</small>',
-                icon: [1, 35, "magixmod", 22, 12, "magixmod"],
+                icon: [1, 39, "magixmod", 22, 12, "magixmod"],
                 cost: { 'insight II': 65, 'culture II': 5 },
                 req: { 'baking II': true },
                 effects: [
@@ -18950,7 +18950,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'gardening III', category: 'tier2',
                 desc: 'Get even better [wheat] farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
-                icon: [1, 35, "magixmod", 10, 0, "magixmod"],
+                icon: [1, 39, "magixmod", 10, 0, "magixmod"],
                 cost: { 'insight II': 200, 'culture II': 30 },
                 req: { 'baking III': true, 'art of cooking III': true },
                 effects: [
@@ -18995,7 +18995,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'more useful bricks', category: 'tier1',
                 desc: 'So far, you have only been able to construct [brick house with a silo,Brick houses] with your [brick]s, but you are sure that there could be more uses for them. @unlocks buildings that require [brick]s in the future',
-                icon: [0, 35, "magixmod", 5, 2, "magixmod"],
+                icon: [0, 39, "magixmod", 5, 2, "magixmod"],
                 cost: { 'insight': 1200, 'brick': 1500 },
                 req: { 'construction II': true },
                 effects: [
@@ -19004,7 +19004,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'festive robot print II', category: 'seasonal',
                 desc: '[f.r.o.s.t.y] is no longer so limited!',
-                icon: [0, 35, "magixmod", 14, 12, 'seasonal'],
+                icon: [0, 39, "magixmod", 14, 12, 'seasonal'],
                 cost: { 'insight II': 8 },
                 req: { 'the christmas': true, 'snowmen': true, 'eotm': true },
                 effects: [
@@ -19018,7 +19018,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'ultimate mushroom crafting', category: 'tier1',
                 desc: 'Getting this makes [blacksmith workshop]s twice as likely to craft [golden mushroom]s successfully!',
-                icon: [1, 35, "magixmod", 7, 5, "magix2", 24, 1],
+                icon: [1, 39, "magixmod", 7, 5, "magix2", 24, 1],
                 cost: { 'insight II': 320, 'culture': 35 },
                 req: { 'eota': true, 'mushroom crafting': true },
                 chance: 1.5,
