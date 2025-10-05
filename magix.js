@@ -2539,7 +2539,7 @@ if (getObj("civ") != "1") {
                     }
                     if (G.has('healthy life')) //Healthy life trait power
                     {
-                        var n = randomFloor(G.getRes('population').amount * 0.13); G.gain('health', n, 'healthy life');
+                        var n = randomFloor(G.getRes('population').amount * 0.12); G.gain('health', n, 'healthy life');
                     }
                     if (G.has('supreme healthy life')) //Supreme healthy life trait power
                     {
@@ -3732,7 +3732,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'food storage',
-                desc: 'Each [food storage] unit slows down decay for one [food] unit.//The number on the left is how much food storage is occupied, while the number on the right is how much you have in total.',
+                desc: 'Each [food storage] unit slows down decay for one piece of [food].//The number on the left is how much food storage is occupied, while the number on the right is how much you have in total.',
                 icon: [12, 5],
                 tick: function (me, tick) {
                     var amount = 0;
@@ -4573,7 +4573,6 @@ if (getObj("civ") != "1") {
                 category: 'terr',
                 tick: function (me, tick) {
                     G.getDict('land of the Plain Island').displayName = 'Land of the ' + islandName()
-                    console.log(islandName())
                     G.getDict('land of the Plain Island').desc = 'The land you got from activating a portal to the new island: ' + islandName() + '. A place for new buildings.'
                 },
             });
@@ -4672,7 +4671,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'holy essence',
-                desc: '[holy essence] should not be used by the average person due to a risk of mass blindness. Anyway, this one will have its faithful uses.',
+                desc: '[holy essence] should not be used by the average person due to a risk of mass blindness. However, this resource will still have its faithful uses.',
                 icon: [20, 6, "magixmod"],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -5617,7 +5616,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'light explosives',
-                desc: 'These are dangerous and with a purpose, but decay over time. May be used to break a wall or used in mining. These little things have a small blast radius <b>but are still dangerous</b> for humans. It\'s best for the average person to leave them untouched.',
+                desc: 'These are dangerous and decay over time, but can be used to break a wall or used in mining. These little things have a small blast radius <b>but are still dangerous</b> for humans. It\'s best for the average person to leave them untouched.',
                 icon: [19, 15, "magixmod"],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.009;
@@ -8184,13 +8183,13 @@ if (getObj("civ") != "1") {
                 desc: '@converts crafted [flour] crafted by your [windmill]s into [bread]. Requires fuel to work.',
                 icon: [24, 10, "magixmod"],
                 cost: { 'basic building materials': 100, 'brick': 10000 },
-                use: { 'land': 1, 'worker': 3 },
+                use: { 'worker': 4, 'land': 1 },
                 require: { 'metal tools': 2 },
                 upkeep: { 'log': 0.6 },
                 effects: [
                     { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1 / 25, req: { 'baking': true, 'baking II': false } },
-                    { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking II': true, 'baking III': false } },
-                    { type: 'convert', from: { 'flour': 100 }, into: { 'bread': 40 }, every: 4, chance: 4.6 / 5, req: { 'baking III': true } },
+                    { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking II': true } },
+                    { type: 'mult', value: 3, req: { 'baking III': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } }
                 ],
                 req: { 'baking': true },
@@ -8198,7 +8197,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'windmill',
-                desc: '[windmill]s are able to convert [wheat] into [flour]. //<small>(Note that [flour] is pretty difficult to make in large batches.)</small>',
+                desc: '[windmill]s are able to convert [wheat] into [flour] with a little [water]. //<small>(Note that [flour] is pretty difficult to make in large batches.)</small>',
                 icon: [24, 11, "magixmod"],
                 cost: { 'basic building materials': 600 },
                 req: { 'flour-crafting II': true },
@@ -8206,7 +8205,7 @@ if (getObj("civ") != "1") {
                 upkeep: {},
                 category: 'crafting',
                 effects: [
-                    { type: 'convert', from: { 'wheat': 6, 'water': 1 }, into: { 'flour': 5 }, every: 3, repeat: 2 },
+                    { type: 'convert', from: { 'wheat': 12, 'water': 2 }, into: { 'flour': 10 }, every: 3, repeat: 2 },
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } },
                     { type: 'mult', value: 1.35, req: { 'improved windmill motors': true } }
                 ],
@@ -8301,7 +8300,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'dark concoction': 1, 'combat potion pot': 1, 'water': 0.4, 'dark essence': 0.2, 'dark fire pit': 0.5 }, into: { 'black fog': 1 }, every: 6, mode: 'bf' },
                     { type: 'convert', from: { 'combat potion pot': 1, 'water': 1, 'wind essence': 3, 'windy sugar': 1 }, into: { 'windy spikes': 1 }, every: 6, mode: 'ws' },
-                    { type: 'convert', from: { 'combat potion pot': 1, 'water': 1, 'wind essence': 1, 'holy essence': 1.25 }, into: { 'back to grave': 1 }, every: 6, mode: 'btg' },
+                    { type: 'convert', from: { 'combat potion pot': 1, 'water': 1, 'wind essence': 1, 'holy essence': 1.5 }, into: { 'back to grave': 1 }, every: 6, mode: 'btg' },
                     { type: 'convert', from: { 'herb of the undead': 1, 'water': 1, 'dark essence': 1, 'nature concoction': 1 }, into: { 'point of venom': 1 }, every: 6, mode: 'pov' },
                 ],
                 req: { 'combat potion & concoction brewing': true },
@@ -8373,7 +8372,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'pyro-artisan',
-                desc: '@This subclass of [artisan] can craft explosives. In his normal mode, he will craft [light explosives]. Deliver a lot of [sulfur] to this guy...without it, how is he supposed to craft TNT?',
+                desc: '@This type of [artisan] crafts [light explosives,Explosives]. In his normal mode, he will craft [light explosives]. Deliver a lot of [sulfur] to this guy...without it, how is he supposed to craft TNT?',
                 icon: [15, 15, "magixmod"],
                 cost: {},
                 use: {},
@@ -8395,14 +8394,15 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'holy orchard',
-                desc: 'An orchard with planted trees with ambrosium leaves which are most common type of trees in new world. People working at the orchard will gather [ambrosium leaf,Ambrosium leaves] that fall to the ground.',
+                desc: 'An orchard with trees that produce [ambrosium leaf,Ambrosium leaves], the most common type of trees in this world. People working in the orchard will gather these leaves when they fall to the ground.',
                 icon: [4, 14, "magixmod"],
                 cost: { 'basic building materials': 900 },
                 use: { 'land of the Paradise': 50, 'industry point': 5 },
                 staff: { 'worker': 10 },
                 upkeep: { 'cloudy water': 30 },
                 effects: [
-                    { type: 'gather', what: { 'ambrosium leaf': 40 } },
+                    { type: 'gather', what: { 'ambrosium leaf': 25 } },
+                    { type: 'gather', what: { 'ambrosium leaf': 10 }, every: 2 },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                 ],
                 req: { 'ambrosium treeplanting': true, 'paradise building': true },
@@ -8416,7 +8416,7 @@ if (getObj("civ") != "1") {
                 use: { 'land of the Paradise': 1, 'industry point': 1 },
                 staff: { 'worker': 1, 'stone tools': 1 },
                 effects: [
-                    { type: 'convert', from: { 'ambrosium leaf': 75, 'holy essence': 4, 'mana': 8 }, into: { 'ambrosium shard': 1 }, every: 4 },
+                    { type: 'convert', from: { 'ambrosium leaf': 75, 'mana': 8, 'holy essence': 4 }, into: { 'ambrosium shard': 1 }, every: 4 },
                 ],
                 req: { 'ambrosium treeplanting': true, 'paradise building': true, 'ambrosium crafting': true },
                 category: 'paradiseunit',
@@ -8526,13 +8526,13 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'library',
-                desc: '[books] may be stored here to slow down their decay. Provides 3,000 [book storage].',
+                desc: '[books] may be stored here to slow down their decay and make them accessible to the public. Provides 2,000 [book storage].',
                 icon: [21, 5, "magixmod"],
                 cost: { 'basic building materials': 1100 },
                 use: { 'land': 1, 'worker': 5 },
                 req: { 'bookwriting': true, 'construction': true },
                 effects: [
-                    { type: 'provide', what: { 'book storage': 3000 } }
+                    { type: 'provide', what: { 'book storage': 2000 } }
                 ],
                 category: 'civil',
             });
@@ -10174,15 +10174,15 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'statue of Madness',
-                desc: '@Leads to the completion of the <b>Unhappy</b> trial. //A monument of anger and wrath. A wonder for Bersaria the Seraphin of Madness. Tall statue with a mad face and some bonfires. <><font color="#fdd">It is insane...INSANE!!!</font>',
+                desc: '@Leads to the completion of the <b>Unhappy</b> trial. //A monument of anger and wrath. A wonder for Bersaria the Seraphin of Madness. Is a tall statue with a mad face and some bonfires. <><font color="#fdd">It is insane...INSANE!!!</font>',
                 wonder: 'unhappy',
                 icon: [7, 26, "magixmod"],
                 wideIcon: [6, 26, "magixmod"],
                 cost: { 'basic building materials': 250, 'gold block': 10 },
-                costPerStep: { 'gold block': 15, 'blood': (2 * (G.achievByName['unhappy'].won + 1.2)), 'basic building materials': 100, 'gem block': 1 },
+                costPerStep: { 'gold block': 15, 'blood': (2 * (G.achievByName['unhappy'].won + 1.2)), 'basic building materials': 100, 'fire pit': 1, 'gem block': 1 },
                 steps: 100,
                 messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have an angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
-                finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'blood': 75 },
+                finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'fire pit': 10, 'blood': 75 },
                 finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,people], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape this plane of Wrath and Madness and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't2': true, 'trial': true, 'language': true },
@@ -10206,7 +10206,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'hartar\'s statue',
-                desc: '@Leads to the completion of the <b>Hunted</b> trial. //This statue is fully related to patron of this plane: Hartar.<><font color="#ffd000">Fresh [meat] might be healthy enough...</font>',
+                desc: '@Leads to the completion of the <b>Hunted</b> trial. //This statue is dedicated to the one and only patron of this plane: Hartar.<><font color="#ffd000">Fresh [meat] might be healthy enough...</font>',
                 wonder: 'hunted',
                 icon: [25, 26, "magixmod"],
                 wideIcon: [24, 26, "magixmod"],
@@ -10901,16 +10901,16 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wheat farmland',
-                desc: '@Specifically harvests [wheat]. This strangely charming farm not only produces [wheat] but also provides: 50 [housing] and 1,000 [food storage]. //[grain fertilizer] increases the efficiency.',
+                desc: '@Specifically harvests [wheat]. This strangely charming farm not only produces tons of [wheat], but also provides 50 [housing] and 1,000 [food storage].',
                 icon: [4, 9, "magixmod"],
                 cost: { 'seeds': 2000, 'basic building materials': 800 },
                 req: { 'glorious agriculture': true },
-                use: { 'worker': 16, 'land of the Past': 50, 'stone tools': 12, 'industry point': 8 },
-                upkeep: { 'water': 14 },
-                limitPer: { 'land': 1000 },
+                use: { 'land of the Past': 3, 'worker': 16, 'land of the Past': 50, 'stone tools': 12, 'industry point': 8 },
+                upkeep: { 'water': 12 },
+                limitPer: { 'land of the Past': 500 },
                 category: 'ancestorsunit',
                 effects: [
-                    { type: 'gather', context: 'gather', what: { 'wheat': 20 } },
+                    { type: 'gather', context: 'gather', what: { 'wheat': 300 } },
                     { type: 'provide', what: { 'housing': 50, 'food storage': 1000 } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.2, req: { 'gt2': true } },
@@ -10920,16 +10920,16 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'vegetable farmland',
-                desc: '@Specifically harvests [vegetables]. This rather charming farm not only produces [vegetables], but also provides 50 [housing] and 1,000 [food storage].',
+                desc: '@Specifically harvests [vegetables]. This strangely charming farm not only produces tons of [vegetables], but also provides 50 [housing] and 1,000 [food storage].',
                 icon: [5, 9, "magixmod"],
                 cost: { 'seeds': 2000, 'basic building materials': 800 },
                 req: { 'glorious agriculture': true },
-                use: { 'worker': 16, 'land of the Past': 50, 'stone tools': 12, 'industry point': 8 },
-                upkeep: { 'water': 14 },
-                limitPer: { 'land': 1000 },
+                use: { 'land of the Past': 3, 'worker': 16, 'land of the Past': 50, 'stone tools': 12, 'industry point': 8 },
+                upkeep: { 'water': 12 },
+                limitPer: { 'land of the Past': 400 },
                 category: 'ancestorsunit',
                 effects: [
-                    { type: 'gather', context: 'gather', what: { 'fruit': 20 } },
+                    { type: 'gather', context: 'gather', what: { 'vegetables': 250 } },
                     { type: 'provide', what: { 'housing': 50, 'food storage': 1000 } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 2, req: { 'backshift at farms': true } },
@@ -11089,7 +11089,7 @@ if (getObj("civ") != "1") {
                 cost: { 'stone': 500, 'advanced building materials': 1000, 'water': 100000, 'magic essences': 100000 },
                 costPerStep: { 'platinum block': 15, 'golden mushroom': 100, 'precious building materials': 25, 'magic essences': 10000 },
                 steps: 25000,
-                messageOnStart: 'You begin throwing things down of the Well of Ideas. It looks more like a shallow pit currently, but you have a suspicion it might go on forever.',
+                messageOnStart: 'You begin throwing resources down of the Well of Ideas. It looks more like a shallow pit for now, but you have a suspicion it might go on forever.',
                 require: { 'worker': 40 },
                 req: { 'the well of ideas': true },
                 type: 'portal',
@@ -13082,7 +13082,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'supreme healthy life',
                 displayName: 'Healthy life',
-                desc: 'Intelligent people came with doctrines of a healthier life. Then they shared their thoughts. Surprisingly, they were right. People are getting even healthier and even better! @This trait allows each person to generate a little bit of [health]. People won\'t eat even more food, so do not worry.',
+                desc: 'Intelligent people came up with doctrines for a healthier life. Then they shared their thoughts, and it turns out they were right. People are slowly getting even healthier... @This trait allows each person to generate a little bit of [health]. People won\'t eat even more food, so do not worry.',
                 icon: [22, 0, "magixmod"],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
                 chance: 120,
@@ -13090,7 +13090,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'healthy life',
-                desc: 'Intelligent people came with doctrines of how to live a healthier life, all because of their moderation culture. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait allows each person to generate a little bit of [health]. People won\'t eat more food, so do not worry.',
+                desc: 'Intelligent people came up with doctrines of how to live a healthier life, all because of their moderation culture. Then they shared their thoughts. Surprisingly, they were right, but they weren\'t happy with simple [food]-based moderation. People got even healthier and feel even better. @This trait allows each person to generate a little bit of [health]. People won\'t eat more food, so do not worry.',
                 icon: [22, 1, "magixmod"],
                 cost: { 'culture': 150, 'insight': 100, 'influence': 15 },
                 chance: 200,
@@ -18946,7 +18946,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'baking III', category: 'tier2',
-                desc: '<li>Baking [bread] becomes even faster and tastier!</li>//Wheat farms also become four times faster. //<small>Maybe one day, every citizen can enjoy this food...</small>',
+                desc: '<li>Baking [bread] becomes even faster!</li>//[wheat farm]s also become four times faster. //<small>Maybe one day, every citizen can enjoy this food...</small>',
                 icon: [1, 39, "magixmod", 22, 12, "magixmod"],
                 cost: { 'insight II': 65, 'culture II': 5 },
                 req: { 'baking II': true },
@@ -18955,7 +18955,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'gardening III', category: 'tier2',
-                desc: 'Get even better [wheat] farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
+                desc: 'Get even better farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
                 icon: [1, 39, "magixmod", 10, 0, "magixmod"],
                 cost: { 'insight II': 200, 'culture II': 30 },
                 req: { 'baking III': true, 'art of cooking III': true },
@@ -23195,7 +23195,7 @@ if (getObj("civ") != "1") {
 
             new G.Res({
                 name: 'food storage',
-                desc: 'Each [food storage] unit slows down decay for one [food] unit.//The number on the left is how much food storage is occupied, while the number on the right is how much you have in total.',
+                desc: 'Each [food storage] unit slows down decay for one piece of [food].//The number on the left is how much food storage is occupied, while the number on the right is how much you have in total.',
                 icon: [12, 5, "c2"],
                 tick: function (me, tick) {
                     var amount = 0;
