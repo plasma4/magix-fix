@@ -1917,7 +1917,7 @@ if (getObj("civ") != "1") {
                     } else {
                         if (G.getRes('influence').amount <= G.getRes('authority').amount - 1) G.gain('influence', 1 + (G.has('at1') ? (Math.floor(G.unitByName['church'].amount / 3)) + (Math.floor(G.unitByName['cathedral'].amount / 3)) : 0));
                     }
-                    G.influenceTraitRemovalCooldown -= (Math.floor(G.getUnitAmount('lawyer') / 100) + (G.influenceTraitRemovalCooldown > 3000 ? Math.floor(G.getUnitAmount('mediator') / 75) : 0));
+                    G.influenceTraitRemovalCooldown -= (Math.floor(G.getUnitAmount('lawyer') / 100) + (G.influenceTraitRemovalCooldown > 3000 ? Math.floor(G.getUnitAmount('mediator') / 50) : 0));
                     //science trickle for bonus 2 or above
                     if (G.has('eotm')) {
                         if (G.has('bonus2') || G.has('bonus3') || G.has('bonus4') || G.has('bonus5') || G.has('bonus6')) {
@@ -1978,7 +1978,7 @@ if (getObj("civ") != "1") {
                         if (G.achievByName['mausoleum'].won == 0) {
                             G.Message({ type: 'tutorial', text: 'It\'s a good idea to ascend with the Mausoleum! When you start a new run after getting the Mausoleum victory, you will unlock way more technologies, and something magical...', icon: [32, 27, "magixmod"] });
                         } else {
-                            G.Message({ type: 'tutorial', text: 'I need to warn you. In next 20 years, something bad will start to occur. It seems like you ascended already, which is a good choice. To prepare for this event, you should start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, "magixmod"] });
+                            G.Message({ type: 'tutorial', text: 'I need to warn you. ' + (G.has('time measuring 1/2') ? 'In the next 20 years' : 'Soon') + ', something bad will start to occur. It seems that you have previously ascended, which is a good choice. To prepare for this event, you should probably start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, "magixmod"] });
                         }
                     if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may recieve future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, "magixmod"] });
                     if (G.year == 9000) {
@@ -4573,6 +4573,7 @@ if (getObj("civ") != "1") {
                 category: 'terr',
                 tick: function (me, tick) {
                     G.getDict('land of the Plain Island').displayName = 'Land of the ' + islandName()
+                    console.log(islandName())
                     G.getDict('land of the Plain Island').desc = 'The land you got from activating a portal to the new island: ' + islandName() + '. A place for new buildings.'
                 },
             });
@@ -4905,9 +4906,9 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'alchemy zone',
-                desc: 'This part of the land will be occupied by [alchemist]s (and their seats). Here they brew potions and craft many other drinks!',
+                desc: 'This part of the land can be occupied by [alchemist]s (and their units) that uses [land of the Plain Island]. Here they can brew potions, mana, and concoctions!',
                 icon: [17, 7, "magixmod"],
-                category: 'main',
+                category: 'terr',
                 displayUsed: true,
             });
             new G.Res({
@@ -5400,8 +5401,7 @@ if (getObj("civ") != "1") {
                 desc: 'You can use these points to set up some industries in the Paradise. Depending on the path that your civilization took, you will have either 800 or 1000 of these points!',
                 icon: [0, 14, "magixmod"],
                 displayUsed: true,
-                category: 'main',
-                hidden: true
+                category: 'main'
             });
             new G.Res({
                 name: 'worship point',
@@ -5658,7 +5658,8 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'basic factory equipment',
-                desc: 'Mostly useful while in [moderation] path. Without it some automation would be impossible. Parts include metal hooks, weights, or pieces of a conveyor.',
+                displayName: 'Basic factory part',
+                desc: 'Without these parts, some complicated machines would be impossible to put together! These parts include metal hooks, weights, or conveyor pieces.',
                 icon: [choose([9, 10]), 18, "magixmod"],
                 category: 'gear',
             });
@@ -8494,7 +8495,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'mediator',
-                desc: 'Solves people\'s arguments with the help of the law to prevent unfair things from occuring. Generates [happiness] and [influence] every now and then. @every 75 [mediator]s reduce the cooldown until the next trait removal by 1 tick if the cooldown is longer than a decade.',
+                desc: 'Solves people\'s arguments with the help of the law to prevent unfair things from occuring. Generates [happiness] and [influence] every now and then. @every 50 [mediator]s will reduce the cooldown until the next trait removal by 1 tick',
                 icon: [9, 13, "magixmod"],
                 cost: {},
                 upkeep: { 'food': 0.2 },
@@ -10836,7 +10837,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'exploreOcean', unexplored: 0.07, mode: 'discover' },
                     { type: 'exploreOcean', explored: 0.07, mode: 'explore' },
-                    { type: 'exploreOcean', unexplored: 0.21, explored: 0.21, upkeep: { 'wind essence': 4 }, mode: 'wind' },
+                    { type: 'exploreOcean', unexplored: 0.21, explored: 0.21, upkeep: ['wind essence', 4], mode: 'wind' }, // THIS UPKEEP IS AN ARRAY DUE TO HOW EXPLOREOCEAN IS HANDLED IN UTILS
                     { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned', 'ships sank. Sadly, everyone who was on the ship drowned..'), chance: 1 / 117.5, notMode: 'off', req: { 'at4': false } },
                     { type: 'function', func: unitGetsConverted({}, 0.01, 0.05, true, '[X] [people].', 'ship sank. Sadly, everyone who was on the ship drowned', 'ships sank. Sadly, everyone who was on the ship drowned..'), chance: 1 / 150, notMode: 'off', req: { 'at4': true } },
                     { type: 'mult', value: 1.05, req: { 'at2': true } },
@@ -11786,7 +11787,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Tech({
                 name: 'wizardry', category: 'tier1',
-                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated: instead, they consume [mana]. Get [wizard wisdom] so that you can hire some [wizard]s!//With your newfound discovery of <b><font color="white">Wizards</font></b>, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Note: it doesn\'t mean anything bad...</small>',
+                desc: '@Some sort of weird, uncommon people will now arrive in you tribe. They are called <b><font color="white">Wizards</font></b>. They behave weird. From now, wizardry and essences will start to appear. Essences are not naturally generated: instead, they consume [mana]. Get [wizard wisdom] so that you can hire some [wizard]s!//With your newfound discovery of <b><font color="white">Wizards</font></b>, both [scouting] and [exploration trips] can be unlocked at the same time upon getting this!//<small>Wizards only intend to do good!</small>',
                 icon: [5, 3, "magixmod"],
                 cost: { 'insight': 75, 'faith': 5 },
                 req: { 'well-digging': true, 'instruction': true, 'a gift from the mausoleum': true, 'spark\'o religion': true },
@@ -14234,7 +14235,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Conveyor conception', category: 'tier2',
-                desc: 'People led by [automation] think about automating movement of produced things so they wouldn\'t have to move it by using their hands and they would focus more on work increasing efficiency of their [factories I,Factories]. @gives 50 bonus [industry point]s',
+                desc: 'People led by [automation] want to learn how to automate the movement of objects, so they wouldn\'t have to move them by hand. @Getting this tech also gives 50 bonus [industry point]s',
                 icon: [0, 24, "magixmod"],
                 cost: { 'insight II': 135 },
                 req: { 'policy revaluation': true, 'moderation': true },
@@ -14369,7 +14370,8 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'plain island mining strategies', category: 'tier2',
-                desc: '@Decreases the accident rate at the [mine of the plain island]. @Increases the efficiency of [mine of the plain island] by 5%. @Applies a new visual change to [mine of the plain island]\'s icon!',
+                displayName: 'Safer island mining strategies',
+                desc: '@Decreases the accident rate at the [mine of the plain island], and also increases their efficiency slightly. @Applies a new visual change to [mine of the plain island]\'s icon!',
                 icon: [31, 7, "magixmod"],
                 cost: { 'insight II': 50, 'science': 2 },
                 req: { 'mining strategy': true }
@@ -15423,7 +15425,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge', category: 'tier1', //despite of costs it doesn\'t do much
-                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will be reset to 0 after purchasing this tech (excluding [industry point]s or [worship point]s). [happiness] and [health] will also be completely reset.<hr><font color="#f70054">Note: It does <b>not</b> expand the map and does not add any new goods; you will simply have an extra 1.5% of [land] and [wtr]. It may help you, but there is a huge risk involved!</font>',
+                desc: 'Send your people beyond the edge of the world for the first time. You will lose 30% of your current [population] and all [insight,Essential] amounts will be reset to 0 after purchasing this tech (excluding [industry point]s or [worship point]s). [happiness] and [health] will also be completely reset.<hr><font color="#f70054">Note: This tech can unlock more in the future, but does <b>not</b> expand the map and does not add any new goods; you will simply have an extra 1.5% of [land] and [wtr]. It may help you, but there is a huge risk involved!</font>',
                 req: { 'policy revaluation': true, 'focused scouting': true },
                 cost: { 'insight II': 45, 'influence': 255 },
                 icon: [33, 26, "magixmod"]
@@ -15496,7 +15498,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'beyond the edge II', category: 'tier2',
-                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 after purchasing this tech (excluding [industry point]s or [worship point]s). [happiness] and [health] will also be completely reset.<hr><font color="#f70054">Note: It does not expand the map and it does not add any new goods. Getting this will give you an extra 7% of [land] and [wtr] rather than 1.5%, overriding the previous tech. It may help you, but there is an even larger risk now! The further you push beyond the edge, a stronger scourge will fall on you and your civilization...</font>',
+                desc: 'Send your people beyond the edge of the world for the second time. You will lose 40% of your current [population], all remaining [adult]s will become [sick], and all [insight,Essential] amounts will be reset to 0 after purchasing this tech (excluding [industry point]s or [worship point]s). [happiness] and [health] will also be completely reset.<hr><font color="#f70054">Note: This tech can unlock more in the future, but does not expand the map and it does not add any new goods. Getting this will give you an extra 7% of [land] and [wtr] rather than 1.5%, overriding the previous tech. It may help you, but there is an even larger risk now! The further you push beyond the edge, a stronger scourge will fall on you and your civilization...</font>',
                 req: { 'beyond the edge': true, 'wonder \'o science': true },
                 cost: { 'insight II': 345, 'science': 26, 'culture II': 24 },
                 icon: [0, 39, "magixmod", 0, 30, "magixmod"],
@@ -15673,7 +15675,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'People know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To be able to see see what day it is, obtain the next part of this research.',
+                desc: 'People now know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To be able to see see what day it is, obtain the next part of this research.',
                 icon: [27, 3, "magixmod", 34, 30, "magixmod"],
                 cost: { 'insight': 50 },
                 req: { 'maths II': true, 'primary time measure': true },
@@ -26054,7 +26056,7 @@ if (getObj("civ") != "1") {
                 cost: { 'gentility': 25, 'discernment': 5 },
                 category: 'long',
                 chance: 500,
-                req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false },
+                req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'respect for the corpse': false, 'art of death': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
             });
             new G.Trait({
@@ -26216,7 +26218,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'time measuring 1/2', category: 'tier1',
-                desc: 'Elves know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To see days as well, you\'ll need to wait some more.',
+                desc: 'Elves now know how to measure time. Getting this will let you see what year it is in your tribe! Also allows to see when <b>temporary traits</b> will expire. //To see days as well, you\'ll need to wait some more.',
                 icon: [27, 3, "magixmod", 25, 12, "c2"],
                 cost: { 'discernment': 60, 'creativity': 12 },
                 effects: [
@@ -29014,3 +29016,4 @@ if (getObj("civ") != "1") {
         }
     })
 }
+G.stabilizeResize()

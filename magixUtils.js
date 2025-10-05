@@ -832,6 +832,8 @@ G.logic['res'] = function () {
 
 //change page layout to fit width (for Magix, the defaults are TOO LOW, sadly)
 G.stabilizeResize = function () {
+    G.w = window.innerWidth;
+    G.h = window.innerHeight;
     G.resizing = false;
     if (l('civBlurb')) l('civBlurb').style.marginTop = (G.w < 1410 ? 42 : 0) + 'px';
     l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
@@ -1095,6 +1097,19 @@ G.AddData({
                     'Td'
                 ])
             ];
+
+        G.BT = function (value)//value is in game days
+        {
+            //give a Beautified Time string for the given value
+            value = Math.max(Math.ceil(value, 0));
+            var years = Math.floor(value / 300);
+            value -= years * 300;
+            var days = Math.floor(value);
+            var bits = [];
+            if (years) bits.push(B(years) + ' year' + (years == 1 ? '' : 's'));
+            if (years < 1000 && days || bits.length == 0) bits.push(B(days) + ' day' + (days == 1 ? '' : 's'));
+            return bits.join(', ');
+        }
 
 
         G.PARTY = 0;
