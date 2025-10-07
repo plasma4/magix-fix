@@ -29,7 +29,7 @@ Do note, this is an non-exhaustive list and when in doubt, you should check the 
 - `G.gain(what: String, amount: number, context: String)`/`G.lose(what,amount,context)`: Gain or lose a certain amount of an item (`what`). The `context` value is used to display to the user info when hovering over a resource (so they might see "-6.0 from eating" when hovering over the herbs resource). Note that it is safe to plug in negative values to either function.
 - `G.has(what: String)`: Determines if you have a knowledge of something. Knowledge would be your techs and traits.
 - `G.checkReq(req: object)`: The universal function for checking requirements. It's more powerful than `G.has()` because it can check for more details (like `{'wisdom rituals':'on'}`) and multiple conditions at once since it is an object. It returns `true` only if all conditions in the `req` object are met. (Note that unit modes can have their own `req` values as well.)
-- `G.testCost(costs: object, mult: number)`/`G.doCost(costs: object, mult: number)`: `testCost` returns `true` or `false` if you can afford the items in `costs`, while `doCost` actually subtracts them. Used for purchases.
+- `G.testCost(costs: object, mult: number)`/`G.doCost(costs: object, mult: number)`: `testCost` returns `true` or `false` if you can afford the items in `costs`, while `doCost` actually subtracts them. Used for purchases (has a bug, see Additional info).
 - `G.checkPolicy(name: String)`: Same as `.has` but for policies. Set a policy using `G.setPolicyModeByName(me: String, mode: String)`.
 - `randomFloor(x: number)`: `if ((x%1)<Math.random()) return Math.floor(x); else return Math.ceil(x);`. Basically, rounding down is more likely if the fractional part of x is less than 0.5 and more likely to round up if greater than 0.5.
 - `G.getSetting(name: String)`/`G.setSetting(name: String)`: Gets or sets a setting. (An example setting name is `debug`.)
@@ -259,10 +259,10 @@ new G.Trait({
 ```
 Resources, achievements, and policies can be made invisible by setting `visible` to false. By default, policies have `'on'`/`'off'` modes. Remember, more detailed information on all possible properties is in `getGameJSON()`, shown at the end of this document!
 
-Do note that Magix uses `traitTick` to randomly generate traits, while `data.js` does so in `G.funcs['new day']`.
+Do note that Magix uses `traitTick` to randomly generate traits, while `data.js` does so directly in `G.funcs['new day']`.
 
 ## Basic mod structure
-Automatic construction of mod structure can be done with [this tool](https://plasma4.github.io/magix-fix/magix-wiki.html) although it's still rather clunky and not very extendable. (Click on "Show mod creator") It might give you an idea of the basics though!
+Automatic construction of some mod structure can be done with [this tool](https://plasma4.github.io/magix-fix/magix-wiki.html) although it's still rather clunky and not very extendable. (Click on "Show mod creator" to start.) It might give you an idea of the basics though! Additionally, Orteil has his own example mod code [here](https://orteil.dashnet.org/legacy/mod.js).
 
 Anyway, here is the minimal NEL mod:
 ```js
@@ -277,7 +277,7 @@ G.AddData({
   }
 })
 ```
-Then, add stuff in the `func` function (or outside if you want), such as new techs, traits, or interactions. The best practice is usually to modify content after it has been created by the base game or another mod. This is done by adding code to your `func` like this:
+Then, you can add stuff in the `func` function (or outside if you want), such as new techs, traits, or interactions. The best practice is usually to modify content after it has been created by the base game or another mod. This is done by adding code to your `func` like this:
 ```js
 G.getDict("gatherer").desc += "<>Yummy!"
 ```
@@ -313,10 +313,10 @@ new G.Unit({
   category:'wonder',
 });
 ```
-`main.js` and `magixUtils.js` have the code for the popup that says "This wonder only needs one more step to finalize" and makes the buttons, but we won't go over them here.
+`main.js` (or `magixUtils.js` with Magix) have the code for the popup that says "This wonder only needs one more step to finalize" and creates the buttons, but we won't go over them here.
 
 ## Additional info
-1. Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was Array(2102051) and `techByTier` was Array(297288). The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does.
+1. Check the Optimization section for ways to speed up the game that the base game does not do. (There is a lot you can do!)
 2. The game will execute your mod file more than once after initially creating a "New game" through the settings (or ascending) or reloading the page, even if that code is outside of the `func` function. If this is a problem you may want to do something like this in your mod file:
     ```js
     if (!window.johnsModLoaded) {
@@ -325,8 +325,12 @@ new G.Unit({
     }
     ```
 3. If you want to create a smaller mod and not a large overhaul it's almost certain that you do not need to replace `data.js` like Magix does. Depending on what you want though, your mod doesn't have to function with Magix (or and mods at all)!
-4. Importantly, the `main.js` in this repo is [different than the actual `main.js`](https://orteil.dashnet.org/legacy/main.js).
-5. Oh, yeah, and `data.js` was also changed for this repo. [Original data.js here.](https://orteil.dashnet.org/legacy/main.js) One of these changes is that fertility rituals only consumed faith every 50 days instead of 20 days, despite the text saying otherwise. Might want to change that in your mod :p
+4. Importantly, the `main.js` in this repo is [different than the actual `main.js`](https://orteil.dashnet.org/legacy/main.js). Oh, yeah, and `data.js` was also changed for this repo. [Original data.js here.](https://orteil.dashnet.org/legacy/main.js) One of these changes is that fertility rituals only consumed faith every 50 days instead of 20 days, despite the text saying otherwise. Might want to change that in your mod :p
+5. There's actually a bug with how cost calculation works. In the base game, the cost testing functions don't account for subresources! Consider a case where you have 250,000 marble. Marble is a part of precious building resources, and pretend that you have a total of 300,000 precious building resources (so 50,000 non-marble). The problem is that this code will actually return `true` in that situation:
+    ```js
+    G.testCost({'precious building materials': 250000, 'marble': 250000}, 1) // Can I spend 250k precious building materials and 250k marble?
+    ```
+    Therefore, this is fixed in Magix (find `G.testCost` in `magixUtils.js`).
 6. [The production multiplier's formula is weird and uses `randomFloor()`.](https://www.desmos.com/calculator/hfowgwemgp) (The Desmos graph has more context; basically the multiplier from happiness is rounded, can be 0 if happiness is a negative percentage, and can go up to 4 times base.) The more you know :)
 7. Magix fundamentally alters many mechanics in the game, and `magix-fix` has edited more of them. Currently it is unfortunately at the point where so many base mechanics have been changed that it would be near impossible to find them all. These would include mobile features (in `G.widget.update`), making `stabilizeResize` more responsive, removal of empty tick functions in `G.Res()`. If you want mobile support or perhaps a more detailed attempt at fiding the differences, contact me on Discord (see top of this document).
 8. The [Magix Wiki](https://plasma4.github.io/magix-fix/magix-wiki.html) might be helpful in order to quickly look for and examine certain items and their interactions between them! In particular, clicking on a unit provides an actually readable explanation of what goes on, and knowledge has detailed explanation (do note, though, that requirements or other properties that are changed with the JS will NOT be shown here).
@@ -340,10 +344,10 @@ new G.Unit({
     amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05
     ```
     So, with 35 herbs available and 10 desired, you would only get 10 herbs.
-However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
+    However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
 11. By default, resources are not `fractional`. One of the most annoying bugs is when resources inconsistently become higher or lower than before, and this might happen if the resource you are doing math on isn't fractional, such as when wizards in Magix `'provide'` 0.5 insight each, resulting in weird queue/unqueue problems with changing insight. Note that queue/unqueue code is in `G.update['unit']()`. (To the user, `fractional` resources still appear as integers.)
 12. Tech and trait IDs are unified because they both are actually considered "knowledge" internally, and extend `G.Know`. (What a weird piece of trivia!)
-13. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
+13. Hotkeys code can be added in your own mod with code from https://github.com/plasma4/magix-extras/blob/master/hotkeys.js.
 14. If you try to have text like `[custom resource name]` that doesn't exist, then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
 15. On the topic of custom text, you can use HTML in descriptions, and custom shortcuts. Magix has this function:
     ```js
@@ -362,18 +366,39 @@ However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. Yo
     }
     ```
     which is where the shortcuts are from. `G.parseFunc` simply takes something like `[gatherer]` and turns it into the neat icon preview and bold white text by calling `G.getSmallThing`.
-16. Magix(-fix version) modifies the chances of particles appearing by adding this line of code to `G.showParticle`:
-    ```js
-    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
-    ```
-    which you may want if there are many new units in your mod.
-17. (Magix-specific) Magix frequently checks for `G.modsByName['default dataset']` in `magixUtils.js` to determine if the race is human or not, since there are two races in the game.
-18. You can add this line of code in `G.traitTick` below `if (!G.has(me.name))` (or uncomment it in Magix):
+16. (Magix-specific) Magix frequently checks for `G.modsByName['default dataset']` in `magixUtils.js` to determine if the race is human or not, since there are two races in the game.
+17. You can add this line of code in `G.traitTick` below `if (!G.has(me.name))` (or uncomment it in Magix):
     ```js
     if (G.checkReq(me.req) && G.testCost(me.cost, 1)) console.log(me.name, me.chance)
     ```
     to easily see what traits can be obtained, and chances of each trait. Magix also has a function trait chance function using `G.getTraitChance` that overhauls `G.traitTick`.
-19. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.)
+18. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
+19. Magix adds touchscreen support, and makes stuff smaller for smaller resolutions (such as mobile). Search "Allow touchscreen" in `magix.js` to see the changes! If you are considering mobile support, and implement the code for small/half sizes in `newMagix.css`. Additionally, you will want to use your own version of `G.stabilizeResize` (since Magix has more tabs and features, its logic is all weird).
+20. On the topic of better UI it is strongly suggested to incorporate some of `newMagix.css` into your game to prevent weird situations such as the speed/debug buttons at the top of the screen "unhovering" itself every so often (that happens because the `logoOverB` element wiggles periodically and somehow messes up button clicking).
+21. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.) Oh, and in the actual game, text before a colon has a space in between (which is probably a French thing), but this has been changed in this repo.
+
+## Optimization
+Magix-fix contains a *lot* of optimization that may not immediately be apparent. So, I've compiled this list to try to find them for other modders:
+- Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was `Array(2102051)` and `techByTier` was `Array(297288)` due to me adding some new techs. The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does!
+- There is an implementation of `G.maxLogicCallsPerFrame` that caps the number of `G.Logic` calls in a frame to prevent significant lag in `magixUtils.js`, which can make the game feel a lot smoother on lower-end devices. By default, `G.maxLogicCallsPerFrame` is set to 4 but can be changed!
+- It is possible to prevent constant HTML updates for unit amounts by checking if `me.lAmount.innerHTML` actually changed.
+- Instead of updating tabs many times on save loading/resetting, only update them once by finding `G.noUpdate`/`G.releaseUIUpdate` (find in `magixUtils.js`).
+- Modify the chances of particles appearing by adding this line of code to `G.showParticle`:
+    ```js
+    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
+    ```
+    which you may want if there are many new units in your mod.
+- Movement of this code:
+    ```js
+    var scrolled = !(Math.abs(G.messagesWrapl.scrollTop - (G.messagesWrapl.scrollHeight - G.messagesWrapl.offsetHeight)) < 3);//is the message list not scrolled at the bottom? (if yes, don't update the scroll - the player probably manually scrolled it)
+    ```
+    to right below this:
+    ```js
+    var div = document.createElement('div');
+    // put that code here instead
+    ```
+    This code movement prevents the JS from having to determine what scrollTop is every single time.
+- Creation of new objects (`G.units/techs/traitsOwnedObject`) to make `G.has` blazing fast, and changing how `G.has` works (check `magixUtils.js` for changes). This takes a little bit to do but can provide some significant benefits!
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:

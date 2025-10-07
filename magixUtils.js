@@ -40,6 +40,10 @@ if (!window.magixLoaded) {
     terrainMagixImg.src = magixURL + 'terrainMagix.png'
     G.traitChanceMult = 1 // Simply multiplies trait chances
     window.magixLoaded = 1
+    G.unitsOwnedObject = {}
+    G.techsOwnedObject = {}
+    G.traitsOwnedObject = {}
+
     var conflictingStorageObjects = ["civ"]
     G.storageObject = {}
     try {
@@ -66,7 +70,19 @@ if (!window.magixLoaded) {
 }
 
 G.getTraitChance = function (me, extraBoost) {
-    return 1 / (me.chance * 300 * G.traitChanceMult * extraBoost)
+    return G.traitChanceMult * extraBoost / (me.chance * 300) // Note that if chance is undefined then this will never return true; the failure is silent so it is okay
+}
+
+// SMALL OPTIMIZATION
+G.has = function (what) {
+    //return true if we have at least 1 of the tech, trait or unit
+    var me = G.getDict(what);
+    var type = me.type;
+    if (type == 'tech' && G.techsOwnedObject[what]) return true;
+    else if (type == 'trait' && G.traitsOwnedObject[what]) return true;
+    else if (type == 'unit' && G.unitsOwnedObject[what]) return true;
+    //NOTE : actually returns true for units if they're visible on the production screen at all
+    return false;
 }
 
 //Cookies aren't really needed for this case, so they have been replaced with localStorage from now on; in addition, i've made it so that the game can detect the object data anyway without them by changing the releaseNumber value: this is just a backup method for those older versions
@@ -115,6 +131,16 @@ function unitAmount(name, res2, cap) {
 G.setDict = function (name, what) {
     //No more warnings :p
     G.dict[name] = what
+}
+
+// Instead of updating tabs many times on save loading/resetting only update them once by checking G.noUpdate.
+G.noUpdate = false
+G.noUpdateTabs = {}
+G.releaseUIUpdate = function () {
+    for (tab in G.noUpdateTabs) {
+        G.update[tab]()
+    }
+    G.noUpdateTabs = {}
 }
 
 /*==========================
@@ -307,7 +333,7 @@ G.Save = function (toStr) {
 }
 
 G.Load = function (doneLoading) {
-    document.title = "NeverEnding Legacy"
+    window.docTitle = "NeverEnding Legacy"
     G.middleText('<p id="loading">Loading save...</p>', "slow");
     if (G.importStr) { var local = G.importStr; }
     else {
@@ -323,6 +349,7 @@ G.Load = function (doneLoading) {
     str = unescape(str);
     //console.log(str);
     if (str != 'null' && str != '') {
+        G.noUpdate = true;
         var oldStorage = G.storageObject;
         try {
             G.storageObject = unescape(b64DecodeUnicode(local)).match(/\$\{.+?\}/);
@@ -335,7 +362,7 @@ G.Load = function (doneLoading) {
                         var newItem = G.storageObject[key];
                         if (oldStorage[key] !== newItem) {
                             G.dialogue.popup(function (div) {
-                                return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be wiped, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
+                                return '<div style="padding:16px;">Are you sure you want to load this save?<br>Your previous save will be immediately overwritten, as there is a storage conflict that requires a reload to fix.<br><br>' + G.button({
                                     text: 'Yes', onclick: function () {
                                         try {
                                             localStorage.setItem(G.saveTo, local);
@@ -477,7 +504,7 @@ G.Load = function (doneLoading) {
         var spl = str[s++].split(';');
         //console.log('Map tiles : '+spl);
         G.currentMap = new G.Map(0, 24, 24, spl[0]);
-        G.islandMap = new G.Map(1, 24, 24, spl[0]);
+        G.islandMap = new G.Map(1, 24, 24, "islMap" + spl[0]);
         var map = G.currentMap;
         var spl2 = spl[1].split(',');
         var I = 0;
@@ -622,6 +649,7 @@ G.Load = function (doneLoading) {
         G.releaseNumber = 55; //this must be assigned here or else we will have issues
         tabs();
         console.log('Game loaded successfully (release ' + G.releaseNumber + ').');
+        G.releaseUIUpdate();
         return true;
     }
     return false;
@@ -720,6 +748,7 @@ G.NewGameConfirm = function () {
 
     G.createMaps();
 
+    G.noUpdate = true;
     for (var i in G.res) {
         G.res[i].amount = G.res[i].startWith;
     }
@@ -737,6 +766,7 @@ G.NewGameConfirm = function () {
         var item = G.res[i]
         if (item.tick) item.tick(item, G.tick);
     }
+    G.releaseUIUpdate();
 
     G.runUnitReqs();
     G.runPolicyReqs();
@@ -788,6 +818,104 @@ G.NewGameConfirm = function () {
         }) + ' tips.'
     });
 }
+
+G.testCost = function (costs, mult) {
+    var tempAmounts = {};
+
+    // Prioritize specific costs first by sortin'
+    var sortedCosts = [];
+    for (var i in costs) {
+        sortedCosts.push({ name: i, cost: costs[i] * mult });
+    }
+    sortedCosts.sort(function (a, b) {
+        return (G.getDict(a.name).meta ? 1 : -1) - (G.getDict(b.name).meta ? 1 : -1);
+    });
+
+    for (var i = 0; i < sortedCosts.length; i++) {
+        var name = sortedCosts[i].name;
+        var cost = sortedCosts[i].cost;
+        if (cost <= 0) continue;
+
+        var res = G.getDict(name);
+
+        // Populate tempAmounts on-demand for performance
+        var populateTemp = function (resource) {
+            if (tempAmounts[resource.name] === undefined) {
+                if (resource.meta) {
+                    var total = 0;
+                    for (var c in resource.subRes) {
+                        total += populateTemp(resource.subRes[c]);
+                    }
+                    tempAmounts[resource.name] = total;
+                } else {
+                    tempAmounts[resource.name] = resource.amount;
+                }
+            }
+            return tempAmounts[resource.name];
+        };
+        populateTemp(res);
+
+        if (res.meta) {
+            var available = 0;
+            for (var c in res.subRes) { available += tempAmounts[res.subRes[c].name]; }
+            if (available < cost) return false;
+            // Spend proportionally from children
+            for (var c in res.subRes) {
+                if (available > 0) tempAmounts[res.subRes[c].name] -= (tempAmounts[res.subRes[c].name] / available) * cost;
+            }
+        } else {
+            if (tempAmounts[name] < cost) return false;
+            tempAmounts[name] -= cost;
+        }
+    }
+    return true;
+}
+
+G.testAnyCost = function (costs) {
+    var normalizedCosts = {};
+
+    // First pass: Add all direct, non-meta costs
+    for (var i in costs) {
+        if (!G.getDict(i).meta) {
+            if (!normalizedCosts[i]) normalizedCosts[i] = 0;
+            normalizedCosts[i] += costs[i];
+        }
+    }
+
+    // Second pass: Distribute meta costs to their children
+    for (var i in costs) {
+        var res = G.getDict(i);
+        if (res.meta) {
+            // Find the total pool of available sub-resources
+            var totalPool = 0;
+            for (var c in res.subRes) {
+                totalPool += G.getRes(res.subRes[c].name).amount;
+            }
+            if (totalPool > 0) {
+                // Distribute this cost to the children
+                for (var c in res.subRes) {
+                    var subRes = res.subRes[c];
+                    var proportion = G.getRes(subRes.name).amount / totalPool;
+                    if (!normalizedCosts[subRes.name]) normalizedCosts[subRes.name] = 0;
+                    normalizedCosts[subRes.name] += costs[i] * proportion;
+                }
+            }
+        }
+    }
+
+    // Now, run the simple calculation on the fully normalized cost object
+    var maxAfford = Infinity;
+    for (var i in normalizedCosts) {
+        var cost = normalizedCosts[i];
+        if (cost > 0) {
+            var have = G.getRes(i).amount;
+            maxAfford = Math.min(maxAfford, Math.floor(have / cost));
+        }
+    }
+
+    return maxAfford === Infinity ? -1 : maxAfford;
+}
+
 G.logic['res'] = function () {
     //update visibility
     var len = G.res.length;
@@ -830,7 +958,7 @@ G.logic['res'] = function () {
     }
 }
 
-//change page layout to fit width (for Magix, the defaults are TOO LOW, sadly)
+//change page layout to fit width (defaults are TOO LOW, sadly)
 G.stabilizeResize = function () {
     G.w = window.innerWidth;
     G.h = window.innerHeight;
@@ -850,6 +978,7 @@ G.stabilizeResize = function () {
     else { G.wrapl.classList.remove('narrower'); G.wrapl.classList.remove('narrow'); }
     //if (G.tab.id=='unit') G.cacheUnitBounds();
 }
+G.stabilizeResize() // Immediately call in order to fix initial resize issues
 
 G.CreateData = function () {
     //cleanse all data first
@@ -1212,6 +1341,7 @@ G.AddData({
             { id: 'pantheon', name: '<font color="#d4af37">----- Pantheon -----</font>' }
         );
         G.update['policy'] = function () {
+            if (G.noUpdate) G.noUpdateTabs['policy'] = true;
             if (G.has('policies')) {
                 var str = '';
                 str +=
@@ -1328,6 +1458,7 @@ G.AddData({
         }
         //TRAIT TAB
         G.update['trait'] = function () {
+            if (G.noUpdate) G.noUpdateTabs['trait'] = true;
             G.knowN = 0;
             G.traitN2 = 0;
             var c = 0;
@@ -1461,6 +1592,7 @@ G.AddData({
 
         //TECH TAB
         G.update['tech'] = function () {
+            if (G.noUpdate) G.noUpdateTabs['tech'] = true;
             var str = '';
             var isC1 = getObj("civ") == 0;
             if (isC1) {
@@ -1598,6 +1730,7 @@ G.AddData({
         /////////MODYFING UNIT TAB!!!!! (so some "wonders" which are step-by-step buildings now will have displayed Step-by-step instead of wonder. Same to portals)
 
         G.update['unit'] = function () {
+            if (G.noUpdate) G.noUpdateTabs['unit'] = true;
             l('unitDiv').innerHTML =
                 G.textWithTooltip('<big>?</big>', '<div style="width:240px;text-align:left;"><div class="par"><li>Units are the core of your resource production and gathering.</li></div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of.<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
                 '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
@@ -1878,7 +2011,7 @@ G.AddData({
                             var str = '<font color="' + (G.modsByName['Default dataset'] ? 'fuschia' : '#99ff66') + '" style="font-size:13px">' + B(Math.round(me.displayedAmount)) + '</font>';
                             if (me.idle) str = '<span style="opacity:0.8;font-size:13px;">' + B(Math.round(me.amount - me.idle)) + '</span>/' + str;
                             if (me.targetAmount - me.displayedAmount != 0) str = str + '<br><span style="opacity:0.8;">' + B(Math.round(me.targetAmount - me.displayedAmount)) + '</span>';
-                            me.lAmount.innerHTML = str;
+                            if (me.lAmount.innerHTML !== str) me.lAmount.innerHTML = str;
                         }
                     }
                     //me.displayedAmount+=(me.amount-me.displayedAmount)*0.25;
@@ -2139,6 +2272,7 @@ G.AddData({
 
                 G.createMaps();
 
+                G.noUpdate = true;
                 for (var i in G.res) {
                     G.res[i].amount = G.res[i].startWith;
                 }
@@ -2156,6 +2290,7 @@ G.AddData({
                     var item = G.res[i]
                     if (item.tick) item.tick(item, G.tick);
                 }
+                G.releaseUIUpdate();
 
                 G.runUnitReqs();
                 G.runPolicyReqs();
@@ -2183,7 +2318,7 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            document.title = 'Elf setup: NeverEnding Legacy';
+            window.docTitle = 'Elf setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -2199,7 +2334,7 @@ G.AddData({
             return str;
         }
         G.funcs['new game blurb'] = function () {
-            document.title = 'Setup: NeverEnding Legacy';
+            window.docTitle = 'Setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -3847,6 +3982,7 @@ G.AddData({
         ==============================*/
         //only pasted to update a tooltip due to tile exploring tech
         G.update['land'] = function () {
+            if (G.noUpdate) G.noUpdateTabs['land'] = true;
             G.updateMapDisplay();
             G.tabs[1].showMap = true;
             if (G.has('where am i?')) {
@@ -4016,8 +4152,7 @@ G.AddData({
                                                 }
                                             }
                                         } else G.cantWhenPaused();
-                                        widget.closeOnMouseUp = false;//override default behavior
-                                        widget.close(5);//schedule to close the widget in 5 frames
+                                        widget.close();
                                     };
                                 }(me, mode, div);
 
@@ -4085,9 +4220,11 @@ G.AddData({
                                 trait.yearOfObtainment = G.year;
                             }
                         }
+                        G.noUpdate = true;
                         for (var i in G.policy) {
                             if (!G.policy[i].skip) G.gainPolicy(G.policy[i]);
                         }
+                        G.releaseUIUpdate();
                         G.shouldRunReqs = true;
                         var audio = new Audio(magixURL + 'spiritReject.wav');
                         audio.play();
@@ -4141,7 +4278,7 @@ G.AddData({
         {
             var seed = makeSeed(12)
             G.currentMap = new G.Map(0, 24, 24, seed); // increase seed len
-            G.islandMap = new G.Map(1, 24, 24, seed)
+            G.islandMap = new G.Map(1, 24, 24, "islMap" + seed);
             //set starting tile by ranking all land tiles by score and picking one
             var goodTiles = [];
             for (var x = 1; x < G.currentMap.w - 1; x++) {
@@ -4187,7 +4324,7 @@ G.AddData({
         G.renderMap = function (_map, obj) {
             // TODO MAP TO RENDER
             if (!G.islandMap) {
-                G.islandMap = new G.Map(1, 24, 24, G.currentMap.seed)
+                G.islandMap = new G.Map(1, 24, 24, "islMap" + G.currentMap.seed)
             }
             var map = G.storageObject.map ? G.islandMap : G.currentMap
             var time = Date.now();
@@ -4787,7 +4924,6 @@ G.AddData({
             var me = {};
             me.type = 'normal';
             for (var i in obj) { me[i] = obj[i]; }
-            var scrolled = !(Math.abs(G.messagesWrapl.scrollTop - (G.messagesWrapl.scrollHeight - G.messagesWrapl.offsetHeight)) < 3);//is the message list not scrolled at the bottom? (if yes, don't update the scroll - the player probably manually scrolled it)
 
             me.date = G.year * 300 + G.day;
             var text = me.text || me.textFunc(me.args);
@@ -4835,6 +4971,7 @@ G.AddData({
             }
             if (mergeWith) mergeWith.l.innerHTML = str;
             else {
+                var scrolled = !(Math.abs(G.messagesWrapl.scrollTop - (G.messagesWrapl.scrollHeight - G.messagesWrapl.offsetHeight)) < 3);//is the message list not scrolled at the bottom? (if yes, don't update the scroll - the player probably manually scrolled it)
                 var div = document.createElement('div');
                 div.innerHTML = str;
                 div.className = 'message popInVertical ' + (me.type).replaceAll(' ', 'Message ') + 'Message';
@@ -4859,7 +4996,33 @@ G.AddData({
         }
 
         var oldFPSShow = G.getSetting('fpsgraph')
+        var catchupTimes = 0 // Detect catchup and cap it to prevent lag becoming really bad. G.catchupLogic is set to 0 the first logic loop in G.Loop which allows us to easily detect this.
+        G.maxLogicCallsPerFrame = 4
+        var callId = 0
         G.Logic = function (forceTick) {
+            G.unitsOwnedObject = {}
+            G.techsOwnedObject = {}
+            G.traitsOwnedObject = {}
+            for (var i = 0; i < G.unitsOwnedNames.length; i++) {
+                G.unitsOwnedObject[G.unitsOwnedNames[i]] = true
+            }
+            for (var i = 0; i < G.techsOwnedNames.length; i++) {
+                G.techsOwnedObject[G.techsOwnedNames[i]] = true
+            }
+            for (var i = 0; i < G.traitsOwnedNames.length; i++) {
+                G.traitsOwnedObject[G.traitsOwnedNames[i]] = true
+            }
+
+            if (G.catchupLogic) {
+                if (++catchupTimes >= G.maxLogicCallsPerFrame) { // There is an additional call to G.Logic() in G.Loop() before calculating catchup logic so this logic should be sound
+                    // console.log("too many!")
+                    G.accumulatedDelay = 0
+                    return
+                }
+            } else {
+                catchupTimes = 0
+            }
+
             if (l("display")) l("display").style.display = G.w < 800 ? "none" : null
             for (var i in G.unit) {
                 if (G.unit[i].visible == undefined) G.unit[i].visible = true;
@@ -5504,7 +5667,7 @@ G.AddData({
 
         // Modify particle setting to just hide most particles with a random function
         G.showParticle = function (obj) {
-            if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.05 : 0.25)) return 0;
+            if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
             if (obj.y && (obj.y > G.h - 102 || obj.y < 26)) return 0;//cull if on black interface
             var me = G.particles[G.particlesI];
             me.x = 0;
@@ -5762,9 +5925,9 @@ G.AddData({
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
                                                     }
-                                                    document.title = 'Ascending: NeverEnding Legacy';
+                                                    window.docTitle = 'Ascending: NeverEnding Legacy';
                                                     G.theme = G.theme;
-                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 2000);
+                                                    setTimeout(function () { window.docTitle = 'NeverEnding Legacy' }, 2000);
                                                     if (G.modsByName['Default dataset']) {
                                                         G.achievByName['first glory'].won++;
                                                         if (G.checkPolicy('theme changer') == 'default') G.theme = 0;
