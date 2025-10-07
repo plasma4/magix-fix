@@ -819,6 +819,7 @@ G.NewGameConfirm = function () {
     });
 }
 
+// BEGIN COST TESTING CHANGES
 G.testCost = function (costs, mult) {
     var tempAmounts = {};
 
@@ -892,13 +893,16 @@ G.testAnyCost = function (costs) {
                 totalPool += G.getRes(res.subRes[c].name).amount;
             }
             if (totalPool > 0) {
-                // Distribute this cost to the children
+                // Distribute this cost to its children
                 for (var c in res.subRes) {
                     var subRes = res.subRes[c];
                     var proportion = G.getRes(subRes.name).amount / totalPool;
                     if (!normalizedCosts[subRes.name]) normalizedCosts[subRes.name] = 0;
-                    normalizedCosts[subRes.name] += costs[i] * proportion;
+                    normalizedCosts[subRes.name] += cost * proportion;
                 }
+            } else {
+                // Can't afford any, return!
+                return 0;
             }
         }
     }
@@ -915,6 +919,30 @@ G.testAnyCost = function (costs) {
 
     return maxAfford === Infinity ? -1 : maxAfford;
 }
+
+G.doCost = function (costs, mult) {
+    for (var i in costs) {
+        var res = G.getDict(i);
+        var cost = costs[i] * mult;
+
+        if (res.meta) {
+            var resAmount = 0;
+            for (var ii in res.subRes) { resAmount += G.resolveRes(res.subRes[ii]).amount; }
+
+            if (resAmount > 0) { // Safety check to prevent division by zero
+                for (var ii in res.subRes) {
+                    var subRes = G.resolveRes(res.subRes[ii]);
+                    subRes.amount -= (subRes.amount / resAmount) * cost;
+                    if (!subRes.fractional) subRes.amount = Math.max(randomFloor(subRes.amount), 0);
+                }
+            }
+        } else {
+            res.amount -= cost;
+            if (!res.fractional) res.amount = Math.max(randomFloor(res.amount), 0);
+        }
+    }
+};
+// END COST TESTING CHANGES
 
 G.logic['res'] = function () {
     //update visibility
@@ -964,8 +992,19 @@ G.stabilizeResize = function () {
     G.h = window.innerHeight;
     G.resizing = false;
     if (l('civBlurb')) l('civBlurb').style.marginTop = (G.w < 1410 ? 42 : 0) + 'px';
-    l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px'
-    l('game').style.bottom = (G.h < 600 || !G.getSetting('fpsgraph')) ? 0 : null;
+    l('sections').style.marginTop = ((G.w < 550) + (G.w < 590) + (G.w < 645) + (G.w < 755)) * 20 + 'px';
+    if (G.h < 600 || !G.getSetting('fpsgraph')) {
+        l('game').style.bottom = 0;
+        if (l('ad')) l('ad').style.display = 'none';
+    } else {
+        l('game').style.bottom = null;
+        if (l('ad')) l('ad').style.display = null;
+    }
+    if (G.h < 600 && G.getSetting('fpsgraph')) {
+        l('resBox').style.marginBottom = '56px'; // Add some extra padding to the bottom of resources to prevent FPS rectangle from hiding stuff
+    } else {
+        l('resBox').style.marginBottom = null;
+    }
     if (G.w < 405) {
         document.body.classList.add('halfSize'); document.body.classList.remove('smallSize');
     } else if (G.w * G.h < 200000 || G.w < 625) {
@@ -1300,6 +1339,7 @@ G.AddData({
             } else {
                 str += "<b>Perform three ascensions to unlock the message filter.</b>";
             }
+            str += "<br>" + G.writeSettingButton({ text: 'Toggle shorter messages', tooltip: 'Enable to force max message history to 25.', name: 'lessMax', id: 'lessMax' });
             str += '<div class="divider"></div>' +
                 '<div class="buttonBox">' +
                 G.dialogue.getCloseButton() +
@@ -2061,6 +2101,7 @@ G.AddData({
         G.settings.push({ name: "drought messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "annual raports", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "fools", type: "toggle", def: 0 });
+        G.settings.push({ name: "lessMax", type: "toggle", def: 0 });
 
         for (var i in G.settings) { G.settingsByName[G.settings[i].name] = G.settings[i]; }
 
@@ -2918,7 +2959,7 @@ G.AddData({
             displayName: '<font color="#fddc99">Next to the deities</font>',
             wideIcon: [0, 9, "magixmod"],
             icon: [1, 9, "magixmod"],
-            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be all be tripled @various other traits have a higher chance of being gained @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon upon building this wonder again! (Nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock...) @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
+            desc: 'Ascend by the Temple of the Paradise/Ancestors...You managed to be very close to the Deity. But this step will make it easier. Because you had to sacrifice so much time reaching that far, this achievement has plenty of rewards. Here are the rewards you will get for it: @the chances for <b>Culture of the before/afterlife</b> and <b>God\'s/Ancestors call</b> will be tripled @various other traits get a higher chance of being adopted @you will start new runs with +1 [faith] and [spirituality] <>You will also unlock the Pantheon upon building this wonder again! (Nope, you won\'t need to ascend once more by it, just complete it and buy the tech that it will unlock...) @This achievement unlocks you <b><font color="orange">3</font> new themes!</b>',
             fromWonder: 'next to the God',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 250 },

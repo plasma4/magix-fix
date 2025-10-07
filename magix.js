@@ -31,7 +31,7 @@ if (window.magixLoaded === 1 && !window.skipModCheck) {
         G.dialogue.popup(function (div) {
             return '<div style="width:480px;height:240px;"><div class="fancyText title">Error!</div>' +
                 '<div class="bitBiggerText scrollBox underTitle"><div class="par">It appears that you have already installed mods with Magix before it loaded.</div><div class="divider"></div>' +
-                ((G.mods[0].url === "data.js" || G.mods[modLen - 1].url === "data.js") ? 'Remove the data.js file to continue.' : '<div class="par" style="color:#f40;">You may need to wipe the save and set the mods to install after Magix. Otherwise, ignore this message!<br><small>(If you are a developer and for some reason, you want to hide this, set window.skipModCheck to true.)<small></div>') +
+                ((G.mods[0].url === "data.js" || G.mods[modLen - 1].url === "data.js") ? 'Remove the data.js file to continue.' : '<div class="par" style="color:#f40;">You may need to wipe the save and set the mods to install after Magix. Otherwise, ignore this message!<br><small>(If you are a developer and for some reason, you want to hide this, set window.skipModCheck to true.)</small></div>') +
                 '</div>' +
                 '<div class="buttonBox">' +
                 G.button({ tooltip: 'Try to select different mods this time. (Clicking on this will reset all data!)', text: 'Clear data', classes: 'frameless', onclick: function () { G.Clear(); } }) +
@@ -178,9 +178,10 @@ if (!window.getObj) {
         }, 'noClose')
         throw TypeError("You have not imported the fixed version of MagixUtils. Replace that link with this one: https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
     }
-    G.dialogue.popup(function () {
+    alert("It appears that magix.js may have loaded before magixUtils.js. Try reloading.")
+    setTimeout(() => G.dialogue.popup(function () {
         return "It appears that magix.js may have loaded before magixUtils.js. Try reloading."
-    }, 'noClose')
+    }, 'noClose'), 5000)
     throw Error("It appears that magix.js may have loaded before magixUtils.js. Try reloading.")
 }
 
@@ -587,8 +588,8 @@ G.NewGame = function (doneLoading, mods) {
                 '<br>You can pick only one race to rule per run,<br>so don\'t worry, you won\'t rule both of them at a time. (Of course that\'s if you unlock<br>that second race...so have fun! <b>:p</b>)<br>' +
                 (G.resets > 0 ? ('You have ' + B(G.resets) + ' ascension' + (G.resets == 1 ? '' : 's') + ' behind you.<br>') : '') +
                 '<br><br>' +
-                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="' + magixURL + 'civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="' + magixURL + 'civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>The world is mainly a huge forest, but still has many other biomes.<br>Gameplay difficulty is higher than with the human race<br>with more more brutal production penalties,<br>but helping elves out will progress both races!<br>Make housing for elves and grow your tribe, but most importantly, just survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="' + magixURL + 'civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
+                G.textWithTooltip('<table style="float:left;"><tr><td><img class="pixelate" src="' + magixURL2 + 'civ1Bposter.png" width="192" height="192" onclick="c1()"/></td></tr><tr><td><div class="fancyText"><font size="3">Human</font></div></td></tr></table></p>', 'Rule people in a natural environment that you know from real life.<br>Oceans, deserts, prairies, jungles, forests and many other natural biomes exist here.<br>Provide housing to your people, research new things, and most importantly, survive and prosper.<br>Make your tribe be legendary and don\'t die early, so<br>your name will be praised in history books.') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                (G.tragedyHappened == 1 ? G.textWithTooltip('<table style="float:right;"><tr><td><img class="pixelate" src="' + magixURL2 + 'civ2Bposter.png" width="192" height="192" onclick="c2()"/></td></tr><tr><td><div class="fancyText"><font size="3">Elf</font></div></td></tr></table>', 'Rule elves in a mystic environment.<br>The world is mainly a huge forest, but still has many other biomes.<br>Gameplay difficulty is higher than with the human race<br>with more more brutal production penalties,<br>but helping elves out will progress both races!<br>Make housing for elves and grow your tribe, but most importantly, just survive in the harsh wilderness.<br>') : G.textWithTooltip('<table style="float:right;"><tr><td><img src="' + magixURL2 + 'civ2Blocked.png" width="192" height="192"/></td></tr><tr><td><div class="fancyText"><font size="3">???</font></div></td></tr></table>', '...there is a way to unlock this race. It will take a while though...')) +
                 '</div>';
         }, 'noClose');
     } else if (G.loadMenu == 1 || G.resets == 0) {
@@ -6944,7 +6945,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'endurance hunting': { name: 'Endurance hunting', icon: [0, 6], desc: 'Hunt animals by simply running after them until they get exhausted.//Slow and tedious.', req: { 'hunting III': false } },
                     'spear hunting': { name: 'Spear hunting', icon: [5, 9], desc: 'Hunt animals with spears.', use: { 'stone weapons': 1 }, req: { 'spears': true } },
-                    'bow hunting': { name: 'Bow hunting', icon: [6, 9], desc: 'Hunt animals with bows. <>This mode has upkeep of 6 [arrow]s.', use: { 'bow': 1, 'arrow': 6 }, req: { 'bows': true } },
+                    'bow hunting': { name: 'Bow hunting', icon: [6, 9], desc: 'Hunt animals with bows. <>This mode has an upkeep of 6 [arrow]s.', use: { 'bow': 1, 'arrow': 6 }, req: { 'bows': true } },
                     'crossbow hunting': { name: 'Crossbow hunting', icon: [13, 6, "magixmod"], desc: 'Hunt animals with crossbows. <>This mode has upkeep of 6 [arrow]s.', req: { 'hunting II': true }, use: { 'crossbow': 1, 'arrow': 150 } },
                 },
                 effects: [
@@ -16210,7 +16211,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'the christmas', category: 'seasonal',
                 displayName: '<font color="#30b783">Christmas</font>',
-                desc: 'People realize that the important parts of this event will expand the holiday cheer of your people, and even create various decorations like ornaments and lights! They are excited to begin.',
+                desc: 'People realize that this event will create holiday cheer everywhere and result in various decorations like ornaments and lights! They are excited to start the celebrations.',
                 icon: [2, 11, 'seasonal'],
                 cost: { 'insight': 400, 'culture': 100, 'faith': 32 },
                 req: { 'culture of celebration': true, 'Wizard complex': true, 'tribalism': false, 'winter holidays': true },
@@ -16649,7 +16650,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.maxMessages = 50;
+                            G.maxMessages = G.getSetting('lessMax') ? 25 : 50;
                         }
                     },
                 ],
@@ -16913,7 +16914,7 @@ if (getObj("civ") != "1") {
                             G.getDict("temple of the Paradise").cost = { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 45000, 'ambrosium shard': 10000 },
                                 G.getDict("temple of the Paradise").costPerStep = { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'influence II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
                                 G.getDict("temple of the Paradise").steps = 400,
-                                G.getDict("temple of the Paradise").messageOnStart = 'The construction of the <b>Temple of Ancestors</b> has been started. Now you are full of hope that it will someday make the Ancestors Leader appear next to you and show his true good-natured face.',
+                                G.getDict("temple of the Paradise").messageOnStart = 'The construction of the <b>Temple of Ancestors</b> has been started. You are incredibly hopeful that someday make the Leader of the Ancestors will appear next to you and show his true good-natured face after its completion.',
                                 G.getDict("temple of the Paradise").finalStepCost = { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 5, 'faith': 125, 'influence': 400, 'influence II': 10, 'spirituality': 25, 'godTemplePoint': -100 },
                                 G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader, you must perform this final step: 25k [population,people] must be sacrificed...and many other ingredients.',
                                 G.getDict("temple of the Paradise").use = { 'land of the Past': 30 };
@@ -19692,7 +19693,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%, and the penalty from unhappiness is more aggressive. In addition, Dreamers in this plane don\'t exist, and neither do Thieves, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After each trial completion, the bonus cap will be increased by 2.5% and other parts of the trial will get harder too. (Like most other trials, this trial is repeatable but will get harder and harder after each completion.)<br><Br><BR>' +
+                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%, and the penalty from unhappiness is more aggressive. In addition, Dreamers in this plane don\'t exist, and neither do Thieves, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascending for me. I will reward you with a small improvement. After each trial completion, the bonus cap will be increased by 2.5% and other parts of the trial will get harder too. (Like most other trials, this trial is repeatable but will get harder and harder after each completion.)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice now...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -19728,7 +19729,7 @@ if (getObj("civ") != "1") {
                                     '<div class="fancyText">The Bersaria trial</font></div><br>' +
                                     '<img class="pixelate" src="' + magixURL + '2.png" width="72" height="72"/>' +
                                     '<div class="fancyText bitBiggerText scrollBox underTitle" style="text-align:left;padding:32px;">' +
-                                    '<br><br><Br><br>' +
+                                    '<br><br><br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
                                     'I am a Madness. This plane is full of anger...No way to make\'em happy. You will somehow have to handle it. In fact, people\'s happiness will start at -200% and can\'t be raised, and will decrease as time passes. In addition, the penalty from unhappiness is more aggressive. Reaching -400% happiness causes Madness to kick you out of this plane. Every 3 discoveries, My penalty from unhappiness raises up by 10% (which compounds). Construct a Wonder of Madness for Bersaria and ascend using it to finish the challenge. Beating mah challenge for the first time will make mah backfire strong and thee Thieves al-most unharmable!<br><Br><BR>' +
@@ -24396,7 +24397,7 @@ if (getObj("civ") != "1") {
                 modes: {
                     'endurance hunting': { name: 'Endurance hunting', icon: [0, 6, "c2"], desc: 'Hunt animals by simply running after them until they get exhausted.//Slow and tedious.' },
                     'spear hunting': { name: 'Spear hunting', icon: [5, 9, "c2"], desc: 'Hunt animals with spears.', use: { 'stone weapons': 1 }, req: { 'spears': true } },
-                    'bow hunting': { name: 'Bow hunting', icon: [6, 9, "c2"], desc: 'Hunt animals with bows.<>This mode has an upkeep of 3 [arrow]s', use: { 'bow': 1, 'arrow': 6 }, req: { 'bows': true } },
+                    'bow hunting': { name: 'Bow hunting', icon: [6, 9, "c2"], desc: 'Hunt animals with bows.<>This mode has an upkeep of 6 [arrow]s.', use: { 'bow': 1, 'arrow': 6 }, req: { 'bows': true } },
                 },
                 effects: [
                     {
@@ -25903,7 +25904,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'pottery', category: 'tier1',
-                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mire]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay] //<small>I love flowers so I take every pot crafted to put a plant in it',
+                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mire]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay] //<small>Some people love flowers, so they take every pot crafted and put a plant or two in it!</small>',
                 icon: [28, 6, "c2"],
                 cost: { 'discernment': 26, 'creativity': 4 },
                 req: { 'fire-making': true, 'digging': true, 'tool-making': true },
@@ -26359,7 +26360,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     {
                         type: 'function', func: function () {
-                            G.maxMessages = 50;
+                            G.maxMessages = G.getSetting('lessMax') ? 25 : 50;
                         }
                     },
                 ],
@@ -26629,7 +26630,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'fluid dress code',
-                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Your elves seem to have strange feelings for clothing, it seems.</small>',
+                desc: 'unhappiness from a lack of [basic clothes,Clothing] or other heating sources is fluid, meaning every some period of time it will switch between: @being increased by 25% @being reduced by 25% <>[happiness] gain from having clothing will also switch between: @being increased by 4% @being reduced by 4% //<small>Your elves seem to have strange feelings for clothing.</small>',
                 icon: [9, 15, "magixmod", 30, 16, "c2"],
                 cost: { 'gentility': 10 },
                 req: { 'weaving': true, 'clothing indifference': false, 'nudist culture': false, 'strict dress code': false },
