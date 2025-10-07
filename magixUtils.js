@@ -333,7 +333,7 @@ G.Save = function (toStr) {
 }
 
 G.Load = function (doneLoading) {
-    window.docTitle = "NeverEnding Legacy"
+    document.title = "NeverEnding Legacy"
     G.middleText('<p id="loading">Loading save...</p>', "slow");
     if (G.importStr) { var local = G.importStr; }
     else {
@@ -2318,7 +2318,7 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            window.docTitle = 'Elf setup: NeverEnding Legacy';
+            document.title = 'Elf setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -2334,7 +2334,7 @@ G.AddData({
             return str;
         }
         G.funcs['new game blurb'] = function () {
-            window.docTitle = 'Setup: NeverEnding Legacy';
+            document.title = 'Setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -2487,6 +2487,7 @@ G.AddData({
             G.applyKnowEffects(G.traitsOwned[index].trait, true, true);
             G.traitsOwned.splice(index, 1);//remove trait
             G.traitsOwnedNames.splice(index, 1);
+            delete G.traitsOwnedObject[me];
             if (G.tab.id && G.update[G.tab.id]) G.update[G.tab.id]();
         }
         G.deleteTech = function (me) {
@@ -2496,6 +2497,7 @@ G.AddData({
             G.techsOwned.splice(index, 1);//remove trait
             G.techsOwnedNames.splice(index, 1);
             if (G.tab.id && G.update[G.tab.id]) G.update[G.tab.id]();
+            delete G.techsOwnedObject[me];
             if (me.category != 'misc') G.miscTechN--; else G.techN--;
         }
 
@@ -5925,9 +5927,9 @@ G.AddData({
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
                                                     }
-                                                    window.docTitle = 'Ascending: NeverEnding Legacy';
+                                                    document.title = 'Ascending: NeverEnding Legacy';
                                                     G.theme = G.theme;
-                                                    setTimeout(function () { window.docTitle = 'NeverEnding Legacy' }, 2000);
+                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 2000);
                                                     if (G.modsByName['Default dataset']) {
                                                         G.achievByName['first glory'].won++;
                                                         if (G.checkPolicy('theme changer') == 'default') G.theme = 0;

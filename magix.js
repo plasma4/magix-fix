@@ -496,7 +496,7 @@ var civ2 = function () {
 
 G.NewGame = function (doneLoading, mods) {
     if (G.resets == 0) G.loadmenu = 1;
-    window.docTitle = 'Setup: NeverEnding Legacy';
+    document.title = 'Setup: NeverEnding Legacy';
     //clean up data, create a map and ask the player to pick a starting location
     if (!doneLoading) {
         //save achievements for each mod so we can reapply them later
@@ -1387,7 +1387,7 @@ if (getObj("civ") != "1") {
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40% to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 if (G.achievByName['sacrificed for culture'].won == 1 && G.achievByName['the fortress'].won <= 3)
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
-                window.docTitle = 'NeverEnding Legacy';
+                document.title = 'NeverEnding Legacy';
                 ///new game mesg
                 var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy has begun. May it stand the test of time!';
                 G.Message({ type: 'important tall', text: str, icon: [0, 3] });
@@ -1519,9 +1519,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
+                    document.title = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    window.docTitle = 'Tribe died: NeverEnding Legacy';
+                    document.title = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
@@ -1865,7 +1865,7 @@ if (getObj("civ") != "1") {
                                 break;
                         }
                     G.updateMapDisplay() //FIX for map(because it is using my sheet not default one)
-                    if (G.getRes('population').amount > 0) window.docTitle = 'NeverEnding Legacy';
+                    if (G.getRes('population').amount > 0) document.title = 'NeverEnding Legacy';
                     if (G.getSetting('tieredDisplay') == 0) { ta = 1 } else { ta = 0 };
                     var txt = '' + G.year + '';
                     if (day + leap >= 289 && day + leap <= 305) {
@@ -1971,7 +1971,7 @@ if (getObj("civ") != "1") {
                         }
                     }
                     if (G.achievByName['mausoleum'].won > 0) {
-                        if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t2') && !G.has('t10')) {
+                        if (G.year >= 109 && G.year <= 121 && !madeThievesWarn && !G.has('t1') && !G.has('t10')) {
                             G.getDict('battling thieves').req = { 'hunting': true };
                             G.Message({ type: 'bad', text: '<b><font color="#FFA500">Beware of thievery!</font></b> It will begin occuring from now on, and slowly grow worse for the next 25 years. Soon, your people will want to punish thieves, so craft equipment for them so they will become easier to deal with! Thieves are unhappy adults and will show their unhappiness by commiting crimes. Even 200% <font color="#f7441f">Happiness</font> won\'t prevent any thieves from appearing, sadly. Adults (and more rarely, old people) may die after encountering a Thief. Expect these bad guys from now on.', icon: [23, 1, "magixmod"] });
                             madeThievesWarn = true
@@ -1993,7 +1993,7 @@ if (getObj("civ") != "1") {
                         if (G.achievByName['mausoleum'].won == 0) {
                             G.Message({ type: 'tutorial', text: 'It\'s a good idea to ascend with the Mausoleum! When you start a new run after getting the Mausoleum victory, you will unlock way more technologies, and something magical...', icon: [32, 27, "magixmod"] });
                         } else {
-                            G.Message({ type: 'tutorial', text: 'I need to warn you. ' + (G.has('time measuring 1/2') ? 'In the next 20 years' : 'Soon') + ', something bad will start to occur. It seems that you have previously ascended, which is a good choice. To prepare for this event, you should probably start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, "magixmod"] });
+                            G.Message({ type: 'tutorial', text: 'I need to warn you. ' + (G.has('time measuring 1/2') ? 'After the next 20 years' : 'After a while') + ', something bad will start to occur. It seems that you have previously ascended, which is a good choice. To prepare for this event, you should probably start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, "magixmod"] });
                         }
                     if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may recieve future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, "magixmod"] });
                     if (G.year == 9000) {
@@ -3713,7 +3713,7 @@ if (getObj("civ") != "1") {
                         me.amount *= recovery;//people recover over time
                     }
                     if (G.has('t4') && G.year >= 3) {
-                        G.lose('health', 1 + (G.year * ((G.achievByName['hunted'].won + 1) / 3)), 'Trial')
+                        G.lose('health', 1 + (G.year * (G.achievByName['hunted'].won + 1.5) * 0.35), 'Trial')
                     }
                     changeHappiness(me.amount * 0.001, 'health');
                 },
@@ -5834,7 +5834,7 @@ if (getObj("civ") != "1") {
                 partOf: 'population',
                 tick: function (me, tick) {
                     if (!(day + leap <= 40 && day + leap >= 46 && !G.has('peace')) || Math.random() < 0.1) {
-                        if (G.year >= (G.has('t10') ? 80 - G.achievByName['pocket'].won * 2 : 110) && !G.has('t1') && !G.has('t2') && G.resets > 0) { //The spawning rate is increased or decreased by various factors
+                        if (G.year >= (G.has('t10') ? 80 - G.achievByName['pocket'].won * 2 : (G.has('t2') ? 100 - G.achievByName['unhappy'].won * 2 : 110)) && !G.has('t1') && G.resets > 0) { //The spawning rate is increased or decreased by various factors
                             var n = (G.getRes('adult').amount * 0.000001 * Math.min(300 - Math.min(G.getRes('happiness').amount / G.getRes('population').amount, 200), 160) * (G.has('at5') ? 0.75 : 1) * Math.pow(Math.min(Math.max(0.012 * G.year - 0.3, 0.9), 1.2), 3.5)) * (Math.random() * 0.4 + 0.8);
                             if (G.checkPolicy('se02') == 'on') {
                                 G.gain('thief', n * 1.02, 'anger');
@@ -6158,7 +6158,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'blood',
-                desc: 'You gain [blood] each year from Madness victims (equal to the amount of murdered people). (Note that you need to glory Bersaria and research more with [fear of death] active.) //<small>You start with 200 blood.</small> <>Be aware that the [blood] will be needed to to keep getting meat from [hartar\'s servant]s!',
+                desc: 'You gain [blood] each year from trial victims (equal to the amount of murdered people). //<small>You start with 200 blood.</small>',
                 icon: [33, 6, "magixmod"],
                 startWith: 200,
                 category: 'main',
@@ -9082,7 +9082,7 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'Wizard Complex',
-                desc: '@provides 600 [housing]<>A towers for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower but only needs 6 times the [mana], <b>and increases your [wisdom], [inspiration], [spirituality], and [authority] after built</b>. May provide more housing with further researches.',
+                desc: '@provides 600 [housing]<>A huge tower for 660 citizens and 30 wizards. Gathers all type of essences three times better than usual tower but only needs 6 times the [mana], <b>and increases your [wisdom], [inspiration], [spirituality], and [authority] after built</b>. May provide more housing with further researches.',
                 icon: [3, 3, "magixmod"],
                 cost: { 'basic building materials': 12500, 'precious building materials': 3000 },
                 use: { 'land': 9, 'worker': 10, 'wizard': 60 },
@@ -10181,8 +10181,8 @@ if (getObj("civ") != "1") {
                 costPerStep: { 'precious building materials': 20, 'gems': 20, 'basic building materials': 200 },
                 steps: 90,
                 messageOnStart: 'You started to build wonder for <b>Chra-nos</b>.<br>This pagoda will have a huge clock which is the symbol of the Seraphin. Stars on night sky as you noticed mostly often make a shape of clock.<br>It is taller than anything around and also its shadow brings reflexions about passing time to your people.',
-                finalStepCost: { 'population': 200, 'gem block': 10 },
-                finalStepDesc: 'To perform the final step, 200 [population,people] and 10 [gem block]s must be sacrificed in order to escape this plane of deadly time and award [victory point]s.',
+                finalStepCost: { 'population': 200, 'gem block': 15 },
+                finalStepDesc: 'To perform the final step, 200 [population,people] and 15 [gem block]s must be sacrificed in order to escape this plane of deadly time and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't1': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10208,11 +10208,11 @@ if (getObj("civ") != "1") {
                 icon: [7, 26, "magixmod"],
                 wideIcon: [6, 26, "magixmod"],
                 cost: { 'basic building materials': 250, 'gold block': 10 },
-                costPerStep: { 'gold block': 15, 'blood': (2 * (G.achievByName['unhappy'].won + 1.2)), 'basic building materials': 100, 'fire pit': 1, 'gem block': 1 },
+                costPerStep: { 'gold block': 15, 'basic building materials': 100, 'fire pit': 1, 'gem block': 1 },
                 steps: 100,
                 messageOnStart: 'You started to build a wonder for <b>Bersaria</b>.<br>This statue will have an angry face at the top. The terrain is covered by some sort of fog. But you do it to stop the Madness and come back to your normal plane. Let the statue be built!',
-                finalStepCost: { 'population': (50 + (1 * G.achievByName['unhappy'].won + 1 / 10)), 'gem block': 5, 'fire pit': 10, 'blood': 75 },
-                finalStepDesc: 'To perform the final step, ' + 250 + (1 * G.achievByName['unhappy'].won + 1 / 10) + '[population,people], 5 [gem block]s, and ' + 100 + (1 * G.achievByName['unhappy'].won) + '[blood] must be sacrificed in order to escape this plane of Wrath and Madness and award [victory point]s.',
+                finalStepCost: { 'population': (50 + (G.achievByName['unhappy'].won) * 5), 'gem block': 5, 'fire pit': 10, 'blood': 75 },
+                finalStepDesc: 'To perform the final step, ' + (50 + (G.achievByName['unhappy'].won) * 5) + '[population,people], 5 [gem block]s, and 75 [blood] must be sacrificed in order to escape this plane of Wrath and Madness and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't2': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10227,8 +10227,8 @@ if (getObj("civ") != "1") {
                 costPerStep: { 'gold block': 5, 'mana': 25, 'basic building materials': 100 },
                 steps: 125,
                 messageOnStart: 'You started to build the wonder for <b>Tu-ria</b>.<br>People start to bring all the artifacts right to the Pagoda. You are full of hope that it will be enough to make Tu-ria support you even more.',
-                finalStepCost: { 'population': 175, 'gem block': 25, 'culture': 25 },
-                finalStepDesc: '175 [population,people], 25 [mana] and some extra materials will be needed to perform final step and let you ascend for some [victory point]s from this trial.',
+                finalStepCost: { 'population': 175, 'mana': 250, 'gem block': 25, 'culture': 25 },
+                finalStepDesc: '175 [population,people], plus some [mana] and other materials, will be needed to perform the final step and let you ascend for some [victory point]s from this trial.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't3': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10240,11 +10240,11 @@ if (getObj("civ") != "1") {
                 icon: [25, 26, "magixmod"],
                 wideIcon: [24, 26, "magixmod"],
                 cost: { 'basic building materials': 250, 'gold block': 10 },
-                costPerStep: { 'gold block': 15, 'mana': 25, 'basic building materials': 100, 'cooked meat': 25, 'meat': 25, 'cured meat': 25 },
+                costPerStep: { 'gold block': 15, 'mana': 125, 'basic building materials': 100, 'cooked meat': 250, 'meat': 25, 'cured meat': 250 },
                 steps: 100,
-                messageOnStart: 'You started to build a statue for <b>Hartar</b>.<br>This statue will have Hartar\'s big statuette at its top. You eat some meat and stare with a hopeful smile, hoping you can complete it.',
-                finalStepCost: { 'population': 100, 'gem block': 5, 'blood': 25 },
-                finalStepDesc: 'To perform the final step, 25 [blood] and 100 [population,people] must be sacrificed in order to escape this plane of meat fanatics and award [victory point]s.',
+                messageOnStart: 'You started to build a statue for <b>Hartar</b>.<br>Eventually, your people hope to complete Hartar\'s big statuette at the very top. You eat some meat and stare with a hopeful smile, hoping you can complete it.',
+                finalStepCost: { 'population': 100, 'cooked meat': 10000, 'cured meat': 10000, 'gold block': 50 },
+                finalStepDesc: 'To perform the final step, 100 [population,people], some goods, and lots of food must be sacrificed in order to escape this plane of meat fanatics and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't4': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10279,7 +10279,7 @@ if (getObj("civ") != "1") {
                 steps: 200,
                 messageOnStart: 'You started to build the pyramid for the <b>Fishyar</b> statue.<br>This statue will have fish and various decorations at the top. However, the more steps you build, the worse the drought will get!',
                 finalStepCost: { 'population': 400, 'gem block': 5, 'platinum block': 50, 'cooked seafood': 5000, 'cured seafood': 5000 },
-                finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials, must be sacrificed in order to leave the plane of seafood haters and award [victory point]s.',
+                finalStepDesc: 'To perform the final step, 400 [population,people] and a few other materials must be sacrificed in order to leave the plane of seafood haters and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't5': true, 'trial': true, 'language': true },
                 category: 'wonder',
@@ -10295,7 +10295,7 @@ if (getObj("civ") != "1") {
                 steps: 50,
                 messageOnStart: 'You and your people started to build the <b>Tomb of oceans</b>.<br>In the middle of the Deep Ocean, as some people say, the wonder for Posi\'zul will eternally stand.',
                 finalStepCost: { 'population': 250, 'golden fish': 1000, 'water': 10000 },
-                finalStepDesc: 'To perform the final step, 250 [population,people] (and a few other things) must be sacrificed in order to leave this world of endless [deep ocean,Water] and award [victory point]s.',
+                finalStepDesc: 'To perform the final step, 250 [population,people] and a few other things must be sacrificed in order to leave this world of endless [deep ocean,Water] and award [victory point]s.',
                 use: { 'deep ocean': 15, 'worker': 5, 'metal tools': 5 },
                 req: { 't6': true, 'trial': true },//due to trial conditions you start run with unlocked wonder
                 category: 'wonder',
@@ -10343,7 +10343,7 @@ if (getObj("civ") != "1") {
                 steps: 50,
                 messageOnStart: 'Your people have started building the <b>Faithsoleum</b>. People would rather build this wonder with fewer steps, as they have become inspired by their one God. Some people seem to say that worship leads to victory and religion is a key now.',
                 finalStepCost: { 'population': 250, 'spirituality': 35, 'faith': 35 },
-                finalStepDesc: 'To perform the final step, 250 [population,people] must be sacrificed to escape this pious plane and award [victory point]s.',
+                finalStepDesc: 'To perform the final step, 250 [population,people] and some faithful essentials must be sacrificed to escape this pious plane and award [victory point]s.',
                 use: { 'land': 10, 'worker': 5, 'metal tools': 5 },
                 req: { 'monument-building': true, 't11': true, 'trial': true, 'language': true, 'wizard towers': true },
                 category: 'wonder',
@@ -10391,7 +10391,7 @@ if (getObj("civ") != "1") {
                 steps: 150,
                 messageOnStart: 'Your people have started building the <b>Mausoleum of the Dreamer</b>. This monument is the tallest building that exists at the lands of your island, and is how wisdom leads to success.',
                 finalStepCost: { 'population': 1000, 'insight': 100, 'wisdom': 100 },
-                finalStepDesc: 'To perform the final step, 1,000 [population,people] must be sacrificed to leave the plane of Wisdom and award [victory point]s.',
+                finalStepDesc: 'To perform the final step, 1,000 [population,people] and some other insightful essentials must be sacrificed to leave the plane of Wisdom and award [victory point]s.',
                 use: { 'land of the Plain Island': 15, 'worker': 5, 'metal tools': 5 },
                 req: { 'language': true, 'tribalism': false },
                 category: 'wonder',
@@ -11078,16 +11078,17 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({ //New unit!!!!! Again!!!!!
                 name: 'golden mana maker',
-                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water]. Requires lots more [alchemy zone]s since it is 150 times faster than [mana crafting stand]s!',
+                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water] and secret rituals. Also requires more [alchemy zone]s, and is 150 times faster than [mana crafting stand]s!',
                 icon: [1, 5, "magix2"],
                 cost: { 'insight': 100, 'gold block': 50 },
                 use: { 'alchemy zone': 8, 'worker': 1 },
                 upkeep: { 'food': 10, 'water': 10, 'insight': 5, 'gold block': 2 },
-                limitPer: { 'population': 6000 },
+                limitPer: { 'population': 10000 },
                 req: { 'more mana making': true },
                 //require:{'wizard':3},
                 effects: [
                     { type: 'gather', what: { 'mana': 120 } },
+                    { type: 'mult', value: 1.5, req: { 'mana brewery III': true } },
                 ],
                 category: 'alchemy',
             });
@@ -11871,7 +11872,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'Wizard complex', category: 'tier1',
-                desc: 'Unlocks a complex of wizard towers. Expensive, but the complex produces all types of [magic essences,Essences] three times faster than usual towers. Each complex tower will increase your max [faith], [culture], and [influence] as well, so they are quite useful!',
+                desc: 'Unlocks a giant complex dedicated to wizardry. Expensive to build, but produces all types of [magic essences,Essences] three times faster than usual towers. Each complex tower will increase your max [faith], [culture], and [influence] as well, so they are quite useful!',
                 icon: [2, 2, "magixmod"],
                 cost: { 'insight': 480, 'culture': 30, 'mana': 1000, 'influence': 20 },
                 req: { 'mana brewery': true, 'more useful housing': true, 'wizardry': true, 'wizard towers': true },
@@ -13981,7 +13982,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'safer explosive usage', category: 'tier2',
-                desc: 'Decreases the accident rate of [explosive mine]s by making them safer. @Also ncreases the efficiency of [explosive mine] by 5% by teaching them more effective ways to mine! @Applies a visual change to [explosive mine]s.',
+                desc: 'Decreases the accident rate of [explosive mine]s by making them safer. @Also improves the efficiency of [explosive mine] by 5% by teaching the workers more effective ways to mine! @Also applies a visual change to [explosive mine]s.',
                 icon: [19, 23, "magixmod"],
                 cost: { 'insight II': 50, 'science': 2 },
                 effects: [
@@ -14621,7 +14622,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'pantheon key', category: 'religion',
-                desc: 'Unlocks the Pantheon. Within it, you will meet 12 Seraphins. Each one will offer some boost, but may come with some backfires! <font color="#f70054">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent on choosing up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back to you, so be careful and think twice before you perform a choice! //You\'ll also unlock a new tab. From this new tab, you may start a trial. //Provides 25 [spirituality II] and 15 [authority II].',
+                desc: 'Unlocks the Pantheon. Within it, you will meet 12 Seraphins. Each one will offer some boost, but may come with some backfires! <font color="#f70054">Be sure to choose the Seraphins wisely!</font> //You will get 4 [worship point]s that can be spent on choosing up to 4 Seraphins. Rejecting an already chosen one will not refund a spent [worship point] back to you, so be careful and think twice before you choose a Seraphin! //Getting this key also unlocks the ability to start a trial from the Policies tab. //Provides 25 [spirituality II] and 15 [authority II].',
                 icon: [4, 25, "magixmod", 24, 1],
                 req: { 'life in faith': true, 'monument-building III': true },
                 cost: { 'insight II': 100, 'faith II': 10, 'culture II': 30, 'godTemplePoint': 500, 'faith': 80 },
@@ -14826,7 +14827,7 @@ if (getObj("civ") != "1") {
                             } else {
                                 G.getDict('monument-building').desc = '@getting this will unlock a wonder that depends on the Trial you are currently in'
                             }
-                            window.docTitle = 'Trial active: NeverEnding Legacy'
+                            document.title = 'Trial active: NeverEnding Legacy'
                         }
                     },
                 ],
@@ -15609,7 +15610,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism1',
                 displayName: 'Druidish merriment',
-                desc: '[druid]s gather 25% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s gather 30% more [happiness]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [27, 30, "magixmod"],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism2': false },
@@ -15620,7 +15621,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism2',
                 displayName: 'Faithful worship',
-                desc: '[druid]s gather 10% more [faith]. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: '[druid]s gather 10% more [faith] and also improve [health]. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [28, 30, "magixmod"],
                 cost: { 'faith': 5, 'culture': 15 },
                 req: { 'druidism': true, 'druidsymbolism1': false },
@@ -16414,7 +16415,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'parental love',
-                desc: 'Now newborn [baby,Babies] provide some [love,Love points] for each one born. This one will lead to more [love] sources.',
+                desc: 'Now newborn [baby,Babies] provide some [love,Love points] for each one born. This trait may lead to even more [love] sources!',
                 icon: [19, 17, 'seasonal'],
                 cost: { 'culture': 75, 'research': 90 },
                 req: { 'love grows around us': true },
@@ -16422,7 +16423,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'discovery with love',
-                desc: 'You may gain [love] from [research] after getting this trait! Every single year, you will gain some [love] points. The amount of points is based on your techs and traits!</font>',
+                desc: 'You may gain [love] from [research] after getting this trait! Every single year, you will also gain some [love] points. The amount of points is based on your techs and traits!</font>',
                 icon: [3, 16, 'seasonal'],
                 cost: { 'culture': 75, 'research': 120, 'insight': 400 },
                 req: { 'parental love': true, 'time measuring 1/2': true },
@@ -16430,7 +16431,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'compliments',
-                desc: 'Now, [child,Children] can generate [love] points. //(Not all children though!) //<small>The good-mannered children will talk good things about other people, generating [love] in the process!</small>',
+                desc: 'Now, [child,Children] can generate [love] points. //(Not all children though!) //<small>The good-mannered children will appreciate and help others, generating [love] in the process!</small>',
                 icon: [4, 16, 'seasonal'],
                 cost: { 'culture': 125, 'research': 120, 'faith': 100 },
                 req: { 'parental love': true, 'alphabet 3/3': true },
@@ -18398,16 +18399,16 @@ if (getObj("civ") != "1") {
                 name: 'spicy foods', category: 'tier1',
                 desc: 'After all this time...your tribe still hasn\'t known about the power of spice yet. Maybe it\'s time to teach them! @unlocks [spices], which are collected from your [gatherer]s @unlocks a new recipe for your [chef]s //<small>ooohh that\'s spicy</small>',
                 icon: [12, 2, "magix2"],
-                cost: { 'insight': 250, 'wisdom': 100, 'inspiration': 125 },
+                cost: { 'insight': 900, 'wisdom': 100, 'inspiration': 125 },
                 req: { 'art of cooking II': true },
                 effects: [
                 ],
             });
             new G.Tech({
                 name: 'spicy foods II', category: 'tier1',
-                desc: 'Gain more information about how [spices] are collected, increasing its collection rate by 50%. //<small>my tongue is burning</small>',
+                desc: 'Gain more information about how [spices] are collected, increasing its collection rate by 50%. //<small>my tongue is burning!!!</small>',
                 icon: [0, 39, "magixmod", 12, 2, "magix2"],
-                cost: { 'wisdom': 300, 'inspiration': 20 },
+                cost: { 'insight': 1400, 'wisdom': 80, 'inspiration': 20 },
                 req: { 'spicy foods': true },
                 effects: [
                 ],
@@ -18459,7 +18460,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mana brewery III', category: 'tier1',
-                desc: 'Use a more effective method of creating [mana], allowing [mana maker]s and [alchemist]s to make it 50% faster. //<small>first, add some water here...</small>',
+                desc: 'Use a more effective method of creating [mana], allowing all [mana maker]s and [alchemist]s to make it 50% faster. //<small>first, add some water here...</small>',
                 icon: [1, 39, "magixmod", 19, 2, "magixmod"],
                 cost: { 'insight': 1500, 'water': 2e5, 'mana': 50000 },
                 req: { 'mana brewery II': true },
@@ -18918,7 +18919,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'more mana making', category: 'tier1',
-                desc: 'Unlock a new method to make [mana] with a special type of [golden mana maker,Mana maker].',
+                desc: 'Unlock a new method to make [mana] very effectively with a special type of [golden mana maker,Mana maker].',
                 icon: [2, 5, "magix2"],
                 cost: { 'insight': 1200, 'culture': 200 },
                 req: { 'mana brewery III': true },
@@ -19691,7 +19692,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%, and the penalty from unhappiness is more aggressive. In addition, Dreamers in this plane don\'t exist and nobody knows who they are, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After each trial completion, the bonus cap will be increased by 2.5% and other parts of the trial will get harder too. (Like most other trials, this trial is repeatable but will get harder and harder after each completion.)<br><Br><BR>' +
+                                    'Enter the plane where I will show you that the time is mo\' than just years and days, weeks and months. Each year in my plane will decrease productivity of all your units by a random amount up to 0.5%, and the penalty from unhappiness is more aggressive. In addition, Dreamers in this plane don\'t exist, and neither do Thieves, but I will bring down to you arandom amount of <font color="#f4b">Insight</font> each year (in this trial, the amount of <font color="#f4b">Insight</font> can be equal to 160% of <font color="#f4b">Wisdom</font> amount). Finish the trial by building the wonder and ascend your soul to me. I will reward you with a small improvement. After each trial completion, the bonus cap will be increased by 2.5% and other parts of the trial will get harder too. (Like most other trials, this trial is repeatable but will get harder and harder after each completion.)<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice now...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -19730,7 +19731,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am a Madness. This plane is full of anger...No way to make\'em happy. You will somehow have to handle it. In fact, people\'s happiness will start at -200% and can\'t be raised, and will decrease as time passes. In addition, the penalty from unhappiness is more aggressive. Reaching -400% happiness causes Madness to kick you out of this plane. Every 3 discoveries, My penalty from unhappiness raises up by 10% (which compounds). Construct a Wonder of Madness for Bersaria and ascend using it to finish the challenge. Beating mah challenge for the first time will make mah backfire weaker and thee Thieve hunters are al-most unharmable!<br><Br><BR>' +
+                                    'I am a Madness. This plane is full of anger...No way to make\'em happy. You will somehow have to handle it. In fact, people\'s happiness will start at -200% and can\'t be raised, and will decrease as time passes. In addition, the penalty from unhappiness is more aggressive. Reaching -400% happiness causes Madness to kick you out of this plane. Every 3 discoveries, My penalty from unhappiness raises up by 10% (which compounds). Construct a Wonder of Madness for Bersaria and ascend using it to finish the challenge. Beating mah challenge for the first time will make mah backfire strong and thee Thieves al-most unharmable!<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -22013,7 +22014,7 @@ if (getObj("civ") != "1") {
             }
 
             G.funcs['new game blurb'] = function () {
-                window.docTitle = 'Setup: NeverEnding Legacy';
+                document.title = 'Setup: NeverEnding Legacy';
                 var str =
                     '<b>Your tribe:</b><div class="thingBox">' +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
@@ -22037,7 +22038,7 @@ if (getObj("civ") != "1") {
                     };
                 };
                 G.ta = 1;
-                window.docTitle = 'NeverEnding Legacy';
+                document.title = 'NeverEnding Legacy';
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some elves start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                 fortress();
@@ -22059,9 +22060,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
+                    document.title = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    window.docTitle = 'Tribe died: NeverEnding Legacy';
+                    document.title = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
@@ -25216,8 +25217,9 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'faith': 0.1, 'happiness': 0.2 } },
                     { type: 'provide', what: { 'druid': 1 } }, //as for teams
-                    { type: 'gather', what: { 'health': 0.8 }, req: { 'druidsymbolism2': true }, chance: 0.2 },
-                    { type: 'gather', what: { 'happiness': 0.066 }, req: { 'druidsymbolism1': true } },
+                    { type: 'gather', what: { 'health': 0.25 }, req: { 'druidsymbolism2': true }, chance: 0.2 },
+                    { type: 'gather', what: { 'faith': 0.01 }, req: { 'druidsymbolism2': true } },
+                    { type: 'gather', what: { 'happiness': 0.06 }, req: { 'druidsymbolism1': true } },
                     //{type:'gather',what:{'faith':0.05},req:{'symbolism II':true}},
                     //{type:'mult',value:2/3,req:{'dt16':true}},
                     //{type:'mult',value:1.25,req:{'se11':'on'}},
@@ -26506,7 +26508,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'druidsymbolism3',
                 displayName: 'Mental balance',
-                desc: 'Unlocks a new ritual which will affect [happiness] and its bonus and penalty at specific amounts. Look for [mental balance] in the rituals section of your <b>Policies</b>. //<b>This trait is always temporary but has a varied lifespan.</b>',
+                desc: 'Unlocks a new ritual which will affect [happiness] and its bonuses and penalties at specific amounts. Look for [mental balance] in the rituals section of your <b>Policies</b>. //<b>This trait is always temporary but has a varied lifespan.</b>',
                 icon: [23, 17, "c2"],
                 cost: { 'faith': 8, 'gentility': 34 },
                 effects: [
