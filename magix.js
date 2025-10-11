@@ -12771,14 +12771,9 @@ if (getObj("civ") != "1") {
                         type: 'function', func: function () {
                             G.getDict('soothsayer').icon = [28, 3, "magixmod"];
                             G.getDict('druid').icon = [29, 30, "magixmod"];
-                            G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
-                            G.getDict('wisdom rituals').visible = true;
-                            G.getDict('wisdom rituals').cost = { 'faith II': 2 };
-                            G.getDict('flower rituals').cost = { 'faith II': 2 };
-                            G.getDict('flower rituals').visible = true;
+                            // Enabling/disabling code for rituals in G.update['policy']
                         }
                     }
-
                 ],
             });
             new G.Tech({
@@ -13515,19 +13510,8 @@ if (getObj("civ") != "1") {
                                     G.know[i].cost[newEss[j]] = Math.ceil(prev / 500) * 3;
                                 }
                             }
-                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
-                            if (!G.has('ritualism II')) {
-                                G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
-                                G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
-                                G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
-                                G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
-                                G.getDict('wisdom rituals').visible = false
-                                G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
-                                G.getDict('flower rituals').visible = false //THE DISABLER
-                                G.getPolicy('wisdom rituals').mode.id = "off";
-                                G.getPolicy('flower rituals').mode.id = "off";
-                                G.update['policy']();
-                            }
+                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter with a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
+                            // Enabling/disabling code for rituals in G.update['policy']
                             if (G.getRes('victory point').amount > 0 && !G.has('pantheon key')) {
                                 G.gainTech(G.techByName['pantheon key']);
                                 G.Message({ type: "important tall", text: 'Being victorious has brought something that should be available later. You look into your pocket and feel something has appeared in it. You take it out to see a shiny <b>Pantheon key</b>!', icon: [4, 25, "magixmod", 24, 1] });
@@ -13923,7 +13907,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'policy revaluation',
-                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost [faith II] to toggle and upkeep. @But don\'t worry, as they won\'t consume too much of these new resources (especially [wisdom rituals])',
+                desc: 'All policies now require [influence II] instead of [influence]. Required for future technologies and to keep people listening to you. </b> Rituals now cost [faith II] to toggle and upkeep. @But don\'t worry, as they won\'t consume too much of the higher tier resources!',
                 icon: [1, 23, "magixmod"],
                 cost: { 'insight II': 15, 'culture II': 15, 'influence II': 5 },
                 chance: 45,
@@ -13938,6 +13922,7 @@ if (getObj("civ") != "1") {
                             G.getDict('discovery rituals').desc = 'Use these unique rituals to improve exploration slightly, with these boosts: @[wanderer]s: +5% speed @[scout]s: +3% speed @[globetrotter]s: +4% speed //Consumes 1 [faith II] over the course of 100 days; will stop if you run out.';
                             G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Consumes 1 [faith II] every 20 days; will stop if you run out. //<small>we are much smarter now</small>';
                             G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Consumes 1 [faith II] every 20 days; will stop if you run out.';
+                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some [insight II]. This policy has a meter with a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
                             var mult = (Math.log10(G.getDict('population').amount / 20 + 1) * 1.2 + 1) * (G.achievByName['mausoleum'].won > 8 ? 1.3 : (G.achievByName['mausoleum'].won > 5 ? 1.15 : 1));
                             G.getDict('trait rituals').desc = 'Improves the chance of getting eternal traits (excluding patrons) based on [population] (currently <b>+' + (mult * 100 - 100).toFixed(1) + '%</b>) through the faster spread of beliefs. Consumes just 1 [culture II], [faith II], and [influence II] over the course of 500 days.';
 
@@ -19832,7 +19817,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'sleepy insight',
-                desc: 'At the start of a new year, you have a chance to gain some [insight]. This policy has a meter that has a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
+                desc: 'At the start of a new year, you have a chance to gain some [insight]. This policy has a meter with a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
                 icon: [8, 12, 33, 24, "magixmod"],
                 cost: { 'faith': 10, 'insight': 2 },
                 startMode: '0',

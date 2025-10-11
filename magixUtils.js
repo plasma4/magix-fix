@@ -137,6 +137,7 @@ G.setDict = function (name, what) {
 G.noUpdate = false
 G.noUpdateTabs = {}
 G.releaseUIUpdate = function () {
+    G.noUpdate = false
     for (tab in G.noUpdateTabs) {
         G.update[tab]()
     }
@@ -1381,8 +1382,27 @@ G.AddData({
             { id: 'pantheon', name: '<font color="#d4af37">----- Pantheon -----</font>' }
         );
         G.update['policy'] = function () {
-            if (G.noUpdate) G.noUpdateTabs['policy'] = true;
+            if (G.noUpdate) { G.noUpdateTabs['policy'] = true; return; }
             if (G.has('policies')) {
+                // Mess with wisdom and flower rituals here because of annoying timing issues
+                if (G.has('eotm') && !G.has('ritualism II')) {
+                    G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
+                    G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
+                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
+                    G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
+                    G.getDict('wisdom rituals').visible = false
+                    G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
+                    G.getDict('flower rituals').visible = false //THE DISABLER
+                    G.getPolicy('wisdom rituals').mode.id = "off";
+                    G.getPolicy('flower rituals').mode.id = "off";
+                    G.update['policy']();
+                } else if (G.has('ritualism II')) {
+                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
+                    G.getDict('wisdom rituals').visible = true;
+                    G.getDict('wisdom rituals').cost = { 'faith II': 2 };
+                    G.getDict('flower rituals').cost = { 'faith II': 2 };
+                    G.getDict('flower rituals').visible = true;
+                }
                 var str = '';
                 str +=
                     '<div class="regularWrapper">' +
@@ -1498,7 +1518,7 @@ G.AddData({
         }
         //TRAIT TAB
         G.update['trait'] = function () {
-            if (G.noUpdate) G.noUpdateTabs['trait'] = true;
+            if (G.noUpdate) { G.noUpdateTabs['trait'] = true; return; }
             G.knowN = 0;
             G.traitN2 = 0;
             var c = 0;
@@ -1632,7 +1652,7 @@ G.AddData({
 
         //TECH TAB
         G.update['tech'] = function () {
-            if (G.noUpdate) G.noUpdateTabs['tech'] = true;
+            if (G.noUpdate) { G.noUpdateTabs['tech'] = true; return; }
             var str = '';
             var isC1 = getObj("civ") == 0;
             if (isC1) {
@@ -1770,7 +1790,7 @@ G.AddData({
         /////////MODYFING UNIT TAB!!!!! (so some "wonders" which are step-by-step buildings now will have displayed Step-by-step instead of wonder. Same to portals)
 
         G.update['unit'] = function () {
-            if (G.noUpdate) G.noUpdateTabs['unit'] = true;
+            if (G.noUpdate) { G.noUpdateTabs['unit'] = true; return; }
             l('unitDiv').innerHTML =
                 G.textWithTooltip('<big>?</big>', '<div style="width:240px;text-align:left;"><div class="par"><li>Units are the core of your resource production and gathering.</li></div><div class="par">Units can be <b>queued</b> for purchase by clicking on them; they will then automatically be created over time until they reach the queued amount. Creating units usually takes up resources such as workers or tools; resources shown in red in the tooltip are resources you do not have enough of.<div class="bulleted">click a unit to queue 1</div><div class="bulleted">right-click or ctrl-click to remove 1</div><div class="bulleted">shift-click to queue 50</div><div class="bulleted">shift-right-click or ctrl-shift-click to remove 50</div></div><div class="par">Units usually require some resources to be present; a <b>building</b> will crumble if you do not have the land to support it, or it could go inactive if you lack the workers or tools (it will become active again once you fit the requirements). Some units may also require daily <b>upkeep</b>, such as fresh food or money, without which they will go inactive.</div><div class="par">Furthermore, workers will sometimes grow old, get sick, or die, removing a unit they\'re part of in the process.</div><div class="par">Units that die off will be automatically replaced until they match the queued amount again.</div><div class="par">Some units have different <b>modes</b> of operation, which can affect what they craft or how they act; you can use the small buttons next to such units to change those modes and do other things. One of those buttons is used to <b>split</b> the unit into another stack; each stack can have its own mode.</div></div>', 'infoButton') +
                 '<div style="position:absolute;z-index:100;top:0px;left:0px;right:0px;text-align:center;"><div class="flourishL"></div>' +
@@ -1992,7 +2012,7 @@ G.AddData({
                                 if (!isEmpty(me.use) || !isEmpty(me.staff)) str += '<div>Uses: ' + G.getUseString(addObjects(me.use, me.staff), true, false, amount) + '</div>';
                                 if (!isEmpty(me.require)) str += '<div>Prerequisites: ' + G.getUseString(me.require, true, false, amount) + '</div>';//should amount count?
                                 if (!isEmpty(me.upkeep)) str += '<div>Upkeep: ' + G.getCostString(me.upkeep, true, false, amount) + '</div>';
-                                if (!isEmpty(me.limitPer)) str += '<div>Limit: ' + G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount) + '</div>';
+                                if (!isEmpty(me.limitPer)) str += '<div>Limit: ' + (me.limitPer.land >= 1000000000 ? '<span style="color:#fff">1 per legacy</span>' : G.getLimitString(me.limitPer, true, false, G.getUnitAmount(me.name) + amount)) + '</div>';
                                 if (isEmpty(me.cost) && isEmpty(me.use) && isEmpty(me.staff) && isEmpty(me.upkeep) && isEmpty(me.require)) str += '<div>Free</div>';
                                 if (me.modesById[0] && !isEmpty(instance.mode.use)) str += '<div>Current mode uses: ' + G.getUseString(instance.mode.use, true, false, amount) + '</div>';
                                 //   if (me.modesById[0] && !isEmpty(instance.mode.upkeep) && instance.mode.upkeep!='undefined') str+='<div>Current mode has upkeep : '+G.getUseString(instance.mode.upkeep,true,false,amount)+'</div>';
@@ -4025,7 +4045,7 @@ G.AddData({
         ==============================*/
         //only pasted to update a tooltip due to tile exploring tech
         G.update['land'] = function () {
-            if (G.noUpdate) G.noUpdateTabs['land'] = true;
+            if (G.noUpdate) { G.noUpdateTabs['land'] = true; return; }
             G.updateMapDisplay();
             G.tabs[1].showMap = true;
             if (G.has('where am i?')) {
