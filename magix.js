@@ -1541,7 +1541,7 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 148 && G.techN < 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no longer as a civilization and everyone has died, but your legacy is <b>not a lost memory</b>, and an interesting part of a history book.<br><font color="#84c292">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, buildings, and manuscripts from your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
                 G.playSound(magixURL + '0population.mp3');
                 G.dialogue.popup(function (div) {
@@ -8075,7 +8075,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: ';cloudy water filter',
                 displayName: 'Cloudy water filter',
-                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [coal] and [mana], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;cloudy water filter]. <>This filter converts [cloudy water] into [water].',
+                desc: 'A filter that uses [land of the Paradise]. Because the upkeep uses [coal] and [mana], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;cloudy water filter]. <>This filter converts [cloudy water] into [water].',
                 icon: [25, 11, "magixmod"],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1, 'mana': 1.5 },
@@ -8093,7 +8093,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'cloudy water filter',
-                desc: 'A filter that uses [land of the Paradise] and a worker. Because the upkeep uses [sand] and [mana], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [cloudy water filter]. <>This filter converts [cloudy water] into [water].',
+                desc: 'A filter that uses [land of the Paradise]. Because the upkeep uses [sand] and [mana], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [cloudy water filter]. <>This filter converts [cloudy water] into [water].',
                 icon: [25, 12, "magixmod"],
                 cost: { 'basic building materials': 75 },
                 upkeep: { 'sand': 1, 'mana': 1 },
@@ -8112,7 +8112,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: ';water filter',
                 displayName: 'Water filter',
-                desc: 'A filter that uses land and a worker. Because the upkeep uses [coal], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;water filter]. <>This filter converts [muddy water] into [water].',
+                desc: 'A rather simple filter for [muddy water]. Because the upkeep uses [coal], you gain 82% of the converted water. <>A [moderation] path unit. Has research techs that can improve the power and efficiency of the [;water filter]. <>This filter converts [muddy water] into [water].',
                 icon: [24, 16, "magixmod"],
                 cost: { 'basic building materials': 275 },
                 upkeep: { 'coal': 1 },
@@ -8129,7 +8129,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'water filter',
-                desc: 'A filter that uses land and a worker. Because the upkeep uses [sand], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [water filter]. <>This filter converts [muddy water] into [water].',
+                desc: 'A rather simple filter for [muddy water]. Because the upkeep uses [sand], you gain 95% of the converted water. <>A [caretaking] path unit. Has research techs that can improve the power and efficiency of the [water filter]. <>This filter converts [muddy water] into [water].',
                 icon: [23, 16, "magixmod"],
                 cost: { 'basic building materials': 75 },
                 upkeep: { 'sand': 1 },
@@ -10335,7 +10335,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'faithsoleum',
-                desc: '@Leads to the completion of the <b>Faithful</b> trial. //The Faithsoleum is full of light and sparks of religion as far as the human eye can see. Its eye is the symbol of An Enlightened Seraphin of Faith!<><font color="#dbb200">Worship to victory...</font>',
+                desc: '@Leads to the completion of the <b>Faithful</b> trial. //The Faithsoleum is filled with light and sparks of religion as far as the human eye can see. Its eye is the symbol of An Enlightened Seraphin of Faith!<><font color="#dbb200">Worship to victory...</font>',
                 wonder: 'faithful',
                 icon: [1, 27, "magixmod"],
                 wideIcon: [0, 27, "magixmod"],
@@ -13239,7 +13239,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'dark side',
-                desc: 'People now believe that if there are good deities and helpful spirits, then there must be something opposite to them. They start to think that some evil beings of terror and pain exist in this world...',
+                desc: 'People now believe that if there are good deities and helpful spirits, then there must be some beings that are the opposite. They start to think that some evil beings of terror and pain exist in this world...',
                 icon: [11, 19, "magixmod"],
                 cost: { 'spirituality': 10, 'faith': 200 },
                 chance: 40,
@@ -15545,7 +15545,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'parallel theory 2/3', category: 'tier2',
-                desc: 'What if you can a make mirror work like a portal? //This part of theory is about the portal and its stability.',
+                desc: 'What if you can a make mirror work like a portal? //This part of the theory is about the portal and its stability.',
                 req: { 'physics II': true, 'parallel theory 1/3': true, 'symbolism III': true },
                 cost: { 'insight II': 150 },
                 icon: [27, 27, "magixmod", 9, 30, "magixmod"],
@@ -17401,7 +17401,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt25',
                 displayName: 'Devil\'s trait #25 Miner\'s curse',
-                desc: 'Every good provides 2% less resources from mining (regardless of mining depth) //<small>Today I have broken 3 pickaxes.</small>',
+                desc: 'Every good provides 2% less resources from mining (regardless of mining depth) //<small>Today I have broken 3 stone pickaxes.</small>',
                 icon: [1, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('mine', 0.98) } }],
@@ -17412,7 +17412,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt26',
                 displayName: 'Devil\'s trait #26 Quarrial insecurity',
-                desc: 'Every good provides 2% less resources from quarrying (regardless of depth) //<small>Are we sure it is a proper mineral at first? Is fear really devouring our minds while we are in a quarry?</small>',
+                desc: 'Every good provides 2% less resources from quarrying (regardless of quarrying depth) //<small>Are we sure this mineral is the right kind? How is fear devouring our minds while we are in a quarry?</small>',
                 icon: [3, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('mine', 0.98) } }],
@@ -22067,7 +22067,7 @@ if (getObj("civ") != "1") {
                 } else if (G.techN >= 148 && G.techN < 190) {
                     G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> is no longer as a civilization and everyone died but your legacy is <b>not a lost memory</b>, and surely an interesting sidenote in a history book.<br><font color="#84c292">Everyone is dead but despite that, there are many relics, constructions, and manuscripts of your tribe are waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 } else if (G.techN >= 190) {
-                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, constructions, and manuscripts of your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
+                    G.Message({ type: 'bad', text: '<font color="white"><b>' + G.getName('civ') + '</b></font> exists no longer as a civilization and everyone died, but your legacy <b>isn\'t a lost memory</b>. It is surely an interesting, long note in many history books that will praise this place.<br><font color="#84c292">Everyone is dead, but despite that, there are many, many relics, buildings, and manuscripts from your tribe left waiting to be discovered and analyzed by other civilizations.</font>', icon: [5, 4] });
                 }
                 G.playSound(magixURL + '0population.mp3');
                 G.dialogue.popup(function (div) {

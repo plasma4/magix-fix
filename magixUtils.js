@@ -1395,7 +1395,6 @@ G.AddData({
                     G.getDict('flower rituals').visible = false //THE DISABLER
                     G.getPolicy('wisdom rituals').mode.id = "off";
                     G.getPolicy('flower rituals').mode.id = "off";
-                    G.update['policy']();
                 } else if (G.has('ritualism II')) {
                     G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
                     G.getDict('wisdom rituals').visible = true;
