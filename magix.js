@@ -16897,12 +16897,12 @@ if (getObj("civ") != "1") {
                             G.getDict("temple of the Paradise").icon = [1, 8, "magixmod"];
                             G.getDict("temple of the Paradise").wideIcon = [0, 8, "magixmod"];
                             G.getDict("temple of the Paradise").cost = { 'basic building materials': 100000, 'precious building materials': 5000, 'gold block': 100, 'platinum block': 10, 'cloud': 45000, 'ambrosium shard': 10000 },
-                                G.getDict("temple of the Paradise").costPerStep = { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'influence II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
-                                G.getDict("temple of the Paradise").steps = 400,
-                                G.getDict("temple of the Paradise").messageOnStart = 'The construction of the <b>Temple of Ancestors</b> has been started. You are incredibly hopeful that someday make the Leader of the Ancestors will appear next to you and show his true good-natured face after its completion.',
-                                G.getDict("temple of the Paradise").finalStepCost = { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 5, 'faith': 125, 'influence': 400, 'influence II': 10, 'spirituality': 25, 'godTemplePoint': -100 },
-                                G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader, you must perform this final step: 25k [population,people] must be sacrificed...and many other ingredients.',
-                                G.getDict("temple of the Paradise").use = { 'land of the Past': 30 };
+                            G.getDict("temple of the Paradise").costPerStep = { 'basic building materials': 1000, 'precious building materials': 500, 'gold block': 10, 'platinum block': 1, 'influence II': 1, 'ambrosium shard': 1000, 'godTemplePoint': -1 },
+                            G.getDict("temple of the Paradise").steps = 400,
+                            G.getDict("temple of the Paradise").messageOnStart = 'The construction of the <b>Temple of Ancestors</b> has been started. You are incredibly hopeful that someday make the Leader of the Ancestors will appear next to you and show his true good-natured face after its completion.',
+                            G.getDict("temple of the Paradise").finalStepCost = { 'wisdom': 125, 'population': 25000, 'precious building materials': 24500, 'gem block': 500, 'insight': 1000, 'ambrosium shard': 10000, 'holy essence': 225000, 'faith II': 5, 'faith': 125, 'influence': 400, 'influence II': 10, 'spirituality': 25, 'godTemplePoint': -100 },
+                            G.getDict("temple of the Paradise").finalStepDesc = 'To complete the wonder and be even closer to the Ancestors Leader, you must perform this final step: 25k [population,people] must be sacrificed...and many other ingredients.',
+                            G.getDict("temple of the Paradise").use = { 'land of the Past': 30 };
 
                             G.getDict('monument-building').req = { 'construction': true, 'burial': true, 'belief in the beforelife': true };
                             G.getDict('missionary').req = { 'ritualism': true, 'symbolism': true, 'belief in the beforelife': true };
@@ -16918,9 +16918,30 @@ if (getObj("civ") != "1") {
                             G.getDict('holy orchard').upkeep = { 'water': 30 };
                             G.getDict('holy orchard').displayName = 'Antique orchard';
                             G.getDict('holy essence storage').use = { 'land of the Past': 0.8 };
-                            G.getDict('holy essence storage').req = { 'stockpiling': true, 'building': true, 'essence storages': true, 'ancestors world building': true, '7th essence': true },
-                                G.getDict('land acknowledge').req = { '2nd portal past': true };
+                            G.getDict('holy essence storage').req = { 'stockpiling': true, 'building': true, 'essence storages': true, 'ancestors world building': true, '7th essence': true };
+                            G.getDict('land acknowledge').req = { '2nd portal past': true };
                             G.getDict('tool refinery 1/2').req = { 'ancestors world crafting': true };
+
+                            //random stuff altering
+                            G.getDict('combat potion & concoction brewing').req = {'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'ancestors world building': true};
+                            G.getDict('bigger potion pallet').req = {'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'ancestors world building': true};
+                            G.getDict('explosive crafting & mining').req = { 'ambrosium treeplanting': true, 'ancestors world building': true };
+                            G.getDict('intelligent blasting').req = { 'ambrosium treeplanting': true, 'ancestors world building': true };
+
+                            //paradise unit altering
+                            //REMEMBER TO SWITCH THE ICONS
+                            G.getDict('Floored warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
+                            G.getDict('Floored warehouse').desc = G.getDict('treehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('Floored warehouse').category = 'ancestorsunit';
+                            G.getDict('Floored warehouse').use = { 'land of the Past': 4, 'industry point': 0.2 };
+                            G.getDict('hardened warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
+                            G.getDict('hardened warehouse').desc = G.getDict('treehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('hardened warehouse').category = 'ancestorsunit';
+                            G.getDict('hardened warehouse').use = { 'land of the Past': 3, 'industry point': 0.2 };
+
+                            //Make gods and idols possible to get without revenants(required for temple of ancestors/paradise)
+                            G.getDict('gods and idols').req = {'power of the faith': true }; //I just removed liberating darkness
+                            
                             mausoleumEvolve();
                             rootPolicyEvolve();
                             rootCultureEvolve();
