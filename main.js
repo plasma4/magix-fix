@@ -1,4 +1,4 @@
-﻿/*
+/*
 	All this code is copyright Orteil, 2016-2020.
 	Spoilers ahead.
 	welcome to my awful soup
@@ -1435,7 +1435,7 @@ G.Launch=function()
 	}
 	G.SelectMagix=function()
 	{
-		G.NewGame(false,['https://raw.githubusercontent.com/painekillers/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/painekillers/magix-fix/master/magix.js']);
+		G.NewGame(false,['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js']);
 	}
 	G.SelectMods=function()
 	{
@@ -8360,5 +8360,4 @@ window.onload=function()
 			G.LoadResources();
 		}
 	}
-
 };
