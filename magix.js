@@ -1067,7 +1067,7 @@ if (getObj("civ") != "1") {
                     Theme = 'Default';
                 }
                 //tech
-                if (G.tab.id == 'tech') {
+                if (G.tab.id == 'tech' && document.getElementsByClassName("bgPanelUp")) {
                     document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
                 }
 
@@ -1219,10 +1219,18 @@ if (getObj("civ") != "1") {
                     G.getDict("colored clothing").displayName = "Halloween costume";
                     G.getDict("colored clothing").icon = [0, 9, 'seasonal'];
                     G.getDict("artisan").modes['candies'].req = { 'tribalism': true, 'candy-crafting': true };
-                    G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
-                    G.getDict("clothier").modes['weave leather colored clothing'] = { name: 'Weave leather costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [leather].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
-                    G.getDict("clothier").modes['weave fiber colored clothing'] = { name: 'Weave fiber costumes', icon: [0, 9, 'seasonal'], desc: 'Your clothier will now weave spooky [colored clothing] out of [herbs].', req: { 'weaving': true, 'costume-crafting': true }, use: { 'stone tools': 1 } };
-                    G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier]s and will bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
+                    G.getDict("artisan").effects.push({ type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' });
+                    G.getDict("clothier").modes['weave leather colored clothing'].icon = [0, 9, 'seasonal'];
+                    G.getDict("clothier").modes['weave fiber colored clothing'].icon = [0, 9, 'seasonal'];
+                    G.getDict("clothier").modes['dye already made clothing'].icon = [0, 9, 'seasonal'];
+                    G.getDict("clothier").modes['weave leather colored clothing'].desc = 'Your clothier will now weave spooky [colored clothing]s out of [leather]. Requires [costume-crafting] to work!';
+                    G.getDict("clothier").modes['weave fiber colored clothing'].desc = 'Your clothier will now weave spooky [colored clothing]s out of [herbs]. Requires [costume-crafting] to work!';
+                    G.getDict("clothier").modes['dye already made clothing'].desc = 'Your clothier will now dye already made [basic clothes], turning them into spooky [colored clothing]s. Requires [costume-crafting] to work!';
+                    G.getDict("clothier").effects.push({ type: 'mult', value: 0, req: { 'costume-crafting': false }, mode: 'weave fiber colored clothing' })
+                    G.getDict("clothier").effects.push({ type: 'mult', value: 0, req: { 'costume-crafting': false }, mode: 'dye already made clothing' })
+                    G.getDict("clothier").effects.push({ type: 'mult', value: 0, req: { 'costume-crafting': false }, mode: 'weave leather colored clothing' })
+                    if (!G.has('costume-crafting')) G.getRes('colored clothing').amount = 0;
+                    G.getDict("colored clothing").desc = "Halloween costumes can be crafted by [clothier]s and will bring more [happiness] than [basic clothes]. //A variety of vampire, ghost, zombie, and skeleton costumes are crafted to celebrate this spooky time.<br>Happy Halloween!";
                 } else {
                     G.getDict('spirit summoner').effects.push({ type: 'mult', value: 0 });
                 };
@@ -1508,6 +1516,7 @@ if (getObj("civ") != "1") {
                 }
                 //G.achievByName['first glory'].won=G.resets;
                 G.getDict('out of relics').chance = 2000 * (1 + (G.achievByName['first glory'].won / 15)); //the more you ascend the less chance
+
                 var s = 0
                 for (var u = 0; u < G.unitsOwned.length; u++) {
                     let defaultUnit = G.unitsOwned[u]
@@ -2253,18 +2262,18 @@ if (getObj("civ") != "1") {
                         var amount;
 
                         if (pumpkinroulette >= 1 && pumpkinroulette <= 15) {
-                            if (loot == 0) { amount = G.getRes('cooked meat').amount / 3; G.gain('cooked meat', amount, '<font color="#f80">Treat</font>'); }; if (loot == 1) { amount = G.getRes('fruit').amount / 3; G.gain('fruit', amount, '<font color="#f80">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="#f80">Treat</font>'); }; if (loot == 3) { amount = G.getRes('colored clothing').amount * 0.6; G.gain('colored clothing', amount, '<font color="#f80">Treat</font>'); }; if (loot == 4) { amount = G.getRes('herbs').amount / 3; G.gain('herbs', amount, '<font color="#f80">Treat</font>'); };
+                            if (loot == 0) { amount = randomFloor(G.getRes('cooked meat').amount / 3); G.gain('cooked meat', amount, '<font color="#f80">Treat</font>'); }; if (loot == 1) { amount = randomFloor(G.getRes('fruit').amount / 3); G.gain('fruit', amount, '<font color="#f80">Treat</font>'); }; if (loot == 2) { amount = G.getRes('cooked seafood').amount / 3; G.gain('cooked seafood', '<font color="#f80">Treat</font>'); }; if (loot == 3) { amount = randomFloor(G.getRes('colored clothing').amount * 0.6); G.gain('colored clothing', amount, '<font color="#f80">Treat</font>'); }; if (loot == 4) { amount = randomFloor(G.getRes('herbs').amount / 3); G.gain('herbs', amount, '<font color="#f80">Treat</font>'); };
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a strong smash your people managed to collect ' + B(amount) + ' <font color="pink">' + loottabfcase[loot] + '</font> outta it. <b>Noice!</b>', icon: [ic, 7, 'seasonal'] }); //7,8
                         } else if (pumpkinroulette > 15 && pumpkinroulette <= 28) {
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a loud, strong smash you see...the inside of this pumpkin...there was...nothing...<br><b>Trick!</b>', icon: [9, 7, 'seasonal'] });
                         } else if (pumpkinroulette > 28 && pumpkinroulette <= 36) {
-                            var amount = G.getRes('water').amount * 0.4;
+                            var amount = randomFloor(G.getRes('water').amount * 0.4);
                             G.gain('water', amount, '<font color="#f80">Treat</font>');
                             G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. Before the pumpkin got smashed, it unleashed from itself a lot of water (probably his tears). Without caring, someone smashes it and that\'s how you gain ' + B(amount) + ' <b>Water</b>.<br>That\'s it!', icon: [13, 7, 'seasonal'] });
                         } else if (pumpkinroulette > 36 && pumpkinroulette <= 38 && G.has('juicy expertise') && G.has('pumpkins II')) {
-                            var amount = G.getRes('juices').amount * 0.9;
+                            var amount = randomFloor(G.getRes('juices').amount * 0.9);
                             G.gain('juices', amount, '<font color="#f80">Treat</font>');
-                            G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. Before you smash the pumpkin, it unleashed from itself a lot of colorful juicy water (probably his tears). Without caring about it an elder smashes it and that\'s how you gain ' + amount + ' <b>liters of tasty Juices</b>.<br>That\'s it!', icon: [14, 7, 'seasonal'] });
+                            G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. Before you smash the pumpkin, it unleashed from itself a lot of colorful juicy water (probably his tears). Without caring about it an elder smashes it and that\'s how you gain ' + B(amount) + ' <b>liters of tasty Juices</b>.<br>That\'s it!', icon: [14, 7, 'seasonal'] });
                         } else if (pumpkinroulette > 38 && pumpkinroulette <= 41 && G.has('pumpkins II') && G.getRes('insight').amount <= G.getRes('wisdom').amount && G.getRes('culture').amount <= G.getRes('inspiration').amount && G.getRes('faith').amount <= G.getRes('spirituality').amount && G.getRes('insight II').amount <= G.getRes('wisdom II').amount && G.getRes('culture II').amount <= G.getRes('inspiration II').amount && G.getRes('faith II').amount <= G.getRes('spirituality II').amount && G.getRes('influence').amount <= G.getRes('authority').amount && G.getRes('influence II').amount <= G.getRes('authority II').amount) { //ONCE A YEAR IT CAN OVERCAP. IT's fine :)
                             const loottabgcase = ['Insight', 'Culture', 'Faith', 'Influence'];
                             const loottabgcase2 = ['Insight II', 'Culture II', 'Faith II', 'Influence II'];
@@ -2282,9 +2291,9 @@ if (getObj("civ") != "1") {
                                 if (lootg == 3) amount = 3 + (G.getRes('authority II').amount / 7); G.gain('influence II', amount, '<font color="#f80">Treat</font>');
                             }
                             if (!G.has('eotm')) {
-                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b> ' + B(amount) + ' ' + loottabgcase[lootg] + '</b>.', icon: [11, 7, 'seasonal'] });
+                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b>' + B(amount) + ' ' + loottabgcase[lootg] + '</b>.', icon: [11, 7, 'seasonal'] });
                             } else {
-                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b> ' + B(amount) + ' ' + loottabgcase2[lootg] + '</b>.', icon: [12, 7, 'seasonal'] });
+                                G.Message({ type: 'tot', text: 'Oh a ' + pumpkinnames[name] + '\'o Pumpkin arrives there. After a smash the pumpkin was...not so empty. It had an essential. You gained <b>' + B(amount) + ' ' + loottabgcase2[lootg] + '</b>.', icon: [12, 7, 'seasonal'] });
                             }
                         } else if (pumpkinroulette > 41 && pumpkinroulette <= 43 && G.has('pumpkins II')) {
                             var amount = G.getRes('fire pit').amount * 0.4;
@@ -6591,7 +6600,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'spookiness xp',
-                displayName: 'Spookiness XP',
+                displayName: 'Spookiness',
                 icon: [12, 8, 'seasonal'],
             });
             new G.Res({
@@ -6609,7 +6618,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'halloween essence',
-                desc: 'A part of Halloween. Can be gathered in ways related to it. Has usages. Does not belong to [magic essences] since it is seasonal essence.',
+                desc: 'A part of Halloween. Can be gathered in ways related to it. Has usages. Does not belong to [magic essences] since it is a seasonal essence.',
                 icon: [5, 8, 'seasonal'],
                 category: 'magic',
                 hidden: true,
@@ -6912,7 +6921,7 @@ if (getObj("civ") != "1") {
                     'cheap make leather': { name: 'Make leather (cheap)', icon: [10, 7], desc: 'Slowly produce [leather] from [hide]s, [muddy water] and [herbs].', use: { 'stone tools': 1 }, req: { 'factories I': false } },
                     'weave leather colored clothing': { name: 'Weave leather colored clothing', icon: [13, 0, "magixmod"], desc: 'Your clothier will now weave [colored clothing] out of [leather].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
                     'weave fiber colored clothing': { name: 'Weave fiber colored clothing', icon: [13, 0, "magixmod"], desc: 'Your clothier will now weave [colored clothing] out of [herbs].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
-                    'dye already made clothing': { name: 'Dye already made clothing', icon: [13, 0, "magixmod"], desc: 'Your clothier will now dye already made [basic clothes], turning them into[colored clothing].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
+                    'dye already made clothing': { name: 'Dye already made clothing', icon: [13, 0, "magixmod"], desc: 'Your clothier will now dye already made [basic clothes], turning them into [colored clothing].', req: { 'weaving': true }, use: { 'stone tools': 1 } },
                     'craft thread': { name: 'Craft thread', icon: [13, 9, "magixmod"], desc: 'Your clothier will now craft [thread] out of [herbs].', req: { 'weaving II': true }, use: { 'stone tools': 1 } },
                     'weave hardened clothes': { name: 'Weave hardened clothes', icon: [choose([27, 28]), choose([0, 1]), "magixmod"], desc: 'Craft [hardened clothes] out of [dried leather] and [thread].', req: { 'weaving III': true, 'sewing II': true }, use: { 'stone tools': 1 } },
                 },
@@ -6929,7 +6938,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'herbs': 18 }, into: { 'thread': 3 }, every: 8, mode: 'craft thread' },
                     { type: 'convert', from: { 'dried leather': 4, 'thread': 7 }, into: { 'hardened clothes': 1 }, every: 6, mode: 'weave hardened clothes' },
                     { type: 'mult', value: 1.03, req: { 'xmas2': true } },
-                    { type: 'mult', value: 1.1, req: { 'knitting': true } },
+                    { type: 'mult', value: 1.1, req: { 'knitting': true } }
                 ],
                 req: { 'sewing': true, 't10': false },
                 category: 'crafting',
@@ -9548,7 +9557,7 @@ if (getObj("civ") != "1") {
                 effects: [
                 ],
                 //req: { 'construction II': true, 'water construction': true },
-                req: { 'tribalism': false },
+                req: { 'water construction': true, 'tribalism': false },
                 category: 'civil',
             });
             new G.Unit({
@@ -9794,7 +9803,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'treehouse',
-                desc: '@provides 2 [housing]<>A tiny pied-a-terre built inside one of the paradise trees.',
+                desc: '@provides 2 [housing]<>A tiny pied-a-terre built inside one of the Paradise trees.',
                 icon: [6, 21, "magixmod"],
                 cost: { 'lumber': 150 },
                 use: { 'land of the Paradise': 1 / 3 },
@@ -10819,15 +10828,15 @@ if (getObj("civ") != "1") {
                 gizmos: true,
                 modes: {
                     'off': G.MODE_OFF,
-                    'spirits': { name: 'Summon spirits', icon: [32, 16, "magixmod"], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Safe way to generate small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
-                    'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon old spirits and ghosts of dead people. Not so safe to generate some [spookiness], but needs [halloween essence] to work.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
-                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon bloodthirsty vampires, which is an easy way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, meaning your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
-                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoner]s will try to summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 15, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
+                    'spirits': { name: 'Summon spirits', icon: [32, 16, "magixmod"], desc: '[spirit summoner,Summoners] will try to summon old spirits and ghosts of dead people. A safe way to generate a small amount of [spookiness] and occasionally [halloween essence].', use: { 'worker': 10, 'knapped tools': 4, 'stone tools': 1 } },
+                    'demons': { name: 'Summon demons', icon: [8, 9, 'seasonal'], desc: '[spirit summoner,Summoners] will try to summon old spirits and ghosts of dead people. Not so safe for gaining [spookiness] and needs [halloween essence] to work but more effective.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1 }, req: { 'demon-summoning': true } },
+                    'vampire': { name: 'Summon vampire spirits', icon: [9, 9, 'seasonal'], desc: '[spirit summoner,Summoners] will try to summon bloodthirsty vampires, which is an easy way to generate a lot of [spookiness], but one that requires [halloween essence].//Note: If the ritual fails, it will cause people to be injured or even die, meaning your [happiness] level will be harmed.', use: { 'worker': 16, 'worker': 2, 'knapped tools': 4, 'stone tools': 1, 'metal weapons': 3 }, req: { 'vampirism': true } },
+                    'halloween': { name: 'Summon halloween spirits', icon: [10, 9, 'seasonal'], desc: '[spirit summoner,Summoners] will try to summon ancient Halloween spirits and their ghosts. Generates a small amount of [spookiness], but you can earn some [halloween essence] from their kindness.', use: { 'worker': 15, 'knapped tools': 4, 'stone tools': 1 }, req: { 'halloween-spirits': true } },
                 },
                 effects: [
                     { type: 'gather', what: { 'spookiness xp': 0.75 }, mode: 'spirits', chance: 4 / 5 },
                     { type: 'gather', what: { 'halloween essence': 0.5 }, mode: 'spirits', chance: 1 / 10 },
-                    { type: 'convert', from: { 'halloween essence': 3, 'dark essence': 3, 'magic essences': 1 }, into: { 'spookiness xp': 5 }, every: 6, mode: 'demons', chance: 3 / 7 },
+                    { type: 'convert', from: { 'halloween essence': 3, 'dark essence': 3, 'magic essences': 1 }, into: { 'spookiness xp': 5 }, every: 6, mode: 'demons', chance: 6 / 7 },
                     { type: 'convert', from: { 'halloween essence': 7, 'dark essence': 4, 'magic essences': 2 }, into: { 'spookiness xp': 10 }, every: 6, mode: 'vampire', chance: 3 / 7 },
                     { type: 'gather', what: { 'halloween essence': 1 }, mode: 'halloween', chance: 1 / 5 },
                     { type: 'gather', what: { 'spookiness xp': 0.5 }, mode: 'halloween', chance: 4 / 5 },
@@ -16674,7 +16683,7 @@ if (getObj("civ") != "1") {
             //halloween part two
             new G.Tech({
                 name: 'halloween ornaments',
-                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various [halloween ornaments,Spooky ornaments] create better a Halloween climate, which makes everything more festive in a slightly scary way. //<small>Woah...*trembles*</small>',
+                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various [halloween ornaments,Spooky ornaments] create better a Halloween climate, which makes everything more festive (in a slightly scary way). //<small>Woah...*trembles*</small>',
                 icon: [7, 9, 'seasonal'],
                 cost: { 'insight': 250, 'culture': 100, 'wisdom': 25 },
                 req: { 'trick or treat': true },
@@ -16683,7 +16692,6 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             spookboost = 1.25;
-                            G.getDict("artisan").effects.push = { type: 'convert', from: { 'paper': 1, 'sugar': 20 }, into: { 'candy': 10, 'spookiness xp': 2 * spookboost }, every: 4, mode: 'candies' };
                         }
                     },
                 ],
@@ -16691,12 +16699,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'costume-crafting',
-                desc: '[clothier]s will now be able to create spooky, scary [colored clothing]. While sewing these, [clothier]s will also gain some [spookiness] XP.//Note: After Halloween ends, crafting costumes will be replaced with <b>Craft colored clothing</b> till next Halloween. //<small>Let\'s begin that scary mascarade...for real.</small>',
+                desc: '[clothier]s will now be able to create spookier and scarier [colored clothing]s. While sewing these, [clothier]s will also gain some [spookiness]!//Note: After Halloween ends, crafting costumes will be replaced with <b>Craft colored clothing</b> \'till next Halloween. //<small>Let\'s begin that scary mascarade...for real.</small>',
                 icon: [5, 9, 'seasonal'],
                 cost: { 'insight': 300, 'culture': 30 },
                 req: { 'weaving II': true, '"dark season"': true },
                 category: 'seasonal',
                 chance: 3,
+                effects: {
+                    type: 'function', func: function () {
+                        if (day + leap >= 289 && day + leap <= 305) {
+                            G.getDict("clothier").effects.push({ type: 'gather', what: { 'spookiness xp': 0.01 * spookboost }, mode: 'weave leather colored clothing' });
+                            G.getDict("clothier").effects.push({ type: 'gather', what: { 'spookiness xp': 0.01 * spookboost }, mode: 'weave fiber colored clothing' });
+                            G.getDict("clothier").effects.push({ type: 'gather', what: { 'spookiness xp': 0.01 * spookboost }, mode: 'dye already made clothing' });
+                        }
+                    }
+                }
             });
             new G.Tech({
                 name: 'spirit-summoning',
@@ -16728,13 +16745,13 @@ if (getObj("civ") != "1") {
                     {
                         type: 'function', func: function () {
                             if (day + leap >= 289 && day + leap <= 305) {
-                                G.getDict("house").effects.push = { type: 'gather', what: { 'halloween essence': 0.001, 'spookiness xp': 0.005 * spookboost, 'candy': 0.05 } };//since it's built a lot it needs to give less
-                                G.getDict("hovel").effects.push = { type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.011 * spookboost, 'candy': 0.1 } };
-                                G.getDict("hut").effects.push = { type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.01 * spookboost, 'candy': 0.05 } };
-                                G.getDict("shelter on water").effects.push = { type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.01 * spookboost, 'candy': 0.05 } };
-                                G.getDict("branch shelter").effects.push = { type: 'gather', what: { 'halloween essence': 0.0022, 'spookiness xp': 0.012 * spookboost, 'candy': 0.2 } };
-                                G.getDict("Hardened house").effects.push = { type: 'gather', what: { 'halloween essence': 0.001, 'spookiness xp': 0.005 * spookboost, 'candy': 0.05 } }; //since it's built a lot it needs to give less
-                                G.getDict("hardened house").effects.push = { type: 'gather', what: { 'halloween essence': 0.0012, 'spookiness xp': 0.014 * spookboost, 'candy': 0.1 } };
+                                G.getDict("house").effects.push({ type: 'gather', what: { 'halloween essence': 0.001, 'spookiness xp': 0.005 * spookboost, 'candy': 0.05 } });//since it's built a lot it needs to give less
+                                G.getDict("hovel").effects.push({ type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.011 * spookboost, 'candy': 0.1 } });
+                                G.getDict("hut").effects.push({ type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.01 * spookboost, 'candy': 0.05 } });
+                                G.getDict("shelter on water").effects.push({ type: 'gather', what: { 'halloween essence': 0.002, 'spookiness xp': 0.01 * spookboost, 'candy': 0.05 } });
+                                G.getDict("branch shelter").effects.push({ type: 'gather', what: { 'halloween essence': 0.0022, 'spookiness xp': 0.012 * spookboost, 'candy': 0.2 } });
+                                G.getDict("Hardened house").effects.push({ type: 'gather', what: { 'halloween essence': 0.001, 'spookiness xp': 0.005 * spookboost, 'candy': 0.05 } }); //since it's built a lot it needs to give less
+                                G.getDict("hardened house").effects.push({ type: 'gather', what: { 'halloween essence': 0.0012, 'spookiness xp': 0.014 * spookboost, 'candy': 0.1 } });
                             }
                         }
                     },
@@ -16885,7 +16902,7 @@ if (getObj("civ") != "1") {
 
                             //treehouse altering
                             G.getDict('treehouse').icon = [7, 9, "magixmod"];
-                            G.getDict('treehouse').desc = G.getDict('treehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('treehouse').desc = G.getDict('treehouse').desc.replace('Paradise', 'Ancestors world');
                             G.getDict('treehouse').category = 'ancestorsunit';
                             G.getDict('treehouse').req = { 'ancestors world housing': true };
                             G.getDict('treehouse').use = { 'land of the Past': 1 / 3 };
@@ -16931,11 +16948,11 @@ if (getObj("civ") != "1") {
 
                             //paradise unit altering (REMEMBER TO SWITCH THE ICONS)
                             G.getDict('Floored warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
-                            G.getDict('Floored warehouse').desc = G.getDict('Floored warehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('Floored warehouse').desc = G.getDict('Floored warehouse').desc.replace('Paradise', 'Ancestors world');
                             G.getDict('Floored warehouse').category = 'ancestorsunit';
                             G.getDict('Floored warehouse').use = { 'land of the Past': 4, 'industry point': 0.2 };
                             G.getDict('hardened warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
-                            G.getDict('hardened warehouse').desc = G.getDict('hardened warehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('hardened warehouse').desc = G.getDict('hardened warehouse').desc.replace('Paradise', 'Ancestors world');
                             G.getDict('hardened warehouse').category = 'ancestorsunit';
                             G.getDict('hardened warehouse').use = { 'land of the Past': 3, 'industry point': 0.2 };
 
@@ -22183,16 +22200,16 @@ if (getObj("civ") != "1") {
                     };
                     if (G.achievByName['the fortress'].won > 5) { G.getDict("food rations").cost = { 'influence': 2 }; G.getDict("water rations").cost = { 'influence': 2 } };
                     if (G.has('Water')) { //trigger debuff for mining units at game load
-                        if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
-                        if (G.getDict("digger").effects[G.getDict("digger").effects.length] == "undefined") G.getDict("digger").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("digger").effects[G.getDict("digger").effects.length] == "undefined") G.getDict("digger").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("digger").effects[(G.getDict("digger").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
-                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
                         G.getDict('forest mushrooms').mult = 9 * (1 + (0.002 * i));
                     }
                     if (G.has('earth')) {
-                        if (G.getDict("archaeologist").effects[G.getDict("archaeologist").effects.length] == "undefined") G.getDict("archaeologist").effects.push = { type: 'mult', value: 1 - (0.002 * i) };
+                        if (G.getDict("archaeologist").effects[G.getDict("archaeologist").effects.length] == "undefined") G.getDict("archaeologist").effects.push({ type: 'mult', value: 1 - (0.002 * i) });
                         else G.getDict("archaeologist").effects[(G.getDict("archaeologist").effects.length) - 1] = { type: 'mult', value: 1 - (0.002 * i) };
                         if (i > 14 && i < 23) G.getDict('mine').effects[9] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, killing all the miners', 'mines collapsed, killing all the miners'), chance: 1 / (40 - i) };
                         else G.getDict('mine').effects[9] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'mine collapsed, wounding its miners', 'mines collapsed, wounding the miners'), chance: 1 / (45 - i) };
@@ -22200,11 +22217,11 @@ if (getObj("civ") != "1") {
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
                         if (i > 14 && i < 23) G.getDict('quarry').effects[4] = { type: 'function', func: unitGetsConverted({ 'corpse': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, killing all the workers', 'quarries collapsed, killing all the workers'), chance: 1 / (40 - i) };
                         else G.getDict('quarry').effects[4] = { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.01, '[X] [elves].', 'quarry collapsed, wounding its workers', 'quarries collapsed, wounding their workers'), chance: 1 / (45 - i) };
-                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 + (0.001 * i) };
+                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push({ type: 'mult', value: 1 + (0.001 * i) });
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
-                        if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
+                        if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push({ type: 'mult', value: 1 + (0.002 * i) });
                         else G.getDict("furnace").effects[(G.getDict("furnace").effects.length) - 1] = { type: 'mult', value: 1 + (0.002 * i) };
-                        if (G.getDict("blacksmith workshop").effects[G.getDict("blacksmith workshop").effects.length] == "undefined") G.getDict("blacksmith workshop").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
+                        if (G.getDict("blacksmith workshop").effects[G.getDict("blacksmith workshop").effects.length] == "undefined") G.getDict("blacksmith workshop").effects.push({ type: 'mult', value: 1 + (0.002 * i) });
                         else G.getDict("blacksmith workshop").effects[(G.getDict("blacksmith workshop").effects.length) - 1] = { type: 'mult', value: 1 + (0.002 * i) };
                     }
                     if (G.has("warmth")) {
@@ -22214,13 +22231,13 @@ if (getObj("civ") != "1") {
                         G.getDict('snow cover').res['gather']['water'] = 4 * (1 - ((i * 2.4) * 0.01));
                         G.getDict('snow cover').res['gather']['muddy water'] = 8 * (1 - ((i * 2.4) * 0.01));
                         G.getDict('snow cover').res['dig']['ice'] = 0.2 * (1 - ((i * 2.4) * 0.01));
-                        if (G.getDict("gatherer").effects[G.getDict("gatherer").effects.length] == "undefined") G.getDict("gatherer").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("gatherer").effects[G.getDict("gatherer").effects.length] == "undefined") G.getDict("gatherer").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("gatherer").effects[(G.getDict("gatherer").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 0.4) * 0.01) };
-                        if (G.getDict("fisher").effects[G.getDict("fisher").effects.length] == "undefined") G.getDict("fisher").effects.push = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
+                        if (G.getDict("fisher").effects[G.getDict("fisher").effects.length] == "undefined") G.getDict("fisher").effects.push({ type: 'mult', value: 1 - ((i * 0.75) * 0.01) });
                         else G.getDict("fisher").effects[(G.getDict("fisher").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
                     }
                     if (G.has('Ice')) {
-                        if (G.getDict("firekeeper").effects[G.getDict("firekeeper").effects.length] == "undefined") G.getDict("firekeeper").effects.push = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
+                        if (G.getDict("firekeeper").effects[G.getDict("firekeeper").effects.length] == "undefined") G.getDict("firekeeper").effects.push({ type: 'mult', value: 1 - ((i * 0.75) * 0.01) });
                         else G.getDict("firekeeper").effects[(G.getDict("firekeeper").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
                         G.getDict('grass').mult = 9 * (1 - (i * 0.02));
                         G.getDict('berry bush').mult = 9 * (1 - (i * 0.02));
@@ -22327,19 +22344,19 @@ if (getObj("civ") != "1") {
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
                         //if(i>14 && i<23)G.getDict('quarry').effects[(G.getDict("quarry").effects.length)-2]={type:'function',func:unitGetsConverted({'corpse':1},0.001,0.01,'[X] [elves].','mine collapsed, killing all the miners','mines collapsed, killing all the miners'),chance:1/40};
                         //else G.getDict('quarry').effects[(G.getDict("quarry").effects.length)-2]={type:'function',func:unitGetsConverted({'wounded':1},0.001,0.01,'[X] [elves].','mine collapsed, wounding its miners','mines collapsed, wounding the miners'),chance:1/45};
-                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 + (0.001 * i) };
+                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push({ type: 'mult', value: 1 + (0.001 * i) });
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 + (0.001 * i) };
-                        if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
+                        if (G.getDict("furnace").effects[G.getDict("furnace").effects.length] == "undefined") G.getDict("furnace").effects.push({ type: 'mult', value: 1 + (0.002 * i) });
                         else G.getDict("furnace").effects[(G.getDict("furnace").effects.length) - 1] = { type: 'mult', value: 1 + (0.002 * i) };
-                        if (G.getDict("blacksmith workshop").effects[G.getDict("blacksmith workshop").effects.length] == "undefined") G.getDict("blacksmith workshop").effects.push = { type: 'mult', value: 1 + (0.002 * i) };
+                        if (G.getDict("blacksmith workshop").effects[G.getDict("blacksmith workshop").effects.length] == "undefined") G.getDict("blacksmith workshop").effects.push({ type: 'mult', value: 1 + (0.002 * i) });
                         else G.getDict("blacksmith workshop").effects[(G.getDict("blacksmith workshop").effects.length) - 1] = { type: 'mult', value: 1 + (0.002 * i) };
                     }
                     if (G.has('Water')) {
-                        if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("mine").effects[G.getDict("mine").effects.length] == "undefined") G.getDict("mine").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("mine").effects[(G.getDict("mine").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
-                        if (G.getDict("digger").effects[G.getDict("digger").effects.length] == "undefined") G.getDict("digger").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("digger").effects[G.getDict("digger").effects.length] == "undefined") G.getDict("digger").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("digger").effects[(G.getDict("digger").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
-                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
+                        if (G.getDict("quarry").effects[G.getDict("quarry").effects.length] == "undefined") G.getDict("quarry").effects.push({ type: 'mult', value: 1 - ((i * 2.5) * 0.01) });
                         else G.getDict("quarry").effects[(G.getDict("quarry").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 2.5) * 0.01) };
                         G.getDict('forest mushrooms').mult = 9 * (1 + (0.002 * i));
                     }
@@ -22372,9 +22389,9 @@ if (getObj("civ") != "1") {
                         G.getDict('snow cover').res['gather']['water'] = 4 * (1 - ((i * 2.4) * 0.01));
                         G.getDict('snow cover').res['gather']['muddy water'] = 8 * (1 - ((i * 2.4) * 0.01));
                         G.getDict('snow cover').res['dig']['ice'] = 0.2 * (1 - ((i * 2.4) * 0.01));
-                        if (G.getDict("fisher").effects[G.getDict("fisher").effects.length] == "undefined") G.getDict("fisher").effects.push = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
+                        if (G.getDict("fisher").effects[G.getDict("fisher").effects.length] == "undefined") G.getDict("fisher").effects.push({ type: 'mult', value: 1 - ((i * 0.75) * 0.01) });
                         else G.getDict("fisher").effects[(G.getDict("fisher").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 0.75) * 0.01) };
-                        if (G.getDict("fisher").effects[G.getDict("florist").effects.length] == "undefined") G.getDict("florist").effects.push = { type: 'mult', value: 1 - ((i * 0.4) * 0.01) };
+                        if (G.getDict("fisher").effects[G.getDict("florist").effects.length] == "undefined") G.getDict("florist").effects.push({ type: 'mult', value: 1 - ((i * 0.4) * 0.01) });
                         else G.getDict("fisher").effects[(G.getDict("florist").effects.length) - 1] = { type: 'mult', value: 1 - ((i * 0.4) * 0.01) };
                     }
                     G.createTopInterface(); G.updateMapDisplay();
@@ -26471,7 +26488,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'developed creativity', category: 'knowledge',
-                desc: '<font color="#e6ffee">@unlocks [conceptionist], who spends his free time developing creativity rather than inventing. @this variation of dreamer will generate [creativity] and will charge [battery of discoveries] at the same time. @from now on, [dreamer]s produce one-third more [discernment]. They also stop providing [creativity] and become limited based on your [population,elves]. @provides 20 [quick-wittinity] and 10 [wisdom], and will unlock a few more techs</font>',
+                desc: '<font color="#e6ffee">@unlocks [conceptionist], who spends his free time developing creativity rather than inventing. @this variation of dreamers will generate [creativity] and will charge the [battery of discoveries] simultaneously. @from now on, [dreamer]s produce one-third more [discernment]. They also stop providing [creativity] and become limited based on your [population,elves]. @provides 20 [quick-wittinity] and 10 [wisdom], and will unlock a few more techs</font>',
                 icon: [30, 14, "c2"],
                 cost: { 'creativity': 60, 'discernment': 120 },
                 req: { 'philosophy': true, 'a power of the fortress': true },

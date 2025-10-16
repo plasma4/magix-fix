@@ -625,6 +625,7 @@ G.Load = function (doneLoading) {
         G.getDict('research box').cooldown = isFinite(num) ? num : 0;
         if (tSpl.length >= 3) G.PARTY = 1; //new feature added: there will be an added $ sign if G.PARTY is true, and there is a button to toggle this in the debug menu because why not (this is right after G.storageObject data but that is pre-calculated in an attempt to avoid conflicting data issues like civ mismatches)
 
+        G.updateOwnedObjects();
         G.runUnitReqs();
         G.runPolicyReqs();
 
@@ -769,6 +770,7 @@ G.NewGameConfirm = function () {
     }
     G.releaseUIUpdate();
 
+    G.updateOwnedObjects();
     G.runUnitReqs();
     G.runPolicyReqs();
 
@@ -2352,6 +2354,7 @@ G.AddData({
                 }
                 G.releaseUIUpdate();
 
+                G.updateOwnedObjects();
                 G.runUnitReqs();
                 G.runPolicyReqs();
 
@@ -5060,8 +5063,7 @@ G.AddData({
         var oldFPSShow = G.getSetting('fpsgraph')
         var catchupTimes = 0 // Detect catchup and cap it to prevent lag becoming really bad. G.catchupLogic is set to 0 the first logic loop in G.Loop which allows us to easily detect this.
         G.maxLogicCallsPerFrame = 4
-        var callId = 0
-        G.Logic = function (forceTick) {
+        G.updateOwnedObjects = function () {
             G.unitsOwnedObject = {}
             G.techsOwnedObject = {}
             G.traitsOwnedObject = {}
@@ -5074,7 +5076,9 @@ G.AddData({
             for (var i = 0; i < G.traitsOwnedNames.length; i++) {
                 G.traitsOwnedObject[G.traitsOwnedNames[i]] = true
             }
-
+        }
+        G.Logic = function (forceTick) {
+            G.updateOwnedObjects()
             if (G.catchupLogic) {
                 if (++catchupTimes >= G.maxLogicCallsPerFrame) { // There is an additional call to G.Logic() in G.Loop() before calculating catchup logic so this logic should be sound
                     // console.log("too many!")
@@ -5389,7 +5393,7 @@ G.AddData({
                 G.runUnitReqs();
                 G.runPolicyReqs();
                 G.update['unit']();
-                G.shouldRunReqs = 0;
+                delete G.shouldRunReqs;
             }
 
             G.logicMapDisplay();
