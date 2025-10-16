@@ -381,13 +381,7 @@ new G.Unit({
 Magix-fix contains a *lot* of optimization that may not immediately be apparent. So, I've compiled this list to try to find them for other modders:
 - Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was `Array(2102051)` and `techByTier` was `Array(297288)` due to me adding some new techs. The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does!
 - There is an implementation of `G.maxLogicCallsPerFrame` that caps the number of `G.Logic` calls in a frame to prevent significant lag in `magixUtils.js`, which can make the game feel a lot smoother on lower-end devices. By default, `G.maxLogicCallsPerFrame` is set to 4 but can be changed!
-- It is possible to prevent constant HTML updates for unit amounts by checking if `me.lAmount.innerHTML` actually changed.
-- Instead of updating tabs many times on save loading/resetting, only update them once by finding `G.noUpdate`/`G.releaseUIUpdate` (find in `magixUtils.js`).
-- Modify the chances of particles appearing by adding this line of code to `G.showParticle`:
-    ```js
-    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
-    ```
-    which you may want if there are many new units in your mod.
+- It is possible to prevent constant HTML updates for unit amounts by checking if `me.lAmount.innerHTML` actually changed, which improves performance.
 - Movement of this code:
     ```js
     var scrolled = !(Math.abs(G.messagesWrapl.scrollTop - (G.messagesWrapl.scrollHeight - G.messagesWrapl.offsetHeight)) < 3);//is the message list not scrolled at the bottom? (if yes, don't update the scroll - the player probably manually scrolled it)
@@ -398,7 +392,13 @@ Magix-fix contains a *lot* of optimization that may not immediately be apparent.
     // put that code here instead
     ```
     This code movement prevents the JS from having to determine what scrollTop is every single time.
-- Creation of new objects (`G.units/techs/traitsOwnedObject`) to make `G.has` blazing fast, and changing how `G.has` works (check `magixUtils.js` for changes). This takes a little bit to do but can provide some significant benefits!
+- Instead of updating tabs many times on save loading/resetting, only update them once by finding `G.noUpdate`/`G.releaseUIUpdate` (find in `magixUtils.js`).
+- Modify the chances of particles appearing by adding this line of code to `G.showParticle`:
+    ```js
+    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
+    ```
+    which you may want if there are many new units in your mod.
+- Creation of new objects (`G.units/techs/traitsOwnedObject`) to make `G.has` blazing fast, and changing how `G.has` works (check `magixUtils.js` for changes). This takes a little bit to do but can provide some significant benefits! Be careful though; you'll probably want to look for every instance of this object (and `updateOwnedObjects`.)
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:
