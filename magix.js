@@ -16921,6 +16921,28 @@ if (getObj("civ") != "1") {
                             G.getDict('holy essence storage').req = { 'stockpiling': true, 'building': true, 'essence storages': true, 'ancestors world building': true, '7th essence': true },
                                 G.getDict('land acknowledge').req = { '2nd portal past': true };
                             G.getDict('tool refinery 1/2').req = { 'ancestors world crafting': true };
+
+                            // fix by @painekillers
+                            //random stuff altering
+                            G.getDict('combat potion & concoction brewing').req = { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'ancestors world building': true };
+                            G.getDict('bigger potion pallet').req = { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'ancestors world building': true };
+                            G.getDict('explosive crafting & mining').req = { 'ambrosium treeplanting': true, 'ancestors world building': true };
+                            G.getDict('intelligent blasting').req = { 'ambrosium treeplanting': true, 'ancestors world building': true };
+
+                            //paradise unit altering (REMEMBER TO SWITCH THE ICONS)
+                            G.getDict('Floored warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
+                            G.getDict('Floored warehouse').desc = G.getDict('Floored warehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('Floored warehouse').category = 'ancestorsunit';
+                            G.getDict('Floored warehouse').use = { 'land of the Past': 4, 'industry point': 0.2 };
+                            G.getDict('hardened warehouse').req = { 'stockpiling': true, 'construction': true, 'ancestors world building': true };
+                            G.getDict('hardened warehouse').desc = G.getDict('hardened warehouse').desc.replace('paradise', 'Ancestors world');
+                            G.getDict('hardened warehouse').category = 'ancestorsunit';
+                            G.getDict('hardened warehouse').use = { 'land of the Past': 3, 'industry point': 0.2 };
+
+                            //Make gods and idols possible to get without revenants(required for temple of ancestors/paradise)
+                            G.getDict('gods and idols').req = { 'power of the faith': true };
+                            //I just removed liberating darkness
+
                             mausoleumEvolve();
                             rootPolicyEvolve();
                             rootCultureEvolve();

@@ -1,4 +1,4 @@
-﻿/*
+/*
 	All this code is copyright Orteil, 2016-2020.
 	Spoilers ahead.
 	welcome to my awful soup
