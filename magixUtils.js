@@ -6018,7 +6018,7 @@ G.AddData({
             else if (amount > 0) {
                 //check requirements
                 if (any) {
-                    var originalAmount = amount;
+                    // var originalAmount=amount;
                     var n = 0;
                     n = G.testAnyCost(me.unit.cost);
                     if (n != -1) amount = Math.min(n, amount);
@@ -6029,6 +6029,7 @@ G.AddData({
                     //n=G.testAnyUse(me.mode.use,amount);
                     //if (n!=-1) amount=Math.min(n,amount);
                     n = G.testAnyLimit(me.unit.limitPer, G.getUnitAmount(me.unit.name) + amount);
+                    // console.log(G.getUnitAmount(me.unit.name) + amount)
                     if (n != -1) amount = Math.min(n, amount);
                     if (amount <= 0) success = false;
                 }

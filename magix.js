@@ -1067,7 +1067,7 @@ if (getObj("civ") != "1") {
                     Theme = 'Default';
                 }
                 //tech
-                if (G.tab.id == 'tech' && document.getElementsByClassName("bgPanelUp")) {
+                if (G.tab.id == 'tech' && document.getElementsByClassName("bgPanelUp")[0]) {
                     document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + (isUsingFile ? magixURL : magixURL + Theme + 'Theme/') + 'bgUpRock' + Theme + '.jpg")'; //needs refreshing every time we enter Tech tab
                 }
 
@@ -7787,7 +7787,7 @@ if (getObj("civ") != "1") {
                             var wiggleRoom = 5 + (G.has('city planning II') ? 2 : 0) + (G.has('city planning III') ? 3 : 0) + (G.has('city planning III(m)') ? 2 : 0);
                             var homeless = Math.max(0, (G.getRes('population').amount + wiggleRoom) - G.getRes('housing').amount);
                             var toMake = me.amount - me.idle;
-                            if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('house', toMake)) {
+                            if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('floored house', toMake)) {
                                 G.buyUnitByName('floored house', toMake, true);
                                 if (G.has('city planning III')) changeHappiness(toMake * 1.5, 'architect trust');
                             }
@@ -7798,7 +7798,7 @@ if (getObj("civ") != "1") {
                             var wiggleRoom = 8 + (G.has('city planning II') ? 2 : 0) + (G.has('city planning III') ? 3 : 0) + (G.has('city planning III(m)') ? 2 : 0);
                             var homeless = Math.max(0, (G.getRes('population').amount + wiggleRoom) - G.getRes('housing').amount);
                             var toMake = me.amount - me.idle;
-                            if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('house', toMake)) {
+                            if (homeless > 0 && toMake > 0 && G.canBuyUnitByName('brick house with a silo', toMake)) {
                                 G.buyUnitByName('brick house with a silo', toMake, true);
                                 if (G.has('city planning III')) changeHappiness(toMake * 1.5, 'architect trust');
                             }
@@ -9122,7 +9122,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'brick house with a silo',
-                desc: '@provides 15 [housing]<>. Even harder construction makes people feel more safe. Increases food storage by 65 per building.',
+                desc: '@provides 15 [housing]<>. Even harder construction makes people feel more safe. Each brick house increases [food storage] by 60.',
                 icon: [5, 1, "magixmod"],
                 cost: { 'brick': 2000, 'basic building materials': 100 },
                 use: { 'land': 1 },
@@ -9130,7 +9130,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'provide', what: { 'housing': 15 } },
                     { type: 'provide', what: { 'housing': 0.2 }, req: { 'better house construction': true } },
-                    { type: 'provide', what: { 'food storage': 65 } },
+                    { type: 'provide', what: { 'food storage': 60 } },
                     { type: 'waste', chance: 0.0004 / 1000 },
                     { type: 'waste', chance: 0.0004 / 1000, req: { 'construction III': false } },
                     { type: 'waste', chance: 0.00008 / 1000, req: { 'construction III': true, 'improved construction': false } },
@@ -21986,7 +21986,7 @@ if (getObj("civ") != "1") {
             function theme() {
                 for (var i = 0; i < document.getElementsByClassName("sideCategory").length; i++) document.getElementsByClassName("sideCategory")[i].style.width = "130px";
                 //res and messages tab
-                if (G.tab.id == 'tech') {
+                if (G.tab.id == 'tech' && document.getElementsByClassName("bgPanelUp")[0]) {
                     document.getElementsByClassName("bgPanelUp")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + 'bgUpRockC2.jpg")'; //needs refreshing every time we enter Tech tab
                 }
                 document.getElementsByClassName("bgPanelDown")[0].style['background-image'] = 'url("img/darkEdgeBorders.png"),url("' + magixURL + 'bgDownRockC2.jpg")';
