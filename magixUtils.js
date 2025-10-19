@@ -824,103 +824,60 @@ G.NewGameConfirm = function () {
 
 // BEGIN COST TESTING CHANGES
 G.testCost = function (costs, mult) {
-    var tempAmounts = {};
-
-    // Prioritize specific costs first by sortin'
-    var sortedCosts = [];
+    //can we afford the specified amount
+    var success = true;
     for (var i in costs) {
-        sortedCosts.push({ name: i, cost: costs[i] * mult });
-    }
-    sortedCosts.sort(function (a, b) {
-        return (G.getDict(a.name).meta ? 1 : -1) - (G.getDict(b.name).meta ? 1 : -1);
-    });
-
-    for (var i = 0; i < sortedCosts.length; i++) {
-        var name = sortedCosts[i].name;
-        var cost = sortedCosts[i].cost;
-        if (cost <= 0) continue;
-
-        var res = G.getDict(name);
-
-        // Populate tempAmounts on-demand for performance
-        var populateTemp = function (resource) {
-            if (tempAmounts[resource.name] === undefined) {
-                if (resource.meta) {
-                    var total = 0;
-                    for (var c in resource.subRes) {
-                        total += populateTemp(resource.subRes[c]);
+        var cost = costs[i] * mult;
+        if (cost > 0) {
+            var res = G.getRes(i);
+            if (res.meta) {
+                var resAmount = 0;
+                var subRes = res.subRes;
+                for (var ii = 0; ii < subRes.length; ii++) {
+                    var res = subRes[ii];
+                    resAmount += res.amount;
+                    var c = costs[res.name];
+                    if (c) {
+                        resAmount -= c;
                     }
-                    tempAmounts[resource.name] = total;
-                } else {
-                    tempAmounts[resource.name] = resource.amount;
                 }
+                if (resAmount < cost) success = false;
             }
-            return tempAmounts[resource.name];
-        };
-        populateTemp(res);
-
-        if (res.meta) {
-            var available = 0;
-            for (var c in res.subRes) { available += tempAmounts[res.subRes[c].name]; }
-            if (available < cost) return false;
-            // Spend proportionally from children
-            for (var c in res.subRes) {
-                if (available > 0) tempAmounts[res.subRes[c].name] -= (tempAmounts[res.subRes[c].name] / available) * cost;
+            else {
+                if (res.amount < cost) success = false;
             }
-        } else {
-            if (tempAmounts[name] < cost) return false;
-            tempAmounts[name] -= cost;
         }
     }
-    return true;
+    return success;
 }
 
 G.testAnyCost = function (costs) {
-    var normalizedCosts = {};
-
-    // First pass: Add all direct, non-meta costs
+    //how many we can afford (returns -1 for infinity)
+    var n = -1;
     for (var i in costs) {
-        if (!G.getDict(i).meta) {
-            if (!normalizedCosts[i]) normalizedCosts[i] = 0;
-            normalizedCosts[i] += costs[i];
-        }
-    }
-
-    // Second pass: Distribute meta costs to their children
-    for (var i in costs) {
-        var res = G.getDict(i);
-        if (res.meta) {
-            // Find the total pool of available sub-resources
-            var totalPool = 0;
-            for (var c in res.subRes) {
-                totalPool += G.getRes(res.subRes[c].name).amount;
-            }
-            if (totalPool > 0) {
-                // Distribute this cost to its children
-                for (var c in res.subRes) {
-                    var subRes = res.subRes[c];
-                    var proportion = G.getRes(subRes.name).amount / totalPool;
-                    if (!normalizedCosts[subRes.name]) normalizedCosts[subRes.name] = 0;
-                    normalizedCosts[subRes.name] += cost * proportion;
-                }
-            } else {
-                // Can't afford any, return!
-                return 0;
-            }
-        }
-    }
-
-    // Now, run the simple calculation on the fully normalized cost object
-    var maxAfford = Infinity;
-    for (var i in normalizedCosts) {
-        var cost = normalizedCosts[i];
+        var cost = costs[i];
         if (cost > 0) {
-            var have = G.getRes(i).amount;
-            maxAfford = Math.min(maxAfford, Math.floor(have / cost));
+            var res = G.getRes(i);
+            if (res.meta) {
+                var resAmount = 0;
+                var subRes = res.subRes;
+                for (var ii = 0; ii < subRes.length; ii++) {
+                    var res = subRes[ii];
+                    resAmount += res.amount;
+                    var c = costs[res.name];
+                    if (c) {
+                        resAmount -= c;
+                    }
+                }
+                if (n == -1) n = resAmount / cost; else n = Math.min(n, resAmount / cost);
+            }
+            else {
+                if (n == -1) n = res.amount / cost; else n = Math.min(n, res.amount / cost);
+            }
         }
     }
-
-    return maxAfford === Infinity ? -1 : maxAfford;
+    n = Math.floor(n);
+    return n;
 }
 
 G.doCost = function (costs, mult) {
@@ -3608,7 +3565,7 @@ G.AddData({
             tier: 0,
             icon: [9, 0, "magix2"],
             name: 'an ocean\'s voyage',
-            desc: 'While in the [t6,Ocean trial], manage to get the [Wizard complex] tech to gain all <b>seven</b> trial-related upgrades! //<small>How did you get that far with the world practically falling apart?</small>',
+            desc: 'While in the [t6,Ocean trial], manage to get the [Wizard complex] tech to gain all <b>seven</b> trial-related techs! //<small>How did you get that far with the world practically falling apart?</small>',
             effects: [
             ],
             civ: 0,
@@ -6021,16 +5978,19 @@ G.AddData({
                     // var originalAmount=amount;
                     var n = 0;
                     n = G.testAnyCost(me.unit.cost);
-                    if (n != -1) amount = Math.min(n, amount);
+                    if (n != -1) amount = Math.min(n, amount); // -1 means Infinity, for some reason
                     n = G.testAnyUse(me.unit.use, amount);
                     if (n != -1) amount = Math.min(n, amount);
                     n = G.testAnyUse(me.unit.require, amount);
                     if (n != -1) amount = Math.min(n, amount);
                     //n=G.testAnyUse(me.mode.use,amount);
                     //if (n!=-1) amount=Math.min(n,amount);
-                    n = G.testAnyLimit(me.unit.limitPer, G.getUnitAmount(me.unit.name) + amount);
-                    // console.log(G.getUnitAmount(me.unit.name) + amount)
-                    if (n != -1) amount = Math.min(n, amount);
+                    n = G.testAnyLimit(me.unit.limitPer, 1);
+                    if (n != -1) {
+                        n -= G.getUnitAmount(me.unit.name);
+                        if (n != -1) amount = Math.min(n, amount);
+                    }
+                    // original G.testAnyLimit testing removed as it's silly and broken, hopefully this doesn't result in additional issues down the line
                     if (amount <= 0) success = false;
                 }
                 else {

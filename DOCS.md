@@ -48,6 +48,7 @@ Note that if you need more details on how these functions work you can probably 
 - `G.widget.popup(obj: object)` This creates the small pop-up menus that appear when you click and hold a "gizmo" button (like the unit mode selector).
 - `unitGetsConverted(...)` This is a special kind of function found in data.js (and modified in magixUtils.js) called a "function factory." It doesn't perform an action itself; instead, it returns a new function that does. It has many uses in effects, such as for workers being wounded/killed, and can have a custom message.
 - `G.ChooseBox` creates the reroll options for technologies. Both the base game `data.js` file and `magix.js` only use one `ChooseBox`, and are made with `new G.ChooseBox` so check that if you wish to modify something.
+- Use `G.unitsOwned[G.unitsOwnedNames.indexOf("brick house with a silo")]`, for example, to get `amount`, `idle`, or similar properties for a specific unit.
 
 ## Digging on your own
 This document unfortunately can't explain every single little detail about the game. If you're trying to understand something, perhaps look for examples in the code and try to get a function call stack with `console.trace()`! (Or you could just ask me on Discord if you're super stuck.)
@@ -331,6 +332,7 @@ new G.Unit({
     G.testCost({'precious building materials': 250000, 'marble': 250000}, 1) // Can I spend 250k precious building materials and 250k marble?
     ```
     Therefore, this is fixed in Magix (find `G.testCost` in `magixUtils.js`).
+    Also, look for the code in `else if (amount > 0) {` for `G.buyUnit` that Magix uses if you are planning to mod the base game; in the base game if a unit has a limit then queueing is weird (meaning queueing is slow for those units for whatever reason).
 6. [The production multiplier's formula is weird and uses `randomFloor()`.](https://www.desmos.com/calculator/hfowgwemgp) (The Desmos graph has more context; basically the multiplier from happiness is rounded, can be 0 if happiness is a negative percentage, and can go up to 4 times base.) The more you know :)
 7. Magix fundamentally alters many mechanics in the game, and `magix-fix` has edited more of them. Currently it is unfortunately at the point where so many base mechanics have been changed that it would be near impossible to find them all. These would include mobile features (in `G.widget.update`), making `stabilizeResize` more responsive, removal of empty tick functions in `G.Res()`. If you want mobile support or perhaps a more detailed attempt at fiding the differences, contact me on Discord (see top of this document).
 8. The [Magix Wiki](https://plasma4.github.io/magix-fix/magix-wiki.html) might be helpful in order to quickly look for and examine certain items and their interactions between them! In particular, clicking on a unit provides an actually readable explanation of what goes on, and knowledge has detailed explanation (do note, though, that requirements or other properties that are changed with the JS will NOT be shown here).
