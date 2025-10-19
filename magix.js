@@ -3650,9 +3650,9 @@ if (getObj("civ") != "1") {
                 colorGood: 'lime', colorBad: '#f44',
                 fractional: true,
                 tick: function (me, tick) {
-                    //Calculate ungratefulness
-                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 5 ? 0.85 : (G.achievByName['mausoleum'].won > 2 ? 0.8 : 0.75) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
-                    ungrateful /= 5 / (1 + Math.exp(Math.pow(Math.max(G.year - 50, 0), 0.8) / -200)) - 1
+                    // Calculate ungratefulness
+                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 3 ? 1.4 : (G.achievByName['mausoleum'].won > 2 ? 1.2 : 1) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
+                    ungrateful /= 5 / (1 + Math.exp(Math.pow(Math.max(G.year - 25, 0), 0.8) / -200)) - 0.75
                     G.getDict('ungrateful tribe').desc = '@people consume 3% less [food] and 2% less [water], but gain ' + (100 - ungrateful * 100).toFixed(1) + '% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum], but also gets worse over time.//<small>we\'re getting used to our resources...</small>'
                     if (G.has('tribe of eaters')) {
                         //Decrease the effect by half
