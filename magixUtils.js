@@ -3930,7 +3930,7 @@ G.AddData({
                 var str = '';
                 //Math.seedrandom(tile.map.seed+'-name-'+tile.x+'/'+tile.y);
                 var name = tile.land.displayName;//choose(tile.land.names);
-                str += '<div class="block framed bgMid fadeIn" id="land-0"><div class="fancyText framed bgMid blockLabel" style="float:right;">' + name + '</div><div class="fancyText segmentHeader">< - - Goods - - ><br><br><br></div><div class="thingBox" style="padding:0px;text-align:left;">';
+                str += '<div class="block framed bgMid fadeIn" id="land-0"><div class="fancyText framed bgMid blockLabel" style="float:right;">' + name + '</div><div class="fancyText segmentHeader">< - -<br>Goods<br>- - ><br><br><br></div><div class="thingBox" style="padding:0px;text-align:left;">';
                 var I = 0;
                 for (var ii in tile.goods) {
                     var me = G.getGoods(ii);
@@ -4040,8 +4040,34 @@ G.AddData({
                             })
                         }
                     }
+
+                    var landCount = 0
+                    var oceanCount = 0
+                    var exploredLand = 0
+                    var exploredOcean = 0
+                    if (G.isMap) { // Map fully explored
+                        landCount = 1
+                        oceanCount = 1
+                        exploredLand = 1
+                        exploredOcean = 1
+                    } else {
+                        for (var x = 0; x < G.maps[0].w; x++) {
+                            var t = G.maps[0].tiles[x]
+                            for (var y = 0; y < G.maps[0].h; y++) {
+                                var tile = t[y]
+                                if (tile.land.ocean) {
+                                    oceanCount++
+                                    exploredOcean += (tile.owner || 0) * tile.explored
+                                } else {
+                                    landCount++
+                                    exploredLand += (tile.owner || 0) * tile.explored
+                                }
+                            }
+                        }
+                    }
+
                     if (G.has('tile inspection II')) {
-                        str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Total natural resources in your territory:</div>';
+                        str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText" id="totalResourcesTip">Total natural resources in your territory (' + (landCount ? exploredLand / landCount * 100 : 0).toFixed(2) + '% land explored, ' + (oceanCount ? exploredOcean / oceanCount * 100 : 0).toFixed(2) + '% ocean explored):</div>'; // totalResourcesTip also updated in G.Logic()
                     } else {
                         str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Natural resources in your territory:</div>';
                     }
@@ -5361,6 +5387,35 @@ G.AddData({
             G.popupSquares.update();
             G.updateMessages();
 
+            if (G.tab.id === 'land' && l('totalResourcesTip')) {
+                var landCount = 0
+                var oceanCount = 0
+                var exploredLand = 0
+                var exploredOcean = 0
+                if (G.isMap) { // Map fully explored
+                    landCount = 1
+                    oceanCount = 1
+                    exploredLand = 1
+                    exploredOcean = 1
+                } else {
+                    for (var x = 0; x < G.maps[0].w; x++) {
+                        var t = G.maps[0].tiles[x]
+                        for (var y = 0; y < G.maps[0].h; y++) {
+                            var tile = t[y]
+                            if (tile.land.ocean) {
+                                oceanCount++
+                                exploredOcean += (tile.owner || 0) * tile.explored
+                            } else {
+                                landCount++
+                                exploredLand += (tile.owner || 0) * tile.explored
+                            }
+                        }
+                    }
+                }
+
+                l('totalResourcesTip').textContent = 'Total natural resources in your territory (' + (landCount ? exploredLand / landCount * 100 : 0).toFixed(2) + '% land explored, ' + (oceanCount ? exploredOcean / oceanCount * 100 : 0).toFixed(2) + '% ocean explored):';
+            }
+
             //keyboard shortcuts
             if (G.keysD[27]) { G.dialogue.close(); }//esc
             if (G.sequence == 'main') {
@@ -5392,6 +5447,14 @@ G.AddData({
         G.ca = 1; G.cb = 2;
         G.herbReq = 0;
         G.fruitReq = 0;
+
+        // Softcaps land/ocean exploration
+        G.softcap = function (amountToExplore, limit, tileType) {
+            var tileAmount = G.getRes(tileType).amount;
+            limit -= tileAmount;
+            var result = (limit < 0) ? amountToExplore / Math.sqrt(-limit) : amountToExplore;
+            return result;
+        }
 
         G.fullApplyUnitEffects = function (me, type, amountParam) {
             //run through every effect in a unit and apply them
@@ -5496,53 +5559,54 @@ G.AddData({
                                         }
                                     }
                                     else if (effect.type == 'explore') {
+                                        // Units explore (softcap now applied)
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
-                                            limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 20000 : 0));
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit && G.isMap == 0) {
-                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewTiles += Math.random() * effect.unexplored * myAmount;
+                                            limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0) + (G.has("map details") ? 8000 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 4000 : 0));
+                                            if (!G.isMap) {
+                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
+                                                if (effect.unexplored) G.exploreNewTiles += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.01;
                                                 G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 0.01;
                                                 G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 0.01;
                                             } else {
-                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 1e-300;
+                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0;
+                                                G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 0;
+                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 0;
                                             }
                                         } else {
-                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 14000 : 0));
-                                            limit += (G.has("map details") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("scouting") ? 300 : 0)); //for now since advanced mapping isn't available for C2 yet
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit && G.isMap == false) {
-                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewTiles += Math.random() * effect.unexplored * myAmount;
+                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
+                                            limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
+                                            if (!G.isMap) {
+                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
+                                                if (effect.unexplored) G.exploreNewTiles += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
-                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 1e-300;
+                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0;
+                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 0;
                                             }
                                         }
                                     }
                                     else if (effect.type == 'exploreAlt') {
                                         var limit = 750;
                                         if (G.modsByName["Default dataset"]) {
-                                            limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14000 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 20000 : 0));
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit && G.isMap == 0) {
-                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * effect.unexplored * myAmount;
+                                            limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 8000 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 20000 : 0));
+                                            if (!G.isMap) {
+                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
+                                                if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.01;
                                                 G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 0.01;
                                             } else {
-                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 1e-300;
+                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0;
+                                                G.getDict('globetrotter').effects[G.unitByName['globetrotter'].effects.length - 1].chance = 0;
                                             }
                                         } else {
-                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 14000 : 0));
-                                            limit += (G.has("map details") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("scouting") ? 300 : 0)); //for now since advanced mapping isn't available for C2 yet
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit && G.isMap == false) {
-                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * effect.unexplored * myAmount;
+                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
+                                            limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
+                                            if (!G.isMap) {
+                                                if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
+                                                if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
-                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
+                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0;
                                             }
                                         }
                                     }
@@ -5551,7 +5615,7 @@ G.AddData({
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("focused scouting") ? 20000 : 0) + (G.has("scouting") ? 1000 : 0));
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit && !G.isMap) {
+                                            if (!G.isMap) {
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
                                                 var upkeepMet = true
@@ -5559,29 +5623,29 @@ G.AddData({
                                                     if (G.lose(effect.upkeep[0], effect.upkeep[1], 'unit upkeep') < effect.upkeep[1]) upkeepMet = false //Bad upkeep programming is fun
                                                 }
                                                 if (upkeepMet) {
-                                                    if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
-                                                    if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * effect.unexplored * myAmount;
+                                                    if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * G.softcap(effect.explored, limit, "wtr") * myAmount;
+                                                    if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * G.softcap(effect.unexplored, limit, "wtr") * myAmount;
                                                 } else {
-                                                    G.getDict('boat').effects[2].chance = 1e-300;
-                                                    G.getDict('boat').effects[3].chance = 1e-300;
+                                                    G.getDict('boat').effects[2].chance = 0;
+                                                    G.getDict('boat').effects[3].chance = 0;
                                                 }
                                             } else {
-                                                G.getDict('boat').effects[2].chance = 1e-300;
-                                                G.getDict('boat').effects[3].chance = 1e-300;
+                                                G.getDict('boat').effects[2].chance = 0;
+                                                G.getDict('boat').effects[3].chance = 0;
                                             }
                                         } else {
-                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 14000 : 0));
-                                            limit += (G.has("map details") ? Infinity : (G.has("basic mapping") ? 6500 : 0)) + (G.has("scouting") ? 1000 : 0); //for now since advanced mapping isn't available for C2 yet
-                                            if (G.getRes("wtr").amount + G.getRes("land").amount < limit) {
-                                                if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * effect.explored * myAmount;
-                                                if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * effect.unexplored * myAmount;
+                                            //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
+                                            limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
+                                            if (!G.isMap) {
+                                                if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * G.softcap(effect.explored, limit, "wtr") * myAmount;
+                                                if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * G.softcap(effect.unexplored, limit, "wtr") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.02;
                                                 G.getDict('druidish travellers team').effects[G.unitByName['druidish travellers team'].effects.length - 1].chance = 1 / 230;
                                                 G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 1 / 90;
                                             } else {
-                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('druidish travellers team').effects[G.unitByName['druidish travellers team'].effects.length - 1].chance = 1e-300;
-                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 1e-300;
+                                                G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0;
+                                                G.getDict('druidish travellers team').effects[G.unitByName['druidish travellers team'].effects.length - 1].chance = 0;
+                                                G.getDict('scout').effects[G.unitByName['scout'].effects.length - 1].chance = 0;
                                             }
                                         }
                                     }
@@ -5687,6 +5751,178 @@ G.AddData({
             }
         }
         G.initializeFixIcons();
+
+        // TODO, fix logic map displaying with lower scaled down resolutions one day
+        // G.logicMapDisplay = function () {
+        //     var editMode = G.editMode;
+        //     if (!G.getSetting('debug')) editMode = 0;
+
+        //     var posx = G.mouseX
+        //     var posy = G.mouseY            //move the map around with the mouse
+        //     if (G.mapVisible) {
+        //         var mapl = l('mapContainer');
+        //         var cornerMap = l('cornerMap');
+        //         var mapSurface = l('mapSurface');
+        //         var displayW = G.mapW;
+        //         var displayH = G.mapH;
+        //         var bounds = mapSurface.getBoundingClientRect();
+        //         var bounds2 = l('mapOverlay').getBoundingClientRect();
+        //         var mouseOnMap = (posx >= bounds2.left && posx < bounds2.right && posy >= bounds2.top && posy < bounds2.bottom);
+        //         if (G.w < 405) { // NEW: Scale for halfSize
+        //             posx /= 0.5
+        //             posy /= 0.5
+        //         } else if (G.w * G.h < 200000 || G.w < 625) { // Scale for smallSize
+        //             posx /= 0.7
+        //             posy /= 0.7
+        //         }
+
+
+
+        //         var ts = 16;//tile size
+        //         var map = G.currentMap;
+
+        //         if (G.mouseDragFrom == mapSurface && !G.keys[17])//drag (not when ctrl is pressed)
+        //         {
+        //             G.mapOffXT += posx - G.mouseDragFromX;
+        //             G.mapOffYT += posy - G.mouseDragFromY;
+        //             G.mouseDragFromX = posx;
+        //             G.mouseDragFromY = posy;
+        //         }
+
+        //         var x1 = 0;
+        //         var x2 = -map.w * ts * G.mapZoomT;
+        //         var y1 = 0;
+        //         var y2 = -map.h * ts * G.mapZoomT;
+        //         if (G.mapOffXT > x1) G.mapOffXT = x1;
+        //         if (G.mapOffXT < x2) G.mapOffXT = x2;
+        //         if (G.mapOffYT > y1) G.mapOffYT = y1;
+        //         if (G.mapOffYT < y2) G.mapOffYT = y2;
+
+        //         if (mouseOnMap && G.Scroll > 0 && G.mapZoomT == 1) {
+        //             G.mapZoomT = 2;
+        //             G.mapOffXT *= 2;
+        //             G.mapOffYT *= 2;
+        //             G.tooltip.close();
+        //         }
+        //         else if (mouseOnMap && G.Scroll < 0 && G.mapZoomT == 2) {
+        //             G.mapZoomT = 1;
+        //             G.mapOffXT /= 2;
+        //             G.mapOffYT /= 2;
+        //             G.tooltip.close();
+        //         }
+
+        //         var smooth = 0.75;
+        //         G.mapOffX += (G.mapOffXT - G.mapOffX) * smooth;
+        //         G.mapOffY += (G.mapOffYT - G.mapOffY) * smooth;
+        //         G.mapZoom += (G.mapZoomT - G.mapZoom) * smooth;
+        //         mapl.style.left = (displayW / 2 + G.mapOffX) + 'px';
+        //         mapl.style.top = (displayH / 2 + G.mapOffY) + 'px';
+        //         mapl.style.transform = 'scale(' + G.mapZoom + ')';
+        //         cornerMap.style.backgroundPosition = (displayW / 2 + G.mapOffX * 0.8) + 'px ' + (displayH / 2 + G.mapOffY * 0.8) + 'px';
+        //         cornerMap.style.backgroundSize = Math.floor(G.mapZoom * 512) + 'px ' + Math.floor(G.mapZoom * 512) + 'px';
+
+        //         //pick tile
+        //         var tileSelector = l('tileSelector');
+        //         var tileX = Math.floor(((posx - bounds.left) / G.mapZoom - displayW / 2) / ts);
+        //         var tileY = Math.floor(((posy - bounds.top) / G.mapZoom - displayH / 2) / ts);
+        //         var changedTile = false;
+        //         if (G.mapSelectingTileX != tileX || G.mapSelectingTileY != tileY) changedTile = true;
+        //         G.mapSelectingTileX = tileX;
+        //         G.mapSelectingTileY = tileY;
+        //         tileSelector.style.left = (tileX * ts) + 'px';
+        //         tileSelector.style.top = (tileY * ts) + 'px';
+
+        //         var tileFocus = l('tileFocus');
+        //         if (G.inspectingTile) {
+        //             tileFocus.style.left = (displayW / 2 + G.mapOffX + (G.inspectingTile.x * ts) * G.mapZoom) + 'px';
+        //             tileFocus.style.top = (displayH / 2 + G.mapOffY + (G.inspectingTile.y * ts) * G.mapZoom) + 'px';
+        //             tileFocus.style.width = (G.mapZoom * ts) + 'px';
+        //             tileFocus.style.height = (G.mapZoom * ts) + 'px';
+        //             tileFocus.style.display = 'block';
+        //         }
+        //         else tileFocus.style.display = 'none';
+
+        //         var mouseInBounds = (tileX >= 0 && tileX < map.w && tileY >= 0 && tileY < map.h && mouseOnMap);
+
+        //         if (editMode == 0 && mouseInBounds && map.tiles[tileX][tileY].explored > 0 && G.inspectingTile != map.tiles[tileX][tileY] && ((G.mouseUp && G.draggedFrames < 3) || (G.keys[17] && changedTile && G.mousePressed)) && l('landList')) {
+        //             //click to display details about tile
+        //             G.inspectingTile = map.tiles[tileX][tileY];
+        //             G.inspectTile(G.inspectingTile);
+        //             G.popupSquares.spawn(l('tileSelector'), l('land-0'));
+        //         }
+
+
+        //         //click to explore/unexplore a tile; ctrl-click to affect multiple tiles without scrolling the map
+        //         if (editMode == 1 && ((!G.keys[17] && G.draggedFrames < 3 && G.clickL == mapSurface && mouseInBounds) || ((changedTile || G.mouseDown) && G.keys[17] && G.mousePressed && mouseInBounds))) {
+        //             var tile = G.currentMap.tiles[tileX][tileY];
+        //             if (G.keys[17] && G.mouseDown) G.mapEditWithLand = (tile.explored == 0) ? 1 : 0;
+        //             if (G.keys[17]) tile.explored = G.mapEditWithLand;
+        //             else { if (tile.explored > 0) tile.explored = 0; else tile.explored = 1; }
+        //             tile.owner = 1;
+        //             G.tileToRender(tile);
+        //             G.updateMapForOwners(G.currentMap);
+        //             changedTile = true;
+        //         }
+        //         //click to set a tile; ctrl-click to draw multiple tiles without scrolling the map
+        //         if (editMode == 2 && ((!G.keys[17] && G.draggedFrames < 3 && G.clickL == mapSurface && mouseInBounds) || ((changedTile || G.mouseDown) && G.keys[17] && G.mousePressed && mouseInBounds))) {
+        //             var tile = G.currentMap.tiles[tileX][tileY];
+        //             G.setTile(tileX, tileY, G.mapEditWithLand);
+        //             G.tileToRender(tile);
+        //             G.updateMapForOwners(G.currentMap);
+        //             changedTile = true;
+        //         }
+
+        //         var tooltipToShow = 0;
+        //         if (mouseOnMap && changedTile) {
+        //             if (mouseInBounds) {
+        //                 tooltipToShow = '<div class="info">' +
+        //                     '<div class="fancyText barred infoTitle">Unexplored</div>' +
+        //                     '<div class="fancyText barred">Start exploring and you may encounter this tile and its secrets.</div>' +
+        //                     '</div>';
+        //             }
+        //             else {
+        //                 tooltipToShow = '<div class="info">' +
+        //                     '<div class="fancyText barred infoTitle">The edge of the world</div>' +
+        //                     '<div class="fancyText barred">No sane soul would explore past this point.</div>' +
+        //                     '</div>';
+        //             }
+        //         }
+
+        //         if (mouseInBounds && map.tiles[tileX][tileY].explored > 0 && !G.Scroll) {
+        //             //display tooltip
+        //             if (changedTile) {
+        //                 var tile = map.tiles[tileX][tileY];
+        //                 var me = tile.land;
+        //                 //Math.seedrandom(tile.map.seed+'-name-'+tile.x+'/'+tile.y);
+        //                 var name = me.displayName;//choose(me.names);
+        //                 var str = '<div class="info">';
+        //                 str += '<div class="fancyText barred infoTitle">' + name + '</div>';
+        //                 str += '<div class="fancyText barred">Explored: ' + Math.floor(tile.explored * 100) + '%</div>';
+        //                 if (editMode == 0) str += '<div class="fancyText barred">Click to see details</div>';
+        //                 else if (editMode == 1) str += '<div class="fancyText barred">Click to unexplore</div>';
+        //                 else if (editMode == 2) str += '<div class="fancyText barred">Click to change terrain</div>';
+        //                 if (me.desc) str += '<div class="infoDesc">' + G.parse(me.desc) + '</div>';
+        //                 str += '</div>';
+        //                 //this should also iterate through tile modifiers and display their info too
+        //                 //Math.seedrandom();
+        //                 tooltipToShow = str;
+        //             }
+        //         }
+
+        //         if (tooltipToShow) {
+        //             G.tooltip.func = function (str) { return function () { return str; } }(tooltipToShow);
+        //             //G.tooltip.parent=tileSelector;
+        //             //G.tooltip.popup({offY:-8});
+        //             G.tooltip.parent = l('cornerMap');
+        //             G.tooltip.popup({ anchor: 'left', offX: -6 });
+        //             G.mapIsDisplayingTooltip = true;
+        //         }
+        //         else if ((!mouseOnMap || changedTile) && G.mapIsDisplayingTooltip) {
+        //             G.tooltip.close();
+        //             G.mapIsDisplayingTooltip = false;
+        //         }
+        //     }
+        // }
 
         // Modify particle setting to just hide most particles with a random function
         G.showParticle = function (obj) {

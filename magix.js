@@ -916,10 +916,12 @@ var updateNewDayLines = function (fools, civ2) {
 
 G.isMapFullyExplored = function () {
     for (var x = 0; x < G.maps[0].w; x++) {
+        var t = G.maps[0].tiles[x];
         for (var y = 0; y < G.maps[0].h; y++) {
-            if (G.maps[0].tiles[x][y].owner != 1 || G.maps[0].tiles[x][y].explored != 1) {
+            var tile = t[y];
+            if (tile.owner != 1 || tile.explored != 1) {
                 return false;
-            };
+            }
         }
     }
     return true;
@@ -2905,9 +2907,29 @@ if (getObj("civ") != "1") {
                 visible: true,
                 icon: [0, 3],
                 tick: function (me, tick) {
+                    // NOTE: This is the first tick function in the game executed for resource tick functions. Therefore, it's usually safest to stuff a bunch of stuff here.
+                    // Update most people
                     if (me.amount > G.achievByName['mostPeopleDuringRun'].won) G.achievByName['mostPeopleDuringRun'].won = me.amount;
                     if (me.amount > G.achievByName['mostPeople'].won) G.achievByName['mostPeople'].won = me.amount;
                     //this.displayName=G.getName('inhabs');
+
+                    // Update ungratefulness mult to positive happiness gain
+                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 3 ? 1.4 : (G.achievByName['mausoleum'].won > 2 ? 1.2 : 1) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
+                    ungrateful /= 5 / (1 + Math.exp(Math.pow(Math.max(G.year - 25, 0), 0.8) / -200)) - 0.75 // In Desmos: f\left(Y_{ear}\right)=\frac{M}{\left(\frac{5}{1+e^{\frac{\max\left(Y_{ear}-25,\ 0\right)^{0.8}}{-200}}}-0.75\right)}, doesn't factor in tribe of eaters/ungrateful tribe II
+                    if (G.has('tribe of eaters')) {
+                        //Decrease the effect by half
+                        ungrateful = 1 - 0.5 * (1 - ungrateful)
+                    }
+                    G.getDict('ungrateful tribe').desc = '@people consume 3% less [food] and 2% less [water], but gain ' + (100 - ungrateful * 100).toFixed(1) + '% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum], but also gets worse over time.//<small>we\'re getting used to our resources...</small>'
+                    if (G.has('t2')) {
+                        G.getRes('happiness').amount = -1e100 //Unhappy trial
+                    }
+                    var amount = (this.displayedAmount / G.getRes('population').displayedAmount);
+                    if (G.has('t4')) {
+                        if (amount >= 98) {
+                            changeHappiness(G.getRes('happiness').amount * -0.8)
+                        }
+                    }
 
                     if (me.amount > 0) {
                         //note : we also sneak in some stuff unrelated to population here
@@ -2921,6 +2943,7 @@ if (getObj("civ") != "1") {
                             else G.lose('nature essence', 250, 'rituals')
                         }
 
+                        // Update rituals
                         if (tick % 5 == 0) {
                             var rituals = ['trait rituals'];
                             for (var i in rituals) {
@@ -3029,6 +3052,8 @@ if (getObj("civ") != "1") {
                                 }
                             }
                         }
+
+                        // Weird multiplier stuff
                         var eatongathermult = 0.5;
                         var happinessLevel = G.getRes('happiness').amount / me.amount;
                         if (G.checkPolicy('eat on gather') == 'on' && happinessLevel < 70 && G.getRes('food').amount > 0) changeHappiness(me.amount * eatongathermult * (G.has("t7") ? 0.2 : 1), 'instant eating');
@@ -3039,7 +3064,7 @@ if (getObj("civ") != "1") {
                         if (G.has('acceptance of death')) deathUnhappinessMult /= 2 * (G.has('bII(acceptance)') ? 1.05 : 1);
                         if (G.has('death scepticism')) (G.year % 40 > 20 ? deathUnhappinessMult *= (5 / 3) : deathUnhappinessMult *= 1 / 3);
                         if (G.has('belief in the afterlife')) deathUnhappinessMult /= 2;
-                        if (G.has('culture of the afterlife')) deathUnhappinessMult /= 1.75;
+                        if (G.has('culture of the afterlife')) deathUnhappinessMult /= 1.5;
                         if (G.has('culture of the beforelife')) { if (parseInt((G.year + 1) / 10) % 2 == 0) deathUnhappinessMult *= 0.9; else deathUnhappinessMult *= 1.1 };
                         if (G.has('hope of revenant abandoning')) deathUnhappinessMult /= 2;
                         if (G.has('dt12')) deathUnhappinessMult *= 1.5;
@@ -3064,7 +3089,17 @@ if (getObj("civ") != "1") {
                                 } else if (n >= 40 && n < 60) consumeMult *= 1.025;
                                 else consumeMult *= 0.975;
                             }//general fluid
-                            var weights = { 'baby': 0.1 * (G.year == 0 ? 0.9 : 1), 'child of Christmas': 0.3 * (G.year == 0 ? 0.9 : 1), 'child': 0.3 * (G.year == 0 ? 0.9 : 1), 'adult': 0.5 * (G.year == 0 ? 0.9 : 1), 'elder': 0.5 * (G.year == 0 ? 0.9 : 1), 'sick': 0.4 * (G.year == 0 ? 0.9 : 1), 'wounded': 0.4 * (G.year == 0 ? 0.9 : 1), 'alchemist': 0.5 * (G.year == 0 ? 0.9 : 1), 'prisoner': 0.4 * (G.year == 0 ? 0.9 : 1) };
+                            var weights = {
+                                'baby': 0.1 * (G.year == 0 ? 0.9 : 1),
+                                'child of Christmas': 0.3 * (G.year == 0 ? 0.9 : 1),
+                                'child': 0.3 * (G.year == 0 ? 0.9 : 1),
+                                'adult': 0.5 * (G.year == 0 ? 0.9 : 1),
+                                'elder': 0.5 * (G.year == 0 ? 0.9 : 1),
+                                'sick': 0.4 * (G.year == 0 ? 0.9 : 1),
+                                'wounded': 0.4 * (G.year == 0 ? 0.9 : 1),
+                                'alchemist': 0.5 * (G.year == 0 ? 0.9 : 1),
+                                'prisoner': 0.4 * (G.year == 0 ? 0.9 : 1)
+                            };
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
@@ -3091,7 +3126,17 @@ if (getObj("civ") != "1") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.4 };//the elderly are the first to starve off
+                                    var weights = {
+                                        'baby': 0.1,
+                                        'child of Christmas': 0.2,
+                                        'child': 0.2,
+                                        'adult': 0.5,
+                                        'elder': 1,
+                                        'sick': 0.4,
+                                        'wounded': 0.3,
+                                        'alchemist': 0.5,
+                                        'prisoner': 0.4
+                                    };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
@@ -3125,7 +3170,16 @@ if (getObj("civ") != "1") {
                                 else consumeMult *= 0.975;
                             }//general fluid
 
-                            var weights = { 'baby': 0.2 * (G.year == 0 ? 0.9 : 1), 'child of Christmas': 0.5 * (G.year == 0 ? 0.9 : 1), 'child': 0.5 * (G.has('child workforce') ? 1.1 : 1) * (G.year == 0 ? 0.9 : 1), 'adult': 1 * (G.year == 0 ? 0.9 : 1), 'elder': 1 * (G.year == 0 ? 0.9 : 1), 'sick': 0.75 * (G.year == 0 ? 0.9 : 1), 'wounded': 0.75 * (G.year == 0 ? 0.9 : 1), 'alchemist': 0.5 * (G.year == 0 ? 0.9 : 1), 'prisoner': 0.4 * (G.year == 0 ? 0.9 : 1) };
+                            var weights = {
+                                'baby': 0.2 * (G.year == 0 ? 0.9 : 1), 'child of Christmas': 0.5 * (G.year == 0 ? 0.9 : 1),
+                                'child': 0.5 * (G.has('child workforce') ? 1.1 : 1) * (G.year == 0 ? 0.9 : 1),
+                                'adult': 1 * (G.year == 0 ? 0.9 : 1),
+                                'elder': 1 * (G.year == 0 ? 0.9 : 1),
+                                'sick': 0.75 * (G.year == 0 ? 0.9 : 1),
+                                'wounded': 0.75 * (G.year == 0 ? 0.9 : 1),
+                                'alchemist': 0.5 * (G.year == 0 ? 0.9 : 1),
+                                'prisoner': 0.4 * (G.year == 0 ? 0.9 : 1)
+                            };
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
@@ -3157,7 +3211,17 @@ if (getObj("civ") != "1") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child of Christmas': 0.2, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3, 'alchemist': 0.5, 'prisoner': 0.65 };//the elderly are the first to starve off
+                                    var weights = {
+                                        'baby': 0.1,
+                                        'child of Christmas': 0.2,
+                                        'child': 0.2,
+                                        'adult': 0.5,
+                                        'elder': 1,
+                                        'sick': 0.4,
+                                        'wounded': 0.3,
+                                        'alchemist': 0.5,
+                                        'prisoner': 0.65
+                                    };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
@@ -3293,7 +3357,13 @@ if (getObj("civ") != "1") {
                                 if (G.checkPolicy('flower rituals') == 'on') toChange *= 0.8;
                                 var changed = 0;
                                 var handwashEffect = G.has('handwashC') ? 0.999 : (G.has('handwashM') ? 0.9996 : 1)
-                                var weights = { 'baby': 2, 'child of Christmas': 1.5 * handwashEffect, 'child': 1.5 * handwashEffect, 'adult': 1 * handwashEffect, 'elder': 2 * handwashEffect };
+                                var weights = {
+                                    'baby': 2,
+                                    'child of Christmas': 1.5 * handwashEffect,
+                                    'child': 1.5 * handwashEffect,
+                                    'adult': 1 * handwashEffect,
+                                    'elder': 2 * handwashEffect
+                                };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 2;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 2;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't fall sick the first 5 years
@@ -3327,7 +3397,14 @@ if (getObj("civ") != "1") {
                                 if (G.year < 5) toChange *= 0.5;//less wounds the first 5 years
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child of Christmas': 1.5, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2, 'alchemist': 0.5 };
+                                var weights = {
+                                    'baby': 2,
+                                    'child of Christmas': 1.5,
+                                    'child': 1.5,
+                                    'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1,
+                                    'elder': 2,
+                                    'alchemist': 0.5
+                                };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= G.checkPolicy('elder workforce') == 'on' ? 4 : 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
@@ -3382,7 +3459,7 @@ if (getObj("civ") != "1") {
                         G.lose('sick', n); G.gain('adult', n);
                     };
 
-                    // Softcap
+                    // Softcap happiness amounts (while rendering only goes from -200% to 200% internally they aren't capped by default)
                     if (me.amount > 1 && !G.has('t2')) {
                         var happiness = G.getRes('happiness').amount
                         var h = happiness / me.amount
@@ -3649,25 +3726,6 @@ if (getObj("civ") != "1") {
                 icon: [3, 4],
                 colorGood: 'lime', colorBad: '#f44',
                 fractional: true,
-                tick: function (me, tick) {
-                    // Calculate ungratefulness
-                    ungrateful = (G.has('ungrateful tribe') ? G.achievByName['mausoleum'].won > 3 ? 1.4 : (G.achievByName['mausoleum'].won > 2 ? 1.2 : 1) : 1) * (G.has('ungrateful tribe II') ? 0.9 : 1)
-                    ungrateful /= 5 / (1 + Math.exp(Math.pow(Math.max(G.year - 25, 0), 0.8) / -200)) - 0.75
-                    G.getDict('ungrateful tribe').desc = '@people consume 3% less [food] and 2% less [water], but gain ' + (100 - ungrateful * 100).toFixed(1) + '% less [happiness] from <b>everything</b>. ([happiness] loss is not affected.) This negative effect can be decreased by upgrading the [mausoleum], but also gets worse over time.//<small>we\'re getting used to our resources...</small>'
-                    if (G.has('tribe of eaters')) {
-                        //Decrease the effect by half
-                        ungrateful = 1 - 0.5 * (1 - ungrateful)
-                    }
-                    if (G.has('t2')) {
-                        G.getRes('happiness').amount = -1e100//Unhappy trial
-                    }
-                    var amount = (this.displayedAmount / G.getRes('population').displayedAmount);
-                    if (G.has('t4')) {
-                        if (amount >= 98) {
-                            changeHappiness(G.getRes('happiness').amount * -0.8)
-                        }
-                    }
-                },
                 getDisplayAmount: function () {
                     if (G.getRes('population').amount <= 0) return '-';
                     var amount = (this.displayedAmount / G.getRes('population').displayedAmount);
@@ -9674,15 +9732,18 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'insight': 500 }, into: { 'insight II': 1 }, every: 10, mode: 'insight', req: { 'essential conversion tank overclock I': false } },
                     { type: 'convert', from: { 'culture': 500 }, into: { 'culture II': 1 }, every: 10, mode: 'culture', req: { 'essential conversion tank overclock I': false } },
-                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 10, mode: 'faith', req: { 'essential conversion tank overclock I': false } },
+                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 10, mode: 'faith', req: { 'essential conversion tank overclock I': false, 'se11': 'off' } },
+                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1.5 }, every: 10, mode: 'faith', req: { 'essential conversion tank overclock I': false, 'se11': 'on' } },
                     { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 10, mode: 'influence', req: { 'essential conversion tank overclock I': false } },
                     { type: 'convert', from: { 'insight': 500 }, into: { 'insight II': 1 }, every: 9, mode: 'insight', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
                     { type: 'convert', from: { 'culture': 500 }, into: { 'culture II': 1 }, every: 9, mode: 'culture', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
-                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 9, mode: 'faith', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
+                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1 }, every: 9, mode: 'faith', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false, 'se11': 'off' } },
+                    { type: 'convert', from: { 'faith': 500 }, into: { 'faith II': 1.5 }, every: 9, mode: 'faith', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false, 'se11': 'on' } },
                     { type: 'convert', from: { 'influence': 500 }, into: { 'influence II': 1 }, every: 9, mode: 'influence', req: { 'essential conversion tank overclock I': true, 'smartness of essentials': false } },
                     { type: 'convert', from: { 'insight': 550 }, into: { 'insight II': 1.5 }, every: 9, mode: 'insight', req: { 'smartness of essentials': true } },
                     { type: 'convert', from: { 'culture': 550 }, into: { 'culture II': 1.2 }, every: 9, mode: 'culture', req: { 'smartness of essentials': true } },
-                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true } },
+                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.2 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true, 'se11': 'off' } },
+                    { type: 'convert', from: { 'faith': 550 }, into: { 'faith II': 1.8 }, every: 9, mode: 'faith', req: { 'smartness of essentials': true }, 'se11': 'on' },
                     { type: 'convert', from: { 'influence': 550 }, into: { 'influence II': 1.2 }, every: 9, mode: 'influence', req: { 'smartness of essentials': true } },
                     { type: 'mult', value: 1.5, req: { 'people of the arts II': true }, mode: 'culture' },
                     { type: 'mult', value: 1.25, req: { 'leaves of wisdom': true } },
@@ -9875,7 +9936,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fishers & hunters camp',
                 displayName: 'Hunting and fishing camp',
-                desc: '@An camp where [hunter]s and [fisher]s get trained to hunt [food]. //There, they learn improve their craft. //A single [fishers & hunters camp] will hire 400 [worker]s divided into 200 [hunter]s and 200 [fisher]s! //[hunter]s that work at this camp also have a very tiny chance to have accidents. //It might be costly, but may gather delectable [food] more easily!',
+                desc: '@An camp where [hunter]s and [fisher]s get trained to hunt [food]. //There, they learn improve their craft. //A single [fishers & hunters camp] will hire 400 [worker]s divided into 200 [hunter]s and 200 [fisher]s! //[hunter]s that work at this camp also have a very tiny chance to have accidents. //This camp might be costly, but it gathers delectable [food] more easily!',
                 icon: [5, 23, "magixmod"],
                 wideIcon: [3, 23, "magixmod"],
                 cost: { 'basic building materials': 4850, 'food': 2500, 'paper': 3000, 'thread': 500 },
@@ -9907,7 +9968,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'dark wormhole',
-                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. [dark wormhole,Wormholes] provide 24M [burial spot]s but will require some upkeep. This may get new abilities later on...',
+                desc: 'A wormhole built in the depths of the Underworld where darkness is everywhere. [dark wormhole,Wormholes] provide 24M [burial spot]s but will require some upkeep, and can only be built at very specific locations. This may get new abilities later on...',
                 icon: [13, 22, "magixmod"],
                 cost: { 'gem block': 4, 'precious building materials': 5e3 },
                 effects: [
@@ -11342,7 +11403,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic...//Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.<>The alternative is <b>Exploration trips</b>, which can also be obtained at the same time upon researching a little magic...//Getting this increases the exploration softcap by a little bit.',
                 icon: [24, 7],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'exploration trips': false },
@@ -12613,7 +12674,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'manufacture units I', category: 'tier1',
-                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <><font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become useless and won\'t produce anything anymore.</font> ',
+                desc: 'Unlocks the [hut of potters] and [hovel of colours]. <><font color="#ff8080">Note: If you will obtain this tech, [potter]s and [artisan]s on the <b>Craft dyes</b> mode will become useless and won\'t produce anything anymore.</font> //<small>Ever noticed how sometimes colour is British and sometimes it isn\'t?</small>',
                 icon: [17, 18, "magixmod"],
                 cost: { 'insight': 750, 'wisdom': 5, 'stone': 1365 },//Stones are there to make tech at same level as Factories I
                 req: { 'workstation planning': true, 'manufacturing': true },
@@ -13035,7 +13096,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'culture of the afterlife',
-                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, so who knows if they will build another wonder?</b> @unhappiness from death is halved.',
+                desc: '<b>Beliefs have slowly morphed into advanced culture. People will now try to be closer to the gods or god they worship, so who knows if they will build another wonder?</b> @unhappiness from death is reduced by a third.',
                 icon: [19, 1, "magixmod"],
                 cost: { 'insight': 50, 'culture': 200, 'inspiration': 20, 'authority': 20, 'spirituality': 30, 'faith': 40 },
                 chance: 300,
@@ -13571,7 +13632,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 category: 'misc',
                 name: 'artistic gray cells', displayName: '<font color="#00e063">Artistic gray cells</font>',
-                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. The ancestors of culture give you their power...providing you with various gains: @+3 [culture] @+3 [inspiration] @idle [worker]s will work at 1/20th the rate of a [storyteller] for free',
+                desc: 'You see flashes of culture...but who were the ones who mode them? These flashes of thought slowly made you more and more inspired. The ancestors of culture give you their power...providing you with various benefits: @+3 [culture] @+3 [inspiration] @idle [worker]s will work at 1/20th the rate of a [storyteller] for free',
                 icon: [4, 12, "magixmod", 6, 12, "magixmod"],
                 cost: {},
                 req: { 'tribalism': false },
@@ -13601,7 +13662,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'a feeling from the Underworld', category: 'misc',
-                desc: 'You feel an unusual and slightly dark warmth. It appears to be a rather strange call from the Underworld... @<b>Allows you to finish unlocking the Underworld!</b>',
+                desc: 'You feel an unusual and slightly dark warmth. It appears to be a rather strange call from the Underworld... @<b>Getting this allows you to finish unlocking the Underworld!</b>',
                 icon: [8, 12, 9, 5, "magixmod"],
                 cost: {},
                 effects: [
@@ -13611,7 +13672,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'underworld\'s ascendant', displayName: 'The Underworld\'s Ascendant', category: 'misc',
-                desc: 'You managed to do several large feats to attract someone new! You will now gain +1 [adult] during new runs, who is [adult,The Underworld\'s Ascendant]! //<small>hello underworld</small>',
+                desc: 'You managed to perform several large feats to attract someone new! You will now gain +1 [adult] during new runs, who is [adult,The Underworld\'s Ascendant]! //<small>hello underworld</small>',
                 icon: [15, 19, "magixmod"],
                 cost: {},
                 effects: [
@@ -13634,7 +13695,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'focused scouting', category: 'upgrade',
-                desc: '@[scout]s and [wanderer]s become smarter by discovering new safer techniques of exploring, like advanced star navigation. It may make exploring safer...<>This tech will allow you to find new adventures and places with the same units. //Increases the exploration cap.',
+                desc: '@[scout]s and [wanderer]s become smarter by discovering new safer techniques of exploring, like advanced star navigation. It may make exploring safer...<>This tech will allow you to find new adventures and places with the same units. //Increases the exploration softcap.',
                 icon: [10, 21, "magixmod"],
                 cost: { 'insight II': 15 },
                 req: { 'tool-making': true, 'richer language': true, 'well-digging': true },
@@ -16178,7 +16239,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'tile inspection II',
-                desc: '<font color="#3ae3ff">Now you can see how much of a certain resource you have within your territory.</font>',
+                desc: '<font color="#3ae3ff">Now you can see how much of a certain resource you have within your territory, and how much total land and ocean is explored.</font>',
                 icon: [0, 39, "magixmod", 35, 14, "magixmod"],
                 cost: { 'insight': 50 },
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
@@ -16664,7 +16725,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'constellations',
-                desc: '<font color="#a4baff">A naming system for star constellations has been invented. //<small>Big dog, Little dog, Dove, Centaur, Water bearer, Octant, Balance, Sea serpent, Crane...yeah, these are names of our constellations...</small></font>',
+                desc: '<font color="#a4baff">A naming system for star constellations has been invented. Your people are now really interested in the sky! //<small>Big dog, Little dog, Dove, Centaur, Water bearer, Octant, Balance, Sea serpent, Crane...yeah, these are names of our constellations...</small></font>',
                 icon: [36, 32, "magixmod"],
                 cost: { 'culture II': 35, 'insight II': 600, 'science': 100 },
                 chance: 6,
@@ -16726,7 +16787,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'candy-crafting',
-                desc: '[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can also help you gather [halloween essence] out of the candies.//Note: This mode only works during Halloween. After the event ends, [artisan] won\'t produce any more [candy,Candies] until Halloween starts again!//<small>Candies are so tasty! Mmmm...</small>',
+                desc: '[artisan] can now craft [candy,Candies]. //Unlocking [trick or treat] can also help you gather [halloween essence] out of the candies.//Note: This mode only works during Halloween. After the event ends, [artisan]s won\'t produce any more [candy,Candies] until Halloween starts again!//<small>Candies are so tasty! Mmmm...</small>',
                 icon: [8, 8, 'seasonal'],
                 cost: { 'insight': 800, 'culture': 100 },
                 req: { 'farm of the sugar cane': true, '"dark season"': true },
@@ -16815,21 +16876,21 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. //Increases the exploration softcap.',
                 icon: [9, 9, "magixmod"],
                 cost: { 'insight': 40 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel and explore more. They will become more advanced and may explore further lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore more. They will become more advanced and may explore further lands. //Increases the exploration softcap.',
                 icon: [10, 9, "magixmod"],
                 cost: { 'insight': 1200 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true, 'plain island building': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier2',
-                desc: '@Allows <b>Exploration</b> units to travel and explore even more! //<b>Removes</b> the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel and explore even more! //<b>Removes</b> exploration barriers.',
                 icon: [11, 9, "magixmod"],
                 cost: { 'insight II': 85 },
                 req: { 'map details': true, 'focused scouting': true },
@@ -18038,7 +18099,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'exploration trips', category: 'tier1',
-                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.//Getting this increases the exploration cap by a little bit.',
+                desc: '@unlocks a new mode for [wanderer]s, allowing them to discover nearby tiles if your primary terrain is decently explored.<>[wanderer]s will discover nearby terrain if their homeland is decently discovered.<>The alternative is [scouting], which can also be obtained at the same time upon reaching [wizardry]. (Be aware that not having [scouting] will prevent you from voyaging deeply into the ocean.)<>Keep in mind that to make <b>Exploration</b> units explore more terrain, you will need more researches.//Getting this increases the exploration softcap by a little bit.',
                 icon: [36, 13, "magixmod"],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true, 'scouting': false },
@@ -18231,7 +18292,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'trees of faith II', category: 'tier1',
-                desc: 'The [leaves of wisdom] and [branches of wisdom] traits can now be obtained at the same time! In addition, you have a 5% chance of getting both of them at the same time at the start of a new year. Be warned, however, as <b>getting this trait will cost some [wisdom II]</b> (you can get more, however, by adopting both traits).',
+                desc: 'The [leaves of wisdom] and [branches of wisdom] traits can now be obtained at the same time! In addition, you have a 4% chance of getting both of them at the same time at the start of a new year. Be warned, however, as <b>getting this trait will cost some [wisdom II]</b> (you can get more back, however, by adopting both traits).',
                 icon: [0, 39, "magixmod", 36, choose([2, 3]), "magixmod", 24, 1],
                 cost: { 'insight II': 125, 'wisdom II': 50 },
                 req: { 'treeplanting': true, 'trees of faith': true, 'richer language': true },
@@ -19652,7 +19713,7 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'se11',
                 displayName: 'An Enlightened Seraphin of Faith',
-                desc: '<font color="lime">All [faith] gathering is increased by 25%.</font><br><hr color="fuschia"><font color="#f70054">Backfire: All [influence] and [insight] units are weakened by 25% (including [guru]s).</font>',
+                desc: '<font color="lime">All [faith] gathering is increased by 25%. [faith II] is produced 50% faster.</font><br><hr color="fuschia"><font color="#f70054">Backfire: All [influence] and [insight] units are weakened by 25% (including [guru]s).</font>',
                 icon: [19, 25, "magixmod"],
                 cost: { 'worship point': 1, 'faith II': 10 },
                 startMode: 'off',
@@ -19795,7 +19856,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al tha right! But show me ya are worthy of me. In my plane no one except me can gather <font color="#7bfe90">Culture</font> or <font color="#7bfe90">Influence</font> for ya. (their amounts can over cap but Tu-ria won\'t bring down to you next portion if even just one of the essentials will overcap) Onle me! Just me! Researching and discovering will be tougher. For this trial, your people\'s water rations cannot be set to plentiful (food rations can be still be set)! In addition, you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (In addition, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gain more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
+                                    'I am a personification of Inspiration. Ya met me ' + G.getName('ruler') + '! Ya want me to be closer to ya and your people. Al tha right! But show me ya are worthy of me. In my plane no one except me can gather <font color="#7bfe90">Culture</font> or <font color="#7bfe90">Influence</font> for ya. (their amounts can go past the cap but Tu-ria won\'t bring down to you the next portion if even just one of those essentials go past the cap) Onle me! Just me! Researching and discovering will be tougher. For this trial, your people\'s water rations cannot be set to plentiful (food rations can be still be set)! In addition, you will be forced to keep cultural stability. Doing anything related to researching or discovering causes stability to go low while doing cultural things will bring it up. (In addition, a few researches will increase the stability.) Don\'t get too little or too much (it will make the trial attempt fail). Completing mah challenge for the first time will encourage me to make yar Cultural units gain more Culture for ya. My penalty will go lower for ya.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -22699,7 +22760,14 @@ if (getObj("civ") != "1") {
                                 } else if (n >= 40 && n < 60) consumeMult *= 1.025;
                                 else consumeMult *= 0.975;
                             }//general fluid
-                            var weights = { 'baby': 0.1, 'child': 0.3, 'adult': 0.5, 'elder': 0.5, 'sick': 0.4, 'wounded': 0.4 };
+                            var weights = {
+                                'baby': 0.1,
+                                'child': 0.3,
+                                'adult': 0.5,
+                                'elder': 0.5,
+                                'sick': 0.4,
+                                'wounded': 0.4
+                            };
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('water rations');
                             switch (rations) {
@@ -22728,7 +22796,14 @@ if (getObj("civ") != "1") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3 };//the elderly are the first to starve off
+                                    var weights = {
+                                        'baby': 0.1,
+                                        'child': 0.2,
+                                        'adult': 0.5,
+                                        'elder': 1,
+                                        'sick': 0.4,
+                                        'wounded': 0.3
+                                    };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'dehydration'); died += n; }
@@ -22756,7 +22831,14 @@ if (getObj("civ") != "1") {
                                 } else if (n >= 40 && n < 60) consumeMult *= 1.025;
                                 else consumeMult *= 0.975;
                             }//general fluid
-                            var weights = { 'baby': 0.2, 'child': 0.5 * (G.has('child workforce') ? 1.1 : 1), 'adult': 1, 'elder': 1, 'sick': 0.75, 'wounded': 0.75 };
+                            var weights = {
+                                'baby': 0.2,
+                                'child': 0.5 * (G.has('child workforce') ? 1.1 : 1),
+                                'adult': 1,
+                                'elder': 1,
+                                'sick': 0.75,
+                                'wounded': 0.75
+                            };
                             for (var i in weights) { toConsume += G.getRes(i).amount * weights[i]; }
                             var rations = G.checkPolicy('food rations');
                             switch (rations) {
@@ -22786,7 +22868,14 @@ if (getObj("civ") != "1") {
                                     var toDie = (lacking / 5) * 0.05;
                                     if (G.year < 1) toDie /= 5;//less deaths in the first year
                                     var died = 0;
-                                    var weights = { 'baby': 0.1, 'child': 0.2, 'adult': 0.5, 'elder': 1, 'sick': 0.4, 'wounded': 0.3 };//the elderly are the first to starve off
+                                    var weights = {
+                                        'baby': 0.1,
+                                        'child': 0.2,
+                                        'adult': 0.5,
+                                        'elder': 1,
+                                        'sick': 0.4,
+                                        'wounded': 0.3
+                                    };//the elderly are the first to starve off
                                     var sum = 0; for (var i in weights) { sum += weights[i]; } for (var i in weights) { weights[i] /= sum; }//normalize
                                     for (var i in weights) { var ratio = (G.getRes(i).amount / me.amount); weights[i] = ratio + (1 - ratio) * weights[i]; }
                                     for (var i in weights) { var n = G.lose(i, randomFloor((Math.random() * 0.8 + 0.2) * toDie * weights[i]), 'starvation'); died += n; }
@@ -22904,7 +22993,12 @@ if (getObj("civ") != "1") {
                                 if (me.amount <= 15) toChange *= 0.5;
                                 if (G.checkPolicy('flower rituals') == 'on') toChange *= 0.8;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child': 1.5, 'adult': 1, 'elder': 2 };
+                                var weights = {
+                                    'baby': 2,
+                                    'child': 1.5,
+                                    'adult': 1,
+                                    'elder': 2
+                                };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= 2;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 2;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't fall sick the first 5 years
@@ -22934,7 +23028,12 @@ if (getObj("civ") != "1") {
                                 if (G.year < 5) toChange *= 0.5;//less wounds the first 5 years
                                 if (me.amount <= 15) toChange *= 0.5;
                                 var changed = 0;
-                                var weights = { 'baby': 2, 'child': 1.5, 'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1, 'elder': 2 };
+                                var weights = {
+                                    'baby': 2,
+                                    'child': 1.5,
+                                    'adult': G.checkPolicy('elder workforce') == 'on' ? 1.3 : 1,
+                                    'elder': 2
+                                };
                                 if (G.checkPolicy('child workforce') == 'on') weights['child'] *= G.checkPolicy('elder workforce') == 'on' ? 4 : 3;
                                 if (G.checkPolicy('elder workforce') == 'on') weights['elder'] *= 3;
                                 if (G.year < 5) weights['adult'] = 0;//adults don't get wounded the first 5 years
@@ -25510,7 +25609,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'scouting', category: 'tier1',
-                desc: '@unlocks [scout]s, which can discover new territory<>The [scout] is an intrepid traveler equipped to deal with the unknown.//Getting this increases the exploration cap by a little bit. //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small> ',
+                desc: '@unlocks [scout]s, which can discover new territory, although not very far at first<>The [scout] is an intrepid traveler equipped to deal with the unknown.//Getting this increases the exploration softcap by a little bit. //<small>Do not forget to take a compass...wait, do we have compasses? WHAT IS A COMPASS!!?</small>',
                 icon: [24, 7, "c2"],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'tool-making': true, 'language': true, 'intuition': true },
@@ -26213,7 +26312,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'tile inspection II',
-                desc: '<font color="#e6ffee">Now you can see how much of a certain resource you have within your territory.</font>',
+                desc: '<font color="#e6ffee">Now you can see how much of a certain resource you have within your territory, and how much total land and ocean is explored.</font>',
                 icon: [3, 13, "c2", 30, 10, "c2"],
                 cost: { 'discernment': 72, 'creativity': 24 },
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
@@ -26417,23 +26516,23 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'basic mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel more. They become more advanced and may explore further lands. //Increases the exploration softcap.',
                 icon: [28, 13, "c2"],
                 cost: { 'discernment': 48, 'creativity': 6 },
                 req: { 'scouting': true, 'writing': true, 'caligraphy': true, 'alphabet 1/3': true },
             });
             new G.Tech({
                 name: 'map details', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel even further beyond! They become more advanced and may explore more distant lands. //Increases the exploration cap.',
+                desc: '@Allows <b>Exploration</b> units to travel even further beyond! They become more advanced and may explore more distant lands. //Increases the exploration softcap.',
                 icon: [29, 13, "c2"],
                 cost: { 'discernment': 104, 'creativity': 16 },
                 req: { 'basic mapping': true, 'alphabet 2/3': true },
             });
             new G.Tech({
                 name: 'advanced mapping', category: 'tier1',
-                desc: '@Allows <b>Exploration</b> units to travel very very far away! They become more advanced and may explore far into the world. //<b>Removes</b> the exploration cap entirely!',
+                desc: '@Allows <b>Exploration</b> units to travel very very far away! They become more advanced and may explore far into the world. //<b>Removes</b> exploration barriers!',
                 icon: [30, 13, "c2"],
-                cost: { 'discernment': 660, 'creativity': 48 },
+                cost: { 'discernment': 800, 'creativity': 48 },
                 req: { 'map details': true, 'alphabet 3/3': true },
             });
             new G.Trait({
@@ -28154,7 +28253,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'oakloo',
-                desc: 'The [oakloo] is a mighty tree with dark wood that thrives in temperate climates (non-autumnal forests), rich in [log]s and [stick]s. It can rarely be found in other biomes.',
+                desc: 'The [oakloo] is a mighty tree with dark wood that thrives in temperate climate, rich in [log]s and [stick]s. It can rarely be found in other biomes.',
                 icon: [18, 14, "c2"],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
@@ -28165,7 +28264,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'autumnal oakloo',
-                desc: 'The [autumnal oakloo] is a mighty tree with dark wood that thrives in temperate climates, rich in [log]s and [stick]s. It can rarely be found in other biomes. This kind of [autumnal oakloo,Oakloo] only appears in autumnal forests where trees grow unique colours of autumn every time spring starts.',
+                desc: 'The [autumnal oakloo] is a mighty tree with dark wood that thrives in temperate climates, rich in [log]s and [stick]s. It can rarely be found in other biomes. This kind of [autumnal oakloo,Oakloo] only appears in autumnal forests where trees grow warm autumnal colors every time spring begins.',
                 icon: [choose([3, 4]), 14, "c2"],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
@@ -28187,7 +28286,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'autumnal burchinn',
-                desc: '[autumnal burchinn,Autumnal burchinn trees] have white and slightly green bark and are rather frail, but are a good source of [log]s and [stick]s. This kind of [autumnal burchinn,Burchinn] only appears in autumnal forests where trees grow in autumnal colours every time spring starts.',
+                desc: '[autumnal burchinn,Autumnal burchinn trees] have white and slightly green bark and are rather frail, but are a good source of [log]s and [stick]s. This kind of [autumnal burchinn,Burchinn] only appears in autumnal forests where trees grow warm autumnal colors every time spring begins.',
                 icon: [choose([5, 6]), 14, "c2"],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
