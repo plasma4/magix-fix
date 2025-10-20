@@ -19304,7 +19304,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'valuable gem block',
-                desc: 'These have unique colors and refract light in all directions. These might be used in some advanced constructions!',
+                desc: 'These have unique colors and refract light in all directions. These might be displayed in cultural exhibits!',
                 icon: [3, 4, "magix2"],
                 partOf: 'misc materials',
                 category: 'build',
@@ -19327,7 +19327,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'mushroom',
-                desc: 'Unfortunately not edible. :(',
+                desc: 'Unfortunately not edible, as the vast majority are dangerous. :(',
                 icon: [5, 5, "magix2"],
                 partOf: 'misc materials',
                 category: 'misc'
