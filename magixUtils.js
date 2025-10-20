@@ -4067,7 +4067,11 @@ G.AddData({
                     }
 
                     if (G.has('tile inspection II')) {
-                        str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText" id="totalResourcesTip">Total natural resources in your territory (' + (landCount ? exploredLand / landCount * 100 : 0).toFixed(2) + '% land explored, ' + (oceanCount ? exploredOcean / oceanCount * 100 : 0).toFixed(2) + '% ocean explored):</div>'; // totalResourcesTip also updated in G.Logic()
+                        if (G.has('maths III')) {
+                            str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText" id="totalResourcesTip">Total natural resources in your territory (' + (landCount ? exploredLand / landCount * 100 : 0).toFixed(2) + '% land explored, ' + (oceanCount ? exploredOcean / oceanCount * 100 : 0).toFixed(2) + '% ocean explored):</div>'; // totalResourcesTip also updated in G.Logic()
+                        } else {
+                            str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Total natural resources in your territory:</div>';
+                        }
                     } else {
                         str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Natural resources in your territory:</div>';
                     }
@@ -5387,7 +5391,7 @@ G.AddData({
             G.popupSquares.update();
             G.updateMessages();
 
-            if (G.tab.id === 'land' && l('totalResourcesTip')) {
+            if (G.tab.id === 'land' && l('totalResourcesTip') != null) {
                 var landCount = 0
                 var oceanCount = 0
                 var exploredLand = 0
@@ -5452,7 +5456,7 @@ G.AddData({
         G.softcap = function (amountToExplore, limit, tileType) {
             var tileAmount = G.getRes(tileType).amount;
             limit -= tileAmount;
-            var result = (limit < 0) ? amountToExplore / Math.sqrt(-limit) : amountToExplore;
+            var result = (limit < 0) ? amountToExplore / Math.sqrt(-limit + 1) : amountToExplore;
             return result;
         }
 

@@ -5103,7 +5103,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'pot of vodka',
-                desc: 'Dangerous for [health]: a bad alcohol drink.',
+                desc: 'Dangerous for [health]: a somewhat bad alcohol drink.',
                 icon: [10, 10, "magixmod"],
                 category: 'alchemypotions',
                 tick: function (me, tick) {
@@ -9513,7 +9513,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'alcohol drink brewing stand',
-                desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,Alcohol], which are tasty but will harm [health]. This stand will be able to craft either [wine] or [pot of vodka].',
+                desc: 'There [alchemist]s can brew drinks with the help of [alcohol pot,Alcohol], which are tasty but will harm [health]. This stand will be able to craft either [wine] or [pot of vodka,Vodka].',
                 icon: [19, 8, "magixmod"],
                 cost: { 'basic building materials': 4.3 },
                 req: { 'alchemy': true, 'alcohol brewing': true },
@@ -12114,7 +12114,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'maths III', category: 'tier1',
-                desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wizardry. @increases your people\'s knowledge of equations and functions //<small>I, personally, would research it now!</small>',
+                desc: '@increase the math skills of your civilization: required for further researching. <>@unlocks ways to calculate proportions which may be needed in chemistry or more complex witchery and wizardry. @increases your people\'s knowledge of equations and functions, and lets them calculate percentage of territory explored with [tile inspection II] //<small>I, personally, would research it now!</small>',
                 icon: [1, 39, "magixmod", 18, 4, "magixmod"],
                 cost: { 'insight': 360, 'wisdom': 10 },
                 req: { 'oral tradition': true, 'maths II': true, 'plain island building': true },
