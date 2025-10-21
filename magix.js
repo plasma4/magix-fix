@@ -1361,27 +1361,6 @@ if (getObj("civ") != "1") {
                 },
             ];
 
-            G.disasters.forEach((d) => {
-                new G.Trait({
-                    name: d.name,
-                    desc: d.desc,
-                    icon: d.icon,
-                    req: { 'tribalism': false },
-                    category: 'main',
-                    skip: true
-                })
-                new G.Res({
-                    name: d.name+' year', //A resource that tells you the next predicted drought/frost/whatever
-                    displayName: 'Next predicted '+d.name+' year',
-                    desc: 'This number is the predicted year that the next '+d.name+' will be at. It may be off by a year or two or not happen in the first place!',
-                    icon: d.icon,
-                    category: 'demog',
-                    getDisplayAmount: function () {
-                        return (B(G.has('time measuring 1/2') && isFinite(G.getRes(d.name+' year').amount)) ? G.getRes(d.name+' year').amount : "???")
-                    }
-                })
-            })
-
             let t1start = false
             let madeThievesWarn = false
             let backupmesg = false
@@ -18690,14 +18669,14 @@ if (getObj("civ") != "1") {
                 chance: 30,
                 category: 'knowledge'
             });
-            // new G.Trait({
-            //     name: 'drought',
-            //     desc: '@<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types.</b> @In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). @[cloudy water] will also decay faster, although slower than [water]. @However, during a <b><u style="color:#c48b10">drought</u></b>, you may research unique technologies!',
-            //     icon: [9, 10, 1, 0, "magix2"],
-            //     req: { 'tribalism': false },
-            //     category: 'main',
-            //     skip: true
-            // });
+            new G.Trait({
+                name: 'droughtOld',
+                desc: '@<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types.</b> @In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). @[cloudy water] will also decay faster, although slower than [water]. @However, during a <b><u style="color:#c48b10">drought</u></b>, you may research unique technologies!',
+                icon: [9, 10, 1, 0, "magix2"],
+                req: { 'tribalism': false },
+                category: 'main',
+                skip: true
+            });
             new G.Trait({
                 name: 'famine',
                 desc: '<b>Your people are in a <u style="color:#c48b10">famine</u>, which simply means that [food] will spoil much faster.</b>',
@@ -19216,16 +19195,16 @@ if (getObj("civ") != "1") {
             });
 
 
-            // new G.Res({
-            //     name: 'drought year', //A resource that tells you the next predicted drought
-            //     displayName: 'Next predicted drought year',
-            //     desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
-            //     icon: [9, 10],
-            //     category: 'demog',
-            //     getDisplayAmount: function () {
-            //         return (B(G.has('time measuring 1/2') && isFinite(G.getRes('drought year').amount)) ? G.getRes('drought year').amount : "???")
-            //     },
-            // });
+            new G.Res({
+                name: 'drought year old', //A resource that tells you the next predicted drought
+                displayName: 'Next predicted drought year',
+                desc: 'This number is the predicted year that the next drought will be at. It may be off by a year or two or not happen in the first place!',
+                icon: [9, 10],
+                category: 'demog',
+                getDisplayAmount: function () {
+                    return "???"; //(B(G.has('time measuring 1/2') && isFinite(G.getRes('drought year').amount)) ? G.getRes('drought year').amount : "???")
+                },
+            });
             new G.Res({
                 name: 'honey', //Added by @1_e0 (the only food that doesn't spoil)
                 desc: 'Eating [honey] is both extraordinarily satisfying and quite healthy for the body, and is even better when eaten in combination with other [food]. Although it is quite difficult to find, it never spoils and will provide the most [happiness] out of all [food]! //<small>yummers</small>',
@@ -24347,6 +24326,20 @@ if (getObj("civ") != "1") {
                 category: 'gear',
                 displayUsed: true,
             });
+
+             G.disasters.forEach((d) => {
+                new G.Res({
+                    name: d.name+' year', //A resource that tells you the next predicted drought/frost/whatever
+                    displayName: 'Next predicted '+d.name+' year',
+                    desc: 'This number is the predicted year that the next '+d.name+' will be at. It may be off by a year or two or not happen in the first place!',
+                    icon: d.icon,
+                    category: 'demog',
+                    getDisplayAmount: function () {
+                        return (B(G.has('time measuring 1/2') && isFinite(G.getRes(d.name+' year').amount)) ? G.getRes(d.name+' year').amount : "???")
+                    }
+                })
+            })
+
             /*=====================================================================================
             UNITS
             =======================================================================================*/
@@ -27516,6 +27509,18 @@ if (getObj("civ") != "1") {
                 ],
                 lifetime: function () { return 1 + this.yearOfObtainment % 3 }
             });
+
+             G.disasters.forEach((d) => {
+                new G.Trait({
+                    name: d.name,
+                    desc: d.desc,
+                    icon: d.icon,
+                    req: { 'tribalism': false },
+                    category: 'main',
+                    skip: true
+                })
+            })
+
             new G.Tech({
                 name: 'symbI', category: 'upgrade',
                 displayName: 'Symbolism',
