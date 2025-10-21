@@ -1599,7 +1599,7 @@ if (getObj("civ") != "1") {
                     rootKnowEvolve();
                     G.seasonalContent();
                     theme();
-                    G.isMap = G.isMapFullyExplored();
+                    G.isMapExplored = G.isMapFullyExplored();
                     //faith II removal from costs if over 25 VPs are obtained
                     if (G.getRes("victory point").amount > 25)
                         for (var i = 1; i <= 12; i++) {
@@ -1800,7 +1800,7 @@ if (getObj("civ") != "1") {
                         G.update['unit']();
                     }
 
-                    G.isMap = G.isMapFullyExplored();
+                    G.isMapExplored = G.isMapFullyExplored();
                     if (G.has("t7") && G.year > 0) {
                         G.herbReq = parseInt((G.achievByName['herbalism'].won == 0 ? 1 : 0.2 + G.achievByName['herbalism'].won) * ((G.year - 1) / 1.5) * (G.getRes('population').amount / 4));
                         var h = G.getRes("herbs").amount;
@@ -4685,6 +4685,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('fire essence limit').displayedAmount = G.getRes('fire essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'fire essence limit',
@@ -4698,6 +4699,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('water essence limit').displayedAmount = G.getRes('water essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'water essence limit',
@@ -4711,6 +4713,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('nature essence limit').displayedAmount = G.getRes('nature essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'nature essence limit',
@@ -4730,6 +4733,7 @@ if (getObj("civ") != "1") {
                                 G.gain(me.name, 20, 'The Cemetarium');
                             }
                         }
+                        G.getRes('dark essence limit').displayedAmount = G.getRes('dark essence limit').amount; // limit display fix
                     }
                 },
                 whenGathered: researchWhenGathered,
@@ -4744,6 +4748,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('lightning essence limit').displayedAmount = G.getRes('lightning essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'lightning essence limit',
@@ -4757,6 +4762,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('wind essence limit').displayedAmount = G.getRes('wind essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'wind essence limit',
@@ -4770,6 +4776,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('holy essence limit').displayedAmount = G.getRes('holy essence limit').amount; // limit display fix
                 },
                 whenGathered: researchWhenGathered,
                 limit: 'holy essence limit',
@@ -5483,14 +5490,14 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'magic essences',
-                desc: 'This is the total amount of all [magic essences,Essence types] you currently have. These are important for [wizard]s and are greatly respected among them.',
+                desc: 'This is the total amount of all [magic essences,Essence types] you currently have. These are important to [wizard]s and are greatly respected among them, and require their respective essence storage.',
                 icon: [20, 13, "magixmod"],
                 meta: true
             });
             //Currency
             new G.Res({
                 name: 'industry point',
-                desc: 'You can use these points to set up some industries in the Paradise. Depending on the path that your civilization took, you will have either 800 or 1000 of these points!',
+                desc: 'You can use these points to set up some industries in the Paradise. Depending on the path that your civilization took, you will have a different limit for these points!',
                 icon: [0, 14, "magixmod"],
                 displayUsed: true,
                 category: 'main'
@@ -5635,20 +5642,20 @@ if (getObj("civ") != "1") {
             //Types of books
             new G.Res({
                 name: 'nature book',
-                desc: 'A book written by writers with the help of [florist]\'s notes.',
+                desc: 'A book written by writers with the help of a [florist]\'s notes.',
                 icon: [2, 13, "magixmod"],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.003;
+                    var toSpoil = me.amount * (G.getRes('nature book').amount + G.getRes('spellbook').amount + G.getRes('novel').amount + G.getRes('book of law').amount > G.getUnitAmount('library') * 2000 ? 0.02 : 0.002);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 category: 'misc',
             });
             new G.Res({
                 name: 'spellbook',
-                desc: 'A book written by writers with the help of [wizard]\'s notes.',
+                desc: 'A book written by writers with the help of a [wizard]\'s notes.',
                 icon: [3, 13, "magixmod"],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.003;
+                    var toSpoil = me.amount * (G.getRes('nature book').amount + G.getRes('spellbook').amount + G.getRes('novel').amount + G.getRes('book of law').amount > G.getUnitAmount('library') * 2000 ? 0.02 : 0.002);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 partOf: 'books',
@@ -5659,7 +5666,7 @@ if (getObj("civ") != "1") {
                 desc: 'A book written by writers with the help of the beautiful notes of your [poet]s.',
                 icon: [5, 6, "magix2"],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.003;
+                    var toSpoil = me.amount * (G.getRes('nature book').amount + G.getRes('spellbook').amount + G.getRes('novel').amount + G.getRes('book of law').amount > G.getUnitAmount('library') * 2000 ? 0.02 : 0.002);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 partOf: 'books',
@@ -5670,7 +5677,7 @@ if (getObj("civ") != "1") {
                 desc: 'The book written with the help of a [lawyer]\'s thoughts.',
                 icon: [0, 13, "magixmod"],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.003;
+                    var toSpoil = me.amount * (G.getRes('nature book').amount + G.getRes('spellbook').amount + G.getRes('novel').amount + G.getRes('book of law').amount > G.getUnitAmount('library') * 2000 ? 0.02 : 0.002);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 partOf: 'books',
@@ -6287,7 +6294,7 @@ if (getObj("civ") != "1") {
                 category: 'misc',
                 icon: [5, 25, "magixmod"],
                 tick: function (me, tick) {
-                    if (G.getRes('money storage').used == G.getRes('money storage').amount) {
+                    if (G.getRes('money storage').used >= G.getRes('money storage').amount) {
                         var toSpoil = me.amount * 0.004 * G.achievByName['pocket'].won;
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     }
@@ -6299,7 +6306,7 @@ if (getObj("civ") != "1") {
                 category: 'misc',
                 icon: [6, 25, "magixmod"],
                 tick: function (me, tick) {
-                    if (G.getRes('money storage').used == G.getRes('money storage').amount) {
+                    if (G.getRes('money storage').used >= G.getRes('money storage').amount) {
                         var toSpoil = me.amount * 0.004 * G.achievByName['pocket'].won;
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     }
@@ -6311,7 +6318,7 @@ if (getObj("civ") != "1") {
                 category: 'misc',
                 icon: [7, 25, "magixmod"],
                 tick: function (me, tick) {
-                    if (G.getRes('money storage').used == G.getRes('money storage').amount) {
+                    if (G.getRes('money storage').used >= G.getRes('money storage').amount) {
                         var toSpoil = me.amount * 0.004 * G.achievByName['pocket'].won;
                         var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                     }
@@ -6494,6 +6501,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('christmas essence limit').displayedAmount = G.getRes('christmas essence limit').amount; // limit display fix
                 },
                 limit: 'christmas essence limit',
                 whenGathered: researchWhenGathered,
@@ -6683,6 +6691,7 @@ if (getObj("civ") != "1") {
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.01;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                    G.getRes('halloween essence limit').displayedAmount = G.getRes('halloween essence limit').amount; // limit display fix
                 },
                 limit: 'halloween essence limit',
                 partOf: 'magic essences',
@@ -8362,14 +8371,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'concoctions crafting stand',
-                desc: 'Here you can craft [dark concoction]s and [nature concoction]s by using [jar for concoctions,Concoction jars] and various crafting materials.',
+                desc: 'Here you can craft [dark concoction]s and [nature concoction]s by using [jar for concoctions,Concoction jars] and various magical materials.',
                 icon: [15, 16, "magixmod"],
                 cost: {},
                 use: { 'alchemy zone': 0.3 },
                 upkeep: {},
                 modes: {
                     'off': G.MODE_OFF,
-                    'ha': { name: 'Hire an alchemist', icon: [12, 5, "magixmod"], desc: 'Hires an alchemist to craft various concoctions.', use: { 'alchemist': 1, 'stone tools': 1 } },
+                    'ha': { name: 'Hire an alchemist', icon: [12, 5, "magixmod"], desc: 'Hires an [alchemist] to craft various concoctions.', use: { 'alchemist': 1, 'stone tools': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'jar for concoctions': 1, 'water': 0.4, 'dark essence': 2, 'dark fire pit': 0.5 }, into: { 'dark concoction': 1 }, every: 6, mode: 'ha' },
@@ -8382,7 +8391,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'combat potions brewing stand',
                 displayName: 'Combat potion brewing stand',
-                desc: 'Here you can craft [combat potions]! Alchemists are creative people who name their creations, and each one is uniquely made.',
+                desc: 'Here you can craft [combat potions]! [alchemist]s are creative people who name their creations, and each one is uniquely made.',
                 icon: [14, 16, "magixmod"],
                 cost: {},
                 use: { 'alchemy zone': 0.3 },
@@ -8406,7 +8415,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'deadly concoction maker',
-                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and also produces [jar for concoctions,Jars for concoctions].',
+                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and also makes [jar for concoctions,Jars for concoctions].',
                 icon: [19, 16, "magixmod"],
                 cost: {},
                 use: { 'worker': 1, 'metal tools': 1, 'alchemy zone': 0.3 },
@@ -8578,12 +8587,12 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lawyer',
-                desc: 'Lawyer will share code of law to people and comparing people\'s decisions with code of law. @every 50 [lawyer]s provide 1 [authority] @every 100 [lawyer]s will reduce the cooldown until the next trait removal by 1 tick',
+                desc: '[lawyer]s will share the code of law to people and comparing people\'s decisions with code of law. @every 50 lawyers provide 1 [authority] @every 100 [lawyer]s will reduce the cooldown until the next trait removal by 1 tick',
                 icon: [10, 13, "magixmod"],
                 cost: {},
                 use: { 'worker': 1 },
                 effects: [
-                    { type: 'convert', from: { 'paper': 14, 'ink': 8 }, into: { 'influence': 1 }, every: 30, req: { 'noting': true }, chance: 1 / 4 },
+                    { type: 'convert', from: { 'paper': 12, 'ink': 3 }, into: { 'lawyer\'s notes': 1 }, every: 30, req: { 'noting': true }, chance: 1 / 4 },
                     { type: 'provide', what: { 'authority': 0.02 } },
                 ],
                 req: { 'better influence & authority': true },
@@ -8609,21 +8618,21 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'lodge of writers',
-                desc: 'In these lodges, writers will write things in [empty book]s. Sources of information contained in them are notes of people from many jobs (manuals for instance).',
+                desc: 'In these lodges, writers will write things in [empty book]s. These writers will create [nature book]s (with [flowers]), as well as [book of law,Books of law] and [novel]s with notes.',
                 icon: [11, 13, "magixmod"],
                 cost: { 'basic building materials': 700 },
                 use: { 'land': 1, 'worker': 7 },
                 effects: [
-                    { type: 'convert', from: { 'flowers': 30, 'empty book': 1, 'ink': 15 }, into: { 'nature book': 1 }, every: 12 },
-                    { type: 'convert', from: { 'poet\'s notes': 1.05, 'empty book': 1, 'ink': 16 }, into: { 'novel': 1 }, every: 13 },
-                    { type: 'convert', from: { 'lawyer\'s notes': 1, 'empty book': 1, 'ink': 15 }, into: { 'book of law': 1 }, every: 12 },
+                    { type: 'convert', from: { 'flowers': 30, 'empty book': 1, 'ink': 2 }, into: { 'nature book': 1 }, every: 12 },
+                    { type: 'convert', from: { 'poet\'s notes': 1, 'empty book': 1, 'ink': 2 }, into: { 'novel': 1 }, every: 15 },
+                    { type: 'convert', from: { 'lawyer\'s notes': 1, 'empty book': 1, 'ink': 2 }, into: { 'book of law': 1 }, every: 20 },
                 ],
                 req: { 'bookwriting': true },
                 category: 'civil',
             });
             new G.Unit({
                 name: 'library',
-                desc: '[books] may be stored here to slow down their decay and make them accessible to the public. Provides 2,000 [book storage].',
+                desc: '[books] may be stored here to slow down their normally rapid decay and make them accessible to the public. Provides 2,000 [book storage].',
                 icon: [21, 5, "magixmod"],
                 cost: { 'basic building materials': 1100 },
                 use: { 'land': 1, 'worker': 5 },
@@ -9139,7 +9148,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'culture': 0.13 } },
                     { type: 'mult', value: 1.31, req: { 'artistic thinking': true } },
                     { type: 'mult', value: 1.21, req: { 'wisdom rituals': 'on' } },
-                    { type: 'convert', from: { 'paper': 21 }, into: { 'poet\'s notes': 1 }, every: 11, req: { 'bookwriting': true } },
+                    { type: 'convert', from: { 'paper': 12, 'ink': 3 }, into: { 'poet\'s notes': 1 }, every: 11, req: { 'noting': true } },
                     { type: 'mult', value: 1.05, req: { 'culture rise': true } }, // NOTE: rootCultureEvolve() RELIES ON FIRST MULT VALUE TO BE EQUAL TO 1.05
                     { type: 'mult', value: 0.9, req: { 'se12': 'on' } },
                     { type: 'mult', value: 2, req: { 'se03': 'on' } },
@@ -9170,7 +9179,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'wind essence': 6 } },
                     { type: 'gather', context: 'gather', what: { 'dark essence': 6 } },
                     { type: 'convert', from: { 'mana': 6 }, into: { 'holy essence': 6 }, every: 4, req: { '7th complex tower': true } },
-                    { type: 'convert', from: { 'books': 1 }, into: { 'spellbook': 1 }, every: 150, req: { 'bookwriting': true } },
+                    { type: 'convert', from: { 'empty book': 1, 'ink': 5 }, into: { 'spellbook': 1 }, every: 150, req: { 'bookwriting': true } },
                     { type: 'mult', value: 1.035, req: { 'at9': true } },
                     { type: 'mult', value: 0.95, req: { 'dt28': true } },
                 ],
@@ -9520,8 +9529,8 @@ if (getObj("civ") != "1") {
                 use: { 'alchemy zone': 0.5 },
                 gizmos: true,
                 modes: {
-                    'wine': { name: 'Craft wine at this stand', icon: [8, 10, "magixmod"], desc: 'At this stand you may craft [wine], an [alcohol brews,Alcohol].', use: { 'alchemist': 1 } },
-                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, "magixmod"], desc: 'At this stand you may craft [pot of vodka,Vodka], an [alcohol brews,Alcohol]. This drink harms [health] a lot, so take care of the [health] of your people.', use: { 'alchemist': 1 } },
+                    'wine': { name: 'Craft wine at this stand', icon: [8, 10, "magixmod"], desc: 'At this stand an [alchemist] will craft [wine], an [alcohol brews,Alcohol].', use: { 'alchemist': 1 } },
+                    'vodka': { name: 'Craft vodka at this stand', icon: [10, 10, "magixmod"], desc: 'At this stand an [alchemist] will craft [pot of vodka,Vodka], an [alcohol brews,Alcohol]. This drink harms [health] a lot, so take care of the [health] of your people.', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'fruit': 0.6, 'sweet water pot': 0.25 }, into: { 'wine': 1 }, every: 4, mode: 'wine' },
@@ -9539,9 +9548,9 @@ if (getObj("civ") != "1") {
                 use: { 'alchemy zone': 0.5 },
                 gizmos: true,
                 modes: {
-                    'herbsyrup': { name: 'Craft syrup out of herbs', icon: [5, 10, "magixmod"], desc: 'At this stand you may craft [herb syrup], a medicament used to heal people.', use: { 'alchemist': 1 } },
-                    'antidotum': { name: 'Craft antidotum', icon: [4, 10, "magixmod"], desc: 'At this stand you may craft [antidotum], which can be used to get rid of poison effect with a large chance of success.', use: { 'alchemist': 1 } },
-                    'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, "magixmod"], desc: 'At this stand you may craft [essenced herb syrup] (although it has a small chance to fail), a medicament that may be used to heal people who are severely [sick].', use: { 'alchemist': 1 } },
+                    'herbsyrup': { name: 'Craft syrup out of herbs', icon: [5, 10, "magixmod"], desc: 'At this stand an [alchemist] will craft [herb syrup], a medicament used to heal people.', use: { 'alchemist': 1 } },
+                    'antidotum': { name: 'Craft antidotum', icon: [4, 10, "magixmod"], desc: 'At this stand an [alchemist] will craft [antidotum], which can be used to get rid of poison effect with a large chance of success.', use: { 'alchemist': 1 } },
+                    'EssHerbsyrup': { name: 'Craft syrup out of herbs and Nature essence', icon: [9, 10, "magixmod"], desc: 'At this stand an [alchemist] will craft [essenced herb syrup], a medicament that may be used to heal people who are severely [sick].', use: { 'alchemist': 1 } },
                 },
                 effects: [
                     { type: 'convert', from: { 'alcohol pot': 0.1, 'water': 0.7, 'mundane water pot': 0.15, 'herbs': 0.05, 'sweet water pot': 0.1 }, into: { 'antidotum': 1 }, every: 4, mode: 'antidotum' },
@@ -12377,7 +12386,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bookwriting', category: 'tier1',
-                desc: '[florist\'s notes] and [poet\'s notes] may now be written into a book. @unlocks the [lodge of writers], who will convert their notes into books',
+                desc: 'Allows for the creation of [nature book]s, [book of law,Manuals], [novel]s, and [spellbook]s. @unlocks the [lodge of writers], who will convert their notes into books @people in [Wizard Complex,Wizard Complexes] will write [spellbook]s in their spare time',
                 icon: [12, 13, "magixmod"],
                 cost: { 'insight': 300 },
                 req: { 'bookcrafting': true, 'ink crafting': true },
@@ -14435,7 +14444,7 @@ if (getObj("civ") != "1") {
                 name: 'symbolism III', category: 'upgrade',
                 desc: 'The third level of [symbolism] will make symbolism bonuses apply to more units and become a little more powerful! //In addition, it provides: @10 [wisdom II], @10 [inspiration II], @3 [education], @5 [authority II], and @5 [spirituality II].',
                 icon: [1, 39, "magixmod", 31, 17, "magixmod"],
-                cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10, 'novel': 10 },
+                cost: { 'insight II': 145, 'culture II': 35, 'influence II': 5, 'faith II': 5, 'science': 10, 'novel': 20 },
                 req: { 'doctrine of the dark wormhole 5/5': true },
                 effects: [
                     { type: 'provide res', what: { 'inspiration II': 10 } },
@@ -19591,7 +19600,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'theme changer',
-                desc: 'Let your population enjoy various themes! Does not apply to popups, however, and only switches every ten days. //<small>Life has its theme too...</small>',
+                desc: 'Let your population enjoy various themes! Only applies to background and only switches every ten days. //<small>Life has its theme too...</small>',
                 icon: [28, 21, "magixmod"],
                 cost: {},
                 req: { 'life has its theme': true },
@@ -22203,7 +22212,7 @@ if (getObj("civ") != "1") {
             G.funcs['game loaded'] = function () {
                 if (G.on) {
                     G.greeting();
-                    G.isMap = G.isMapFullyExplored();
+                    G.isMapExplored = G.isMapFullyExplored();
                     theme();
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
                         if (G.achievByName['god complex'].won == 0) {
@@ -22337,7 +22346,7 @@ if (getObj("civ") != "1") {
             G.funcs['new year'] = function () //new year but civ2
             {
                 if (G.on) {
-                    G.isMap = G.isMapFullyExplored();
+                    G.isMapExplored = G.isMapFullyExplored();
                     if (G.checkPolicy("creative foraging") == "on") {
                         if (G.getRes('creativity').amount < 1) G.setPolicyModeByName('creative foraging', 'off');
                         else G.lose('creativity', 1, 'creative foraging');

@@ -21,7 +21,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 
 /* Small note: the creator of this mod (pelletsstarPL) has personally stated in Discord messages that the Magix mod may be modded by anyone who wishes, thus disregarding the comment below. This mod provides various important fixes that prevent the game from breaking, as well as a significant amount of text rewritings and improvements (and some extra content). To compare, visit https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js to find the original source. */
 
-// CURRENTLY TESTING: CUSTOM MAPS FOR PLAIN ISLAND (MAP TYPE 1)
+// CURRENTLY TESTING: CUSTOM MAP TYPES (MAP TYPE 1)
 // STATUS: VISUAL-ONLY, INCOMPLETE
 // DONE: SEEDING AND TERRITORY TYPE GENERATION
 // TODO: FUNCTIONAL TERRITORY UI, GAMEPLAY ADDITIONS
@@ -505,7 +505,7 @@ G.Load = function (doneLoading) {
         var spl = str[s++].split(';');
         //console.log('Map tiles : '+spl);
         G.currentMap = new G.Map(0, 24, 24, spl[0]);
-        G.islandMap = new G.Map(1, 24, 24, "islMap" + spl[0]);
+        G.moonMap = new G.Map(1, 24, 24, "islMap" + spl[0]);
         var map = G.currentMap;
         var spl2 = spl[1].split(',');
         var I = 0;
@@ -3924,7 +3924,7 @@ G.AddData({
             More exact tile inspection
         ==============================*/
         G.inspectTile = function (tile) {
-            if (G.has('tile inspection') && !G.storageObject.map) {
+            if (G.has('tile inspection') && !G.storageObject.showMoonMap) {
                 //display the tile's details in the land section
                 //note : this used to display every territory owned until i realized 3 frames per second doesn't make for a very compelling user experience
                 var str = '';
@@ -4008,8 +4008,8 @@ G.AddData({
             G.updateMapDisplay();
             G.tabs[1].showMap = true;
             if (G.has('where am i?')) {
-                function showPlain() {
-                    G.storageObject.map = 1;
+                function showMoon() {
+                    G.storageObject.showMoonMap = 1;
                     G.updateMapDisplay();
                 }
                 var str = '';
@@ -4020,21 +4020,21 @@ G.AddData({
                     //display list of total gatherable resources per context
                     var I = 0;
                     var cI = 0;
-                    if (G.getSetting('debug')) str += '<br><br>' + G.button({ text: '<font>Reseed</font>', tooltip: 'Reseed and reset the territory completely.', onclick: function () { delete G.storageObject.map; G.createMaps(); G.update['land']; } });
+                    if (G.getSetting('debug')) str += '<br><br>' + G.button({ text: '<font>Reseed</font>', tooltip: 'Reseed and reset the territory completely.', onclick: function () { delete G.storageObject.showMoonMap; G.createMaps(); G.update['land']; } });
                     if (testingMagix) {
-                        if (G.storageObject.map) {
-                            showPlain()
+                        if (G.storageObject.showMoonMap) {
+                            showMoon()
                             str += "<br>" + G.button({
                                 text: '<font>View main map</font>', tooltip: 'View the map of your main world.', onclick: function () {
-                                    delete G.storageObject.map
+                                    delete G.storageObject.showMoonMap
                                     G.update['land']()
                                 }
                             })
                         } else {
                             if (G.getSetting('debug') || G.getDict('land of the Plain Island').amount > 1000) str += '<br>' + G.button({
-                                text: '<font>View island map</font>', tooltip: 'View the map of your island world.', onclick: function () {
+                                text: '<font>View moon map</font>', tooltip: 'View the map of the moon world.', onclick: function () {
                                     // A few hacky ways to prevent updates and fake current map here
-                                    showPlain()
+                                    showMoon()
                                     G.update['land']()
                                 }
                             })
@@ -4045,7 +4045,7 @@ G.AddData({
                     var oceanCount = 0
                     var exploredLand = 0
                     var exploredOcean = 0
-                    if (G.isMap) { // Map fully explored
+                    if (G.isMapExplored) { // Map fully explored
                         landCount = 1
                         oceanCount = 1
                         exploredLand = 1
@@ -4217,7 +4217,7 @@ G.AddData({
                                         //if (!isEmpty(me.use)) str+='<div class="divider"></div><div class="fancyText par">Uses : '+G.getUseString(me.use,true,true)+' per '+proto.name+'</div>';
                                         //if (target.amount>0 && target.mode.num!=me.num && !isEmpty(uses)) str+='<div class="divider"></div><div class="fancyText par">Needs '+G.getUseString(uses,true,false,target.amount)+' to switch</div>';
                                         var costStr = G.getCostString(proto.cost, true, false, 1)
-                                        str += (costStr.length !== 0 ? '<div><b>Changing to this mode will cost you </b>' + G.getCostString(proto.cost, true, false, 1) + '.</div>' : '<div><b>This change will not cost anything!</b></div>');
+                                        str += (costStr.length !== 0 ? '<div><b>Changing to this mode will cost you </b>' + G.getCostString(proto.cost, true, false, 1) + '.</div>' : '<div>This mode change is free.</div>');
                                         return str;
                                     };
                                 }(mode, me), { offY: -8 });
@@ -4330,7 +4330,7 @@ G.AddData({
         {
             var seed = makeSeed(12)
             G.currentMap = new G.Map(0, 24, 24, seed); // increase seed len
-            G.islandMap = new G.Map(1, 24, 24, "islMap" + seed);
+            G.moonMap = new G.Map(1, 24, 24, "islMap" + seed);
             //set starting tile by ranking all land tiles by score and picking one
             var goodTiles = [];
             for (var x = 1; x < G.currentMap.w - 1; x++) {
@@ -4375,10 +4375,10 @@ G.AddData({
         }
         G.renderMap = function (_map, obj) {
             // TODO MAP TO RENDER
-            if (!G.islandMap) {
-                G.islandMap = new G.Map(1, 24, 24, "islMap" + G.currentMap.seed)
+            if (!G.moonMap) {
+                G.moonMap = new G.Map(1, 24, 24, "islMap" + G.currentMap.seed)
             }
-            var map = G.storageObject.map ? G.islandMap : G.currentMap
+            var map = G.storageObject.showMoonMap ? G.moonMap : G.currentMap
             var time = Date.now();
             var timeStep = Date.now();
             var verbose = false;
@@ -4411,7 +4411,7 @@ G.AddData({
             var c = document.createElement('canvas'); c.width = totalw * ts; c.height = totalh * ts;
             var ctx = c.getContext('2d');
             ctx.translate(ts / 2, ts / 2);
-            var m = G.storageObject.map
+            var m = G.storageObject.showMoonMap
             for (var x = 0; x < map.w; x++) {
                 for (var y = 0; y < map.h; y++) {
                     if (x >= x1 && x < x2 && y >= y1 && y < y2) {
@@ -5204,6 +5204,7 @@ G.AddData({
                             G.exploreOwnedTiles = randomFloor(G.exploreOwnedTiles);
                             for (var i = 0; i < G.exploreOwnedTiles; i++) {
                                 var tile = choose(map.tilesByOwner[1]);
+                                
                                 if (tile.explored < 1) {
                                     if (!tile.land.ocean) tile.explored += 0.01;
                                     else tile.explored += 0;
@@ -5396,7 +5397,7 @@ G.AddData({
                 var oceanCount = 0
                 var exploredLand = 0
                 var exploredOcean = 0
-                if (G.isMap) { // Map fully explored
+                if (G.isMapExplored) { // Map fully explored
                     landCount = 1
                     oceanCount = 1
                     exploredLand = 1
@@ -5456,7 +5457,7 @@ G.AddData({
         G.softcap = function (amountToExplore, limit, tileType) {
             var tileAmount = G.getRes(tileType).amount;
             limit -= tileAmount;
-            var result = (limit < 0) ? amountToExplore / Math.sqrt(-limit + 1) : amountToExplore;
+            var result = limit < 0 ? amountToExplore / Math.sqrt(-limit + tileAmount / 250 + 1) : amountToExplore;
             return result;
         }
 
@@ -5567,7 +5568,7 @@ G.AddData({
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0) + (G.has("map details") ? 8000 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 4000 : 0));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTiles += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.01;
@@ -5581,7 +5582,7 @@ G.AddData({
                                         } else {
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTiles += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
@@ -5594,7 +5595,7 @@ G.AddData({
                                         var limit = 750;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 8000 : 0) + (G.has("scouting") ? 1000 : 0) + (G.has("focused scouting") ? 20000 : 0));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.01;
@@ -5606,7 +5607,7 @@ G.AddData({
                                         } else {
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
@@ -5619,7 +5620,7 @@ G.AddData({
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("focused scouting") ? 20000 : 0) + (G.has("scouting") ? 1000 : 0));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
                                                 var upkeepMet = true
@@ -5640,7 +5641,7 @@ G.AddData({
                                         } else {
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
-                                            if (!G.isMap) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * G.softcap(effect.explored, limit, "wtr") * myAmount;
                                                 if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * G.softcap(effect.unexplored, limit, "wtr") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.02;
