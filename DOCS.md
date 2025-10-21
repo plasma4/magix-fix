@@ -314,7 +314,7 @@ new G.Unit({
   category:'wonder',
 });
 ```
-`main.js` (or `magixUtils.js` with Magix) have the code for the popup that says "This wonder only needs one more step to finalize" and creates the buttons, but we won't go over them here.
+`main.js` (or `magixUtils.js` with Magix) have the code for the popup that says "This wonder only needs one more step to finalize" and creates the buttons, but we won't go over them here. Magix also has some additional modifcations involving tooltips, tab colors, and update/draw functions.
 
 ## Additional info
 1. Check the Optimization section for ways to speed up the game that the base game does not do. (There is a lot you can do!)
@@ -340,7 +340,7 @@ new G.Unit({
     ```js
     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
     ```
-    is actually located in `G.funcs['game loaded']`! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
+    is located in `G.funcs['game loaded']`, which means you might have trouble finding it! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
 10. Gathering is based on the total goods available across all owned tiles, weighted by each tile's exploration percentage. The `chance` property determines if a good spawns on a tile at all, and this happens only once when the world is created. However...the actual amount gathered isn't just `Math.min(resAmount, toGather)`. The game "soft-caps" it to make gathering less effective when you have far more workers than available resources, but it doesn't drop to zero. The formula is:
     ```js
     amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05
@@ -348,6 +348,11 @@ new G.Unit({
     So, with 35 herbs available and 10 desired, you would only get 10 herbs.
     However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
 11. By default, resources are not `fractional`. One of the most annoying bugs is when resources inconsistently become higher or lower than before, and this might happen if the resource you are doing math on isn't fractional, such as when wizards in Magix `'provide'` 0.5 insight each, resulting in weird queue/unqueue problems with changing insight. Note that queue/unqueue code is in `G.update['unit']()`. (To the user, `fractional` resources still appear as integers.)
+
+    One more thing: in order to properly some display amounts for resources that act as limits, you might need this code segment (preferably in the unit's tick function):
+    ```js
+    G.getRes('fire essence limit').displayedAmount = G.getRes('fire essence limit').amount; // limit display fix
+    ```
 12. Tech and trait IDs are unified because they both are actually considered "knowledge" internally, and extend `G.Know`. (What a weird piece of trivia!)
 13. Hotkeys code can be added in your own mod with code from https://github.com/plasma4/magix-extras/blob/master/hotkeys.js.
 14. If you try to have text like `[custom resource name]` that doesn't exist, then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
