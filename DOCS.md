@@ -340,7 +340,7 @@ new G.Unit({
     ```js
     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
     ```
-    is actually located in `G.funcs['game loaded']`! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
+    is located in `G.funcs['game loaded']`, which means you might have trouble finding it! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
 10. Gathering is based on the total goods available across all owned tiles, weighted by each tile's exploration percentage. The `chance` property determines if a good spawns on a tile at all, and this happens only once when the world is created. However...the actual amount gathered isn't just `Math.min(resAmount, toGather)`. The game "soft-caps" it to make gathering less effective when you have far more workers than available resources, but it doesn't drop to zero. The formula is:
     ```js
     amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05

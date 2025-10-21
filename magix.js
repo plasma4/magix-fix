@@ -6770,9 +6770,9 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'water': 0.8, 'muddy water': 0.8 }, amount: 1, max: 3, req: { 'drought': false } },
                     { type: 'gather', context: 'gather', what: { 'water': 0.8 * 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'drought': true } },
                     { type: 'gather', context: 'gather', what: { 'herbs': 0.5, 'fruit': 0.25, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'plant lore': true, 'fruit identification II': false } },
-                    { type: 'gather', context: 'exotic', what: { 'herbs': 0.55, 'fruit': 0.3, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'fruit identification II': true } },
+                    { type: 'gather', context: 'exotic', what: { 'herbs': 0.55, 'fruit': 0.275, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'fruit identification II': true } },
                     { type: 'gather', context: 'exotic', amount: 0.015, max: 1, req: { 'fruit identification': true, 'fruit identification II': false } },
-                    { type: 'gather', context: 'exotic', amount: 0.015 * 0.25, max: 1, req: { 'fruit identification II': true } },
+                    { type: 'gather', context: 'exotic', amount: 0.015 * 1.25, max: 1, req: { 'fruit identification II': true } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.002 }, amount: 1, max: 1, req: { 'spicy foods': true, 'spicy foods II': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.003 }, amount: 1, max: 1, req: { 'spicy foods II': true, 'spicy foods III': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.009 }, amount: 1, max: 1, req: { 'spicy foods III': true } },
@@ -9602,7 +9602,8 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'paper': 12, 'ink': 3 }, into: { 'florist\'s notes': 1 }, every: 11, req: { 'noting': true }, chance: 1 / 95 },
                     { type: 'mult', value: 0.8, req: { 'se12': 'on' } },
                     { type: 'gather', what: { 'health': 0.01125 }, req: { 'mentors of nature III': true } },
-                    { type: 'mult', value: 3, req: { 'advanced flower gathering': true } },
+                    { type: 'mult', value: 1.1, req: { 'fruit identification II': true } },
+                    { type: 'mult', value: 2, req: { 'advanced flower gathering': true } },
                 ],
             });
             new G.Unit({
@@ -12386,7 +12387,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bookwriting', category: 'tier1',
-                desc: 'Allows for the creation of [nature book]s, [book of law,Manuals], [novel]s, and [spellbook]s. @unlocks the [lodge of writers], who will convert their notes into books @people in [Wizard Complex,Wizard Complexes] will write [spellbook]s in their spare time',
+                desc: 'Allows for the creation of written books from [lawyer\'s notes] and [poet\'s notes], and [nature book]s with the addition of [flowers]. @unlocks the [lodge of writers], who will convert their notes into books @people in [Wizard Complex,Wizard Complexes] will write [spellbook]s in their spare time',
                 icon: [12, 13, "magixmod"],
                 cost: { 'insight': 300 },
                 req: { 'bookcrafting': true, 'ink crafting': true },
@@ -14088,7 +14089,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'magical presence', category: 'misc',
                 displayName: '<font color="silver">Magical presence</font>',
-                desc: 'You feel some weird stuff inside of your body. Sometimes it is warm, and at other times it makes you feel weird, but there doesn\'t seem to be anything bad that this presence has made. @Increases the efficiency of all [fire wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks a new theme (check the [theme changer] if you have it)',
+                desc: 'You feel some weird stuff inside of your body. Sometimes it is warm, and at other times it makes you feel weird, but there doesn\'t seem to be anything bad that this presence has made. @Increases the efficiency of all [fire wizard tower,Wizard towers] by 5% without increasing [mana] upkeep. @Unlocks a new theme (make sure you have the [theme changer] by upgrading the [mausoleum] enough)',
                 icon: [4, 12, "magixmod", 2, 24, "magixmod"],
                 cost: {},
                 req: { 'tribalism': false }
@@ -14676,7 +14677,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'life in faith', category: 'misc',
                 displayName: '<font color="gold">Life in faith</font>',
-                desc: 'You remember that you were staying near the Temple...and this memory alone has unbelievable powers! @+1 [faith] @+1 [spirituality] @3 new themes (check the [theme changer] if you have it</b>)',
+                desc: 'You remember that you were staying near the Temple...and this memory alone has unbelievable powers! @+1 [faith] @+1 [spirituality] @3 new themes (make sure you have the [theme changer] by upgrading the [mausoleum] enough)',
                 icon: [4, 12, "magixmod", 1, 9, "magixmod"],
                 cost: {},
                 effects: [
@@ -14840,7 +14841,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'mastered caligraphy', category: 'tier2',
-                desc: '<font color="#ff9e3e">Most of your people can write and their writing skills are steadily improving! Your people are now able to write better, meaning that most things your people write down are legible now.<br>Provides 5 [education] and 5 [wisdom II]</font>',
+                desc: '<font color="#ff9e3e">Most of your people can write and their writing skills are steadily improving! Your people are now able to write better, meaning that most things your people write down are legible now. //Provides 5 [education] and 5 [wisdom II]</font>',
                 icon: [15, 27, "magixmod"],
                 req: { 'eotm': true },
                 cost: { 'insight II': 15, 'culture II': 15 },
@@ -18455,7 +18456,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'ocean reversion', category: 'tier1',
-                desc: '@[land] decay is reverted by 1 every 5 ticks',
+                desc: '@[land] decay is reverted by 1 every 5 days',
                 icon: [8, 0, "magix2", 24, 1],
                 cost: { 'insight': 25 },
                 req: { 'ocean decay II': true },
@@ -18483,7 +18484,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'fruit identification II', category: 'tier1',
-                desc: 'People will become better-trained at finding out if various plants are poisonous or not, increasing [fruit] and [herbs,Herb] gain slightly and [exotic fruit] gain by 25%.',
+                desc: 'People will become better-trained at finding out if various plants are poisonous or not, increasing [fruit], [herbs,Herb], and [flowers,Flower] gain by 10% and [exotic fruit] gain by 25%.',
                 icon: [0, 39, "magixmod", 9, 2, "magix2", 24, 1],
                 cost: { 'insight': 100 },
                 req: { 'exotic blending': true },
@@ -19117,7 +19118,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'advanced flower gathering', category: 'tier1',
-                desc: 'Your [florist]s aren\'t very good at collecting [flowers], sadly. So why not teach them better ways of going about it? @use [nature book]s to help teach [florist]s just starting off, tripling their gathering rate',
+                desc: 'Your [florist]s aren\'t very good at collecting [flowers], sadly. So why not teach them better ways of going about it? @use [nature book]s to help teach [florist]s just starting off, doubling their gathering rate',
                 icon: [0, 7, "magix2"],
                 cost: { 'insight II': 9, 'nature book': 100 },
                 req: { 'eota': true },
@@ -26013,7 +26014,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'quarrying', category: 'tier1',
-                desc: '@unlocks [quarry,Quarries]',
+                desc: '@unlocks [quarry,Quarries] //<small>These rocks seem ever-so-slightly green...</small>',
                 icon: [25, 6, "c2"],
                 cost: { 'discernment': 30, 'creativity': 6 },
                 req: { 'digging': true, 'building': true },
@@ -26045,7 +26046,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'pottery', category: 'tier1',
-                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mire]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay] //<small>Some elves love flowers, so they take every pot crafted and put a plant or two in it!</small>',
+                desc: '@unlocks [potter]s, which produce goods such as [pot]s out of [clay] and [mire]@unlocks [granary,Granaries] (with [stockpiling])@[digger]s find more [clay] //<small>Some elves love nature, so they take every pot crafted and put a flower or two in it!</small>',
                 icon: [28, 6, "c2"],
                 cost: { 'discernment': 26, 'creativity': 4 },
                 req: { 'fire-making': true, 'digging': true, 'tool-making': true },

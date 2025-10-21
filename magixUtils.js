@@ -768,9 +768,9 @@ G.NewGameConfirm = function () {
         var item = G.res[i]
         if (item.tick) item.tick(item, G.tick);
     }
-    G.releaseUIUpdate();
 
     G.updateOwnedObjects();
+    G.releaseUIUpdate();
     G.runUnitReqs();
     G.runPolicyReqs();
 
@@ -2309,9 +2309,9 @@ G.AddData({
                     var item = G.res[i]
                     if (item.tick) item.tick(item, G.tick);
                 }
-                G.releaseUIUpdate();
 
                 G.updateOwnedObjects();
+                G.releaseUIUpdate();
                 G.runUnitReqs();
                 G.runPolicyReqs();
 
@@ -4261,6 +4261,7 @@ G.AddData({
                 G.button({
                     text: 'ALMIGHTY', tooltip: 'Unlock every tech, trait and policy instantly. Also unlocks the elf race!', onclick: function () {
                         G.achievByName['???'].won = 1;
+                        G.noUpdate = true;
                         for (var i in G.tech) {
                             var tech = G.tech[i]
                             if (!tech.skip && !G.techsOwnedNames.includes(tech.name)) G.gainTech(tech);
@@ -4272,10 +4273,10 @@ G.AddData({
                                 trait.yearOfObtainment = G.year;
                             }
                         }
-                        G.noUpdate = true;
                         for (var i in G.policy) {
                             if (!G.policy[i].skip) G.gainPolicy(G.policy[i]);
                         }
+                        G.updateOwnedObjects();
                         G.releaseUIUpdate();
                         G.shouldRunReqs = true;
                         var audio = new Audio(magixURL + 'spiritReject.wav');
@@ -5204,7 +5205,7 @@ G.AddData({
                             G.exploreOwnedTiles = randomFloor(G.exploreOwnedTiles);
                             for (var i = 0; i < G.exploreOwnedTiles; i++) {
                                 var tile = choose(map.tilesByOwner[1]);
-                                
+
                                 if (tile.explored < 1) {
                                     if (!tile.land.ocean) tile.explored += 0.01;
                                     else tile.explored += 0;
