@@ -1341,7 +1341,7 @@ if (getObj("civ") != "1") {
             // famines can now happen during either droughts *or* frosts
             G.disasters = [
                 {
-                    name: 'drought',
+                    name: 'droughtNew',
                     desc: '@<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types.</b> @In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). @[cloudy water] will also decay faster, although slower than [water]. @However, during a <b><u style="color:#c48b10">drought</u></b>, you may research unique technologies!',
                     icon: [9, 10, 1, 0, "magix2"],
                     startYear: 50,
@@ -1787,9 +1787,9 @@ if (getObj("civ") != "1") {
                     } else if (!G.has('t5') && G.year === 39) {
                         G.Message({ type: 'good', text: 'Within trials, droughts, frosts and famines will <b>not</b> occur!', icon: choose([9, 10],[15,14,'magixmod']) })
                     } else if (G.has('t5') && G.year >= 5) {
-                        if (!G.has('drought')) {
-                            setObj('drought', 5)
-                            G.gainTrait(G.traitByName['drought'])
+                        if (!G.has('droughtNew')) {
+                            setObj('droughtNew', 5)
+                            G.gainTrait(G.traitByName['droughtNew'])
                         }
                     }
 
@@ -1812,7 +1812,7 @@ if (getObj("civ") != "1") {
                         var fishReq = Math.pow(G.fruitReq, 0.95) - 1
                         if (G.getRes("seafood").amount >= fishReq) {
                             var waterAmount = Math.min(25 * population + 10, 12 * population + 400)
-                            G.Message({ type: 'good', text: "Your current stockpile of fish is enough to please Fishyar, making your " + G.getName("inhabs") + " a little happier and healthier, as well as providing everyone with " + B(waterAmount) + " water to fend off the " + (G.has('drought') ? "eternally lasting drought" : "drought that will arrive soon") + ". Keep this up and do not forget that Fishyar will demand more and more fish!", icon: [5, 6] });
+                            G.Message({ type: 'good', text: "Your current stockpile of fish is enough to please Fishyar, making your " + G.getName("inhabs") + " a little happier and healthier, as well as providing everyone with " + B(waterAmount) + " water to fend off the " + (G.has('droughtNew') ? "eternally lasting drought" : "drought that will arrive soon") + ". Keep this up and do not forget that Fishyar will demand more and more fish!", icon: [5, 6] });
                             changeHappiness(3 * population, "Fishyar happiness");
                             G.gain("water", waterAmount, "Fishyar giving supplies");
                             G.gain("health", 2.3 * population, "Fishyar giving supplies");
@@ -2338,7 +2338,7 @@ if (getObj("civ") != "1") {
             }
             G.funcs['new day'] = function () {
                 if (G.on) {
-                    if (!droughtmesg && G.has('drought')) {
+                    if (!droughtmesg && G.has('droughtNew')) {
                         G.Message({ type: 'bad3', text: 'You are currently in ' + (G.has('trial') ? 'an eternal' : 'a') + ' <b>drought</b>! While in a <b>drought</b>, water will be a lot harder to obtain and store. In addition, these may to turn into famines (which will cause food to decay more rapidly). (Check the trait for more info.)', icon: [9, 10] })
                         droughtmesg = true
                     }
@@ -3105,7 +3105,7 @@ if (getObj("civ") != "1") {
                             var toConsume = 0;
                             var consumeMult = 1;
                             var happinessAdd = 0;
-                            if (G.has('drought') && G.has('drought preparation')) { consumeMult *= 0.95 }
+                            if (G.has('droughtNew') && G.has('drought preparation')) { consumeMult *= 0.95 }
                             if (G.has('ungrateful tribe')) { consumeMult *= 0.98 }
                             if (G.has('dry throats')) { consumeMult *= 0.85; happinessAdd -= 0.04; }
                             else if (G.has('joy of drinking')) { consumeMult *= 1.15; happinessAdd += 0.04; }
@@ -3938,7 +3938,7 @@ if (getObj("civ") != "1") {
                         } else {
                             toSpoil = me.amount * 0.02;
                         }
-                        spent = G.lose('water', randomFloor(toSpoil * (G.checkPolicy('se06') == 'on' ? 0.4 : 1) * (G.has('drought') ? Math.pow(((G.year - getObj('drought')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1)), 'decay');
+                        spent = G.lose('water', randomFloor(toSpoil * (G.checkPolicy('se06') == 'on' ? 0.4 : 1) * (G.has('droughtNew') ? Math.pow(((G.year - getObj('droughtNew')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.6 : 1) + 1.2, 0.9) : 1)), 'decay');
                         G.gain('muddy water', randomFloor(spent), 'decay');
                     }
                 },
@@ -5056,7 +5056,7 @@ if (getObj("civ") != "1") {
                 desc: 'Water which cannot spoil in any way (however, it can still slowly decay). It is gathered from Paradise\'s lakes, ponds, rivers and tastes the same as water.',
                 icon: [11, 14, "magixmod"],
                 tick: function (me, tick) {
-                    var toSpoil = me.amount * 0.004 * (G.has('drought') ? Math.pow(((G.year - getObj('drought')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.85 : 1) + 1.2, 0.6) : 1);
+                    var toSpoil = me.amount * 0.004 * (G.has('droughtNew') ? Math.pow(((G.year - getObj('droughtNew')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.85 : 1) + 1.2, 0.6) : 1);
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 category: 'food',
@@ -6799,8 +6799,8 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'herbs': 2.5 }, req: { 'herbalism': false } },//To keep early game possible (there is a function within herbalism that provides more methods of herb gathering)
                     { type: 'gather', context: 'gather', what: { 'herbs': 3 }, req: { 't7': true } },//For the trial
                     //{type:'gather',context:'gather',what:{'water':1,'muddy water':1},amount:1,max:3,req:{'gathering focus':'water'}},
-                    { type: 'gather', context: 'gather', what: { 'water': 0.8, 'muddy water': 0.8 }, amount: 1, max: 3, req: { 'drought': false } },
-                    { type: 'gather', context: 'gather', what: { 'water': 0.8 * 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'drought': true } },
+                    { type: 'gather', context: 'gather', what: { 'water': 0.8, 'muddy water': 0.8 }, amount: 1, max: 3, req: { 'droughtNew': false } },
+                    { type: 'gather', context: 'gather', what: { 'water': 0.8 * 0.15, 'muddy water': 0.5 }, amount: 1, max: 3, req: { 'droughtNew': true } },
                     { type: 'gather', context: 'gather', what: { 'herbs': 0.5, 'fruit': 0.25, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'plant lore': true, 'fruit identification II': false } },
                     { type: 'gather', context: 'exotic', what: { 'herbs': 0.55, 'fruit': 0.275, 'vegetables': 0.25 }, amount: 1, max: 1, req: { 'fruit identification II': true } },
                     { type: 'gather', context: 'exotic', amount: 0.015, max: 1, req: { 'fruit identification': true, 'fruit identification II': false } },
@@ -7254,12 +7254,12 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'gather', what: { 'water': 35 } },
                     { type: 'gather', what: { 'water': 5 }, chance: 0.4 },
-                    { type: 'mult', value: 0.3, req: { 'drought': true } },
+                    { type: 'mult', value: 0.3, req: { 'droughtNew': true } },
                     { type: 'mult', value: 1.05, req: { 'deeper wells': true } },
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
                     { type: 'mult', value: 1.25, req: { 'se06': 'on' } },
                     { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
-                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'droughtNew': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
                 category: 'production',
@@ -8362,7 +8362,7 @@ if (getObj("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'wheat': 40 } },
-                    { type: 'mult', value: 0.6, req: { 'drought': true } },
+                    { type: 'mult', value: 0.6, req: { 'droughtNew': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.2, req: { 'gt2': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true, 'wizard\'s grain fertilizer': false } },
@@ -8831,8 +8831,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
                     { type: 'mult', value: 1.25, req: { 'se06': 'on' } },
                     { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
-                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
-                    { type: 'mult', value: 0.3, req: { 'drought': true } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'droughtNew': true } },
+                    { type: 'mult', value: 0.3, req: { 'droughtNew': true } },
                     { type: 'mult', value: 0.9, req: { 'dt7': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
@@ -9378,8 +9378,8 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.5, req: { 'deeper wells II': true } },
                     { type: 'mult', value: 1.25, req: { 'se06': 'on' } },
                     { type: 'mult', value: 1.15, req: { 'water rituals': 'on' } },
-                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'drought': true } },
-                    { type: 'mult', value: 0.3, req: { 'drought': true } },
+                    { type: 'mult', value: 1.6, req: { 'water rituals': 'on', 'droughtNew': true } },
+                    { type: 'mult', value: 0.3, req: { 'droughtNew': true } },
                     { type: 'mult', value: 0.85, req: { 'dt8': true } },
                     { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
                 ],
@@ -9714,7 +9714,7 @@ if (getObj("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'vegetables': 0.16 } },
-                    { type: 'mult', value: 0.6, req: { 'drought': true } },
+                    { type: 'mult', value: 0.6, req: { 'droughtNew': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } },
                     { type: 'mult', value: 2.25, req: { 'gardening II': true } },
@@ -9732,7 +9732,7 @@ if (getObj("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', context: 'gather', what: { 'sugar cane': 0.85 } },
-                    { type: 'mult', value: 0.6, req: { 'drought': true } },
+                    { type: 'mult', value: 0.6, req: { 'droughtNew': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 2.5, req: { 'more humid water': true } },
                     { type: 'mult', value: 3, req: { 'soil for moisture-loving plants': true } },
@@ -11219,7 +11219,7 @@ if (getObj("civ") != "1") {
                 category: 'production',
                 effects: [
                     { type: 'gather', what: { 'mushroom': 3.7 }, amount: 1 },
-                    { type: 'mult', value: 0.6, req: { 'drought': true } },
+                    { type: 'mult', value: 0.6, req: { 'droughtNew': true } },
                     { type: 'mult', value: 1.17, req: { 'crafting & farm rituals': 'on' } },
                     { type: 'mult', value: 1.8, req: { 'veggie fertilizer': true } },
                     { type: 'mult', value: 2.25, req: { 'gardening II': true } },
@@ -18355,7 +18355,7 @@ if (getObj("civ") != "1") {
                 desc: 'Carefully storing the [water] within your tribe is a good first step in preventing its rapid decay. @decreases [water] decay during droughts @[cloudy water] decay will be decreased slightly',
                 icon: [7, 6, 0, 0, "magix2"],
                 cost: { 'insight': 120 },
-                req: { 'drought': true, 'well-digging': true, 'paradise building': true },
+                req: { 'droughtNew': true, 'well-digging': true, 'paradise building': true },
                 effects: [
                 ],
             });
@@ -18670,7 +18670,7 @@ if (getObj("civ") != "1") {
                 category: 'knowledge'
             });
             new G.Trait({
-                name: 'droughtOld',
+                name: 'drought', // this is unused
                 desc: '@<b>Your people are in a <u style="color:#c48b10">drought</u>, which means that they will get 85% less [water] from [gatherer]s and 70% less from all [well] types.</b> @In addition, [muddy water] gathering is decreased by 50%, non-magical farms become 40% slower, and [water] now decays faster (although the decay rate is based on how long the drought has lasted). @[cloudy water] will also decay faster, although slower than [water]. @However, during a <b><u style="color:#c48b10">drought</u></b>, you may research unique technologies!',
                 icon: [9, 10, 1, 0, "magix2"],
                 req: { 'tribalism': false },
@@ -18681,7 +18681,7 @@ if (getObj("civ") != "1") {
                 name: 'famine',
                 desc: '<b>Your people are in a <u style="color:#c48b10">famine</u>, which simply means that [food] will spoil much faster.</b>',
                 icon: [33, 12, "magixmod", 1, 0, "magix2"],
-                req: { 'drought': true },
+                req: { 'droughtNew': true },
                 category: 'main',
                 chance: 6,
                 skip: true
@@ -18690,7 +18690,7 @@ if (getObj("civ") != "1") {
                 name: 'drought preparation',
                 desc: 'During droughts, your people will automatically consume 5% less [water].',
                 icon: [33, 12, "magixmod", 24, 1],
-                req: { 'drought': true },
+                req: { 'droughtNew': true },
                 category: 'main',
                 chance: 25,
             });
@@ -21734,7 +21734,7 @@ if (getObj("civ") != "1") {
                                     if (me.unit.name == 'temple of the Dead' && me.percent > 100 && me.percent <= 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 10, 'corpse': 1 + (me.percent * 0.001), 'precious building materials': 1.2, 'bone': 3 + (me.percent * 0.01), 'dark essence': 2 + (me.percent * 0.01) };
                                     if (me.unit.name == 'temple of the Dead' && me.percent > 500) G.getDict('temple of the Dead').costPerStep = { 'basic building materials': 5 + me.percent * 0.01, 'corpse': 1.5, 'precious building materials': 2, 'bone': 3 + (me.percent * 0.011), 'dark essence': 4 + (me.percent * 0.012) };
                                     if (me.unit.name == 'platinum fish statue') {
-                                        setObj('drought', 5 - me.percent * 0.1)
+                                        setObj('droughtNew', 5 - me.percent * 0.1)
                                     }
                                     G.doCost(me.unit.costPerStep, 1);
                                     if (me.unit.name == 'well of ideas' && me.percent > 0 && me.percent % 10 === 0) {
@@ -22604,8 +22604,8 @@ if (getObj("civ") != "1") {
                     }
 
                     // breh (famine reqs) (added by Garchmop)
-                    if (G.has('frost') && !G.has('drought')) {G.getDict('famine').req={'frost':true};}
-                    else {G.getDict('famine').req={'drought':true};}
+                    if (G.has('frost') && !G.has('droughtNew')) {G.getDict('famine').req={'frost':true};}
+                    else {G.getDict('famine').req={'droughtNew':true};}
 
                     if (G.year > 19)//Gear decaying at year 20 and later
                     {
