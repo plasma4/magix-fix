@@ -17153,9 +17153,9 @@ if (getObj("civ") != "1") {
 
                             G.getDict('cloudy water filter').category = 'ancestorsunit';
                             G.getDict('cloudy water filter').use = { 'worker': 1, 'land of the Past': 1, 'industry point': 1 };
-                            G.getDict('cloudy water filter').desc = G.getDict('cloudy water filter').desc.replace('Paradise', 'Ancestors world')
+                            G.getDict('cloudy water filter').desc = G.getDict('cloudy water filter').desc.replace('Paradise', 'Ancestors world');
 
-                            G.getDict('cloudy water filtering').req = { 'water filtering': true, 'ancestors world crafting': true }
+                            G.getDict('cloudy water filtering').req = { 'water filtering': true, 'ancestors world crafting': true };
 
                             mausoleumEvolve();
                             rootPolicyEvolve();
