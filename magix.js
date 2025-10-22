@@ -17140,6 +17140,23 @@ if (getObj("civ") != "1") {
                             G.getDict('gods and idols').req = { 'power of the faith': true };
                             //I just removed liberating darkness
 
+                            //Adding cloudy water because apparently thats a required resource for progression
+                            G.getDict('holy well').req = { 'well-digging': true, 'ancestors world building': true };
+                            G.getDict('holy well').use = { 'land of the Past': 1 };
+                            G.getDict('holy well').category = 'ancestorsunit';
+                            //I assume holy well is still a reasonable name for this so I won't change that
+                            G.getDict('cloudy water').desc = G.getDict('cloudy water').desc.replace('Paradise', 'Ancestors world');
+
+                            G.getDict(';cloudy water filter').category = 'ancestorsunit';
+                            G.getDict(';cloudy water filter').use = { 'worker': 1, 'land of the Past': 1, 'industry point': 1 };
+                            G.getDict(';cloudy water filter').desc = G.getDict(';cloudy water filter').desc.replace('Paradise', 'Ancestors world');
+
+                            G.getDict('cloudy water filter').category = 'ancestorsunit';
+                            G.getDict('cloudy water filter').use = { 'worker': 1, 'land of the Past': 1, 'industry point': 1 };
+                            G.getDict('cloudy water filter').desc = G.getDict('cloudy water filter').desc.replace('Paradise', 'Ancestors world')
+
+                            G.getDict('cloudy water filtering').req = { 'water filtering': true, 'ancestors world crafting': true }
+
                             mausoleumEvolve();
                             rootPolicyEvolve();
                             rootCultureEvolve();
