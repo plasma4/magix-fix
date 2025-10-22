@@ -48,6 +48,7 @@ Note that if you need more details on how these functions work you can probably 
 - `G.widget.popup(obj: object)` This creates the small pop-up menus that appear when you click and hold a "gizmo" button (like the unit mode selector).
 - `unitGetsConverted(...)` This is a special kind of function found in data.js (and modified in magixUtils.js) called a "function factory." It doesn't perform an action itself; instead, it returns a new function that does. It has many uses in effects, such as for workers being wounded/killed, and can have a custom message.
 - `G.ChooseBox` creates the reroll options for technologies. Both the base game `data.js` file and `magix.js` only use one `ChooseBox`, and are made with `new G.ChooseBox` so check that if you wish to modify something.
+- Use `G.unitsOwned[G.unitsOwnedNames.indexOf("brick house with a silo")]`, for example, to get `amount`, `idle`, or similar properties for a specific unit.
 
 ## Digging on your own
 This document unfortunately can't explain every single little detail about the game. If you're trying to understand something, perhaps look for examples in the code and try to get a function call stack with `console.trace()`! (Or you could just ask me on Discord if you're super stuck.)
@@ -313,7 +314,7 @@ new G.Unit({
   category:'wonder',
 });
 ```
-`main.js` (or `magixUtils.js` with Magix) have the code for the popup that says "This wonder only needs one more step to finalize" and creates the buttons, but we won't go over them here.
+`main.js` (or `magixUtils.js` with Magix) have the code for the popup that says "This wonder only needs one more step to finalize" and creates the buttons, but we won't go over them here. Magix also has some additional modifcations involving tooltips, tab colors, and update/draw functions.
 
 ## Additional info
 1. Check the Optimization section for ways to speed up the game that the base game does not do. (There is a lot you can do!)
@@ -331,14 +332,15 @@ new G.Unit({
     G.testCost({'precious building materials': 250000, 'marble': 250000}, 1) // Can I spend 250k precious building materials and 250k marble?
     ```
     Therefore, this is fixed in Magix (find `G.testCost` in `magixUtils.js`).
-6. [The production multiplier's formula is weird and uses `randomFloor()`.](https://www.desmos.com/calculator/hfowgwemgp) (The Desmos graph has more context; basically the multiplier from happiness is rounded, can be 0 if happiness is a negative percentage, and can go up to 4 times base.) The more you know :)
+    Also, look for the code in `else if (amount > 0) {` for `G.buyUnit` that Magix uses if you are planning to mod the base game; in the base game if a unit has a limit then queueing is weird (meaning queueing is slow for those units for whatever reason).
+6. [The production multiplier's formula is weird and uses `randomFloor()`.](https://www.desmos.com/calculator/hfowgwemgp) (The Desmos graph has more context; basically the multiplier from happiness is rounded, can be 0 if happiness is a negative percentage, and can go up to 4 times base.) Also, Magix's ungrateful tribe mechanic [has its own happiness gain multiplier graph](https://www.desmos.com/calculator/byalkqfbtd). The more you know :)
 7. Magix fundamentally alters many mechanics in the game, and `magix-fix` has edited more of them. Currently it is unfortunately at the point where so many base mechanics have been changed that it would be near impossible to find them all. These would include mobile features (in `G.widget.update`), making `stabilizeResize` more responsive, removal of empty tick functions in `G.Res()`. If you want mobile support or perhaps a more detailed attempt at fiding the differences, contact me on Discord (see top of this document).
 8. The [Magix Wiki](https://plasma4.github.io/magix-fix/magix-wiki.html) might be helpful in order to quickly look for and examine certain items and their interactions between them! In particular, clicking on a unit provides an actually readable explanation of what goes on, and knowledge has detailed explanation (do note, though, that requirements or other properties that are changed with the JS will NOT be shown here).
 9. Not everything might be in a place you expect initially; for example, this code:
     ```js
     if (G.achievByName['mausoleum'].won > 4) G.techByName['missionary'].effects.push({ type: 'provide res', what: { 'spirituality': 1 } });
     ```
-    is actually located in `G.funcs['game loaded']`! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
+    is located in `G.funcs['game loaded']`, which means you might have trouble finding it! Unfortunately, this also means that finding stuff can be a huge pain sometimes and it may take a while to figure out what is going on.
 10. Gathering is based on the total goods available across all owned tiles, weighted by each tile's exploration percentage. The `chance` property determines if a good spawns on a tile at all, and this happens only once when the world is created. However...the actual amount gathered isn't just `Math.min(resAmount, toGather)`. The game "soft-caps" it to make gathering less effective when you have far more workers than available resources, but it doesn't drop to zero. The formula is:
     ```js
     amount = Math.min(resAmount, toGather) * 0.95 + 0.05 * toGather // Original code: amount = Math.min(resAmount, toGather) * resWeight + unitWeight * (toGather), where unitWeight = 1 - resWeight and resWeight = 0.05
@@ -346,6 +348,11 @@ new G.Unit({
     So, with 35 herbs available and 10 desired, you would only get 10 herbs.
     However, if you had 50 gatherers (toGather = 100), you would get 38.25 herbs. You get slightly more than what's available because of the small "from thin air" bonus, but you suffer heavily from diminishing returns.
 11. By default, resources are not `fractional`. One of the most annoying bugs is when resources inconsistently become higher or lower than before, and this might happen if the resource you are doing math on isn't fractional, such as when wizards in Magix `'provide'` 0.5 insight each, resulting in weird queue/unqueue problems with changing insight. Note that queue/unqueue code is in `G.update['unit']()`. (To the user, `fractional` resources still appear as integers.)
+
+    One more thing: in order to properly some display amounts for resources that act as limits, you might need this code segment (preferably in the unit's tick function):
+    ```js
+    G.getRes('fire essence limit').displayedAmount = G.getRes('fire essence limit').amount; // limit display fix
+    ```
 12. Tech and trait IDs are unified because they both are actually considered "knowledge" internally, and extend `G.Know`. (What a weird piece of trivia!)
 13. Hotkeys code can be added in your own mod with code from https://github.com/plasma4/magix-extras/blob/master/hotkeys.js.
 14. If you try to have text like `[custom resource name]` that doesn't exist, then `G.resolveRes` will be called. If you need to debug everything it may be reasonble to append all descriptions, mode descriptions, and so on into a big piece of text in the inspector, modify `G.resolveRes` to what is desired, then `G.parseFunc` that text. While this might take a while to parse it might allow you to quickly find these typos!
@@ -375,19 +382,12 @@ new G.Unit({
 18. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
 19. Magix adds touchscreen support, and makes stuff smaller for smaller resolutions (such as mobile). Search "Allow touchscreen" in `magix.js` to see the changes! If you are considering mobile support, and implement the code for small/half sizes in `newMagix.css`. Additionally, you will want to use your own version of `G.stabilizeResize` (since Magix has more tabs and features, its logic is all weird).
 20. On the topic of better UI it is strongly suggested to incorporate some of `newMagix.css` into your game to prevent weird situations such as the speed/debug buttons at the top of the screen "unhovering" itself every so often (that happens because the `logoOverB` element wiggles periodically and somehow messes up button clicking).
-21. For that one individual curious as to how likely the `1e-300` chance is to occur, it is [actually quite a bit higher due to how seedrandom is implemented](https://github.com/davidbau/seedrandom/issues/83). (Only theoretically though of course! There's also a very small chance that a map is created without certain land limits because the for loop escapes eventually.) Oh, and in the actual game, text before a colon has a space in between (which is probably a French thing), but this has been changed in this repo.
 
 ## Optimization
 Magix-fix contains a *lot* of optimization that may not immediately be apparent. So, I've compiled this list to try to find them for other modders:
 - Did you know Orteil likes arrays? Even though he should be using objects instead of sparse arrays? This is actually a problem, because Orteil uses `G.techByTier = []; ... G.traitByTier = [];` Seems innocent enough, right??? Well, the problem is that the tier is based on the sum of the previous ancestor's tiers (ancestors are basically a requirement to unlock a trait or tech in this case). Except when [I found this problem in September 2024](https://discord.com/channels/412363381891137536/412372186955907102/1279856888414076959) it turns out that `traitByTier` was `Array(2102051)` and `techByTier` was `Array(297288)` due to me adding some new techs. The fix is simple enough; find all locations of these two variables and change [] to {}. Also, override `G.CreateData()` like Magix does!
 - There is an implementation of `G.maxLogicCallsPerFrame` that caps the number of `G.Logic` calls in a frame to prevent significant lag in `magixUtils.js`, which can make the game feel a lot smoother on lower-end devices. By default, `G.maxLogicCallsPerFrame` is set to 4 but can be changed!
-- It is possible to prevent constant HTML updates for unit amounts by checking if `me.lAmount.innerHTML` actually changed.
-- Instead of updating tabs many times on save loading/resetting, only update them once by finding `G.noUpdate`/`G.releaseUIUpdate` (find in `magixUtils.js`).
-- Modify the chances of particles appearing by adding this line of code to `G.showParticle`:
-    ```js
-    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
-    ```
-    which you may want if there are many new units in your mod.
+- It is possible to prevent constant HTML updates for unit amounts by checking if `me.lAmount.innerHTML` actually changed, which improves performance.
 - Movement of this code:
     ```js
     var scrolled = !(Math.abs(G.messagesWrapl.scrollTop - (G.messagesWrapl.scrollHeight - G.messagesWrapl.offsetHeight)) < 3);//is the message list not scrolled at the bottom? (if yes, don't update the scroll - the player probably manually scrolled it)
@@ -398,7 +398,13 @@ Magix-fix contains a *lot* of optimization that may not immediately be apparent.
     // put that code here instead
     ```
     This code movement prevents the JS from having to determine what scrollTop is every single time.
-- Creation of new objects (`G.units/techs/traitsOwnedObject`) to make `G.has` blazing fast, and changing how `G.has` works (check `magixUtils.js` for changes). This takes a little bit to do but can provide some significant benefits!
+- Instead of updating tabs many times on save loading/resetting, only update them once by finding `G.noUpdate`/`G.releaseUIUpdate` (find in `magixUtils.js`).
+- Modify the chances of particles appearing by adding this line of code to `G.showParticle`:
+    ```js
+    if (!G.getSetting('particles') || Math.random() > (G.getSetting('fast') == true ? 0.1 : 0.25)) return 0;
+    ```
+    which you may want if there are many new units in your mod.
+- Creation of new objects (`G.units/techs/traitsOwnedObject`) to make `G.has` blazing fast, and changing how `G.has` works (check `magixUtils.js` for changes). This takes a little bit to do but can provide some significant benefits! Be careful though; you'll probably want to look for every instance of this object (and `updateOwnedObjects`.)
 
 ## Properties
 In `localDevelopment.js` there is a function called `getGameJSON()` that gives information on properties, including those from Magix. Here is the code, which should give you an idea of what these properties mean:

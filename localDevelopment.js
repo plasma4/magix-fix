@@ -30,7 +30,7 @@ testFunction()
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 
 // getGameJSON() is used in conjunction with JSON.stringify(getDictionaryObject()) to construct the data for MagixData.js automatically.
-// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and reload. For Magix, run c1() for human race and c2() for second race.
+// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and reload. For Magix, run c1() for human race and c2() for second race; also make sure to enable offlineMode.
 // Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
     var result = {
@@ -140,7 +140,7 @@ function extractObject(toExtract, properties, funcProperties) {
                     for (var e = 0; e < l; e++) {
                         var effect = effects[e]
                         if (effect.type === "function") {
-                            effect.func = String(effect.func)
+                            effect.func = String(thing[e].func)
                         }
                     }
                     obj[key] = effects
