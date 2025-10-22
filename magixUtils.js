@@ -14,7 +14,7 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 >>> If you pasted them in with that order and deleted the default text, it should work!
 ==========
   - DOWNLOADING MAGIX LOCALLY:
- If you wish to download Magix in a local copy for offline use or modding, you can do so download the .zip file at https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip to get started!
+ If you wish to download Magix in a local copy for offline use or modding, you can do so download the .zip file at https://github.com/plasma4/magix-fix/archive/refs/heads/main.zip (or clone the repo at https://github.com/plasma4/magix-fix) to get started!
 
 >>> You next step should be to extract the .zip file (to ensure assets work properly) and to open the index.html file. Congrats! You can now use Magix or load other mods in without internet.
 */
@@ -25,7 +25,12 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 // STATUS: VISUAL-ONLY, INCOMPLETE
 // DONE: SEEDING AND TERRITORY TYPE GENERATION
 // TODO: FUNCTIONAL TERRITORY UI, GAMEPLAY ADDITIONS
-var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game or not function at all; be warned!
+
+// CURRENTLY TESTING: MORE DISASTERS (HUMAN RACE)
+// STATUS: COMPLETELY BROKEN
+// DONE: N/A
+// TODO: FIX
+var testingMagix = !!window.testingMagix // For testing highly unstable features that are not fully implemented. May break saves, the game or not function at all; be warned! It's recommended to set this to true in localDevelopment.js with a local copy. You can find instances of testing by searching up this variable name in magix.js/magixUtils.js!
 
 // window.location.origin.slice(0, 4) === "file" || window.location.toString().slice(0, 16) === "http://127.0.0.1" || window.location.toString().slice(0, 17) === "https://127.0.0.1"
 // The real purpose of this is to detect if localDevelopment.js exists, which shows that assets exist locally already.
@@ -334,7 +339,7 @@ G.Save = function (toStr) {
 }
 
 G.Load = function (doneLoading) {
-    document.title = "NeverEnding Legacy"
+    window.docTitle = "NeverEnding Legacy"
     G.middleText('<p id="loading">Loading save...</p>', "slow");
     if (G.importStr) { var local = G.importStr; }
     else {
@@ -1344,22 +1349,24 @@ G.AddData({
             if (G.noUpdate) { G.noUpdateTabs['policy'] = true; return; }
             if (G.has('policies')) {
                 // Mess with wisdom and flower rituals here because of annoying timing issues
-                if (G.has('eotm') && !G.has('ritualism II')) {
-                    G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
-                    G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
-                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
-                    G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
-                    G.getDict('wisdom rituals').visible = false
-                    G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
-                    G.getDict('flower rituals').visible = false //THE DISABLER
-                    G.getPolicy('wisdom rituals').mode.id = "off";
-                    G.getPolicy('flower rituals').mode.id = "off";
-                } else if (G.has('ritualism II')) {
-                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
-                    G.getDict('wisdom rituals').visible = true;
-                    G.getDict('wisdom rituals').cost = { 'faith II': 2 };
-                    G.getDict('flower rituals').cost = { 'faith II': 2 };
-                    G.getDict('flower rituals').visible = true;
+                if (G.modsByName['Default dataset']) {
+                    if (G.has('eotm') && !G.has('ritualism II')) {
+                        G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
+                        G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
+                        G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
+                        G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
+                        G.getDict('wisdom rituals').visible = false
+                        G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
+                        G.getDict('flower rituals').visible = false //THE DISABLER
+                        G.getPolicy('wisdom rituals').mode.id = "off";
+                        G.getPolicy('flower rituals').mode.id = "off";
+                    } else if (G.has('ritualism II')) {
+                        G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
+                        G.getDict('wisdom rituals').visible = true;
+                        G.getDict('wisdom rituals').cost = { 'faith II': 2 };
+                        G.getDict('flower rituals').cost = { 'faith II': 2 };
+                        G.getDict('flower rituals').visible = true;
+                    }
                 }
                 var str = '';
                 str +=
@@ -2338,7 +2345,7 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            document.title = 'Elf setup: NeverEnding Legacy';
+            window.docTitle = 'Elf setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -2354,7 +2361,7 @@ G.AddData({
             return str;
         }
         G.funcs['new game blurb'] = function () {
-            document.title = 'Setup: NeverEnding Legacy';
+            window.docTitle = 'Setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -3168,7 +3175,7 @@ G.AddData({
             tier: 0,
             name: 'love for eternity',
             icon: [1, 15, 'seasonal'],
-            desc: 'Finish the [fortress of love]. //You don\'t have to ascend by this wonder. Also, this fortress is a place where no lie or cheating ever happens...just simple love and respect. //Symbolically constructed in Paradise. @<b>Bonus: from some sources, you gain 20% more [love] points.</b>',
+            desc: 'Finish the [fortress of love] (doesn\'t require ascending). //This fortress is a place where no lie or cheating ever happens...just simple love and respect. //Symbolically constructed in Paradise. @<b>Bonus: from some sources, you gain 20% more [love] points.</b>',
             effects: [
                 { type: 'addFastTicksOnStart', amount: 300 },
                 { type: 'addFastTicksOnResearch', amount: 25 },
@@ -4067,7 +4074,7 @@ G.AddData({
                     }
 
                     if (G.has('tile inspection II')) {
-                        if (G.has('maths III')) {
+                        if (G.modsByName['Default dataset'] && G.has('maths III')) {
                             str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText" id="totalResourcesTip">Total natural resources in your territory (' + (landCount ? exploredLand / landCount * 100 : 0).toFixed(2) + '% land explored, ' + (oceanCount ? exploredOcean / oceanCount * 100 : 0).toFixed(2) + '% ocean explored):</div>'; // totalResourcesTip also updated in G.Logic()
                         } else {
                             str += '<div style="padding:16px;text-align:left;" class="thingBox"><div class="bitBiggerText fancyText">Total natural resources in your territory:</div>';
@@ -5456,9 +5463,10 @@ G.AddData({
 
         // Softcaps land/ocean exploration
         G.softcap = function (amountToExplore, limit, tileType) {
+            amountToExplore = Math.pow(amountToExplore + 1, 0.8) - 1; // More people exploring doesn't mean 100% faster exploration
             var tileAmount = G.getRes(tileType).amount;
             limit -= tileAmount;
-            var result = limit < 0 ? amountToExplore / Math.sqrt(-limit + tileAmount / 250 + 1) : amountToExplore;
+            var result = limit < 0 ? amountToExplore / Math.pow(-limit + tileAmount / 250 + 1, 0.6) : amountToExplore;
             return result;
         }
 
@@ -6190,9 +6198,9 @@ G.AddData({
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
                                                     }
-                                                    document.title = 'Ascending: NeverEnding Legacy';
+                                                    window.docTitle = 'Ascending: NeverEnding Legacy';
                                                     G.theme = G.theme;
-                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 2000);
+                                                    setTimeout(function () { window.docTitle = 'NeverEnding Legacy' }, 2000);
                                                     if (G.modsByName['Default dataset']) {
                                                         G.achievByName['first glory'].won++;
                                                         if (G.checkPolicy('theme changer') == 'default') G.theme = 0;
