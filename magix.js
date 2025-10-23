@@ -2834,12 +2834,6 @@ if (getObj("civ") != "1") {
                         G.achievByName['not so pious people'].won = 1
                         G.middleText('- Completed <font color="cyan">Not so pious people</font> achievement -', 'slow')
                     }
-                    //0/0 insight fix
-                    if (G.has('wizard wisdom') && G.getUnitAmount('wizard') >= 1) {
-                        if (G.getRes('wisdom').amount < 100) {
-                            G.gain('wisdom', 1)
-                        }
-                    }/*year1&2 nerf removed*/
 
                     if (G.has('t11')) { G.ca = 2; G.cb = 1; };
                     faicost = 1 * (G.getRes("new world point").amount / 6) * ((G.achievByName['faithful'].won / 2) + 1);
@@ -3036,7 +3030,7 @@ if (getObj("civ") != "1") {
                     }
 
                     if (G.getRes('wisdom').amount < 0 && G.getRes('insight').amount < 25 && Math.random() < G.getUnitAmount('dreamer') / 50) {
-                        G.getRes('insight').amount = Math.min(Math.ceil(G.getRes('insight').amount + G.getUnitAmount('dreamer') / 50), 25); // prevent negative wisdom from losing wizards from softlocking
+                        G.getRes('insight').amount = Math.min(Math.ceil(G.getRes('insight').amount + G.getUnitAmount('dreamer') / 50), 25); // prevent negative wisdom from losing too wizards from softlocking
                     }
 
                     if (me.amount > 0) {
@@ -20161,7 +20155,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'In this trial, fish are the only acceptable source of meat. Gatherers become 60% less efficient and hunters no longer exist. In addition, bugs act as bait instead, which will allow you to catch fish (because of this, the upkeep of fishers is less and they work 50% faster). You will also be able to unlock boats and scouts earlier. After a few years, your people\'s valuable Land will gradually decay into Ocean, while those tiles themselves will gradually become Deep Ocean later on. Be warned: when you run out of land, you will immediately fail the trial! Luckily, there are a variety of techs in this specific trial that may be used to counter this decay. Can you stop the sinking of your civilization and prove your worth by collecting enough golden fish to satisfy the Deep Ocean?<br><br><br>' +
+                                    'In this trial, fish are the only acceptable source of meat. Gatherers become 60% less efficient and hunters no longer exist. In addition, bugs act as bait instead, which will allow you to catch fish (because of this, the upkeep of fishers is less and they work 50% faster). You will also be able to unlock boats and scouts earlier. You unlock the wonder immediately in this plane, but after a few years, your people\'s valuable land will gradually decay into Ocean, while those tiles themselves will gradually become Deep Ocean later on. Be warned: when you run out of land, you will immediately fail the trial! Luckily, there are a variety of techs in this specific trial that may be used to counter this decay. Can you stop the sinking of your civilization and prove your worth by collecting enough golden fish to satisfy the Deep Ocean?<br><br><br>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.',
@@ -20243,7 +20237,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'My plane is full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> and <font color="white">Land</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the Wonder at the very beginning in this plane. Completing the trial will grant you a special award. You won\'t be able to do get anything from this trial again after its completion, however.<br><Br><BR>' +
+                                    'My plane is full of one thing...Death. And it\'s full of darkness. Also, everything that provides you with <font color="white">Housing</font> is more powerful. However, every 300th morning and night cycle, some of your <font color="white">Housing</font> and <font color="white">Land</font> will decay and some of your <font color="white">People</font> will die, producing Dark Essence. You unlock the wonder immediately in this plane; completing the trial will grant you a special award! You won\'t be able to do get anything from this trial again after its completion, however.<br><Br><BR>' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
