@@ -13744,7 +13744,7 @@ if (getObj("civ") != "1") {
                 desc: '@Some buildings or crafting shacks from the mortal world can be built in the ancestors world as a separate unit!',
                 icon: [0, 14, "magixmod", 0, 18, "magixmod"],
                 cost: { 'insight': 650 },
-                req: { 'ambrosium treeplanting': true, 'ancestors world building': true, 'more useful bricks': true },
+                req: { 'tree-caring': true, 'ancestors world building': true, 'more useful bricks': true },
             });
             //Special techs from achievements and their functions
             /*============================================================================================
@@ -17139,6 +17139,23 @@ if (getObj("civ") != "1") {
                             //Make gods and idols possible to get without revenants(required for temple of ancestors/paradise)
                             G.getDict('gods and idols').req = { 'power of the faith': true };
                             //I just removed liberating darkness
+
+                            //Adding cloudy water because apparently thats a required resource for progression
+                            G.getDict('holy well').req = { 'well-digging': true, 'ancestors world building': true };
+                            G.getDict('holy well').use = { 'land of the Past': 1 };
+                            G.getDict('holy well').category = 'ancestorsunit';
+                            //I assume holy well is still a reasonable name for this so I won't change that
+                            G.getDict('cloudy water').desc = G.getDict('cloudy water').desc.replace('Paradise', 'Ancestors world');
+
+                            G.getDict(';cloudy water filter').category = 'ancestorsunit';
+                            G.getDict(';cloudy water filter').use = { 'worker': 1, 'land of the Past': 1, 'industry point': 1 };
+                            G.getDict(';cloudy water filter').desc = G.getDict(';cloudy water filter').desc.replace('Paradise', 'Ancestors world');
+
+                            G.getDict('cloudy water filter').category = 'ancestorsunit';
+                            G.getDict('cloudy water filter').use = { 'worker': 1, 'land of the Past': 1, 'industry point': 1 };
+                            G.getDict('cloudy water filter').desc = G.getDict('cloudy water filter').desc.replace('Paradise', 'Ancestors world');
+
+                            G.getDict('cloudy water filtering').req = { 'water filtering': true, 'ancestors world crafting': true };
 
                             mausoleumEvolve();
                             rootPolicyEvolve();
