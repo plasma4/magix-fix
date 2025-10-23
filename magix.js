@@ -13744,7 +13744,7 @@ if (getObj("civ") != "1") {
                 desc: '@Some buildings or crafting shacks from the mortal world can be built in the ancestors world as a separate unit!',
                 icon: [0, 14, "magixmod", 0, 18, "magixmod"],
                 cost: { 'insight': 650 },
-                req: { 'ambrosium treeplanting': true, 'ancestors world building': true, 'more useful bricks': true },
+                req: { 'tree-caring': true, 'ancestors world building': true, 'more useful bricks': true },
             });
             //Special techs from achievements and their functions
             /*============================================================================================
