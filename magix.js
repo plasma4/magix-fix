@@ -1206,10 +1206,10 @@ if (getObj("civ") != "1") {
                 G.getDict('valentine2').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [herbs]. //<font color="#f70054">Note: While Valentines is active this buff won\'t disable; however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine3').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 70 extra [cooked meat]. //<font color="#f70054">Note: While Valentines is active this buff won\'t disable; however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
                 G.getDict('valentine4').desc = 'Amore the Angel of [love] and the son of [se03,Tu-ria] and [se11,Enlightened] thank you for completing the wonder and spreading love all around the globe. For this run and the next <b>' + G.getAchiev('xmas buff').won + '</b> ' + (G.achievByName['valentine buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', you will start with 1 extra [child] and 1 extra [insight]. //<font color="#f70054">Note: While Valentines is active this buff won\'t disable; however, when Valentines ends, you will start losing that bonus, meaning that you will have to wait until next Valentines.</font>';
-                G.getDict('hallow1').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>we are no longer scared of the darkness!</small>';
-                G.getDict('hallow2').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>the ancients sure do love flowers for whatever reason</small>';
-                G.getDict('hallow3').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>it\'s a good thing?</small>';
-                G.getDict('hallow4').desc = 'The ancients of Halloween are going to support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', all your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>that\'s pretty magical...</small>';
+                G.getDict('hallow1').desc = 'The ancients of Halloween shall support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [wanderer]s are 2% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>we are no longer scared of the darkness!</small>';
+                G.getDict('hallow2').desc = 'The ancients of Halloween shall support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [florist]s are 3% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>the ancients sure do love flowers for whatever reason</small>';
+                G.getDict('hallow3').desc = 'The ancients of Halloween shall support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', your [mana maker]s are 1% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>it\'s a good thing?</small>';
+                G.getDict('hallow4').desc = 'The ancients of Halloween shall support you for some time. For this run and the next <b>' + G.getAchiev('halloween buff').won + '</b> ' + (G.achievByName['halloween buff'].won == 1 ? "run/legacy" : "runs/legacies") + ', all your [fire wizard tower,Wizard towers] are 1% more efficient. //<font color="#f70054">Note: During this spooky season this buff won\'t disable; however, when Halloween ends, you will start losing that bonus, meaning that you will have to wait until next Halloween.</font> //<small>that\'s pretty magical...</small>';
                 var timeOffline = Math.max(0, (Date.now() - G.lastDate) / 1000);
                 if (day + leap >= 289 && day + leap <= 305) {
                     G.getDict('"dark season"').req = { 'tribalism': true, 'culture of celebration': true, 'sedentism': true, 'intuition': true };
@@ -21100,7 +21100,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'berry bush',
-                desc: '[berry bush,Berry bushes] can be foraged for [fruit]s, [stick]s, and the rare [exotic fruit].',
+                desc: '[berry bush,Berry bushes] can be foraged for unique [fruit]s and [stick]s.',
                 icon: [4, 10],
                 res: {
                     'gather': { 'fruit': 3, 'stick': 0.5 },
@@ -21120,22 +21120,22 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'succulents',
-                desc: 'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide valuable [fruit] and may even produce an [exotic fruit]!',
+                desc: 'Hardy cacti that grow in the desert. While tricky to harvest, [succulents] can provide valuable and potentially rare [fruit]!',
                 icon: [6, 10],
                 res: {
                     'gather': { 'fruit': 1 },
-                    'exotic': { 'exotic fruit': 0.15 }
+                    'exotic': { 'exotic fruit': 0.2 }
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 10,
             });
             new G.Goods({
                 name: 'jungle fruits',
-                desc: '[jungle fruits] come in all shapes, colors and sizes, and will yield [fruit]s and [exotic fruit]s to those willing to forage around.',
+                desc: '[jungle fruits] come in all shapes, colors and sizes, and will yield rare [fruit]s of various kinds to those willing to forage around.',
                 icon: [7, 10],
                 res: {
                     'gather': { 'fruit': 2 },
-                    'exotic': { 'exotic fruit': 0.5 }
+                    'exotic': { 'exotic fruit': 0.35 }
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 10,
@@ -21625,13 +21625,13 @@ if (getObj("civ") != "1") {
                 desc: '[dead grass] is a bad source of [herbs], however, you may gain a piece of [fruit] or a [stick] when foraging.',
                 icon: [33, 15, "magixmod"],
                 res: {
-                    'gather': { 'fruit': 0.1, 'stick': 0.5 },
+                    'gather': { 'fruit': 0.1, 'stick': 0.5, 'herb': 0.02 },
                 },
                 mult: 8.5,
             });
             new G.Goods({
                 name: 'mudwater',
-                desc: '[mudwater], whether found in some swamps and Dead forests, can only be collected for unhealthy [muddy water].',
+                desc: '[mudwater] found within the swamps of dead forests can only be collected for unhealthy [muddy water].',
                 icon: [33, 17, "magixmod"],
                 res: {
                     'gather': { 'muddy water': 12 },
@@ -21718,7 +21718,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This does not provide anything useful, however.',
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This good provides no gatherable resources, however.',
                 icon: [3, 5, "magix2"],
             });
             new G.Goods({
@@ -28976,7 +28976,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'mudwater',
-                desc: '[mudwater], whether found in swamps, polluted streams, or other locations can be collected for disgusting [muddy water].',
+                desc: '[mudwater], often found in swamps and polluted streams of certain biomes, can be collected for disgusting [muddy water].',
                 icon: [16, 16, "c2"],
                 res: {
                     'gather': { 'muddy water': 8 },
@@ -29007,12 +29007,12 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'coral reef',
-                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This does not provide anything useful, however.',
+                desc: 'Colorful, beautiful corals. They like to live in warm, tropical oceans and seas. However, some reefs can be met in the depths of lukewarm oceans in much smaller colonies. //This good provides no gatherable resources, however.',
                 icon: [choose([8, 9]), 17, "c2"],
             });
             new G.Goods({
                 name: 'kelp',
-                desc: 'Kelp or seagrass. They can be found in a variety of aquatic places. In some regions of the marine world, kelp are very common, while in others, they become very scarce.//This does not provide anything useful, however.',
+                desc: 'Kelp or seagrass. They can be found in a variety of aquatic places. In some regions of the marine world, kelp are very common, while in others, they become very scarce.//This good provides no gatherable resources, however.',
                 icon: [10, 17, "c2"],
             });
             new G.Goods({

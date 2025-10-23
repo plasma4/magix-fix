@@ -5466,7 +5466,8 @@ G.AddData({
             amountToExplore = Math.pow(amountToExplore + 1, 0.8) - 1; // More people exploring doesn't mean 100% faster exploration
             var tileAmount = G.getRes(tileType).amount;
             limit -= tileAmount;
-            var result = limit < 0 ? amountToExplore / Math.pow(-limit + tileAmount / 250 + 1, 0.6) : amountToExplore;
+            limit -= amountToExplore;
+            var result = limit < 0 ? amountToExplore / Math.pow(-limit + tileAmount / 250 + 1, 0.65) : amountToExplore;
             return result;
         }
 
