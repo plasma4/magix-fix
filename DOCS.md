@@ -49,6 +49,7 @@ Note that if you need more details on how these functions work you can probably 
 - `unitGetsConverted(...)` This is a special kind of function found in data.js (and modified in magixUtils.js) called a "function factory." It doesn't perform an action itself; instead, it returns a new function that does. It has many uses in effects, such as for workers being wounded/killed, and can have a custom message.
 - `G.ChooseBox` creates the reroll options for technologies. Both the base game `data.js` file and `magix.js` only use one `ChooseBox`, and are made with `new G.ChooseBox` so check that if you wish to modify something.
 - Use `G.unitsOwned[G.unitsOwnedNames.indexOf("brick house with a silo")]`, for example, to get `amount`, `idle`, or similar properties for a specific unit.
+- To see or modify resource category names (and where a lot of resources are located) search for `G.resCategories`.
 
 ## Digging on your own
 This document unfortunately can't explain every single little detail about the game. If you're trying to understand something, perhaps look for examples in the code and try to get a function call stack with `console.trace()`! (Or you could just ask me on Discord if you're super stuck.)

@@ -2954,7 +2954,7 @@ if (getObj("civ") != "1") {
                 'food': {
                     name: '<font color="#0080FF">Food & Water</font>',
                     base: [],
-                    side: ['food', 'spoiled food', 'water', 'muddy water', 'food storage', 'juices', 'exotic juices', 'spoiled juices'],
+                    side: ['food', 'spoiled food', 'water', 'cloudy water', 'muddy water', 'juices', 'exotic juices', 'spoiled juices', 'food storage'],
                 },
                 'build': {
                     name: '<font color="#FFCCCC">Crafting & Construction</font>',
@@ -4769,6 +4769,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'land of the Plain Island',
+                displayName: 'land of the Island',
                 desc: 'The land you got from activating a portal to the new island: Plain Island. A place for new buildings.',
                 icon: [7, 0, "magixmod"],
                 displayUsed: true,
@@ -4795,7 +4796,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'fire essence',
-                desc: '[fire essence] is quite warm and dangerous. Could be used to fight against cold winters.',
+                desc: '[fire essence] is quite warm and dangerous. It could be used to fight against cold winters or deep underground.',
                 icon: [0, 2, "magixmod"],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4900,7 +4901,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'cobalt ore',
-                desc: 'A unique and rather hard mineral. At least you may be able to smelt some cobalt and turn them into cobalt ingots in the mortal world.',
+                desc: 'A unique and rather hard mineral. At least you may be able to smelt these into [cobalt ingot]s for use in your main world.',
                 icon: [8, 2, "magixmod"],
                 partOf: 'misc materials',
                 category: 'ore',
