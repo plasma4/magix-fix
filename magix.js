@@ -5129,7 +5129,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'cloudy water',
-                desc: 'Water which cannot spoil in any way (however, it can still slowly decay). It is gathered from Paradise\'s lakes, ponds, rivers and tastes the same as water.',
+                desc: 'Water which cannot spoil in any way (however, it can still slowly decay). It is gathered from Paradise\'s lakes, ponds, rivers and tastes the same as [water].',
                 icon: [11, 14, "magixmod"],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.004 * (G.has('drought') ? Math.pow(((G.year - getObj('drought')) * 3 + G.day * 0.01) * (G.has('careful water storage') ? 0.85 : 1) + 1.2, 0.6) : 1);
@@ -5217,7 +5217,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'pot of vodka',
-                desc: 'Dangerous for [health]: a somewhat bad alcohol drink.',
+                desc: 'Dangerous for [health]; a somewhat bad alcohol drink.',
                 icon: [10, 10, "magixmod"],
                 category: 'alchemypotions',
                 tick: function (me, tick) {
@@ -10974,7 +10974,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'fortress of love',
                 displayName: '<font color="#f9c">Fortress of love</font>',
-                desc: 'Constucted in Paradise as a gigantic [fortress of love]. It is in a unique region separated as much as possible from other island, giving it even more uniqueness. //In this unique island, there are mutual feelings of respect, good feelings, and true empathy. //Only the kindest people and souls are able to live there! //Happy valentines! @(The final step will require 2 full [love] levels.)',
+                desc: 'Constucted in Paradise as a gigantic [fortress of love]. This fortress is within a unique region separated as much as possible from other island buildings, giving it even more uniqueness. //In this unique island, there are mutual feelings of respect, good feelings, and true empathy. //Only the kindest people and souls are able to live there! //Happy valentines! @(The final step will require 2 full [love] levels.)',
                 icon: [0, 16, 'seasonal'],
                 wonder: '.',
                 steps: 999,
@@ -10982,7 +10982,7 @@ if (getObj("civ") != "1") {
                 costPerStep: { 'marble': 4000, 'metal tools': 100, 'metal weapons': 100, 'armor set': 100, 'basic building materials': 1000, 'stone': 8000, 'clay': 2500, 'cloud': 1000, 'magic essences': 15000, 'gems': 100, 'gem block': 25, 'mana': 20000 },
                 finalStepCost: { 'love': 2 },
                 threexthreeIcon: [0, 11, 'seasonal'],
-                use: { 'worker': 200, 'worker': 15, 'metal tools': 400, 'metal weapons': 200, 'armor set': 200 },
+                use: { 'worker': 200, 'worker': 15, 'metal tools': 400, 'metal weapons': 200, 'armor set': 200, 'land of the Paradise': 25 },
                 req: { 'lovely monument': true, 'tribalism': false },
                 category: 'seasonal',
                 priority: 5,
@@ -12139,7 +12139,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'weaving II', category: 'upgrade',
-                desc: 'Upgrades the sewing skills of your civilization. @Unlocks [drying rack]s, which make [dried leather] used to craft better quality clothing. @Now artisans can sew [fishing net] @Clothier can craft [thread] that is required to craft a [fishing net].',
+                desc: 'Upgrades the sewing skills of your civilization. @Unlocks [drying rack]s that create [dried leather] used to craft better quality clothing. @Now artisans can sew [fishing net] @Clothier can craft [thread] that is required to craft a [fishing net].',
                 icon: [0, 39, "magixmod", 13, 5, "magixmod"],
                 cost: { 'insight': 380, 'wisdom': 10 },
                 req: { 'wizardry': true, 'sewing': true },
@@ -17144,7 +17144,6 @@ if (getObj("civ") != "1") {
                             G.getDict('holy well').req = { 'well-digging': true, 'ancestors world building': true };
                             G.getDict('holy well').use = { 'land of the Past': 1 };
                             G.getDict('holy well').category = 'ancestorsunit';
-                            //I assume holy well is still a reasonable name for this so I won't change that
                             G.getDict('cloudy water').desc = G.getDict('cloudy water').desc.replace('Paradise', 'Ancestors world');
 
                             G.getDict(';cloudy water filter').category = 'ancestorsunit';
@@ -17156,6 +17155,13 @@ if (getObj("civ") != "1") {
                             G.getDict('cloudy water filter').desc = G.getDict('cloudy water filter').desc.replace('Paradise', 'Ancestors world');
 
                             G.getDict('cloudy water filtering').req = { 'water filtering': true, 'ancestors world crafting': true };
+
+                            // Log all unchanged paradise units
+                            // for (i in G.dict) {
+                            //     if (i.toLowerCase().includes('paradise') || (G.dict[i].displayName && G.dict[i].displayName.toLowerCase().includes('paradise')) || (G.dict[i].category && G.dict[i].category.toLowerCase().includes('paradiseunit')) || (G.dict[i].desc && G.dict[i].desc.toLowerCase().includes('paradise')) || (G.dict[i].use && G.dict[i].use['land of the Paradise'])) {
+                            //         console.log(i + " not replaced with ancestors", G.dict[i])
+                            //     }
+                            // }
 
                             mausoleumEvolve();
                             rootPolicyEvolve();
@@ -17637,7 +17643,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt25',
                 displayName: 'Devil\'s trait #25 Miner\'s curse',
-                desc: 'Every good provides 2% less resources from mining (regardless of mining depth) //<small>Today I have broken 3 stone pickaxes.</small>',
+                desc: 'Every good provides 2% less from mining (regardless of mining depth) //<small>Today I have broken 3 stone pickaxes.</small>',
                 icon: [1, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('mine', 0.98) } }],
@@ -17648,7 +17654,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt26',
                 displayName: 'Devil\'s trait #26 Quarrial insecurity',
-                desc: 'Every good provides 2% less resources from quarrying (regardless of quarrying depth) //<small>Are we sure this mineral is the right kind? How is fear devouring our minds while we are in a quarry?</small>',
+                desc: 'Every good provides 2% less from quarrying (regardless of quarrying depth) //<small>Are we sure this mineral is the right kind? How is fear devouring our minds while we are in a quarry?</small>',
                 icon: [3, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('mine', 0.98) } }],
@@ -17659,7 +17665,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt27',
                 displayName: 'Devil\'s trait #27 not durable axes',
-                desc: 'Every good provides 2% less resources from chopping. //<small>These axes aren\'t as good as they said they were.</small>',
+                desc: 'Every good provides 2% less from chopping. //<small>These axes aren\'t as good as they said they were.</small>',
                 icon: [5, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('chop', 0.98) } }],
@@ -17711,7 +17717,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'dt30',
                 displayName: 'Devil\'s trait #30 Smart fishes',
-                desc: 'Every good provides 2% less resources from fishing. //<small>these fishes are really smart...or are they? Or are they controlled by smart forces and in reality they are a little stupid?</small>',
+                desc: 'Every good provides 2% less from fishing. //<small>these fishes are really smart...or are they? Or are they controlled by smart forces and in reality they are a little stupid?</small>',
                 icon: [11, 34, "magixmod", 26, 0, "magixmod"],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('fish', 0.98) } }],
@@ -17722,7 +17728,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at6',
                 displayName: 'Ancestors trait #6 Old Miner\'s luck',
-                desc: 'Every good provides 1% more resources from mining (regardless of mining depth) //<small>Now hard work down in the mines will feel more rewarding.</small>',
+                desc: 'Every good provides 1% more from mining (regardless of mining depth) //<small>Now hard work down in the mines will feel more rewarding.</small>',
                 icon: [0, 34, "magixmod", 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('mine', 1.01) } }],
@@ -17755,7 +17761,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at9',
                 displayName: 'Ancestors trait #9 Ancestor wizardry',
-                desc: 'Units related to magic and wizardry produce 3.5% more of magical resources. //<small>Bibiddi bobiddi boo! Did it sound familiar to you?</small>',
+                desc: 'Units that make magical items (like [magic essences,Essences] or [mana]) work 3.5% faster. //<small>Bibiddi bobiddi boo! Does this sound familiar to you?</small>',
                 icon: [6, 34, "magixmod", 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 req: { 'doctrine of the dark wormhole 5/5': true, 'dt28': false, 'belief in the beforelife': true },
@@ -17808,7 +17814,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'at11',
                 displayName: 'Ancestors trait #11 Fisher\'s good old luck',
-                desc: 'Every good provides 0.5% more resources from fishing.',
+                desc: 'Every good provides 0.5% more from fishing.',
                 icon: [10, 34, "magixmod", 22, 1],
                 cost: { 'culture II': 10, 'influence II': 1, 'wisdom': 10, 'faith II': 1 },
                 effects: [{ type: 'function', func: function () { ContextBuff('fish', 1.005) } }],
