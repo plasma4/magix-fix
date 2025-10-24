@@ -339,7 +339,7 @@ G.Save = function (toStr) {
 }
 
 G.Load = function (doneLoading) {
-    document.title = "NeverEnding Legacy"
+    window.docTitle = "NeverEnding Legacy"
     G.middleText('<p id="loading">Loading save...</p>', "slow");
     if (G.importStr) { var local = G.importStr; }
     else {
@@ -2345,7 +2345,7 @@ G.AddData({
             }
         }
         G.funcs['new game blurb 2'] = function () {
-            document.title = 'Elf setup: NeverEnding Legacy';
+            window.docTitle = 'Elf setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -2361,7 +2361,7 @@ G.AddData({
             return str;
         }
         G.funcs['new game blurb'] = function () {
-            document.title = 'Setup: NeverEnding Legacy';
+            window.docTitle = 'Setup: NeverEnding Legacy';
             var str =
                 '<b>Your tribe:</b><div class="thingBox">' +
                 G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">\xd75</div>', '5 Adults') +
@@ -6199,9 +6199,9 @@ G.AddData({
                                                         if (!achiev.won) middleText = '<font color="pink">- Completed the ' + achiev.displayName + ' victory -</font>'
                                                         achiev.won++;
                                                     }
-                                                    document.title = 'Ascending: NeverEnding Legacy';
+                                                    window.docTitle = 'Ascending: NeverEnding Legacy';
                                                     G.theme = G.theme;
-                                                    setTimeout(function () { document.title = 'NeverEnding Legacy' }, 2000);
+                                                    setTimeout(function () { window.docTitle = 'NeverEnding Legacy' }, 2000);
                                                     if (G.modsByName['Default dataset']) {
                                                         G.achievByName['first glory'].won++;
                                                         if (G.checkPolicy('theme changer') == 'default') G.theme = 0;

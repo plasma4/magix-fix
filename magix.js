@@ -493,7 +493,7 @@ var civ2 = function () {
 
 G.NewGame = function (doneLoading, mods) {
     if (G.resets == 0) G.loadmenu = 1;
-    document.title = 'Setup: NeverEnding Legacy';
+    window.docTitle = 'Setup: NeverEnding Legacy';
     //clean up data, create a map and ask the player to pick a starting location
     if (!doneLoading) {
         //save achievements for each mod so we can reapply them later
@@ -1444,7 +1444,7 @@ if (getObj("civ") != "1") {
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40% to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 if (G.achievByName['sacrificed for culture'].won == 1 && G.achievByName['the fortress'].won <= 3)
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
-                document.title = 'NeverEnding Legacy';
+                window.docTitle = 'NeverEnding Legacy';
                 ///new game mesg
                 var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy has begun. May it stand the test of time!';
                 G.Message({ type: 'important tall', text: str, icon: [0, 3] });
@@ -1577,9 +1577,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    document.title = 'Tribe OOFed: NeverEnding Legacy';
+                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    document.title = 'Tribe died: NeverEnding Legacy';
+                    window.docTitle = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
@@ -1979,7 +1979,7 @@ if (getObj("civ") != "1") {
                                 break;
                         }
                     G.updateMapDisplay() //FIX for map(because it is using my sheet not default one)
-                    if (G.getRes('population').amount > 0) document.title = 'NeverEnding Legacy';
+                    if (G.getRes('population').amount > 0) window.docTitle = 'NeverEnding Legacy';
                     if (G.getSetting('tieredDisplay') == 0) { ta = 1 } else { ta = 0 };
                     var txt = '' + G.year + '';
                     if (day + leap >= 289 && day + leap <= 305) {
@@ -3030,7 +3030,7 @@ if (getObj("civ") != "1") {
                     }
 
                     if (G.getRes('wisdom').amount < 0 && G.getRes('insight').amount < 25 && Math.random() < G.getUnitAmount('dreamer') / 50) {
-                        G.getRes('insight').amount = Math.min(Math.ceil(G.getRes('insight').amount + G.getUnitAmount('dreamer') / 50), 25); // prevent negative wisdom from losing too wizards from softlocking
+                        G.getRes('insight').amount = Math.min(Math.ceil(G.getRes('insight').amount + G.getUnitAmount('dreamer') / 50), 25); // prevent negative wisdom from losing too many wizards from softlocking
                     }
 
                     if (me.amount > 0) {
@@ -3664,18 +3664,15 @@ if (getObj("civ") != "1") {
                                 }
                             }
 
-                            if (G.has('revenants') && (day + leap <= 40 && day + leap >= 46 && !G.has('peace') || Math.random() < 0.1)) {
-                                if (G.day % 25 === 0) {
-                                    var wildCorpses = randomFloor(G.getRes('corpse').amount * 0.00125 * (G.traitByName['revenants'].yearOfObtainment ? (1 + Math.pow(G.year - G.traitByName['revenants'].yearOfObtainment, 0.9) * 0.001) : 1))
-                                    G.lose('corpse', wildCorpses, 'revenge of corpses');
-                                    G.lose('dark essence', Math.random() * 4 + 2, 'revenge of corpses');
-                                    G.gain('wild corpse', wildCorpses, 'revenge of corpses');
-                                } else if (G.day % 35 == 0) {
-                                    G.lose('corpse', 1, 'revenge of corpses');
-                                    G.gain('wild corpse', 1, 'revenge of corpses');
-                                } else if (G.day % 60 == 0) {
-                                    G.lose('corpse', 2, 'revenge of corpses');
-                                    G.gain('wild corpse', 2, 'revenge of corpses');
+                            if (G.has('revenants') && (!(day + leap <= 40 && day + leap >= 46 && G.has('peace')) || Math.random() < 0.1)) {
+                                if (G.day % 3 == 0) {
+                                    var revengeAmount = G.day % 45 == 0 ? randomFloor((G.getRes('corpse').amount + graves.used) * 0.00125 * (G.traitByName['revenants'].yearOfObtainment ? 1 + Math.pow(G.year - G.traitByName['revenants'].yearOfObtainment, 0.9) * 0.001 : 1)) : randomFloor(G.day % 15 == 0 ? Math.random() * 30 + 8 : (Math.random() * 3.5 + 2));
+                                    console.log(revengeAmount + " on day " + (G.day % 45))
+                                    var lostAmount = G.lose('corpse', revengeAmount, 'revenge of corpses');
+                                    if (lostAmount < revengeAmount) {
+                                        graves.used = Math.max(0, graves.used - (revengeAmount - lostAmount));
+                                    }
+                                    G.gain('wild corpse', revengeAmount, 'revenge of corpses');
                                 }
                             }
 
@@ -5555,7 +5552,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark concoction',
-                desc: 'Releases darkness from itself. If wrongly crafted, it may explode.',
+                desc: 'Releases darkness from inside itself. If wrongly crafted, it may explode.',
                 icon: [12, 16, "magixmod"],
                 tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0008;
@@ -9229,7 +9226,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'cathedral',
-                desc: 'A precious place for worship. Generates [faith] faster than [soothsayer]s. Requires [holy essence] to operate properly!',
+                desc: 'A precious place for worship. Generates [faith] much faster than [druid]s and [church,Churches]. Requires [holy essence] to operate properly!',
                 icon: [19, 4, "magixmod"],
                 cost: { 'basic building materials': 1750, 'precious building materials': 400 },
                 upkeep: { 'food': 2, 'holy essence': 1 },
@@ -10182,12 +10179,12 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'the cemetarium',
                 displayName: 'The Cemetarium',
-                desc: '@leads to <b>Deadly, revenantic</b><>A big cemetary full of hostility and where [revenants] live with a second life.//A realm is around it, providing a burial for [wild corpse]s. Even if most souls are dark, some light souls also live here. For each step that you perform for the building, you will get 6,000 [burial spot]s! <i>Let these corpses go into their rightenous home please!</i>',
+                desc: '@leads to <b>Deadly, revenantic</b><>A big and sturdy cemetary full of hostility and where [revenants] live with a second life.//A large realm is around it, providing a burial for [wild corpse]s. Even if most souls are dark, some light souls also live here. For each step that you perform for the building, you will get 6,000 [burial spot]s! <i>Let these corpses go into their rightenous home please!</i>',
                 wonder: 'deadly, revenantic',
                 icon: [1, 16, "magixmod"],
                 wideIcon: [0, 16, "magixmod"],
                 cost: { 'basic building materials': 1000, 'gem block': 30 },
-                costPerStep: { 'basic building materials': 2500, 'archaic building materials': 1500, 'burial spot': -6000, 'cemetarium construction point': -1 },
+                costPerStep: { 'basic building materials': 2500, 'advanced building materials': 4000, 'dark essence': 5000, 'dark fire pit': 300, 'burial spot': -6000, 'cemetarium construction point': -1 },
                 steps: 270,
                 messageOnStart: 'You begin the construction of The Cemetarium. You think that wild corpses will go there to leave us alone. I want calmness, at any price. It is the right choice. I will make my soldiers take these living souls to here.',
                 finalStepCost: { 'corpse': 100, 'faith': 100, 'dark essence': 25000, 'cobalt ingot': 1000, 'burial spot': -15000 },
@@ -10772,7 +10769,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'corpse slayer',
-                desc: 'Hunts for [wild corpse]s and takes \'em down. Has a chance to become wounded upon finding one! //Once slain, a [wild corpse] cannot revive again.',
+                desc: 'Hunts for [wild corpse]s and takes \'em down. Has a very large chance to become wounded upon finding one! //Once slain, a [wild corpse] cannot revive again.',
                 icon: [24, 30, "magixmod"],
                 cost: {},
                 use: { 'worker': 1, 'metal weapons': 1, 'armor set': 1 },
@@ -10780,9 +10777,9 @@ if (getObj("civ") != "1") {
                 category: 'guard',
                 priority: 5,
                 effects: [
-                    { type: 'convert', from: { 'wild corpse': 1 }, into: { 'slain corpse': 1 }, every: 4, chance: 1 / 5 },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 50, req: { 'coordination': true } },
-                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 25, req: { 'coordination': false } },
+                    { type: 'convert', from: { 'wild corpse': 1 }, into: { 'slain corpse': 1 }, every: 8, chance: 1 / 12 },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 30, req: { 'coordination': true } },
+                    { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, false, 0.001, 0.03, '', '', ''), chance: 1 / 15, req: { 'coordination': false } },
                 ],
             });
             new G.Unit({
@@ -14359,7 +14356,7 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'wisdom II': 10 } },
                     { type: 'provide res', what: { 'inspiration II': 2 } },
                 ],
-                tutorialMesg: ['tutorial', 'The next part of the wormhole doctrine is related to knowledge! Be aware that the next part of the doctrine is not cheap though. (Stages 2 and 4 are traits, while stages 1, 3, and 5 are manual researches.)', [32, 27, "magixmod"]]
+                tutorialMesg: ['tutorial', 'You have begun the next part of the wormhole doctrine, related to knowledge! Be aware that this part of the doctrine is not cheap though. (Stages 2 and 4 are traits, while stages 1, 3, and 5 are manual researches.)', [32, 27, "magixmod"]]
             });
             new G.Trait({
                 name: 'doctrine of the dark wormhole 2/5',
@@ -15007,7 +15004,7 @@ if (getObj("civ") != "1") {
                             } else {
                                 G.getDict('monument-building').desc = '@getting this will unlock a wonder that depends on the Trial you are currently in'
                             }
-                            document.title = 'Trial active: NeverEnding Legacy'
+                            window.docTitle = 'Trial active: NeverEnding Legacy'
                         }
                     },
                 ],
@@ -16505,8 +16502,10 @@ if (getObj("civ") != "1") {
                                     G.lose('thief', 2, 'winter punishment');
                                     G.gain('wounded', 1, 'thief punished');
 
-                                    G.lose('wild corpse', 2, 'winter punishment');
-                                    G.gain('slain corpse', 2);
+                                    if (G.day % 5 == 0) {
+                                        G.lose('wild corpse', 2, 'winter punishment');
+                                        G.gain('slain corpse', 2);
+                                    }
                                 }
                             }
                         }
@@ -16635,7 +16634,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'peace',
-                desc: 'During the <b>Valentine\'s day</b> event, no [thief,Thieves] and [wild corpse]s appear much less often. //<small>Why it is this only during Valentines?</small>',
+                desc: 'During the <b>Valentine\'s day</b> event, [thief,Thieves] and [wild corpse]s appear much less often. //<small>Why it is this only during Valentines?</small>',
                 icon: [6, 16, 'seasonal'],
                 cost: { 'culture': 500, 'research': 100, 'faith': 500 },
                 req: { 'compliments': true },
@@ -18406,7 +18405,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'stronger faith II', category: 'tier1',
-                desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep.',
+                desc: '[cathedral]s become 4 times as powerful, but require twice as much [holy essence] as upkeep. This makes them a lot stronger!',
                 icon: [0, 39, "magixmod", 19, 3, "magixmod"],
                 cost: { 'insight': 800, 'faith': 200 },
                 req: { 'stronger faith': true, '7th complex tower': true },
@@ -19239,7 +19238,7 @@ if (getObj("civ") != "1") {
                 name: 'battling thieves II', category: 'tier1',
                 desc: '[thief,Thieves] are quite smart, but you can also fight back against them! @let your soldiers use [windy spikes] and [dark concoction]s against [thief,Thieves]',
                 icon: [1, 7, "magix2"],
-                cost: { 'windy spikes': 10, 'dark concoction': 10 },
+                cost: { 'windy spikes': 100, 'black fog': 100, 'dark concoction': 180 },
                 req: { 'combat potion & concoction brewing': true, 'battling thieves': true },
                 effects: [
                 ],
@@ -21625,7 +21624,7 @@ if (getObj("civ") != "1") {
                 desc: '[dead grass] is a bad source of [herbs], however, you may gain a piece of [fruit] or a [stick] when foraging.',
                 icon: [33, 15, "magixmod"],
                 res: {
-                    'gather': { 'fruit': 0.1, 'stick': 0.5, 'herb': 0.02 },
+                    'gather': { 'fruit': 0.1, 'stick': 0.5, 'herbs': 0.02 },
                 },
                 mult: 8.5,
             });
@@ -21886,6 +21885,7 @@ if (getObj("civ") != "1") {
                             }
                             if (!G.testLimit(me.unit.limitPer, G.getUnitAmount(me.unit.name))) waste = true;
 
+                            if (me.name === "wizard") alert(me.amount + " " + idle + " " + me.idle)
                             //if (idle) G.idleUnit(me,Math.ceil(idle));
                             //if (waste) G.wasteUnit(me,Math.ceil(waste));
                             if (idle) G.idleUnit(me, Math.ceil((me.amount - me.idle) * 0.05));
@@ -22248,7 +22248,7 @@ if (getObj("civ") != "1") {
             }
 
             G.funcs['new game blurb'] = function () {
-                document.title = 'Setup: NeverEnding Legacy';
+                window.docTitle = 'Setup: NeverEnding Legacy';
                 var str =
                     '<b>Your tribe:</b><div class="thingBox">' +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
@@ -22272,7 +22272,7 @@ if (getObj("civ") != "1") {
                     };
                 };
                 G.ta = 1;
-                document.title = 'NeverEnding Legacy';
+                window.docTitle = 'NeverEnding Legacy';
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some elves start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                 fortress();
@@ -22303,9 +22303,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    document.title = 'Tribe OOFed: NeverEnding Legacy';
+                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    document.title = 'Tribe died: NeverEnding Legacy';
+                    window.docTitle = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
