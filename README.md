@@ -44,6 +44,12 @@ This offline version of Magix...
 
 <sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html). You are even able to **create** your own mods from there, so check it out!</sup>
 
+## Known issues
+- Territory tab doesn't render on game load if saved with that tab open
+- Moving the territory map isn't supported on touchscreen and behaves really weirdly at lower resolutions (due to game size scaling)
+- Two trials still not implemented yet
+- Second race's theme acts weird and doesn't immediately update
+
 ## Information for devs
 Check `localDevelopment.js` to mess with some settings, and `DOCS.md` for lots more context on how the game works and how to develop a basic mod yourself (hopefully to avoid dev headaches).
 
