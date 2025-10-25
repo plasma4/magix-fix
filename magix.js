@@ -1488,8 +1488,8 @@ if (getObj("civ") != "1") {
                 /////VP CALC FOR STARTING A NEW RUN
                 vpcalc();
                 G.achievByName['pickedCiv'].won = 1; //bc you are playing with human race.
-                G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 8)) } });
-                G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
+                G.getDict('hotel of victory').effects.push({ type: 'provide', what: { 'housing': (220 + (G.getRes('victory point').amount * 15)) } });
+                G.getDict('hotel of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 220. However, you get 15 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (220 + (G.getRes('victory point').amount * 15)) + ' [housing] for your people.';
                 /*---------------------
                 . . . assignments
                 ----------------------------*/
@@ -1724,8 +1724,8 @@ if (getObj("civ") != "1") {
                     }
                     vpcalc();
                     G.greeting();
-                    G.getDict('villa of victory').effects.push({ type: 'provide', what: { 'housing': (100 + (G.getRes('victory point').amount * 7)) } });
-                    G.getDict('villa of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.';
+                    G.getDict('hotel of victory').effects.push({ type: 'provide', what: { 'housing': (220 + (G.getRes('victory point').amount * 15)) } });
+                    G.getDict('hotel of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 220. However, you get 15 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (220 + (G.getRes('victory point').amount * 15)) + ' [housing] for your people.';
                     ////
 
                     if (G.achievByName['???'].won > 0) {
@@ -2038,7 +2038,7 @@ if (getObj("civ") != "1") {
                         } else {
                             G.Message({ type: 'tutorial', text: 'I need to warn you. ' + (G.has('time measuring 1/2') ? 'After the next 20 years' : 'After a while') + ', something bad will start to occur. It seems that you have previously ascended, which is a good choice. To prepare for this event, you should probably start making some <b>Armor</b> and <b>Metal weapons</b>.', icon: [32, 27, "magixmod"] });
                         }
-                    if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may recieve future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, "magixmod"] });
+                    if (G.year == 149) G.Message({ type: 'important', text: '<font color="#a968ec">Seems like you are doing quite well. It is been 150 years since you started the magic adventure with Magix additions. Thank you for playing with this expansion! Your playing makes the mod better and motivates me to make future updates...remember the mod may receive future updates (from @1_e0), so if you have any ideas, tell me on Discord! Anyway, keep enjoying this adventure...<br></font><b>Farewell...</b>', icon: [24, 1, "magixmod"] });
                     if (G.year == 9000) {
                         G.doFunc('>9000');
                     }
@@ -6525,7 +6525,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'christmas essence',
-                desc: 'A part of Christmas. Can be gathered in ways related to it. Has its uses. Does not belong to [magic essences] officially until you unlock [sleep-speech] and [villas of victory].',
+                desc: 'A part of Christmas. Can be gathered in ways related to it. Has its uses. Does not belong to [magic essences] officially until you unlock [sleep-speech] and [hotels of victory].',
                 icon: [3, 11, 'seasonal'],
                 category: 'magic',
                 hidden: true,
@@ -10042,12 +10042,12 @@ if (getObj("civ") != "1") {
 
             new G.Unit({
                 name: 'plain island portal', displayName: '<font color="yellow">Plain Island Portal</font>',
-                desc: '@opens a portal to a huge <b>Plain Island</b>. It is a creation made of ideas from various dreams and wizards.//With this portal your dream can become real! You will recieve some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.',
+                desc: '@opens a portal to a huge <b>Plain Island</b>. It is a creation made of ideas from various dreams and wizards.//With this portal your dream can become real! You will receive some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.',
                 wideIcon: [28, 29, "magixmod"],
                 wideIcon2: [7, 3, "magixmod"],
                 icon: [29, 29, "magixmod"],
                 tick: function (me, tick) {
-                    G.getDict('plain island portal').desc = '@opens a portal to a huge <b>new island</b> with new units and techs! It is a creation built upon the ideas taken from various dreams and wizards.//With this portal your dream can become real! You will recieve some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.'
+                    G.getDict('plain island portal').desc = '@opens a portal to a huge <b>new island</b> with new units and techs! It is a creation built upon the ideas taken from various dreams and wizards.//With this portal your dream can become real! You will receive some [land of the Plain Island] upon activation of the portal. Upon completion, you will be able to rename this island.'
                 },
                 wonder: '.',
                 cost: { 'marble': 100, 'gems': 10 },
@@ -10925,8 +10925,8 @@ if (getObj("civ") != "1") {
                 type: 'stepByStep',
             });
             new G.Unit({
-                name: 'villa of victory',
-                desc: '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 100. However, you get 8 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (100 + (G.getRes('victory point').amount * 8)) + ' [housing] for your people.',
+                name: 'hotel of victory',
+                desc: '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 220. However, you get 15 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (220 + (G.getRes('victory point').amount * 15)) + ' [housing] for your people.',
                 wideIcon: [1, 31, "magixmod"],
                 icon: [1, 31, "magixmod"],
                 cost: { 'basic building materials': 1000, 'precious building materials': 300 },
@@ -10935,7 +10935,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     //{type:'provide',what:{'housing':60+(G.getRes('victory point').amount*7)}},
                 ],
-                req: { 'villas of victory': true },
+                req: { 'hotels of victory': true },
                 category: 'civil',
             });
             new G.Unit({
@@ -15974,7 +15974,7 @@ if (getObj("civ") != "1") {
                 chance: 3
             });
             new G.Tech({
-                name: 'villas of victory', category: 'tier2',
+                name: 'hotels of victory', category: 'tier2',
                 desc: 'Unlocks a rather unique way to give people [housing]...//This unit will provide more [housing] based on the amount of [victory point]s you have. @provides 15 [inspiration II], 5 [spirituality II] and 5 [authority II]',
                 icon: [0, 31, "magixmod"],
                 req: { 'bigger university': true },
@@ -16185,7 +16185,7 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'spirituality': 100 } },
                     { type: 'provide res', what: { 'inspiration II': 90 } },
                 ],
-                req: { 'villas of victory': true },
+                req: { 'hotels of victory': true },
                 chance: 50,
                 category: 'main'
             });
@@ -16247,7 +16247,7 @@ if (getObj("civ") != "1") {
                     { type: 'provide res', what: { 'spirituality II': 15 } },
                     { type: 'provide res', what: { 'authority II': 15 } },
                 ],
-                req: { 'villas of victory': true, 'sergius the angel of belief': false },
+                req: { 'hotels of victory': true, 'sergius the angel of belief': false },
                 chance: 500,
                 category: 'religion',
             });
@@ -16259,7 +16259,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'provide res', what: { 'spirituality II': 30 } },
                 ],
-                req: { 'villas of victory': true, 'brahim the angel of authority': false },
+                req: { 'hotels of victory': true, 'brahim the angel of authority': false },
                 chance: 500,
                 category: 'religion',
             });
