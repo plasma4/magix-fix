@@ -4787,7 +4787,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'fire essence',
-                desc: '[fire essence] is quite warm and dangerous. It could be used to fight against cold winters or deep underground.',
+                desc: '[fire essence] is quite warm and dangerous. It could be used to fight against cold winters or deep underground or undersea.',
                 icon: [0, 2, "magixmod"],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -4864,7 +4864,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'wind essence',
-                desc: '[wind essence] must be used carefully due to a risk of tornado disasters. It may be used to move [boat]s and large objects around!',
+                desc: '[wind essence] must be used carefully due to a risk of tornado disasters. It may be used to move [boat]s and large objects around, as well as to support some types of buildings!',
                 icon: [1, 1, "magixmod"],
                 partOf: 'magic essences',
                 tick: function (me, tick) {
@@ -9357,7 +9357,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'mine of the plain island',
                 displayName: 'Mine of the Island',
-                desc: 'These mines are able to gather various ores, in particular, [cobalt ore]. They will be able to mine few other resources.',
+                desc: 'These mines are able to gather various ores, in particular, [cobalt ore]. They will also be able to mine a few other resources.',
                 icon: [9, 2, "magixmod"],
                 cost: { 'basic building materials': 100 },
                 use: { 'land of the Plain Island': 5 },
