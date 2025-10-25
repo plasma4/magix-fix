@@ -493,7 +493,7 @@ var civ2 = function () {
 
 G.NewGame = function (doneLoading, mods) {
     if (G.resets == 0) G.loadmenu = 1;
-    window.docTitle = 'Setup: NeverEnding Legacy';
+    document.title = 'Setup: NeverEnding Legacy';
     //clean up data, create a map and ask the player to pick a starting location
     if (!doneLoading) {
         //save achievements for each mod so we can reapply them later
@@ -1444,7 +1444,7 @@ if (getObj("civ") != "1") {
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 25 [wisdom] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40% to 50%. //Some people start wondering why things aren\'t different than they are. Also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
                 if (G.achievByName['sacrificed for culture'].won == 1 && G.achievByName['the fortress'].won <= 3)
                     G.fastTicks = (G.fastTicks - G.fastTicks2 < 0 ? 0 : G.fastTicks - G.fastTicks2); //to prevent summing up bonuses for elf race
-                window.docTitle = 'NeverEnding Legacy';
+                document.title = 'NeverEnding Legacy';
                 ///new game mesg
                 var str = 'Your name is ' + G.getName('ruler') + '' + ((G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') ? ' <i>(but that\'s not you, is it?)</i>' : '') + ', ruler of ' + G.getName('civ') + '. Your tribe is primitive, but full of hope.<br>The first year of your legacy has begun. May it stand the test of time!';
                 G.Message({ type: 'important tall', text: str, icon: [0, 3] });
@@ -1577,9 +1577,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
+                    document.title = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    window.docTitle = 'Tribe died: NeverEnding Legacy';
+                    document.title = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
@@ -1979,7 +1979,7 @@ if (getObj("civ") != "1") {
                                 break;
                         }
                     G.updateMapDisplay() //FIX for map(because it is using my sheet not default one)
-                    if (G.getRes('population').amount > 0) window.docTitle = 'NeverEnding Legacy';
+                    if (G.getRes('population').amount > 0) document.title = 'NeverEnding Legacy';
                     if (G.getSetting('tieredDisplay') == 0) { ta = 1 } else { ta = 0 };
                     var txt = '' + G.year + '';
                     if (day + leap >= 289 && day + leap <= 305) {
@@ -8197,7 +8197,7 @@ if (getObj("civ") != "1") {
             //MAGIX
             new G.Unit({
                 name: 'hovel of colours',
-                desc: 'Does the same thing as an [artisan] crafting dyes.',
+                desc: 'Does the same thing as an [artisan] crafting dyes, while using a third less [flowers]!',
                 icon: [19, 18, "magixmod"],
                 cost: { 'basic building materials': 975 },
                 upkeep: { 'fire pit': 1 },
@@ -8205,14 +8205,14 @@ if (getObj("civ") != "1") {
                 req: { 'caretaking': true, 'manufacture units I': true },
                 category: 'crafting',
                 effects: [
-                    ({ type: 'convert', from: { 'flowers': 21 }, into: { 'dyes': 8 }, every: 4 }),
+                    ({ type: 'convert', from: { 'flowers': 24 }, into: { 'dyes': 12 }, every: 4 }),
                     //Production influence
                     { type: 'mult', value: 1.25, req: { 'gt5': true } },
                 ],
             });
             new G.Unit({
                 name: 'hut of potters',
-                desc: 'Does same thing as [potter] was. All 4 modes he had are active all the time in this unit!',
+                desc: 'Does the same thing as [potter] originally did. All 4 modes he had are active all the time in this unit!',
                 icon: [20, 18, "magixmod"],
                 cost: { 'basic building materials': 475, 'archaic building materials': 500 },
                 upkeep: { 'fire pit': 1 },
@@ -8220,6 +8220,7 @@ if (getObj("civ") != "1") {
                 req: { 'caretaking': true, 'manufacture units I': true },
                 category: 'crafting',
                 effects: [
+                    { type: 'convert', from: { 'clay': 100, 'mud': 70, 'fire pit': 8 }, into: { 'pot': 60 }, every: 24 },
                     { type: 'convert', from: { 'clay': 100, 'mud': 70, 'fire pit': 8 }, into: { 'pot': 60 }, every: 24 },
                     { type: 'convert', from: { 'clay': 120, 'mud': 130, 'dyes': 24, 'fire pit': 5 }, into: { 'precious pot': 100 }, every: 36 },
                     { type: 'convert', from: { 'clay': 60, 'mud': 40 }, into: { 'potion pot': 30 }, every: 64 },
@@ -8229,16 +8230,16 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'factory of pots',
-                desc: 'Does same thing as [potter] was. All 4 modes he had are active all the time in this unit!',
+                desc: 'Does the same thing as [potter] originally did, but on an industrial scale. All 4 modes he had are active all the time in this unit!',
                 icon: [14, 18, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
-                use: { 'worker': 16, 'land': 1, 'stone tools': 32 },
+                use: { 'worker': 16, 'land': 2, 'stone tools': 32 },
                 req: { 'moderation': true, 'factories I': true },
                 category: 'crafting',
                 effects: [
-                    { type: 'convert', from: { 'clay': 140, 'mud': 140, 'fire pit': 14 }, into: { 'pot': 120 }, every: 20 },
-                    { type: 'convert', from: { 'clay': 170, 'mud': 120, 'dyes': 50, 'fire pit': 15 }, into: { 'precious pot': 120 }, every: 40 },
+                    { type: 'convert', from: { 'clay': 140, 'mud': 140, 'fire pit': 14 }, into: { 'pot': 120 }, every: 8 },
+                    { type: 'convert', from: { 'clay': 170, 'mud': 120, 'dyes': 50, 'fire pit': 15 }, into: { 'precious pot': 120 }, every: 12 },
                     { type: 'convert', from: { 'clay': 100, 'mud': 100, 'fire pit': 10 }, into: { 'potion pot': 40 }, every: 15 },
                     { type: 'mult', value: 1.25, req: { 'gt4': true } },
                     { type: 'mult', value: 1.2, req: { 'ground pots': true } },
@@ -8246,7 +8247,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'leather factory',
-                desc: 'Does the same thing as [clothier]s making [leather] and [drying rack]s at the same time.',
+                desc: 'Does the same thing as [clothier]s making [leather] and [drying rack]s on an industrial scale.',
                 icon: [15, 18, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
@@ -11226,11 +11227,11 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'heat factory',
-                desc: '@This factory can process many resources, turning them into [heating capability,Heating power]. @production has a chance to fail',
+                desc: '@This factory can process many resources, turning them into [heating capability,Heating power] on an industrial scale. @production has a chance to fail',
                 icon: [34, 16, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 3, 'fire pit': 1, 'food': 25, 'water': 35 },
-                use: { 'worker': 20, 'land': 1, 'stone tools': 32 },
+                use: { 'worker': 20, 'land': 2, 'stone tools': 32 },
                 req: { 'moderation': true, 'factories II': true },
                 gizmos: true,
                 category: 'crafting',
@@ -12687,9 +12688,9 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'water filtering', category: 'tier1',
-                desc: 'Obtaining this tech is part of what is needed to clean [muddy water] and turn it into normal [water]; you also need [caretaking] or [moderation].',
+                desc: 'Obtaining this tech will inspire your people to clean [muddy water] and turn it into normal [water], although you also need [caretaking] or [moderation] to actually unlock them.',
                 icon: [25, 16, "magixmod"],
-                cost: { 'insight': 30 },
+                cost: { 'insight': 60 },
                 req: { 'bows': true, 'a gift from the mausoleum': true },//IK it seems strange but i wanted to make it equal to other tech at tech tier tree
             });
             new G.Tech({
@@ -15004,7 +15005,7 @@ if (getObj("civ") != "1") {
                             } else {
                                 G.getDict('monument-building').desc = '@getting this will unlock a wonder that depends on the Trial you are currently in'
                             }
-                            window.docTitle = 'Trial active: NeverEnding Legacy'
+                            document.title = 'Trial active: NeverEnding Legacy'
                         }
                     },
                 ],
@@ -22248,7 +22249,7 @@ if (getObj("civ") != "1") {
             }
 
             G.funcs['new game blurb'] = function () {
-                window.docTitle = 'Setup: NeverEnding Legacy';
+                document.title = 'Setup: NeverEnding Legacy';
                 var str =
                     '<b>Your tribe:</b><div class="thingBox">' +
                     G.textWithTooltip('<div class="icon freestanding" style="' + G.getIconUsedBy(G.getRes('adult')) + '"></div><div class="freelabel">x5</div>', '5 Adults') +
@@ -22272,7 +22273,7 @@ if (getObj("civ") != "1") {
                     };
                 };
                 G.ta = 1;
-                window.docTitle = 'NeverEnding Legacy';
+                document.title = 'NeverEnding Legacy';
                 if (G.modsByName['Thot Mod']) G.getDict('philosophy').desc = 'Provides 75 [wisdom] and 30 [quick-wittinity] for free. //Also increases the [symbolism] bonus for [dreamer]s from 40 to 45%. //Some elves start wondering why things aren\'t different than they are. //It also unlocks [thot] and applies the [symbolism] bonus for him equal to the new [dreamer] bonus.';
 
                 fortress();
@@ -22303,9 +22304,9 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game over'] = function () {
                 if ((yer.getMonth() == 3 && yer.getDate() == 1) || (G.getSetting('fools') && G.resets >= 3)) {
-                    window.docTitle = 'Tribe OOFed: NeverEnding Legacy';
+                    document.title = 'Tribe OOFed: NeverEnding Legacy';
                 } else {
-                    window.docTitle = 'Tribe died: NeverEnding Legacy';
+                    document.title = 'Tribe died: NeverEnding Legacy';
                 };
                 var quote = Math.round(Math.random() * 5);
                 const quotes = ['\u201cTo the well-organized mind, death is but the next great adventure.\u201d', '\u201cThe fear of death follows from the fear of life. A man who lives fully is prepared to die at any time.\u201d', '\u201cIt is said that your life flashes before your eyes just before you die.\u201d', '\u201cDon\'t feel bad, I\'m usually about to die.\u201d', '\u201cDeath is so terribly final, while life is full of possibilities.\u201d', "It is as natural to die as it is to be born."];
