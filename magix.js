@@ -1335,6 +1335,7 @@ if (getObj("civ") != "1") {
                 { id: 'paradiseunit', name: 'Paradise' },
                 { id: 'ancestorsunit', name: 'Ancestors\' world' },
                 { id: 'alchemy', name: 'Alchemy' },
+                { id: 'skyunit', name: 'Skies' },
                 { id: 'trial', name: 'Trial' },
                 { id: 'underworld', name: 'Underworld' },
                 { id: 'guard', name: '<font color="#ff66cc">Army & Guards</font>' },
@@ -6858,6 +6859,29 @@ if (getObj("civ") != "1") {
                 name: 'demon decay' //debug res to track if devil's trait 29 or ancestor 10 already worked or not
             });
 
+            new G.Res({
+                name: 'enchanted feather',
+                desc: 'These feathers have a sort of weightless quality that seems to defy gravity. Useless, for now.',
+                icon: [0,0,'magixmod'], // filler
+                tick: function (me, tick) {
+                    var toSpoil = Math.min(me.amount * 0.01, 1e4); // goofy exponential scaling amirite
+                    var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
+                },
+                category: 'alchemyingredients',
+            })
+
+            new G.Res({
+                name: 'sky',
+                desc: 'The [sky] itself is at your command! You\'ll get more of this territory by getting more [skybase]s. You can use this territory to build [sky home]s.',
+                icon: [0,0,'magixmod'], // filler
+                displayUsed: true,
+                category: 'terr',
+                partOf: 'tl',
+                getDisplayAmount: function () {
+                    return B(this.displayedUsedAmount) + '<wbr>/' + B(this.displayedAmount);
+                },
+            });
+
             /*=====================================================================================
             UNITS
             =======================================================================================*/
@@ -8937,6 +8961,7 @@ if (getObj("civ") != "1") {
                     'windsugar': { name: 'windy sugar', icon: [14, 13, "magixmod"], desc: 'Gain [windy sugar] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'wind-essenced ingredients': true } },
                     'scoblife': { name: 'scobs of life', icon: [17, 13, "magixmod"], desc: 'Gain [scobs of life] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'nature-essenced ingredients': true } },
                     'growgrass': { name: 'grass of growing', icon: [16, 13, "magixmod"], desc: 'Gain [grass of growing] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'nature-essenced ingredients': true } },
+                    'enchantfeather': { name: 'enchanted feather', icon: [0,0,'magixmod'] /* filler */, desc: 'Gain [enchanted feather] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.5 }, req: { 'enchanted feather-making': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'bone': 1.25 }, into: { 'bone dust': 1 }, every: 4, mode: 'bonedust' },
@@ -8948,6 +8973,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'mana': 0.75, 'sugar': 1, 'wind essence': 1 }, into: { 'windy sugar': 2 }, every: 4, mode: 'windsugar' },
                     { type: 'convert', from: { 'herbs': 2, 'dark essence': 1, 'fruit': 0.5 }, into: { 'herb of the undead': 2 }, every: 4, mode: 'undeadherb' },
                     { type: 'convert', from: { 'mana': 0.75, 'scobs': 1, 'nature essence': 1, 'water': 0.25 }, into: { 'scobs of life': 1.05 }, every: 8, mode: 'scoblife' },
+                    { type: 'convert', from: { 'mana': 1.2, 'wind essence': 1.5 }, into: { 'enchanted feather': 2.3 }, every: 6, mode: 'enchantfeather' },
                 ],
                 category: 'alchemy',
             });
@@ -11319,6 +11345,70 @@ if (getObj("civ") != "1") {
                 type: 'portal',
                 category: 'dimensions'
             });
+
+            new G.Unit({
+                name: 'skybase',
+                desc: 'A glorious construction floating in the high skies which acts as scaffolding for buildings. Each [skybase] gives 45 [sky] for use to construct buildings. To construct a skybase and raise it far above ground, you need [insight], [advanced building materials] and a lot of [wind essence]. In addition, you also need a dedicated team of [wizard]s and a large quantity of [wind essence] to maintain skybases; otherwise, they will collapse and kill your [people] that are on the base.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 1300, 'advanced building materials': 4500, 'wind essence': 135000},
+                use: { 'wizard': 30 },
+                upkeep: { 'wind essence': 500 }, // too much or too little?
+                limitPer: { 'population': 6500 },
+                req: { 'skybases': true },
+                category: 'skyunit',
+                effects: [
+                    { type: 'provide res', what: { 'sky': 45 } },
+                ],
+            })
+
+            new G.Unit({
+                name: 'sky home',
+                desc: '@provides 5 [housing]<>A cozy and well-built home for 5 citizens, situated high in the skies. Thanks to the magic of [enchanted feather]s and your [wizard]s, it never wastes.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'basic building materials': 400, 'advanced building materials': 90, 'enchanted feather': 110 },
+                use: { 'sky': 1 },
+                upkeep: { 'enchanted feather': 1 },
+                req: { 'skycities': true },
+                effects: [
+                    { type: 'provide', what: { 'housing': 5 } },
+                ],
+                category: 'skyunit',
+            })
+
+            new G.Unit({
+                name: 'sky warehouse',
+                desc: '@provides 3,000 [material storage] and 2,000 [food storage]<>A large building situated high in the skies for storing food and materials. Thanks to the magic of [enchanted feather]s and your [wizard]s, it never wastes. Staffed with two guards to prevent theft, even though it is built in the sky.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'basic building materials': 1000, 'advanced building materials': 400, 'enchanted feather': 480 },
+                use: { 'sky': 3 },
+                staff: { 'worker': 2 },
+                upkeep: { 'enchanted feather': 1 },
+                req: { 'sky storage': true },
+                effects: [
+                    { type: 'provide', what: { 'added material storage': 3000 } },
+                    { type: 'provide', what: { 'added food storage': 2000 } },
+                ],
+                category: 'skyunit',
+            })
+
+            new G.Unit({
+                name: 'storm wizard tower',
+                desc: '@provides 9 [housing]<>A tower for 9 citizens, situated high in the skies. It collects [wind essence] and [lightning essence] at three times the rate of a normal wizard tower by consuming [mana].',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'advanced building materials': 2500, 'precious building materials': 300, 'enchanted feather': 1700 },
+                use: { 'sky': 2, 'wizard': 3 },
+                upkeep: { 'mana': 4, 'enchanted feather': 2 },
+                req: { 'storm towers': true },
+                effects: [
+                    { type: 'provide', what: { 'housing': 9 } },
+                    { type: 'gather', what: { 'wind essence': 6 } },
+                    { type: 'gather', what: { 'lightning essence': 6 } },
+                    { type: 'gather', what: { 'water essence': 1.3, 'cloudy water': 22, 'cloud': 0.27 }, req: { 'cloud harvests': true } },
+                    // add mults to this in the future
+                ],
+                category: 'housing',
+                limitPer: { 'sky': 11 },
+            })
 
             /*=====================================================================================
             MAGIX MODIFICATIONS FOR VANILLA UNITS
@@ -19296,6 +19386,120 @@ if (getObj("civ") != "1") {
                 ],
             });
             if (testingMagix) addDisaster()
+
+            // TRAITS
+            new G.Trait({
+                name: 'sky building',
+                desc: 'Your people want to expand far above, into the sky. @more likely with [culture of the afterlife]. @can be unlocked at the same time as [underwater building] and [underground building] once [eotm] is obtained.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'culture': 500, 'faith': 350, 'influence': 350, 'insight': 2700 },
+                req: { 'expansionism': true, 'underwater building': false, 'underground building': false },
+                chance: 750,
+                category: 'main',
+            })
+
+            new G.Trait({
+                name: 'underwater building',
+                desc: 'Your people want to expand into the depths of seas and oceans. @can be unlocked at the same time as [sky building] and [underground building] once [eotm] is obtained.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'culture': 350, 'influence': 300, 'insight': 2900 },
+                req: { 'expansionism': true, 'sky building': false, 'underground building': false },
+                chance: 750,
+                category: 'main',
+            })
+
+            new G.Trait({
+                name: 'underground building',
+                desc: 'Your people want to expand far below, into the earth. @less likely with [belief in revenants]. @can be unlocked at the same time as [sky building] and [underwater building] once [eotm] is obtained.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'culture': 400, 'influence': 400, 'insight': 2500 },
+                req: { 'expansionism': true, 'sky building': false, 'underwater building': false },
+                chance: 500,
+                category: 'main',
+            })
+
+            new G.Trait({
+                name: 'thrilling heights',
+                desc: 'Your people living in skybases have developed a strange thrill from living so far aboveground. This trait makes each [skybase] produce a little [happiness].',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'culture': 200 },
+                req: { 'skybases': true, 'fear of heights': false },
+                chance: 125, lifetime: function () { return 25 + ((this.yearOfObtainment % 10) - 5) },
+                category: 'short',
+            })
+
+
+            new G.Trait({
+                name: 'fear of heights',
+                desc: 'Your people are terrified of heights, and do not want to live so far aboveground. This trait makes each [skybase] harm [happiness] a little.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'culture': 200 },
+                req: { 'skybases': true, 'thrilling heights': false },
+                chance: 125, lifetime: function () { return 25 + ((this.yearOfObtainment % 10) - 5) },
+                category: 'short',
+            })
+
+            // TECHS
+
+            // TODO: make regular feathers a resource and add birds that you can get feathers from, etc etc
+            new G.Tech({
+                name: 'enchanted feather-making',
+                desc: '@[ingredient crafting stand]s can now make [enchanted feather]s out of [wind essence], [mana] and [feather]s',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 450, 'wind essence': 7000 },
+                req: { 'wind-essenced ingredients': true },
+            })
+
+            new G.Tech({
+                name: 'skybases',
+                desc: '@unlocks [skybase]s@unlocks [sky] territory<>Each [skybase], standing loftily hundreds of meters above ground, is kept afloat by enormous quantities of [wind essence]. Skybases will collapse and fall down if not properly maintained.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 3000, 'wind essence': 175000, 'influence': 500 },
+                req: { 'sky building': true },
+                effects: [
+                    { type: 'show res', what: ['sky'] },
+                ],
+            })
+
+            new G.Tech({
+                name: 'skycities',
+                desc: '@unlocks [sky home]s<>Sky buildings must be extremely light and will use [enchanted feather]s, so these will give less housing - the view is heavenly, though!',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 3500 },
+                req: { 'skybases': true },
+            })
+
+            new G.Tech({
+                name: 'sky storage',
+                desc: '@unlocks [sky warehouse]s<>Each [sky warehouse] gives some [food storage] and [material storage].',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 2700 },
+                req: { 'skycities': true },
+            })
+
+            new G.Tech({
+                name: 'storm towers',
+                desc: '@unlocks [storm wizard tower]s<>Your wizards have discovered that generation of wind and lightning essences is more efficient far above in the sky, where you can draw on the natural energy of clouds, wind and storms more effectively.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 4000, 'wind essence': 75000, 'lightning essence': 75000, 'mana': 180000 },
+                req: { 'construction': true, 'wizard towers': true, 'wizard wisdom': true, 'well of mana': true, 'skycities': true },
+            })
+
+            // note to pellet: if we're planning to remove paradise, then we could make it so that this is the only way to get cloudy water (and then not make the three paths mutually exclusive), what do you think of that?
+            new G.Tech({
+                name: 'cloud harvests',
+                desc: '@[storm wizard tower]s also give some [water essence] and [cloudy water], but use 75% more [mana]<>You may also obtain a [cloud] every once in a while.',
+                icon: [0,0,'magixmod'], // filler
+                cost: { 'insight': 2800, 'water essence': 90000, 'mana': 150000 },
+                req: { 'storm towers': true, 'non-magical filters improvement': true },
+                effects: [
+                    {
+                        type: 'function', func: function () {
+                            G.getDict('storm wizard tower').upkeep = { 'mana': 7, 'enchanted feather': 2 };
+                        }
+                    }
+                ],
+            })
 
 
             new G.Res({
