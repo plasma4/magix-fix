@@ -17,6 +17,13 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 </head>
 <body>
 
+<div id="errors" style="background:#111;color:#f44;padding:5px;height:100px;overflow:auto;font-family:monospace;position:fixed;top:0;left:0;width:300px;z-index:9999"></div>
+<script>
+	const eDiv = document.getElementById('errors');
+	window.onerror = (msg, src, line) => { eDiv.innerHTML += `Error: ${msg} (line ${line})<br>`; };
+</script>
+
+
 <div id="wrap">
 	<div id="topBar">
 		<div id="versions" style="float:right;"></div>
@@ -80,4 +87,5 @@ Feel free to alter this code to your liking, but please do not re-host it, do no
 </div>
 
 </body>
+
 </html>
