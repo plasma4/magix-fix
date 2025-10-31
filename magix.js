@@ -18070,9 +18070,9 @@ if (getObj("civ") != "1") {
                 icon: [15, 6, "magixmod"],
                 cost: { 'culture': 25 },
                 category: 'long',
-                effects: [
+                /*effects: [
                     { type: 'function', func: function() { G.getDict('revenants').req = { 'belief in revenants': true, 'art of death': true }; } }
-                ],
+                ],*/
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
