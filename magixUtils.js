@@ -1494,7 +1494,7 @@ G.AddData({
                 if (G.traitsOwned[i].trait.category != 'anomaly') G.traitN2++;
             }
             var str = '';
-            str += '<div style=position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>';
+            str += '<div style="position:absolute;z-index:0;top:0px;left:0px;right:0px;text-align:right;"><div class="flourishL"></div>';
             if (G.traitN >= 15) {
                 str += '<br><div class="flourishL"></div>';
                 str += G.button({
@@ -2494,7 +2494,7 @@ G.AddData({
         }
         G.fastTicks2 = 0; //civ2 stuff
         G.pressureAdd = 0;
-        /*=====Achiev bonuses*/
+        /*=====Achiev bonuses=====*/
         G.legacyBonuses.push(
             { id: 'addFastTicksOnStart', name: '+[X] free fast ticks', desc: 'Additional fast ticks when starting a new game with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.fastTicks += obj.amount }, context: 'new' },
             { id: 'addFastTicksOnResearch', name: '+[X] fast ticks from research', desc: 'Additional fast ticks when completing research while playing with the <u>human race</u>.', icon: [0, 0], func: function (obj) { G.props['fastTicksOnResearch'] += obj.amount; } },

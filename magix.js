@@ -4893,7 +4893,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'cobalt ore',
-                desc: 'A unique and rather hard mineral. At least you may be able to smelt these into [cobalt ingot]s for use in your main world.',
+                desc: 'A unique and rather hard mineral. At least you can smelt these into [cobalt ingot]s for use in your main world.',
                 icon: [8, 2, "magixmod"],
                 partOf: 'misc materials',
                 category: 'ore',
@@ -5180,7 +5180,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'bubbling water pot',
-                desc: 'Bubbling water. Can be used to craft more advanced brews/potions. So hot, so do not drink. At least it releases bubbles.',
+                desc: 'Bubbling water. Can be used to craft more advanced brews/potions. Usually boiling, so dangerous to touch! //<small>At least it releases satisfying bubbles though...</small>',
                 icon: [3, 10, "magixmod"],
                 category: 'alchemypotions',
                 tick: function (me, tick) {
@@ -5197,7 +5197,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'alcohol pot',
-                desc: 'Can be used to craft [wine] or [pot of vodka,Pots of vodka]. Let\'s not forget about its uses to other potions.',
+                desc: 'Can be used to craft [wine] or [pot of vodka,Pots of vodka]. Let\'s not forget about its uses for other potions.',
                 icon: [7, 10, "magixmod"],
                 category: 'alchemypotions',
                 tick: function (me, tick) {
@@ -8423,14 +8423,14 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'bakery',
-                desc: '@converts crafted [flour] crafted by your [windmill]s into [bread]. Requires fuel to work.',
+                desc: '@converts [flour] into tasty [bread]. Requires fuel to work.',
                 icon: [24, 10, "magixmod"],
                 cost: { 'basic building materials': 100, 'brick': 10000 },
                 use: { 'worker': 4, 'land': 1 },
                 require: { 'metal tools': 2 },
                 upkeep: { 'log': 0.6 },
                 effects: [
-                    { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1 / 25, req: { 'baking': true, 'baking II': false } },
+                    { type: 'convert', from: { 'flour': 18 }, into: { 'bread': 6 }, every: 4, chance: 1.5 / 5, req: { 'baking': true, 'baking II': false } },
                     { type: 'convert', from: { 'flour': 36 }, into: { 'bread': 12 }, every: 4, chance: 4 / 5, req: { 'baking II': true } },
                     { type: 'mult', value: 3, req: { 'baking III': true } },
                     { type: 'mult', value: 1.5, req: { 'grain fertilizer': true } }
@@ -8587,9 +8587,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'paper-crafting shack',
-                desc: 'Allows you to choose between 3 types of [paper]: <li>papyrus</li> <li>pergamin</li> <li>common paper</li> <font color="#ff6b40">Although this is the paradise version of this shack, it works as the same rate as the ones from the main world.</font>',
+                desc: 'Allows you to choose between 3 types of [paper]: @<font color="#fde088">papyrus</font> @<font color="#fde088">pergamin</font> @<font color="#fde088">common paper</font> //<font color="#ff6b40">Due to shacks being of higher quality, modes work 20% than the ones from the main world.</font>',
                 icon: [0, 12, "magixmod", 20, 14, "magixmod"],
-                cost: { 'basic building materials': 800 },
+                cost: { 'advanced building materials': 400, 'basic building materials': 500 },
                 use: { 'land of the Paradise': 0.7, 'industry point': 0.05 },
                 gizmos: true,
                 modes: {
@@ -8609,6 +8609,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 3, req: { 'paper mastery': true } },
                     { type: 'mult', value: 1.3, req: { 'even mo\' paper': true, 'moderation': true, 'caretaking': false } },
                     { type: 'mult', value: 1.3, req: { 'even mo\' paper': true, 'caretaking': true, 'moderation': false } },
+                    { type: 'mult', value: 1.2, req: { 'tribalism': true } },
                 ],
                 req: { 'papercrafting': true, 'paradise crafting': true, 't10': false },
                 category: 'paradiseunit',
@@ -8979,7 +8980,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Paper-crafting shack',
-                desc: 'Makes [paper]; you can choose between 3 types of paper: <li>papyrus</li> <li>pergamin</li> <li>common paper</li> ',
+                desc: 'Makes [paper]; you can choose between 3 types of paper: @<font color="#fde088">papyrus</font> @<font color="#fde088">pergamin</font> @<font color="#fde088">common paper</font>',
                 icon: [0, 12, "magixmod", 25, 2],
                 cost: { 'basic building materials': 800 },
                 use: { 'land': 0.7 },
