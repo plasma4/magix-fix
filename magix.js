@@ -1,4 +1,5 @@
 /*
+    ver 1
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
