@@ -13118,6 +13118,9 @@ if (getObj("civ") != "1") {
                 icon: [15, 7, "magixmod"],
                 cost: { 'culture': 25 },
                 category: 'long',
+                effects: [
+                    { type: 'function', func: function() { G.getDict('revenants').req = { 'belief in revenants': true, 'ritual necrophagy': true }; } }
+                ],
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -13213,7 +13216,7 @@ if (getObj("civ") != "1") {
                 desc: 'The dark powers got mad because your people are using [corpse]s as a toy or ritual. Some of them will come back to life and will behave like an evil zombie. Just know: they won\'t replicate. You will need to defend your people against them. Every [wild corpse] that appears will harm your [happiness] and kill your [population,people].',
                 icon: [19, 0, "magixmod"],
                 cost: { 'insight': 50, 'corpse': 500 },
-                chance: 200,
+                chance: 1,
                 req: { 'belief in revenants': true, 'ritual necrophagy': true },
                 effects: [
                 ]
@@ -18072,6 +18075,9 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 25 },
                 category: 'long',
                 chance: 500,
+                effects: [
+                    { type: 'function', func: function() { G.getDict('revenants').req = { 'belief in revenants': true, 'art of death': true }; } }
+                ],
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
             });
