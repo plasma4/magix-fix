@@ -13216,7 +13216,7 @@ if (getObj("civ") != "1") {
                 desc: 'The dark powers got mad because your people are using [corpse]s as a toy or ritual. Some of them will come back to life and will behave like an evil zombie. Just know: they won\'t replicate. You will need to defend your people against them. Every [wild corpse] that appears will harm your [happiness] and kill your [population,people].',
                 icon: [19, 0, "magixmod"],
                 cost: { 'insight': 50, 'corpse': 500 },
-                chance: 1,
+                chance: 200,
                 req: { 'belief in revenants': true, 'ritual necrophagy': true },
                 effects: [
                 ]
