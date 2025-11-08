@@ -1,5 +1,4 @@
 /*
-    ver 1
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
@@ -10323,7 +10322,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'heavy warehouse',
-                desc: '@provides 9,000 [material storage]<>A large and very hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.//<small>storage9000</small>',
+                desc: '@provides 9,000 [material storage]<>A large and very hard-to-destroy building for storing materials. Staffed with five guards and one leader to prevent theft or evil forces from causing problems near the warehouse.//<small>storage9000</small>',
                 icon: [30, 12, "magixmod"],
                 cost: { 'basic building materials': 1500, 'cobalt ingot': 1000, 'precious building materials': 100 },
                 use: { 'land of the Underworld': 5 },
@@ -16480,7 +16479,7 @@ if (getObj("civ") != "1") {
                 name: 'festive lights', category: 'seasonal',
                 desc: 'Artisan of christmas can now craft festive lights. Let the streets be even nicer. Obtaining [mo\' beauty] doubles your [happiness] gain from lights, but makes them used in more places.',
                 icon: [18, 12, 'seasonal'],
-                cost: { 'insight': 800, 'christmas essence': 593 },
+                cost: { 'insight': 800, 'christmas essence': 2450 },
                 req: { 'festive robot print': true, 'physics': true, 'dynamics': true },
             });
             new G.Tech({
@@ -18126,7 +18125,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(sums)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc.//<small>Fibonacci, here we go...</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will focus on discovering endless sums and sequences.//<small>Fibonacci, here we go...</small>',
                 icon: [3, 39, "magixmod", 17, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -18137,7 +18136,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(3dgeo)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will try to understand all the secrets of 3-dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
                 icon: [3, 39, "magixmod", 18, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
