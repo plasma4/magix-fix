@@ -1,4 +1,5 @@
 /*
+    ver 1
     Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
@@ -8528,13 +8529,13 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'deadly concoction maker',
-                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and also makes [jar for concoctions,Jars for concoctions].',
+                desc: '@Converts [potion pot]s, [clay], and some [hard metal ingot]s into [combat potion pot]s, and makes [jar for concoctions,Jars for concoctions] from [clay] and [mud].',
                 icon: [19, 16, "magixmod"],
                 cost: {},
                 use: { 'worker': 1, 'metal tools': 1, 'alchemy zone': 0.3 },
                 upkeep: {},
                 effects: [
-                    { type: 'convert', from: { 'potion pot': 1, 'clay': 1, 'hard metal ingot': 0.02 }, into: { 'combat potion pot': 1 }, repeat: 1, every: 3 },
+                    { type: 'convert', from: { 'potion pot': 1, 'clay': 1, 'hard metal ingot': 0.05 }, into: { 'combat potion pot': 1 }, repeat: 1, every: 3 },
                     { type: 'convert', from: { 'clay': 8, 'mud': 2 }, into: { 'jar for concoctions': 1 }, repeat: 1, every: 3 },
                 ],
                 req: { 'bigger potion pallet': true },
@@ -12549,7 +12550,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bigger potion pallet', category: 'tier1',
-                desc: 'Unlocks more potion types. This includes [combat potions], which are throwable and may be used in battle as well as [jar for concoctions,Concoction jars], which are used for more advanced potions! <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
+                desc: 'Unlocks more potion types. This includes [combat potions], which are throwable and may be used in battle, and [jar for concoctions,Concoction jars] for more advanced potions!',
                 icon: [21, 16, "magixmod"],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -13117,6 +13118,9 @@ if (getObj("civ") != "1") {
                 icon: [15, 7, "magixmod"],
                 cost: { 'culture': 25 },
                 category: 'long',
+                effects: [
+                    { type: 'function', func: function () { G.getDict('revenants').req = { 'belief in revenants': true, 'ritual necrophagy': true }; } }
+                ],
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -18071,6 +18075,9 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 25 },
                 category: 'long',
                 chance: 500,
+                effects: [
+                    { type: 'function', func: function () { G.getDict('revenants').req = { 'belief in revenants': true, 'art of death': true }; } }
+                ],
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
             });
