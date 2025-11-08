@@ -8552,13 +8552,13 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'deadly concoction maker',
-                desc: '@Converts a [potion pot] and some other materials into a [combat potion pot] and also makes [jar for concoctions,Jars for concoctions].',
+                desc: '@Converts [potion pot]s, [clay], and some [hard metal ingot]s into [combat potion pot]s, and makes [jar for concoctions,Jars for concoctions] from [clay] and [mud].',
                 icon: [19, 16, "magixmod"],
                 cost: {},
                 use: { 'worker': 1, 'metal tools': 1, 'alchemy zone': 0.3 },
                 upkeep: {},
                 effects: [
-                    { type: 'convert', from: { 'potion pot': 1, 'clay': 1, 'hard metal ingot': 0.02 }, into: { 'combat potion pot': 1 }, repeat: 1, every: 3 },
+                    { type: 'convert', from: { 'potion pot': 1, 'clay': 1, 'hard metal ingot': 0.05 }, into: { 'combat potion pot': 1 }, repeat: 1, every: 3 },
                     { type: 'convert', from: { 'clay': 8, 'mud': 2 }, into: { 'jar for concoctions': 1 }, repeat: 1, every: 3 },
                 ],
                 req: { 'bigger potion pallet': true },
@@ -10349,7 +10349,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'heavy warehouse',
-                desc: '@provides 9,000 [material storage]<>A large and very hard-to-destroy building for storing materials. Staffed with six guards and one leader to prevent theft or evil forces from appear near the warehouse.//<small>storage9000</small>',
+                desc: '@provides 9,000 [material storage]<>A large and very hard-to-destroy building for storing materials. Staffed with five guards and one leader to prevent theft or evil forces from causing problems near the warehouse.//<small>storage9000</small>',
                 icon: [30, 12, "magixmod"],
                 cost: { 'basic building materials': 1500, 'cobalt ingot': 1000, 'precious building materials': 100 },
                 use: { 'land of the Underworld': 5 },
@@ -12640,7 +12640,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'bigger potion pallet', category: 'tier1',
-                desc: 'Unlocks more potion types. This includes [combat potions], which are throwable and may be used in battle as well as [jar for concoctions,Concoction jars], which are used for more advanced potions! <b>Unlocks stands, which allow you to craft pots for these types of potion out of a [potion pot].</b>',
+                desc: 'Unlocks more potion types. This includes [combat potions], which are throwable and may be used in battle, and [jar for concoctions,Concoction jars] for more advanced potions!',
                 icon: [21, 16, "magixmod"],
                 cost: { 'insight': 850, 'science': 1, 'wisdom': 9 },
                 req: { 'alcohol brewing': true, 'medicaments brewing': true, 'alchemy': true, 'paradise building': true },
@@ -13208,6 +13208,9 @@ if (getObj("civ") != "1") {
                 icon: [15, 7, "magixmod"],
                 cost: { 'culture': 25 },
                 category: 'long',
+                effects: [
+                    { type: 'function', func: function () { G.getDict('revenants').req = { 'belief in revenants': true, 'ritual necrophagy': true }; } }
+                ],
                 chance: 500,
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'art of death': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
@@ -16567,7 +16570,7 @@ if (getObj("civ") != "1") {
                 name: 'festive lights', category: 'seasonal',
                 desc: 'Artisan of christmas can now craft festive lights. Let the streets be even nicer. Obtaining [mo\' beauty] doubles your [happiness] gain from lights, but makes them used in more places.',
                 icon: [18, 12, 'seasonal'],
-                cost: { 'insight': 800, 'christmas essence': 593 },
+                cost: { 'insight': 800, 'christmas essence': 2450 },
                 req: { 'festive robot print': true, 'physics': true, 'dynamics': true },
             });
             new G.Tech({
@@ -18162,6 +18165,9 @@ if (getObj("civ") != "1") {
                 cost: { 'culture': 25 },
                 category: 'long',
                 chance: 500,
+                effects: [
+                    { type: 'function', func: function () { G.getDict('revenants').req = { 'belief in revenants': true, 'art of death': true }; } }
+                ],
                 req: { 'tribalism': true, 'ritualism': true, 'belief in the beforelife': false, 'ritual necrophagy': false, 'belongings preservance': false },
                 lifetime: function () { return ((this.yearOfObtainment + 350) % 450 >= 383 && (this.yearOfObtainment + 350) % 450 <= 400 ? Infinity : (this.yearOfObtainment + 350) % 450) }
             });
@@ -18210,7 +18216,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(sums)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly discover endless sums, sequences etc.//<small>Fibonacci, here we go...</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will focus on discovering endless sums and sequences.//<small>Fibonacci, here we go...</small>',
                 icon: [3, 39, "magixmod", 17, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
@@ -18221,7 +18227,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'mathV(3dgeo)',
                 displayName: 'Maths V', category: 'tier1',
-                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will mostly try to understand all secrets of 3 dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
+                desc: '@provides 10 [education] and 25 [wisdom II] @By picking this mathematical tech, your scholars and mathematicians working in your university will try to understand all the secrets of 3-dimensional geometry.//<small>It is x axis, y axis, and z axis</small>',
                 icon: [3, 39, "magixmod", 18, 28, "magixmod"],
                 cost: { 'insight II': 500, 'science': 100 },
                 effects: [
