@@ -2170,11 +2170,11 @@ if (getObj("civ") != "1") {
                             st7 = true
                         }
                         if (G.techN > 93 && G.techN <= 99 && !st8) {
-                            G.Message({ type: 'bad', text: 'You had a nightmare someday, which had a brutally wounded ' + G.getName('inhab') + '. It really shocked and made you scared.', icon: [32, 9, "magixmod"] });
+                            G.Message({ type: 'bad', text: 'You had a nightmare last night, which had a brutally wounded ' + G.getName('inhab') + '. You decided not to tell anyone, but feel a small sense of worry for what\'s to come.', icon: [32, 9, "magixmod"] });
                             st8 = true
                         }
                         if (G.techN > 99 && G.techN <= 106 && !st9) {
-                            G.Message({ type: 'good', text: 'While wandering you noticed some angel waving at you. But you didn\'t understand what the angel did say to you. You are full of hope that it is some greeting.', icon: [32, 8, "magixmod"] });
+                            G.Message({ type: 'good', text: 'While wandering you noticed an angel waving at you. While you didn\'t understand what the angel said to you, you are hopeful that it was some greeting.', icon: [32, 8, "magixmod"] });
                             st9 = true
                         }
                         if (G.techN > 108 && G.techN <= 112 && !st10) {
@@ -2901,8 +2901,8 @@ if (getObj("civ") != "1") {
                 }
             }
 
-            G.funcs['production multiplier'] = function () {
-                var happiness = (G.getRes('happiness').amount / G.getRes('population').amount) / 100;
+            G.funcs['production multiplier'] = function (customHappiness) {
+                var happiness = (customHappiness == null ? (G.getRes('happiness').amount / G.getRes('population').amount) : customHappiness) / 100;
                 happiness = Math.max(-2, Math.min(2, happiness));
                 if (t1start == true) {
                     var mult = 1 - ((G.getRes('chranosweak').amount / 2500) * (G.achievByName['patience'].won + 1 / 4));
@@ -3034,6 +3034,8 @@ if (getObj("civ") != "1") {
                     }
 
                     if (me.amount > 0) {
+                        var baseMult = G.doFunc('production multiplier')
+                        G.getDict('happiness').desc = '[happiness] describes the global level of well-being of your [population], currently making your people work ' + (baseMult > 1 ? (baseMult * 100 - 100).toFixed(1) + '% faster' : (100 - baseMult * 100).toFixed(1) + '% slower') + ' (accounting for traits).//Happy people work even harder and improve unit speeds, while unhappy people tend to slack off. This goes on up to +200% and -200%.//Several things improve happiness, such as good [food], entertainment, or luxury items; things that bring down [happiness] are spoiled food, starvation, disease, death and harsh policies.//Happiness and unhappiness both tend to level off over time, or reach one of the limits.'
                         //note : we also sneak in some stuff unrelated to population here
                         //policy ticks
                         if (G.checkPolicy('water rituals') == 'on') {
@@ -3159,7 +3161,7 @@ if (getObj("civ") != "1") {
                         var eatongathermult = 0.5;
                         var happinessLevel = G.getRes('happiness').amount / me.amount;
                         if (G.checkPolicy('eat on gather') == 'on' && happinessLevel < 70 && G.getRes('food').amount > 0) changeHappiness(me.amount * eatongathermult * (G.has("t7") ? 0.2 : 1), 'instant eating');
-                        var productionMult = G.doFunc('production multiplier', 1);
+                        var productionMult = G.doFunc('production multiplier');
 
                         var deathUnhappinessMult = 1;
                         if (G.has('fear of death')) deathUnhappinessMult *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
@@ -6715,7 +6717,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'dark decay',
-                desc: 'Completing <b>Buried</b> grants you [dark decay]! Starting with 150 slots and capping at 500, dark decay will take away [corpse]s. The cap of [dark decay] slots can be increased by gaining various early-game traits such as [fear of death]/[acceptance of death], or afterlife traits. @gaining this resource also activates the bonus from [voodoo spirit], if you have completed <b>Buried</b>',
+                desc: 'Completing <b>Buried</b> grants you [dark decay]! Starting with 150 slots, dark decay will take away [corpse]s. The cap of [dark decay] slots can be increased by gaining various early-game traits such as [fear of death]/[acceptance of death], or afterlife traits. @gaining this resource also activates the bonus from [voodoo spirit], if you have completed <b>Buried</b>',
                 icon: [23, 5, "magixmod"],
                 displayUsed: true,
                 startWith: 50,
@@ -13706,7 +13708,7 @@ if (getObj("civ") != "1") {
                                     G.know[i].cost[newEss[j]] = Math.ceil(prev / 500) * 3;
                                 }
                             }
-                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter with a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
+                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some powerful [insight II]. This policy has a meter with a scale from -3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
                             // Enabling/disabling code for rituals in G.update['policy']
                             if (G.getRes('victory point').amount > 0 && !G.has('pantheon key')) {
                                 G.gainTech(G.techByName['pantheon key']);
@@ -14117,7 +14119,6 @@ if (getObj("civ") != "1") {
                             G.getDict('discovery rituals').desc = 'Use these unique rituals to improve exploration slightly, with these boosts: @[wanderer]s: +5% speed @[scout]s: +3% speed @[globetrotter]s: +4% speed //Consumes 1 [faith II] over the course of 100 days; will stop if you run out.';
                             G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Consumes 1 [faith II] over the course of 200 days; will stop if you run out. //<small>we are much smarter now</small>';
                             G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Consumes 1 [faith II] over the course of 20 days; will stop if you run out.';
-                            G.getDict('sleepy insight').desc = 'At the start of a new year, you have a chance to gain some [insight II]. This policy has a meter with a scale from -3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.';
                             var mult = (Math.log10(G.getDict('population').amount / 20 + 1) * 1.2 + 1) * (G.achievByName['mausoleum'].won > 8 ? 1.3 : (G.achievByName['mausoleum'].won > 5 ? 1.15 : 1));
                             G.getDict('trait rituals').desc = 'Improves the chance of getting eternal traits (excluding patrons) based on [population] (currently <b>+' + (mult * 100 - 100).toFixed(1) + '%</b>) through the faster spread of beliefs. Consumes just 1 [culture II], [faith II], and [influence II] over the course of 500 days.';
 
@@ -16470,7 +16471,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'f.r.o.s.t.y overclock III', category: 'seasonal',
-                desc: 'Wizards really want to overclock [f.r.o.s.t.y] even more! They have come up with an elaborate scientific solution to tackle this problem, although the [snowman,Snowmen] aren\'t really happy about it. @<font color="#54d431">[f.r.o.s.t.y] becomes twice as fast</font> @<font color="#f70054">[f.r.o.s.t.y] is 30% more likely to destroy a [snowman]</font>',
+                desc: 'Wizards really want to overclock [f.r.o.s.t.y] even more! They have come up with an elaborate scientific solution to tackle this problem, although the [snowman,Snowmen] aren\'t really happy about it. @<font color="#54d431">[f.r.o.s.t.y] becomes four times faster</font> @<font color="#f70054">[f.r.o.s.t.y] is 30% more likely to destroy a [snowman]</font>',
                 icon: [3, 12, 'seasonal'],
                 cost: { 'insight II': 400, 'science': 45 },
                 req: { 'festive robot print': true, 'bigger university': true, 'f.r.o.s.t.y overclock II': true, 'dynamics II': true },
@@ -18495,7 +18496,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'magical filtering II', category: 'tier1',
-                desc: 'Use the power of the [water essence,Waters], [wind essence,Winds], and [cloud]s! @your filters that process [cloudy water] work twice as fast',
+                desc: 'Use the power of the [water essence,Waters], [wind essence,Winds], and [cloud]s! @your filters that process [cloudy water] work four times faster',
                 icon: [0, 39, "magixmod", 25, 8, "magixmod"],
                 cost: { 'insight': 1600, 'wind essence': 40000, 'water essence': 40000, 'cloud': 21000 },
                 req: { 'magical filtering': true },
@@ -19225,7 +19226,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'gardening III', category: 'tier2',
-                desc: 'Get even better farms! @[wheat farm]s become twice as fast now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
+                desc: 'Get even better farms! @[wheat farm]s become four times faster now, and the [sugar cane], [vegetables], and [mushroom] farms become +20% faster. @In addition, [wheat farm]s take up 20 less [land], while other farms will take up 10 less [land]!//<small>Maybe wheat will finally become a reasonable food source and not a luxury! (Well, possibly.)</small>',
                 icon: [1, 39, "magixmod", 10, 0, "magixmod"],
                 cost: { 'insight II': 200, 'culture II': 30 },
                 req: { 'baking III': true, 'art of cooking III': true },
@@ -20071,7 +20072,7 @@ if (getObj("civ") != "1") {
             });
             new G.Policy({
                 name: 'sleepy insight',
-                desc: 'At the start of a new year, you have a chance to gain some [insight]. This policy has a meter with a scale from 3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
+                desc: 'At the start of a new year, you have a chance to gain some [insight]. This policy has a meter with a scale from -3 to 3. <>Modes less than 0 will cause the ability to be stronger at the cost of chance, while modes greater than 0 be less powerful, but with a larger chance.',
                 icon: [8, 12, 33, 24, "magixmod"],
                 cost: { 'faith': 10, 'insight': 2 },
                 startMode: '0',
@@ -21780,7 +21781,7 @@ if (getObj("civ") != "1") {
             });
             //UNIT LOGIC
             G.logic['unit'] = function () {
-                var mult = G.doFunc('production multiplier', 1);//global production multiplier - affects how many times the unit effects will be applied every tick
+                var mult = G.doFunc('production multiplier');//global production multiplier - affects how many times the unit effects will be applied every tick
 
                 var len = G.unitsOwned.length;
                 //we turn the list of owned units into internally shuffled sections sorted by priority, then work through those in order
@@ -22883,7 +22884,7 @@ if (getObj("civ") != "1") {
                         var eatongathermult = 0.5;
                         var happinessLevel = G.getRes('happiness').amount / me.amount;
                         if (G.checkPolicy('eat on gather') == 'on' && G.getRes('happiness').amount / me.amount < 70 && G.getRes('food').amount > 0) changeHappiness(me.amount * eatongathermult, 'instant eating');
-                        var productionMult = G.doFunc('production multiplier', 1);
+                        var productionMult = G.doFunc('production multiplier');
 
                         var deathUnhappinessMult = 1;
                         if (G.has('fear of death')) deathUnhappinessMult *= 2 * (G.has('bII(normal)') ? 0.95 : 1);
