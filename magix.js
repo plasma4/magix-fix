@@ -3029,7 +3029,7 @@ if (getObj("civ") != "1") {
                         }
                     }
 
-                    if (G.getRes('wisdom').amount < 0 && G.getRes('insight').amount < 25 && Math.random() < G.getUnitAmount('dreamer') / 50) {
+                    if (G.getRes('wisdom').amount < 25 && G.getRes('insight').amount < 25 && Math.random() < G.getUnitAmount('dreamer') / 50) {
                         G.getRes('insight').amount = Math.min(Math.ceil(G.getRes('insight').amount + G.getUnitAmount('dreamer') / 50), 25); // prevent negative wisdom from losing too many wizards from softlocking
                     }
 
@@ -10890,7 +10890,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'wonderful fortress of christmas',
-                desc: 'Constucted in snowy biomes, the colossal and giant [wonderful fortress of christmas,Wonderful fortress of Christmas] is taller and bigger than anything else nearby, showing its shadow to festive villages and cities all around. //Full of lights and ornaments so that its mightiness is also the art of beauty. //This giant wonder takes a lot of steps to be built though! //<small>Merry Christmas!</small>',
+                desc: 'Constucted in snowy biomes, the colossal [wonderful fortress of christmas,Wonderful fortress of Christmas] is taller than anything else nearby, casting its shadow over the nearby festive villages and cities. //Full of lights and ornaments so that its mightiness is also the art of beauty. //This giant wonder takes a lot of steps to build though! //<small>Merry Christmas!</small>',
                 icon: [0, 12, 'seasonal'],
                 wonder: '.',
                 steps: 1200,
