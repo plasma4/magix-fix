@@ -3669,7 +3669,6 @@ if (getObj("civ") != "1") {
                             if (G.has('revenants') && (!(day + leap <= 40 && day + leap >= 46 && G.has('peace')) || Math.random() < 0.1)) {
                                 if (G.day % 3 == 0) {
                                     var revengeAmount = G.day % 45 == 0 ? randomFloor((G.getRes('corpse').amount + graves.used) * 0.00125 * (G.traitByName['revenants'].yearOfObtainment ? 1 + Math.pow(G.year - G.traitByName['revenants'].yearOfObtainment, 0.9) * 0.001 : 1)) : randomFloor(G.day % 15 == 0 ? Math.random() * 30 + 8 : (Math.random() * 3.5 + 2));
-                                    console.log(revengeAmount + " on day " + (G.day % 45))
                                     var lostAmount = G.lose('corpse', revengeAmount, 'revenge of corpses');
                                     if (lostAmount < revengeAmount) {
                                         graves.used = Math.max(0, graves.used - (revengeAmount - lostAmount));
@@ -16683,13 +16682,13 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'patron2',
-                displayName: 'Wuraloik The Son of the Forest',
-                desc: '[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has often fixes a lot of troubles and that aggression isn\'t needed to solve most problems. Also, [wizard]s believe that The Son created once a true Oasis of Peace. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                displayName: 'Wuraloik the Son of the Forest',
+                desc: '[patron2] represents nature and its flora. @This patron is also symbolizes calm and peace. @Your [wizard]s and people picking this patron want to mark that peace has often fixes a lot of troubles and that aggression isn\'t needed to solve most problems. Also, [wizard]s believe that this Son created once a true Oasis of Peace. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [1, 32, "magixmod"],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron1': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('patron2').displayName = G.getName('civ')[0].toUpperCase() + 'wuraloik The Son of the Forest'; } },
+                    { type: 'function', func: function () { G.getDict('patron2').displayName = G.getName('civ')[0].toUpperCase() + 'wuraloik the Son of the Forest'; } },
                 ],
                 category: 'religion', chance: 60,
                 switchCategory: false,
@@ -16697,13 +16696,13 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'patron3',
-                displayName: 'Rvikol The Guide of the Winds',
-                desc: '[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuosity. @Your [wizard]s picking and sending their hopes to [patron3,Him] want to mark that change may be sudden, but can result in being better off. Also, [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven, preventing them from being absorbed by darkness of the Hell or Underworld. //Belief in that patron persists through the ages. Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                displayName: 'Rvikol the Guide of the Winds',
+                desc: '[patron3] represents winds and hurricanes. @This patron is also symbolizes time and impetuosity. @Your [wizard]s who sent their hopes to [patron3,Him] want to mark that change may be sudden, but also beneficial. Also, [wizard]s believe that one of [patron3,His] winds will blow their souls right to the Heaven, preventing them from being absorbed by darkness of the Hell or Underworld. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [2, 32, "magixmod"],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron1': false, 'patron4': false, 'patron5': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('patron3').displayName = G.getName('civ')[0].toUpperCase() + 'rvikol The Guide of the Winds'; } },
+                    { type: 'function', func: function () { G.getDict('patron3').displayName = G.getName('civ')[0].toUpperCase() + 'rvikol the Guide of the Winds'; } },
                 ],
                 category: 'religion', chance: 60,
                 switchCategory: false,
@@ -16725,13 +16724,13 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'patron5',
-                displayName: 'Takerus The Stormlord',
+                displayName: 'Takerus the Stormlord',
                 desc: '[patron5] represents precision and impulsivity. @This patron also symbolizes indigation and quick action. @Your [wizard]s picking this patron want to mark that sometimes all of us need to perform a decision in a short period of time. Also, [wizard]s believe that [patron5,The Stormlord] will guide through the lives of [population,people], helping to make decisions with His precision. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [4, 32, "magixmod"],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron1': false, 'patron6': false, 'patron8': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('patron5').displayName = G.getName('civ')[0].toUpperCase() + 'takerus The Stormlord'; } },
+                    { type: 'function', func: function () { G.getDict('patron5').displayName = G.getName('civ')[0].toUpperCase() + 'takerus the Stormlord'; } },
                 ],
                 category: 'religion', chance: 60,
                 switchCategory: false,
@@ -16763,13 +16762,13 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'patron7',
-                displayName: 'Chirus the time watcher',
+                displayName: 'Chirus the Time Watcher',
                 desc: '[patron7] is all about time and how it passes. @This patron also symbolizes how things pass away all the time. @Your [wizard]s picking this patron want to mark that they realize this. Also, [wizard]s believe that [patron7,The Time Watcher] will prolong their lives. //<b>Carpe diem!</b> //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [8, 32, "magixmod"],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron8': false, 'unknown patron': false, 'nonpatronage': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('patron7').displayName = G.getName('civ')[0].toUpperCase() + 'chirus the time watcher'; } },
+                    { type: 'function', func: function () { G.getDict('patron7').displayName = G.getName('civ')[0].toUpperCase() + 'chirus the Time Watcher'; } },
                 ],
                 category: 'religion', chance: 60,
                 switchCategory: false,
@@ -16777,13 +16776,13 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'patron8',
-                displayName: 'Hzakilok the homepeace keeper',
-                desc: '[patron8] is a patron of [housing,Houses]. @This patron also symbolizes how the best place is still your own home. @Your [wizard]s picking this patron want to point out how their homeland should be a peaceful place. Also, [wizard]s believe that [patron8,The Homepeace keeper] will protect [housing,Houses] from evil and dark powers. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
+                displayName: 'Hzakilok the Homepeace Keeper',
+                desc: '[patron8] is a patron of [housing,Houses]. @This patron also symbolizes how the best place is still your own home. @Your [wizard]s picking this patron want to point out how their homeland should be a peaceful place. Also, [wizard]s believe that [patron8,The Homepeace Keeper] will protect [housing,Houses] from evil and dark powers. //Belief in that patron persists through the ages. <font color="fuschia">Be aware that patrons do not involve gameplay in any way. It is just some lore.</font>',
                 icon: [7, 32, "magixmod"],
                 cost: { 'culture': 75, 'faith': 5, 'insight': 105 },
                 req: { 'wizardry': true, 'patron2': false, 'patron3': false, 'patron4': false, 'patron5': false, 'patron1': false, 'patron6': false, 'patron7': false, 'unknown patron': false, 'nonpatronage': false },
                 effects: [
-                    { type: 'function', func: function () { G.getDict('patron8').displayName = G.getName('civ')[0].toUpperCase() + 'hzakilok the homepeace keeper'; } },
+                    { type: 'function', func: function () { G.getDict('patron8').displayName = G.getName('civ')[0].toUpperCase() + 'hzakilok, the Homepeace Keeper'; } },
                 ],
                 category: 'religion', chance: 60,
                 switchCategory: false,
