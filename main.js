@@ -7504,11 +7504,12 @@ G.Launch=function()
 			} else {
 				// A rather strange function with the purpose of trying to get files that don't work with XMLHttpRequests or when you don't have internet
 				let triedOffline = false
+				let onlineLoaded = false
 				function tryOffline() {
-					if (triedOffline) {
+					if (triedOffline || onlineLoaded) {
 						return
 					}
-					offlineMode = true
+					//offlineMode = true
 					triedOffline = true
 					var offlineScript=localStorage.getItem("nelOffline"+i);
 					if (offlineScript==null) {
@@ -7556,6 +7557,7 @@ G.Launch=function()
 				setTimeout(tryOffline, 2000);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
+					onlineLoaded = true;
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
 					script.innerHTML=v;
@@ -8360,4 +8362,5 @@ window.onload=function()
 			G.LoadResources();
 		}
 	}
+
 };
