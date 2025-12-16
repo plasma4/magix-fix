@@ -22,8 +22,8 @@ Upon loading it, you should be able to play the game!
 Here are a few examples:
 - Multiple game-breaking bugs are **fixed** now (in particular, bookwriting will no longer cause problems)
 - Thousands of spelling and text issues corrected or improved
-- Some alternative techs can now be obtained simultaneously
-- Various traits have been fixed
+- Picking alternative techs no longer causes issues
+- Various techs/traits and their stats have been fixed
 - A few new unique trials implemented
 - Dozens of techs and mechanics have been added (including a new way to get sand)
 - Negative costs are hidden now

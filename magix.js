@@ -4947,14 +4947,14 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'crossbow',
-                desc: 'A more effective weapon that is easier to use. Your hunter or soldier will now need to just click to release their belt.' + numbersInfo,
+                desc: 'A more effective weapon that is easier to use than a standard [bow]. Your hunter or soldier will now need to just click to release their belt.' + numbersInfo,
                 icon: [13, 6, "magixmod"],
                 category: 'gear',
                 displayUsed: true,
             });
             new G.Res({
                 name: 'arrow',
-                desc: 'A piece of ammo for ranged weapons like [bow]s and [crossbow]s. //Required to keep units that use this stuff working properly.',
+                desc: 'A piece of ammo for ranged weapons like [bow]s and [crossbow]s. //Required to keep units using those tools active.',
                 icon: [13, 7, "magixmod"],
                 category: 'gear',
             });
@@ -7173,14 +7173,14 @@ if (getObj("civ") != "1") {
                     },
                     { type: 'gather', context: 'hunt', amount: 1, max: 5, mode: 'endurance hunting', req: { 'hunting III': false } },
                     //SPEARS
-                    { type: 'gather', context: 'hunt', amount: 2, max: 4, mode: 'spear hunting', req: { 'aiming': false } },
-                    { type: 'gather', context: 'hunt', amount: 2.5, max: 5, mode: 'spear hunting', req: { 'aiming': true } },
+                    { type: 'gather', context: 'hunt', amount: 1, max: 4, mode: 'spear hunting', req: { 'aiming': false } },
+                    { type: 'gather', context: 'hunt', amount: 1.6, max: 8, mode: 'spear hunting', req: { 'aiming': true } },
                     //BOW
-                    { type: 'gather', context: 'hunt', amount: 1.6, max: 2, mode: 'bow hunting', req: { 'aiming': false } },
-                    { type: 'gather', context: 'hunt', amount: 4, max: 5, mode: 'bow hunting', req: { 'aiming': true } },
+                    { type: 'gather', context: 'hunt', amount: 1, max: 4, mode: 'bow hunting', req: { 'aiming': false } },
+                    { type: 'gather', context: 'hunt', amount: 1.8, max: 9, mode: 'bow hunting', req: { 'aiming': true } },
                     //CROSSBOW
-                    { type: 'gather', context: 'hunt', amount: 1.8, max: 2.2, mode: 'crossbow hunting', req: { 'aiming': false } },
-                    { type: 'gather', context: 'hunt', amount: 4.5, max: 5.5, mode: 'crossbow hunting', req: { 'aiming': true } },
+                    { type: 'gather', context: 'hunt', amount: 1, max: 4, mode: 'crossbow hunting', req: { 'aiming': false } },
+                    { type: 'gather', context: 'hunt', amount: 2, max: 10, mode: 'crossbow hunting', req: { 'aiming': true } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30, req: { 'hunting III': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 40, req: { 'hunter\'s coordination': true, 'an armor for Hunter': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 65, req: { 'an armor for Hunter': true } },
@@ -7210,14 +7210,14 @@ if (getObj("civ") != "1") {
                     'catch by hand': { name: 'Catch by hand', icon: [0, 6], desc: 'Catch fish with nothing but bare hands.//Slow and tedious.', req: { 'fishing III': false } },
                     'spear fishing': { name: 'Spear fishing', icon: [5, 9], desc: 'Catch fish with spears.', use: { 'stone weapons': 1 }, req: { 'spears': true, 'fishing III': false } },
                     'line fishing': { name: 'Line fishing', icon: [7, 21, "magixmod"], desc: 'Catch fish with fishing poles.', use: { 'stone tools': 1, 'bugs': 10 }, req: { 'fishing hooks': true } },
-                    'net fishing': { name: 'Net fishing', icon: [13, 8, "magixmod"], desc: 'Catch fish with [fishing net].', req: { 'fishing II': true }, use: { 'fishing net': 1 } },
+                    'net fishing': { name: 'Net fishing', icon: [13, 8, "magixmod"], desc: 'Catch fish with fishing nets.', req: { 'fishing II': true }, use: { 'fishing net': 1 } },
                 },
                 effects: [
                     { type: 'gather', context: 'fish', amount: 1.5, max: 5, mode: 'catch by hand', req: { 'fishing III': false } },
                     //SPEARS
-                    { type: 'gather', context: 'fish', amount: 2, max: 4, mode: 'spear fishing', req: { 'aiming': false, 'fishing III': false } },
-                    { type: 'gather', context: 'fish', amount: 2.5, max: 5, mode: 'spear fishing', req: { 'aiming': true } },
-                    { type: 'gather', context: 'fish', amount: 2.5, max: 5, mode: 'line fishing' },
+                    { type: 'gather', context: 'fish', amount: 1.5, max: 4, mode: 'spear fishing', req: { 'aiming': false } },
+                    { type: 'gather', context: 'fish', amount: 2.4, max: 8, mode: 'spear fishing', req: { 'aiming': true } },
+                    { type: 'gather', context: 'fish', amount: 3, max: 10, mode: 'line fishing' },
                     { type: 'gather', context: 'fish', what: { 'seafood': 6 }, amount: 6, max: 8, mode: 'net fishing' },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     { type: 'mult', value: 1.5, req: { 't6': true } },
@@ -11287,7 +11287,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({ //New unit!!!!! Again!!!!!
                 name: 'golden mana maker',
-                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water] and secret rituals. Also requires more [alchemy zone]s, and is 150 times faster than [mana crafting stand]s!',
+                desc: 'A man who can make [mana] six times faster than normal [mana maker]s by using [gold block]s, [insight], and [water] combined with secret rituals. Requires more [alchemy zone]s but is 150 times faster than [mana crafting stand]s!',
                 icon: [1, 5, "magix2"],
                 cost: { 'insight': 100, 'gold block': 50 },
                 use: { 'alchemy zone': 8, 'worker': 1 },
@@ -11775,14 +11775,14 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'spears', category: 'tier1',
                 displayName: 'Spears and maces',
-                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes have only 80% of its normal efficiency (however, it is still faster than without tools). To remove that penalty, obtain the [aiming] research.',
+                desc: '@[artisan]s can now craft [stone weapons]@unlocks new modes for [hunter]s and [fisher]s<>Using tools as weapons opens a world of possibilities, from hunting to warfare. <b>Spear hunting/fishing</b> modes have only 80% of their normal efficiencies (however, it is still faster than without tools). To make using [stone weapons] faster than without tools, obtain the [aiming] research.',
                 icon: [26, 1],
                 cost: { 'insight': 10 },
                 req: { 'tool-making': true },
             });
             new G.Tech({
                 name: 'bows', category: 'tier1',
-                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<><b>Bow hunting</b> has only 40% of its normal efficiency (slower than without tools). To make it faster than the default mode, obtain the [aiming] research.',
+                desc: '@[artisan]s can now craft [bow]s@unlocks new modes for [hunter]s<><b>Bow hunting</b> has only 40% of their normal efficiency (slower than without tools). To make using [bow]s faster than without tools, obtain the [aiming] research.',
                 icon: [27, 1],
                 cost: { 'insight': 20 },
                 req: { 'spears': true },
@@ -12162,14 +12162,14 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'hunting II', category: 'upgrade',
-                desc: 'Builds upon the hunting skills of your civilization. @Unlocks a way to craft a new weapon, allowing artisans to make [crossbow]s.',
+                desc: 'Builds upon the hunting skills of your civilization. @Unlocks a way to craft a new weapon, allowing artisans to make powerful and more effective [crossbow]s along with [bow]s.',
                 icon: [15, 0, "magixmod"],
                 cost: { 'insight': 385, 'wisdom': 10 },
                 req: { 'wizardry': true, 'hunting': true },
             });
             new G.Tech({
                 name: 'fishing II', category: 'upgrade',
-                desc: 'Builds upon the fishing skills of your civilization. @Introduces [fishing net] to your [fisher]s!',
+                desc: 'Builds upon the fishing skills of your civilization. @Introduces the [fishing net] to your [fisher]s!',
                 icon: [1, 7, "magixmod"],
                 cost: { 'insight': 385, 'wisdom': 10 },
                 req: { 'wizardry': true, 'fishing': true },
@@ -15603,7 +15603,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'aiming', category: 'tier1',
-                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>However, improved accuarcy will increase the chances of good aim, meaning that <b>Bow hunting</b> and <b>Spear hunting/fishing</b> become faster.',
+                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that your people tried to catch food by just testing their luck.<>However, teaching aiming will allow <b>Bow hunting</b> to become 80% faster than without tools and <b>Spear hunting/fishing</b> to become 60% faster than without tools.',
                 icon: [33, 28, "magixmod"],
                 req: { 'spears': true, 'bows': true, 'building': true },
                 cost: { 'insight': 17, 'influence': 3 },
@@ -20348,7 +20348,7 @@ if (getObj("civ") != "1") {
                                     '<br><br><Br><br>' +
                                     '<center><font color="#f70054">' + noteStr + '</font>' +
                                     '<br>Trial rules<br>' +
-                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">Spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you will lose ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, you will immediately fail the trial and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer will only work at 10% of its normal efficiency. Build up a replacement of the Mausoleum...the Faithoselum...and try to ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s helpers.' +
+                                    'Be faithful. Only faith will lead you to victory. In this plane you start with 100 <font color="#d51eef">Spirituality</font> and 100 <font color="#d51eef">Faith</font>. Each year you will lose ' + (5 + G.achievByName['faithful'].won) + ' Faith. Be careful! If you lose all of your Faith, you will immediately fail the trial and you will come back to the mortal world. The more you research, the more Faith you will lose. In addition, Soothsayer will only work at 10% of their normal efficiency. Build up a replacement of the Mausoleum...the Faithoselum...and try to ascend by it. Completing the trial causes Soothsayers to generate faith more, so early-game faith gathering will be easier because of Enlightened\'s helpers.' +
                                     '<div class="fancyText title">Tell me your choice...</div>' +
                                     '<center>' + G.button({
                                         text: 'Start the trial', tooltip: 'Let the Trial begin. You\'ll pseudoascend.', onclick: function () {
@@ -24352,7 +24352,7 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'arrow',
-                desc: 'A piece of ammo for ranged [bow]s. //Required to keep units that use this stuff working properly.',
+                desc: 'A piece of ammo for ranged weapons like [bow]s. //Required to keep units using those tools active.',
                 icon: [19, 7, "c2"],
                 category: 'gear',
             });
@@ -24717,11 +24717,11 @@ if (getObj("civ") != "1") {
                     },mode:'crossbow hunting'},*/
                     { type: 'gather', context: 'hunt', amount: 1, max: 4.25, mode: 'endurance hunting' },
                     //SPEARS
-                    { type: 'gather', context: 'hunt', amount: 1.5, max: 4, mode: 'spear hunting', req: { 'aiming': false } },
-                    { type: 'gather', context: 'hunt', amount: 2.5, max: 5, mode: 'spear hunting', req: { 'aiming': true } },
+                    { type: 'gather', context: 'hunt', amount: 1, max: 4.25 * 0.8, mode: 'spear hunting', req: { 'aiming': false } },
+                    { type: 'gather', context: 'hunt', amount: 1.6, max: 4.25 * 1.6, mode: 'spear hunting', req: { 'aiming': true } },
                     //BOW
-                    { type: 'gather', context: 'hunt', amount: 0.7, max: 2, mode: 'bow hunting', req: { 'aiming': false } },
-                    { type: 'gather', context: 'hunt', amount: 4, max: 5, mode: 'bow hunting', req: { 'aiming': true } },
+                    { type: 'gather', context: 'hunt', amount: 1, max: 4.25 * 0.8, mode: 'bow hunting', req: { 'aiming': false } },
+                    { type: 'gather', context: 'hunt', amount: 1.8, max: 4.25 * 1.8, mode: 'bow hunting', req: { 'aiming': true } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, '[X] [elves] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30 },
                     //trends
                     { type: 'gather', context: 'hunt', what: { 'hide': 1 }, req: { 'htt1': true } },
@@ -26422,7 +26422,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'aiming', category: 'tier1',
-                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that hunters were shooting arrows from bows and just trying their luck. Same with spear throwing.<>However, improved accuarcy will increase the chances of good aim, meaning that <b>Bow hunting</b> and <b>Spear hunting/fishing</b> become faster.',
+                desc: 'Teach your [hunter]s and [fisher]s how to be more accurate. The problem was that your people tried to catch food by just testing their luck.<>However, teaching aiming will allow <b>Bow hunting</b> to become 80% faster than without tools and <b>Spear hunting/fishing</b> to become 60% faster than without tools.',
                 icon: [25, 8, "c2"],
                 req: { 'spears': true, 'bows': true, 'building': true },
                 cost: { 'discernment': 24, 'creativity': 12 },
