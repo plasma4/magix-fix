@@ -1,5 +1,6 @@
 /*
-    Setup process:
+Check the GitHub at https://github.com/plasma4/magix-fix for the more detailed and easier-to-read information.
+Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
 javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),onbeforeunload=null,location.reload()
@@ -25,6 +26,13 @@ https://file.garden/ZmatEHzFI2_QBuAF/magix.js
 //===========================
 //Detect invalid mods
 if (window.magixLoaded === 1 && !window.skipModCheck) {
+    if (window.location.hostname == "orteil.dashnet.org") { // Analytics for the official Dashnet domain
+        const analyticsScript = document.createElement("script");
+        analyticsScript.defer = true;
+        analyticsScript.src = "https://static.cloudflareinsights.com/beacon.min.js";
+        analyticsScript.setAttribute("data-cf-beacon", '{"token": "2768a8a828844f0596ac67d67320da70"}');
+        document.body.appendChild(analyticsScript);
+    }
     window.magixLoaded = 2
     var modLen = G.mods.length
     if (modLen > 2 && (G.mods[modLen - 2].name === "MagixUtils" || G.mods[0].url === "data.js")) {
@@ -2469,7 +2477,7 @@ if (getObj("civ") != "1") {
                         G.middleText('- Completed <font color="indigo">Man of essences</font> achievement -')
                     }
                     //3rd party achievement's code
-                    if (G.mods.length !== 2 || !(G.mods[0].url.includes("/magixUtils.js")) || !(G.mods[1].url.includes("/magix.js"))) {
+                    if (G.mods.length !== 2 || !(G.mods[0].url.includes("magixUtils.js")) || !(G.mods[1].url.includes("magix.js"))) {
                         if (G.achievByName['3rd party'].won === 0) {
                             G.achievByName['3rd party'].won = 2 //Fix for displaying over time middleText
                             G.middleText('- Completed <font color="pink">3rd party</font> achievement -', 'slow')
@@ -7176,7 +7184,7 @@ if (getObj("civ") != "1") {
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 30, req: { 'hunting III': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 40, req: { 'hunter\'s coordination': true, 'an armor for Hunter': false } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.03, true, '[X] [people] wounded while hunting.', 'hunter was', 'hunters were'), chance: 1 / 65, req: { 'an armor for Hunter': true } },
-                    { type: 'mult', value: 1.35, req: { 'se04': true } },
+                    { type: 'mult', value: 1.35, req: { 'se04': 'on' } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on', 'hunters & fishers unification': false } },
                     // { type: 'mult', value: 0.5, req: { 'frost': true } }, // added by Garchmop, testingMagix moment
                     { type: 'mult', value: 0.2, req: { 'eat on gather': 'on' } },
@@ -10088,7 +10096,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'fish', what: { 'seafood': 400 }, req: { 'se05': 'on' } },
                     { type: 'gather', context: 'fish', what: { 'ink': 2 }, req: { 'ink-fishing': true } },
                     { type: 'convert', from: { 'adult': 2 }, into: { 'wounded': 2 }, every: 7, chance: 1 / 115 },
-                    { type: 'mult', value: 1.35, req: { 'se05': true } },
+                    { type: 'mult', value: 1.35, req: { 'se05': 'on' } },
                     { type: 'mult', value: 1.35, req: { 'harvest rituals': 'on' } },
                     { type: 'convert', from: { 'meat': 4, 'seafood': 3 }, into: { 'cooked meat': 4, 'seafood': 3 }, every: 2, req: { 'camp-cooking': true } },
                     { type: 'function', func: unitGetsConverted({ 'wounded': 1 }, 0.001, 0.005, true, '[X] [people] wounded while camp hunting.', 'hunter was', 'hunters were'), chance: 1 / 1200, req: {} },

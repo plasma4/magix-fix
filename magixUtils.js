@@ -1,5 +1,6 @@
 /*
-    Setup process:
+Check the GitHub at https://github.com/plasma4/magix-fix for the more detailed and easier-to-read information.
+Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
 javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),onbeforeunload=null,location.reload()
@@ -321,9 +322,8 @@ G.Save = function (toStr) {
     str += '|';
 
     //Important for file-based saves
-    if (toStr) {
-        str = str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
-        console.log(str)
+    if (toStr && window.magixSources) {
+        str = str.replace("magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
     }
     //console.log('SAVE');
     //console.log(str);

@@ -383,6 +383,7 @@ new G.Unit({
 18. Note that the game uses `PicLoader` to cache images properly, but you might not be able to use that tool if you have your own mod. Magix(-fix version) tries to solve this problem by creating a `new Image()` at the start and setting it to a global variable (and uses the `johnsModLoaded` trick to only make one new image).
 19. Magix adds touchscreen support, and makes stuff smaller for smaller resolutions (such as mobile). Search "Allow touchscreen" in `magix.js` to see the changes! If you are considering mobile support, and implement the code for small/half sizes in `newMagix.css`. Additionally, you will want to use your own version of `G.stabilizeResize` (since Magix has more tabs and features, its logic is all weird).
 20. On the topic of better UI it is strongly suggested to incorporate some of `newMagix.css` into your game to prevent weird situations such as the speed/debug buttons at the top of the screen "unhovering" itself every so often (that happens because the `logoOverB` element wiggles periodically and somehow messes up button clicking).
+21. One last thing: seraphin policies (like `se01`-`se12`) start off as `false` rather than `off`. This issue to disappear after unlocking trial keys (instead switching to `'off'` or `'on'`). Due to this awkward inconsistency, it is recommended to implement custom or redundant checks for this edge case.
 
 ## Optimization
 Magix-fix contains a *lot* of optimization that may not immediately be apparent. So, I've compiled this list to try to find them for other modders:
