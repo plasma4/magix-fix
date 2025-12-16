@@ -7562,6 +7562,7 @@ G.Launch=function()
 				setTimeout(tryOffline, 2000);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
+					onlineLoaded = true;
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
 					script.innerHTML=v;
@@ -8367,4 +8368,5 @@ window.onload=function()
 			G.LoadResources();
 		}
 	}
+
 };
