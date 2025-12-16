@@ -739,8 +739,19 @@
                 if (type === "waste") {
                     info = "will waste"
                 } else if (type === "gather") {
+                    var amount = effect.amount
                     if (effect.what) {
-                        info = "gathers " + parseRes(obj, effect.what)
+                        if (amount) {
+                            info = "tries gathering " + amount + parseRes(obj, effect.what)
+                        } else {
+                            info = "gathers " + parseRes(obj, effect.what)
+                        }
+                    } else if (amount) {
+                        info = "tries gathering " + amount
+                    }
+                    var max = effect.max
+                    if (max) {
+                        info += " (capped at " + max + ")"
                     }
                 } else if (type === "convert") {
                     info = "converts " + parseRes(obj, effect.from) + " into " + parseRes(obj, effect.into)
@@ -749,16 +760,16 @@
                 } else if (type === "addFree" && effect.what.worker) {
                     info = "each idle worker will work at " + (effect.what.worker * 100) + "% the speed of this unit for free"
                 }
+                var context = effect.context
+                if (context) {
+                    info += ' within the internal context of <span class="mono">' + context + "</span>"
+                }
                 if (req && Object.getOwnPropertyNames(req).length !== 0) {
                     info += " if you have " + parseReq(obj, req)
                 }
                 var chance = effect.chance
                 if (chance) {
-                    info += " with a chance of " + (chance * 100) + "%"
-                }
-                var context = effect.context
-                if (context) {
-                    info += ' within the internal context of <span class="mono">' + context + "</span>"
+                    info += ", with a chance of " + (chance * 100) + "%"
                 }
                 var notMode = effect.notMode
                 if (notMode) {
@@ -767,10 +778,6 @@
                 var mode = effect.mode
                 if (mode) {
                     info += ' for the mode ID <span class="mono">' + mode + "</span>"
-                }
-                var max = effect.max
-                if (max) {
-                    info += " its gathering is capped at " + max
                 }
                 var every = effect.every
                 if (every && every !== 1) {

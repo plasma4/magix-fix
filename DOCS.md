@@ -75,7 +75,7 @@ new G.Unit({
     //upkeep:{'food':0.2},
     //alternateUpkeep:{'food':'spoiled food'},
     effects: [
-        { type: 'gather', context: 'gather', amount: 2, max: 4 }, // Gather something within the harvesting context of 'gather' (explained later), 
+        { type: 'gather', context: 'gather', amount: 2, max: 4 }, // Gather something within the harvesting context of 'gather' (explained later), amount property explained in Additional info
         { type: 'gather', context: 'hunt', amount: 0.1, max: 0.2, chance: 0.1, req: { 'carcass-looting': true } }, // In the 'hunt' context with a smaller chance and a requirement
         ...
     ]
