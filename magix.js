@@ -6902,6 +6902,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'gather', what: { 'spices': 0.003 }, amount: 1, max: 1, req: { 'spicy foods II': true, 'spicy foods III': false } },
                     { type: 'gather', context: 'gather', what: { 'spices': 0.009 }, amount: 1, max: 1, req: { 'spicy foods III': true } },
                     { type: 'gather', context: 'kelp', amount: 0.03, req: { 'aquatic food': true } },
+                    { type: 'gather', context: 'mushroom', amount: 0.000001, max: 0.0001, req: { 'mushroom farming': true } },
                     { type: 'addFree', what: { 'worker': 0.1 }, req: { 'scavenging': true } },
                     { type: 'mult', value: 1.2, req: { 'harvest rituals': 'on' } },
                     { type: 'mult', value: 1.075, req: { 'focused gathering': true, 'moderation': true } },
@@ -8227,7 +8228,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'hut of potters',
-                desc: 'Does the same thing as [potter] originally did. All 4 modes he had are active all the time in this unit!',
+                desc: 'Does the same thing that [potter]s originally did, but on an industrial scale. All 4 modes he had are active all the time in this unit!',
                 icon: [20, 18, "magixmod"],
                 cost: { 'basic building materials': 475, 'archaic building materials': 500 },
                 upkeep: { 'fire pit': 1 },
@@ -8245,7 +8246,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'factory of pots',
-                desc: 'Does the same thing as [potter] originally did, but on an industrial scale. All 4 modes he had are active all the time in this unit!',
+                desc: 'Does the same thing that [potter]s originally did, but on an industrial scale. All 4 modes he had are active all the time in this unit!',
                 icon: [14, 18, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
@@ -8262,7 +8263,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'leather factory',
-                desc: 'Does the same thing as [clothier]s making [leather] and [drying rack]s on an industrial scale.',
+                desc: 'Does the same thing that [clothier]s originally did, but makes [leather] and [dried leather] on an industrial scale.',
                 icon: [15, 18, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
                 upkeep: { 'coal': 2, 'fire pit': 1 },
@@ -11245,29 +11246,31 @@ if (getObj("civ") != "1") {
                 desc: '@This factory can process many resources, turning them into [heating capability,Heating power] on an industrial scale. @production has a chance to fail',
                 icon: [34, 16, "magixmod"],
                 cost: { 'basic building materials': 775, 'basic factory equipment': 400 },
-                upkeep: { 'coal': 3, 'fire pit': 1, 'food': 25, 'water': 35 },
+                upkeep: { 'coal': 3, 'food': 25, 'water': 30 },
                 use: { 'worker': 20, 'land': 2, 'stone tools': 32 },
                 req: { 'moderation': true, 'factories II': true },
                 gizmos: true,
                 category: 'crafting',
                 modes: {
-                    'log': { name: 'Process logs', icon: [1, 6], desc: 'Process 30 [log]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
-                    'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 400 [stick]s and 1 [lightning essence], turning them into 15 [fire pit]s each.' },
-                    'essence': { name: 'Process essences', icon: [0, 2, "magixmod"], desc: 'Process 25 [fire essence] and 5 [lightning essence], turning them into 20 [fire pit]s each.' },
-                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 20 [coal] and 2 [lightning essence], turning them into 20 [fire pit]s each.' },
-                    'oil': { name: 'Process various fuels', icon: [5, 4, "magix2"], desc: 'Process 20 [coal], 10 [charcoal], and 10 [oil], turning them into 30 [fire pit]s each. Has a chance to convert [charcoal] into [lightning essence]!', req: { 'oil-digging II': true } },
+                    'log': { name: 'Process logs', icon: [1, 6], desc: 'Process 300 [log]s and 1 [lightning essence], turning them into 150 [fire pit]s each.' },
+                    'stick': { name: 'Process sticks', icon: [0, 6], desc: 'Process 4,000 [stick]s and 1 [lightning essence], turning them into 150 [fire pit]s each.' },
+                    'essence': { name: 'Process essences', icon: [0, 2, "magixmod"], desc: 'Process 250 [fire essence] and 50 [lightning essence], turning them into 200 [fire pit]s each.' },
+                    'coal': { name: 'Process coal', icon: [12, 8], desc: 'Process 500 [coal] and 20 [lightning essence], turning them into 200 [fire pit]s each.' },
+                    'oil': { name: 'Process various fuels', icon: [5, 4, "magix2"], desc: 'Process 300 [coal], 100 [charcoal], and 100 [oil], turning them into 30 [fire pit]s each. Has a chance to convert [charcoal] into [lightning essence]!', req: { 'oil-digging II': true } },
                 },
                 effects: [
-                    { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log', req: { 'hotter factories': false } },
-                    { type: 'convert', from: { 'stick': 400, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'stick', req: { 'hotter factories': false } },
-                    { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 8, chance: 0.7, mode: 'essence', req: { 'hotter factories': false } },
-                    { type: 'convert', from: { 'coal': 20, 'lightning essence': 1 }, into: { 'fire pit': 8 }, every: 8, chance: 0.7, mode: 'coal', req: { 'hotter factories': false } },
-                    { type: 'convert', from: { 'log': 30, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'log', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'stick': 400, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.95, mode: 'stick', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'fire essence': 25, 'lightning essence': 5 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'essence', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'coal': 20, 'lightning essence': 2 }, into: { 'fire pit': 8 }, every: 6, chance: 0.95, mode: 'coal', req: { 'hotter factories': true } },
-                    { type: 'convert', from: { 'coal': 20, 'charcoal': 10, 'oil': 10 }, into: { 'fire pit': 20 }, every: 6, chance: 0.95, mode: 'oil' },
-                    { type: 'convert', from: { 'charcoal': 10 }, into: { 'lightning essence': 5 }, every: 6, chance: 0.15, mode: 'oil' },
+                    { type: 'convert', from: { 'log': 300, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'log', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'stick': 4000, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 8, chance: 0.7, mode: 'stick', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'fire essence': 250, 'lightning essence': 50 }, into: { 'fire pit': 20 }, every: 8, chance: 0.7, mode: 'essence', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'coal': 500, 'lightning essence': 20 }, into: { 'fire pit': 8 }, every: 8, chance: 0.7, mode: 'coal', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'coal': 300, 'charcoal': 100, 'oil': 100 }, into: { 'fire pit': 20 }, every: 8, chance: 0.7, mode: 'oil', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'charcoal': 10 }, into: { 'lightning essence': 5 }, every: 8, chance: 0.15, mode: 'oil', req: { 'hotter factories': false } },
+                    { type: 'convert', from: { 'log': 300, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.9, mode: 'log', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'stick': 4000, 'lightning essence': 1 }, into: { 'fire pit': 15 }, every: 6, chance: 0.9, mode: 'stick', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'fire essence': 250, 'lightning essence': 50 }, into: { 'fire pit': 20 }, every: 6, chance: 0.9, mode: 'essence', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'coal': 500, 'lightning essence': 20 }, into: { 'fire pit': 8 }, every: 6, chance: 0.9, mode: 'coal', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'coal': 300, 'charcoal': 100, 'oil': 100 }, into: { 'fire pit': 20 }, every: 6, chance: 0.9, mode: 'oil', req: { 'hotter factories': true } },
+                    { type: 'convert', from: { 'charcoal': 10 }, into: { 'lightning essence': 5 }, every: 6, chance: 0.25, mode: 'oil', req: { 'hotter factories': true } },
                 ],
             });
             new G.Unit({ //New unit!!!!!
@@ -11303,9 +11306,9 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({ //running out of comment ideas now :/
                 name: 'mushroom farm',
-                desc: 'A unique farm that produces a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
+                desc: 'A unique farm that cultivates a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
                 icon: [7, 5, "magix2"],
-                cost: { 'herbs': 10000 },
+                cost: { 'mushroom': 250 },
                 req: { 'mushroom farming': true },
                 use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 12 },
@@ -16885,7 +16888,7 @@ if (getObj("civ") != "1") {
             //halloween part two
             new G.Tech({
                 name: 'halloween ornaments',
-                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various [halloween ornaments,Spooky ornaments] create better a Halloween climate, which makes everything more festive (in a slightly scary way). //<small>Woah...*trembles*</small>',
+                desc: 'Increases your [spookiness] gain from all sources by +25%. //Various [halloween ornaments,Spooky ornaments] create a better Halloween climate, which makes everything more festive (in a slightly scary way). //<small>Woah...*trembles*</small>',
                 icon: [7, 9, 'seasonal'],
                 cost: { 'insight': 250, 'culture': 100, 'wisdom': 25 },
                 req: { 'trick or treat': true },
@@ -19199,7 +19202,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'mushroom farming', category: 'tier1',
-                desc: '@unlocks the [mushroom farm], which lets you to gather some [mushroom]s every day',
+                desc: '@unlocks the [mushroom farm], which lets you to gather some [mushroom]s every day @also allows you the occasional discovery of [mushroom]s while foraging',
                 icon: [7, 5, "magix2", 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 effects: [
@@ -21065,7 +21068,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'acacia',
-                desc: 'The [acacia,Acacia tree] tends to grow in warm, dry climates, and can be chopped for [log]s and some [stick]s.',
+                desc: 'The [acacia,Acacia tree] tends to grow in warm, dry climates, and can be chopped for [log]s and [stick]s.',
                 icon: [8, 10],
                 res: {
                     'chop': { 'log': 2, 'stick': 4 },
@@ -21131,9 +21134,11 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'forest mushrooms',
-                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and may extremely rarely yield a [mushroom] or two. It\'s much more easy to gather these by farming though.',
+                desc: '[forest mushrooms] grow in the penumbra of the underbrush, and yield all sorts of interesting [mushroom]s or [herb]s. While they look fascinating, they are extremely hard to find, and are rarely found in clusters larger than two or three.',
                 icon: [5, 10],
                 res: {
+                    'gather': { 'herbs': 0.00005 },
+                    'mushroom': { 'mushroom': 1 }
                 },
                 affectedBy: ['scarce forageables'],
                 mult: 10,
@@ -21491,7 +21496,7 @@ if (getObj("civ") != "1") {
             G.getDict('palm tree').res['gather']['bamboo'] = 0.0000035;
             new G.Goods({
                 name: 'jacaranda',
-                desc: 'The [jacaranda,Jacaranda tree] appears only at <b>Lavender fields</b> and grows in temperate climate. //Can be chopped for [log]s and harvested for [stick]s.',
+                desc: 'The [jacaranda,Jacaranda tree] appears only at <b>Lavender fields</b> and grows in temperate climates. //Can be chopped for [log]s and harvested for [stick]s.',
                 icon: [19, 24, "magixmod"],
                 res: {
                     'chop': { 'log': 2, 'stick': 4 },
@@ -28417,7 +28422,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'oakloo',
-                desc: 'The [oakloo] is a mighty tree with dark wood that thrives in temperate climate, rich in [log]s and [stick]s. It can rarely be found in other biomes.',
+                desc: 'The [oakloo] is a mighty tree with dark wood that thrives in temperate climates, rich in [log]s and [stick]s.',
                 icon: [18, 14, "c2"],
                 res: {
                     'chop': { 'log': 1, 'stick': 3 },
@@ -28579,7 +28584,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'big warped shrooms',
-                desc: '[big warped shrooms] are a variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be met in <b>Warplands</b>. Will yield [herbs] and easily harvested [spoiled food]. Can be chopped for its stem that can be later used to make a building material.',
+                desc: '[big warped shrooms] are a variety of [big shrooms] that can be found in <b>Shroomest</b>. //This variety can only be found in <b>Warplands</b>, yielding [herbs] and easily harvested [spoiled food]. Can be chopped for its stem that can be later used to make a building material.',
                 icon: [8, choose([14, 15]), "c2"],
                 res: {
                     'gather': { 'herbs': 1, 'spoiled food': 4 },
