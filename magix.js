@@ -11308,7 +11308,7 @@ if (getObj("civ") != "1") {
                 name: 'mushroom farm',
                 desc: 'A unique farm that cultivates a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
                 icon: [7, 5, "magix2"],
-                cost: { 'mushroom': 250 },
+                cost: { 'herb': 2000 },
                 req: { 'mushroom farming': true },
                 use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 12 },
@@ -12445,7 +12445,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'paradise building', category: 'tier1',
-                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1 from now on.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>I\'d construct...a huge campfire</small>',
+                desc: 'Unlocks a new sheet of buildings which can only be built in the newly opened <b>Paradise</b>. Also allows you to create [alchemy zone]s using [land of the Paradise]! //<font color="#f70054"><b>After getting this, rolling new researches will cost 2 [idea tablet]s instead of 1.</b> This technology also costs 20 additional idea tablets on its own.</font> //<small>I\'d construct...a huge campfire</small>',
                 icon: [19, 13, "magixmod"],
                 cost: { 'insight': 4, 'paradise tablet': 1, 'idea tablet': 20 },
                 effects: [
@@ -17466,7 +17466,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'essential transmutation II', category: 'tier2',
-                desc: '@[transcendentalist]s are five times as efficient, but will only use [insight II] from now on. @[dreamer]s will have a four times larger chance to succeed at transmuting knowledge essentials! //<small>Looks like this civilization will create a new type of science soon!</small>',
+                desc: '@[transcendentalist]s are five times as efficient, but will only use [insight II] from now on. @[dreamer]s will be four times as likely to succeed at transmuting knowledge essentials! //<small>Looks like this civilization will create a new type of science soon!</small>',
                 icon: [17, 34, "magixmod"],
                 cost: { 'insight II': 15, 'science': 5, 'mana': 500 },
                 req: { 'at3': true, 'symbolism II': true },
@@ -19206,7 +19206,6 @@ if (getObj("civ") != "1") {
                 icon: [7, 5, "magix2", 24, 1],
                 cost: { 'insight': 300, 'culture': 25 },
                 effects: [
-                    { type: 'provide res', what: { 'mushroom': 1 } },
                 ],
                 req: { 'plain island ideas': true },
                 chance: 2
@@ -21452,7 +21451,7 @@ if (getObj("civ") != "1") {
             //Swamplands
             new G.Goods({
                 name: 'crocodiles',
-                desc: 'Crocodiles are large semiaquatic reptiles that live throughout the tropics especially swamplands. A source of [meat] and [leather].//Carcasses can also be gathered for [spoiled food].',
+                desc: 'Crocodiles are large semiaquatic reptiles that live throughout the tropics, especially swamplands. A source of [meat] and [leather].//Carcasses can also be gathered for [spoiled food].',
                 icon: [17, 24, "magixmod"],
                 res: {
                     'hunt': { 'meat': 2 },
@@ -21585,7 +21584,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'wet rocky substrate',
-                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
+                desc: 'A [wet rocky substrate] is found underneath terrain with high humidity.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [mud] and [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [copper ore,Copper], and precious [gems]. Also, mining there provides way less [iron ore,Iron].//Quarrying provides a little more [limestone] and [marble] but less [cut stone] than usual.',
                 icon: [33, 20, "magixmod"],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.007, 'limestone': 0.005 },
@@ -21601,7 +21600,7 @@ if (getObj("civ") != "1") {
             });
             new G.Goods({
                 name: 'jungle rocky substrate',
-                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging there provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
+                desc: 'A [jungle rocky substrate] is found underneath jungles.//Surface [stone]s may be gathered by hand.//Digging here often produces way more [clay], more [stone]s and occasionally [copper ore,Ores] and extra [clay]. Digging here provides more [limestone] but provides no [salt].//Mining provides the best results, outputting a variety of [stone]s, more common [tin ore,Tin] but less precious [gems] and way less [copper ore,Copper] amounts. Also, mining there provides way less [iron ore,Iron].//Quarrying provides less [platinum ore,Platinum].',
                 icon: [33, 18, "magixmod"],
                 res: {
                     'gather': { 'stone': 0.25, 'clay': 0.005, 'limestone': 0.005 },
