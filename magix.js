@@ -11308,7 +11308,7 @@ if (getObj("civ") != "1") {
                 name: 'mushroom farm',
                 desc: 'A unique farm that cultivates a specific type of [mushroom]s. While these can\'t be eaten, they have other uses...',
                 icon: [7, 5, "magix2"],
-                cost: { 'herb': 2000 },
+                cost: { 'herbs': 2000 },
                 req: { 'mushroom farming': true },
                 use: { 'worker': 8, 'land': 35, 'stone tools': 8 },
                 upkeep: { 'water': 12 },
