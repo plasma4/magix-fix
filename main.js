@@ -4318,6 +4318,7 @@ G.Launch=function()
 					for (var i in me.unit.modes)
 					{
 						var mode=me.unit.modes[i];
+						if (mode.req) console.log(mode);
 						if (!mode.req || G.checkReq(mode.req))
 						//{str+='<div class="button'+(mode.num==me.mode.num?' on':'')+'" id="mode-button-'+mode.num+'">'+mode.name+'</div>';}
 						{str+='<div class="button'+(mode.num==me.mode.num?' on':'')+'" id="mode-button-'+mode.num+'">'+(mode.icon?G.getSmallThing(mode):'')+''+mode.name+'</div>';}
@@ -4326,6 +4327,7 @@ G.Launch=function()
 					for (var i in me.unit.modes)
 					{
 						var mode=me.unit.modes[i];
+						if (mode.req) console.log(mode);
 						if (!mode.req || G.checkReq(mode.req))
 						{
 							l('mode-button-'+mode.num).onmouseup=function(unit,mode,div){return function(){
