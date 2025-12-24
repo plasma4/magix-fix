@@ -4318,7 +4318,6 @@ G.Launch=function()
 					for (var i in me.unit.modes)
 					{
 						var mode=me.unit.modes[i];
-						if (mode.req) console.log(mode);
 						if (!mode.req || G.checkReq(mode.req))
 						//{str+='<div class="button'+(mode.num==me.mode.num?' on':'')+'" id="mode-button-'+mode.num+'">'+mode.name+'</div>';}
 						{str+='<div class="button'+(mode.num==me.mode.num?' on':'')+'" id="mode-button-'+mode.num+'">'+(mode.icon?G.getSmallThing(mode):'')+''+mode.name+'</div>';}
@@ -4327,7 +4326,6 @@ G.Launch=function()
 					for (var i in me.unit.modes)
 					{
 						var mode=me.unit.modes[i];
-						if (mode.req) console.log(mode);
 						if (!mode.req || G.checkReq(mode.req))
 						{
 							l('mode-button-'+mode.num).onmouseup=function(unit,mode,div){return function(){
@@ -7490,7 +7488,8 @@ G.Launch=function()
 			let script=document.createElement('script');
 			script.id='dataScript-'+mod.id;
 			G.modsByScript['dataScript-'+mod.id]=mod;
-			var isMagixMod = ['https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js', 'https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'].includes(mod.url);
+
+			var isMagixMod = magixSources.includes(mod.url.replace("magix.js", "").replace("magixUtils.js", ""));
 			if ((offlineMode && isMagixMod) || directAccessMode || mod.url.slice(0, 4) !== 'http') {
 				if (!magixNote) {
 					if (isMagixMod) {
@@ -7498,20 +7497,25 @@ G.Launch=function()
 					}
 					magixNote=true;
 				}
-				script.setAttribute('src',isMagixMod?mod.url.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/", ""):mod.url);
+				if (isMagixMod) {
+					for (let s in magixSources) {
+						mod.url = mod.url.replace(magixSources[s], "");
+					}
+				}
+				script.setAttribute('src',mod.url);
 				document.head.appendChild(script);	
 				script.onload=function() {
 					mod.loaded=true;
 				}
 			} else {
 				// A rather strange function with the purpose of trying to get files that don't work with XMLHttpRequests or when you don't have internet
-				let triedOffline = false
+				let offlineNotNeeded = false
 				function tryOffline() {
-					if (triedOffline) {
+					if (offlineNotNeeded) {
 						return
 					}
 					offlineMode = true
-					triedOffline = true
+					offlineNotNeeded = true
 					var offlineScript=localStorage.getItem("nelOffline"+i);
 					if (offlineScript==null) {
 						if (mod.url === "https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js") {
@@ -7558,9 +7562,11 @@ G.Launch=function()
 				setTimeout(tryOffline, 2000);
 				let x=new XMLHttpRequest();
 				x.onload=function() {
+					onlineLoaded = true;
 					var v=x.responseText + ";\nG.mods[" + i + "].loaded=true";
 					localStorage.setItem("nelOffline"+i,mod.url+"\n"+v);
 					script.innerHTML=v;
+					offlineNotNeeded=true;
 					setTimeout(function() {document.head.appendChild(script)}, 100*i);
 				};
 				x.addEventListener("error", tryOffline);
@@ -8362,4 +8368,5 @@ window.onload=function()
 			G.LoadResources();
 		}
 	}
+
 };

@@ -22,8 +22,8 @@ Upon loading it, you should be able to play the game!
 Here are a few examples:
 - Multiple game-breaking bugs are **fixed** now (in particular, bookwriting will no longer cause problems)
 - Thousands of spelling and text issues corrected or improved
-- Some alternative techs can now be obtained simultaneously
-- Various traits have been fixed
+- Picking alternative techs no longer causes issues
+- Various techs/traits and their stats have been fixed
 - A few new unique trials implemented
 - Dozens of techs and mechanics have been added (including a new way to get sand)
 - Negative costs are hidden now
@@ -44,17 +44,19 @@ This offline version of Magix...
 
 <sup>Note: if you wish to view data about the Magix mod (such as icons, names, and functions), you can use the magix-wiki.html file or view [the online version](https://plasma4.github.io/magix-fix/magix-wiki.html). You are even able to **create** your own mods from there, so check it out!</sup>
 
+## Known issues
+- Territory tab doesn't render on game load if saved with that tab open
+- Moving the territory map isn't supported on touchscreen and behaves really weirdly at lower resolutions (due to game size scaling)
+- Two trials still not implemented yet
+- Second race's theme acts weird and doesn't immediately update
+
 ## Information for devs
 Check `localDevelopment.js` to mess with some settings, and `DOCS.md` for lots more context on how the game works and how to develop a basic mod yourself (hopefully to avoid dev headaches).
 
 ---
-<sup>Be aware that the file version uses raw.githubusercontent.com links for uncached XML request purposes whenever the user has an internet connection instead. The link will automatically fix itself when importing or exporting, and this shouldn't be something you need to worry about. If you are a programmer and want to use the magix.js and magixUtils.js files in the code, set `offlineMode` to `true` in localDevelopment.js.</sup>
+<sup>Be aware that the file version uses raw.githubusercontent.com links for uncached XML request purposes whenever the user has an internet connection instead. The link will automatically fix itself when importing or exporting, and this shouldn't be something you need to worry about. If you are a programmer and want to use the magix.js and magixUtils.js files in the code, set `offlineMode` to `true` in `localDevelopment.js`.</sup>
 ### Alternate links for Magix
 Want a few other links for loading Magix? Try some of these:
-```
-https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magixUtils.js
-https://rawcdn.githack.com/plasma4/magix-fix/6af48b41422aa744548fce3eb2d6fabfab02f8e2/magix.js
-```
 ```
 https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magixUtils.js
 https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
@@ -62,4 +64,8 @@ https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/magix.js
 ```
 https://plasma4.github.io/magix-fix/magixUtils.js
 https://plasma4.github.io/magix-fix/magix.js
+```
+```
+https://rawcdn.githack.com/plasma4/magix-fix/main/magixUtils.js
+https://rawcdn.githack.com/plasma4/magix-fix/main/magix.js
 ```

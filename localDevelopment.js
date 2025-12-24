@@ -25,6 +25,15 @@ function testFunction() {
 testFunction()
 */
 
+// This variable is for a set of links that is considered "from Magix" and therefore gets the logic from the variables above. It is necessary to include ALL of the link except for "magix.js" or "magixUtils.js" or else this will not work.
+var magixSources = [
+    'https://raw.githubusercontent.com/plasma4/magix-fix/master/',
+    'https://file.garden/ZmatEHzFI2_QBuAF/',
+    'https://cdn.jsdelivr.net/gh/plasma4/magix-fix@main/',
+    'https://plasma4.github.io/magix-fix/',
+    'https://rawcdn.githack.com/plasma4/magix-fix/main/'
+]
+
 // The function below is for extracting data out of various properties within the game. You can run it in the console if you wish to get a rather large JSON-safe string or object containing some raw data about the game.
 // For some mods like Magix, there may be several possible JSON files generated because of different civs/races in the gameplay. You'll have to get the data separately, however.
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!

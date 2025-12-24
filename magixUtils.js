@@ -1,5 +1,6 @@
 /*
-    Setup process:
+Check the GitHub at https://github.com/plasma4/magix-fix for the more detailed and easier-to-read information.
+Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
 javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),onbeforeunload=null,location.reload()
@@ -322,9 +323,8 @@ G.Save = function (toStr) {
     str += '|';
 
     //Important for file-based saves
-    if (toStr) {
-        str = str.replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
-        console.log(str)
+    if (toStr && window.magixSources) {
+        str = str.replace("magix.js", "https://file.garden/ZmatEHzFI2_QBuAF/magix.js").replace("magixUtils.js", "https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js")
     }
     //console.log('SAVE');
     //console.log(str);
@@ -5231,6 +5231,7 @@ G.AddData({
                             G.exploreOwnedTiles = randomFloor(G.exploreOwnedTiles);
                             for (var i = 0; i < G.exploreOwnedTiles; i++) {
                                 var tile = choose(map.tilesByOwner[1]);
+
                                 if (tile.explored < 1) {
                                     if (!tile.land.ocean) tile.explored += 0.01;
                                     else tile.explored += 0;
@@ -5674,6 +5675,7 @@ G.AddData({
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
                                             if (!G.isMapExplored) {
+                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
@@ -5686,6 +5688,7 @@ G.AddData({
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("focused scouting") ? 20000 : 0) + (G.has("scouting") ? 1000 : 0));
+                                            if (!G.isMapExplored) {
                                             if (!G.isMapExplored) {
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
@@ -5707,6 +5710,7 @@ G.AddData({
                                         } else {
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
+                                            if (!G.isMapExplored) {
                                             if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * G.softcap(effect.explored, limit, "wtr") * myAmount;
                                                 if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * G.softcap(effect.unexplored, limit, "wtr") * myAmount;
