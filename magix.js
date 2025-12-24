@@ -1951,11 +1951,7 @@ if (getObj("civ") != "1") {
                             case 6: G.Message({ type: 'story2', text: 'Wizards believe in the tragedy. After now, happiness will go lower and lower. Soon, that won\'t seem like it\'s just a rumor. But is there any confirmation or proof about the incoming tragedy?', icon: [33, 32, "magixmod"] }); break;
                             case 4: G.Message({ type: 'story1', text: 'A green light shining through the sky is one of the proofs that people have noticed. Unhappiness will now start to grow. It is not a simple rumor anymore. But is there any clear confirmation about the incoming tragedy?', icon: [34, 32, "magixmod"] }); break;
                             case 3: G.Message({ type: 'story2', text: 'The tragedy seems like it will happen no matter what. The end of humanity is nigh...or is it the beginning of something new? That is no longer a rumor. Even at night, everyone in the tribe can see a glowing <font color="lime">green star</font> that is getting bigger and bigger.', icon: [34, 32, "magixmod"] }); break;
-<<<<<<< HEAD
                             case 2: G.Message({ type: 'story2', text: 'Turns out that glowing object was a giant meteor. It\'s...the end...right??? The predicted time when the <font color="lime">green meteor</font> will hit Earth is in the beginning of next year. <b>The end is nigh.</b>', icon: [35, 32, "magixmod"] }); break;
-=======
-                            case 2: G.Message({ type: 'story2', text: 'Turns out that glowing object was a giant meteor. It\'s...the end...right??? The predicted time when the <font color="lime">green meteor</font> will hit Earth in the beginning of next year. <b>The end is nigh.</b>', icon: [35, 32, "magixmod"] }); break;
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                             case 0:
                                 var survivors = 240 + Math.round(Math.random() * 400);
                                 var over = survivors - G.getRes('housing').amount;
@@ -19426,7 +19422,6 @@ if (getObj("civ") != "1") {
                 ],
             });
             if (testingMagix) addDisaster()
-<<<<<<< HEAD
 
             // TRAITS
             new G.Trait({
@@ -19542,8 +19537,6 @@ if (getObj("civ") != "1") {
                     }
                 ],
             })
-=======
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
 
 
             new G.Res({
@@ -24780,7 +24773,6 @@ if (getObj("civ") != "1") {
                 displayUsed: true,
             });
 
-<<<<<<< HEAD
             // garch resses
 
             new G.Res({
@@ -25050,8 +25042,6 @@ if (getObj("civ") != "1") {
                 ]
             });
 
-=======
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
             /*=====================================================================================
             UNITS
             =======================================================================================*/
@@ -25498,13 +25488,10 @@ if (getObj("civ") != "1") {
                 //upkeep:{'food':0.2},
                 effects: [
                     { type: 'gather', what: { 'water': 40 } },
-<<<<<<< HEAD
                     { type: 'gatherFunc', what: { 'water': function(me) {
                         let sacrifice = Math.ceil(G.temporarySpells[13].sacrificed, 10);
                         return 30 * Math.log10(sacrifice) * Math.log10(sacrifice);
                     } }, req: { 'spellT14': 'on' } },
-=======
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 ],
                 category: 'production',
                 req: { 'well-digging': true },
@@ -26246,11 +26233,7 @@ if (getObj("civ") != "1") {
             });
             new G.Unit({
                 name: 'Wizard',
-<<<<<<< HEAD
                 desc: 'A wizened elf and worshipper of magic. You\'ll need them to maintain various complicated ideas and to cultivate magic in your civilization. Provides 2 [wisdom] for every 5 [Wizard]s.',
-=======
-                desc: 'A smart elf that is also a worshipper of magic. You\'ll need them to maintain various complicated ideas and to cultivate magic in your civilization. Provides 2 [wisdom] for every 5 [Wizard]s.',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [choose([21, 22, 23, 24]), 8, "magixmod"],
                 cost: { 'creativity': 3, 'discernment': 1, 'stick': 2, 'food': 1 },
                 use: { 'elder': 1, 'wand': 1 },
@@ -26641,11 +26624,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'construction', category: 'tier1',
-<<<<<<< HEAD
                 desc: '@unlocks [house]s @unlocks [warehouse]s (with [stockpiling])//<small>This one refers to actual construction!</small>',
-=======
-                desc: '@unlocks [house]s @unlocks [warehouse]s (with [stockpiling])<small>This one refers to actual construction!</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [30, 7, "c2"],
                 cost: { 'discernment': 30, 'creativity': 6 },
                 req: { 'cities': true, 'masonry': true, 'carpentry': true, 'quarrying': true, 'construction-planning': true },
@@ -26725,11 +26704,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'healing', category: 'tier1',
-<<<<<<< HEAD
                 desc: '@unlocks [healer]s//<small>A hospital somewhere around here would be a way better idea, but that seems way too hard.</small>',
-=======
-                desc: '@unlocks [healer]s//<small>A hospital somewhere around here would be way better idea, but that seems way too hard.</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [25, 7, "c2"],
                 cost: { 'discernment': 20, 'creativity': 4 },
                 req: { 'plant lore': true, 'stone-knapping': true, 'intuition': true },
@@ -26955,11 +26930,7 @@ if (getObj("civ") != "1") {
 
             new G.Tech({
                 name: 'mining', category: 'tier1',
-<<<<<<< HEAD
                 desc: '@unlocks [mine]s.//<small>Strike the earth, with a lot of might!</small>',
-=======
-                desc: '@unlocks [mine]s.//<small>Strike the earth with a lot of might!</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [24, 5, "c2"],
                 cost: { 'discernment': 38, 'creativity': 4 },
                 req: { 'digging': true, 'building': true },
@@ -27269,11 +27240,7 @@ if (getObj("civ") != "1") {
             });
             new G.Trait({
                 name: 'upscale', category: 'anomaly',
-<<<<<<< HEAD
                 desc: '@increases the costs of rolling/rerolling technologies @the [battery of discoveries] charges far slower //<small>It may have something to do with pressure, it seems like. You may need to prepare for the next anomalies!</small>',
-=======
-                desc: 'Increases the costs of rolling/rerolling technologies. Also, the [battery of discoveries] will charge way slower from now on. //<small>It may have something to do with pressure, it seems like. You may need to prepare for the next anomalies!</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [28, 11, "c2"],
                 req: { 'cities': true },
                 cost: { 'discernment': 9, 'creativity': 3 },
@@ -27300,11 +27267,7 @@ if (getObj("civ") != "1") {
             });8
             new G.Trait({
                 name: 'second upscale', category: 'anomaly',
-<<<<<<< HEAD
                 desc: '@increases the costs of rolling/rerolling technologies @the [battery of discoveries] charges far slower //<small>Now it is confirmed...it has to do with <b>Pressure</b>.</small>',
-=======
-                desc: 'Increases the costs of rolling/rerolling technologies. Also, the [battery of discoveries] will charge way slower. //<small>Now it is confirmed...it has to do with <b>Pressure</b>.</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [29, 11, "c2"],
                 req: { 'monument-building': true, 'upscale': true },
                 cost: {},
@@ -27401,11 +27364,7 @@ if (getObj("civ") != "1") {
             });
             new G.Tech({
                 name: 'writing', category: 'tier1',
-<<<<<<< HEAD
                 desc: 'Elves can write, at least. Because they do not have any paper yet, they will write on stones, logs, and other nearby objects. Learning [writing] is required to unlock further researches.//<small>Write the A letter, then G, after that another A, then write I and N at the end.</small>',
-=======
-                desc: 'Elves can write, at least. Because they do not have any paper yet, they will write on stones, logs, and other nearby objects. Learning [writing] is required to unlock further researches.//Provides 5 [quick-wittinity]//<small>Writing the A letter, then G, after that an A, then write I and N at the end.</small>',
->>>>>>> 6e54ba3cec19d05558156758ad1cbedb4e259ec3
                 icon: [27, 8, "c2"],
                 req: { 'language': true },
                 cost: { 'discernment': 6, 'creativity': 12 },
