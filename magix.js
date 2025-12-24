@@ -28611,6 +28611,15 @@ if (getObj("civ") != "1") {
                 icon: [1, 10, "magix2", 22, 1, "c2"],
                 cost: { 'gentility': 25, 'discernment': 141, 'creativity': 41, 'mana': 5400, 'magic essences': 10000 },
                 req: { 'wizard wisdom': true },
+                effects: [
+                    { 
+                        type: 'function', func: function() {
+                            G.temporarySpells.forEach((spell, i) => {
+                                spell.loading = true;
+                            })
+                        }
+                    }
+                ]
             });
 
             new G.Tech({
@@ -28634,6 +28643,15 @@ if (getObj("civ") != "1") {
                 icon: [3, 11, "magix2", 2, 3, "magixmod"],
                 cost: { 'gentility': 49, 'discernment': 1, 'creativity': 42, 'faith': 9 },
                 req: { 'spellcasting': true }, //, 'wizard wisdom II': true },
+                effects: [
+                    { 
+                        type: 'function', func: function() {
+                            G.temporarySpells.forEach((spell, i) => {
+                                spell.loading = true;
+                            })
+                        }
+                    }
+                ]
             });
 
 
