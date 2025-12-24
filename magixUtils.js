@@ -1353,23 +1353,23 @@ G.AddData({
             if (G.has('policies')) {
                 // Mess with wisdom and flower rituals here because of annoying timing issues
                 if (G.modsByName['Default dataset']) {
-                if (G.has('eotm') && !G.has('ritualism II')) {
-                    G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
-                    G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
-                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
-                    G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
-                    G.getDict('wisdom rituals').visible = false
-                    G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
-                    G.getDict('flower rituals').visible = false //THE DISABLER
-                    G.getPolicy('wisdom rituals').mode.id = "off";
-                    G.getPolicy('flower rituals').mode.id = "off";
-                } else if (G.has('ritualism II')) {
-                    G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
-                    G.getDict('wisdom rituals').visible = true;
-                    G.getDict('wisdom rituals').cost = { 'faith II': 2 };
-                    G.getDict('flower rituals').cost = { 'faith II': 2 };
-                    G.getDict('flower rituals').visible = true;
-                }
+                    if (G.has('eotm') && !G.has('ritualism II')) {
+                        G.getDict('wisdom rituals').desc = 'Improves [dreamer] and [storyteller] efficiency by 20%. Requires [ritualism II] to work properly. //<small>we are much smarter now</small>';
+                        G.getDict('flower rituals').desc = 'People get sick slower and recover faster. Requires [ritualism II] to work properly.';
+                        G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"]
+                        G.getDict('wisdom rituals').cost = { 'land': 1000000000 }//THE DISABLER
+                        G.getDict('wisdom rituals').visible = false
+                        G.getDict('flower rituals').cost = { 'land': 1000000000 } //THE DISABLER
+                        G.getDict('flower rituals').visible = false //THE DISABLER
+                        G.getPolicy('wisdom rituals').mode.id = "off";
+                        G.getPolicy('flower rituals').mode.id = "off";
+                    } else if (G.has('ritualism II')) {
+                        G.getDict('wisdom rituals').icon = [8, 12, 23, 19, "magixmod"];
+                        G.getDict('wisdom rituals').visible = true;
+                        G.getDict('wisdom rituals').cost = { 'faith II': 2 };
+                        G.getDict('flower rituals').cost = { 'faith II': 2 };
+                        G.getDict('flower rituals').visible = true;
+                    }
                 }
                 var str = '';
                 str +=
@@ -5675,7 +5675,6 @@ G.AddData({
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
                                             if (!G.isMapExplored) {
-                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedTiles += Math.random() * G.softcap(effect.explored, limit, "land") * myAmount;
                                                 if (effect.unexplored) G.exploreNewTilesAlternate += Math.random() * G.softcap(effect.unexplored, limit, "land") * myAmount;
                                             } else {
@@ -5683,13 +5682,11 @@ G.AddData({
                                             }
                                         }
                                     }
-                                }
                                     else if (effect.type == 'exploreOcean')//exploreOcean : discover new tiles or explore owned ocean
                                     {
                                         var limit = 500;
                                         if (G.modsByName["Default dataset"]) {
                                             limit += (G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6500 : 0) + (G.has("map details") ? 14500 : 0) + (G.has("focused scouting") ? 20000 : 0) + (G.has("scouting") ? 1000 : 0));
-                                            if (!G.isMapExplored) {
                                             if (!G.isMapExplored) {
                                                 G.getDict('boat').effects[2].chance = 1 / 117.5;
                                                 G.getDict('boat').effects[3].chance = 1 / 150;
@@ -5712,7 +5709,6 @@ G.AddData({
                                             //limit+=(G.has("advanced mapping") ? Infinity : (G.has("basic mapping") ? 6000 : 0)+(G.has("map details") ? 8000 : 0));
                                             limit += G.has("advanced mapping") ? Infinity : ((G.has("map details") ? 8000 : (G.has("basic mapping") ? 6000 : 0) + (G.has("scouting") ? 300 : 0)));
                                             if (!G.isMapExplored) {
-                                            if (!G.isMapExplored) {
                                                 if (effect.explored) G.exploreOwnedOceanTiles += Math.random() * G.softcap(effect.explored, limit, "wtr") * myAmount;
                                                 if (effect.unexplored) G.exploreNewOceanTiles += Math.random() * G.softcap(effect.unexplored, limit, "wtr") * myAmount;
                                                 G.getDict('wanderer').effects[G.unitByName['wanderer'].effects.length - 1].chance = 0.02;
@@ -5725,7 +5721,6 @@ G.AddData({
                                             }
                                         }
                                     }
-                                }
                                     else if (effect.type == 'function')//function : any arbitrary function (or list of functions)
                                     {
                                         if (!effect.chance || Math.random() < effect.chance) {
@@ -6406,5 +6401,4 @@ G.AddData({
             }
         }
     }
-}
 })
