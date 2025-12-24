@@ -1766,7 +1766,7 @@ if (getObj("civ") != "1") {
                         }
                     }
                     vpcalc();
-                    G.greeting();
+                    //G.greeting();
                     G.getDict('hotel of victory').effects.push({ type: 'provide', what: { 'housing': (220 + (G.getRes('victory point').amount * 15)) } });
                     G.getDict('hotel of victory').desc = '@The more [victory point]s you get, the more housing this will provide. The amount of [housing] provided starts from 220. However, you get 15 more bonus [housing] for every [victory point] obtained! Villas cannot waste; however, these are very limited. At the moment, each one provides ' + (220 + (G.getRes('victory point').amount * 15)) + ' [housing] for your people.';
                     ////
@@ -22599,7 +22599,7 @@ if (getObj("civ") != "1") {
             }
             G.funcs['game loaded'] = function () {
                 if (G.on) {
-                    G.greeting();
+                    //G.greeting();
                     G.isMapExplored = G.isMapFullyExplored();
                     theme();
                     if (G.getName('ruler').toLowerCase() == 'orteil' || G.getName('ruler').toLowerCase() == 'pelletsstarpl' || G.getName('ruler').toLowerCase() == 'opti') {
@@ -28611,15 +28611,15 @@ if (getObj("civ") != "1") {
                 icon: [1, 10, "magix2", 22, 1, "c2"],
                 cost: { 'gentility': 25, 'discernment': 141, 'creativity': 41, 'mana': 5400, 'magic essences': 10000 },
                 req: { 'wizard wisdom': true },
-                effects: [
-                    { 
-                        type: 'function', func: function() {
-                            G.temporarySpells.forEach((spell, i) => {
-                                spell.loading = true;
-                            })
-                        }
-                    }
-                ]
+                // effects: [
+                //     { 
+                //         type: 'function', func: function() {
+                //             G.temporarySpells.forEach((spell, i) => {
+                //                 spell.loading = true;
+                //             })
+                //         }
+                //     }
+                // ]
             });
 
             new G.Tech({
@@ -28643,15 +28643,15 @@ if (getObj("civ") != "1") {
                 icon: [3, 11, "magix2", 2, 3, "magixmod"],
                 cost: { 'gentility': 49, 'discernment': 1, 'creativity': 42, 'faith': 9 },
                 req: { 'spellcasting': true }, //, 'wizard wisdom II': true },
-                effects: [
-                    { 
-                        type: 'function', func: function() {
-                            G.temporarySpells.forEach((spell, i) => {
-                                spell.loading = true;
-                            })
-                        }
-                    }
-                ]
+                // effects: [
+                //     { 
+                //         type: 'function', func: function() {
+                //             G.temporarySpells.forEach((spell, i) => {
+                //                 spell.loading = true;
+                //             })
+                //         }
+                //     }
+                // ]
             });
 
 
