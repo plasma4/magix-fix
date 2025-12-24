@@ -28611,15 +28611,6 @@ if (getObj("civ") != "1") {
                 icon: [1, 10, "magix2", 22, 1, "c2"],
                 cost: { 'gentility': 25, 'discernment': 141, 'creativity': 41, 'mana': 5400, 'magic essences': 10000 },
                 req: { 'wizard wisdom': true },
-                // effects: [
-                //     { 
-                //         type: 'function', func: function() {
-                //             G.temporarySpells.forEach((spell, i) => {
-                //                 spell.loading = true;
-                //             })
-                //         }
-                //     }
-                // ]
             });
 
             new G.Tech({
@@ -28642,16 +28633,7 @@ if (getObj("civ") != "1") {
                 desc: '@unlocks a new sheet of spells that provide various boons in exchange for some [magic essences]//<small>EXPECTO PATRONUM!</small>',
                 icon: [3, 11, "magix2", 2, 3, "magixmod"],
                 cost: { 'gentility': 49, 'discernment': 1, 'creativity': 42, 'faith': 9 },
-                req: { 'spellcasting': true }, //, 'wizard wisdom II': true },
-                // effects: [
-                //     { 
-                //         type: 'function', func: function() {
-                //             G.temporarySpells.forEach((spell, i) => {
-                //                 spell.loading = true;
-                //             })
-                //         }
-                //     }
-                // ]
+                req: { 'spellcasting': true },
             });
 
 
@@ -29189,6 +29171,7 @@ if (getObj("civ") != "1") {
                 spell.baseCost = spellP.cost;
                 spell.shouldTurnOff = false;
                 spell.loading = true;
+                spell.on = G.checkPolicy(spellN) == 'on';
                 spellP.effects.push({type: 'function', func: function() {
                     // spell.durationT = spell.length;
                     spell.setDuration(spell.length);
@@ -29196,16 +29179,18 @@ if (getObj("civ") != "1") {
                         G.Message({type: 'important tall', text: 'The spell <b>'+spellP.displayName+'</b> has been activated for '+
                                     (spell.length < 600 ? spell.length.toString()+' days.':Math.floor(spell.length/300).toString()+' years.'), icon: spellP.icon});
                     }
+                    spell.on = true;
                 }});
 
                 spellP.modes['off'].effects = [{type: 'function', func: function() {
-                    if (spell.loading) return; // ignore attempts to change cooldown when loading
+                    if (spell.loading || (!spell.on)) return; // ignore attempts to change cooldown when loading
                     spell.setCooldown(spell.cooldownYears * 300);
                     //spellP.desc = spell.baseDesc + '//<b>This spell is currently on cooldown and cannot be used.</b>';
                     //spellP.cost = { 'spell point': 1000000000000000 };
                     if (G.getSetting('spell messages') || G.resets < 3) {
                         G.Message({type: 'important tall', text: 'The spell <b>'+spellP.displayName+'</b> has ended.', icon: spellP.icon});
                     }
+                    spell.on = false;
                 }}];
 
                 // mults
