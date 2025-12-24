@@ -5683,6 +5683,7 @@ G.AddData({
                                             }
                                         }
                                     }
+                                }
                                     else if (effect.type == 'exploreOcean')//exploreOcean : discover new tiles or explore owned ocean
                                     {
                                         var limit = 500;
@@ -5724,6 +5725,7 @@ G.AddData({
                                             }
                                         }
                                     }
+                                }
                                     else if (effect.type == 'function')//function : any arbitrary function (or list of functions)
                                     {
                                         if (!effect.chance || Math.random() < effect.chance) {
@@ -6405,3 +6407,4 @@ G.AddData({
         }
     }
 }
+})
