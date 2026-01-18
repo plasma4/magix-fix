@@ -3690,7 +3690,6 @@ if (getObj("civ") != "1") {
                             if (G.has('revenants') && (!(day + leap <= 40 && day + leap >= 46 && G.has('peace')) || Math.random() < 0.1)) {
                                 if (G.day % 3 == 0) {
                                     var revengeAmount = G.day % 45 == 0 ? randomFloor((G.getRes('corpse').amount + graves.used) * 0.00125 * (G.traitByName['revenants'].yearOfObtainment ? 1 + Math.pow(G.year - G.traitByName['revenants'].yearOfObtainment, 0.9) * 0.001 : 1)) : randomFloor(G.day % 15 == 0 ? Math.random() * 30 + 8 : (Math.random() * 3.5 + 2));
-                                    console.log(revengeAmount + " on day " + (G.day % 45))
                                     var lostAmount = G.lose('corpse', revengeAmount, 'revenge of corpses');
                                     if (lostAmount < revengeAmount) {
                                         graves.used = Math.max(0, graves.used - (revengeAmount - lostAmount));

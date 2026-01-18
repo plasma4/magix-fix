@@ -542,8 +542,16 @@ G.Load = function (doneLoading) {
         for (var i = len - 1; i >= 0; i--) {
             if (spl[i] != '') {
                 var spl2 = spl[i].split(',');
-                G.gainTrait(G.know[parseInt(spl2[0])]);
-                if (G.releaseNumber > 54) G.know[parseInt(spl2[0])].yearOfObtainment = parseFloat(spl2[1]);
+                var val = parseInt(spl2[0]);
+                if (isFinite(val)) {
+                    G.gainTrait(G.know[val]);
+                    if (G.releaseNumber > 54) {
+                        var year = parseFloat(spl2[1]);
+                        if (isFinite(year)) {
+                            G.know[val].yearOfObtainment = year;
+                        }
+                    }
+                }
             }
         }
 
