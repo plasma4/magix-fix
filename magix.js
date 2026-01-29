@@ -2504,9 +2504,9 @@ if (getObj("civ") != "1") {
                     if (G.checkPolicy('se12') == 'on')//Okar The Seer's backfire
                     {
                         G.getDict('guru').upkeep = { 'food': 10, 'water': 5 }
-                        G.getDict('dreamer').upkeep = { 'food': 2, 'water': 1 }
+                        G.getDict('dreamer').upkeep = { 'food': 0.2, 'water': 0.1 }
                         G.getDict('guru').alternateUpkeep = { 'spoiled food': 4, 'muddy water': 2 }
-                        G.getDict('dreamer').alternateUpkeep = { 'spoiled food': 2, 'muddy water': 1 }
+                        G.getDict('dreamer').alternateUpkeep = { 'spoiled food': 1, 'muddy water': 0.5 }
                     }
                     if (G.has('t6') && G.has('ocean decay V') && G.has('golden crafting') && G.has('ocean reversion')) {
                         G.achievByName['an ocean\'s voyage'].won = 1
