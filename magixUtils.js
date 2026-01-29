@@ -1,5 +1,6 @@
 /*
-Check the GitHub at https://github.com/plasma4/magix-fix for the more detailed and easier-to-read information.
+Check the GitHub at https://github.com/plasma4/magix-fix for more detailed and easier-to-read installation information.
+
 Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
@@ -3301,7 +3302,7 @@ G.AddData({
         new G.Achiev({
             tier: 'population',
             name: 'pressed progress',
-            desc: choose(['Manage to get a tribe of 9k [population,Elves]. //<small>gg bro :p</small>','Manage to get a tribe of 9k [population,Elves]. //<small>IT\'S OVER 9000!</small>']),
+            desc: choose(['Manage to get a tribe of 9k [population,Elves]. //<small>gg bro :p</small>', 'Manage to get a tribe of 9k [population,Elves]. //<small>IT\'S OVER 9000!</small>']),
             icon: [32, 9, "c2"],
             /*effects:[
                 {type:'pressure',amount:100}

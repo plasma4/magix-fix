@@ -1,7 +1,7 @@
 // THIS VARIABLE IS FOR LOCALLY MODIFYING MAGIX AND SHOULD NOT BE CHANGED WHEN PLAYING NORMALLY OR WHEN CHANGING YOUR OWN MOD.
 // If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to test modifications of Magix! (Should you be modifying data.js or importing OTHER local files, you don't need to do this.)
 
-var offlineMode = false
+var offlineMode = true
 
 
 // IMPORTANT: Settting this value to true will PREVENT FILES FROM WORKING WHEN YOU ARE OFFLINE (if you are getting a message about XML requests, they won't work offline anyway, so feel free to enable this).
@@ -14,9 +14,9 @@ var directAccessMode = false
 var testingMagix = false
 
 
-// This file is loaded before main.js and after style.css, so, if you wish, you can modify various values in this script.
+// This file is loaded before main.js and after style.css, so you can modify this file directly if you really want.
 /*
-In order to make files work offline, the NEL Toolkit automatically uses XMLHttpRequests to get script data and stores that into localStorage. The first mod will be stored in "nelOffline0", the second in "nelOffline1", and so on. So, for example, a script stored into localStorage might look like this:
+In order to make files work offline, the NEL Toolkit automatically uses XMLHttpRequests to get script data and stores that into localStorage. (It's important to note that this is different than requesting a script directly so it might fail in unexpected cases.) The first mod will be stored in "nelOffline0", the second in "nelOffline1", and so on. So, for example, a script stored into localStorage might look like this:
 
 https://the.modLinkGoesHere/script.js
 function testFunction() {
@@ -38,7 +38,7 @@ var magixSources = [
 // For some mods like Magix, there may be several possible JSON files generated because of different civs/races in the gameplay. You'll have to get the data separately, however.
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 
-// getGameJSON() is used in conjunction with JSON.stringify(getDictionaryObject()) to construct the data for MagixData.js automatically.
+// getGameJSON() is used in conjunction with getDictionaryData() to construct the data for MagixData.js automatically.
 // Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and reload. For Magix, run c1() for human race and c2() for second race; also make sure to enable offlineMode.
 // Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
@@ -170,13 +170,13 @@ function extractObject(toExtract, properties, funcProperties) {
 }
 
 // Returns an object where the keys are the raw names of the resources and the values are the display names.
-function getDictionaryObject() {
+function getDictionaryData(asObject) {
     var resObj = {}
     var keys = Object.keys(G.dict)
     for (var i = 0; i < keys.length; i++) {
         resObj[G.dict[keys[i]].name] = G.dict[keys[i]].displayName
     }
-    return resObj
+    return asObject ? resObj : JSON.stringify(resObj)
 }
 
 /* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod; check DOCS.md for extensive NEL documentation. */

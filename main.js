@@ -23,7 +23,7 @@ UPDATELOG=[
 	{date:'3/26/2017',title:'Alpha patch 5',text:['your people will no longer be completely apathetic and neutrally healthy from some bug with consuming food','fire pits warm more people','clothiers no longer need to know leatherworking to sew grass clothing','happiness and health sources are detailed more explicitly','many messages now have icons']},
 	{date:'3/28/2017',title:'Alpha patch 6',text:['unit modes now have icons','added custom bulk-buying in units','gathering was reworked, expect different rates for resource production','workers dying while working probably won\'t result in ghost workers anymore','units have innate priorities in the context of being created and acting, with food-producing units going first','happier people now produce more babies, while unhappy people just aren\'t feeling it as much','corpses decay slowly']},
 ];
-
+var magixNotUsed=true; //for some reason pressing Use Magix twice just breaks things so add this variable
 
 
 //misc handy stuff
@@ -573,14 +573,7 @@ G.Launch=function()
 	}
 	G.Import=function(str)
 	{
-		// Magix will override the G.Load function, so we add an extra step here
-		try {
-			G.importStr=b64EncodeUnicode(escape(unescape(b64DecodeUnicode(str)).replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magix.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js").replace("https://file.garden/ZmatEHzFI2_QBuAF/magixUtils.js","https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js")));
-		} catch (e) {
-			alert("The save that you have provided was invalid.");
-			console.warn(e);
-			return;
-		}
+		G.importStr=str;
 		G.Load(false);
 	}
 	
@@ -1318,12 +1311,11 @@ G.Launch=function()
 		str+=choose(['ian','ish','ese','an']);
 		G.setName('civadj',str);
 		
-		
 		G.dialogue.popup(function(div){
 			var magixOn=G.mods[0].url=='https://raw.githubusercontent.com/plasma4/magix-fix/master/magixUtils.js'&&G.mods[1].url=='https://raw.githubusercontent.com/plasma4/magix-fix/master/magix.js'
 			return (magixOn?'<div style="padding:16px;min-width:320px;"><div class="fancyText title">Magix is enabled!</div>':'<div style="padding:16px;min-width:320px;"><div class="fancyText title">Start a new game</div>')+
 			G.button({style:'position:absolute;right:-6px;top:-6px;',tooltip:'Select mods for this playthrough.',text:'Use mods',onclick:function(e){G.SelectMods();}})+
-			(magixOn?"":G.button({style:'position:absolute;top:-6px;',tooltip:'Use the Magix Mod, which works offline.',text:'Use Magix',onclick:function(e){G.SelectMagix();}}))+
+			(magixOn?"":G.button({style:'position:absolute;top:-6px;',tooltip:'Use the Magix Mod, which works offline.',text:'Use Magix',onclick:function(e){if(magixNotUsed){G.SelectMagix();magixNotUsed=false}}}))+
 			G.button({style:'position:absolute;left:-6px;top:-6px;',tooltip:'View the game\'s version history.',text:'Update log',onclick:function(e){G.dialogue.popup(G.tabPopup['updates'],'bigDialogue');}})+
 			G.button({style:'position:absolute;left:-6px;top:20px;',tooltip:'Change the game\'s settings.',text:'Settings',onclick:function(e){G.dialogue.popup(G.tabPopup['settings'],'bigDialogue');}})+
 			'<div class="framed bgMid fancyText" style="position:absolute;left:-2px;bottom:-26px;">'+G.textWithTooltip('About this alpha','<div style="width:240px;text-align:left;padding:4px;"><div class="par">The game in its current state features stone age technology and up to some parts of iron age.</div><div class="par">Features to be added later include agriculture, religion, commerce, military, and interactions with other civilizations, among other things planned.</div><div class="par">Feedback about bugs, oversights and technological inaccuracies are appreciated! (Send me a message to my tumblr at the top)</div><div class="par">Thank you for playing this alpha!</div><div class="par" style="text-align:right;">-Orteil</div></div>')+'</div>'+

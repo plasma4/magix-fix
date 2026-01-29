@@ -1,5 +1,6 @@
 /*
-Check the GitHub at https://github.com/plasma4/magix-fix for the more detailed and easier-to-read information.
+Check the GitHub at https://github.com/plasma4/magix-fix for more detailed and easier-to-read installation information.
+
 Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
@@ -848,7 +849,7 @@ var updateNewDayLines = function (fools, civ2) {
             'friends meet during the night', 'Gatherer said another BRUH today.', '<font color="pink">Purchase the full version of Magix to unlock special content. $0 after you buy it for $999.</font>',
             'README.txt', 'README.png', '<font color="pink">Hey, over here!</font>',
             'Wild thorns do nothing.', 'Something does nothing in the distance.',
-            'Strange ashes snow down.', choose(['A loud YEET is heard.','A loud YEET(dragon24) is heard.']),
+            'Strange ashes snow down.', choose(['A loud YEET is heard.', 'A loud YEET(dragon24) is heard.']),
             'Memeish creatures roll and scurry in the dirt', 'i++;',
             'Name: Magix', 'Thanks for entering the game today, I suppose.',
             'Wind blows or something. Maybe it\'s air.', 'Secrets await.', '<b>Do not forget to look at r/engrish</b>',
@@ -6888,10 +6889,10 @@ if (getObj("civ") != "1") {
             });
             new G.Res({
                 name: 'enchanted feather',
-                desc: 'These feathers have a sort of weightless quality that seems to defy gravity. Useless, for now.',
+                desc: 'These feathers have a sort of weightless quality that seems to defy gravity. It seems that a large pile of these is able to prevent decay of the feathers underneath. Useless, for now.',
                 icon: [3, 8, 'magix2'],
                 tick: function (me, tick) {
-                    var toSpoil = Math.min(me.amount * 0.01, 1e4); // goofy exponential scaling amirite
+                    var toSpoil = Math.min(me.amount * 0.01, 5000); // goofy exponential scaling amirite
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
                 },
                 category: 'alchemyingredients',
@@ -7073,7 +7074,7 @@ if (getObj("civ") != "1") {
                     { type: 'mult', value: 1.04, req: { 'motivation for artisans': true, 'caretaking': true } },
                     { type: 'mult', value: 1.03, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
                     { type: 'mult', value: 1.03, req: { 'xmas1': true } },
-                    { type: 'mult', value: 0.915, req: { 'se09': 'on' } },
+                    { type: 'mult', value: 0.925, req: { 'se09': 'on' } },
                 ],
                 req: { 'stone-knapping': true, 't10': false },
                 category: 'crafting',
@@ -8657,7 +8658,7 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'convert', from: { 'sulfur': 3, 'paper': 2, 'thread': 3 }, into: { 'light explosives': 1.25 }, every: 2, repeat: 2, mode: 'explosivesS' },
                     { type: 'mult', value: 1.25, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
-                    { type: 'mult', value: 0.85, req: { 'se09': 'on' } },
+                    { type: 'mult', value: 0.925, req: { 'se09': 'on' } },
                 ],
                 req: { 'explosive crafting & mining': true },
                 category: 'crafting',
@@ -8988,7 +8989,7 @@ if (getObj("civ") != "1") {
                     'windsugar': { name: 'windy sugar', icon: [14, 13, "magixmod"], desc: 'Gain [windy sugar] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'wind-essenced ingredients': true } },
                     'scoblife': { name: 'scobs of life', icon: [17, 13, "magixmod"], desc: 'Gain [scobs of life] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'nature-essenced ingredients': true } },
                     'growgrass': { name: 'grass of growing', icon: [16, 13, "magixmod"], desc: 'Gain [grass of growing] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.25 }, req: { 'nature-essenced ingredients': true } },
-                    'enchantfeather': { name: 'enchanted feather', icon: [0,0,'magixmod'] /* filler */, desc: 'Gain [enchanted feather] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.5 }, req: { 'enchanted feather-making': true } },
+                    'enchantfeather': { name: 'enchanted feather', icon: [0, 0, 'magixmod'] /* filler */, desc: 'Gain [enchanted feather] out of its stand and its owner.', use: { 'alchemist': 1, 'alchemy zone': 0.5 }, req: { 'enchanted feather-making': true } },
                 },
                 effects: [
                     { type: 'convert', from: { 'bone': 1.25 }, into: { 'bone dust': 1 }, every: 4, mode: 'bonedust' },
@@ -9829,7 +9830,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'sugar': 1, 'exotic fruit': 0.4, 'water': 1.25 }, into: { 'exotic juices': 1.75 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': false } },
                     { type: 'convert', from: { 'sugar': 2, 'exotic fruit': 0.4, 'water': 3.75 }, into: { 'exotic juices': 3.5 }, every: 5, mode: 'juicesE', req: { 'concentrated juices': true } },
                     { type: 'mult', value: 1.25, req: { 'crafting & farm rituals': 'on', 'power of the faith': true } },
-                    { type: 'mult', value: 0.915, req: { 'se09': 'on' } },
+                    { type: 'mult', value: 0.925, req: { 'se09': 'on' } },
                 ],
                 req: { 'juice-crafting': true, 't10': false },
                 category: 'crafting',
@@ -11378,8 +11379,8 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'skybase',
                 desc: 'A glorious construction floating in the high skies which acts as scaffolding for buildings. Each [skybase] gives 90 [sky] for use to construct buildings. To construct a skybase and raise it far above ground, you need [insight], [advanced building materials] and a lot of [wind essence]. In addition, you also need a dedicated team of [wizard]s and a large quantity of [wind essence] to maintain skybases; otherwise, they will collapse and kill your [people] that are on the base.',
-                icon: [0,0,'magixmod'], // filler
-                cost: { 'insight II': 13, 'advanced building materials': 4500, 'wind essence': 135000},
+                icon: [0, 0, 'magixmod'], // filler
+                cost: { 'insight II': 13, 'advanced building materials': 4500, 'wind essence': 135000 },
                 use: { 'wizard': 30 },
                 upkeep: { 'wind essence': 50 }, // too much or too little?
                 limitPer: { 'population': 6500 },
@@ -11393,7 +11394,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'sky home',
                 desc: '@provides 7 [housing]<>A cozy and well-built home for 7 citizens, situated high in the skies. Thanks to the magic of [enchanted feather]s and your [wizard]s, it never wastes.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'basic building materials': 400, 'advanced building materials': 90, 'enchanted feather': 110 },
                 use: { 'sky': 1 },
                 upkeep: { 'enchanted feather': 1 },
@@ -11407,7 +11408,7 @@ if (getObj("civ") != "1") {
             new G.Unit({
                 name: 'sky warehouse',
                 desc: '@provides 3,000 [material storage] and 2,000 [food storage]<>A large building situated high in the skies for storing food and materials. Thanks to the magic of [enchanted feather]s and your [wizard]s, it never wastes. Staffed with two guards to prevent theft, even though it is built in the sky.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'basic building materials': 1000, 'advanced building materials': 400, 'enchanted feather': 480 },
                 use: { 'sky': 3 },
                 staff: { 'worker': 2 },
@@ -19426,7 +19427,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'sky building',
                 desc: 'Your people want to expand far above, into the sky. @more likely with [culture of the afterlife]. @can be unlocked at the same time as [underwater building] and [underground building] once [eotm] is obtained.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 500, 'faith': 350, 'influence': 350, 'insight': 2700 },
                 req: { 'eotm': true },
                 chance: 250,
@@ -19436,7 +19437,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'underwater building',
                 desc: 'Your people want to expand into the depths of seas and oceans. @can be unlocked at the same time as [sky building] and [underground building] once [eotm] is obtained.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 350, 'influence': 300, 'insight': 2900 },
                 req: { 'eotm': true },
                 chance: 250,
@@ -19446,7 +19447,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'underground building',
                 desc: 'Your people want to expand far below, into the earth. @less likely with [belief in revenants]. @can be unlocked at the same time as [sky building] and [underwater building] once [eotm] is obtained.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 400, 'influence': 400, 'insight': 2500 },
                 req: { 'eotm': true },
                 chance: 100,
@@ -19456,7 +19457,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'thrilling heights',
                 desc: 'Your people living in skybases have developed a strange thrill from living so far aboveground. This trait makes each [skybase] produce a little [happiness].',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 200 },
                 req: { 'skybases': true, 'fear of heights': false },
                 chance: 125, lifetime: function () { return 25 + ((this.yearOfObtainment % 10) - 5) },
@@ -19467,7 +19468,7 @@ if (getObj("civ") != "1") {
             new G.Trait({
                 name: 'fear of heights',
                 desc: 'Your people are terrified of heights, and do not want to live so far aboveground. This trait makes each [skybase] harm [happiness] a little.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 200 },
                 req: { 'skybases': true, 'thrilling heights': false },
                 chance: 125, lifetime: function () { return 25 + ((this.yearOfObtainment % 10) - 5) },
@@ -19488,7 +19489,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'skybases',
                 desc: '@unlocks [skybase]s@unlocks [sky] territory<>Each [skybase], standing loftily hundreds of meters above ground, is kept afloat by enormous quantities of [wind essence]. Skybases will collapse and fall down if not properly maintained.',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'insight': 3000, 'wind essence': 175000, 'influence': 500 },
                 req: { 'sky building': true },
                 effects: [
@@ -19499,7 +19500,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'skycities',
                 desc: '@unlocks [sky home]s<>Sky buildings must be extremely light and will use [enchanted feather]s, so these will give less housing - the view is heavenly, though!',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'insight': 3500 },
                 req: { 'skybases': true },
             })
@@ -19507,7 +19508,7 @@ if (getObj("civ") != "1") {
             new G.Tech({
                 name: 'sky storage',
                 desc: '@unlocks [sky warehouse]s<>Each [sky warehouse] gives some [food storage] and [material storage].',
-                icon: [0,0,'magixmod'], // filler
+                icon: [0, 0, 'magixmod'], // filler
                 cost: { 'insight': 2700 },
                 req: { 'skycities': true },
             })
@@ -23135,11 +23136,11 @@ if (getObj("civ") != "1") {
                             }
                         }
                         //spell ticks
-                        G.temporarySpells.forEach(function(spell, i) {
+                        G.temporarySpells.forEach(function (spell, i) {
                             let spellN = 'spellT' + (i + 1);
                             // just quickly
                             if (spell.loading && G.checkPolicy(spellN) == 'on') {
-                                spell.unitMults.forEach(function(m) {
+                                spell.unitMults.forEach(function (m) {
                                     m.setN(m.getN() * m.mult);
                                 })
                             }
@@ -23148,15 +23149,15 @@ if (getObj("civ") != "1") {
                             if (G.checkPolicy(spellN) == 'on') {
                                 spell.shouldTurnOff = false;
                                 let dur = spell.getDuration();
-                                let yrs = Math.floor(dur/300);
-                                let days = dur - 300 * Math.floor(dur/300);
+                                let yrs = Math.floor(dur / 300);
+                                let days = dur - 300 * Math.floor(dur / 300);
                                 if (yrs > 0) cdArr.push(yrs.toString() + (yrs > 1 ? ' years' : ' year'));
                                 if (days > 0) cdArr.push(days.toString() + (days > 1 ? ' days' : ' day'));
                                 //console.log('a' + spell.getDuration());
                                 if (dur > 0) spell.setDuration(dur - 1);
                                 else spell.shouldTurnOff = true; // off by one error here but no one cares anyway
                                 //if (spell.cooldownT > 0) shouldTurnOff = true;
-                                G.getPolicy(spellN).desc = spell.baseDesc + (cdArr.length > 0 ? '//<b>This spell is currently active for '+cdArr.join(' and ')+'.</b>' : '');
+                                G.getPolicy(spellN).desc = spell.baseDesc + (cdArr.length > 0 ? '//<b>This spell is currently active for ' + cdArr.join(' and ') + '.</b>' : '');
                                 for (var i in spell.toConsume) {
                                     let c = spell.toConsume[i];
                                     let res = G.getRes(i);
@@ -23180,9 +23181,10 @@ if (getObj("civ") != "1") {
                                         G.lose('child', deathSpread[0], 'firestorm');
                                         G.lose('adult', deathSpread[1], 'firestorm');
                                         G.lose('elder', deathSpread[2], 'firestorm');
-                                        let sum = deathSpread[0]+deathSpread[1]+deathSpread[2];
+                                        let sum = deathSpread[0] + deathSpread[1] + deathSpread[2];
                                         G.gain('corpse', sum, 'firestorm');
-                                        if (sum > 0) G.Message({ type: 'bad', mergeId: 'firestormDeath', textFunc: function (args) {
+                                        if (sum > 0) G.Message({
+                                            type: 'bad', mergeId: 'firestormDeath', textFunc: function (args) {
                                                 return args.str.replaceAll('\\[people\\]', (args.n == 1 ? 'elf was' : 'elves were')).replaceAll('\\[X\\]', B(args.n));
                                             }, args: { n: sum, str: '[X] [people] killed in a monstrous firestorm.' }, icon: G.getPolicy(spellN).icon
                                         });
@@ -23191,11 +23193,12 @@ if (getObj("civ") != "1") {
                                         G.lose('child', woundedSpread[0], 'firestorm');
                                         G.lose('adult', woundedSpread[1], 'firestorm');
                                         G.lose('elder', woundedSpread[2], 'firestorm');
-                                        sum = woundedSpread[0]+woundedSpread[1]+woundedSpread[2];
+                                        sum = woundedSpread[0] + woundedSpread[1] + woundedSpread[2];
                                         // oh yeah, elders wounded during a firestorm de-age
                                         // we'll call this intentional and say it's purifying fire magic or something
                                         G.gain('wounded', sum, 'firestorm');
-                                        if (sum > 0) G.Message({ type: 'bad', mergeId: 'firestormWound', textFunc: function (args) {
+                                        if (sum > 0) G.Message({
+                                            type: 'bad', mergeId: 'firestormWound', textFunc: function (args) {
                                                 return args.str.replaceAll('\\[people\\]', (args.n == 1 ? 'elf was' : 'elves were')).replaceAll('\\[X\\]', B(args.n));
                                             }, args: { n: sum, str: '[X] [people] heavily wounded in a monstrous firestorm.' }, icon: G.getPolicy(spellN).icon
                                         });
@@ -23203,15 +23206,15 @@ if (getObj("civ") != "1") {
                                 }
                             } else if (spell.getCooldown() > 0) {
                                 let cd = spell.getCooldown();
-                                let yrs = Math.floor(cd/300);
-                                let days = cd - 300 * Math.floor(cd/300);
+                                let yrs = Math.floor(cd / 300);
+                                let days = cd - 300 * Math.floor(cd / 300);
                                 if (yrs > 0) cdArr.push(yrs + (yrs > 1 ? ' years' : ' year'));
                                 if (days > 0) cdArr.push(days + (days > 1 ? ' days' : 'day'));
-                                G.getPolicy(spellN).desc = spell.baseDesc + (cdArr.length > 0 ? '//<b>This spell is currently on cooldown for '+cdArr.join(' and ')+' and cannot be used.</b>' : '');
+                                G.getPolicy(spellN).desc = spell.baseDesc + (cdArr.length > 0 ? '//<b>This spell is currently on cooldown for ' + cdArr.join(' and ') + ' and cannot be used.</b>' : '');
                                 G.getPolicy(spellN).cost = { 'spell point': 1000000000000000 };
                                 spell.setCooldown(cd - 1);
                             } else { // another off by one error here but its cleaner so whatevs
-                                    //spell.cooldownT = 0;
+                                //spell.cooldownT = 0;
                                 G.getPolicy(spellN).desc = spell.baseDesc;
                                 G.getPolicy(spellN).cost = spell.baseCost;
                             }
@@ -24979,7 +24982,7 @@ if (getObj("civ") != "1") {
                 partOf: 'misc materials',
                 whenGathered: researchWhenGathered,
                 limit: 'mana capacity',
-                tick: function(me, tick) {
+                tick: function (me, tick) {
                     var toSpoil = me.amount * 0.0001;
                     if (G.checkPolicy('spellT7') == 'on') toSpoil *= 0.4;
                     var spent = G.lose(me.name, randomFloor(toSpoil), 'decay');
@@ -24992,7 +24995,7 @@ if (getObj("civ") != "1") {
                 desc: '[spell point]s represent bits of arcana and magic power that are required to cast large-scale spells.',
                 icon: [1, 10, "magix2"],
                 category: 'magic',
-                tick: function(me, tick) {
+                tick: function (me, tick) {
 
                 }
             });
@@ -25000,15 +25003,15 @@ if (getObj("civ") != "1") {
             // these are essential but unfortunately cannot be really automated
             function makeSpellResses(n) {
                 new G.Res({
-                    name: 'spellT'+n+'durationT',
+                    name: 'spellT' + n + 'durationT',
                     desc: 'You\'re not supposed to be reading this. I\'m calling the cops.',
-                    icon: [0,0, "magixmod"],
+                    icon: [0, 0, "magixmod"],
                     hidden: true,
                 });
                 new G.Res({
-                    name: 'spellT'+n+'cooldownT',
+                    name: 'spellT' + n + 'cooldownT',
                     desc: 'You\'re not supposed to be reading this. I\'m calling the cops.',
-                    icon: [0,0, "magixmod"],
+                    icon: [0, 0, "magixmod"],
                     hidden: true,
                 });
             }
@@ -25033,7 +25036,7 @@ if (getObj("civ") != "1") {
                 desc: '[ashened land] is the result of a wildfire, excessive dragon fire, or firestorm.//It replaces regular [land], does not provide any resources, and cannot be used to construct buildings.//However, it will slowly return to a normal state over time.',
                 icon: [5, 7, "magix2"],
                 category: 'land',
-                tick: function(me, tick) {
+                tick: function (me, tick) {
                     G.lose(me.name, randomFloor(me.amount * 0.0004), 'recovery');
                 },
                 effects: [
@@ -25121,16 +25124,22 @@ if (getObj("civ") != "1") {
                     //magical spirit
                     { type: 'gather', what: { 'nature essence': 0.07 } },
                     { type: 'gather', what: { 'water essence': 0.04 } },
-                    { type: 'gatherFunc', context: 'gather', amount: function(me) {
-                        let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
-                        return 0.15 * Math.log10(sacrifice) * Math.log10(sacrifice);
-                    }, max: function(me) {
-                        return 3.5;
-                    }, req: { 'spellT11': 'on' } },
-                    { type: 'gatherFunc', what: { 'water': function(me) {
-                        let sacrifice = Math.ceil(G.temporarySpells[13].sacrificed, 10);
-                        return 0.12 * Math.log10(sacrifice) * Math.log10(sacrifice);
-                    } }, req: { 'spellT14': 'on' } },
+                    {
+                        type: 'gatherFunc', context: 'gather', amount: function (me) {
+                            let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
+                            return 0.15 * Math.log10(sacrifice) * Math.log10(sacrifice);
+                        }, max: function (me) {
+                            return 3.5;
+                        }, req: { 'spellT11': 'on' }
+                    },
+                    {
+                        type: 'gatherFunc', what: {
+                            'water': function (me) {
+                                let sacrifice = Math.ceil(G.temporarySpells[13].sacrificed, 10);
+                                return 0.12 * Math.log10(sacrifice) * Math.log10(sacrifice);
+                            }
+                        }, req: { 'spellT14': 'on' }
+                    },
                 ],
                 req: { 'tribalism': true },
                 category: 'production',
@@ -25344,16 +25353,18 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'hunt', what: { 'hide': 1 }, req: { 'htt1': true } },
                     { type: 'gather', context: 'hunt', what: { 'meat': 1 }, req: { 'htt2': true } },
                     { type: 'mult', value: 1.1, req: { 'harvest rituals': 'on' } },
-                    { type: 'gatherFunc', context: 'hunt', amount: function(me) {
-                        let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
-                        let mult = 1;
-                        if (me.mode == 'spear fishing' && !G.has('aiming')) mult *= 0.375;
-                        else mult *= 0.625;
-                        if (me.mode == 'endurance hunting') mult *= 0.25;
-                        return 0.35 * mult * Math.log10(sacrifice) * Math.log10(sacrifice);
-                    }, max: function(me) {
-                        return 6;
-                    }, req: { 'spellT11': 'on' } },
+                    {
+                        type: 'gatherFunc', context: 'hunt', amount: function (me) {
+                            let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
+                            let mult = 1;
+                            if (me.mode == 'spear fishing' && !G.has('aiming')) mult *= 0.375;
+                            else mult *= 0.625;
+                            if (me.mode == 'endurance hunting') mult *= 0.25;
+                            return 0.35 * mult * Math.log10(sacrifice) * Math.log10(sacrifice);
+                        }, max: function (me) {
+                            return 6;
+                        }, req: { 'spellT11': 'on' }
+                    },
                 ],
                 req: { 'hunting': true },
                 category: 'production',
@@ -25381,24 +25392,28 @@ if (getObj("civ") != "1") {
                     { type: 'gather', context: 'fish', amount: 2.5, max: 4, mode: 'spear fishing', req: { 'aiming': true } },
                     { type: 'gather', context: 'fish', amount: 2.5, max: 4, mode: 'line fishing' },
                     { type: 'mult', value: 1.1, req: { 'harvest rituals': 'on' } },
-                    { type: 'gatherFunc', context: 'fish', amount: function(me) {
+                    {
+                        type: 'gatherFunc', context: 'fish', amount: function (me) {
                             let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
                             let mult = 1;
                             if (me.mode == 'spear fishing' && !G.has('aiming')) mult *= 0.6;
                             if (me.mode == 'catch by hand') mult *= 0.6;
                             return 0.8 * mult * Math.log10(sacrifice) * Math.log10(sacrifice);
-                        }, max: function(me) {
+                        }, max: function (me) {
                             return 10;
-                        }, req: { 'spellT10': 'on' } },
-                    { type: 'gatherFunc', context: 'fish', amount: function(me) {
-                        let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
-                        let mult = 1;
-                        if (me.mode == 'spear fishing' && !G.has('aiming')) mult *= 0.6;
-                        if (me.mode == 'catch by hand') mult *= 0.6;
-                        return 0.35 * mult * Math.log10(sacrifice) * Math.log10(sacrifice);
-                    }, max: function(me) {
-                        return 8;
-                    }, req: { 'spellT11': 'on' } },
+                        }, req: { 'spellT10': 'on' }
+                    },
+                    {
+                        type: 'gatherFunc', context: 'fish', amount: function (me) {
+                            let sacrifice = Math.ceil(G.temporarySpells[9].sacrificed, 10);
+                            let mult = 1;
+                            if (me.mode == 'spear fishing' && !G.has('aiming')) mult *= 0.6;
+                            if (me.mode == 'catch by hand') mult *= 0.6;
+                            return 0.35 * mult * Math.log10(sacrifice) * Math.log10(sacrifice);
+                        }, max: function (me) {
+                            return 8;
+                        }, req: { 'spellT11': 'on' }
+                    },
                 ],
                 req: { 'fishing': true },
                 upkeep: { 'bugs': 0.5 },
@@ -25487,10 +25502,14 @@ if (getObj("civ") != "1") {
                 //upkeep:{'food':0.2},
                 effects: [
                     { type: 'gather', what: { 'water': 40 } },
-                    { type: 'gatherFunc', what: { 'water': function(me) {
-                        let sacrifice = Math.ceil(G.temporarySpells[13].sacrificed, 10);
-                        return 30 * Math.log10(sacrifice) * Math.log10(sacrifice);
-                    } }, req: { 'spellT14': 'on' } },
+                    {
+                        type: 'gatherFunc', what: {
+                            'water': function (me) {
+                                let sacrifice = Math.ceil(G.temporarySpells[13].sacrificed, 10);
+                                return 30 * Math.log10(sacrifice) * Math.log10(sacrifice);
+                            }
+                        }, req: { 'spellT14': 'on' }
+                    },
                 ],
                 category: 'production',
                 req: { 'well-digging': true },
@@ -25721,7 +25740,7 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'wounded': 1, 'herbs': 3 }, into: { 'elder': 1 }, chance: 1 / 14, every: 12, mode: 'normal', req: { 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'wounded': 1, 'herbs': 1 }, into: { 'elder': 1 }, chance: 1 / 3, every: 8, mode: 'wounded', req: { 'elder workforce': 'on' } },
                     { type: 'convert', from: { 'sick': 1, 'herbs': 3, 'flowers': 1 }, into: { 'elder': 1 }, chance: 2 / 4, every: 5, mode: 'sick', req: { 'elder workforce': 'on' } },
-                    { type: 'mult', value: 1.8, req: { 'spellT9' : 'on' } },
+                    { type: 'mult', value: 1.8, req: { 'spellT9': 'on' } },
                     //{type:'mult',value:1.03,req:{'more experienced healers':true,'moderation':true}},
                     //   {type:'mult',value:1.06,req:{'more experienced healers':true,'caretaking':true}},
                     //{type:'mult',value:1.25,req:{'se07':'on'}},
@@ -26241,11 +26260,13 @@ if (getObj("civ") != "1") {
                 effects: [
                     { type: 'provide', what: { 'wisdom': 0.4 } },
                     { type: 'gather', what: { 'insight': 0.005 }, req: { 'wizard wisdom II': true } },
-                    { type: 'function', func: function(me) {
-                        if (!G.has('spellcasting')) return;
-                        let gained = 0.1 * Math.log10(Math.ceil(me.amount, 2)) * Math.pow(me.amount, 1/3);
-                        G.gain('spell point', randomFloor(gained), 'wizardry');
-                    }, chance: 1 / 50 },
+                    {
+                        type: 'function', func: function (me) {
+                            if (!G.has('spellcasting')) return;
+                            let gained = 0.1 * Math.log10(Math.ceil(me.amount, 2)) * Math.pow(me.amount, 1 / 3);
+                            G.gain('spell point', randomFloor(gained), 'wizardry');
+                        }, chance: 1 / 50
+                    },
                 ],
                 category: 'discovery',
                 limitPer: { 'population': 6 },
@@ -26269,7 +26290,7 @@ if (getObj("civ") != "1") {
                     { type: 'gather', what: { 'mana': 6 }, mode: 'gathermana' },
                     { type: 'gather', what: { 'water essence': 0.7 }, mode: 'essences' },
                     { type: 'gather', what: { 'fire essence': 0.7 }, mode: 'essences' },
-                    { type: 'gather', what: { 'dark essence': 1 }, mode: 'essences' , req: { 'dark channeling': true } },
+                    { type: 'gather', what: { 'dark essence': 1 }, mode: 'essences', req: { 'dark channeling': true } },
                     { type: 'gather', what: { 'nature essence': 0.7 }, mode: 'essences' },
                     { type: 'gather', what: { 'lightning essence': 1 }, mode: 'essences', req: { 'storm channeling': true } },
                     { type: 'gather', what: { 'wind essence': 1 }, mode: 'essences', req: { 'storm channeling': true } },
@@ -26279,11 +26300,13 @@ if (getObj("civ") != "1") {
                     { type: 'convert', from: { 'mana': 0.4 }, into: { 'nature essence': 1.25 }, every: 1, mode: 'advessences' },
                     { type: 'convert', from: { 'mana': 0.6 }, into: { 'lightning essence': 2 }, every: 1, mode: 'advessences' },
                     { type: 'convert', from: { 'mana': 0.6 }, into: { 'wind essence': 2 }, every: 1, mode: 'advessences' },
-                    { type: 'function', func: function(me) {
-                        if (!G.has('shamanry III')) return;
-                        let gained = 0.2 * Math.log10(Math.ceil(me.amount, 2)) * Math.pow(me.amount, 1/3);
-                        G.gain('spell point', randomFloor(gained), 'wizardry');
-                    }, chance: 1 / 20 },
+                    {
+                        type: 'function', func: function (me) {
+                            if (!G.has('shamanry III')) return;
+                            let gained = 0.2 * Math.log10(Math.ceil(me.amount, 2)) * Math.pow(me.amount, 1 / 3);
+                            G.gain('spell point', randomFloor(gained), 'wizardry');
+                        }, chance: 1 / 20
+                    },
                 ],
                 category: 'spiritual',
                 limitPer: { 'population': 400 },
@@ -26393,7 +26416,7 @@ if (getObj("civ") != "1") {
                 noMoreChoicesTexts: ['There is currently nothing to research', 'No new technologies can now be found', 'There are currently around one hundred technologies. Maybe wait up a bit.', 'There are currently no new available researches', 'No new technologies are currently available'],
                 getCosts: function () {
                     var techCntLastNmbr = G.has('symbN') ? (G.techN + G.knowN) % 10 : -1;
-                    var batterycost = (this.choices.length == 0 ? (G.achievByName['the fortress'].won > 0 ? 25 : 0) + (G.has('symbN') && techCntLastNmbr == 1 ? 5 : 0) : 50 );
+                    var batterycost = (this.choices.length == 0 ? (G.achievByName['the fortress'].won > 0 ? 25 : 0) + (G.has('symbN') && techCntLastNmbr == 1 ? 5 : 0) : 50);
                     let calcCost = (name, constGain = 0.025, rollGain = 0.05) => Math.floor(G.getRes(name).amount * (constGain + this.roll * rollGain))
                     var costs = {};
                     costs['discernment'] = calcCost('wisdom');
@@ -26442,7 +26465,7 @@ if (getObj("civ") != "1") {
                     else str += '<font color="#cfc">Research</font>';
                     var costs = this.getCosts();
                     var costsStr = G.getCostString(costs);
-                    var batterycost = (this.choices.length == 0 ? (G.achievByName['the fortress'].won > 0 ? 25 : 0) : 50 );
+                    var batterycost = (this.choices.length == 0 ? (G.achievByName['the fortress'].won > 0 ? 25 : 0) : 50);
                     var costbat = B((100 - batterycost) * upscaleBat);
                     costsStr = costsStr.replace(costbat, '&nbsp;' + (100 - batterycost + '%'));
                     if (costsStr) str += ' <b><i><font color="#aff">(' + costsStr + ')</font></i></b>';
@@ -26452,8 +26475,8 @@ if (getObj("civ") != "1") {
                     var charged = (this.choices.length == 0 ? (G.achievByName['the fortress'].won > 0 ? "a 75% charged" : "a fully charged") : "a 50% charged");
                     var costs = this.getCosts();
                     var costStr = G.getCostString(costs, true).replace(" Battery of discoveries", "% charged battery")
-                        .replace(B(costs['battery of discoveries']), '| '+B(costs['battery of discoveries'] / upscaleBat))
-                        .replace(B(costs['discernment']), '| '+B(costs['discernment']))
+                        .replace(B(costs['battery of discoveries']), '| ' + B(costs['battery of discoveries'] / upscaleBat))
+                        .replace(B(costs['discernment']), '| ' + B(costs['discernment']))
                     if (G.has('oral tradition 2/2')) {
                         return '<div class="info"><div class="par">' + (this.choices.length == 0 ? 'Generate new research opportunities.<br>The cost will scale with your <b>Wisdom</b> and <b>Inspiration</b> resources.<br>To roll or reroll you also need ' + charged + ' <b>Battery of Discoveries</b>.' : 'Reroll to get new research opportunities if none of the available choices suit you.<br>The cost will rise with each reroll, but will decrease again over time.') + '</div><div>Cost: ' + costStr + '</div></div>';
                     } else {
@@ -26636,7 +26659,7 @@ if (getObj("civ") != "1") {
                 icon: [22, 8, "c2"],
                 cost: { 'discernment': 25, 'gentility': 5 },
                 req: { 'construction': true, 'cities': true, 'intuition': true, 'caligraphy': true },
-                effects: [           
+                effects: [
                     { type: 'provide res', what: { 'wisdom': 5 } },
                 ],
             });
@@ -27263,7 +27286,7 @@ if (getObj("civ") != "1") {
                 req: { 'maths': true, 'tile inspection': true, 'writing': true, 'alphabet 1/3': true },
                 chance: 30,
                 category: 'knowledge'
-            });8
+            }); 8
             new G.Trait({
                 name: 'second upscale', category: 'anomaly',
                 desc: '@increases the costs of rolling/rerolling technologies @the [battery of discoveries] charges far slower //<small>Now it is confirmed...it has to do with <b>Pressure</b>.</small>',
@@ -27960,15 +27983,15 @@ if (getObj("civ") != "1") {
                 icon: [24, 14, "c2"],
                 cost: { 'discernment': 106, 'faith': 10, 'gentility': 16 },
                 req: { 'a power of the fortress': true, 'developed creativity': true, 'shamanry II': true },
-                           effects: [
-                               { type: 'provide res', what: { 'fire essence limit': 5000 } },
-                               { type: 'provide res', what: { 'water essence limit': 5000 } },
-                               { type: 'provide res', what: { 'nature essence limit': 5000 } },
-                               { type: 'provide res', what: { 'dark essence limit': 5000 } },
-                               { type: 'provide res', what: { 'wind essence limit': 5000 } },
-                               { type: 'provide res', what: { 'lightning essence limit': 5000 } },
-                               { type: 'provide res', what: { 'mana capacity': 5000 } },
-                           ],
+                effects: [
+                    { type: 'provide res', what: { 'fire essence limit': 5000 } },
+                    { type: 'provide res', what: { 'water essence limit': 5000 } },
+                    { type: 'provide res', what: { 'nature essence limit': 5000 } },
+                    { type: 'provide res', what: { 'dark essence limit': 5000 } },
+                    { type: 'provide res', what: { 'wind essence limit': 5000 } },
+                    { type: 'provide res', what: { 'lightning essence limit': 5000 } },
+                    { type: 'provide res', what: { 'mana capacity': 5000 } },
+                ],
             });
             /*Insight traits will work together with culture one*/
             new G.Trait({
@@ -28458,7 +28481,7 @@ if (getObj("civ") != "1") {
                 icon: [21, 5, "c2"],
                 cost: { 'gentility': 13, 'discernment': 17, 'creativity': 16, 'faith': 6 },
                 req: { 'ritualism': true, 'magical spirit': true },
-                effects: [ { type: 'show res', what: ['mana'] } ],
+                effects: [{ type: 'show res', what: ['mana'] }],
             });
 
             new G.Tech({
@@ -28591,7 +28614,7 @@ if (getObj("civ") != "1") {
                 desc: '@lose an additional 0.3% of your [happiness] every 2 days (up from 0.7% to 1%), but most [happiness] loss is reduced by 40%@is a prerequisite to other techs',
                 icon: [3, 11, "c2"],
                 chance: 2,
-                cost: { },
+                cost: {},
                 // effects: [
                 //     {
                 //         type: 'function', func: function () {
@@ -28895,8 +28918,8 @@ if (getObj("civ") != "1") {
             new G.Policy({
                 name: 'spellT1',
                 displayName: 'Flare-casting',
-                desc: ['['+G.essenceBuff[0]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[0]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[0] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[0] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 0, 2, "magixmod", 2, 11, "magix2"],
@@ -28905,20 +28928,22 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                           [ { unit: 'firekeeper', type: 'gather', mode: 'stick fires', toMult: 'fire essence', mult: 6 },
-                                             { unit: 'firekeeper', type: 'gather', mode: 'fire essence gather', toMult: 'fire essence', mult: 6 },
-                                             { unit: 'necromancer', type: 'convertTo', mode: 'darkcorpses', toMult: 'dark essence', mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[0], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[0], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[0], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[0], mult: 0.55 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'firekeeper', type: 'gather', mode: 'stick fires', toMult: 'fire essence', mult: 6 },
+                    { unit: 'firekeeper', type: 'gather', mode: 'fire essence gather', toMult: 'fire essence', mult: 6 },
+                    { unit: 'necromancer', type: 'convertTo', mode: 'darkcorpses', toMult: 'dark essence', mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[0], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[0], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[0], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[0], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT2',
                 displayName: 'Wave spells',
-                desc: ['['+G.essenceBuff[1]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[1]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[1] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[1] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 0, 1, "magixmod", 2, 11, "magix2"],
@@ -28927,21 +28952,23 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                           [ { unit: 'gatherer', type: 'gather', toMult: 'water essence', mult: 6 },
-                                             { unit: 'fisher', type: 'gather', toMult: 'water essence', mult: 6 },
-                                             { unit: 'firekeeper', type: 'gather', mode: 'stick fires', toMult: 'fire essence', mult: 0.55 },
-                                             { unit: 'firekeeper', type: 'gather', mode: 'fire essence gather', toMult: 'fire essence', mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[1], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[1], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[1], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[1], mult: 0.55 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'gatherer', type: 'gather', toMult: 'water essence', mult: 6 },
+                    { unit: 'fisher', type: 'gather', toMult: 'water essence', mult: 6 },
+                    { unit: 'firekeeper', type: 'gather', mode: 'stick fires', toMult: 'fire essence', mult: 0.55 },
+                    { unit: 'firekeeper', type: 'gather', mode: 'fire essence gather', toMult: 'fire essence', mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[1], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[1], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[1], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[1], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT3',
                 displayName: 'Soulless energies',
-                desc: ['['+G.essenceBuff[2]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[2]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[2] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[2] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 1, 3, "magixmod", 2, 11, "magix2"],
@@ -28950,20 +28977,22 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                           [ { unit: 'necromancer', type: 'convertTo', mode: 'darkcorpses', toMult: 'dark essence', mult: 6 },
-                                             { unit: 'gatherer', type: 'gather', toMult: 'nature essence', mult: 0.55 },
-                                             { unit: 'scout', type: 'gather', toMult: 'nature essence', mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[2], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[2], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[2], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[2], mult: 0.55 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'necromancer', type: 'convertTo', mode: 'darkcorpses', toMult: 'dark essence', mult: 6 },
+                    { unit: 'gatherer', type: 'gather', toMult: 'nature essence', mult: 0.55 },
+                    { unit: 'scout', type: 'gather', toMult: 'nature essence', mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[2], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[2], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[2], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[2], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT4',
                 displayName: 'Magical overgrowth',
-                desc: ['['+G.essenceBuff[3]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[3]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[3] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[3] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 1, 2, "magixmod", 2, 11, "magix2"],
@@ -28972,20 +29001,22 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                [ { unit: 'gatherer', type: 'gather', toMult: 'nature essence', mult: 6 },
-                                  { unit: 'scout', type: 'gather', toMult: 'nature essence', mult: 6 },
-                                  { unit: 'storm teller', type: 'convertTo', toMult: 'lightning essence', mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[3], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[3], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[3], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[3], mult: 0.55 },
-                                       ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'gatherer', type: 'gather', toMult: 'nature essence', mult: 6 },
+                    { unit: 'scout', type: 'gather', toMult: 'nature essence', mult: 6 },
+                    { unit: 'storm teller', type: 'convertTo', toMult: 'lightning essence', mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[3], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[3], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[3], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[3], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT5',
                 displayName: 'Bolt in the blue',
-                desc: ['['+G.essenceBuff[4]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[4]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[4] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[4] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 0, 3, "magixmod", 2, 11, "magix2"],
@@ -28994,19 +29025,21 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                           [ { unit: 'storm teller', type: 'convertTo', toMult: 'lightning essence', mult: 6 },
-                                             { unit: 'storm teller', type: 'convertTo', toMult: 'wind essence', mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[4], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[4], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[4], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[4], mult: 0.55 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'storm teller', type: 'convertTo', toMult: 'lightning essence', mult: 6 },
+                    { unit: 'storm teller', type: 'convertTo', toMult: 'wind essence', mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[4], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[4], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[4], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[4], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT6',
                 displayName: 'Soul of the wind',
-                desc: ['['+G.essenceBuff[5]+'] is produced 6x faster and decays much slower.',
-                    'However, ['+G.essenceNerf[5]+'] is produced 45% slower and decays faster.',
+                desc: ['[' + G.essenceBuff[5] + '] is produced 6x faster and decays much slower.',
+                'However, [' + G.essenceNerf[5] + '] is produced 45% slower and decays faster.',
                     'Consumes 1% of your [mana] as well as an extra 30 [mana] every day.',
                     'Automatically stops after 225 days or if the upkeep cannot be met and gives a cooldown of 2 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 1, 1, "magixmod", 2, 11, "magix2"],
@@ -29015,15 +29048,17 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
-                                           [ { unit: 'gatherer', type: 'gather', toMult: 'water essence', mult: 0.55 },
-                                             { unit: 'fisher', type: 'gather', toMult: 'water essence', mult: 0.55 },
-                                             { unit: 'storm teller', type: 'convertTo', toMult: 'wind essence', mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[5], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[5], mult: 6 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[5], mult: 0.55 },
-                                           { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[5], mult: 0.55 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [30, 0.01] }, length: 225, cooldownYears: 2, unitMults:
+                    [{ unit: 'gatherer', type: 'gather', toMult: 'water essence', mult: 0.55 },
+                    { unit: 'fisher', type: 'gather', toMult: 'water essence', mult: 0.55 },
+                    { unit: 'storm teller', type: 'convertTo', toMult: 'wind essence', mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceBuff[5], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceBuff[5], mult: 6 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'essences', toMult: G.essenceNerf[5], mult: 0.55 },
+                    { unit: 'shaman', type: 'convertTo', mode: 'advessences', toMult: G.essenceNerf[5], mult: 0.55 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT7',
                 displayName: 'Mana preservation',
@@ -29036,7 +29071,7 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'magic essences': [30, 0] }, length: 2400, cooldownYears: 5 } )
+            G.temporarySpells.push({ toConsume: { 'magic essences': [30, 0] }, length: 2400, cooldownYears: 5 })
             new G.Policy({
                 name: 'spellT8',
                 displayName: 'Essence preservation',
@@ -29050,11 +29085,13 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [35, 0.02] }, length: 3600, cooldownYears: 7, unitMults:
-                                           [ { unit: 'shaman', type: 'convertFrom', mode: 'advessences', toMult: 'mana', mult: 2 },
-                                             { unit: 'necromancer', type: 'convertFrom', mode: 'darkcorpses', toMult: 'mana', mult: 2 },
-                                             { unit: 'storm teller', type: 'convertFrom', toMult: 'mana', mult: 2 },
-                                                  ] } )
+            G.temporarySpells.push({
+                toConsume: { 'mana': [35, 0.02] }, length: 3600, cooldownYears: 7, unitMults:
+                    [{ unit: 'shaman', type: 'convertFrom', mode: 'advessences', toMult: 'mana', mult: 2 },
+                    { unit: 'necromancer', type: 'convertFrom', mode: 'darkcorpses', toMult: 'mana', mult: 2 },
+                    { unit: 'storm teller', type: 'convertFrom', toMult: 'mana', mult: 2 },
+                    ]
+            })
             new G.Policy({
                 name: 'spellT9',
                 displayName: 'Healing charms',
@@ -29067,7 +29104,7 @@ if (getObj("civ") != "1") {
                 req: { 'charm spells': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'nature essence': [27, 0.04] }, length: 1200, cooldownYears: 4 } )
+            G.temporarySpells.push({ toConsume: { 'nature essence': [27, 0.04] }, length: 1200, cooldownYears: 4 })
             new G.Policy({
                 name: 'spellT10',
                 displayName: 'Fishing charms',
@@ -29080,7 +29117,7 @@ if (getObj("civ") != "1") {
                 req: { 'charm spells': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'nature essence': [20, 0.02], 'water essence': [20, 0.02] }, length: 3300, cooldownYears: 3 } )
+            G.temporarySpells.push({ toConsume: { 'nature essence': [20, 0.02], 'water essence': [20, 0.02] }, length: 3300, cooldownYears: 3 })
             new G.Policy({
                 name: 'spellT11',
                 displayName: 'Harvest charms',
@@ -29093,14 +29130,14 @@ if (getObj("civ") != "1") {
                 req: { 'charm spells': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'nature essence': [11, 0.03] }, length: 3300, cooldownYears: 9 } )
+            G.temporarySpells.push({ toConsume: { 'nature essence': [11, 0.03] }, length: 3300, cooldownYears: 9 })
             // this spell was originally meant for the human race but has been added here because why not (and also to go along with dark wisdom)
             // it requires holy essence so cannot be cast (for now)
             // it also currently uses the optic power sprite because i'm too lazy to make a new one
             new G.Policy({
                 name: 'spellT12',
                 displayName: 'Golden eye',
-                desc: ['[dreamer]s, [storyteller]s and all [faith,faith units] are twice as efficient.',
+                desc: ['[dreamer]s, [storyteller]s, and all [faith,faith units] are twice as efficient.',
                     'Consumes 60 [mana], 15 [greenold block]s and 70 [holy essence] every day.',
                     'Automatically stops after 6 years or if the upkeep cannot be met and gives a cooldown of 7 years upon stopping.'].join('//'),
                 icon: [1, 11, "magix2", 18, 5, "c2"],
@@ -29109,7 +29146,7 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },// 'more mana making': true, '7th essence': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [60, 0], 'greenold block': [15, 0], 'holy essence': [70, 0] }, length: 1800, cooldownYears: 7 } )
+            G.temporarySpells.push({ toConsume: { 'mana': [60, 0], 'greenold block': [15, 0], 'holy essence': [70, 0] }, length: 1800, cooldownYears: 7 })
             // this is dark wisdoms (currently has no sprite because i'm too lazy to make a new one)
             new G.Policy({
                 name: 'spellT13',
@@ -29123,7 +29160,7 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'mana': [70, 0], 'dark essence': [55, 0] }, length: 2400, cooldownYears: 11 } )
+            G.temporarySpells.push({ toConsume: { 'mana': [70, 0], 'dark essence': [55, 0] }, length: 2400, cooldownYears: 11 })
             new G.Policy({
                 name: 'spellT14',
                 displayName: 'Mana rains',
@@ -29136,7 +29173,7 @@ if (getObj("civ") != "1") {
                 req: { 'charm spells': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'water essence': [40, 0.028] }, length: 1350, cooldownYears: 17 } )
+            G.temporarySpells.push({ toConsume: { 'water essence': [40, 0.028] }, length: 1350, cooldownYears: 17 })
             // below spells are definitely not implemented quite yet XD
             new G.Policy({
                 name: 'spellT15',
@@ -29153,7 +29190,7 @@ if (getObj("civ") != "1") {
                 req: { 'spellcasting': true }, // { 'curses and maledictions': true, 'advanced spellcasting': true },
                 category: 'spell',
             });
-            G.temporarySpells.push( { toConsume: { 'fire essence': [65, 0.03] }, length: 1050, cooldownYears: 21 } )
+            G.temporarySpells.push({ toConsume: { 'fire essence': [65, 0.03] }, length: 1050, cooldownYears: 21 })
 
             // important setup for sp (at some point replace these with effectFuncs)
             G.temporarySpells.forEach((spell, i) => {
@@ -29171,33 +29208,39 @@ if (getObj("civ") != "1") {
                 spell.shouldTurnOff = false;
                 spell.loading = true;
                 spell.on = G.checkPolicy(spellN) == 'on';
-                spellP.effects.push({type: 'function', func: function() {
-                    // spell.durationT = spell.length;
-                    spell.setDuration(spell.length);
-                    if (G.getSetting('spell messages') || G.resets < 3) {
-                        G.Message({type: 'important tall', text: 'The spell <b>'+spellP.displayName+'</b> has been activated for '+
-                                    (spell.length < 600 ? spell.length.toString()+' days.':Math.floor(spell.length/300).toString()+' years.'), icon: spellP.icon});
+                spellP.effects.push({
+                    type: 'function', func: function () {
+                        // spell.durationT = spell.length;
+                        spell.setDuration(spell.length);
+                        if (G.getSetting('spell messages') || G.resets < 3) {
+                            G.Message({
+                                type: 'important tall', text: 'The spell <b>' + spellP.displayName + '</b> has been activated for ' +
+                                    (spell.length < 600 ? spell.length.toString() + ' days.' : Math.floor(spell.length / 300).toString() + ' years.'), icon: spellP.icon
+                            });
+                        }
+                        spell.on = true;
                     }
-                    spell.on = true;
-                }});
+                });
 
-                spellP.modes['off'].effects = [{type: 'function', func: function() {
-                    if (spell.loading || (!spell.on)) return; // ignore attempts to change cooldown when loading
-                    spell.setCooldown(spell.cooldownYears * 300);
-                    //spellP.desc = spell.baseDesc + '//<b>This spell is currently on cooldown and cannot be used.</b>';
-                    //spellP.cost = { 'spell point': 1000000000000000 };
-                    if (G.getSetting('spell messages') || G.resets < 3) {
-                        G.Message({type: 'important tall', text: 'The spell <b>'+spellP.displayName+'</b> has ended.', icon: spellP.icon});
+                spellP.modes['off'].effects = [{
+                    type: 'function', func: function () {
+                        if (spell.loading || (!spell.on)) return; // ignore attempts to change cooldown when loading
+                        spell.setCooldown(spell.cooldownYears * 300);
+                        //spellP.desc = spell.baseDesc + '//<b>This spell is currently on cooldown and cannot be used.</b>';
+                        //spellP.cost = { 'spell point': 1000000000000000 };
+                        if (G.getSetting('spell messages') || G.resets < 3) {
+                            G.Message({ type: 'important tall', text: 'The spell <b>' + spellP.displayName + '</b> has ended.', icon: spellP.icon });
+                        }
+                        spell.on = false;
                     }
-                    spell.on = false;
-                }}];
+                }];
 
                 // mults
-                spell.unitMults.forEach( (m) => {
-                    m.getN = function() {
+                spell.unitMults.forEach((m) => {
+                    m.getN = function () {
                         // loop through effects (there's probably a cleaner way but idc tbh icl)
                         let n = 0;
-                        G.getDict(m.unit).effects.forEach(function(eff) {
+                        G.getDict(m.unit).effects.forEach(function (eff) {
                             if (m.type == 'gather' && eff.type == 'gather' && (m.mode ? (m.mode == eff.mode) : true)) {
                                 if (eff.what && eff.what[m.toMult]) n = eff.what[m.toMult];
                             }
@@ -29210,9 +29253,9 @@ if (getObj("civ") != "1") {
                         })
                         return n;
                     }
-                    m.setN = function(n) {
+                    m.setN = function (n) {
                         // loop through effects (there's probably a cleaner way but idc tbh icl)
-                        G.getDict(m.unit).effects.forEach(function(eff) {
+                        G.getDict(m.unit).effects.forEach(function (eff) {
                             if (m.type == 'gather' && eff.type == 'gather' && (m.mode ? (m.mode == eff.mode) : true)) {
                                 if (eff.what && eff.what[m.toMult]) eff.what[m.toMult] = n;
                             }
@@ -29226,18 +29269,22 @@ if (getObj("civ") != "1") {
                     }
                     m.baseValue = m.getN();
                 })
-                spellP.effects.push({type: 'function', func: function() {
-                    spell.unitMults.forEach(function(m) {
-                        m.setN(m.getN() * m.mult);
-                    })
-                }});
+                spellP.effects.push({
+                    type: 'function', func: function () {
+                        spell.unitMults.forEach(function (m) {
+                            m.setN(m.getN() * m.mult);
+                        })
+                    }
+                });
 
-                spellP.modes['off'].effects.push({type: 'function', func: function() {
-                    if (spell.loading) return; // ignore the off that's called at the start of the game
-                    spell.unitMults.forEach(function(m) {
-                        m.setN(m.getN() / m.mult);
-                    })
-                }});
+                spellP.modes['off'].effects.push({
+                    type: 'function', func: function () {
+                        if (spell.loading) return; // ignore the off that's called at the start of the game
+                        spell.unitMults.forEach(function (m) {
+                            m.setN(m.getN() / m.mult);
+                        })
+                    }
+                });
             })
 
 
