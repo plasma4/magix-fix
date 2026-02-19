@@ -43,6 +43,13 @@ var orteilURL = window.offlineMode ? "Magix/" : "https://orteil.dashnet.org/cook
 
 //Custom storage tools that 1) don't break the save data and 2) are saved when exporting
 if (!window.magixLoaded) {
+    for (let i = 0; i < G.mods.length; i++) {
+        let url = G.mods[i].url
+        if (url === "data.js") {
+            alert("When running Magix, please remove data.js first.")
+            throw new Error("The data.js file should not be in mods list.")
+        }
+    }
     var terrainMagixImg = new Image()
     terrainMagixImg.src = magixURL + 'terrainMagix.png'
     G.traitChanceMult = 1 // Simply multiplies trait chances
@@ -1310,7 +1317,7 @@ G.AddData({
                     G.writeSettingButton({ text: 'Toggle relic messages', tooltip: 'Toggle messages related to relics (from archaeologists).', name: 'relic messages', id: 'relic messages' }) +
                     G.writeSettingButton({ text: 'Toggle drought messages', tooltip: 'Toggle messages giving info about droughts in your world.', name: 'drought messages', id: 'drought messages' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle spell messages', tooltip: 'Toggle messages related to spells cast.', name: 'spell messages', id: 'spell messages' });
-                str += "<br>" + G.writeSettingButton({ text: 'Toggle annual messages', tooltip: 'Toggle annual reports that tell you about your tribe.', name: 'annual raports', id: 'annual raports' });
+                str += "<br>" + G.writeSettingButton({ text: 'Toggle annual messages', tooltip: 'Toggle annual reports that tell you about your tribe.', name: 'annual reports', id: 'annual reports' });
                 str += "<br>" + G.writeSettingButton({ text: 'Toggle fools mode', tooltip: 'You\'d be a fool to think it\'s April Fools.', name: 'fools', id: 'fools' });
             } else {
                 str += "<b>Perform three ascensions to unlock the message filter.</b>";
@@ -2099,7 +2106,7 @@ G.AddData({
         G.settings.push({ name: "wonder messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "relic messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "drought messages", type: "toggle", def: 1, value: 1 });
-        G.settings.push({ name: "annual raports", type: "toggle", def: 1, value: 1 });
+        G.settings.push({ name: "annual reports", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "spell messages", type: "toggle", def: 1, value: 1 });
         G.settings.push({ name: "fools", type: "toggle", def: 0 });
         G.settings.push({ name: "lessMax", type: "toggle", def: 0 });
@@ -3101,7 +3108,7 @@ G.AddData({
             tier: 0,
             name: 'that was so brutal',
             icon: [35, 8, "magixmod"],
-            desc: 'Oh my goodness! Murdering the root full of hope for future once AGAIN? And with more cruelty than before?! //Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //The [cruel goal] shadow achievement is also required for this.',
+            desc: 'Oh my goodness! Murdering the root full of hope for the future once AGAIN? And with more cruelty than before?! //Sacrifice all of your people to one of following wonders: @[pagoda of passing time] @[pagoda of culture] @[hartar\'s statue] @[pagoda of democracy] @[fortress of cultural legacy] @[complex of dreamers] @[fortress of magicians] @[platinum fish statue] @[tomb of oceans] @[the Herboleum] @[temple of the Stone] @[Mausoleum of the Dreamer] //The [cruel goal] shadow achievement is also required for this.',
             effects: [
             ],
             visible: false,
@@ -5595,7 +5602,7 @@ G.AddData({
                                         var toDie = randomFloor(effect.chance * me.amount);
                                         if (toDie > 0) {
                                             if (effect.desired) {
-                                                //if(me.unit.name.indexOf('grave')!=-1 || me.unit.name.indexOf('cemetary')!=-1)G.gain('corpse',-toDie*G.unitByName[''].effects[0].what['burial spot'],'decay');
+                                                //if(me.unit.name.indexOf('grave')!=-1 || me.unit.name.indexOf('cemetery')!=-1)G.gain('corpse',-toDie*G.unitByName[''].effects[0].what['burial spot'],'decay');
                                                 me.targetAmount -= toDie;
                                             }
                                             G.wasteUnit(me, toDie);

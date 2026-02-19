@@ -1,3 +1,5 @@
+/* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod; check DOCS.md for extensive NEL documentation. */
+
 // THIS VARIABLE IS FOR LOCALLY MODIFYING MAGIX AND SHOULD NOT BE CHANGED WHEN PLAYING NORMALLY OR WHEN CHANGING YOUR OWN MOD.
 // If you wish to force Magix to use your local files (magix.js and magixUtils.js), set the value below to true. This is not advised because normally, the game will automatically use the newest version when possible and use your browser's local storage to keep an offline copy of the scripts. You should only use this if you are trying to test modifications of Magix! (Should you be modifying data.js or importing OTHER local files, you don't need to do this.)
 
@@ -39,7 +41,7 @@ var magixSources = [
 // To make sure that data doesn't have any weird issues, you may want to wipe the save before trying to get this data!
 
 // getGameJSON() is used in conjunction with getDictionaryData() to construct the data for MagixData.js automatically.
-// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and reload. For Magix, run c1() for human race and c2() for second race; also make sure to enable offlineMode.
+// Tip: in order to prevent RNG changing exported data, add the code below after the seedrandom function script (on line 270 of main.js), uncomment it, and export data from a private window. For Magix, start with the human race and run the c2() for switching to the second race; also make sure to enable offlineMode if you made any local changes.
 // Math.seedrandom=function(){Math.random=function(){return 0}}
 function getGameJSON(objectMode) {
     var result = {
@@ -170,13 +172,11 @@ function extractObject(toExtract, properties, funcProperties) {
 }
 
 // Returns an object where the keys are the raw names of the resources and the values are the display names.
-function getDictionaryData(asObject) {
+function getDictionaryData(objectMode) {
     var resObj = {}
     var keys = Object.keys(G.dict)
     for (var i = 0; i < keys.length; i++) {
         resObj[G.dict[keys[i]].name] = G.dict[keys[i]].displayName
     }
-    return asObject ? resObj : JSON.stringify(resObj)
+    return objectMode ? resObj : JSON.stringify(resObj)
 }
-
-/* Want help making your own mod? You can use the magix-wiki.html file to create a basic mod; check DOCS.md for extensive NEL documentation. */
