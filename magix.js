@@ -19465,7 +19465,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'thrilling heights',
-                desc: 'Your people living in skybases have developed a strange thrill from living so far aboveground. This trait makes each [skybase] produce a little [happiness].',
+                desc: 'Your people living in skybases have developed a strange thrill from living so far above the ground. This trait makes each [skybase] produce a little [happiness].',
                 icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 200 },
                 req: { 'skybases': true, 'fear of heights': false },
@@ -19476,7 +19476,7 @@ if (getObj("civ") != "1") {
 
             new G.Trait({
                 name: 'fear of heights',
-                desc: 'Your people are terrified of heights, and do not want to live so far aboveground. This trait makes each [skybase] harm [happiness] a little.',
+                desc: 'Your people are terrified of heights, and wish to live less far above-ground. This trait makes each [skybase] harm [happiness] a little.',
                 icon: [0, 0, 'magixmod'], // filler
                 cost: { 'culture': 200 },
                 req: { 'skybases': true, 'thrilling heights': false },
@@ -19489,7 +19489,7 @@ if (getObj("civ") != "1") {
             // TODO: make regular feathers a resource and add birds that you can get feathers from, etc etc
             new G.Tech({
                 name: 'enchanted feather-making',
-                desc: '@[ingredient crafting stand]s can now make [enchanted feather]s out of [wind essence], [mana] and [feather]s',
+                desc: '@[ingredient crafting stand]s can now make [enchanted feather]s out of [wind essence], [mana], and [feather]s',
                 icon: [1, 9, 'magix2'],
                 cost: { 'insight': 450, 'wind essence': 7000 },
                 req: { 'wind-essenced ingredients': true },
