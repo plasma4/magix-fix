@@ -4,7 +4,7 @@ Check the GitHub at https://github.com/plasma4/magix-fix for more detailed and e
 Setup process:
   - IF YOU ALREADY HAVE MAGIX INSTALLED:
  Paste the script below into the console.
-javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace("Xbm-ilapeDSxWf1b/MagixOfficialR55B.js","ZmatEHzFI2_QBuAF/magix.js").replace("Xbm-ilapeDSxWf1b/MagixUtilsR55B.js","ZmatEHzFI2_QBuAF/magixUtils.js")))),onbeforeunload=null,location.reload()
+javascript:localStorage.setItem("legacySave-alpha",b64EncodeUnicode(escape(unescape(b64DecodeUnicode(G.Export())).replace(/Xbm-ilapeDSxWf1b\/MagixUtils(R55B|).js/,"ZmatEHzFI2_QBuAF/magixUtils.js").replace(/Xbm-ilapeDSxWf1b\/MagixOfficial(R55B|)\.js/,"ZmatEHzFI2_QBuAF/magix.js")))),onbeforeunload=null,location.reload()
 
 >>> It's that easy! If you can't open the console for some reason, you can try selecting all the code above and dragging it to your browser's bookmark bar. Then, go to the tab with NeverEnding Legacy open and click on the bookmark. After that, the bookmark isn't needed anymore and can be removed.
 ==========
