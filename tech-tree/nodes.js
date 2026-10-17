@@ -2,12 +2,41 @@
 
 import { Node } from "@painekillers/tree-builder-core"
 
-export default [
-    new Node("A", [], ["B", "C"], "A"),
+const c1 = window.magixData.civ1Object
+const c2 = window.magixData.civ2Object
 
-    new Node("B", ["A"], ["D"], "B"),
-    new Node("C", ["A"], ["D"], "C"),
+function parseArray(arr, useReq = false) {
+    let result = []
 
-    new Node("D", ["B", "C"], ["E"], "D"),
-    new Node("E", ["D"], ["A"], "E"),
-]
+    for (const item of arr) { 
+        if (item.req == null) {
+            console.log("Missing req:", item)
+        }
+
+        result.push(
+            new Node(
+                item.name,
+                useReq ? Object.keys(item.req ?? {}) : item.precededBy ?? [],
+                [],
+                {
+                    full: item,
+                    icon: null
+                }
+            )
+        )
+    }
+
+    return result
+}
+
+export default function getNodes(civ = "civ1", useReq = false) {
+    let nodes = []
+    
+    if (civ === "civ1") {
+        nodes = [...parseArray(c1.techs, useReq), ...parseArray(c1.traits, useReq)]
+    } else if (civ === "civ2") {
+        nodes = [...parseArray(c2.techs, useReq), ...parseArray(c2.traits, useReq)]
+    }
+
+    return nodes
+}

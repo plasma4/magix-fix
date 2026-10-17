@@ -35,6 +35,8 @@ export default class Viewer {
     #search
     #tooltip
 
+    #uiUpdates
+
     #enabled = false
 
     recurse = true
@@ -609,6 +611,12 @@ export default class Viewer {
         updateThemeMenu()
         updateSearchResults()
 
+        this.#uiUpdates = {
+            updateThemeButtons,
+            updateThemeMenu,
+            updateSearchResults
+        }
+
         // Init tooltip
         this.tooltip = {
             offset: 12,
@@ -629,6 +637,9 @@ export default class Viewer {
                 name: node.id,
                 value: node
             }))
+
+        this.updateUi()
+
     }
 
     set tooltip({
@@ -648,6 +659,10 @@ export default class Viewer {
                 duration: duration
             }
         )
+    }
+
+    updateUi() {
+        Object.values(this.#uiUpdates).forEach(callback => callback())
     }
 
     setRoot(root) {
@@ -696,6 +711,8 @@ export default class Viewer {
         this.#bridge.createObjects(
             maxDepth ?? null
         )
+
+        this.updateUi()
     }
 
     enable() {
