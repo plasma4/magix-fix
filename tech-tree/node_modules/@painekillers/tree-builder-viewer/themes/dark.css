@@ -1,0 +1,144 @@
+body {
+    color: #e4e5e7;
+}
+
+#search-button {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+    color: #e4e5e7;
+
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+#search-button:hover {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+#search-menu {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.menu-header button {
+    color: #e4e5e7;
+}
+
+.menu-header button:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+#search-input {
+    border-color: #3a3b3e;
+    background: #242528;
+    color: #e4e5e7;
+}
+
+#search-input::placeholder {
+    color: #77797d;
+}
+
+.search-entry {
+    border-color: #3a3b3e;
+    background: #242528;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-entry:hover {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.search-entry-actions button {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+    color: #e4e5e7;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-entry-actions button:hover:not(:disabled) {
+    background: #343539;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.search-entry-alias {
+    color: #888a8e;
+}
+
+#tooltip {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+    color: #e4e5e7;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+#tooltip::after {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+}
+
+#theme-button {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+    color: #e4e5e7;
+
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+#theme-button:hover {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+#theme-menu {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.theme-entry {
+    border-color: #3a3b3e;
+    color: #e4e5e7;
+}
+
+.theme-entry:hover {
+    border-color: #5a5c62;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme-entry.selected {
+    border-color: #6a6c72;
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+.theme-name {
+    background: #242528;
+    color: #e4e5e7;
+}
+
+#node-menu {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35);
+}
