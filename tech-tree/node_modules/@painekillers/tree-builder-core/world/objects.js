@@ -53,7 +53,7 @@ class PSInstance extends Object {
     }
 }
 
-export class test extends PSInstance {
+/*export class test extends PSInstance {
     constructor(world, x, y, width, height, value) {
         super(world, x, y, width, height)
 
@@ -82,7 +82,7 @@ export class test extends PSInstance {
             pos.y
         )
     }
-}
+}*/
 
 const placeholder = new Image()
 

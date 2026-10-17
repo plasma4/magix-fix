@@ -1,6 +1,5 @@
 import { LayoutGraph, DrawGraph } from "../graph.js"
 import { NodeInstance, Line } from "./objects.js"
-import World from "./world.js"
 
 export default class Bridge {
     constructor(graph, world) {

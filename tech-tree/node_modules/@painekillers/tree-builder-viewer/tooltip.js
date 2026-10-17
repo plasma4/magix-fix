@@ -1,11 +1,16 @@
 export default class Tooltip {
     #target = null
+    #duration
 
-    constructor({
-        offset = 8,
-        duration = 120
-    } = {}) {
+    constructor(
+        container,
+        {
+            offset = 8,
+            duration = 120
+        } = {}
+    ) {
         this.offset = offset
+        this.#duration = duration
 
         this.element = document.createElement("div")
         this.element.id = "tooltip"
@@ -15,7 +20,7 @@ export default class Tooltip {
 
         document.body.append(this.element)
 
-        document.addEventListener("mouseover", e => {
+        container.addEventListener("mouseover", e => {
             const target = e.target.closest("[data-tooltip]")
 
             if(!target) return
@@ -23,7 +28,7 @@ export default class Tooltip {
             this.show(target.dataset.tooltip, target)
         })
 
-        document.addEventListener("mouseout", e => {
+        container.addEventListener("mouseout", e => {
             const target = e.target.closest("[data-tooltip]")
 
             if(target !== this.#target) return
@@ -34,14 +39,20 @@ export default class Tooltip {
         new MutationObserver(() => {
             if(
                 this.#target &&
-                !document.contains(this.#target)
+                !container.contains(this.#target)
             ) {
                 this.hide()
             }
-        }).observe(document.body, {
+        }).observe(container, {
             childList: true,
             subtree: true
         })
+    }
+
+    set duration(value) {
+        this.#duration = value
+        this.element.style.transitionDuration =
+            `${value}ms`
     }
 
     show(text, target) {

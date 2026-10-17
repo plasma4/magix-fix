@@ -120,6 +120,48 @@ export default class World {
         return this.#objects
     }
 
+    #draw() {
+        this.#ctx.clearRect(
+            0,
+            0,
+            this.#canvas.width,
+            this.#canvas.height
+        )
+
+        if (this.#background) {
+            this.#ctx.drawImage(
+                this.#background,
+                0,
+                0,
+                this.#canvas.width,
+                this.#canvas.height
+            )
+        }
+
+        this.#ctx.save()
+
+        const cpos = this.#camera.pos
+
+        this.#ctx.translate(
+            this.#canvas.width / 2,
+            this.#canvas.height / 2
+        )
+
+        this.#ctx.scale(
+            this.#camera.zoom,
+            this.#camera.zoom
+        )
+
+        this.#ctx.translate(
+            -cpos.x,
+            -cpos.y
+        )
+
+        this.#objects.forEach(e => e.draw(this.#ctx))
+
+        this.#ctx.restore()
+    }
+
     #frameRequested = false
 
     update() {
@@ -131,51 +173,15 @@ export default class World {
         requestAnimationFrame(() => {
             this.#frameRequested = false
 
-            this.#ctx.clearRect(
-                0,
-                0,
-                this.#canvas.width,
-                this.#canvas.height
-            )
-
-            if (this.#background) {
-                this.#ctx.drawImage(
-                    this.#background,
-                    0,
-                    0,
-                    this.#canvas.width,
-                    this.#canvas.height
-                )
-            }
-
-            this.#ctx.save()
-
-            const cpos = this.#camera.pos
-
-            this.#ctx.translate(
-                this.#canvas.width / 2,
-                this.#canvas.height / 2
-            )
-
-            this.#ctx.scale(
-                this.#camera.zoom,
-                this.#camera.zoom
-            )
-
-            this.#ctx.translate(
-                -cpos.x,
-                -cpos.y
-            )
-
-            this.#objects.forEach(e => e.draw(this.#ctx))
-
-            this.#ctx.restore()
+            this.#draw()
         })
     }
 
     resize(width, height) {
         this.#canvas.width = width
         this.#canvas.height = height
+        
+        this.#draw()
 
         this.#camera.viewport = [width, height]
     }
