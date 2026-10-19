@@ -25,8 +25,8 @@ export default class Bridge {
         }
     }
 
-    calculateLayout(root, recurse){ // Real maxdepth, since we cant actually make it infinite
-        this.layout = new LayoutGraph(this.graph, root, recurse)
+    calculateLayout(root, recurse, strategy = "First"){ // Real maxdepth, since we cant actually make it infinite
+        this.layout = new LayoutGraph(this.graph, root, recurse, strategy)
         // Since JS is goofy like this ill just have recurse be a number when we want recursive
         this.root = this.graph.nodes.get(root)
 
