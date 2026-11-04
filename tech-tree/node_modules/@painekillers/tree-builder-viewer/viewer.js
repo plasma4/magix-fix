@@ -41,6 +41,7 @@ export default class Viewer {
 
     recurse = true
     strategy = "First"
+    maxDepth = null
     /*
     Recursion settings
     Null: No recursion
@@ -224,6 +225,7 @@ export default class Viewer {
         // Init search index
         this.#search = new SearchIndex([])
 
+        // (Badly written HTML UI code, I have to refactor this !!!!!!!!)
         // Create UI
         const searchButton = document.createElement("button")
         searchButton.id = "search-button"
@@ -291,7 +293,6 @@ export default class Viewer {
             themeGrid
         )
 
-
         const nodeMenu = document.createElement("div")
         nodeMenu.id = "node-menu"
 
@@ -318,14 +319,32 @@ export default class Viewer {
             nodeHeader,
             nodeMenuContent
         )
-
+        
+        const depthControl = document.createElement("div")
+        depthControl.id = "depth-control"
+        
+        const depthLabel = document.createElement("label")
+        depthLabel.textContent = "Max Depth"
+        
+        const depthInput = document.createElement("input")
+        depthInput.id = "max-depth-input"
+        depthInput.type = "number"
+        depthInput.min = "0"
+        depthInput.step = "1"
+        depthInput.placeholder = "∞"
+        
+        depthControl.append(
+            depthLabel,
+            depthInput
+        )
 
         this.#ui.append(
             searchButton,
             searchMenu,
             themeButton,
             themeMenu,
-            nodeMenu
+            nodeMenu,
+            depthControl
         )
 
         this.#shadow.append(
@@ -376,6 +395,24 @@ export default class Viewer {
 
         nodeMenuClose.addEventListener("click", () => {
             nodeMenu.style.display = "none"
+        })
+
+        depthInput.addEventListener("change", () => {
+            const value = depthInput.value.trim()
+
+            if(value === "") {
+                this.draw(null)
+                return
+            }
+
+            const depth = Number(value)
+
+            if(!Number.isSafeInteger(depth) || depth < 0) {
+                updateMaxDepth()
+                return
+            }
+
+            this.draw(depth)
         })
 
         const blank = new Image()
@@ -456,7 +493,7 @@ export default class Viewer {
                     50
                 )
 
-                bridge.createObjects(null)
+                this.draw(this.maxDepth)
 
                 camera.zoom = 0.4
                 camera.pos = [-40, 40]
@@ -568,7 +605,7 @@ export default class Viewer {
                     )
 
                     this.#bridge.createObjects(
-                        this.depth
+                        this.maxDepth
                     )
 
                     searchMenu.style.display = "none"
@@ -588,6 +625,10 @@ export default class Viewer {
 
                 searchResults.append(entry)
             }
+        }
+
+        const updateMaxDepth = () => {
+            depthInput.value = this.maxDepth ?? null
         }
 
         this.nodeMenu = node => {
@@ -612,6 +653,7 @@ export default class Viewer {
         this.#theme.subscribe(updateSearchResults)
         this.#theme.subscribe(updateThemeMenu)
         this.#theme.subscribe(updateThemeButtons)
+        this.#theme.subscribe(updateMaxDepth)
 
         searchInput.addEventListener(
             "input",
@@ -621,11 +663,13 @@ export default class Viewer {
         updateThemeButtons()
         updateThemeMenu()
         updateSearchResults()
+        updateMaxDepth()
 
         this.#uiUpdates = {
             updateThemeButtons,
             updateThemeMenu,
-            updateSearchResults
+            updateSearchResults,
+            updateMaxDepth
         }
 
         // Init tooltip
@@ -674,6 +718,7 @@ export default class Viewer {
 
     updateUi(updateTheme = false) {
         this.#uiUpdates.updateSearchResults()
+        this.#uiUpdates.updateMaxDepth()
 
         if (updateTheme) {
             this.#uiUpdates.updateThemeButtons()
@@ -723,7 +768,7 @@ export default class Viewer {
             return
         }
 
-        this.depth = maxDepth
+        this.maxDepth = maxDepth
 
         this.#bridge.createObjects(
             maxDepth ?? null

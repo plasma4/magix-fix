@@ -486,3 +486,98 @@ canvas {
 #tooltip.visible {
     opacity: 1;
 }
+
+#depth-control {
+    position: absolute;
+    left: 132px;
+    bottom: 20px;
+
+    height: 44px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+
+    background: #f8f8f8;
+
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.14);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+#depth-control:hover {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+#depth-control label {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #464646;
+
+    white-space: nowrap;
+}
+
+#max-depth-input {
+    width: 52px;
+    height: 30px;
+
+    padding: 4px 6px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+
+    outline: none;
+
+    background: white;
+    color: #333;
+
+    font-size: 13px;
+    text-align: center;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+#max-depth-input:focus {
+    border-color: rgba(0, 0, 0, 0.3);
+
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.06);
+}
+
+#max-depth-input::placeholder {
+    color: #999;
+    font-size: 11px;
+}
+
+/* Remove browser-specific number input controls */
+#max-depth-input::-webkit-inner-spin-button,
+#max-depth-input::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+}
+
+#max-depth-input {
+    appearance: textfield;
+}
+
+#max-depth-input::placeholder {
+    color: #999;
+    font-family: 'Segoe UI Symbol', sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+}

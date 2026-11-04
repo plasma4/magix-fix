@@ -19,6 +19,6 @@ console.log(JSON.stringify([...viewer.graph.nodes].map(([id, node]) => ({ id, pa
 
 viewer.setRoot("tribalism")
 viewer.setSize(50, 50, 100, 50)
-viewer.draw()
+viewer.draw(1)
 
 viewer.enable()

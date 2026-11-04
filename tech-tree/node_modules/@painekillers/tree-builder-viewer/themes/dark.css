@@ -1,3 +1,14 @@
+:host {
+    color: #e4e5e7;
+}
+
+button,
+input,
+textarea,
+select {
+    color: inherit;
+}
+
 body {
     color: #e4e5e7;
 }
@@ -141,4 +152,41 @@ body {
 
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* Depth control */
+
+#depth-control {
+    border-color: #3a3b3e;
+    background: #2d2e31;
+
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+#depth-control:hover {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+#depth-control label {
+    color: #e4e5e7;
+}
+
+#max-depth-input {
+    border-color: #3a3b3e;
+    background: #242528;
+    color: #e4e5e7;
+}
+
+#max-depth-input:focus {
+    border-color: #6a6c72;
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+#max-depth-input::placeholder {
+    color: #888a8e;
+    opacity: 1;
 }
