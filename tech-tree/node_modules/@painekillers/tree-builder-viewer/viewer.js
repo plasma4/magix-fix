@@ -263,7 +263,6 @@ export default class Viewer {
             searchResults
         )
 
-
         const themeButton = document.createElement("button")
         themeButton.id = "theme-button"
 
@@ -493,7 +492,7 @@ export default class Viewer {
                     50
                 )
 
-                this.draw(this.maxDepth)
+                //this.draw(this.maxDepth)
 
                 camera.zoom = 0.4
                 camera.pos = [-40, 40]
