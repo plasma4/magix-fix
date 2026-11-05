@@ -54,6 +54,8 @@ async function getIcon(icon, civ2 = false) {
 
         const ctx = canvas.getContext("2d");
 
+        ctx.imageSmoothingEnabled = false;
+
         const layers = [];
         let i = 0;
 

@@ -174,6 +174,8 @@ export default {
 
             ctx.globalAlpha = object.hovered ? 1 : 0.92
 
+            ctx.imageSmoothingEnabled = false;
+
             if (tile) {
                 ctx.drawImage(
                     object.image,
