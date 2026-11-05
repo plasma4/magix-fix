@@ -90,7 +90,7 @@ True: Connects back to existing instance of a node when recursing
 /*
 Strategies
 - [X] Current BFS (First) — Layer by shortest distance from root; first discovery determines placement.
-- [X] Undirected BFS (Undirected) — Shortest distance to root; layering is on directional.
+- [X] Undirected BFS (Undirected) — Shortest distance to root; layering is one directional.
 - [X] Directed BFS, outward only (Outwards) — Follow prerequisite-to-dependent edges only.
 - [X] Furthest-parent layering (Furthest) — Place each node one layer below its deepest prerequisite.
 */
@@ -116,13 +116,13 @@ export class LayoutGraph {
         const visited = new Map()
         const connections = new Set()
 
-        const addConnection = (ln, from) => {
+        const addConnection = (ln, from, lnPos) => {
             const fromNode =
                 this.layers.get(from.layer)?.[from.ind]
 
             if(!fromNode) return
 
-            const a = `${ln.layer}:${ln.ind}`
+            const a = `${lnPos.layer}:${lnPos.ind}`
             const b = `${from.layer}:${from.ind}`
 
             const key = [a, b].sort().join("|")
@@ -166,7 +166,7 @@ export class LayoutGraph {
                     //holy crap i cannot think bruh
                     if(((recurse === false) || (recurse === null)) && pos.layer !== layer) { 
                         if (
-                            recurse == null ||
+                            recurse === null ||
                             strategy == "Outwards" &&
                             from !== null &&
                             Math.abs(layer) < Math.abs(from.layer)
@@ -181,12 +181,13 @@ export class LayoutGraph {
                             )
                         ) { continue }
 
+                        //this part makes the fake node btw
                         const fn = new LayoutNode(node, layer, this.layers.get(pos.layer)[pos.ind])
                         this.layers.get(layer).push(fn)
 
-                        addConnection(fn, from)
+                        addConnection(fn, from, pos)
                     } else {
-                        addConnection(ln, from)
+                        addConnection(ln, from, pos)
 
                     }
                 }
@@ -200,14 +201,30 @@ export class LayoutGraph {
                 Math.abs(layer) < Math.abs(from.layer)
             ) { continue }
 
-            if (
-                strategy == "Furthest" &&
-                (
-                    (layer > 0 && !node.parents.every(val => visited.has(val.id)))
-                    ||
-                    (layer < 0 && !node.children.every(val => visited.has(val.id)))
-                )
-            ) { continue }
+            if (strategy == "Furthest") {
+                if (layer > 0 && !node.parents.every(val => visited.has(val.id))) {
+                    for (const parent of node.parents) {
+                        queue.push({
+                            node: parent,
+                            layer: layer - 1,
+                            from: null
+                        })
+                    }
+
+                    continue
+                } else 
+                if (layer < 0 && !node.children.every(val => visited.has(val.id))) {
+                    for (const child of node.children) {
+                        queue.push({
+                            node: child,
+                            layer: layer + 1,
+                            from: null
+                        })
+                    }
+
+                    continue
+                }
+            }
 
             const ln = new LayoutNode(node, layer)
 
@@ -221,7 +238,7 @@ export class LayoutGraph {
             visited.set(key, pos)
 
             if(from) {
-                addConnection(ln, from)
+                addConnection(ln, from, pos)
             }
 
             for (const child of node.children) {
