@@ -100,11 +100,13 @@ placeholder.src = "data:image/svg+xml," + encodeURIComponent(`
 
 export class ImageInstance extends PSInstance {
     #image
+    #tile
 
-    constructor(world, x, y, width, height, image) {
+    constructor(world, x, y, width, height, image, tile) {
         super(world, x, y, width, height)
 
         this.image = image
+        this.#tile = tile ?? null
     }
 
     set image(img) {
@@ -116,17 +118,37 @@ export class ImageInstance extends PSInstance {
         return this.#image ?? placeholder
     }
 
+    set tile(t) {
+        this.#tile = t
+        this.world.update()
+    }
+
+    get tile() {
+        return this.#tile
+    }
+
     draw(ctx, p, s) {
         let pos = p || this.pos
         let size = s || this.size
 
-        ctx.drawImage(
-            this.image,
-            pos.x - size.width / 2,
-            pos.y - size.height / 2,
-            size.width,
-            size.height
-        )
+        if (this.#tile) {
+            ctx.drawImage(
+                this.image,
+                this.#tile.x, this.#tile.y, this.#tile.width, this.#tile.height,
+                pos.x - size.width / 2,
+                pos.y - size.height / 2,
+                size.width,
+                size.height,
+            )
+        } else {
+            ctx.drawImage(
+                this.image,
+                pos.x - size.width / 2,
+                pos.y - size.height / 2,
+                size.width,
+                size.height,
+            )
+        }
     }
 }
 
@@ -144,6 +166,7 @@ export class Line extends Object {
     }
 }
 
+// Probably wanna change how this works too !!!!!!!!!!!
 export class NodeInstance extends ImageInstance {
     constructor(world, x, y, width, height, node, image, drawNode) {
         super(world, x, y, width, height, image)
