@@ -65,7 +65,7 @@ async function getIcon(icon, civ2 = false) {
                 throw new Error("Invalid icon data");
             }
 
-            let url = "magix-fix/img/iconSheet.png?v=1";
+            let url = "../img/iconSheet.png?v=1";
 
             if (typeof icon[i] === "string") {
                 const sheetId = icon[i++];
@@ -78,10 +78,10 @@ async function getIcon(icon, civ2 = false) {
                 if (url.startsWith("https://file.garden/")) {
                     url = url.replace(
                         /^https:\/\/file\.garden\/.+?\//,
-                        "magix-fix/Magix/"
+                        "../Magix/"
                     );
                 } else if (url.startsWith("Magix/")) {
-                    url = "magix-fix/" + url;
+                    url = "../" + url;
                 }
             }
 
