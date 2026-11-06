@@ -1,0 +1,866 @@
+/* ==================================================
+   Fonts
+   ================================================== */
+
+@font-face {
+    font-family: 'Domine';
+    font-style: normal;
+    font-weight: 400;
+    src: url(a.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Domine';
+    font-style: normal;
+    font-weight: 400;
+    src: url(b.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+/* ==================================================
+   Base layout
+   ================================================== */
+
+:host {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#ui {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    color: #ccc;
+    text-shadow: 1px 1px 0 #000;
+}
+
+#ui > * {
+    pointer-events: auto;
+}
+
+
+/* ==================================================
+   Shared dark rock surfaces
+   ================================================== */
+
+#search-menu,
+#theme-menu,
+#node-menu,
+#search-input,
+.search-entry,
+.theme-name,
+#tooltip,
+#depth-control,
+#max-depth-input {
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg);
+
+    background-size: 100% 100%, cover;
+
+    color: #ccc;
+    text-shadow: 1px 1px 0 #000;
+}
+
+
+/* ==================================================
+   Shared frame treatment
+   ================================================== */
+
+#search-menu,
+#theme-menu,
+#node-menu,
+#tooltip,
+#depth-control,
+#search-input,
+.search-entry,
+#max-depth-input {
+    border: 4px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+}
+
+
+/* ==================================================
+   Blue button sprite — 1.5x scaled artwork
+   ================================================== */
+
+#search-button,
+#theme-button,
+.search-entry-actions button {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+
+    height: 36px;
+    width: 36px;
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    background-image: url(../img/blueButton.png);
+    background-size: 192px 180px;
+    background-position: 0 -36px;
+    background-repeat: repeat-x;
+
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
+
+    color: #ddd;
+    font-family: 'Domine', serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-shadow: 1px 1px 0 #000;
+
+    cursor: pointer;
+}
+
+#search-button::before,
+#search-button::after,
+#theme-button::before,
+#theme-button::after,
+.search-entry-actions button::before,
+.search-entry-actions button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+
+    width: 21px;
+    height: 36px;
+
+    background-image: url(../img/blueButton.png);
+    background-size: 192px 180px;
+    pointer-events: none;
+}
+
+/* Left cap */
+
+#search-button::before,
+#theme-button::before,
+.search-entry-actions button::before {
+    left: 0;
+    background-position: 0 0;
+}
+
+/* Right cap */
+
+#search-button::after,
+#theme-button::after,
+.search-entry-actions button::after {
+    right: 0;
+    background-position: -21px 0;
+}
+
+/* ==================================================
+   Hover
+   ================================================== */
+
+#search-button:hover,
+#theme-button:hover,
+.search-entry-actions button:hover:not(:disabled) {
+    background-position: 0 -108px;
+}
+
+#search-button:hover::before,
+#theme-button:hover::before,
+.search-entry-actions button:hover:not(:disabled)::before {
+    background-position: -84px 0;
+}
+
+#search-button:hover::after,
+#theme-button:hover::after,
+.search-entry-actions button:hover:not(:disabled)::after {
+    background-position: -105px 0;
+}
+
+
+/* ==================================================
+   Pressed
+   ================================================== */
+
+#search-button:active,
+#theme-button:active,
+.search-entry-actions button:active:not(:disabled) {
+    background-position: 0 -144px;
+}
+
+#search-button:active::before,
+#theme-button:active::before,
+.search-entry-actions button:active:not(:disabled)::before {
+    background-position: -126px 0;
+}
+
+#search-button:active::after,
+#theme-button:active::after,
+.search-entry-actions button:active:not(:disabled)::after {
+    background-position: -147px 0;
+}
+
+
+/* ==================================================
+   Selected
+   ================================================== */
+
+#search-button.on,
+#theme-button.on,
+.search-entry-actions button.on {
+    background-position: 0 -72px;
+}
+
+#search-button.on::before,
+#theme-button.on::before,
+.search-entry-actions button.on::before {
+    background-position: -42px 0;
+}
+
+#search-button.on::after,
+#theme-button.on::after,
+.search-entry-actions button.on::after {
+    background-position: -63px 0;
+}
+
+
+/* ==================================================
+   Main buttons
+   ================================================== */
+
+#search-button {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+}
+
+#theme-button {
+    position: absolute;
+    left: 64px;
+    bottom: 20px;
+}
+
+#search-button svg,
+#theme-button svg {
+    position: absolute;
+    z-index: 1;
+
+    left: 50%;
+    top: 50%;
+
+    display: block;
+    width: 14px;
+    height: 14px;
+
+    transform: translate(-50%, -50%);
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   Shared menu positioning and appearance
+   ================================================== */
+
+#search-menu,
+#theme-menu,
+#node-menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    padding: 16px;
+    box-sizing: border-box;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg);
+    background-size: 100% 100%, cover;
+
+    border: 4px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+
+    color: #ddd;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+
+/* ==================================================
+   Menu corner twirls
+   Left: top-left
+   Right: bottom-right
+   ================================================== */
+
+#search-menu::before,
+#theme-menu::before,
+#node-menu::before,
+#search-menu::after,
+#theme-menu::after,
+#node-menu::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 5;
+
+    width: 12px;
+    height: 10px;
+
+    background-repeat: no-repeat;
+    background-size: 12px 10px;
+
+    pointer-events: none;
+}
+
+#search-menu::before,
+#theme-menu::before,
+#node-menu::before {
+    top: -1px;
+    bottom: auto;
+    left: -1px;
+    right: auto;
+
+    background-image: url(../img/twirlCorner1.png);
+}
+
+#search-menu::after,
+#theme-menu::after,
+#node-menu::after {
+    top: auto;
+    bottom: -1px;
+    left: auto;
+    right: -1px;
+
+    background-image: url(../img/twirlCorner2.png);
+}
+
+
+/* ==================================================
+   Search menu
+   ================================================== */
+
+#search-menu {
+    width: min(700px, calc(100% - 32px));
+    height: min(600px, calc(100% - 32px));
+    display: none;
+}
+
+
+/* ==================================================
+   Theme menu
+   ================================================== */
+
+#theme-menu {
+    width: min(650px, calc(100% - 32px));
+    height: min(520px, calc(100% - 32px));
+
+    display: none;
+    overflow-y: auto;
+}
+
+
+/* ==================================================
+   Node menu
+   ================================================== */
+
+#node-menu {
+    width: min(700px, calc(100% - 32px));
+    height: min(600px, calc(100% - 32px));
+    display: none;
+}
+
+
+/* ==================================================
+   Menu headers and close buttons
+   ================================================== */
+
+.menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+}
+
+.menu-header span {
+    color: #ddd;
+    font-family: 'Domine', serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.menu-header button {
+    position: relative;
+
+    width: 24px;
+    height: 24px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #000;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+    color: #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 21px;
+    line-height: 24px;
+    text-align: center;
+    text-indent: -5px;
+
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   Search input
+   ================================================== */
+
+#search-input {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 12px;
+    padding: 10px 14px;
+
+    outline: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg);
+    background-size: 100% 100%, cover;
+}
+
+#search-input::placeholder {
+    color: #ccc;
+    opacity: 0.7;
+}
+
+
+/* ==================================================
+   Search results
+   ================================================== */
+
+#search-results {
+    height: calc(100% - 96px);
+    margin-top: 12px;
+
+    /* Room for entries to grow without clipping their frames */
+    padding: 8px;
+    box-sizing: border-box;
+
+    overflow-y: auto;
+}
+
+.search-entry {
+    position: relative;
+    z-index: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 12px;
+    margin-bottom: 8px;
+
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+
+    transform: scale(1);
+    transform-origin: center;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.search-entry:hover {
+    z-index: 2;
+    transform: scale(1.01);
+
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.65);
+}
+
+.search-entry-name {
+    color: #ddd;
+    font-family: 'Domine', serif;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.search-entry-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.search-entry-alias {
+    margin-top: 2px;
+    color: #888;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.search-entry-actions button {
+    width: 36px;
+    min-width: 36px;
+}
+
+.search-entry-actions button svg {
+    position: absolute;
+    z-index: 1;
+
+    left: 50%;
+    top: 50%;
+
+    display: block;
+    width: 12px;
+    height: 12px;
+
+    transform: translate(-50%, -50%);
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    pointer-events: none;
+}
+
+.search-entry-actions button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+
+/* ==================================================
+   Theme grid
+   ================================================== */
+
+#theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+    gap: 16px;
+
+    width: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+    margin-top: 12px;
+}
+
+
+/* ==================================================
+   Theme cards
+   ================================================== */
+
+.theme-entry {
+    position: relative;
+
+    width: 150px;
+    height: 130px;
+
+    padding: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.3s ease;
+}
+
+.theme-entry:hover {
+    transform: scale(1.02);
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtle selected state; fades smoothly when selection changes */
+
+/* Selected theme */
+.theme-entry.selected {
+    box-shadow:
+        0 0 0 2px rgba(220, 220, 220, 0.65),
+        0 0 8px 3px rgba(255, 255, 255, 0.2);
+}
+
+/* Selected theme while hovering */
+.theme-entry.selected:hover {
+    transform: scale(1.02);
+    box-shadow:
+        0 0 0 2px rgba(220, 220, 220, 0.8),
+        0 0 12px 4px rgba(255, 255, 255, 0.3);
+}
+
+
+/* ==================================================
+   Theme preview
+   ================================================== */
+
+.theme-preview {
+    position: relative;
+
+    width: 100%;
+    height: 90px;
+    flex: 0 0 90px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    overflow: hidden;
+    box-sizing: border-box;
+
+    border: 2px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+
+    background: transparent;
+}
+
+/*
+   FRAME ATLAS NOTE:
+   frames.png contains several different frame sprites in one
+   horizontal strip. A proper nine-slice requires the selected
+   preview frame to be cropped into its own image first.
+
+   Once cropped, set that asset as the border-image source here.
+   Do not apply the full frames.png atlas as border-image.
+*/
+
+
+/* ==================================================
+   Theme name
+   ================================================== */
+
+.theme-name {
+    position: relative;
+
+    width: 100%;
+    height: 40px;
+    flex: 0 0 40px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    box-sizing: border-box;
+
+    border: 3px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg);
+    background-size: 100% 100%, cover;
+
+    color: #ddd;
+    font-family: 'Domine', serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+
+/* ==================================================
+   Node menu content
+   ================================================== */
+
+#node-menu-content {
+    height: calc(100% - 44px);
+    margin-top: 12px;
+    overflow-y: auto;
+}
+
+
+/* ==================================================
+   Tooltip
+   ================================================== */
+
+#tooltip {
+    position: absolute;
+    padding: 7px 11px;
+
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+
+    color: #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+
+    pointer-events: none;
+    opacity: 0;
+
+    transform: translate(-50%, -100%);
+    transition: opacity 0.12s;
+
+    z-index: 1000;
+}
+
+#tooltip::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+
+    width: 9px;
+    height: 9px;
+
+    background: url(../Magix/bgDarkRockDefault.jpg);
+
+    transform: translateX(-50%) rotate(45deg);
+}
+
+#tooltip.visible {
+    opacity: 1;
+}
+
+/* Depth control */
+#depth-control {
+    position: absolute;
+    left: 116px;
+    bottom: 20px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg);
+    background-size: 100% 100%, cover;
+    color: #ccc;
+    text-shadow: 1px 1px 0 #000;
+
+    border: 4px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+}
+
+#depth-control label {
+    font-family: "Domine", serif;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #000;
+
+    color: #ccc;
+
+    white-space: nowrap;
+}
+
+/* Decorative flourishes outside the control */
+#depth-control::before,
+#depth-control::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 24px;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    pointer-events: none;
+}
+
+#depth-control::before {
+    left: -18px;
+    background-image: url(../img/flourish2L.png);
+}
+
+#depth-control::after {
+    right: -18px;
+    background-image: url(../img/flourish2R.png);
+}
+
+/* Maximum depth input */
+#max-depth-input {
+    flex: 0 0 52px;
+    width: 52px;
+    min-width: 52px;
+    max-width: 52px;
+    height: 26px;
+    min-height: 26px;
+    max-height: 26px;
+    box-sizing: border-box;
+
+    padding: 0 2px;
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+    border: 2px solid transparent;
+    border-image: url(../img/frameBorder.png) 2 repeat;
+    border-radius: 0;
+
+    background:
+        url(../img/darkBorders.png),
+        url(../Magix/bgDarkRockDefault.jpg) !important;
+    background-size: 100% 100%, cover !important;
+
+    color: #ddd !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+
+    font-family: "Domine", serif;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #000;
+}
+
+#max-depth-input:focus {
+    outline: none;
+    border-color: #aaa !important;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(200, 200, 200, 0.2);
+}
+
+#max-depth-input::-webkit-inner-spin-button,
+#max-depth-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#max-depth-input::placeholder {
+    color: #aaa;
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+    opacity: 1;
+}

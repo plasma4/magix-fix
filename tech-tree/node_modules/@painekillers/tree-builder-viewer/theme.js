@@ -132,10 +132,26 @@ export class ThemeApplier {
         this.#css.href =
             defaultTheme.css
 
+        const stylesReady = Promise.all([
+            this.#defaultCSS,
+            this.#css
+        ].map(link => new Promise((resolve, reject) => {
+            link.addEventListener("load", resolve, { once: true });
+            link.addEventListener("error", reject, { once: true });
+        })));
+
         this.#shadow.append(
             this.#defaultCSS,
             this.#css
-        )
+        );
+
+        stylesReady.then(() => {
+            for (const func of this.#subscription) {
+                func();
+            }
+        }).catch(error => {
+            console.error("Failed to load stylesheets:", error);
+        });
 
         this.#current =
             defaultTheme.theme
