@@ -22,116 +22,88 @@ const animate = node => {
     node.animation = requestAnimationFrame(animate)
 }
 
+const frames = new Image()
+frames.src = "../Magix/frames.png"
+
 export default {
-    background: Object.assign(new Image(),
-        {src: "data:image/svg+xml," + encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-                <defs>
-                    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#f4f5f7"/>
-                        <stop offset="100%" stop-color="#e8eaed"/>
-                    </linearGradient>
+    background: (() => {
+        const canvas = document.createElement("canvas")
+        canvas.width = 1920
+        canvas.height = 1080
 
-                    <radialGradient id="light" cx="50%" cy="42%" r="65%">
-                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
-                        <stop offset="60%" stop-color="#ffffff" stop-opacity="0.3"/>
-                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-                    </radialGradient>
+        const ctx = canvas.getContext("2d")
+        const image = new Image()
 
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path
-                            d="M 40 0 L 0 0 0 40"
-                            fill="none"
-                            stroke="#9da3ad"
-                            stroke-width="1"
-                            opacity="0.28"
-                        />
-                    </pattern>
+        const rock = new Image()
+        const borders = new Image()
 
-                    <radialGradient id="fade" cx="50%" cy="50%" r="70%">
-                        <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
-                        <stop offset="100%" stop-color="#c8ccd3" stop-opacity="0.2"/>
-                    </radialGradient>
-                </defs>
+        let loaded = 0
 
-                <rect width="1920" height="1080" fill="url(#base)"/>
-                <rect width="1920" height="1080" fill="url(#light)"/>
-                <rect width="1920" height="1080" fill="url(#grid)"/>
-                <rect width="1920" height="1080" fill="url(#fade)"/>
-            </svg>
-        `)}
-    ),
+        const compose = () => {
+            if (++loaded !== 2) return
 
-    focusButton: `
-        <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="7"/>
-            <circle cx="12" cy="12" r="2"/>
-            <path d="M12 2V5"/>
-            <path d="M12 19V22"/>
-            <path d="M2 12H5"/>
-            <path d="M19 12H22"/>
-        </svg>
-    `,
+            ctx.drawImage(rock, 0, 0, 1920, 1080)
+            ctx.drawImage(borders, 0, 0, 1920, 1080)
 
-    rootButton: `
-        <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="5" r="2.5"/>
-            <circle cx="6" cy="19" r="2.5"/>
-            <circle cx="18" cy="19" r="2.5"/>
-            <path d="M12 7.5V12"/>
-            <path d="M12 12L6 16.5"/>
-            <path d="M12 12L18 16.5"/>
-        </svg>
-    `,
+            image.src = canvas.toDataURL()
+        }
 
-    searchButton: `
-        <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="6.5"></circle>
-            <line x1="16" y1="16" x2="21" y2="21"></line>
-        </svg>
-    `,
+        rock.onload = compose
+        borders.onload = compose
 
-    themeButton: `
-        <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="13.5" cy="6.5" r=".5"></circle>
-            <circle cx="17.5" cy="10.5" r=".5"></circle>
-            <circle cx="8.5" cy="7.5" r=".5"></circle>
-            <circle cx="6.5" cy="12.5" r=".5"></circle>
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
-        </svg>
-    `,
+        rock.src = "../img/bgMidRock.jpg"
+        borders.src = "../img/darkBorders.png"
+
+        return image
+    })(),
 
     draw: {
         line(ctx, object) {
+            const { from, to, width } = object
+
+            const dx = to.x - from.x
+            const dy = to.y - from.y
+            const length = Math.hypot(dx, dy) || 1
+
+            const nx = -dy / length
+            const ny = dx / length
+
             ctx.save()
-
             ctx.lineCap = "round"
+            ctx.lineJoin = "round"
 
-            ctx.shadowColor = "rgba(0, 0, 0, 0.12)"
-            ctx.shadowBlur = 4
-            ctx.shadowOffsetY = 1
+            // Outline, fading near connected nodes
+            const outline = ctx.createLinearGradient(
+                from.x, from.y,
+                to.x, to.y
+            )
+
+            outline.addColorStop(0, "rgba(48, 37, 27, 0.15)")
+            outline.addColorStop(0.15, "rgba(48, 37, 27, 0.75)")
+            outline.addColorStop(0.85, "rgba(48, 37, 27, 0.75)")
+            outline.addColorStop(1, "rgba(48, 37, 27, 0.15)")
 
             ctx.beginPath()
+            ctx.moveTo(from.x, from.y)
+            ctx.lineTo(to.x, to.y)
+            ctx.lineWidth = width + 1.5
+            ctx.strokeStyle = outline
+            ctx.stroke()
 
-            ctx.moveTo(
-                object.from.x,
-                object.from.y
-            )
+            // Main body
+            ctx.beginPath()
+            ctx.moveTo(from.x, from.y)
+            ctx.lineTo(to.x, to.y)
+            ctx.lineWidth = width
+            ctx.strokeStyle = "#796044"
+            ctx.stroke()
 
-            ctx.lineTo(
-                object.to.x,
-                object.to.y
-            )
-
-            ctx.lineWidth = object.width
-            ctx.strokeStyle = "#999"
+            // Subtle highlight
+            ctx.beginPath()
+            ctx.moveTo(from.x - nx * width * 0.22, from.y - ny * width * 0.22)
+            ctx.lineTo(to.x - nx * width * 0.22, to.y - ny * width * 0.22)
+            ctx.lineWidth = Math.max(1, width * 0.2)
+            ctx.strokeStyle = "rgba(190, 157, 108, 0.5)"
             ctx.stroke()
 
             ctx.restore()
@@ -148,7 +120,7 @@ export default {
             const x = pos.x - width / 2
             const y = pos.y - height / 2
 
-            const radius = 10
+            const radius = 0
 
             const fake = object.drawNode.layoutNode.original !== null
 
@@ -158,21 +130,17 @@ export default {
             ctx.shadowBlur = object.hovered ? 16 : 8
             ctx.shadowOffsetY = object.hovered ? 4 : 2
 
-            ctx.fillStyle = "#f8f8f8"
+            ctx.fillStyle = "#796044"
 
             ctx.beginPath()
-            ctx.roundRect(x, y, width, height, radius)
+            ctx.roundRect(x, y, width * 0.99, height * 0.99, radius)
             ctx.fill()
 
             ctx.shadowColor = "transparent"
 
             ctx.save()
 
-            ctx.beginPath()
-            ctx.roundRect(x, y, width, height, radius)
-            ctx.clip()
-
-            ctx.globalAlpha = object.hovered ? 1 : 0.92
+            ctx.globalAlpha = object.hovered ? 1 : 0.96
 
             ctx.imageSmoothingEnabled = false;
 
@@ -194,10 +162,27 @@ export default {
                     height,
                 )
             }
-
+            
             ctx.restore()
 
-            ctx.beginPath()
+            ctx.imageSmoothingEnabled = false;
+
+            ctx.globalAlpha = 1
+            ctx.shadowColor = "transparent"
+            ctx.shadowBlur = 16
+            ctx.shadowOffsetY = 4
+
+            const frame = object.root
+                ? { x: 339, y: 1, width: 50, height: 50 }
+                : { x: 0, y: 0, width: 51, height: 52 }
+
+            ctx.drawImage(
+                frames,
+                frame.x, frame.y, frame.width, frame.height,
+                x, y, width, height
+            )
+
+            /*ctx.beginPath()
             ctx.roundRect(x, y, width, height, radius)
 
             ctx.lineWidth = 1
@@ -208,9 +193,9 @@ export default {
             }
 
             ctx.stroke()
-            ctx.setLineDash([])
+            ctx.setLineDash([])*/
 
-            if(object.root) {
+            /*if(object.root) {
                 ctx.beginPath()
                 ctx.arc(
                     x + width - 9,
@@ -222,7 +207,7 @@ export default {
 
                 ctx.fillStyle = "rgba(0, 0, 0, 0.25)"
                 ctx.fill()
-            }
+            }*/
 
             ctx.restore()
         }
