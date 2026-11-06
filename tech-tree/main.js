@@ -25,3 +25,5 @@ viewer.setSize(50, 50, 100, 50)
 viewer.draw(1)
 
 viewer.enable()
+
+document.getElementById("loading-overlay").classList.add("hidden")

@@ -3,7 +3,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Tree Builder Test</title>
+        <title>Magix Tech Tree</title>
+        <link rel="shortcut icon" href="../favicon.ico" />
+
+        <link rel="stylesheet" href="./loading.css">
 
         <script type="importmap">
             {
@@ -32,6 +35,13 @@
 
     <body>
         <div id="tree"></div>
+
+        <div id="loading-overlay">
+            <div id="loading-box">
+                <div id="loading-title">Loading nodes</div>
+                <div id="loading-bar"></div>
+            </div>
+        </div>
 
         <script src="../MagixData.js"></script>
         <script

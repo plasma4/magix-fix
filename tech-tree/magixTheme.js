@@ -65,32 +65,23 @@ export default {
             const dy = to.y - from.y
             const length = Math.hypot(dx, dy) || 1
 
+            // Perpendicular direction for the highlight
             const nx = -dy / length
             const ny = dx / length
 
             ctx.save()
-            ctx.lineCap = "round"
-            ctx.lineJoin = "round"
+            ctx.lineCap = "square"
+            ctx.lineJoin = "miter"
 
-            // Outline, fading near connected nodes
-            const outline = ctx.createLinearGradient(
-                from.x, from.y,
-                to.x, to.y
-            )
-
-            outline.addColorStop(0, "rgba(48, 37, 27, 0.15)")
-            outline.addColorStop(0.15, "rgba(48, 37, 27, 0.75)")
-            outline.addColorStop(0.85, "rgba(48, 37, 27, 0.75)")
-            outline.addColorStop(1, "rgba(48, 37, 27, 0.15)")
-
+            // Dark outline
             ctx.beginPath()
             ctx.moveTo(from.x, from.y)
             ctx.lineTo(to.x, to.y)
-            ctx.lineWidth = width + 1.5
-            ctx.strokeStyle = outline
+            ctx.lineWidth = width + 2
+            ctx.strokeStyle = "#30251b"
             ctx.stroke()
 
-            // Main body
+            // Muted brown body
             ctx.beginPath()
             ctx.moveTo(from.x, from.y)
             ctx.lineTo(to.x, to.y)
@@ -98,12 +89,18 @@ export default {
             ctx.strokeStyle = "#796044"
             ctx.stroke()
 
-            // Subtle highlight
+            // Very subtle warm highlight
             ctx.beginPath()
-            ctx.moveTo(from.x - nx * width * 0.22, from.y - ny * width * 0.22)
-            ctx.lineTo(to.x - nx * width * 0.22, to.y - ny * width * 0.22)
+            ctx.moveTo(
+                from.x - nx * 0.7,
+                from.y - ny * 0.7
+            )
+            ctx.lineTo(
+                to.x - nx * 0.7,
+                to.y - ny * 0.7
+            )
             ctx.lineWidth = Math.max(1, width * 0.2)
-            ctx.strokeStyle = "rgba(190, 157, 108, 0.5)"
+            ctx.strokeStyle = "#a18a65"
             ctx.stroke()
 
             ctx.restore()
