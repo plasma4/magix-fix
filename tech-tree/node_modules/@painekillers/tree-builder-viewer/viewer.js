@@ -230,6 +230,7 @@ export default class Viewer {
         const searchButton = document.createElement("button")
         searchButton.id = "search-button"
         searchButton.ariaLabel = "Search"
+        searchButton.dataset.tooltip = "Search"
 
         const searchMenu = document.createElement("div")
         searchMenu.id = "search-menu"
@@ -265,6 +266,7 @@ export default class Viewer {
 
         const themeButton = document.createElement("button")
         themeButton.id = "theme-button"
+        themeButton.dataset.tooltip = "Themes"
 
         const themeMenu = document.createElement("div")
         themeMenu.id = "theme-menu"
@@ -331,6 +333,7 @@ export default class Viewer {
         depthInput.min = "0"
         depthInput.step = "1"
         depthInput.placeholder = "∞"
+        depthInput.dataset.tooltip = "Max Depth (leave blank for no limit)"
         
         depthControl.append(
             depthLabel,

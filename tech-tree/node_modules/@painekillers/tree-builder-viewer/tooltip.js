@@ -18,7 +18,7 @@ export default class Tooltip {
         this.element.style.transitionDuration =
             `${duration}ms`
 
-        document.body.append(this.element)
+        container.append(this.element)
 
         container.addEventListener("mouseover", e => {
             const target = e.target.closest("[data-tooltip]")

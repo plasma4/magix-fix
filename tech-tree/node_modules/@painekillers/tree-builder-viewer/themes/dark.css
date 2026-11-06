@@ -141,6 +141,14 @@ body {
         0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
+.theme-entry.selected:hover {
+    border-color: #6a6c72;
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 .theme-name {
     background: #242528;
     color: #e4e5e7;
