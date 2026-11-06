@@ -6,6 +6,7 @@ import getNodes from "./nodes.js"
 const themes = new ThemeContainer()
 
 await themes.load("Dark")
+await themes.load("Magix", new URL("./magixTheme.js", import.meta.url), new URL("./magixTheme.css", import.meta.url))
 
 const viewer = new Viewer(
     document.getElementById("tree"),
@@ -13,6 +14,8 @@ const viewer = new Viewer(
 )
 viewer.recurse = null
 viewer.strategy = "Outwards"
+
+viewer.setTheme("Magix")
 
 viewer.graph = new Graph(await getNodes())
 //console.log(JSON.stringify([...viewer.graph.nodes].map(([id, node]) => ({ id, parents: node.parents.map(n => n.id), children: node.children.map(n => n.id) })), null, 2))

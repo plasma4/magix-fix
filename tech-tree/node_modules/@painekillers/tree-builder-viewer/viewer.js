@@ -492,7 +492,7 @@ export default class Viewer {
                     50
                 )
 
-                //this.draw(this.maxDepth)
+                bridge.createObjects(null)
 
                 camera.zoom = 0.4
                 camera.pos = [-40, 40]
@@ -776,6 +776,10 @@ export default class Viewer {
         this.updateUi()
     }
 
+    setTheme(name) {
+        this.#theme.apply(name)
+    }
+
     enable() {
         if(this.#enabled) return
 
@@ -797,6 +801,7 @@ export default class Viewer {
         this.#observer.observe(
             this.#container
         )
+
     }
 
     disable() {
