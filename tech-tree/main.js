@@ -10,11 +10,32 @@ const themes = new ThemeContainer()
 await themes.load("Dark")
 await themes.load("Magix", new URL("./magixTheme.js", import.meta.url), new URL("./magixTheme.css", import.meta.url))
 
+const nameFunc = (node, full = false) => {
+    const displayName = node.val?.full?.displayName;
+
+    return displayName && full
+        ? `${displayName} (${node.val?.full?.name ?? node.id})`
+        : displayName 
+            ?? node.val?.full?.name
+            ?? node.val?.full?.id
+            ?? node.id;
+};
+
 const viewer = new Viewer(
     document.getElementById("tree"),
     themes,
-    renderMenu
+    renderMenu,
+    nameFunc
 )
+
+renderMenu.setOnNodeClick(node => {
+    viewer.setRoot(node.id)
+    viewer.setSize(50, 50, 100, 50)
+    viewer.draw(1)
+
+    viewer.closeMenus()
+})
+
 viewer.recurse = null
 viewer.strategy = "Outwards"
 

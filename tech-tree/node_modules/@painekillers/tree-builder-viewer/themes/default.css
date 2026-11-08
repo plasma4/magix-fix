@@ -644,7 +644,6 @@ canvas {
 }
 
 .codebox {
-    min-height: 120px;
     max-height: 300px;
 
     padding: 14px;
