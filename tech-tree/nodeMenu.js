@@ -1,3 +1,4 @@
+
 export default (() => {
     let elements;
     let onNodeClick = null;
@@ -11,11 +12,8 @@ export default (() => {
 
     const createSectionTitle = text => {
         const element = document.createElement("div");
+        element.className = "node-menu-section-title";
         element.textContent = text;
-        element.style.fontSize = "1.2em";
-        element.style.fontWeight = "bold";
-        element.style.padding = "8px 0";
-        element.style.color = "inherit";
         return element;
     };
 
@@ -66,7 +64,7 @@ export default (() => {
     };
 
     const createEffect = effect => {
-        const wrapper = createText("text");
+        const wrapper = createText("text node-menu-effect");
 
         const { type, ...properties } = effect;
 
@@ -74,9 +72,7 @@ export default (() => {
         typeText.textContent = `Type : ${type ?? ""}`;
 
         const separator = document.createElement("hr");
-        separator.style.border = "none";
-        separator.style.borderTop = "1px solid rgba(128,128,128,0.3)";
-        separator.style.margin = "8px 0";
+        separator.className = "node-menu-effect-separator";
 
         const valueText = createText(
             type === "function" ? "codebox" : ""
@@ -94,9 +90,7 @@ export default (() => {
     };
 
     const createCost = (key, value) => {
-        const wrapper = createText("text");
-        wrapper.style.whiteSpace = "pre-wrap";
-        wrapper.style.overflowWrap = "anywhere";
+        const wrapper = createText("text node-menu-value");
         wrapper.textContent = `${key} : ${formatValue(value)}`;
 
         return wrapper;
@@ -107,29 +101,15 @@ export default (() => {
         const icon = new Image();
 
         button.type = "button";
+        button.className = "node-menu-related-button";
         button.title = node.val?.full?.displayName
             ?? node.val?.full?.name
             ?? node.val?.full?.id
             ?? "";
 
-        // Remove the browser's default button appearance.
-        button.style.all = "unset";
-        button.style.cursor = "pointer";
-        button.style.flex = "0 0 auto";
-
-        icon.className = "image";
+        icon.className = "image node-menu-related-icon";
         icon.src = node.val?.icon?.src ?? "";
         icon.alt = button.title;
-
-        // Same image treatment as the main icon, but smaller.
-        icon.style.display = "block";
-        icon.style.width = "64px";
-        icon.style.maxWidth = "100%";
-        icon.style.height = "auto";
-        icon.style.maxHeight = "none";
-        icon.style.objectFit = "contain";
-        icon.style.imageRendering = "pixelated";
-        icon.style.setProperty("image-rendering", "crisp-edges");
 
         button.appendChild(icon);
 
@@ -140,80 +120,57 @@ export default (() => {
         return button;
     };
 
-    const createNodeSection = (title, nodes) => {
-        const wrapper = createText("");
+    const createNodeSection = title => {
+        const wrapper = createText("node-menu-related-section");
         const heading = createSectionTitle(title);
+        const row = createText("node-menu-related-row");
 
-        const row = createText("");
-        row.style.display = "flex";
-        row.style.flexDirection = "row";
-        row.style.flexWrap = "nowrap";
-        row.style.alignItems = "center";
-        row.style.gap = "8px";
-        row.style.overflowX = "auto";
-        row.style.overflowY = "hidden";
-        row.style.width = "100%";
-        row.style.paddingBottom = "8px";
-        row.style.boxSizing = "border-box";
+        wrapper.append(heading, row);
+
+        return { wrapper, row };
+    };
+
+    const updateNodeSection = (section, nodes) => {
+        section.row.replaceChildren();
 
         if (Array.isArray(nodes)) {
             nodes.forEach(node => {
                 if (!node) return;
-                row.appendChild(createNodeButton(node));
+                section.row.appendChild(createNodeButton(node));
             });
         }
 
-        wrapper.append(heading, row);
-        wrapper.hidden = row.children.length === 0;
-
-        return wrapper;
+        section.wrapper.hidden = section.row.children.length === 0;
     };
 
     const render = (node, container) => {
         if (!elements) {
             const icon = new Image();
-
-            icon.className = "image";
-            icon.style.display = "block";
-            icon.style.width = "200px";
-            icon.style.maxWidth = "100%";
-            icon.style.height = "auto";
-            icon.style.maxHeight = "none";
-            icon.style.objectFit = "contain";
-            icon.style.imageRendering = "pixelated";
-            icon.style.setProperty("image-rendering", "crisp-edges");
-            icon.style.margin = "0 0 16px 0";
+            icon.className = "image node-menu-image";
 
             const id = createTitle("");
             const type = createTitle("");
 
             const descriptionTitle = createSectionTitle("Description");
-            const description = createText("text");
-            description.style.whiteSpace = "pre-wrap";
-            description.style.overflowWrap = "anywhere";
+            const description = createText("text node-menu-description");
 
             const costTitle = createSectionTitle("Cost");
-            const cost = createText("");
-            cost.style.display = "flex";
-            cost.style.flexDirection = "column";
-            cost.style.gap = "8px";
+            const cost = createText("node-menu-list");
 
             const effectsTitle = createSectionTitle("Effects");
-            const effects = createText("");
-            effects.style.display = "flex";
-            effects.style.flexDirection = "column";
-            effects.style.gap = "8px";
+            const effects = createText("node-menu-list");
+
+            const requires = createNodeSection("Requires");
+            const leadsTo = createNodeSection("LeadsTo");
 
             const raw = document.createElement("details");
-            raw.style.marginTop = "14px";
+            raw.className = "node-menu-raw";
 
             const rawSummary = document.createElement("summary");
             rawSummary.textContent = "Raw JSON";
-            rawSummary.className = "title";
-            rawSummary.style.cursor = "pointer";
+            rawSummary.className = "title node-menu-raw-summary";
 
-            const rawContent = createText("codebox");
-            rawContent.style.marginTop = "8px";
+            const rawContent = createText("codebox node-menu-raw-content");
 
             raw.append(rawSummary, rawContent);
 
@@ -227,6 +184,8 @@ export default (() => {
                 cost,
                 effectsTitle,
                 effects,
+                requires,
+                leadsTo,
                 raw,
                 rawContent
             };
@@ -242,9 +201,27 @@ export default (() => {
             cost,
             effectsTitle,
             effects,
+            requires,
+            leadsTo,
             raw,
             rawContent
         } = elements;
+
+        // Reattach all cached elements on every render.
+        container.replaceChildren(
+            icon,
+            id,
+            type,
+            descriptionTitle,
+            description,
+            costTitle,
+            cost,
+            effectsTitle,
+            effects,
+            requires.wrapper,
+            leadsTo.wrapper,
+            raw
+        );
 
         const full = node.val?.full ?? {};
 
@@ -323,8 +300,8 @@ export default (() => {
         effects.hidden = !hasEffects;
 
         // Requires and LeadsTo
-        const requires = createNodeSection("Requires", node.parents);
-        const leadsTo = createNodeSection("LeadsTo", node.children);
+        updateNodeSection(requires, node.parents);
+        updateNodeSection(leadsTo, node.children);
 
         // Raw JSON
         rawContent.textContent = JSON.stringify(
@@ -334,31 +311,6 @@ export default (() => {
                 : value,
             2
         );
-
-        // Update container
-        if (id.parentElement !== container) {
-            container.replaceChildren(
-                icon,
-                id,
-                type,
-                descriptionTitle,
-                description,
-                costTitle,
-                cost,
-                effectsTitle,
-                effects,
-                requires,
-                leadsTo,
-                raw
-            );
-        } else {
-            // Keep the navigation sections current when rendering another node.
-            const existingRequires = container.children[9];
-            const existingLeadsTo = container.children[10];
-
-            existingRequires.replaceWith(requires);
-            existingLeadsTo.replaceWith(leadsTo);
-        }
     };
 
     render.setOnNodeClick = fn => {
