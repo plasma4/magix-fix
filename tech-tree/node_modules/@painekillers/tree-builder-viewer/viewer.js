@@ -37,6 +37,8 @@ export default class Viewer {
 
     #uiUpdates
 
+    #nodeMenu
+
     #enabled = false
 
     recurse = true
@@ -58,7 +60,7 @@ export default class Viewer {
     - [X] Furthest-parent layering (Furthest) — Place each node one layer below its deepest prerequisite.
     */
 
-    constructor(container, themes) {
+    constructor(container, themes, interpretNode) {
         this.#container = container
 
         this.#shadow = this.#container.attachShadow({
@@ -120,7 +122,7 @@ export default class Viewer {
                 console.log("clicked node:", object.node.val)
 
                 if(object.drawNode.layoutNode.original === null) {
-                    this.nodeMenu(object.node)
+                    this.#nodeMenu(object.node)
                 } else {
                     this.#bridge.focus(
                         object.drawNode.layoutNode.original.node
@@ -633,9 +635,11 @@ export default class Viewer {
             depthInput.value = this.maxDepth ?? null
         }
 
-        this.nodeMenu = node => {
+        this.#nodeMenu = node => {
             nodeMenuTitle.textContent = node.id
             nodeMenuContent.replaceChildren()
+
+            interpretNode?.(node, nodeMenuContent)
 
             openMenu(nodeMenu)
         }
@@ -683,6 +687,10 @@ export default class Viewer {
 
     get graph() {
         return this.#graph
+    }
+
+    get nodeMenu() {
+        return this.#nodeMenu
     }
 
     set graph(graph) {
